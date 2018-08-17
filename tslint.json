@@ -1,0 +1,24 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    "jsx-boolean-value": false,
+    "no-empty-interface": false,
+    "only-arrow-functions": true,
+    "ordered-imports": true,
+    "quotemark": [true, "single", "jsx-double"],
+    "trailing-comma": true,
+    "object-literal-sort-keys": false,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ]
+  },
+  "jsRules": {
+    "object-literal-sort-keys": false
+  }
+}
