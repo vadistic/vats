@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "public",
+    "outDir": "dist",
     "rootDirs": ["src"],
     "module": "es2015",
     "target": "es2015",
@@ -19,5 +19,5 @@
     "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
