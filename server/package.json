@@ -8,6 +8,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "graphql-import": "^0.6.0",
+    "graphql-iso-date": "^3.5.0",
     "graphql-shield": "^2.2.7",
     "graphql-yoga": "^1.16.1",
     "prisma-binding": "^2.1.4"

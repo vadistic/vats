@@ -1,0 +1,84 @@
+type Post {
+  id: ID! @unique
+  title: String!
+  content: String
+  author: User!
+}
+
+type Person {
+  id: ID! @unique
+}
+
+type User implements Person {
+  firstName: String!
+  lastName: String!
+  username: String! @unique
+  email: String! @unique
+  password: String!
+}
+
+type Action {
+  id: ID! @unique
+  date: DateTime!
+  owner: Person!
+  type: String!
+}
+
+type Candidate implements Person {
+  id: ID! @unique
+  tags: [String!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  actions: [Action!]!
+  basic: CandidateBasic
+  meta: CandidateMeta
+  applications: [Application!]!
+}
+
+type CandidateBasic {
+  firstName: String!
+  lastName: String!
+  emails: [String!]
+  phones: [String!]
+}
+
+type CandidateMeta {
+  source: String!
+}
+
+type Country {
+  id: ID! @unique
+  name: String!
+  code: String!
+  telPrefix: Int!
+}
+
+type Location {
+  country: Country!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+type Stage {
+  id: ID! @unique
+  name: String!
+  position: Int!
+}
+
+type Application {
+  offer: Offer!
+  candidate: Candidate!
+  stage: Stage!
+}
+
+type Offer {
+  id: ID! @unique
+  title: String!
+  department: String
+  location: Location
+  description: String
+  requirements: String
+  applications: [Application!]!
+  stages: [Stage!]!
+}
