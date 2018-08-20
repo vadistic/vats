@@ -9,12 +9,23 @@ type Person {
   id: ID! @unique
 }
 
-type User implements Person {
-  firstName: String!
-  lastName: String!
-  username: String! @unique
+type Organisation {
+  id: ID! @unique
+  users: [User!]!
+  name: String!
+}
+
+type User {
+  id: ID! @unique
   email: String! @unique
+  username: String!
   password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  createdAt: DateTime!
+  deletedAt: DateTime
+  organisation: Organisation!
 }
 
 type Action {
@@ -24,11 +35,25 @@ type Action {
   type: String!
 }
 
-type Candidate implements Person {
+type Comment {
   id: ID! @unique
-  tags: [String!]
+  content: User!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type Task {
+  id: ID! @unique
+  createdAt: DateTime!
+  dueAt: DateTime!
+  owners: [User!]!
+}
+
+type Candidate implements Person {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tags: [String!]
   actions: [Action!]!
   basic: CandidateBasic
   meta: CandidateMeta
@@ -40,6 +65,7 @@ type CandidateBasic {
   lastName: String!
   emails: [String!]
   phones: [String!]
+  links: [String!]
 }
 
 type CandidateMeta {
@@ -74,6 +100,8 @@ type Application {
 
 type Offer {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   department: String
   location: Location

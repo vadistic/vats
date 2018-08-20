@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/vadistic-7a6c16/vats/dev
-# timestamp: Sun Aug 19 2018 21:21:15 GMT+0200 (Central European Summer Time)
+# timestamp: Mon Aug 20 2018 02:54:05 GMT+0200 (Central European Summer Time)
 
 type Action implements Node {
   id: ID!
@@ -266,6 +266,10 @@ type AggregateCandidateMeta {
   count: Int!
 }
 
+type AggregateComment {
+  count: Int!
+}
+
 type AggregateCountry {
   count: Int!
 }
@@ -278,6 +282,10 @@ type AggregateOffer {
   count: Int!
 }
 
+type AggregateOrganisation {
+  count: Int!
+}
+
 type AggregatePerson {
   count: Int!
 }
@@ -287,6 +295,10 @@ type AggregatePost {
 }
 
 type AggregateStage {
+  count: Int!
+}
+
+type AggregateTask {
   count: Int!
 }
 
@@ -425,9 +437,9 @@ type BatchPayload {
 
 type Candidate implements Node {
   id: ID!
-  tags: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  tags: [String!]!
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action!]
   basic(where: CandidateBasicWhereInput): CandidateBasic
   meta(where: CandidateMetaWhereInput): CandidateMeta
@@ -439,6 +451,7 @@ type CandidateBasic {
   lastName: String!
   emails: [String!]!
   phones: [String!]!
+  links: [String!]!
 }
 
 """A connection to a list of items."""
@@ -460,6 +473,11 @@ input CandidateBasicCreateInput {
   lastName: String!
   emails: CandidateBasicCreateemailsInput
   phones: CandidateBasicCreatephonesInput
+  links: CandidateBasicCreatelinksInput
+}
+
+input CandidateBasicCreatelinksInput {
+  set: [String!]
 }
 
 input CandidateBasicCreateOneInput {
@@ -497,6 +515,7 @@ type CandidateBasicPreviousValues {
   lastName: String!
   emails: [String!]!
   phones: [String!]!
+  links: [String!]!
 }
 
 type CandidateBasicSubscriptionPayload {
@@ -543,6 +562,7 @@ input CandidateBasicUpdateDataInput {
   lastName: String
   emails: CandidateBasicUpdateemailsInput
   phones: CandidateBasicUpdatephonesInput
+  links: CandidateBasicUpdatelinksInput
 }
 
 input CandidateBasicUpdateemailsInput {
@@ -554,6 +574,11 @@ input CandidateBasicUpdateInput {
   lastName: String
   emails: CandidateBasicUpdateemailsInput
   phones: CandidateBasicUpdatephonesInput
+  links: CandidateBasicUpdatelinksInput
+}
+
+input CandidateBasicUpdatelinksInput {
+  set: [String!]
 }
 
 input CandidateBasicUpdateOneInput {
@@ -875,9 +900,9 @@ enum CandidateOrderByInput {
 
 type CandidatePreviousValues {
   id: ID!
-  tags: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  tags: [String!]!
 }
 
 type CandidateSubscriptionPayload {
@@ -1055,6 +1080,194 @@ input CandidateWhereInput {
 }
 
 input CandidateWhereUniqueInput {
+  id: ID
+}
+
+type Comment implements Node {
+  id: ID!
+  content(where: UserWhereInput): User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type CommentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommentEdge]!
+  aggregate: AggregateComment!
+}
+
+input CommentCreateInput {
+  content: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type CommentEdge {
+  """The item at the end of the edge."""
+  node: Comment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CommentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CommentPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CommentSubscriptionPayload {
+  mutation: MutationType!
+  node: Comment
+  updatedFields: [String!]
+  previousValues: CommentPreviousValues
+}
+
+input CommentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CommentWhereInput
+}
+
+input CommentUpdateInput {
+  content: UserUpdateOneInput
+}
+
+input CommentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  content: UserWhereInput
+}
+
+input CommentWhereUniqueInput {
   id: ID
 }
 
@@ -1604,6 +1817,9 @@ scalar Long
 
 type Mutation {
   createPost(data: PostCreateInput!): Post!
+  createOrganisation(data: OrganisationCreateInput!): Organisation!
+  createComment(data: CommentCreateInput!): Comment!
+  createTask(data: TaskCreateInput!): Task!
   createCandidate(data: CandidateCreateInput!): Candidate!
   createApplication(data: ApplicationCreateInput!): Application!
   createOffer(data: OfferCreateInput!): Offer!
@@ -1616,6 +1832,9 @@ type Mutation {
   createStage(data: StageCreateInput!): Stage!
   createPerson: Person!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateOrganisation(data: OrganisationUpdateInput!, where: OrganisationWhereUniqueInput!): Organisation
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
   updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
   updateOffer(data: OfferUpdateInput!, where: OfferWhereUniqueInput!): Offer
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
@@ -1623,6 +1842,9 @@ type Mutation {
   updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
   deletePost(where: PostWhereUniqueInput!): Post
+  deleteOrganisation(where: OrganisationWhereUniqueInput!): Organisation
+  deleteComment(where: CommentWhereUniqueInput!): Comment
+  deleteTask(where: TaskWhereUniqueInput!): Task
   deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
   deleteOffer(where: OfferWhereUniqueInput!): Offer
   deleteUser(where: UserWhereUniqueInput!): User
@@ -1631,6 +1853,9 @@ type Mutation {
   deleteStage(where: StageWhereUniqueInput!): Stage
   deletePerson(where: PersonWhereUniqueInput!): Person
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertOrganisation(where: OrganisationWhereUniqueInput!, create: OrganisationCreateInput!, update: OrganisationUpdateInput!): Organisation!
+  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
+  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
   upsertCandidate(where: CandidateWhereUniqueInput!, create: CandidateCreateInput!, update: CandidateUpdateInput!): Candidate!
   upsertOffer(where: OfferWhereUniqueInput!, create: OfferCreateInput!, update: OfferUpdateInput!): Offer!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
@@ -1638,6 +1863,9 @@ type Mutation {
   upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertStage(where: StageWhereUniqueInput!, create: StageCreateInput!, update: StageUpdateInput!): Stage!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  updateManyOrganisations(data: OrganisationUpdateInput!, where: OrganisationWhereInput): BatchPayload!
+  updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
+  updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
   updateManyCandidates(data: CandidateUpdateInput!, where: CandidateWhereInput): BatchPayload!
   updateManyApplications(data: ApplicationUpdateInput!, where: ApplicationWhereInput): BatchPayload!
   updateManyOffers(data: OfferUpdateInput!, where: OfferWhereInput): BatchPayload!
@@ -1649,6 +1877,9 @@ type Mutation {
   updateManyActions(data: ActionUpdateInput!, where: ActionWhereInput): BatchPayload!
   updateManyStages(data: StageUpdateInput!, where: StageWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyOrganisations(where: OrganisationWhereInput): BatchPayload!
+  deleteManyComments(where: CommentWhereInput): BatchPayload!
+  deleteManyTasks(where: TaskWhereInput): BatchPayload!
   deleteManyCandidates(where: CandidateWhereInput): BatchPayload!
   deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
   deleteManyOffers(where: OfferWhereInput): BatchPayload!
@@ -1676,6 +1907,8 @@ interface Node {
 
 type Offer implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   department: String
   location(where: LocationWhereInput): Location
@@ -1731,6 +1964,10 @@ type OfferEdge {
 enum OfferOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   title_ASC
   title_DESC
   department_ASC
@@ -1739,14 +1976,12 @@ enum OfferOrderByInput {
   description_DESC
   requirements_ASC
   requirements_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type OfferPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   department: String
   description: String
@@ -1873,6 +2108,50 @@ input OfferWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   title: String
 
   """All values that are not equal to given value."""
@@ -2043,6 +2322,220 @@ input OfferWhereInput {
 }
 
 input OfferWhereUniqueInput {
+  id: ID
+}
+
+type Organisation implements Node {
+  id: ID!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  name: String!
+}
+
+"""A connection to a list of items."""
+type OrganisationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OrganisationEdge]!
+  aggregate: AggregateOrganisation!
+}
+
+input OrganisationCreateInput {
+  name: String!
+  users: UserCreateManyWithoutOrganisationInput
+}
+
+input OrganisationCreateOneWithoutUsersInput {
+  create: OrganisationCreateWithoutUsersInput
+  connect: OrganisationWhereUniqueInput
+}
+
+input OrganisationCreateWithoutUsersInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type OrganisationEdge {
+  """The item at the end of the edge."""
+  node: Organisation!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum OrganisationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type OrganisationPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type OrganisationSubscriptionPayload {
+  mutation: MutationType!
+  node: Organisation
+  updatedFields: [String!]
+  previousValues: OrganisationPreviousValues
+}
+
+input OrganisationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OrganisationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OrganisationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OrganisationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OrganisationWhereInput
+}
+
+input OrganisationUpdateInput {
+  name: String
+  users: UserUpdateManyWithoutOrganisationInput
+}
+
+input OrganisationUpdateOneWithoutUsersInput {
+  create: OrganisationCreateWithoutUsersInput
+  connect: OrganisationWhereUniqueInput
+  delete: Boolean
+  update: OrganisationUpdateWithoutUsersDataInput
+  upsert: OrganisationUpsertWithoutUsersInput
+}
+
+input OrganisationUpdateWithoutUsersDataInput {
+  name: String
+}
+
+input OrganisationUpsertWithoutUsersInput {
+  update: OrganisationUpdateWithoutUsersDataInput!
+  create: OrganisationCreateWithoutUsersInput!
+}
+
+input OrganisationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OrganisationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OrganisationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OrganisationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+}
+
+input OrganisationWhereUniqueInput {
   id: ID
 }
 
@@ -2434,6 +2927,9 @@ input PostWhereUniqueInput {
 
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  organisations(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organisation]!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
   offers(where: OfferWhereInput, orderBy: OfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Offer]!
@@ -2446,6 +2942,9 @@ type Query {
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
   persons(where: PersonWhereInput, orderBy: PersonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Person]!
   post(where: PostWhereUniqueInput!): Post
+  organisation(where: OrganisationWhereUniqueInput!): Organisation
+  comment(where: CommentWhereUniqueInput!): Comment
+  task(where: TaskWhereUniqueInput!): Task
   candidate(where: CandidateWhereUniqueInput!): Candidate
   offer(where: OfferWhereUniqueInput!): Offer
   user(where: UserWhereUniqueInput!): User
@@ -2454,6 +2953,9 @@ type Query {
   stage(where: StageWhereUniqueInput!): Stage
   person(where: PersonWhereUniqueInput!): Person
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  organisationsConnection(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganisationConnection!
+  commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
   candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
   applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
   offersConnection(where: OfferWhereInput, orderBy: OfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OfferConnection!
@@ -2733,6 +3235,9 @@ input StageWhereUniqueInput {
 
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  organisation(where: OrganisationSubscriptionWhereInput): OrganisationSubscriptionPayload
+  comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
   candidate(where: CandidateSubscriptionWhereInput): CandidateSubscriptionPayload
   application(where: ApplicationSubscriptionWhereInput): ApplicationSubscriptionPayload
   offer(where: OfferSubscriptionWhereInput): OfferSubscriptionPayload
@@ -2746,12 +3251,211 @@ type Subscription {
   person(where: PersonSubscriptionWhereInput): PersonSubscriptionPayload
 }
 
-type User {
-  firstName: String!
-  lastName: String!
-  username: String!
+type Task implements Node {
+  id: ID!
+  createdAt: DateTime!
+  dueAt: DateTime!
+  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+"""A connection to a list of items."""
+type TaskConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TaskEdge]!
+  aggregate: AggregateTask!
+}
+
+input TaskCreateInput {
+  dueAt: DateTime!
+  owners: UserCreateManyInput
+}
+
+"""An edge in a connection."""
+type TaskEdge {
+  """The item at the end of the edge."""
+  node: Task!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TaskOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  dueAt_ASC
+  dueAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TaskPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  dueAt: DateTime!
+}
+
+type TaskSubscriptionPayload {
+  mutation: MutationType!
+  node: Task
+  updatedFields: [String!]
+  previousValues: TaskPreviousValues
+}
+
+input TaskSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TaskWhereInput
+}
+
+input TaskUpdateInput {
+  dueAt: DateTime
+  owners: UserUpdateManyInput
+}
+
+input TaskWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  dueAt: DateTime
+
+  """All values that are not equal to given value."""
+  dueAt_not: DateTime
+
+  """All values that are contained in given list."""
+  dueAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  dueAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  dueAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  dueAt_lte: DateTime
+
+  """All values greater than the given value."""
+  dueAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  dueAt_gte: DateTime
+  owners_every: UserWhereInput
+  owners_some: UserWhereInput
+  owners_none: UserWhereInput
+}
+
+input TaskWhereUniqueInput {
+  id: ID
+}
+
+type User implements Node {
+  id: ID!
   email: String!
+  username: String!
   password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  createdAt: DateTime!
+  deletedAt: DateTime
+  organisation(where: OrganisationWhereInput): Organisation!
 }
 
 """A connection to a list of items."""
@@ -2765,16 +3469,39 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  firstName: String!
-  lastName: String!
-  username: String!
   email: String!
+  username: String!
   password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  organisation: OrganisationCreateOneWithoutUsersInput!
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutOrganisationInput {
+  create: [UserCreateWithoutOrganisationInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutOrganisationInput {
+  email: String!
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  deletedAt: DateTime
 }
 
 """An edge in a connection."""
@@ -2787,30 +3514,38 @@ type UserEdge {
 }
 
 enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  password_ASC
+  password_DESC
   firstName_ASC
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  username_ASC
-  username_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+  lastLogin_ASC
+  lastLogin_DESC
   createdAt_ASC
   createdAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
-  firstName: String!
-  lastName: String!
-  username: String!
+  id: ID!
   email: String!
+  username: String!
   password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  createdAt: DateTime!
+  deletedAt: DateTime
 }
 
 type UserSubscriptionPayload {
@@ -2853,19 +3588,43 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
+  email: String
+  username: String
+  password: String
   firstName: String
   lastName: String
-  username: String
-  email: String
-  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  organisation: OrganisationUpdateOneWithoutUsersInput
 }
 
 input UserUpdateInput {
+  email: String
+  username: String
+  password: String
   firstName: String
   lastName: String
-  username: String
-  email: String
-  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  organisation: OrganisationUpdateOneWithoutUsersInput
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+}
+
+input UserUpdateManyWithoutOrganisationInput {
+  create: [UserCreateWithoutOrganisationInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutOrganisationInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutOrganisationInput!]
 }
 
 input UserUpdateOneInput {
@@ -2876,9 +3635,41 @@ input UserUpdateOneInput {
   upsert: UserUpsertNestedInput
 }
 
+input UserUpdateWithoutOrganisationDataInput {
+  email: String
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutOrganisationInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutOrganisationDataInput!
+}
+
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutOrganisationInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutOrganisationDataInput!
+  create: UserCreateWithoutOrganisationInput!
 }
 
 input UserWhereInput {
@@ -2890,6 +3681,166 @@ input UserWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
   firstName: String
 
   """All values that are not equal to given value."""
@@ -2970,129 +3921,76 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   lastName_not_ends_with: String
-  username: String
+  lastLogin: DateTime
 
   """All values that are not equal to given value."""
-  username_not: String
+  lastLogin_not: DateTime
 
   """All values that are contained in given list."""
-  username_in: [String!]
+  lastLogin_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  username_not_in: [String!]
+  lastLogin_not_in: [DateTime!]
 
   """All values less than the given value."""
-  username_lt: String
+  lastLogin_lt: DateTime
 
   """All values less than or equal the given value."""
-  username_lte: String
+  lastLogin_lte: DateTime
 
   """All values greater than the given value."""
-  username_gt: String
+  lastLogin_gt: DateTime
 
   """All values greater than or equal the given value."""
-  username_gte: String
-
-  """All values containing the given string."""
-  username_contains: String
-
-  """All values not containing the given string."""
-  username_not_contains: String
-
-  """All values starting with the given string."""
-  username_starts_with: String
-
-  """All values not starting with the given string."""
-  username_not_starts_with: String
-
-  """All values ending with the given string."""
-  username_ends_with: String
-
-  """All values not ending with the given string."""
-  username_not_ends_with: String
-  email: String
+  lastLogin_gte: DateTime
+  createdAt: DateTime
 
   """All values that are not equal to given value."""
-  email_not: String
+  createdAt_not: DateTime
 
   """All values that are contained in given list."""
-  email_in: [String!]
+  createdAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  email_not_in: [String!]
+  createdAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  email_lt: String
+  createdAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  email_lte: String
+  createdAt_lte: DateTime
 
   """All values greater than the given value."""
-  email_gt: String
+  createdAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  password: String
+  createdAt_gte: DateTime
+  deletedAt: DateTime
 
   """All values that are not equal to given value."""
-  password_not: String
+  deletedAt_not: DateTime
 
   """All values that are contained in given list."""
-  password_in: [String!]
+  deletedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  password_not_in: [String!]
+  deletedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  password_lt: String
+  deletedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  password_lte: String
+  deletedAt_lte: DateTime
 
   """All values greater than the given value."""
-  password_gt: String
+  deletedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
+  deletedAt_gte: DateTime
+  organisation: OrganisationWhereInput
 }
 
 input UserWhereUniqueInput {
-  username: String
+  id: ID
   email: String
 }

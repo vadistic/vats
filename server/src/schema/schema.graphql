@@ -1,10 +1,15 @@
-# import PostCreateInput from "../generated/prisma.graphql"
+# import UserWhereInput from "../generated/prisma.graphql"
+
+# import OrganisationCreateInput, Organisation from "../generated/prisma.graphql"
+# import PostCreateInput, Post from "../generated/prisma.graphql"
+# import UserCreateInput, User from "../generated/prisma.graphql"
 
 type Query {
-  posts: [Post!]!
+  users(where: UserWhereInput): [User]!
 }
 
 type Mutation {
-  createPost(data: PostCreateInput!): Post
-  deletePost(id: ID!): Post
+  createOrganisation(data: OrganisationCreateInput!): Organisation!
+  createPost(data: PostCreateInput!): Post!
+  createUser(data: UserCreateInput!): User!
 }

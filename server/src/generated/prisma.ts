@@ -5,6 +5,9 @@ import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
 export interface Query {
     posts: <T = Post[]>(args: { where?: PostWhereInput, orderBy?: PostOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    organisations: <T = Organisation[]>(args: { where?: OrganisationWhereInput, orderBy?: OrganisationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    comments: <T = Comment[]>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tasks: <T = Task[]>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     candidates: <T = Candidate[]>(args: { where?: CandidateWhereInput, orderBy?: CandidateOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     applications: <T = Application[]>(args: { where?: ApplicationWhereInput, orderBy?: ApplicationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     offers: <T = Offer[]>(args: { where?: OfferWhereInput, orderBy?: OfferOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -17,6 +20,9 @@ export interface Query {
     stages: <T = Stage[]>(args: { where?: StageWhereInput, orderBy?: StageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     persons: <T = Person[]>(args: { where?: PersonWhereInput, orderBy?: PersonOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     post: <T = Post | null>(args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    organisation: <T = Organisation | null>(args: { where: OrganisationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    comment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    task: <T = Task | null>(args: { where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     candidate: <T = Candidate | null>(args: { where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     offer: <T = Offer | null>(args: { where: OfferWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -25,6 +31,9 @@ export interface Query {
     stage: <T = Stage | null>(args: { where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     person: <T = Person | null>(args: { where: PersonWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     postsConnection: <T = PostConnection>(args: { where?: PostWhereInput, orderBy?: PostOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    organisationsConnection: <T = OrganisationConnection>(args: { where?: OrganisationWhereInput, orderBy?: OrganisationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    commentsConnection: <T = CommentConnection>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tasksConnection: <T = TaskConnection>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     candidatesConnection: <T = CandidateConnection>(args: { where?: CandidateWhereInput, orderBy?: CandidateOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     applicationsConnection: <T = ApplicationConnection>(args: { where?: ApplicationWhereInput, orderBy?: ApplicationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     offersConnection: <T = OfferConnection>(args: { where?: OfferWhereInput, orderBy?: OfferOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -41,6 +50,9 @@ export interface Query {
 
 export interface Mutation {
     createPost: <T = Post>(args: { data: PostCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createOrganisation: <T = Organisation>(args: { data: OrganisationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createComment: <T = Comment>(args: { data: CommentCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createTask: <T = Task>(args: { data: TaskCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createCandidate: <T = Candidate>(args: { data: CandidateCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createApplication: <T = Application>(args: { data: ApplicationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createOffer: <T = Offer>(args: { data: OfferCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -53,6 +65,9 @@ export interface Mutation {
     createStage: <T = Stage>(args: { data: StageCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createPerson: <T = Person>(args?: {}, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updatePost: <T = Post | null>(args: { data: PostUpdateInput, where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateOrganisation: <T = Organisation | null>(args: { data: OrganisationUpdateInput, where: OrganisationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateComment: <T = Comment | null>(args: { data: CommentUpdateInput, where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateTask: <T = Task | null>(args: { data: TaskUpdateInput, where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateCandidate: <T = Candidate | null>(args: { data: CandidateUpdateInput, where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateOffer: <T = Offer | null>(args: { data: OfferUpdateInput, where: OfferWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -60,6 +75,9 @@ export interface Mutation {
     updateAction: <T = Action | null>(args: { data: ActionUpdateInput, where: ActionWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateStage: <T = Stage | null>(args: { data: StageUpdateInput, where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deletePost: <T = Post | null>(args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteOrganisation: <T = Organisation | null>(args: { where: OrganisationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteComment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteTask: <T = Task | null>(args: { where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteCandidate: <T = Candidate | null>(args: { where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteOffer: <T = Offer | null>(args: { where: OfferWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -68,6 +86,9 @@ export interface Mutation {
     deleteStage: <T = Stage | null>(args: { where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deletePerson: <T = Person | null>(args: { where: PersonWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertPost: <T = Post>(args: { where: PostWhereUniqueInput, create: PostCreateInput, update: PostUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertOrganisation: <T = Organisation>(args: { where: OrganisationWhereUniqueInput, create: OrganisationCreateInput, update: OrganisationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertComment: <T = Comment>(args: { where: CommentWhereUniqueInput, create: CommentCreateInput, update: CommentUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertTask: <T = Task>(args: { where: TaskWhereUniqueInput, create: TaskCreateInput, update: TaskUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertCandidate: <T = Candidate>(args: { where: CandidateWhereUniqueInput, create: CandidateCreateInput, update: CandidateUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertOffer: <T = Offer>(args: { where: OfferWhereUniqueInput, create: OfferCreateInput, update: OfferUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -75,6 +96,9 @@ export interface Mutation {
     upsertAction: <T = Action>(args: { where: ActionWhereUniqueInput, create: ActionCreateInput, update: ActionUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertStage: <T = Stage>(args: { where: StageWhereUniqueInput, create: StageCreateInput, update: StageUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyPosts: <T = BatchPayload>(args: { data: PostUpdateInput, where?: PostWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyOrganisations: <T = BatchPayload>(args: { data: OrganisationUpdateInput, where?: OrganisationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyComments: <T = BatchPayload>(args: { data: CommentUpdateInput, where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyTasks: <T = BatchPayload>(args: { data: TaskUpdateInput, where?: TaskWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyCandidates: <T = BatchPayload>(args: { data: CandidateUpdateInput, where?: CandidateWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyApplications: <T = BatchPayload>(args: { data: ApplicationUpdateInput, where?: ApplicationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyOffers: <T = BatchPayload>(args: { data: OfferUpdateInput, where?: OfferWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -86,6 +110,9 @@ export interface Mutation {
     updateManyActions: <T = BatchPayload>(args: { data: ActionUpdateInput, where?: ActionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyStages: <T = BatchPayload>(args: { data: StageUpdateInput, where?: StageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyPosts: <T = BatchPayload>(args: { where?: PostWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyOrganisations: <T = BatchPayload>(args: { where?: OrganisationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyComments: <T = BatchPayload>(args: { where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyTasks: <T = BatchPayload>(args: { where?: TaskWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyCandidates: <T = BatchPayload>(args: { where?: CandidateWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyApplications: <T = BatchPayload>(args: { where?: ApplicationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyOffers: <T = BatchPayload>(args: { where?: OfferWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -101,6 +128,9 @@ export interface Mutation {
 
 export interface Subscription {
     post: <T = PostSubscriptionPayload | null>(args: { where?: PostSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    organisation: <T = OrganisationSubscriptionPayload | null>(args: { where?: OrganisationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    comment: <T = CommentSubscriptionPayload | null>(args: { where?: CommentSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
+    task: <T = TaskSubscriptionPayload | null>(args: { where?: TaskSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     candidate: <T = CandidateSubscriptionPayload | null>(args: { where?: CandidateSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     application: <T = ApplicationSubscriptionPayload | null>(args: { where?: ApplicationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     offer: <T = OfferSubscriptionPayload | null>(args: { where?: OfferSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
@@ -116,6 +146,9 @@ export interface Subscription {
 
 export interface Exists {
   Post: (where?: PostWhereInput) => Promise<boolean>
+  Organisation: (where?: OrganisationWhereInput) => Promise<boolean>
+  Comment: (where?: CommentWhereInput) => Promise<boolean>
+  Task: (where?: TaskWhereInput) => Promise<boolean>
   Candidate: (where?: CandidateWhereInput) => Promise<boolean>
   Application: (where?: ApplicationWhereInput) => Promise<boolean>
   Offer: (where?: OfferWhereInput) => Promise<boolean>
@@ -416,6 +449,10 @@ type AggregateCandidateMeta {
   count: Int!
 }
 
+type AggregateComment {
+  count: Int!
+}
+
 type AggregateCountry {
   count: Int!
 }
@@ -428,6 +465,10 @@ type AggregateOffer {
   count: Int!
 }
 
+type AggregateOrganisation {
+  count: Int!
+}
+
 type AggregatePerson {
   count: Int!
 }
@@ -437,6 +478,10 @@ type AggregatePost {
 }
 
 type AggregateStage {
+  count: Int!
+}
+
+type AggregateTask {
   count: Int!
 }
 
@@ -575,9 +620,9 @@ type BatchPayload {
 
 type Candidate implements Node {
   id: ID!
-  tags: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  tags: [String!]!
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action!]
   basic(where: CandidateBasicWhereInput): CandidateBasic
   meta(where: CandidateMetaWhereInput): CandidateMeta
@@ -589,6 +634,7 @@ type CandidateBasic {
   lastName: String!
   emails: [String!]!
   phones: [String!]!
+  links: [String!]!
 }
 
 """A connection to a list of items."""
@@ -610,6 +656,11 @@ input CandidateBasicCreateInput {
   lastName: String!
   emails: CandidateBasicCreateemailsInput
   phones: CandidateBasicCreatephonesInput
+  links: CandidateBasicCreatelinksInput
+}
+
+input CandidateBasicCreatelinksInput {
+  set: [String!]
 }
 
 input CandidateBasicCreateOneInput {
@@ -647,6 +698,7 @@ type CandidateBasicPreviousValues {
   lastName: String!
   emails: [String!]!
   phones: [String!]!
+  links: [String!]!
 }
 
 type CandidateBasicSubscriptionPayload {
@@ -693,6 +745,7 @@ input CandidateBasicUpdateDataInput {
   lastName: String
   emails: CandidateBasicUpdateemailsInput
   phones: CandidateBasicUpdatephonesInput
+  links: CandidateBasicUpdatelinksInput
 }
 
 input CandidateBasicUpdateemailsInput {
@@ -704,6 +757,11 @@ input CandidateBasicUpdateInput {
   lastName: String
   emails: CandidateBasicUpdateemailsInput
   phones: CandidateBasicUpdatephonesInput
+  links: CandidateBasicUpdatelinksInput
+}
+
+input CandidateBasicUpdatelinksInput {
+  set: [String!]
 }
 
 input CandidateBasicUpdateOneInput {
@@ -1025,9 +1083,9 @@ enum CandidateOrderByInput {
 
 type CandidatePreviousValues {
   id: ID!
-  tags: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  tags: [String!]!
 }
 
 type CandidateSubscriptionPayload {
@@ -1205,6 +1263,194 @@ input CandidateWhereInput {
 }
 
 input CandidateWhereUniqueInput {
+  id: ID
+}
+
+type Comment implements Node {
+  id: ID!
+  content(where: UserWhereInput): User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type CommentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommentEdge]!
+  aggregate: AggregateComment!
+}
+
+input CommentCreateInput {
+  content: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type CommentEdge {
+  """The item at the end of the edge."""
+  node: Comment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CommentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CommentPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CommentSubscriptionPayload {
+  mutation: MutationType!
+  node: Comment
+  updatedFields: [String!]
+  previousValues: CommentPreviousValues
+}
+
+input CommentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CommentWhereInput
+}
+
+input CommentUpdateInput {
+  content: UserUpdateOneInput
+}
+
+input CommentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  content: UserWhereInput
+}
+
+input CommentWhereUniqueInput {
   id: ID
 }
 
@@ -1754,6 +2000,9 @@ scalar Long
 
 type Mutation {
   createPost(data: PostCreateInput!): Post!
+  createOrganisation(data: OrganisationCreateInput!): Organisation!
+  createComment(data: CommentCreateInput!): Comment!
+  createTask(data: TaskCreateInput!): Task!
   createCandidate(data: CandidateCreateInput!): Candidate!
   createApplication(data: ApplicationCreateInput!): Application!
   createOffer(data: OfferCreateInput!): Offer!
@@ -1766,6 +2015,9 @@ type Mutation {
   createStage(data: StageCreateInput!): Stage!
   createPerson: Person!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateOrganisation(data: OrganisationUpdateInput!, where: OrganisationWhereUniqueInput!): Organisation
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
   updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
   updateOffer(data: OfferUpdateInput!, where: OfferWhereUniqueInput!): Offer
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
@@ -1773,6 +2025,9 @@ type Mutation {
   updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
   deletePost(where: PostWhereUniqueInput!): Post
+  deleteOrganisation(where: OrganisationWhereUniqueInput!): Organisation
+  deleteComment(where: CommentWhereUniqueInput!): Comment
+  deleteTask(where: TaskWhereUniqueInput!): Task
   deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
   deleteOffer(where: OfferWhereUniqueInput!): Offer
   deleteUser(where: UserWhereUniqueInput!): User
@@ -1781,6 +2036,9 @@ type Mutation {
   deleteStage(where: StageWhereUniqueInput!): Stage
   deletePerson(where: PersonWhereUniqueInput!): Person
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertOrganisation(where: OrganisationWhereUniqueInput!, create: OrganisationCreateInput!, update: OrganisationUpdateInput!): Organisation!
+  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
+  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
   upsertCandidate(where: CandidateWhereUniqueInput!, create: CandidateCreateInput!, update: CandidateUpdateInput!): Candidate!
   upsertOffer(where: OfferWhereUniqueInput!, create: OfferCreateInput!, update: OfferUpdateInput!): Offer!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
@@ -1788,6 +2046,9 @@ type Mutation {
   upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertStage(where: StageWhereUniqueInput!, create: StageCreateInput!, update: StageUpdateInput!): Stage!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  updateManyOrganisations(data: OrganisationUpdateInput!, where: OrganisationWhereInput): BatchPayload!
+  updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
+  updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
   updateManyCandidates(data: CandidateUpdateInput!, where: CandidateWhereInput): BatchPayload!
   updateManyApplications(data: ApplicationUpdateInput!, where: ApplicationWhereInput): BatchPayload!
   updateManyOffers(data: OfferUpdateInput!, where: OfferWhereInput): BatchPayload!
@@ -1799,6 +2060,9 @@ type Mutation {
   updateManyActions(data: ActionUpdateInput!, where: ActionWhereInput): BatchPayload!
   updateManyStages(data: StageUpdateInput!, where: StageWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyOrganisations(where: OrganisationWhereInput): BatchPayload!
+  deleteManyComments(where: CommentWhereInput): BatchPayload!
+  deleteManyTasks(where: TaskWhereInput): BatchPayload!
   deleteManyCandidates(where: CandidateWhereInput): BatchPayload!
   deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
   deleteManyOffers(where: OfferWhereInput): BatchPayload!
@@ -1826,6 +2090,8 @@ interface Node {
 
 type Offer implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   department: String
   location(where: LocationWhereInput): Location
@@ -1881,6 +2147,10 @@ type OfferEdge {
 enum OfferOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   title_ASC
   title_DESC
   department_ASC
@@ -1889,14 +2159,12 @@ enum OfferOrderByInput {
   description_DESC
   requirements_ASC
   requirements_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type OfferPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   department: String
   description: String
@@ -2023,6 +2291,50 @@ input OfferWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   title: String
 
   """All values that are not equal to given value."""
@@ -2193,6 +2505,220 @@ input OfferWhereInput {
 }
 
 input OfferWhereUniqueInput {
+  id: ID
+}
+
+type Organisation implements Node {
+  id: ID!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  name: String!
+}
+
+"""A connection to a list of items."""
+type OrganisationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OrganisationEdge]!
+  aggregate: AggregateOrganisation!
+}
+
+input OrganisationCreateInput {
+  name: String!
+  users: UserCreateManyWithoutOrganisationInput
+}
+
+input OrganisationCreateOneWithoutUsersInput {
+  create: OrganisationCreateWithoutUsersInput
+  connect: OrganisationWhereUniqueInput
+}
+
+input OrganisationCreateWithoutUsersInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type OrganisationEdge {
+  """The item at the end of the edge."""
+  node: Organisation!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum OrganisationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type OrganisationPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type OrganisationSubscriptionPayload {
+  mutation: MutationType!
+  node: Organisation
+  updatedFields: [String!]
+  previousValues: OrganisationPreviousValues
+}
+
+input OrganisationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OrganisationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OrganisationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OrganisationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OrganisationWhereInput
+}
+
+input OrganisationUpdateInput {
+  name: String
+  users: UserUpdateManyWithoutOrganisationInput
+}
+
+input OrganisationUpdateOneWithoutUsersInput {
+  create: OrganisationCreateWithoutUsersInput
+  connect: OrganisationWhereUniqueInput
+  delete: Boolean
+  update: OrganisationUpdateWithoutUsersDataInput
+  upsert: OrganisationUpsertWithoutUsersInput
+}
+
+input OrganisationUpdateWithoutUsersDataInput {
+  name: String
+}
+
+input OrganisationUpsertWithoutUsersInput {
+  update: OrganisationUpdateWithoutUsersDataInput!
+  create: OrganisationCreateWithoutUsersInput!
+}
+
+input OrganisationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OrganisationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OrganisationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OrganisationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+}
+
+input OrganisationWhereUniqueInput {
   id: ID
 }
 
@@ -2584,6 +3110,9 @@ input PostWhereUniqueInput {
 
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  organisations(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organisation]!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
   offers(where: OfferWhereInput, orderBy: OfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Offer]!
@@ -2596,6 +3125,9 @@ type Query {
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
   persons(where: PersonWhereInput, orderBy: PersonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Person]!
   post(where: PostWhereUniqueInput!): Post
+  organisation(where: OrganisationWhereUniqueInput!): Organisation
+  comment(where: CommentWhereUniqueInput!): Comment
+  task(where: TaskWhereUniqueInput!): Task
   candidate(where: CandidateWhereUniqueInput!): Candidate
   offer(where: OfferWhereUniqueInput!): Offer
   user(where: UserWhereUniqueInput!): User
@@ -2604,6 +3136,9 @@ type Query {
   stage(where: StageWhereUniqueInput!): Stage
   person(where: PersonWhereUniqueInput!): Person
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  organisationsConnection(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganisationConnection!
+  commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
   candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
   applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
   offersConnection(where: OfferWhereInput, orderBy: OfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OfferConnection!
@@ -2883,6 +3418,9 @@ input StageWhereUniqueInput {
 
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  organisation(where: OrganisationSubscriptionWhereInput): OrganisationSubscriptionPayload
+  comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
   candidate(where: CandidateSubscriptionWhereInput): CandidateSubscriptionPayload
   application(where: ApplicationSubscriptionWhereInput): ApplicationSubscriptionPayload
   offer(where: OfferSubscriptionWhereInput): OfferSubscriptionPayload
@@ -2896,12 +3434,211 @@ type Subscription {
   person(where: PersonSubscriptionWhereInput): PersonSubscriptionPayload
 }
 
-type User {
-  firstName: String!
-  lastName: String!
-  username: String!
+type Task implements Node {
+  id: ID!
+  createdAt: DateTime!
+  dueAt: DateTime!
+  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+"""A connection to a list of items."""
+type TaskConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TaskEdge]!
+  aggregate: AggregateTask!
+}
+
+input TaskCreateInput {
+  dueAt: DateTime!
+  owners: UserCreateManyInput
+}
+
+"""An edge in a connection."""
+type TaskEdge {
+  """The item at the end of the edge."""
+  node: Task!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TaskOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  dueAt_ASC
+  dueAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TaskPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  dueAt: DateTime!
+}
+
+type TaskSubscriptionPayload {
+  mutation: MutationType!
+  node: Task
+  updatedFields: [String!]
+  previousValues: TaskPreviousValues
+}
+
+input TaskSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TaskWhereInput
+}
+
+input TaskUpdateInput {
+  dueAt: DateTime
+  owners: UserUpdateManyInput
+}
+
+input TaskWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  dueAt: DateTime
+
+  """All values that are not equal to given value."""
+  dueAt_not: DateTime
+
+  """All values that are contained in given list."""
+  dueAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  dueAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  dueAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  dueAt_lte: DateTime
+
+  """All values greater than the given value."""
+  dueAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  dueAt_gte: DateTime
+  owners_every: UserWhereInput
+  owners_some: UserWhereInput
+  owners_none: UserWhereInput
+}
+
+input TaskWhereUniqueInput {
+  id: ID
+}
+
+type User implements Node {
+  id: ID!
   email: String!
+  username: String!
   password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  createdAt: DateTime!
+  deletedAt: DateTime
+  organisation(where: OrganisationWhereInput): Organisation!
 }
 
 """A connection to a list of items."""
@@ -2915,16 +3652,39 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  firstName: String!
-  lastName: String!
-  username: String!
   email: String!
+  username: String!
   password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  organisation: OrganisationCreateOneWithoutUsersInput!
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutOrganisationInput {
+  create: [UserCreateWithoutOrganisationInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutOrganisationInput {
+  email: String!
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  deletedAt: DateTime
 }
 
 """An edge in a connection."""
@@ -2937,30 +3697,38 @@ type UserEdge {
 }
 
 enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  password_ASC
+  password_DESC
   firstName_ASC
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  username_ASC
-  username_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
+  lastLogin_ASC
+  lastLogin_DESC
   createdAt_ASC
   createdAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
-  firstName: String!
-  lastName: String!
-  username: String!
+  id: ID!
   email: String!
+  username: String!
   password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  createdAt: DateTime!
+  deletedAt: DateTime
 }
 
 type UserSubscriptionPayload {
@@ -3003,19 +3771,43 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
+  email: String
+  username: String
+  password: String
   firstName: String
   lastName: String
-  username: String
-  email: String
-  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  organisation: OrganisationUpdateOneWithoutUsersInput
 }
 
 input UserUpdateInput {
+  email: String
+  username: String
+  password: String
   firstName: String
   lastName: String
-  username: String
-  email: String
-  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  organisation: OrganisationUpdateOneWithoutUsersInput
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+}
+
+input UserUpdateManyWithoutOrganisationInput {
+  create: [UserCreateWithoutOrganisationInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutOrganisationInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutOrganisationInput!]
 }
 
 input UserUpdateOneInput {
@@ -3026,9 +3818,41 @@ input UserUpdateOneInput {
   upsert: UserUpsertNestedInput
 }
 
+input UserUpdateWithoutOrganisationDataInput {
+  email: String
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutOrganisationInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutOrganisationDataInput!
+}
+
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutOrganisationInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutOrganisationDataInput!
+  create: UserCreateWithoutOrganisationInput!
 }
 
 input UserWhereInput {
@@ -3040,6 +3864,166 @@ input UserWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
   firstName: String
 
   """All values that are not equal to given value."""
@@ -3120,130 +4104,77 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   lastName_not_ends_with: String
-  username: String
+  lastLogin: DateTime
 
   """All values that are not equal to given value."""
-  username_not: String
+  lastLogin_not: DateTime
 
   """All values that are contained in given list."""
-  username_in: [String!]
+  lastLogin_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  username_not_in: [String!]
+  lastLogin_not_in: [DateTime!]
 
   """All values less than the given value."""
-  username_lt: String
+  lastLogin_lt: DateTime
 
   """All values less than or equal the given value."""
-  username_lte: String
+  lastLogin_lte: DateTime
 
   """All values greater than the given value."""
-  username_gt: String
+  lastLogin_gt: DateTime
 
   """All values greater than or equal the given value."""
-  username_gte: String
-
-  """All values containing the given string."""
-  username_contains: String
-
-  """All values not containing the given string."""
-  username_not_contains: String
-
-  """All values starting with the given string."""
-  username_starts_with: String
-
-  """All values not starting with the given string."""
-  username_not_starts_with: String
-
-  """All values ending with the given string."""
-  username_ends_with: String
-
-  """All values not ending with the given string."""
-  username_not_ends_with: String
-  email: String
+  lastLogin_gte: DateTime
+  createdAt: DateTime
 
   """All values that are not equal to given value."""
-  email_not: String
+  createdAt_not: DateTime
 
   """All values that are contained in given list."""
-  email_in: [String!]
+  createdAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  email_not_in: [String!]
+  createdAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  email_lt: String
+  createdAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  email_lte: String
+  createdAt_lte: DateTime
 
   """All values greater than the given value."""
-  email_gt: String
+  createdAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
-  password: String
+  createdAt_gte: DateTime
+  deletedAt: DateTime
 
   """All values that are not equal to given value."""
-  password_not: String
+  deletedAt_not: DateTime
 
   """All values that are contained in given list."""
-  password_in: [String!]
+  deletedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  password_not_in: [String!]
+  deletedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  password_lt: String
+  deletedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  password_lte: String
+  deletedAt_lte: DateTime
 
   """All values greater than the given value."""
-  password_gt: String
+  deletedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
+  deletedAt_gte: DateTime
+  organisation: OrganisationWhereInput
 }
 
 input UserWhereUniqueInput {
-  username: String
+  id: ID
   email: String
 }
 `
@@ -3254,12 +4185,89 @@ export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDe
  * Types
 */
 
-export type LocationOrderByInput =   'region_ASC' |
-  'region_DESC' |
-  'city_ASC' |
-  'city_DESC' |
-  'zip_ASC' |
-  'zip_DESC' |
+export type OfferOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'title_ASC' |
+  'title_DESC' |
+  'department_ASC' |
+  'department_DESC' |
+  'description_ASC' |
+  'description_DESC' |
+  'requirements_ASC' |
+  'requirements_DESC'
+
+export type TaskOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'dueAt_ASC' |
+  'dueAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
+
+export type StageOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'position_ASC' |
+  'position_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type PersonOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type ApplicationOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type CandidateBasicOrderByInput =   'firstName_ASC' |
+  'firstName_DESC' |
+  'lastName_ASC' |
+  'lastName_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type UserOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'email_ASC' |
+  'email_DESC' |
+  'username_ASC' |
+  'username_DESC' |
+  'password_ASC' |
+  'password_DESC' |
+  'firstName_ASC' |
+  'firstName_DESC' |
+  'lastName_ASC' |
+  'lastName_DESC' |
+  'lastLogin_ASC' |
+  'lastLogin_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
+
+export type CandidateMetaOrderByInput =   'source_ASC' |
+  'source_DESC' |
   'id_ASC' |
   'id_DESC' |
   'updatedAt_ASC' |
@@ -3274,29 +4282,12 @@ export type CandidateOrderByInput =   'id_ASC' |
   'updatedAt_ASC' |
   'updatedAt_DESC'
 
-export type UserOrderByInput =   'firstName_ASC' |
-  'firstName_DESC' |
-  'lastName_ASC' |
-  'lastName_DESC' |
-  'username_ASC' |
-  'username_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'password_ASC' |
-  'password_DESC' |
-  'id_ASC' |
+export type CommentOrderByInput =   'id_ASC' |
   'id_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
   'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type PersonOrderByInput =   'id_ASC' |
-  'id_DESC' |
+  'createdAt_DESC' |
   'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
+  'updatedAt_DESC'
 
 export type ActionOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -3309,34 +4300,23 @@ export type ActionOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type ApplicationOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type StageOrderByInput =   'id_ASC' |
+export type OrganisationOrderByInput =   'id_ASC' |
   'id_DESC' |
   'name_ASC' |
   'name_DESC' |
-  'position_ASC' |
-  'position_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type OfferOrderByInput =   'id_ASC' |
+export type LocationOrderByInput =   'region_ASC' |
+  'region_DESC' |
+  'city_ASC' |
+  'city_DESC' |
+  'zip_ASC' |
+  'zip_DESC' |
+  'id_ASC' |
   'id_DESC' |
-  'title_ASC' |
-  'title_DESC' |
-  'department_ASC' |
-  'department_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'requirements_ASC' |
-  'requirements_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -3348,30 +4328,6 @@ export type PostOrderByInput =   'id_ASC' |
   'title_DESC' |
   'content_ASC' |
   'content_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type MutationType =   'CREATED' |
-  'UPDATED' |
-  'DELETED'
-
-export type CandidateMetaOrderByInput =   'source_ASC' |
-  'source_DESC' |
-  'id_ASC' |
-  'id_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type CandidateBasicOrderByInput =   'firstName_ASC' |
-  'firstName_DESC' |
-  'lastName_ASC' |
-  'lastName_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -3390,9 +4346,12 @@ export type CountryOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export interface ApplicationCreateWithoutCandidateInput {
-  offer: OfferCreateOneWithoutApplicationsInput
-  stage: StageCreateOneInput
+export type MutationType =   'CREATED' |
+  'UPDATED' |
+  'DELETED'
+
+export interface CandidateBasicCreatelinksInput {
+  set?: String[] | String
 }
 
 export interface PostWhereInput {
@@ -3444,595 +4403,15 @@ export interface PostWhereInput {
   author?: UserWhereInput
 }
 
-export interface StageCreateManyInput {
-  create?: StageCreateInput[] | StageCreateInput
-  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
-}
-
-export interface ApplicationWhereInput {
-  AND?: ApplicationWhereInput[] | ApplicationWhereInput
-  OR?: ApplicationWhereInput[] | ApplicationWhereInput
-  NOT?: ApplicationWhereInput[] | ApplicationWhereInput
-  offer?: OfferWhereInput
-  candidate?: CandidateWhereInput
-  stage?: StageWhereInput
-}
-
-export interface StageCreateInput {
-  name: String
-  position: Int
-}
-
-export interface LocationWhereInput {
-  AND?: LocationWhereInput[] | LocationWhereInput
-  OR?: LocationWhereInput[] | LocationWhereInput
-  NOT?: LocationWhereInput[] | LocationWhereInput
-  region?: String
-  region_not?: String
-  region_in?: String[] | String
-  region_not_in?: String[] | String
-  region_lt?: String
-  region_lte?: String
-  region_gt?: String
-  region_gte?: String
-  region_contains?: String
-  region_not_contains?: String
-  region_starts_with?: String
-  region_not_starts_with?: String
-  region_ends_with?: String
-  region_not_ends_with?: String
-  city?: String
-  city_not?: String
-  city_in?: String[] | String
-  city_not_in?: String[] | String
-  city_lt?: String
-  city_lte?: String
-  city_gt?: String
-  city_gte?: String
-  city_contains?: String
-  city_not_contains?: String
-  city_starts_with?: String
-  city_not_starts_with?: String
-  city_ends_with?: String
-  city_not_ends_with?: String
-  zip?: String
-  zip_not?: String
-  zip_in?: String[] | String
-  zip_not_in?: String[] | String
-  zip_lt?: String
-  zip_lte?: String
-  zip_gt?: String
-  zip_gte?: String
-  zip_contains?: String
-  zip_not_contains?: String
-  zip_starts_with?: String
-  zip_not_starts_with?: String
-  zip_ends_with?: String
-  zip_not_ends_with?: String
-  country?: CountryWhereInput
-}
-
-export interface StageCreateOneInput {
-  create?: StageCreateInput
-  connect?: StageWhereUniqueInput
-}
-
-export interface StageWhereInput {
-  AND?: StageWhereInput[] | StageWhereInput
-  OR?: StageWhereInput[] | StageWhereInput
-  NOT?: StageWhereInput[] | StageWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  position?: Int
-  position_not?: Int
-  position_in?: Int[] | Int
-  position_not_in?: Int[] | Int
-  position_lt?: Int
-  position_lte?: Int
-  position_gt?: Int
-  position_gte?: Int
-}
-
-export interface LocationUpdateOneInput {
-  create?: LocationCreateInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: LocationUpdateDataInput
-  upsert?: LocationUpsertNestedInput
-}
-
-export interface ActionUpdateWithWhereUniqueNestedInput {
-  where: ActionWhereUniqueInput
-  data: ActionUpdateDataInput
-}
-
-export interface OfferUpdateInput {
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  location?: LocationUpdateOneInput
-  applications?: ApplicationUpdateManyWithoutOfferInput
-  stages?: StageUpdateManyInput
-}
-
-export interface ApplicationCreateInput {
-  offer: OfferCreateOneWithoutApplicationsInput
-  candidate: CandidateCreateOneWithoutApplicationsInput
-  stage: StageCreateOneInput
-}
-
-export interface ApplicationUpdateManyWithoutCandidateInput {
-  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
-}
-
-export interface StageSubscriptionWhereInput {
-  AND?: StageSubscriptionWhereInput[] | StageSubscriptionWhereInput
-  OR?: StageSubscriptionWhereInput[] | StageSubscriptionWhereInput
-  NOT?: StageSubscriptionWhereInput[] | StageSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: StageWhereInput
-}
-
-export interface CandidateMetaUpsertNestedInput {
-  update: CandidateMetaUpdateDataInput
-  create: CandidateMetaCreateInput
-}
-
-export interface CountrySubscriptionWhereInput {
-  AND?: CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput
-  OR?: CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput
-  NOT?: CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: CountryWhereInput
-}
-
-export interface CandidateMetaUpdateDataInput {
-  source?: String
-}
-
-export interface CandidateBasicSubscriptionWhereInput {
-  AND?: CandidateBasicSubscriptionWhereInput[] | CandidateBasicSubscriptionWhereInput
-  OR?: CandidateBasicSubscriptionWhereInput[] | CandidateBasicSubscriptionWhereInput
-  NOT?: CandidateBasicSubscriptionWhereInput[] | CandidateBasicSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: CandidateBasicWhereInput
-}
-
-export interface CandidateMetaUpdateOneInput {
-  create?: CandidateMetaCreateInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: CandidateMetaUpdateDataInput
-  upsert?: CandidateMetaUpsertNestedInput
-}
-
-export interface LocationSubscriptionWhereInput {
-  AND?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
-  OR?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
-  NOT?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: LocationWhereInput
-}
-
-export interface CandidateBasicUpsertNestedInput {
-  update: CandidateBasicUpdateDataInput
-  create: CandidateBasicCreateInput
-}
-
-export interface ActionWhereInput {
-  AND?: ActionWhereInput[] | ActionWhereInput
-  OR?: ActionWhereInput[] | ActionWhereInput
-  NOT?: ActionWhereInput[] | ActionWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  date?: DateTime
-  date_not?: DateTime
-  date_in?: DateTime[] | DateTime
-  date_not_in?: DateTime[] | DateTime
-  date_lt?: DateTime
-  date_lte?: DateTime
-  date_gt?: DateTime
-  date_gte?: DateTime
-  type?: String
-  type_not?: String
-  type_in?: String[] | String
-  type_not_in?: String[] | String
-  type_lt?: String
-  type_lte?: String
-  type_gt?: String
-  type_gte?: String
-  type_contains?: String
-  type_not_contains?: String
-  type_starts_with?: String
-  type_not_starts_with?: String
-  type_ends_with?: String
-  type_not_ends_with?: String
-  owner?: PersonWhereInput
-}
-
-export interface CandidateBasicUpdatephonesInput {
-  set?: String[] | String
-}
-
-export interface ApplicationSubscriptionWhereInput {
-  AND?: ApplicationSubscriptionWhereInput[] | ApplicationSubscriptionWhereInput
-  OR?: ApplicationSubscriptionWhereInput[] | ApplicationSubscriptionWhereInput
-  NOT?: ApplicationSubscriptionWhereInput[] | ApplicationSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ApplicationWhereInput
-}
-
-export interface CandidateBasicUpdateemailsInput {
-  set?: String[] | String
-}
-
-export interface CandidateSubscriptionWhereInput {
-  AND?: CandidateSubscriptionWhereInput[] | CandidateSubscriptionWhereInput
-  OR?: CandidateSubscriptionWhereInput[] | CandidateSubscriptionWhereInput
-  NOT?: CandidateSubscriptionWhereInput[] | CandidateSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: CandidateWhereInput
-}
-
-export interface CandidateBasicUpdateDataInput {
-  firstName?: String
-  lastName?: String
-  emails?: CandidateBasicUpdateemailsInput
-  phones?: CandidateBasicUpdatephonesInput
-}
-
-export interface PostSubscriptionWhereInput {
-  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
-  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
-  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: PostWhereInput
-}
-
-export interface CandidateBasicUpdateOneInput {
-  create?: CandidateBasicCreateInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: CandidateBasicUpdateDataInput
-  upsert?: CandidateBasicUpsertNestedInput
-}
-
-export interface UserWhereInput {
-  AND?: UserWhereInput[] | UserWhereInput
-  OR?: UserWhereInput[] | UserWhereInput
-  NOT?: UserWhereInput[] | UserWhereInput
-  firstName?: String
-  firstName_not?: String
-  firstName_in?: String[] | String
-  firstName_not_in?: String[] | String
-  firstName_lt?: String
-  firstName_lte?: String
-  firstName_gt?: String
-  firstName_gte?: String
-  firstName_contains?: String
-  firstName_not_contains?: String
-  firstName_starts_with?: String
-  firstName_not_starts_with?: String
-  firstName_ends_with?: String
-  firstName_not_ends_with?: String
-  lastName?: String
-  lastName_not?: String
-  lastName_in?: String[] | String
-  lastName_not_in?: String[] | String
-  lastName_lt?: String
-  lastName_lte?: String
-  lastName_gt?: String
-  lastName_gte?: String
-  lastName_contains?: String
-  lastName_not_contains?: String
-  lastName_starts_with?: String
-  lastName_not_starts_with?: String
-  lastName_ends_with?: String
-  lastName_not_ends_with?: String
-  username?: String
-  username_not?: String
-  username_in?: String[] | String
-  username_not_in?: String[] | String
-  username_lt?: String
-  username_lte?: String
-  username_gt?: String
-  username_gte?: String
-  username_contains?: String
-  username_not_contains?: String
-  username_starts_with?: String
-  username_not_starts_with?: String
-  username_ends_with?: String
-  username_not_ends_with?: String
-  email?: String
-  email_not?: String
-  email_in?: String[] | String
-  email_not_in?: String[] | String
-  email_lt?: String
-  email_lte?: String
-  email_gt?: String
-  email_gte?: String
-  email_contains?: String
-  email_not_contains?: String
-  email_starts_with?: String
-  email_not_starts_with?: String
-  email_ends_with?: String
-  email_not_ends_with?: String
-  password?: String
-  password_not?: String
-  password_in?: String[] | String
-  password_not_in?: String[] | String
-  password_lt?: String
-  password_lte?: String
-  password_gt?: String
-  password_gte?: String
-  password_contains?: String
-  password_not_contains?: String
-  password_starts_with?: String
-  password_not_starts_with?: String
-  password_ends_with?: String
-  password_not_ends_with?: String
-}
-
-export interface ActionUpsertWithWhereUniqueNestedInput {
-  where: ActionWhereUniqueInput
-  update: ActionUpdateDataInput
-  create: ActionCreateInput
-}
-
-export interface CandidateWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface PersonUpdateOneInput {
-  connect?: PersonWhereUniqueInput
-  delete?: Boolean
-}
-
-export interface UserWhereUniqueInput {
-  username?: String
-  email?: String
-}
-
-export interface PostCreateInput {
-  title: String
-  content?: String
-  author: UserCreateOneInput
-}
-
-export interface ActionWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface UserCreateOneInput {
-  create?: UserCreateInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface PersonWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface UserCreateInput {
-  firstName: String
-  lastName: String
-  username: String
-  email: String
-  password: String
-}
-
-export interface LocationUpdateInput {
-  region?: String
-  city?: String
-  zip?: String
-  country?: CountryUpdateOneInput
-}
-
-export interface CandidateCreateInput {
-  tags?: CandidateCreatetagsInput
-  actions?: ActionCreateManyInput
-  basic?: CandidateBasicCreateOneInput
-  meta?: CandidateMetaCreateOneInput
-  applications?: ApplicationCreateManyWithoutCandidateInput
-}
-
-export interface StageUpdateOneInput {
-  create?: StageCreateInput
-  connect?: StageWhereUniqueInput
-  delete?: Boolean
-  update?: StageUpdateDataInput
-  upsert?: StageUpsertNestedInput
-}
-
-export interface CandidateCreatetagsInput {
-  set?: String[] | String
-}
-
-export interface CandidateUpdateWithoutApplicationsDataInput {
-  tags?: CandidateUpdatetagsInput
-  actions?: ActionUpdateManyInput
-  basic?: CandidateBasicUpdateOneInput
-  meta?: CandidateMetaUpdateOneInput
-}
-
-export interface ActionCreateManyInput {
-  create?: ActionCreateInput[] | ActionCreateInput
-  connect?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
-}
-
-export interface OfferUpsertWithoutApplicationsInput {
-  update: OfferUpdateWithoutApplicationsDataInput
-  create: OfferCreateWithoutApplicationsInput
-}
-
-export interface ActionCreateInput {
-  date: DateTime
-  type: String
-  owner: PersonCreateOneInput
-}
-
-export interface OfferUpdateOneWithoutApplicationsInput {
-  create?: OfferCreateWithoutApplicationsInput
-  connect?: OfferWhereUniqueInput
-  delete?: Boolean
-  update?: OfferUpdateWithoutApplicationsDataInput
-  upsert?: OfferUpsertWithoutApplicationsInput
-}
-
-export interface PersonCreateOneInput {
-  connect?: PersonWhereUniqueInput
-}
-
-export interface StageUpdateInput {
-  name?: String
-  position?: Int
-}
-
-export interface CandidateBasicCreateOneInput {
-  create?: CandidateBasicCreateInput
-}
-
-export interface CountryUpdateInput {
-  name?: String
-  code?: String
-  telPrefix?: Int
-}
-
-export interface CandidateBasicCreateInput {
-  firstName: String
-  lastName: String
-  emails?: CandidateBasicCreateemailsInput
-  phones?: CandidateBasicCreatephonesInput
-}
-
-export interface StageUpsertWithWhereUniqueNestedInput {
-  where: StageWhereUniqueInput
-  update: StageUpdateDataInput
-  create: StageCreateInput
-}
-
-export interface CandidateBasicCreateemailsInput {
-  set?: String[] | String
-}
-
-export interface StageUpdateWithWhereUniqueNestedInput {
-  where: StageWhereUniqueInput
-  data: StageUpdateDataInput
-}
-
-export interface CandidateBasicCreatephonesInput {
-  set?: String[] | String
-}
-
-export interface ApplicationUpdateManyWithoutOfferInput {
-  create?: ApplicationCreateWithoutOfferInput[] | ApplicationCreateWithoutOfferInput
-}
-
-export interface CandidateMetaCreateOneInput {
-  create?: CandidateMetaCreateInput
-}
-
-export interface CountryUpsertNestedInput {
-  update: CountryUpdateDataInput
-  create: CountryCreateInput
-}
-
-export interface CandidateMetaCreateInput {
-  source: String
-}
-
-export interface CountryUpdateOneInput {
+export interface CountryCreateOneInput {
   create?: CountryCreateInput
   connect?: CountryWhereUniqueInput
-  delete?: Boolean
-  update?: CountryUpdateDataInput
-  upsert?: CountryUpsertNestedInput
 }
 
-export interface ApplicationCreateManyWithoutCandidateInput {
-  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
-}
-
-export interface PersonSubscriptionWhereInput {
-  AND?: PersonSubscriptionWhereInput[] | PersonSubscriptionWhereInput
-  OR?: PersonSubscriptionWhereInput[] | PersonSubscriptionWhereInput
-  NOT?: PersonSubscriptionWhereInput[] | PersonSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: PersonWhereInput
-}
-
-export interface ActionUpdateDataInput {
-  date?: DateTime
-  type?: String
-  owner?: PersonUpdateOneInput
-}
-
-export interface PersonWhereInput {
-  AND?: PersonWhereInput[] | PersonWhereInput
-  OR?: PersonWhereInput[] | PersonWhereInput
-  NOT?: PersonWhereInput[] | PersonWhereInput
+export interface TaskWhereInput {
+  AND?: TaskWhereInput[] | TaskWhereInput
+  OR?: TaskWhereInput[] | TaskWhereInput
+  NOT?: TaskWhereInput[] | TaskWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -4047,31 +4426,31 @@ export interface PersonWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  dueAt?: DateTime
+  dueAt_not?: DateTime
+  dueAt_in?: DateTime[] | DateTime
+  dueAt_not_in?: DateTime[] | DateTime
+  dueAt_lt?: DateTime
+  dueAt_lte?: DateTime
+  dueAt_gt?: DateTime
+  dueAt_gte?: DateTime
+  owners_every?: UserWhereInput
+  owners_some?: UserWhereInput
+  owners_none?: UserWhereInput
 }
 
-export interface OfferCreateOneWithoutApplicationsInput {
-  create?: OfferCreateWithoutApplicationsInput
-  connect?: OfferWhereUniqueInput
-}
-
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
-}
-
-export interface OfferCreateWithoutApplicationsInput {
-  title: String
-  department?: String
-  description?: String
-  requirements?: String
-  location?: LocationCreateOneInput
-  stages?: StageCreateManyInput
+export interface CountryCreateInput {
+  name: String
+  code: String
+  telPrefix: Int
 }
 
 export interface CandidateWhereInput {
@@ -4118,46 +4497,59 @@ export interface CandidateWhereInput {
   applications_none?: ApplicationWhereInput
 }
 
-export interface LocationCreateOneInput {
-  create?: LocationCreateInput
+export interface StageCreateManyInput {
+  create?: StageCreateInput[] | StageCreateInput
+  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
 }
 
-export interface CandidateBasicUpdateInput {
-  firstName?: String
-  lastName?: String
-  emails?: CandidateBasicUpdateemailsInput
-  phones?: CandidateBasicUpdatephonesInput
-}
-
-export interface LocationCreateInput {
-  region: String
-  city: String
-  zip: String
-  country: CountryCreateOneInput
-}
-
-export interface OfferWhereUniqueInput {
+export interface PersonWhereInput {
+  AND?: PersonWhereInput[] | PersonWhereInput
+  OR?: PersonWhereInput[] | PersonWhereInput
+  NOT?: PersonWhereInput[] | PersonWhereInput
   id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
 }
 
-export interface CountryCreateOneInput {
-  create?: CountryCreateInput
-  connect?: CountryWhereUniqueInput
-}
-
-export interface StageWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface CountryCreateInput {
+export interface StageCreateInput {
   name: String
-  code: String
-  telPrefix: Int
+  position: Int
 }
 
-export interface StageUpsertNestedInput {
-  update: StageUpdateDataInput
-  create: StageCreateInput
+export interface CandidateMetaWhereInput {
+  AND?: CandidateMetaWhereInput[] | CandidateMetaWhereInput
+  OR?: CandidateMetaWhereInput[] | CandidateMetaWhereInput
+  NOT?: CandidateMetaWhereInput[] | CandidateMetaWhereInput
+  source?: String
+  source_not?: String
+  source_in?: String[] | String
+  source_not_in?: String[] | String
+  source_lt?: String
+  source_lte?: String
+  source_gt?: String
+  source_gte?: String
+  source_contains?: String
+  source_not_contains?: String
+  source_starts_with?: String
+  source_not_starts_with?: String
+  source_ends_with?: String
+  source_not_ends_with?: String
+}
+
+export interface StageCreateOneInput {
+  create?: StageCreateInput
+  connect?: StageWhereUniqueInput
 }
 
 export interface OfferWhereInput {
@@ -4178,6 +4570,22 @@ export interface OfferWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
   title?: String
   title_not?: String
   title_in?: String[] | String
@@ -4243,12 +4651,10 @@ export interface OfferWhereInput {
   stages_none?: StageWhereInput
 }
 
-export interface CandidateUpdateOneWithoutApplicationsInput {
-  create?: CandidateCreateWithoutApplicationsInput
-  connect?: CandidateWhereUniqueInput
-  delete?: Boolean
-  update?: CandidateUpdateWithoutApplicationsDataInput
-  upsert?: CandidateUpsertWithoutApplicationsInput
+export interface ApplicationCreateInput {
+  offer: OfferCreateOneWithoutApplicationsInput
+  candidate: CandidateCreateOneWithoutApplicationsInput
+  stage: StageCreateOneInput
 }
 
 export interface CountryWhereInput {
@@ -4307,38 +4713,742 @@ export interface CountryWhereInput {
   telPrefix_gte?: Int
 }
 
+export interface CandidateBasicUpdatephonesInput {
+  set?: String[] | String
+}
+
+export interface CommentUpdateInput {
+  content?: UserUpdateOneInput
+}
+
+export interface CandidateBasicUpdateemailsInput {
+  set?: String[] | String
+}
+
+export interface CandidateCreateOneWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput
+  connect?: CandidateWhereUniqueInput
+}
+
+export interface CandidateBasicUpdateDataInput {
+  firstName?: String
+  lastName?: String
+  emails?: CandidateBasicUpdateemailsInput
+  phones?: CandidateBasicUpdatephonesInput
+  links?: CandidateBasicUpdatelinksInput
+}
+
+export interface PersonSubscriptionWhereInput {
+  AND?: PersonSubscriptionWhereInput[] | PersonSubscriptionWhereInput
+  OR?: PersonSubscriptionWhereInput[] | PersonSubscriptionWhereInput
+  NOT?: PersonSubscriptionWhereInput[] | PersonSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: PersonWhereInput
+}
+
+export interface CandidateBasicUpdateOneInput {
+  create?: CandidateBasicCreateInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: CandidateBasicUpdateDataInput
+  upsert?: CandidateBasicUpsertNestedInput
+}
+
+export interface ActionSubscriptionWhereInput {
+  AND?: ActionSubscriptionWhereInput[] | ActionSubscriptionWhereInput
+  OR?: ActionSubscriptionWhereInput[] | ActionSubscriptionWhereInput
+  NOT?: ActionSubscriptionWhereInput[] | ActionSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ActionWhereInput
+}
+
+export interface ActionUpsertWithWhereUniqueNestedInput {
+  where: ActionWhereUniqueInput
+  update: ActionUpdateDataInput
+  create: ActionCreateInput
+}
+
+export interface CandidateBasicSubscriptionWhereInput {
+  AND?: CandidateBasicSubscriptionWhereInput[] | CandidateBasicSubscriptionWhereInput
+  OR?: CandidateBasicSubscriptionWhereInput[] | CandidateBasicSubscriptionWhereInput
+  NOT?: CandidateBasicSubscriptionWhereInput[] | CandidateBasicSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CandidateBasicWhereInput
+}
+
+export interface PersonUpdateOneInput {
+  connect?: PersonWhereUniqueInput
+  delete?: Boolean
+}
+
+export interface LocationSubscriptionWhereInput {
+  AND?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  OR?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  NOT?: LocationSubscriptionWhereInput[] | LocationSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: LocationWhereInput
+}
+
+export interface ActionUpdateDataInput {
+  date?: DateTime
+  type?: String
+  owner?: PersonUpdateOneInput
+}
+
+export interface OfferSubscriptionWhereInput {
+  AND?: OfferSubscriptionWhereInput[] | OfferSubscriptionWhereInput
+  OR?: OfferSubscriptionWhereInput[] | OfferSubscriptionWhereInput
+  NOT?: OfferSubscriptionWhereInput[] | OfferSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: OfferWhereInput
+}
+
+export interface ActionUpdateWithWhereUniqueNestedInput {
+  where: ActionWhereUniqueInput
+  data: ActionUpdateDataInput
+}
+
+export interface CandidateSubscriptionWhereInput {
+  AND?: CandidateSubscriptionWhereInput[] | CandidateSubscriptionWhereInput
+  OR?: CandidateSubscriptionWhereInput[] | CandidateSubscriptionWhereInput
+  NOT?: CandidateSubscriptionWhereInput[] | CandidateSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CandidateWhereInput
+}
+
+export interface ActionUpdateManyInput {
+  create?: ActionCreateInput[] | ActionCreateInput
+  connect?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
+  disconnect?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
+  delete?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
+  update?: ActionUpdateWithWhereUniqueNestedInput[] | ActionUpdateWithWhereUniqueNestedInput
+  upsert?: ActionUpsertWithWhereUniqueNestedInput[] | ActionUpsertWithWhereUniqueNestedInput
+}
+
+export interface TaskSubscriptionWhereInput {
+  AND?: TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput
+  OR?: TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput
+  NOT?: TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: TaskWhereInput
+}
+
+export interface CandidateUpdatetagsInput {
+  set?: String[] | String
+}
+
+export interface OrganisationWhereInput {
+  AND?: OrganisationWhereInput[] | OrganisationWhereInput
+  OR?: OrganisationWhereInput[] | OrganisationWhereInput
+  NOT?: OrganisationWhereInput[] | OrganisationWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  users_every?: UserWhereInput
+  users_some?: UserWhereInput
+  users_none?: UserWhereInput
+}
+
+export interface CandidateUpdateInput {
+  tags?: CandidateUpdatetagsInput
+  actions?: ActionUpdateManyInput
+  basic?: CandidateBasicUpdateOneInput
+  meta?: CandidateMetaUpdateOneInput
+  applications?: ApplicationUpdateManyWithoutCandidateInput
+}
+
+export interface UserWhereInput {
+  AND?: UserWhereInput[] | UserWhereInput
+  OR?: UserWhereInput[] | UserWhereInput
+  NOT?: UserWhereInput[] | UserWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  email?: String
+  email_not?: String
+  email_in?: String[] | String
+  email_not_in?: String[] | String
+  email_lt?: String
+  email_lte?: String
+  email_gt?: String
+  email_gte?: String
+  email_contains?: String
+  email_not_contains?: String
+  email_starts_with?: String
+  email_not_starts_with?: String
+  email_ends_with?: String
+  email_not_ends_with?: String
+  username?: String
+  username_not?: String
+  username_in?: String[] | String
+  username_not_in?: String[] | String
+  username_lt?: String
+  username_lte?: String
+  username_gt?: String
+  username_gte?: String
+  username_contains?: String
+  username_not_contains?: String
+  username_starts_with?: String
+  username_not_starts_with?: String
+  username_ends_with?: String
+  username_not_ends_with?: String
+  password?: String
+  password_not?: String
+  password_in?: String[] | String
+  password_not_in?: String[] | String
+  password_lt?: String
+  password_lte?: String
+  password_gt?: String
+  password_gte?: String
+  password_contains?: String
+  password_not_contains?: String
+  password_starts_with?: String
+  password_not_starts_with?: String
+  password_ends_with?: String
+  password_not_ends_with?: String
+  firstName?: String
+  firstName_not?: String
+  firstName_in?: String[] | String
+  firstName_not_in?: String[] | String
+  firstName_lt?: String
+  firstName_lte?: String
+  firstName_gt?: String
+  firstName_gte?: String
+  firstName_contains?: String
+  firstName_not_contains?: String
+  firstName_starts_with?: String
+  firstName_not_starts_with?: String
+  firstName_ends_with?: String
+  firstName_not_ends_with?: String
+  lastName?: String
+  lastName_not?: String
+  lastName_in?: String[] | String
+  lastName_not_in?: String[] | String
+  lastName_lt?: String
+  lastName_lte?: String
+  lastName_gt?: String
+  lastName_gte?: String
+  lastName_contains?: String
+  lastName_not_contains?: String
+  lastName_starts_with?: String
+  lastName_not_starts_with?: String
+  lastName_ends_with?: String
+  lastName_not_ends_with?: String
+  lastLogin?: DateTime
+  lastLogin_not?: DateTime
+  lastLogin_in?: DateTime[] | DateTime
+  lastLogin_not_in?: DateTime[] | DateTime
+  lastLogin_lt?: DateTime
+  lastLogin_lte?: DateTime
+  lastLogin_gt?: DateTime
+  lastLogin_gte?: DateTime
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  deletedAt?: DateTime
+  deletedAt_not?: DateTime
+  deletedAt_in?: DateTime[] | DateTime
+  deletedAt_not_in?: DateTime[] | DateTime
+  deletedAt_lt?: DateTime
+  deletedAt_lte?: DateTime
+  deletedAt_gt?: DateTime
+  deletedAt_gte?: DateTime
+  organisation?: OrganisationWhereInput
+}
+
+export interface UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  create: UserCreateInput
+}
+
+export interface OrganisationWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface PostCreateInput {
+  title: String
+  content?: String
+  author: UserCreateOneInput
+}
+
+export interface TaskWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface OfferWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserCreateInput {
+  email: String
+  username: String
+  password: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  organisation: OrganisationCreateOneWithoutUsersInput
+}
+
+export interface CountryWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface OrganisationCreateOneWithoutUsersInput {
+  create?: OrganisationCreateWithoutUsersInput
+  connect?: OrganisationWhereUniqueInput
+}
+
+export interface StageWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface OrganisationCreateWithoutUsersInput {
+  name: String
+}
+
+export interface PostSubscriptionWhereInput {
+  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
+  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
+  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: PostWhereInput
+}
+
+export interface OrganisationCreateInput {
+  name: String
+  users?: UserCreateManyWithoutOrganisationInput
+}
+
+export interface CandidateMetaUpdateInput {
+  source?: String
+}
+
+export interface UserCreateManyWithoutOrganisationInput {
+  create?: UserCreateWithoutOrganisationInput[] | UserCreateWithoutOrganisationInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
+export interface StageUpsertNestedInput {
+  update: StageUpdateDataInput
+  create: StageCreateInput
+}
+
+export interface UserCreateWithoutOrganisationInput {
+  email: String
+  username: String
+  password: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+}
+
+export interface CandidateUpsertWithoutApplicationsInput {
+  update: CandidateUpdateWithoutApplicationsDataInput
+  create: CandidateCreateWithoutApplicationsInput
+}
+
+export interface CommentCreateInput {
+  content: UserCreateOneInput
+}
+
+export interface CandidateUpdateOneWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput
+  connect?: CandidateWhereUniqueInput
+  delete?: Boolean
+  update?: CandidateUpdateWithoutApplicationsDataInput
+  upsert?: CandidateUpsertWithoutApplicationsInput
+}
+
+export interface TaskCreateInput {
+  dueAt: DateTime
+  owners?: UserCreateManyInput
+}
+
+export interface OfferUpdateWithoutApplicationsDataInput {
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  location?: LocationUpdateOneInput
+  stages?: StageUpdateManyInput
+}
+
+export interface UserCreateManyInput {
+  create?: UserCreateInput[] | UserCreateInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
 export interface ApplicationUpdateInput {
   offer?: OfferUpdateOneWithoutApplicationsInput
   candidate?: CandidateUpdateOneWithoutApplicationsInput
   stage?: StageUpdateOneInput
 }
 
-export interface CandidateMetaWhereInput {
-  AND?: CandidateMetaWhereInput[] | CandidateMetaWhereInput
-  OR?: CandidateMetaWhereInput[] | CandidateMetaWhereInput
-  NOT?: CandidateMetaWhereInput[] | CandidateMetaWhereInput
-  source?: String
-  source_not?: String
-  source_in?: String[] | String
-  source_not_in?: String[] | String
-  source_lt?: String
-  source_lte?: String
-  source_gt?: String
-  source_gte?: String
-  source_contains?: String
-  source_not_contains?: String
-  source_starts_with?: String
-  source_not_starts_with?: String
-  source_ends_with?: String
-  source_not_ends_with?: String
+export interface CandidateCreateInput {
+  tags?: CandidateCreatetagsInput
+  actions?: ActionCreateManyInput
+  basic?: CandidateBasicCreateOneInput
+  meta?: CandidateMetaCreateOneInput
+  applications?: ApplicationCreateManyWithoutCandidateInput
+}
+
+export interface ActionUpdateInput {
+  date?: DateTime
+  type?: String
+  owner?: PersonUpdateOneInput
+}
+
+export interface CandidateCreatetagsInput {
+  set?: String[] | String
 }
 
 export interface UserUpdateInput {
+  email?: String
+  username?: String
+  password?: String
   firstName?: String
   lastName?: String
-  username?: String
-  email?: String
-  password?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  organisation?: OrganisationUpdateOneWithoutUsersInput
+}
+
+export interface ActionCreateManyInput {
+  create?: ActionCreateInput[] | ActionCreateInput
+  connect?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
+}
+
+export interface StageUpdateDataInput {
+  name?: String
+  position?: Int
+}
+
+export interface ActionCreateInput {
+  date: DateTime
+  type: String
+  owner: PersonCreateOneInput
+}
+
+export interface StageUpdateManyInput {
+  create?: StageCreateInput[] | StageCreateInput
+  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
+  disconnect?: StageWhereUniqueInput[] | StageWhereUniqueInput
+  delete?: StageWhereUniqueInput[] | StageWhereUniqueInput
+  update?: StageUpdateWithWhereUniqueNestedInput[] | StageUpdateWithWhereUniqueNestedInput
+  upsert?: StageUpsertWithWhereUniqueNestedInput[] | StageUpsertWithWhereUniqueNestedInput
+}
+
+export interface PersonCreateOneInput {
+  connect?: PersonWhereUniqueInput
+}
+
+export interface LocationUpsertNestedInput {
+  update: LocationUpdateDataInput
+  create: LocationCreateInput
+}
+
+export interface CandidateBasicCreateOneInput {
+  create?: CandidateBasicCreateInput
+}
+
+export interface CountryUpdateDataInput {
+  name?: String
+  code?: String
+  telPrefix?: Int
+}
+
+export interface CandidateBasicCreateInput {
+  firstName: String
+  lastName: String
+  emails?: CandidateBasicCreateemailsInput
+  phones?: CandidateBasicCreatephonesInput
+  links?: CandidateBasicCreatelinksInput
+}
+
+export interface LocationUpdateDataInput {
+  region?: String
+  city?: String
+  zip?: String
+  country?: CountryUpdateOneInput
+}
+
+export interface CandidateBasicCreateemailsInput {
+  set?: String[] | String
+}
+
+export interface OfferUpdateInput {
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  location?: LocationUpdateOneInput
+  applications?: ApplicationUpdateManyWithoutOfferInput
+  stages?: StageUpdateManyInput
+}
+
+export interface CandidateBasicCreatephonesInput {
+  set?: String[] | String
+}
+
+export interface CandidateMetaUpsertNestedInput {
+  update: CandidateMetaUpdateDataInput
+  create: CandidateMetaCreateInput
+}
+
+export interface UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateDataInput
+}
+
+export interface CandidateMetaUpdateOneInput {
+  create?: CandidateMetaCreateInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: CandidateMetaUpdateDataInput
+  upsert?: CandidateMetaUpsertNestedInput
+}
+
+export interface CandidateMetaCreateOneInput {
+  create?: CandidateMetaCreateInput
+}
+
+export interface CandidateBasicUpdatelinksInput {
+  set?: String[] | String
+}
+
+export interface CandidateMetaCreateInput {
+  source: String
+}
+
+export interface StageSubscriptionWhereInput {
+  AND?: StageSubscriptionWhereInput[] | StageSubscriptionWhereInput
+  OR?: StageSubscriptionWhereInput[] | StageSubscriptionWhereInput
+  NOT?: StageSubscriptionWhereInput[] | StageSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: StageWhereInput
+}
+
+export interface ApplicationCreateManyWithoutCandidateInput {
+  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
+}
+
+export interface CandidateMetaSubscriptionWhereInput {
+  AND?: CandidateMetaSubscriptionWhereInput[] | CandidateMetaSubscriptionWhereInput
+  OR?: CandidateMetaSubscriptionWhereInput[] | CandidateMetaSubscriptionWhereInput
+  NOT?: CandidateMetaSubscriptionWhereInput[] | CandidateMetaSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CandidateMetaWhereInput
+}
+
+export interface ApplicationCreateWithoutCandidateInput {
+  offer: OfferCreateOneWithoutApplicationsInput
+  stage: StageCreateOneInput
+}
+
+export interface ApplicationSubscriptionWhereInput {
+  AND?: ApplicationSubscriptionWhereInput[] | ApplicationSubscriptionWhereInput
+  OR?: ApplicationSubscriptionWhereInput[] | ApplicationSubscriptionWhereInput
+  NOT?: ApplicationSubscriptionWhereInput[] | ApplicationSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ApplicationWhereInput
+}
+
+export interface OfferCreateOneWithoutApplicationsInput {
+  create?: OfferCreateWithoutApplicationsInput
+  connect?: OfferWhereUniqueInput
+}
+
+export interface CommentSubscriptionWhereInput {
+  AND?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput
+  OR?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput
+  NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CommentWhereInput
+}
+
+export interface OfferCreateWithoutApplicationsInput {
+  title: String
+  department?: String
+  description?: String
+  requirements?: String
+  location?: LocationCreateOneInput
+  stages?: StageCreateManyInput
+}
+
+export interface PostWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface LocationCreateOneInput {
+  create?: LocationCreateInput
+}
+
+export interface CandidateWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface LocationCreateInput {
+  region: String
+  city: String
+  zip: String
+  country: CountryCreateOneInput
+}
+
+export interface ActionWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserUpdateManyInput {
+  create?: UserCreateInput[] | UserCreateInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueNestedInput[] | UserUpdateWithWhereUniqueNestedInput
+  upsert?: UserUpsertWithWhereUniqueNestedInput[] | UserUpsertWithWhereUniqueNestedInput
+}
+
+export interface CandidateBasicUpdateInput {
+  firstName?: String
+  lastName?: String
+  emails?: CandidateBasicUpdateemailsInput
+  phones?: CandidateBasicUpdatephonesInput
+  links?: CandidateBasicUpdatelinksInput
+}
+
+export interface ActionWhereInput {
+  AND?: ActionWhereInput[] | ActionWhereInput
+  OR?: ActionWhereInput[] | ActionWhereInput
+  NOT?: ActionWhereInput[] | ActionWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  date?: DateTime
+  date_not?: DateTime
+  date_in?: DateTime[] | DateTime
+  date_not_in?: DateTime[] | DateTime
+  date_lt?: DateTime
+  date_lte?: DateTime
+  date_gt?: DateTime
+  date_gte?: DateTime
+  type?: String
+  type_not?: String
+  type_in?: String[] | String
+  type_not_in?: String[] | String
+  type_lt?: String
+  type_lte?: String
+  type_gt?: String
+  type_gte?: String
+  type_contains?: String
+  type_not_contains?: String
+  type_starts_with?: String
+  type_not_starts_with?: String
+  type_ends_with?: String
+  type_not_ends_with?: String
+  owner?: PersonWhereInput
+}
+
+export interface StageUpdateOneInput {
+  create?: StageCreateInput
+  connect?: StageWhereUniqueInput
+  delete?: Boolean
+  update?: StageUpdateDataInput
+  upsert?: StageUpsertNestedInput
 }
 
 export interface CandidateBasicWhereInput {
@@ -4375,24 +5485,137 @@ export interface CandidateBasicWhereInput {
   lastName_not_ends_with?: String
 }
 
-export interface StageUpdateManyInput {
-  create?: StageCreateInput[] | StageCreateInput
-  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
-  disconnect?: StageWhereUniqueInput[] | StageWhereUniqueInput
-  delete?: StageWhereUniqueInput[] | StageWhereUniqueInput
-  update?: StageUpdateWithWhereUniqueNestedInput[] | StageUpdateWithWhereUniqueNestedInput
-  upsert?: StageUpsertWithWhereUniqueNestedInput[] | StageUpsertWithWhereUniqueNestedInput
+export interface OfferUpsertWithoutApplicationsInput {
+  update: OfferUpdateWithoutApplicationsDataInput
+  create: OfferCreateWithoutApplicationsInput
 }
 
-export interface CandidateCreateOneWithoutApplicationsInput {
-  create?: CandidateCreateWithoutApplicationsInput
-  connect?: CandidateWhereUniqueInput
+export interface ApplicationWhereInput {
+  AND?: ApplicationWhereInput[] | ApplicationWhereInput
+  OR?: ApplicationWhereInput[] | ApplicationWhereInput
+  NOT?: ApplicationWhereInput[] | ApplicationWhereInput
+  offer?: OfferWhereInput
+  candidate?: CandidateWhereInput
+  stage?: StageWhereInput
 }
 
-export interface CountryUpdateDataInput {
+export interface StageUpdateInput {
   name?: String
-  code?: String
-  telPrefix?: Int
+  position?: Int
+}
+
+export interface LocationWhereInput {
+  AND?: LocationWhereInput[] | LocationWhereInput
+  OR?: LocationWhereInput[] | LocationWhereInput
+  NOT?: LocationWhereInput[] | LocationWhereInput
+  region?: String
+  region_not?: String
+  region_in?: String[] | String
+  region_not_in?: String[] | String
+  region_lt?: String
+  region_lte?: String
+  region_gt?: String
+  region_gte?: String
+  region_contains?: String
+  region_not_contains?: String
+  region_starts_with?: String
+  region_not_starts_with?: String
+  region_ends_with?: String
+  region_not_ends_with?: String
+  city?: String
+  city_not?: String
+  city_in?: String[] | String
+  city_not_in?: String[] | String
+  city_lt?: String
+  city_lte?: String
+  city_gt?: String
+  city_gte?: String
+  city_contains?: String
+  city_not_contains?: String
+  city_starts_with?: String
+  city_not_starts_with?: String
+  city_ends_with?: String
+  city_not_ends_with?: String
+  zip?: String
+  zip_not?: String
+  zip_in?: String[] | String
+  zip_not_in?: String[] | String
+  zip_lt?: String
+  zip_lte?: String
+  zip_gt?: String
+  zip_gte?: String
+  zip_contains?: String
+  zip_not_contains?: String
+  zip_starts_with?: String
+  zip_not_starts_with?: String
+  zip_ends_with?: String
+  zip_not_ends_with?: String
+  country?: CountryWhereInput
+}
+
+export interface StageUpsertWithWhereUniqueNestedInput {
+  where: StageWhereUniqueInput
+  update: StageUpdateDataInput
+  create: StageCreateInput
+}
+
+export interface StageWhereInput {
+  AND?: StageWhereInput[] | StageWhereInput
+  OR?: StageWhereInput[] | StageWhereInput
+  NOT?: StageWhereInput[] | StageWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  position?: Int
+  position_not?: Int
+  position_in?: Int[] | Int
+  position_not_in?: Int[] | Int
+  position_lt?: Int
+  position_lte?: Int
+  position_gt?: Int
+  position_gte?: Int
+}
+
+export interface ApplicationUpdateManyWithoutOfferInput {
+  create?: ApplicationCreateWithoutOfferInput[] | ApplicationCreateWithoutOfferInput
+}
+
+export interface TaskUpdateInput {
+  dueAt?: DateTime
+  owners?: UserUpdateManyInput
+}
+
+export interface CountryUpdateOneInput {
+  create?: CountryCreateInput
+  connect?: CountryWhereUniqueInput
+  delete?: Boolean
+  update?: CountryUpdateDataInput
+  upsert?: CountryUpsertNestedInput
 }
 
 export interface CandidateCreateWithoutApplicationsInput {
@@ -4402,15 +5625,8 @@ export interface CandidateCreateWithoutApplicationsInput {
   meta?: CandidateMetaCreateOneInput
 }
 
-export interface ActionSubscriptionWhereInput {
-  AND?: ActionSubscriptionWhereInput[] | ActionSubscriptionWhereInput
-  OR?: ActionSubscriptionWhereInput[] | ActionSubscriptionWhereInput
-  NOT?: ActionSubscriptionWhereInput[] | ActionSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ActionWhereInput
+export interface ApplicationUpdateManyWithoutCandidateInput {
+  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
 }
 
 export interface OfferCreateInput {
@@ -4423,23 +5639,24 @@ export interface OfferCreateInput {
   stages?: StageCreateManyInput
 }
 
-export interface OfferSubscriptionWhereInput {
-  AND?: OfferSubscriptionWhereInput[] | OfferSubscriptionWhereInput
-  OR?: OfferSubscriptionWhereInput[] | OfferSubscriptionWhereInput
-  NOT?: OfferSubscriptionWhereInput[] | OfferSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: OfferWhereInput
+export interface CandidateBasicUpsertNestedInput {
+  update: CandidateBasicUpdateDataInput
+  create: CandidateBasicCreateInput
 }
 
 export interface ApplicationCreateManyWithoutOfferInput {
   create?: ApplicationCreateWithoutOfferInput[] | ApplicationCreateWithoutOfferInput
 }
 
-export interface PostWhereUniqueInput {
-  id?: ID_Input
+export interface CountrySubscriptionWhereInput {
+  AND?: CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput
+  OR?: CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput
+  NOT?: CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CountryWhereInput
 }
 
 export interface ApplicationCreateWithoutOfferInput {
@@ -4447,8 +5664,8 @@ export interface ApplicationCreateWithoutOfferInput {
   stage: StageCreateOneInput
 }
 
-export interface CandidateMetaUpdateInput {
-  source?: String
+export interface CommentWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface PostUpdateInput {
@@ -4457,13 +5674,8 @@ export interface PostUpdateInput {
   author?: UserUpdateOneInput
 }
 
-export interface OfferUpdateWithoutApplicationsDataInput {
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  location?: LocationUpdateOneInput
-  stages?: StageUpdateManyInput
+export interface PersonWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface UserUpdateOneInput {
@@ -4474,45 +5686,65 @@ export interface UserUpdateOneInput {
   upsert?: UserUpsertNestedInput
 }
 
-export interface StageUpdateDataInput {
-  name?: String
-  position?: Int
-}
-
-export interface UserUpdateDataInput {
-  firstName?: String
-  lastName?: String
-  username?: String
-  email?: String
-  password?: String
-}
-
-export interface LocationUpdateDataInput {
-  region?: String
-  city?: String
-  zip?: String
-  country?: CountryUpdateOneInput
-}
-
-export interface ActionUpdateManyInput {
-  create?: ActionCreateInput[] | ActionCreateInput
-  connect?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
-  disconnect?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
-  delete?: ActionWhereUniqueInput[] | ActionWhereUniqueInput
-  update?: ActionUpdateWithWhereUniqueNestedInput[] | ActionUpdateWithWhereUniqueNestedInput
-  upsert?: ActionUpsertWithWhereUniqueNestedInput[] | ActionUpsertWithWhereUniqueNestedInput
-}
-
-export interface CandidateUpdatetagsInput {
-  set?: String[] | String
-}
-
-export interface CandidateUpdateInput {
+export interface CandidateUpdateWithoutApplicationsDataInput {
   tags?: CandidateUpdatetagsInput
   actions?: ActionUpdateManyInput
   basic?: CandidateBasicUpdateOneInput
   meta?: CandidateMetaUpdateOneInput
-  applications?: ApplicationUpdateManyWithoutCandidateInput
+}
+
+export interface UserUpdateDataInput {
+  email?: String
+  username?: String
+  password?: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  organisation?: OrganisationUpdateOneWithoutUsersInput
+}
+
+export interface CountryUpdateInput {
+  name?: String
+  code?: String
+  telPrefix?: Int
+}
+
+export interface OrganisationUpdateOneWithoutUsersInput {
+  create?: OrganisationCreateWithoutUsersInput
+  connect?: OrganisationWhereUniqueInput
+  delete?: Boolean
+  update?: OrganisationUpdateWithoutUsersDataInput
+  upsert?: OrganisationUpsertWithoutUsersInput
+}
+
+export interface CountryUpsertNestedInput {
+  update: CountryUpdateDataInput
+  create: CountryCreateInput
+}
+
+export interface OrganisationUpdateWithoutUsersDataInput {
+  name?: String
+}
+
+export interface CandidateMetaUpdateDataInput {
+  source?: String
+}
+
+export interface OrganisationUpsertWithoutUsersInput {
+  update: OrganisationUpdateWithoutUsersDataInput
+  create: OrganisationCreateWithoutUsersInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
 }
 
 export interface UserUpsertNestedInput {
@@ -4520,35 +5752,120 @@ export interface UserUpsertNestedInput {
   create: UserCreateInput
 }
 
-export interface CountryWhereUniqueInput {
+export interface UserWhereUniqueInput {
   id?: ID_Input
+  email?: String
 }
 
-export interface CandidateMetaSubscriptionWhereInput {
-  AND?: CandidateMetaSubscriptionWhereInput[] | CandidateMetaSubscriptionWhereInput
-  OR?: CandidateMetaSubscriptionWhereInput[] | CandidateMetaSubscriptionWhereInput
-  NOT?: CandidateMetaSubscriptionWhereInput[] | CandidateMetaSubscriptionWhereInput
+export interface OrganisationUpdateInput {
+  name?: String
+  users?: UserUpdateManyWithoutOrganisationInput
+}
+
+export interface OfferUpdateOneWithoutApplicationsInput {
+  create?: OfferCreateWithoutApplicationsInput
+  connect?: OfferWhereUniqueInput
+  delete?: Boolean
+  update?: OfferUpdateWithoutApplicationsDataInput
+  upsert?: OfferUpsertWithoutApplicationsInput
+}
+
+export interface UserUpsertWithWhereUniqueWithoutOrganisationInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutOrganisationDataInput
+  create: UserCreateWithoutOrganisationInput
+}
+
+export interface UserUpdateWithoutOrganisationDataInput {
+  email?: String
+  username?: String
+  password?: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+}
+
+export interface UserUpdateWithWhereUniqueWithoutOrganisationInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutOrganisationDataInput
+}
+
+export interface UserUpdateManyWithoutOrganisationInput {
+  create?: UserCreateWithoutOrganisationInput[] | UserCreateWithoutOrganisationInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutOrganisationInput[] | UserUpdateWithWhereUniqueWithoutOrganisationInput
+  upsert?: UserUpsertWithWhereUniqueWithoutOrganisationInput[] | UserUpsertWithWhereUniqueWithoutOrganisationInput
+}
+
+export interface StageUpdateWithWhereUniqueNestedInput {
+  where: StageWhereUniqueInput
+  data: StageUpdateDataInput
+}
+
+export interface LocationUpdateInput {
+  region?: String
+  city?: String
+  zip?: String
+  country?: CountryUpdateOneInput
+}
+
+export interface OrganisationSubscriptionWhereInput {
+  AND?: OrganisationSubscriptionWhereInput[] | OrganisationSubscriptionWhereInput
+  OR?: OrganisationSubscriptionWhereInput[] | OrganisationSubscriptionWhereInput
+  NOT?: OrganisationSubscriptionWhereInput[] | OrganisationSubscriptionWhereInput
   mutation_in?: MutationType[] | MutationType
   updatedFields_contains?: String
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
-  node?: CandidateMetaWhereInput
+  node?: OrganisationWhereInput
 }
 
-export interface LocationUpsertNestedInput {
-  update: LocationUpdateDataInput
-  create: LocationCreateInput
+export interface CommentWhereInput {
+  AND?: CommentWhereInput[] | CommentWhereInput
+  OR?: CommentWhereInput[] | CommentWhereInput
+  NOT?: CommentWhereInput[] | CommentWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  content?: UserWhereInput
 }
 
-export interface ActionUpdateInput {
-  date?: DateTime
-  type?: String
-  owner?: PersonUpdateOneInput
-}
-
-export interface CandidateUpsertWithoutApplicationsInput {
-  update: CandidateUpdateWithoutApplicationsDataInput
-  create: CandidateCreateWithoutApplicationsInput
+export interface LocationUpdateOneInput {
+  create?: LocationCreateInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: LocationUpdateDataInput
+  upsert?: LocationUpsertNestedInput
 }
 
 /*
@@ -4564,52 +5881,49 @@ export interface PersonPreviousValues {
 }
 
 /*
- * Information about pagination in a connection.
+ * An edge in a connection.
 
  */
-export interface PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor?: String
-  endCursor?: String
+export interface PostEdge {
+  node: Post
+  cursor: String
+}
+
+export interface Comment extends Node {
+  id: ID_Output
+  content: User
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+export interface AggregatePost {
+  count: Int
+}
+
+export interface Person extends Node {
+  id: ID_Output
+}
+
+export interface Task extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  dueAt: DateTime
+  owners?: User[]
 }
 
 export interface Candidate extends Node {
   id: ID_Output
-  tags: String[]
   createdAt: DateTime
   updatedAt: DateTime
+  tags: String[]
   actions?: Action[]
   basic?: CandidateBasic
   meta?: CandidateMeta
   applications?: Application[]
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface PostConnection {
-  pageInfo: PageInfo
-  edges: PostEdge[]
-  aggregate: AggregatePost
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface PersonEdge {
-  node: Person
-  cursor: String
-}
-
 export interface AggregatePerson {
   count: Int
-}
-
-export interface Person extends Node {
-  id: ID_Output
 }
 
 /*
@@ -4622,8 +5936,15 @@ export interface PersonConnection {
   aggregate: AggregatePerson
 }
 
-export interface AggregateStage {
-  count: Int
+/*
+ * Information about pagination in a connection.
+
+ */
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
 }
 
 /*
@@ -4635,7 +5956,144 @@ export interface StageEdge {
   cursor: String
 }
 
+/*
+ * A connection to a list of items.
+
+ */
+export interface PostConnection {
+  pageInfo: PageInfo
+  edges: PostEdge[]
+  aggregate: AggregatePost
+}
+
 export interface AggregateAction {
+  count: Int
+}
+
+export interface Action extends Node {
+  id: ID_Output
+  date: DateTime
+  owner: Person
+  type: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface ActionConnection {
+  pageInfo: PageInfo
+  edges: ActionEdge[]
+  aggregate: AggregateAction
+}
+
+export interface PostSubscriptionPayload {
+  mutation: MutationType
+  node?: Post
+  updatedFields?: String[]
+  previousValues?: PostPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CountryEdge {
+  node: Country
+  cursor: String
+}
+
+export interface PostPreviousValues {
+  id: ID_Output
+  title: String
+  content?: String
+}
+
+export interface AggregateCandidateBasic {
+  count: Int
+}
+
+export interface StagePreviousValues {
+  id: ID_Output
+  name: String
+  position: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CandidateBasicConnection {
+  pageInfo: PageInfo
+  edges: CandidateBasicEdge[]
+  aggregate: AggregateCandidateBasic
+}
+
+export interface OrganisationSubscriptionPayload {
+  mutation: MutationType
+  node?: Organisation
+  updatedFields?: String[]
+  previousValues?: OrganisationPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CandidateMetaEdge {
+  node: CandidateMeta
+  cursor: String
+}
+
+export interface OrganisationPreviousValues {
+  id: ID_Output
+  name: String
+}
+
+export interface AggregateLocation {
+  count: Int
+}
+
+export interface StageSubscriptionPayload {
+  mutation: MutationType
+  node?: Stage
+  updatedFields?: String[]
+  previousValues?: StagePreviousValues
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface LocationConnection {
+  pageInfo: PageInfo
+  edges: LocationEdge[]
+  aggregate: AggregateLocation
+}
+
+export interface CommentSubscriptionPayload {
+  mutation: MutationType
+  node?: Comment
+  updatedFields?: String[]
+  previousValues?: CommentPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+export interface CommentPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+export interface AggregateOffer {
   count: Int
 }
 
@@ -4650,122 +6108,35 @@ export interface Post extends Node {
  * A connection to a list of items.
 
  */
-export interface ActionConnection {
+export interface OfferConnection {
   pageInfo: PageInfo
-  edges: ActionEdge[]
-  aggregate: AggregateAction
+  edges: OfferEdge[]
+  aggregate: AggregateOffer
 }
 
-export interface StagePreviousValues {
-  id: ID_Output
-  name: String
-  position: Int
+export interface TaskSubscriptionPayload {
+  mutation: MutationType
+  node?: Task
+  updatedFields?: String[]
+  previousValues?: TaskPreviousValues
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface CountryEdge {
-  node: Country
+export interface ApplicationEdge {
+  node: Application
   cursor: String
 }
 
-export interface PostSubscriptionPayload {
-  mutation: MutationType
-  node?: Post
-  updatedFields?: String[]
-  previousValues?: PostPreviousValues
-}
-
-export interface AggregateCandidateBasic {
-  count: Int
-}
-
-export interface PostPreviousValues {
+export interface TaskPreviousValues {
   id: ID_Output
-  title: String
-  content?: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface CandidateBasicConnection {
-  pageInfo: PageInfo
-  edges: CandidateBasicEdge[]
-  aggregate: AggregateCandidateBasic
-}
-
-export interface User {
-  firstName: String
-  lastName: String
-  username: String
-  email: String
-  password: String
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface CandidateMetaEdge {
-  node: CandidateMeta
-  cursor: String
-}
-
-export interface CandidateSubscriptionPayload {
-  mutation: MutationType
-  node?: Candidate
-  updatedFields?: String[]
-  previousValues?: CandidatePreviousValues
-}
-
-export interface AggregateLocation {
-  count: Int
-}
-
-export interface CandidatePreviousValues {
-  id: ID_Output
-  tags: String[]
   createdAt: DateTime
-  updatedAt: DateTime
+  dueAt: DateTime
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface LocationConnection {
-  pageInfo: PageInfo
-  edges: LocationEdge[]
-  aggregate: AggregateLocation
-}
-
-export interface StageSubscriptionPayload {
-  mutation: MutationType
-  node?: Stage
-  updatedFields?: String[]
-  previousValues?: StagePreviousValues
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
-}
-
-export interface ApplicationSubscriptionPayload {
-  mutation: MutationType
-  node?: Application
-  updatedFields?: String[]
-}
-
-export interface AggregateOffer {
+export interface AggregateCandidate {
   count: Int
 }
 
@@ -4779,41 +6150,70 @@ export interface Stage extends Node {
  * A connection to a list of items.
 
  */
-export interface OfferConnection {
+export interface CandidateConnection {
   pageInfo: PageInfo
-  edges: OfferEdge[]
-  aggregate: AggregateOffer
+  edges: CandidateEdge[]
+  aggregate: AggregateCandidate
 }
 
-export interface OfferSubscriptionPayload {
+export interface CandidateSubscriptionPayload {
   mutation: MutationType
-  node?: Offer
+  node?: Candidate
   updatedFields?: String[]
-  previousValues?: OfferPreviousValues
+  previousValues?: CandidatePreviousValues
 }
 
-export interface PersonSubscriptionPayload {
-  mutation: MutationType
-  node?: Person
-  updatedFields?: String[]
-  previousValues?: PersonPreviousValues
+export interface BatchPayload {
+  count: Long
 }
 
-export interface OfferPreviousValues {
+export interface CandidatePreviousValues {
   id: ID_Output
-  title: String
-  department?: String
-  description?: String
-  requirements?: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  tags: String[]
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface ApplicationEdge {
-  node: Application
+export interface TaskEdge {
+  node: Task
   cursor: String
+}
+
+export interface User extends Node {
+  id: ID_Output
+  email: String
+  username: String
+  password: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  createdAt: DateTime
+  deletedAt?: DateTime
+  organisation: Organisation
+}
+
+export interface AggregateComment {
+  count: Int
+}
+
+export interface ApplicationSubscriptionPayload {
+  mutation: MutationType
+  node?: Application
+  updatedFields?: String[]
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CommentConnection {
+  pageInfo: PageInfo
+  edges: CommentEdge[]
+  aggregate: AggregateComment
 }
 
 export interface Country extends Node {
@@ -4823,49 +6223,39 @@ export interface Country extends Node {
   telPrefix: Int
 }
 
-export interface AggregateCandidate {
-  count: Int
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
-}
-
 /*
- * A connection to a list of items.
+ * An edge in a connection.
 
  */
-export interface CandidateConnection {
-  pageInfo: PageInfo
-  edges: CandidateEdge[]
-  aggregate: AggregateCandidate
+export interface OrganisationEdge {
+  node: Organisation
+  cursor: String
 }
 
-export interface UserPreviousValues {
-  firstName: String
-  lastName: String
-  username: String
-  email: String
-  password: String
+export interface OfferSubscriptionPayload {
+  mutation: MutationType
+  node?: Offer
+  updatedFields?: String[]
+  previousValues?: OfferPreviousValues
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface PostEdge {
-  node: Post
+export interface PersonEdge {
+  node: Person
   cursor: String
 }
 
-export interface Location {
-  country: Country
-  region: String
-  city: String
-  zip: String
+export interface OfferPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  title: String
+  department?: String
+  description?: String
+  requirements?: String
 }
 
 /*
@@ -4878,21 +6268,22 @@ export interface StageConnection {
   aggregate: AggregateStage
 }
 
-export interface LocationSubscriptionPayload {
-  mutation: MutationType
-  node?: Location
-  updatedFields?: String[]
-  previousValues?: LocationPreviousValues
+export interface Location {
+  country: Country
+  region: String
+  city: String
+  zip: String
 }
 
 export interface AggregateCountry {
   count: Int
 }
 
-export interface LocationPreviousValues {
-  region: String
-  city: String
-  zip: String
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
 }
 
 /*
@@ -4904,15 +6295,16 @@ export interface CandidateBasicEdge {
   cursor: String
 }
 
-export interface Offer extends Node {
+export interface UserPreviousValues {
   id: ID_Output
-  title: String
-  department?: String
-  location?: Location
-  description?: String
-  requirements?: String
-  applications?: Application[]
-  stages?: Stage[]
+  email: String
+  username: String
+  password: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  createdAt: DateTime
+  deletedAt?: DateTime
 }
 
 /*
@@ -4925,19 +6317,28 @@ export interface CandidateMetaConnection {
   aggregate: AggregateCandidateMeta
 }
 
-export interface CandidateMetaSubscriptionPayload {
-  mutation: MutationType
-  node?: CandidateMeta
-  updatedFields?: String[]
-  previousValues?: CandidateMetaPreviousValues
+export interface Offer extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  title: String
+  department?: String
+  location?: Location
+  description?: String
+  requirements?: String
+  applications?: Application[]
+  stages?: Stage[]
 }
 
 export interface AggregateUser {
   count: Int
 }
 
-export interface CandidateMetaPreviousValues {
-  source: String
+export interface LocationSubscriptionPayload {
+  mutation: MutationType
+  node?: Location
+  updatedFields?: String[]
+  previousValues?: LocationPreviousValues
 }
 
 /*
@@ -4949,13 +6350,64 @@ export interface OfferEdge {
   cursor: String
 }
 
+export interface LocationPreviousValues {
+  region: String
+  city: String
+  zip: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface ApplicationConnection {
+  pageInfo: PageInfo
+  edges: ApplicationEdge[]
+  aggregate: AggregateApplication
+}
+
 export interface Application {
   offer: Offer
   candidate: Candidate
   stage: Stage
 }
 
-export interface AggregateApplication {
+export interface AggregateTask {
+  count: Int
+}
+
+export interface CandidateMetaSubscriptionPayload {
+  mutation: MutationType
+  node?: CandidateMeta
+  updatedFields?: String[]
+  previousValues?: CandidateMetaPreviousValues
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface TaskConnection {
+  pageInfo: PageInfo
+  edges: TaskEdge[]
+  aggregate: AggregateTask
+}
+
+export interface CandidateMetaPreviousValues {
+  source: String
+}
+
+export interface AggregateOrganisation {
+  count: Int
+}
+
+export interface Organisation extends Node {
+  id: ID_Output
+  users?: User[]
+  name: String
+}
+
+export interface AggregateStage {
   count: Int
 }
 
@@ -4964,33 +6416,6 @@ export interface CandidateBasicSubscriptionPayload {
   node?: CandidateBasic
   updatedFields?: String[]
   previousValues?: CandidateBasicPreviousValues
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface CandidateEdge {
-  node: Candidate
-  cursor: String
-}
-
-export interface CandidateBasicPreviousValues {
-  firstName: String
-  lastName: String
-  emails: String[]
-  phones: String[]
-}
-
-export interface Action extends Node {
-  id: ID_Output
-  date: DateTime
-  owner: Person
-  type: String
-}
-
-export interface CandidateMeta {
-  source: String
 }
 
 /*
@@ -5003,11 +6428,12 @@ export interface CountryConnection {
   aggregate: AggregateCountry
 }
 
-export interface CountrySubscriptionPayload {
-  mutation: MutationType
-  node?: Country
-  updatedFields?: String[]
-  previousValues?: CountryPreviousValues
+export interface CandidateBasicPreviousValues {
+  firstName: String
+  lastName: String
+  emails: String[]
+  phones: String[]
+  links: String[]
 }
 
 /*
@@ -5019,8 +6445,36 @@ export interface LocationEdge {
   cursor: String
 }
 
-export interface BatchPayload {
-  count: Long
+export interface CandidateMeta {
+  source: String
+}
+
+export interface AggregateApplication {
+  count: Int
+}
+
+export interface CountrySubscriptionPayload {
+  mutation: MutationType
+  node?: Country
+  updatedFields?: String[]
+  previousValues?: CountryPreviousValues
+}
+
+export interface PersonSubscriptionPayload {
+  mutation: MutationType
+  node?: Person
+  updatedFields?: String[]
+  previousValues?: PersonPreviousValues
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface OrganisationConnection {
+  pageInfo: PageInfo
+  edges: OrganisationEdge[]
+  aggregate: AggregateOrganisation
 }
 
 export interface ActionPreviousValues {
@@ -5041,6 +6495,7 @@ export interface CandidateBasic {
   lastName: String
   emails: String[]
   phones: String[]
+  links: String[]
 }
 
 export interface CountryPreviousValues {
@@ -5051,13 +6506,30 @@ export interface CountryPreviousValues {
 }
 
 /*
- * A connection to a list of items.
+ * An edge in a connection.
 
  */
-export interface ApplicationConnection {
-  pageInfo: PageInfo
-  edges: ApplicationEdge[]
-  aggregate: AggregateApplication
+export interface ActionEdge {
+  node: Action
+  cursor: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CommentEdge {
+  node: Comment
+  cursor: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CandidateEdge {
+  node: Candidate
+  cursor: String
 }
 
 /*
@@ -5075,22 +6547,9 @@ export interface AggregateCandidateMeta {
 }
 
 /*
- * An edge in a connection.
-
- */
-export interface ActionEdge {
-  node: Action
-  cursor: String
-}
-
-export interface AggregatePost {
-  count: Int
-}
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type Int = number
+export type Boolean = boolean
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -5105,13 +6564,13 @@ Long can represent values between -(2^63) and 2^63 - 1.
 export type Long = string
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
-
-/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string
 
 export type DateTime = Date | string
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number

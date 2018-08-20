@@ -1,18 +1,5 @@
-mutation {
-  CreateFirstPostWithUser: createPost(
-    data: {
-      title: "First Post"
-      content: "First Post Content"
-      author: {
-        create: {
-          name: "Admin Admin"
-          username: "admin"
-          email: "admin@email.com"
-          password: "admin"
-        }
-      }
-    }
-  ) {
+mutation CreateOrganisation {
+  createOrganisation(data: { name: "Demo Company" }) {
     id
   }
 }
