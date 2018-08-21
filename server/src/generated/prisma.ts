@@ -2492,7 +2492,7 @@ input TaskWhereUniqueInput {
 
 type User implements Node {
   id: ID!
-  workspace(where: WorkspaceWhereInput): Workspace
+  workspace(where: WorkspaceWhereInput): Workspace!
   email: String!
   username: String!
   password: String!
@@ -2521,7 +2521,7 @@ input UserCreateInput {
   lastName: String
   lastLogin: DateTime
   deletedAt: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
+  workspace: WorkspaceCreateOneWithoutUsersInput!
 }
 
 input UserCreateManyInput {
@@ -3161,7 +3161,6 @@ input WorkspaceUpdateOneInput {
 input WorkspaceUpdateOneWithoutUsersInput {
   create: WorkspaceCreateWithoutUsersInput
   connect: WorkspaceWhereUniqueInput
-  disconnect: Boolean
   delete: Boolean
   update: WorkspaceUpdateWithoutUsersDataInput
   upsert: WorkspaceUpsertWithoutUsersInput
@@ -4107,7 +4106,7 @@ export interface UserCreateInput {
   lastName?: String
   lastLogin?: DateTime
   deletedAt?: DateTime
-  workspace?: WorkspaceCreateOneWithoutUsersInput
+  workspace: WorkspaceCreateOneWithoutUsersInput
 }
 
 export interface ApplicationUpdateManyWithoutOfferInput {
@@ -4680,7 +4679,6 @@ export interface OfferUpsertWithoutApplicationsInput {
 export interface WorkspaceUpdateOneWithoutUsersInput {
   create?: WorkspaceCreateWithoutUsersInput
   connect?: WorkspaceWhereUniqueInput
-  disconnect?: Boolean
   delete?: Boolean
   update?: WorkspaceUpdateWithoutUsersDataInput
   upsert?: WorkspaceUpsertWithoutUsersInput
@@ -5113,7 +5111,7 @@ export interface LocationSubscriptionPayload {
 
 export interface User extends Node {
   id: ID_Output
-  workspace?: Workspace
+  workspace: Workspace
   email: String
   username: String
   password: String

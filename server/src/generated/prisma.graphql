@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/vadistic-7a6c16/vats/dev
-# timestamp: Tue Aug 21 2018 20:36:51 GMT+0200 (Central European Summer Time)
+# timestamp: Tue Aug 21 2018 22:12:41 GMT+0200 (Central European Summer Time)
 
 type AggregateApplication {
   count: Int!
@@ -2356,7 +2356,7 @@ input TaskWhereUniqueInput {
 
 type User implements Node {
   id: ID!
-  workspace(where: WorkspaceWhereInput): Workspace
+  workspace(where: WorkspaceWhereInput): Workspace!
   email: String!
   username: String!
   password: String!
@@ -2385,7 +2385,7 @@ input UserCreateInput {
   lastName: String
   lastLogin: DateTime
   deletedAt: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
+  workspace: WorkspaceCreateOneWithoutUsersInput!
 }
 
 input UserCreateManyInput {
@@ -3025,7 +3025,6 @@ input WorkspaceUpdateOneInput {
 input WorkspaceUpdateOneWithoutUsersInput {
   create: WorkspaceCreateWithoutUsersInput
   connect: WorkspaceWhereUniqueInput
-  disconnect: Boolean
   delete: Boolean
   update: WorkspaceUpdateWithoutUsersDataInput
   upsert: WorkspaceUpsertWithoutUsersInput

@@ -1,7 +1,36 @@
-import { getUserId } from 'graphql-authentication'
+import {forwardTo} from 'prisma-binding'
 
-import { Context } from '../utils'
+// Workspace
+export const workspace = forwardTo('db')
+export const workspaces = forwardTo('db')
 
-export const users = async (root, args, ctx: Context, info) => {
-  return await ctx.db.query.users(args, info)
-}
+// User
+export const user = forwardTo('db')
+export const users = forwardTo('db')
+
+// Offer
+export const offer = forwardTo('db')
+export const offers = forwardTo('db')
+
+// Stage
+export const stage = forwardTo('db')
+export const stages = forwardTo('db')
+
+// Application
+export const application = forwardTo('db')
+export const applications = forwardTo('db')
+
+// Candidate
+export const candidate = forwardTo('db')
+export const candidates = forwardTo('db')
+
+// Comment
+export const comment = forwardTo('db')
+export const comments = forwardTo('db')
+
+// Task
+export const task = forwardTo('db')
+export const tasks = forwardTo('db')
+
+
+

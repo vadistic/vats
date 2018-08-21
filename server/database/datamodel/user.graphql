@@ -6,7 +6,7 @@ type Workspace {
 
 type User {
   id: ID! @unique
-  workspace: Workspace
+  workspace: Workspace!
   email: String! @unique
   username: String!
   password: String!
