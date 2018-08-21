@@ -1,15 +1,8 @@
-type Workspace {
-  id: ID! @unique
-  users: [User!]!
-  name: String!
-}
-
 type User {
-  id: ID! @unique
+  id: ID!
   workspace: Workspace!
-  email: String! @unique
+  email: String!
   username: String!
-  password: String!
   firstName: String
   lastName: String
   lastLogin: DateTime

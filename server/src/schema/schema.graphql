@@ -13,7 +13,8 @@ type Query {
   ): [Workspace]!
 
   # User
-  # import User, UserWhereUniqueInput, UserWhereInput, UserOrderByInput  from "../generated/prisma.graphql"
+  # import UserWhereUniqueInput, UserWhereInput, UserOrderByInput  from "../generated/prisma.graphql"
+  # import User from './user.graphql'
   user(where: UserWhereUniqueInput!): User
   users(
     where: UserWhereInput
@@ -105,6 +106,14 @@ type Query {
 }
 
 type Mutation {
+  # Authentication
+  # import AuthPayload from './auth.graphql'
+  signup(password: String!, username: String!, inviteId: ID!): AuthPayload
+  login(email: String!, password: String!): AuthPayload!
+
+  # import Invite from '../generated/prisma.graphql'
+  invite(email: String!, workspaceId: ID!): Invite!
+
   # Workspace
   # import Workspace, WorkspaceCreateInput, WorkspaceUpdateInput, WorkspaceWhereUniqueInput  from "../generated/prisma.graphql"
   createWorkspace(data: WorkspaceCreateInput!): Workspace!
@@ -112,7 +121,9 @@ type Mutation {
   deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace
 
   # User
-  # import User, UserCreateInput, UserUpdateInput, UserWhereUniqueInput  from "../generated/prisma.graphql"
+
+  # import UserCreateInput, UserUpdateInput, UserWhereUniqueInput  from "../generated/prisma.graphql"
+  # import User from './user.graphql'
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteUser(where: UserWhereUniqueInput!): User

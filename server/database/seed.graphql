@@ -1,5 +1,0 @@
-mutation CreateOrganisation {
-  createOrganisation(data: { name: "Demo Company" }) {
-    id
-  }
-}

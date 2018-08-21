@@ -1,0 +1,28 @@
+type Invite {
+  id: ID! @unique
+  email: String!
+  workspace: Workspace!
+  createdAt: DateTime!
+  expireAt: DateTime!
+  invitedBy: User!
+}
+
+type Workspace {
+  id: ID! @unique
+  users: [User!]!
+  name: String!
+  invites: [Invite!]!
+}
+
+type User {
+  id: ID! @unique
+  workspace: Workspace!
+  email: String! @unique
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  createdAt: DateTime!
+  deletedAt: DateTime
+}
