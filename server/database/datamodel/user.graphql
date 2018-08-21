@@ -1,0 +1,18 @@
+type Workspace {
+  id: ID! @unique
+  users: [User!]!
+  name: String!
+}
+
+type User {
+  id: ID! @unique
+  workspace: Workspace
+  email: String! @unique
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  lastLogin: DateTime
+  createdAt: DateTime!
+  deletedAt: DateTime
+}

@@ -1,0 +1,35 @@
+type Location {
+  id: ID! @unique
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+type Stage {
+  id: ID! @unique
+  name: String!
+  description: String
+  position: Int!
+}
+
+type Application {
+  id: ID! @unique
+  offer: Offer!
+  candidate: Candidate!
+  stage: Stage!
+}
+
+type Offer {
+  id: ID! @unique
+  workspace: Workspace
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  department: String
+  location: Location
+  description: String
+  requirements: String
+  applications: [Application!]!
+  stages: [Stage!]!
+}

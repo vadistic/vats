@@ -1,7 +1,7 @@
 {
   "name": "server",
   "scripts": {
-    "start": "dotenv -e .env.dev ts-node src/index.ts",
+    "start": "dotenv -e .env ts-node src/index.ts",
     "dev": "npm-run-all --parallel start playground",
     "playground": "graphql playground"
   },
@@ -14,6 +14,7 @@
     "graphql-iso-date": "^3.5.0",
     "graphql-shield": "^2.2.7",
     "graphql-yoga": "^1.16.1",
+    "jsonwebtoken": "^8.3.0",
     "prisma-binding": "^2.1.4"
   },
   "devDependencies": {

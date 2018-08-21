@@ -3,7 +3,10 @@ endpoint: https://eu1.prisma.sh/vadistic-7a6c16/vats/dev
 
 # The file containing the definition of your data model.
 datamodel:
-  - datamodel.graphql
+  - datamodel/user.graphql
+  - datamodel/candidate.graphql
+  - datamodel/offer.graphql
+  - datamodel/types.graphql
 
 # Seed your service with initial data based on `seed.graphql`.
 seed:
