@@ -2,23 +2,32 @@ import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 import * as dayjs from 'dayjs'
 
-import { getUserId, Context, Mutation } from '../../utils'
+import { getId, Context, Mutation } from '../../utils'
+
+const jwtPayload = (userId, workspaceId) => ({
+  // userId
+  uid: userId,
+  // workspaceId
+  wid: workspaceId,
+  // token expiration date
+  exp: dayjs()
+    .add(7, 'day')
+    .format(),
+})
 
 export const invite = async (parent, { email }, ctx: Context, info) => {
-  const userId = getUserId(ctx)
+  const { userId, workspaceId } = getId(ctx)
 
   const expireAt = dayjs()
     .add(7, 'day')
     .format()
-
-  const user = await ctx.db.query.user({ where: { id: userId } }, `{workspace {id}}`)
 
   return ctx.db.mutation.createInvite(
     {
       data: {
         email,
         expireAt,
-        workspace: { connect: { id: user.workspace.id } },
+        workspace: { connect: { id: workspaceId } },
         invitedBy: { connect: { id: userId } },
       },
     },
@@ -43,14 +52,15 @@ export const signup: Mutation['signup'] = async (parent, args, ctx, info) => {
   })
 
   return {
-    token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
+    // or invite.workspace.id as wid - check!
+    token: jwt.sign(jwtPayload(user.id, user.workspace.id), process.env.APP_SECRET),
     user,
-    x: 'as'
   }
 }
 
 export const login = async (parent, { email, password }, ctx: Context, info) => {
   const user = await ctx.db.query.user({ where: { email } })
+
   if (!user) {
     throw new Error(`No such user found for email: ${email}`)
   }
@@ -61,7 +71,7 @@ export const login = async (parent, { email, password }, ctx: Context, info) => 
   }
 
   return {
-    token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
+    token: jwt.sign(jwtPayload(user.id, user.workspace.id), process.env.APP_SECRET),
     user,
   }
 }
