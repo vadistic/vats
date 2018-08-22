@@ -2,20 +2,14 @@ import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 import * as dayjs from 'dayjs'
 
-import { getId, Context, Mutation } from '../../utils'
+import { getId, Mutation } from '../../utils'
 
-const jwtPayload = (userId, workspaceId) => ({
-  // userId
-  uid: userId,
-  // workspaceId
-  wid: workspaceId,
-  // token expiration date
-  exp: dayjs()
-    .add(7, 'day')
-    .format(),
-})
+export interface JWTPayload {
+  userId: string
+  workspaceId: string
+}
 
-export const invite = async (parent, { email }, ctx: Context, info) => {
+export const invite: Mutation['invite'] = async (parent, { email }, ctx, info) => {
   const { userId, workspaceId } = getId(ctx)
 
   const expireAt = dayjs()
@@ -36,11 +30,22 @@ export const invite = async (parent, { email }, ctx: Context, info) => {
 }
 
 export const signup: Mutation['signup'] = async (parent, args, ctx, info) => {
-  const password = await bcrypt.hash(args.password, 10)
   const invite = await ctx.db.query.invite(
     { where: { id: args.inviteId } },
-    `{email, workspace {id}}`
+    `{email, expireAt, workspace {id}}`
   )
+
+  if (!invite) {
+    throw Error('Ivalid Invitation Token')
+  }
+
+  if (dayjs(invite.expireAt).isBefore(dayjs())) {
+    throw Error('Invitation token expired')
+  }
+
+  const password = await bcrypt.hash(args.password, 10)
+
+  ctx.db.mutation.deleteInvite({ where: { id: args.inviteId } })
 
   const user = await ctx.db.mutation.createUser({
     data: {
@@ -52,26 +57,32 @@ export const signup: Mutation['signup'] = async (parent, args, ctx, info) => {
   })
 
   return {
-    // or invite.workspace.id as wid - check!
-    token: jwt.sign(jwtPayload(user.id, user.workspace.id), process.env.APP_SECRET),
+    token: jwt.sign({ userId: user.id, workspaceId: invite.workspace.id }, process.env.APP_SECRET, {
+      expiresIn: '7 days',
+    }),
     user,
   }
 }
 
-export const login = async (parent, { email, password }, ctx: Context, info) => {
-  const user = await ctx.db.query.user({ where: { email } })
+export const login: Mutation['login'] = async (parent, { email, password }, ctx, info) => {
+  const user = await ctx.db.query.user({ where: { email } }, `{id, password, workspace {id}}`)
+
+  console.log(user)
 
   if (!user) {
     throw new Error(`No such user found for email: ${email}`)
   }
 
   const valid = await bcrypt.compare(password, user.password)
+
   if (!valid) {
     throw new Error('Invalid password')
   }
 
   return {
-    token: jwt.sign(jwtPayload(user.id, user.workspace.id), process.env.APP_SECRET),
+    token: jwt.sign({ userId: user.id, workspaceId: user.workspace.id }, process.env.APP_SECRET, {
+      expiresIn: '7 days',
+    }),
     user,
   }
 }

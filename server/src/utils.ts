@@ -5,25 +5,19 @@ import * as dayjs from 'dayjs'
 import { Mutation as ApiMutation, Query as ApiQuery, AuthPayload } from './generated/app'
 import { Prisma } from './generated/prisma'
 
-interface JWTPayload {
-  uid: string
-  wip: string
-  exp: string
-}
+import { JWTPayload } from './resolvers/Mutation/auth'
 
 export const getId = (ctx: Context) => {
   const Authorization = ctx.request.get('Authorization')
 
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')
-    const { uid, wip, exp } = jwt.verify(token, process.env.APP_SECRET) as JWTPayload
+    const { userId, workspaceId } = jwt.verify(token, process.env.APP_SECRET) as JWTPayload
 
-    if (!(uid && wip && exp)) {
+    if (!(userId && workspaceId)) {
       throw new Error('Invalid Authorization Token')
-    } else if (dayjs(exp).isBefore(dayjs())) {
-      throw new Error('Expired Authorization Token')
     } else {
-      return { userId: uid, workspaceId: wip }
+      return { userId, workspaceId }
     }
   }
 
