@@ -4,7 +4,14 @@ projects:
     includes: ['**/*.graphql']
     extensions:
       endpoints:
-        default: http://localhost:4000
+        default: 'http://localhost:4000'
+      codegen:
+        - generator: graphql-binding
+          language: typescript
+          input: src/schema/schema.ts
+          output:
+            binding: src/generated/app.ts
+
   database:
     schemaPath: src/generated/prisma.graphql
     includes: ['**/*.graphql']

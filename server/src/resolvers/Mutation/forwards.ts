@@ -1,5 +1,10 @@
 import { forwardTo } from 'prisma-binding'
 
+// Invite
+export const createInvite = forwardTo('db')
+export const updateInvite = forwardTo('db')
+export const deleteInvite = forwardTo('db')
+
 // Workspace
 export const createWorkspace = forwardTo('db')
 export const updateWorkspace = forwardTo('db')
