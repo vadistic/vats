@@ -4,9 +4,28 @@ import * as dayjs from 'dayjs'
 
 import { getId, Mutation } from '../../utils'
 
-export interface JWTPayload {
-  userId: string
-  workspaceId: string
+export const createWorkspace: Mutation['createWorkspace'] = async (
+  parent,
+  { name, password: passwordRaw, ...args },
+  ctx,
+  info
+) => {
+  const password = await bcrypt.hash(passwordRaw, 10)
+
+  const workspace = await ctx.db.mutation.createWorkspace({
+    data: { name },
+  })
+
+  const user = await ctx.db.mutation.createUser({
+    data: { ...args, password, workspace: { connect: { id: workspace.id } } },
+  })
+
+  return {
+    token: jwt.sign({ userId: user.id, workspaceId: workspace.id }, process.env.APP_SECRET, {
+      expiresIn: '7 days',
+    }),
+    user,
+  }
 }
 
 export const invite: Mutation['invite'] = async (parent, { email }, ctx, info) => {

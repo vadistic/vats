@@ -5,7 +5,10 @@ import * as dayjs from 'dayjs'
 import { Mutation as ApiMutation, Query as ApiQuery, AuthPayload } from './generated/app'
 import { Prisma } from './generated/prisma'
 
-import { JWTPayload } from './resolvers/Mutation/auth'
+export interface JWTPayload {
+  userId: string
+  workspaceId: string
+}
 
 export const getId = (ctx: Context) => {
   const Authorization = ctx.request.get('Authorization')

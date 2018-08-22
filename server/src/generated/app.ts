@@ -25,13 +25,13 @@ export interface Query {
   }
 
 export interface Mutation {
-    signup: <T = AuthPayload | null>(args: { password: String, username: String, inviteId: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createWorkspace: <T = AuthPayload>(args: { name: String, firstName: String, lastName: String, email: String, username: String, password: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    signup: <T = AuthPayload>(args: { password: String, username: String, inviteId: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     login: <T = AuthPayload>(args: { email: String, password: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     invite: <T = Invite>(args: { email: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createInvite: <T = Invite>(args: { data: InviteCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateInvite: <T = Invite | null>(args: { data: InviteUpdateInput, where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteInvite: <T = Invite | null>(args: { where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createWorkspace: <T = Workspace>(args: { data: WorkspaceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateWorkspace: <T = Workspace | null>(args: { data: WorkspaceUpdateInput, where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteWorkspace: <T = Workspace | null>(args: { where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -188,10 +188,15 @@ export type CandidateOrderByInput =   'id_ASC' |
   'source_ASC' |
   'source_DESC'
 
-export interface WorkspaceUpdateInput {
-  name?: String
-  users?: UserUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
+export interface UserUpdateInput {
+  email?: String
+  username?: String
+  password?: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutUsersInput
 }
 
 export interface TaskUpdateInput {
@@ -218,22 +223,6 @@ export interface OfferCreateOneWithoutApplicationsInput {
   connect?: OfferWhereUniqueInput
 }
 
-export interface UserUpdateInput {
-  email?: String
-  username?: String
-  password?: String
-  firstName?: String
-  lastName?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutUsersInput
-}
-
-export interface ApplicationCreateManyWithoutOfferInput {
-  create?: ApplicationCreateWithoutOfferInput[] | ApplicationCreateWithoutOfferInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-}
-
 export interface OfferCreateInput {
   title: String
   department?: String
@@ -245,14 +234,25 @@ export interface OfferCreateInput {
   stages?: StageCreateManyInput
 }
 
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
+export interface ApplicationCreateManyWithoutOfferInput {
+  create?: ApplicationCreateWithoutOfferInput[] | ApplicationCreateWithoutOfferInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
 }
 
 export interface WorkspaceCreateOneInput {
   create?: WorkspaceCreateInput
   connect?: WorkspaceWhereUniqueInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
+export interface WorkspaceCreateInput {
+  name: String
+  users?: UserCreateManyWithoutWorkspaceInput
+  invites?: InviteCreateManyWithoutWorkspaceInput
 }
 
 export interface CommentUpdateInput {
@@ -940,10 +940,10 @@ export interface ApplicationUpdateManyWithoutOfferInput {
   upsert?: ApplicationUpsertWithWhereUniqueWithoutOfferInput[] | ApplicationUpsertWithWhereUniqueWithoutOfferInput
 }
 
-export interface WorkspaceCreateInput {
-  name: String
-  users?: UserCreateManyWithoutWorkspaceInput
-  invites?: InviteCreateManyWithoutWorkspaceInput
+export interface WorkspaceUpdateInput {
+  name?: String
+  users?: UserUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
 }
 
 export interface ApplicationUpdateWithWhereUniqueWithoutOfferInput {

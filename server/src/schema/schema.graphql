@@ -120,8 +120,17 @@ type Query {
 
 type Mutation {
   # Authentication
+
   # import AuthPayload from './auth.graphql'
-  signup(password: String!, username: String!, inviteId: ID!): AuthPayload
+  createWorkspace(
+    name: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    username: String!
+    password: String!
+  ): AuthPayload!
+  signup(password: String!, username: String!, inviteId: ID!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
 
   # import Invite from '../generated/prisma.graphql'
@@ -133,8 +142,7 @@ type Mutation {
   deleteInvite(where: InviteWhereUniqueInput!): Invite
 
   # Workspace
-  # import Workspace, WorkspaceCreateInput, WorkspaceUpdateInput, WorkspaceWhereUniqueInput  from "../generated/prisma.graphql"
-  createWorkspace(data: WorkspaceCreateInput!): Workspace!
+  # import Workspace, WorkspaceUpdateInput, WorkspaceWhereUniqueInput  from "../generated/prisma.graphql"
   updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace
   deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace
 
