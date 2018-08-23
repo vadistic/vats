@@ -30,6 +30,7 @@ type Mutation {
 
   # import Invite from "../../generated/prisma.graphql"
   createInvite(data: InviteCreateInput): Invite!
+  updateInvite(where: InviteWhereUniqueInput): Invite!
   # import InviteWhereUniqueInput from "../../generated/prisma.graphql"
-  deleteInvite(data: InviteWhereUniqueInput): Invite!
+  deleteInvite(where: InviteWhereUniqueInput): Invite!
 }

@@ -1,9 +1,11 @@
 import { GraphQLServer } from 'graphql-yoga'
-import { importSchema } from 'graphql-import'
 import { Prisma } from 'prisma-binding'
 
 import * as resolvers from './resolvers'
-import permissions from './permissions'
+import permissions from './middleware/permissions'
+import filters from './middleware/filters'
+
+
 
 const server = new GraphQLServer({
   typeDefs: 'src/schema/schema.graphql',
@@ -11,7 +13,7 @@ const server = new GraphQLServer({
   resolverValidationOptions: {
     requireResolversForResolveType: false,
   },
-  middlewares: [permissions],
+  middlewares: [filters, permissions],
   context: req => ({
     ...req,
     db: new Prisma({

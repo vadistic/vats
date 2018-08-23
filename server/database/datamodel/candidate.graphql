@@ -1,6 +1,6 @@
 type Candidate implements Person {
   id: ID! @unique
-  workspace: Workspace
+  workspace: Workspace!
   createdAt: DateTime!
   updatedAt: DateTime!
   tags: [String!]

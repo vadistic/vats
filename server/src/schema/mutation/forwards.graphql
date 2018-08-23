@@ -1,22 +1,4 @@
 type Mutation {
-  # Invite
-  # import Invite, InviteCreateInput, InviteUpdateInput, InviteWhereUniqueInput from "../../generated/prisma.graphql"
-  createInvite(data: InviteCreateInput!): Invite!
-  updateInvite(data: InviteUpdateInput!, where: InviteWhereUniqueInput!): Invite
-  deleteInvite(where: InviteWhereUniqueInput!): Invite
-
-  # Workspace
-  # import Workspace, WorkspaceUpdateInput, WorkspaceWhereUniqueInput from "../../generated/prisma.graphql"
-  updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace
-  deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace
-
-  # User
-  # import UserCreateInput, UserUpdateInput, UserWhereUniqueInput from "../../generated/prisma.graphql"
-  # import User from '../types/user.graphql'
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteUser(where: UserWhereUniqueInput!): User
-
   # Offer
   # import Offer, OfferCreateInput, OfferUpdateInput, OfferWhereUniqueInput from "../../generated/prisma.graphql"
   createOffer(data: OfferCreateInput!): Offer!

@@ -9,3 +9,483 @@ type User {
   createdAt: DateTime!
   deletedAt: DateTime
 }
+
+input UserWhereUniqueInput {
+  id: ID
+}
+
+input UserWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [UserWhereInput!]
+
+  """
+  Logical OR on all given filters.
+  """
+  OR: [UserWhereInput!]
+
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  email: String
+
+  """
+  All values that are not equal to given value.
+  """
+  email_not: String
+
+  """
+  All values that are contained in given list.
+  """
+  email_in: [String!]
+
+  """
+  All values that are not contained in given list.
+  """
+  email_not_in: [String!]
+
+  """
+  All values less than the given value.
+  """
+  email_lt: String
+
+  """
+  All values less than or equal the given value.
+  """
+  email_lte: String
+
+  """
+  All values greater than the given value.
+  """
+  email_gt: String
+
+  """
+  All values greater than or equal the given value.
+  """
+  email_gte: String
+
+  """
+  All values containing the given string.
+  """
+  email_contains: String
+
+  """
+  All values not containing the given string.
+  """
+  email_not_contains: String
+
+  """
+  All values starting with the given string.
+  """
+  email_starts_with: String
+
+  """
+  All values not starting with the given string.
+  """
+  email_not_starts_with: String
+
+  """
+  All values ending with the given string.
+  """
+  email_ends_with: String
+
+  """
+  All values not ending with the given string.
+  """
+  email_not_ends_with: String
+  username: String
+
+  """
+  All values that are not equal to given value.
+  """
+  username_not: String
+
+  """
+  All values that are contained in given list.
+  """
+  username_in: [String!]
+
+  """
+  All values that are not contained in given list.
+  """
+  username_not_in: [String!]
+
+  """
+  All values less than the given value.
+  """
+  username_lt: String
+
+  """
+  All values less than or equal the given value.
+  """
+  username_lte: String
+
+  """
+  All values greater than the given value.
+  """
+  username_gt: String
+
+  """
+  All values greater than or equal the given value.
+  """
+  username_gte: String
+
+  """
+  All values containing the given string.
+  """
+  username_contains: String
+
+  """
+  All values not containing the given string.
+  """
+  username_not_contains: String
+
+  """
+  All values starting with the given string.
+  """
+  username_starts_with: String
+
+  """
+  All values not starting with the given string.
+  """
+  username_not_starts_with: String
+
+  """
+  All values ending with the given string.
+  """
+  username_ends_with: String
+
+  """
+  All values not ending with the given string.
+  """
+  username_not_ends_with: String
+  firstName: String
+
+  """
+  All values that are not equal to given value.
+  """
+  firstName_not: String
+
+  """
+  All values that are contained in given list.
+  """
+  firstName_in: [String!]
+
+  """
+  All values that are not contained in given list.
+  """
+  firstName_not_in: [String!]
+
+  """
+  All values less than the given value.
+  """
+  firstName_lt: String
+
+  """
+  All values less than or equal the given value.
+  """
+  firstName_lte: String
+
+  """
+  All values greater than the given value.
+  """
+  firstName_gt: String
+
+  """
+  All values greater than or equal the given value.
+  """
+  firstName_gte: String
+
+  """
+  All values containing the given string.
+  """
+  firstName_contains: String
+
+  """
+  All values not containing the given string.
+  """
+  firstName_not_contains: String
+
+  """
+  All values starting with the given string.
+  """
+  firstName_starts_with: String
+
+  """
+  All values not starting with the given string.
+  """
+  firstName_not_starts_with: String
+
+  """
+  All values ending with the given string.
+  """
+  firstName_ends_with: String
+
+  """
+  All values not ending with the given string.
+  """
+  firstName_not_ends_with: String
+  lastName: String
+
+  """
+  All values that are not equal to given value.
+  """
+  lastName_not: String
+
+  """
+  All values that are contained in given list.
+  """
+  lastName_in: [String!]
+
+  """
+  All values that are not contained in given list.
+  """
+  lastName_not_in: [String!]
+
+  """
+  All values less than the given value.
+  """
+  lastName_lt: String
+
+  """
+  All values less than or equal the given value.
+  """
+  lastName_lte: String
+
+  """
+  All values greater than the given value.
+  """
+  lastName_gt: String
+
+  """
+  All values greater than or equal the given value.
+  """
+  lastName_gte: String
+
+  """
+  All values containing the given string.
+  """
+  lastName_contains: String
+
+  """
+  All values not containing the given string.
+  """
+  lastName_not_contains: String
+
+  """
+  All values starting with the given string.
+  """
+  lastName_starts_with: String
+
+  """
+  All values not starting with the given string.
+  """
+  lastName_not_starts_with: String
+
+  """
+  All values ending with the given string.
+  """
+  lastName_ends_with: String
+
+  """
+  All values not ending with the given string.
+  """
+  lastName_not_ends_with: String
+  lastLogin: DateTime
+
+  """
+  All values that are not equal to given value.
+  """
+  lastLogin_not: DateTime
+
+  """
+  All values that are contained in given list.
+  """
+  lastLogin_in: [DateTime!]
+
+  """
+  All values that are not contained in given list.
+  """
+  lastLogin_not_in: [DateTime!]
+
+  """
+  All values less than the given value.
+  """
+  lastLogin_lt: DateTime
+
+  """
+  All values less than or equal the given value.
+  """
+  lastLogin_lte: DateTime
+
+  """
+  All values greater than the given value.
+  """
+  lastLogin_gt: DateTime
+
+  """
+  All values greater than or equal the given value.
+  """
+  lastLogin_gte: DateTime
+  createdAt: DateTime
+
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  deletedAt: DateTime
+
+  """
+  All values that are not equal to given value.
+  """
+  deletedAt_not: DateTime
+
+  """
+  All values that are contained in given list.
+  """
+  deletedAt_in: [DateTime!]
+
+  """
+  All values that are not contained in given list.
+  """
+  deletedAt_not_in: [DateTime!]
+
+  """
+  All values less than the given value.
+  """
+  deletedAt_lt: DateTime
+
+  """
+  All values less than or equal the given value.
+  """
+  deletedAt_lte: DateTime
+
+  """
+  All values greater than the given value.
+  """
+  deletedAt_gt: DateTime
+
+  """
+  All values greater than or equal the given value.
+  """
+  deletedAt_gte: DateTime
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+  lastLogin_ASC
+  lastLogin_DESC
+  createdAt_ASC
+  createdAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}

@@ -1,10 +1,5 @@
 import { forwardTo } from 'prisma-binding'
 
-// User
-export const createUser = forwardTo('db')
-export const updateUser = forwardTo('db')
-export const deleteUser = forwardTo('db')
-
 // Offer
 export const createOffer = forwardTo('db')
 export const updateOffer = forwardTo('db')

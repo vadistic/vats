@@ -24,7 +24,7 @@ export const getId = (ctx: Context) => {
     }
   }
 
-  throw new Error('Not Authorized')
+  throw new Error('Not Authorized!')
 }
 
 export interface Context {

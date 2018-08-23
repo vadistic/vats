@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 import * as dayjs from 'dayjs'
+import { forwardTo } from 'prisma-binding'
 
 import { getId, Mutation } from '../../utils'
 
@@ -28,31 +29,6 @@ export const createWorkspace: Mutation['createWorkspace'] = async (
   }
 }
 
-export const createInvite: Mutation['createInvite'] = async (
-  parent,
-  { data: { email } },
-  ctx,
-  info
-) => {
-  const { userId, workspaceId } = getId(ctx)
-
-  const expireAt = dayjs()
-    .add(7, 'day')
-    .format()
-
-  return ctx.db.mutation.createInvite(
-    {
-      data: {
-        email,
-        expireAt,
-        workspace: { connect: { id: workspaceId } },
-        invitedBy: { connect: { id: userId } },
-      },
-    },
-    info
-  )
-}
-
 export const signup: Mutation['signup'] = async (
   parent,
   { data: { inviteId, password: passwordRaw, username } },
@@ -65,16 +41,20 @@ export const signup: Mutation['signup'] = async (
   )
 
   if (!invite) {
-    throw Error('Ivalid Invitation Token')
+    throw Error('Ivalid Invitation')
   }
 
   if (dayjs(invite.expireAt).isBefore(dayjs())) {
-    throw Error('Invitation token expired')
+    throw Error('Invitation expired')
   }
 
   const password = await bcrypt.hash(passwordRaw, 10)
 
-  ctx.db.mutation.deleteInvite({ where: { id: inviteId } })
+  const deleteInvite = await ctx.db.mutation.deleteInvite({ where: { id: inviteId } })
+
+  if (!deleteInvite) {
+    throw Error('Signup processing failed (cannot delete invitation)')
+  }
 
   const user = await ctx.db.mutation.createUser({
     data: {
@@ -84,6 +64,10 @@ export const signup: Mutation['signup'] = async (
       workspace: { connect: { id: invite.workspace.id } },
     },
   })
+
+  if (!user) {
+    throw Error('Signup processing failed (cannot create user)')
+  }
 
   return {
     token: jwt.sign({ userId: user.id, workspaceId: invite.workspace.id }, process.env.APP_SECRET, {
@@ -118,3 +102,47 @@ export const login: Mutation['login'] = async (
     user,
   }
 }
+
+export const createInvite: Mutation['createInvite'] = async (
+  parent,
+  { data: { email } },
+  ctx,
+  info
+) => {
+  const { userId, workspaceId } = getId(ctx)
+
+  const expireAt = dayjs()
+    .add(7, 'day')
+    .format()
+
+  // TODO: trriger invitation email
+
+  return ctx.db.mutation.createInvite(
+    {
+      data: {
+        email,
+        expireAt,
+        workspace: { connect: { id: workspaceId } },
+        invitedBy: { connect: { id: userId } },
+      },
+    },
+    info
+  )
+}
+
+export const updateInvite: Mutation['updateInvite'] = async (
+  parent,
+  { where: { id } },
+  ctx,
+  info
+) => {
+  const expireAt = dayjs()
+    .add(7, 'day')
+    .format()
+
+  // TODO: trriger invitation email
+
+  return ctx.db.mutation.updateInvite({ where: { id }, data: { expireAt } }, info)
+}
+
+export const deleteInvite: Mutation['deleteInvite'] = forwardTo('db')
