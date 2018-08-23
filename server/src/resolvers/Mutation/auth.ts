@@ -86,8 +86,6 @@ export const signup: Mutation['signup'] = async (parent, args, ctx, info) => {
 export const login: Mutation['login'] = async (parent, { email, password }, ctx, info) => {
   const user = await ctx.db.query.user({ where: { email } }, `{id, password, workspace {id}}`)
 
-  console.log(user)
-
   if (!user) {
     throw new Error(`No such user found for email: ${email}`)
   }

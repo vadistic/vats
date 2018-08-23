@@ -1,0 +1,55 @@
+type Mutation {
+  # Invite
+  # import Invite, InviteCreateInput, InviteUpdateInput, InviteWhereUniqueInput from "../../generated/prisma.graphql"
+  createInvite(data: InviteCreateInput!): Invite!
+  updateInvite(data: InviteUpdateInput!, where: InviteWhereUniqueInput!): Invite
+  deleteInvite(where: InviteWhereUniqueInput!): Invite
+
+  # Workspace
+  # import Workspace, WorkspaceUpdateInput, WorkspaceWhereUniqueInput from "../../generated/prisma.graphql"
+  updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace
+  deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace
+
+  # User
+  # import UserCreateInput, UserUpdateInput, UserWhereUniqueInput from "../../generated/prisma.graphql"
+  # import User from '../types/user.graphql'
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteUser(where: UserWhereUniqueInput!): User
+
+  # Offer
+  # import Offer, OfferCreateInput, OfferUpdateInput, OfferWhereUniqueInput from "../../generated/prisma.graphql"
+  createOffer(data: OfferCreateInput!): Offer!
+  updateOffer(data: OfferUpdateInput!, where: OfferWhereUniqueInput!): Offer
+  deleteOffer(where: OfferWhereUniqueInput!): Offer
+
+  # Stage
+  # import Stage, StageCreateInput, StageUpdateInput, StageWhereUniqueInput from "../../generated/prisma.graphql"
+  createStage(data: StageCreateInput!): Stage!
+  updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
+  deleteStage(where: StageWhereUniqueInput!): Stage
+
+  # Application
+  # import Application, UserCreateInput, UserUpdateInput, UserWhereUniqueInput from "../../generated/prisma.graphql"
+  createApplication(data: ApplicationCreateInput!): Application!
+  updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
+  deleteApplication(where: ApplicationWhereUniqueInput!): Application
+
+  # Candidate
+  # import Candidate, UserCreateInput, UserUpdateInput, UserWhereUniqueInput from "../../generated/prisma.graphql"
+  createCandidate(data: CandidateCreateInput!): Candidate!
+  updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
+  deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
+
+  # Comment
+  # import Comment, UserCreateInput, UserUpdateInput, UserWhereUniqueInput from "../../generated/prisma.graphql"
+  createComment(data: CommentCreateInput!): Comment!
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
+  deleteComment(where: CommentWhereUniqueInput!): Comment
+
+  # Task
+  # import Task, UserCreateInput, UserUpdateInput, UserWhereUniqueInput from "../../generated/prisma.graphql"
+  createTask(data: TaskCreateInput!): Task!
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+  deleteTask(where: TaskWhereUniqueInput!): Task
+}

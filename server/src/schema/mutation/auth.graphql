@@ -1,0 +1,18 @@
+input WorkspaceCreateInput {
+  name: String!
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+}
+
+type Mutation {
+  # import AuthPayload from "../types/auth.graphql"
+  createWorkspace(data: WorkspaceCreateInput): AuthPayload!
+  signup(password: String!, username: String!, inviteId: ID!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+
+  # import Invite from "../../generated/prisma.graphql"
+  invite(email: String!): Invite!
+}

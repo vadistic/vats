@@ -1,0 +1,119 @@
+type Query {
+  # Invite
+  # import Invite, InviteWhereUniqueInput, InviteWhereInput, InviteOrderByInput  from "../../generated/prisma.graphql"
+  invite(where: InviteWhereUniqueInput!): Invite
+  invites(
+    where: InviteWhereInput
+    orderBy: InviteOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Invite]!
+
+  # Workspace
+  # import Workspace, WorkspaceWhereUniqueInput, WorkspaceWhereInput, WorkspaceOrderByInput  from "../../generated/prisma.graphql"
+  workspace(where: WorkspaceWhereUniqueInput!): Workspace
+  workspaces(
+    where: WorkspaceWhereInput
+    orderBy: WorkspaceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Workspace]!
+
+  # User
+  # import UserWhereUniqueInput, UserWhereInput, UserOrderByInput  from "../../generated/prisma.graphql"
+  # import User from '../types/user.graphql'
+  user(where: UserWhereUniqueInput!): User
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User]!
+
+  # Offer
+  # import Offer, OfferWhereUniqueInput, OfferWhereInput, OfferOrderByInput  from "../../generated/prisma.graphql"
+  offer(where: OfferWhereUniqueInput!): Offer
+  offers(
+    where: OfferWhereInput
+    orderBy: OfferOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Offer]!
+
+  # Stage
+  # import Stage, StageWhereUniqueInput, StageWhereInput, StageOrderByInput  from "../../generated/prisma.graphql"
+  stage(where: StageWhereUniqueInput!): Stage
+  stages(
+    where: StageWhereInput
+    orderBy: StageOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Stage]!
+
+  # Application
+  # import Application, ApplicationWhereUniqueInput, ApplicationWhereInput, ApplicationOrderByInput  from "../../generated/prisma.graphql"
+  application(where: ApplicationWhereUniqueInput!): Application
+  applications(
+    where: ApplicationWhereInput
+    orderBy: ApplicationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Application]!
+
+  # Candidate
+  # import Candidate, CandidateWhereUniqueInput, CandidateWhereInput, CandidateOrderByInput  from "../../generated/prisma.graphql"
+  candidate(where: CandidateWhereUniqueInput!): Candidate
+  candidates(
+    where: CandidateWhereInput
+    orderBy: CandidateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Candidate]!
+
+  # Comment
+  # import Comment, CommentWhereUniqueInput, CommentWhereInput, CommentOrderByInput  from "../../generated/prisma.graphql"
+  comment(where: CommentWhereUniqueInput!): Comment
+  comments(
+    where: CommentWhereInput
+    orderBy: CommentOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Comment]!
+
+  # Task
+  # import Task, TaskWhereUniqueInput, TaskWhereInput, TaskOrderByInput  from "../../generated/prisma.graphql"
+  task(where: TaskWhereUniqueInput!): Task
+  tasks(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Task]!
+}
