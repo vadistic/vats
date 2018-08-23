@@ -25,13 +25,12 @@ export interface Query {
   }
 
 export interface Mutation {
-    createWorkspace: <T = AuthPayload>(args: { name: String, firstName: String, lastName: String, email: String, username: String, password: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    signup: <T = AuthPayload>(args: { password: String, username: String, inviteId: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    login: <T = AuthPayload>(args: { email: String, password: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    invite: <T = Invite>(args: { email: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createWorkspace: <T = AuthPayload>(args: { data?: WorkspaceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    signup: <T = AuthPayload>(args: { data?: SignupInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    login: <T = AuthPayload>(args: { data?: LoginInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createInvite: <T = Invite>(args: { data: InviteCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateInvite: <T = Invite | null>(args: { data: InviteUpdateInput, where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteInvite: <T = Invite | null>(args: { where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateInvite: <T = Invite | null>(args: { data: InviteUpdateInput, where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateWorkspace: <T = Workspace | null>(args: { data: WorkspaceUpdateInput, where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteWorkspace: <T = Workspace | null>(args: { where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -188,6 +187,48 @@ export type CandidateOrderByInput =   'id_ASC' |
   'source_ASC' |
   'source_DESC'
 
+export interface WorkspaceUpdateInput {
+  name?: String
+  users?: UserUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
+}
+
+export interface TaskUpdateInput {
+  dueAt?: DateTime
+  owners?: UserUpdateManyInput
+}
+
+export interface LocationCreateInput {
+  country: String
+  region: String
+  city: String
+  zip: String
+}
+
+export interface InviteWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput
+  create: UserCreateInput
+}
+
+export interface OfferCreateOneWithoutApplicationsInput {
+  create?: OfferCreateWithoutApplicationsInput
+  connect?: OfferWhereUniqueInput
+}
+
+export interface ApplicationUpdateInput {
+  offer?: OfferUpdateOneWithoutApplicationsInput
+  candidate?: CandidateUpdateOneWithoutApplicationsInput
+  stage?: StageUpdateOneInput
+}
+
+export interface LocationWhereUniqueInput {
+  id?: ID_Input
+}
+
 export interface UserUpdateInput {
   email?: String
   username?: String
@@ -199,28 +240,9 @@ export interface UserUpdateInput {
   workspace?: WorkspaceUpdateOneWithoutUsersInput
 }
 
-export interface TaskUpdateInput {
-  dueAt?: DateTime
-  owners?: UserUpdateManyInput
-}
-
-export interface LocationWhereUniqueInput {
+export interface UserWhereUniqueInput {
   id?: ID_Input
-}
-
-export interface InviteWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface ApplicationUpdateInput {
-  offer?: OfferUpdateOneWithoutApplicationsInput
-  candidate?: CandidateUpdateOneWithoutApplicationsInput
-  stage?: StageUpdateOneInput
-}
-
-export interface OfferCreateOneWithoutApplicationsInput {
-  create?: OfferCreateWithoutApplicationsInput
-  connect?: OfferWhereUniqueInput
+  email?: String
 }
 
 export interface OfferCreateInput {
@@ -234,34 +256,13 @@ export interface OfferCreateInput {
   stages?: StageCreateManyInput
 }
 
-export interface ApplicationCreateManyWithoutOfferInput {
-  create?: ApplicationCreateWithoutOfferInput[] | ApplicationCreateWithoutOfferInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+export interface CommentUpdateInput {
+  content?: UserUpdateOneInput
 }
 
 export interface WorkspaceCreateOneInput {
   create?: WorkspaceCreateInput
   connect?: WorkspaceWhereUniqueInput
-}
-
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
-}
-
-export interface WorkspaceCreateInput {
-  name: String
-  users?: UserCreateManyWithoutWorkspaceInput
-  invites?: InviteCreateManyWithoutWorkspaceInput
-}
-
-export interface CommentUpdateInput {
-  content?: UserUpdateOneInput
-}
-
-export interface LocationCreateOneInput {
-  create?: LocationCreateInput
-  connect?: LocationWhereUniqueInput
 }
 
 export interface ApplicationUpsertWithWhereUniqueWithoutCandidateInput {
@@ -270,11 +271,9 @@ export interface ApplicationUpsertWithWhereUniqueWithoutCandidateInput {
   create: ApplicationCreateWithoutCandidateInput
 }
 
-export interface LocationCreateInput {
-  country: String
-  region: String
-  city: String
-  zip: String
+export interface LocationCreateOneInput {
+  create?: LocationCreateInput
+  connect?: LocationWhereUniqueInput
 }
 
 export interface OfferWhereInput {
@@ -518,9 +517,9 @@ export interface TaskWhereInput {
   owners_none?: UserWhereInput
 }
 
-export interface ApplicationCreateWithoutOfferInput {
-  candidate: CandidateCreateOneWithoutApplicationsInput
-  stage: StageCreateOneInput
+export interface ApplicationCreateManyWithoutOfferInput {
+  create?: ApplicationCreateWithoutOfferInput[] | ApplicationCreateWithoutOfferInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
 }
 
 export interface ApplicationUpdateWithWhereUniqueWithoutCandidateInput {
@@ -528,9 +527,9 @@ export interface ApplicationUpdateWithWhereUniqueWithoutCandidateInput {
   data: ApplicationUpdateWithoutCandidateDataInput
 }
 
-export interface CandidateCreateOneWithoutApplicationsInput {
-  create?: CandidateCreateWithoutApplicationsInput
-  connect?: CandidateWhereUniqueInput
+export interface ApplicationCreateWithoutOfferInput {
+  candidate: CandidateCreateOneWithoutApplicationsInput
+  stage: StageCreateOneInput
 }
 
 export interface UserWhereInput {
@@ -648,17 +647,9 @@ export interface UserWhereInput {
   workspace?: WorkspaceWhereInput
 }
 
-export interface CandidateCreateWithoutApplicationsInput {
-  firstName: String
-  lastName: String
-  source: String
-  tags?: CandidateCreatetagsInput
-  emails?: CandidateCreateemailsInput
-  phones?: CandidateCreatephonesInput
-  links?: CandidateCreatelinksInput
-  workspace?: WorkspaceCreateOneInput
-  comments?: CommentCreateManyInput
-  tasks?: TaskCreateManyInput
+export interface CandidateCreateOneWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput
+  connect?: CandidateWhereUniqueInput
 }
 
 export interface WorkspaceWhereInput {
@@ -701,8 +692,17 @@ export interface WorkspaceWhereInput {
   invites_none?: InviteWhereInput
 }
 
-export interface CandidateCreatetagsInput {
-  set?: String[] | String
+export interface CandidateCreateWithoutApplicationsInput {
+  firstName: String
+  lastName: String
+  source: String
+  tags?: CandidateCreatetagsInput
+  emails?: CandidateCreateemailsInput
+  phones?: CandidateCreatephonesInput
+  links?: CandidateCreatelinksInput
+  workspace?: WorkspaceCreateOneInput
+  comments?: CommentCreateManyInput
+  tasks?: TaskCreateManyInput
 }
 
 export interface ApplicationCreateManyWithoutCandidateInput {
@@ -710,7 +710,7 @@ export interface ApplicationCreateManyWithoutCandidateInput {
   connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
 }
 
-export interface CandidateCreateemailsInput {
+export interface CandidateCreatetagsInput {
   set?: String[] | String
 }
 
@@ -718,7 +718,7 @@ export interface ApplicationWhereUniqueInput {
   id?: ID_Input
 }
 
-export interface CandidateCreatephonesInput {
+export interface CandidateCreateemailsInput {
   set?: String[] | String
 }
 
@@ -727,7 +727,7 @@ export interface OfferUpsertWithoutApplicationsInput {
   create: OfferCreateWithoutApplicationsInput
 }
 
-export interface CandidateCreatelinksInput {
+export interface CandidateCreatephonesInput {
   set?: String[] | String
 }
 
@@ -735,20 +735,44 @@ export interface TaskWhereUniqueInput {
   id?: ID_Input
 }
 
+export interface CandidateCreatelinksInput {
+  set?: String[] | String
+}
+
+export interface OfferUpdateWithoutApplicationsDataInput {
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  workspace?: WorkspaceUpdateOneInput
+  location?: LocationUpdateOneInput
+  stages?: StageUpdateManyInput
+}
+
 export interface CommentCreateManyInput {
   create?: CommentCreateInput[] | CommentCreateInput
   connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
 }
 
-export interface InviteCreateInput {
+export interface LoginInput {
   email: String
-  expireAt: DateTime
-  workspace: WorkspaceCreateOneWithoutInvitesInput
-  invitedBy: UserCreateOneInput
+  password: String
 }
 
 export interface CommentCreateInput {
   content: UserCreateOneInput
+}
+
+export interface InviteUpdateInput {
+  email?: String
+  expireAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutInvitesInput
+  invitedBy?: UserUpdateOneInput
+}
+
+export interface TaskCreateManyInput {
+  create?: TaskCreateInput[] | TaskCreateInput
+  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
 }
 
 export interface WorkspaceCreateWithoutInvitesInput {
@@ -756,9 +780,9 @@ export interface WorkspaceCreateWithoutInvitesInput {
   users?: UserCreateManyWithoutWorkspaceInput
 }
 
-export interface TaskCreateManyInput {
-  create?: TaskCreateInput[] | TaskCreateInput
-  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+export interface TaskCreateInput {
+  dueAt: DateTime
+  owners?: UserCreateManyInput
 }
 
 export interface UserCreateWithoutWorkspaceInput {
@@ -771,30 +795,14 @@ export interface UserCreateWithoutWorkspaceInput {
   deletedAt?: DateTime
 }
 
-export interface TaskCreateInput {
-  dueAt: DateTime
-  owners?: UserCreateManyInput
-}
-
-export interface UserCreateInput {
-  email: String
-  username: String
-  password: String
-  firstName?: String
-  lastName?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
-}
-
 export interface UserCreateManyInput {
   create?: UserCreateInput[] | UserCreateInput
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
 }
 
-export interface WorkspaceCreateWithoutUsersInput {
-  name: String
-  invites?: InviteCreateManyWithoutWorkspaceInput
+export interface WorkspaceUpdateWithoutInvitesDataInput {
+  name?: String
+  users?: UserUpdateManyWithoutWorkspaceInput
 }
 
 export interface StageCreateOneInput {
@@ -802,10 +810,9 @@ export interface StageCreateOneInput {
   connect?: StageWhereUniqueInput
 }
 
-export interface InviteCreateWithoutWorkspaceInput {
-  email: String
-  expireAt: DateTime
-  invitedBy: UserCreateOneInput
+export interface UserUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutWorkspaceDataInput
 }
 
 export interface StageCreateInput {
@@ -814,12 +821,10 @@ export interface StageCreateInput {
   position: Int
 }
 
-export interface WorkspaceUpdateOneWithoutInvitesInput {
-  create?: WorkspaceCreateWithoutInvitesInput
-  connect?: WorkspaceWhereUniqueInput
-  delete?: Boolean
-  update?: WorkspaceUpdateWithoutInvitesDataInput
-  upsert?: WorkspaceUpsertWithoutInvitesInput
+export interface UserUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutWorkspaceDataInput
+  create: UserCreateWithoutWorkspaceInput
 }
 
 export interface StageCreateManyInput {
@@ -827,9 +832,12 @@ export interface StageCreateManyInput {
   connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
 }
 
-export interface WorkspaceUpdateWithoutInvitesDataInput {
-  name?: String
-  users?: UserUpdateManyWithoutWorkspaceInput
+export interface UserUpdateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateDataInput
+  upsert?: UserUpsertNestedInput
 }
 
 export interface OfferUpdateInput {
@@ -843,9 +851,9 @@ export interface OfferUpdateInput {
   stages?: StageUpdateManyInput
 }
 
-export interface UserUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutWorkspaceDataInput
+export interface WorkspaceCreateOneWithoutUsersInput {
+  create?: WorkspaceCreateWithoutUsersInput
+  connect?: WorkspaceWhereUniqueInput
 }
 
 export interface WorkspaceUpdateOneInput {
@@ -857,10 +865,9 @@ export interface WorkspaceUpdateOneInput {
   upsert?: WorkspaceUpsertNestedInput
 }
 
-export interface UserUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutWorkspaceDataInput
-  create: UserCreateWithoutWorkspaceInput
+export interface InviteCreateManyWithoutWorkspaceInput {
+  create?: InviteCreateWithoutWorkspaceInput[] | InviteCreateWithoutWorkspaceInput
+  connect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
 }
 
 export interface WorkspaceUpdateDataInput {
@@ -869,12 +876,9 @@ export interface WorkspaceUpdateDataInput {
   invites?: InviteUpdateManyWithoutWorkspaceInput
 }
 
-export interface UserUpdateOneInput {
+export interface UserCreateOneInput {
   create?: UserCreateInput
   connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateDataInput
-  upsert?: UserUpsertNestedInput
 }
 
 export interface WorkspaceUpsertNestedInput {
@@ -940,24 +944,13 @@ export interface ApplicationUpdateManyWithoutOfferInput {
   upsert?: ApplicationUpsertWithWhereUniqueWithoutOfferInput[] | ApplicationUpsertWithWhereUniqueWithoutOfferInput
 }
 
-export interface WorkspaceUpdateInput {
-  name?: String
-  users?: UserUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
+export interface OfferWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface ApplicationUpdateWithWhereUniqueWithoutOfferInput {
   where: ApplicationWhereUniqueInput
   data: ApplicationUpdateWithoutOfferDataInput
-}
-
-export interface OfferWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface ApplicationUpdateWithoutOfferDataInput {
-  candidate?: CandidateUpdateOneWithoutApplicationsInput
-  stage?: StageUpdateOneInput
 }
 
 export interface ApplicationWhereInput {
@@ -983,12 +976,9 @@ export interface ApplicationWhereInput {
   stage?: StageWhereInput
 }
 
-export interface CandidateUpdateOneWithoutApplicationsInput {
-  create?: CandidateCreateWithoutApplicationsInput
-  connect?: CandidateWhereUniqueInput
-  delete?: Boolean
-  update?: CandidateUpdateWithoutApplicationsDataInput
-  upsert?: CandidateUpsertWithoutApplicationsInput
+export interface ApplicationUpdateWithoutOfferDataInput {
+  candidate?: CandidateUpdateOneWithoutApplicationsInput
+  stage?: StageUpdateOneInput
 }
 
 export interface CommentWhereInput {
@@ -1028,6 +1018,23 @@ export interface CommentWhereInput {
   content?: UserWhereInput
 }
 
+export interface CandidateUpdateOneWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput
+  connect?: CandidateWhereUniqueInput
+  delete?: Boolean
+  update?: CandidateUpdateWithoutApplicationsDataInput
+  upsert?: CandidateUpsertWithoutApplicationsInput
+}
+
+export interface ApplicationUpdateManyWithoutCandidateInput {
+  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput[] | ApplicationUpdateWithWhereUniqueWithoutCandidateInput
+  upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput[] | ApplicationUpsertWithWhereUniqueWithoutCandidateInput
+}
+
 export interface CandidateUpdateWithoutApplicationsDataInput {
   firstName?: String
   lastName?: String
@@ -1041,25 +1048,12 @@ export interface CandidateUpdateWithoutApplicationsDataInput {
   tasks?: TaskUpdateManyInput
 }
 
-export interface ApplicationUpdateManyWithoutCandidateInput {
-  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput[] | ApplicationUpdateWithWhereUniqueWithoutCandidateInput
-  upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput[] | ApplicationUpsertWithWhereUniqueWithoutCandidateInput
-}
-
-export interface CandidateUpdatetagsInput {
-  set?: String[] | String
-}
-
 export interface ApplicationCreateWithoutCandidateInput {
   offer: OfferCreateOneWithoutApplicationsInput
   stage: StageCreateOneInput
 }
 
-export interface CandidateUpdateemailsInput {
+export interface CandidateUpdatetagsInput {
   set?: String[] | String
 }
 
@@ -1067,7 +1061,7 @@ export interface StageWhereUniqueInput {
   id?: ID_Input
 }
 
-export interface CandidateUpdatephonesInput {
+export interface CandidateUpdateemailsInput {
   set?: String[] | String
 }
 
@@ -1075,13 +1069,26 @@ export interface CommentWhereUniqueInput {
   id?: ID_Input
 }
 
+export interface CandidateUpdatephonesInput {
+  set?: String[] | String
+}
+
+export interface SignupInput {
+  password: String
+  username: String
+  inviteId: ID_Input
+}
+
 export interface CandidateUpdatelinksInput {
   set?: String[] | String
 }
 
-export interface WorkspaceCreateOneWithoutInvitesInput {
+export interface WorkspaceUpdateOneWithoutInvitesInput {
   create?: WorkspaceCreateWithoutInvitesInput
   connect?: WorkspaceWhereUniqueInput
+  delete?: Boolean
+  update?: WorkspaceUpdateWithoutInvitesDataInput
+  upsert?: WorkspaceUpsertWithoutInvitesInput
 }
 
 export interface CommentUpdateManyInput {
@@ -1093,25 +1100,6 @@ export interface CommentUpdateManyInput {
   upsert?: CommentUpsertWithWhereUniqueNestedInput[] | CommentUpsertWithWhereUniqueNestedInput
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface CommentUpdateWithWhereUniqueNestedInput {
-  where: CommentWhereUniqueInput
-  data: CommentUpdateDataInput
-}
-
-export interface InviteCreateManyWithoutWorkspaceInput {
-  create?: InviteCreateWithoutWorkspaceInput[] | InviteCreateWithoutWorkspaceInput
-  connect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
-}
-
-export interface CommentUpdateDataInput {
-  content?: UserUpdateOneInput
-}
-
 export interface OfferUpdateOneWithoutApplicationsInput {
   create?: OfferCreateWithoutApplicationsInput
   connect?: OfferWhereUniqueInput
@@ -1120,10 +1108,9 @@ export interface OfferUpdateOneWithoutApplicationsInput {
   upsert?: OfferUpsertWithoutApplicationsInput
 }
 
-export interface CommentUpsertWithWhereUniqueNestedInput {
+export interface CommentUpdateWithWhereUniqueNestedInput {
   where: CommentWhereUniqueInput
-  update: CommentUpdateDataInput
-  create: CommentCreateInput
+  data: CommentUpdateDataInput
 }
 
 export interface UserUpdateWithoutWorkspaceDataInput {
@@ -1136,6 +1123,33 @@ export interface UserUpdateWithoutWorkspaceDataInput {
   deletedAt?: DateTime
 }
 
+export interface CommentUpdateDataInput {
+  content?: UserUpdateOneInput
+}
+
+export interface UserCreateInput {
+  email: String
+  username: String
+  password: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput
+}
+
+export interface CommentUpsertWithWhereUniqueNestedInput {
+  where: CommentWhereUniqueInput
+  update: CommentUpdateDataInput
+  create: CommentCreateInput
+}
+
+export interface InviteCreateWithoutWorkspaceInput {
+  email: String
+  expireAt: DateTime
+  invitedBy: UserCreateOneInput
+}
+
 export interface TaskUpdateManyInput {
   create?: TaskCreateInput[] | TaskCreateInput
   connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
@@ -1145,15 +1159,9 @@ export interface TaskUpdateManyInput {
   upsert?: TaskUpsertWithWhereUniqueNestedInput[] | TaskUpsertWithWhereUniqueNestedInput
 }
 
-export interface UserUpdateDataInput {
-  email?: String
-  username?: String
-  password?: String
-  firstName?: String
-  lastName?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutUsersInput
+export interface WorkspaceUpdateWithoutUsersDataInput {
+  name?: String
+  invites?: InviteUpdateManyWithoutWorkspaceInput
 }
 
 export interface TaskUpdateWithWhereUniqueNestedInput {
@@ -1161,28 +1169,15 @@ export interface TaskUpdateWithWhereUniqueNestedInput {
   data: TaskUpdateDataInput
 }
 
-export interface InviteUpdateWithWhereUniqueWithoutWorkspaceInput {
+export interface InviteUpsertWithWhereUniqueWithoutWorkspaceInput {
   where: InviteWhereUniqueInput
-  data: InviteUpdateWithoutWorkspaceDataInput
+  update: InviteUpdateWithoutWorkspaceDataInput
+  create: InviteCreateWithoutWorkspaceInput
 }
 
 export interface TaskUpdateDataInput {
   dueAt?: DateTime
   owners?: UserUpdateManyInput
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput
-  create: UserCreateInput
-}
-
-export interface UserUpdateManyInput {
-  create?: UserCreateInput[] | UserCreateInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueNestedInput[] | UserUpdateWithWhereUniqueNestedInput
-  upsert?: UserUpsertWithWhereUniqueNestedInput[] | UserUpsertWithWhereUniqueNestedInput
 }
 
 export interface LocationWhereInput {
@@ -1261,9 +1256,13 @@ export interface LocationWhereInput {
   zip_not_ends_with?: String
 }
 
-export interface UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateDataInput
+export interface UserUpdateManyInput {
+  create?: UserCreateInput[] | UserCreateInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueNestedInput[] | UserUpdateWithWhereUniqueNestedInput
+  upsert?: UserUpsertWithWhereUniqueNestedInput[] | UserUpsertWithWhereUniqueNestedInput
 }
 
 export interface ApplicationUpdateWithoutCandidateDataInput {
@@ -1271,10 +1270,9 @@ export interface ApplicationUpdateWithoutCandidateDataInput {
   stage?: StageUpdateOneInput
 }
 
-export interface UserUpsertWithWhereUniqueNestedInput {
+export interface UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput
-  update: UserUpdateDataInput
-  create: UserCreateInput
+  data: UserUpdateDataInput
 }
 
 export interface CandidateCreateInput {
@@ -1291,20 +1289,30 @@ export interface CandidateCreateInput {
   tasks?: TaskCreateManyInput
 }
 
+export interface UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  create: UserCreateInput
+}
+
+export interface WorkspaceCreateInput {
+  name: String
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+}
+
 export interface TaskUpsertWithWhereUniqueNestedInput {
   where: TaskWhereUniqueInput
   update: TaskUpdateDataInput
   create: TaskCreateInput
 }
 
-export interface OfferUpdateWithoutApplicationsDataInput {
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  workspace?: WorkspaceUpdateOneInput
-  location?: LocationUpdateOneInput
-  stages?: StageUpdateManyInput
+export interface UserCreateManyWithoutWorkspaceInput {
+  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
 }
 
 export interface CandidateUpsertWithoutApplicationsInput {
@@ -1312,9 +1320,9 @@ export interface CandidateUpsertWithoutApplicationsInput {
   create: CandidateCreateWithoutApplicationsInput
 }
 
-export interface WorkspaceCreateOneWithoutUsersInput {
-  create?: WorkspaceCreateWithoutUsersInput
-  connect?: WorkspaceWhereUniqueInput
+export interface WorkspaceUpsertWithoutInvitesInput {
+  update: WorkspaceUpdateWithoutInvitesDataInput
+  create: WorkspaceCreateWithoutInvitesInput
 }
 
 export interface StageUpdateOneInput {
@@ -1325,29 +1333,21 @@ export interface StageUpdateOneInput {
   upsert?: StageUpsertNestedInput
 }
 
-export interface UserUpdateManyWithoutWorkspaceInput {
-  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutWorkspaceInput[] | UserUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: UserUpsertWithWhereUniqueWithoutWorkspaceInput[] | UserUpsertWithWhereUniqueWithoutWorkspaceInput
+export interface UserUpdateDataInput {
+  email?: String
+  username?: String
+  password?: String
+  firstName?: String
+  lastName?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutUsersInput
 }
 
 export interface StageUpdateDataInput {
   name?: String
   description?: String
   position?: Int
-}
-
-export interface WorkspaceUpdateWithoutUsersDataInput {
-  name?: String
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-}
-
-export interface StageUpsertNestedInput {
-  update: StageUpdateDataInput
-  create: StageCreateInput
 }
 
 export interface InviteWhereInput {
@@ -1402,10 +1402,9 @@ export interface InviteWhereInput {
   invitedBy?: UserWhereInput
 }
 
-export interface ApplicationUpsertWithWhereUniqueWithoutOfferInput {
-  where: ApplicationWhereUniqueInput
-  update: ApplicationUpdateWithoutOfferDataInput
-  create: ApplicationCreateWithoutOfferInput
+export interface StageUpsertNestedInput {
+  update: StageUpdateDataInput
+  create: StageCreateInput
 }
 
 export interface CandidateUpdateInput {
@@ -1422,6 +1421,16 @@ export interface CandidateUpdateInput {
   tasks?: TaskUpdateManyInput
 }
 
+export interface ApplicationUpsertWithWhereUniqueWithoutOfferInput {
+  where: ApplicationWhereUniqueInput
+  update: ApplicationUpdateWithoutOfferDataInput
+  create: ApplicationCreateWithoutOfferInput
+}
+
+export interface InviteCreateInput {
+  email: String
+}
+
 export interface StageUpdateManyInput {
   create?: StageCreateInput[] | StageCreateInput
   connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
@@ -1431,9 +1440,9 @@ export interface StageUpdateManyInput {
   upsert?: StageUpsertWithWhereUniqueNestedInput[] | StageUpsertWithWhereUniqueNestedInput
 }
 
-export interface UserCreateManyWithoutWorkspaceInput {
-  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+export interface WorkspaceCreateWithoutUsersInput {
+  name: String
+  invites?: InviteCreateManyWithoutWorkspaceInput
 }
 
 export interface ApplicationCreateInput {
@@ -1459,11 +1468,18 @@ export interface StageUpdateWithWhereUniqueNestedInput {
   data: StageUpdateDataInput
 }
 
-export interface InviteUpdateInput {
-  email?: String
-  expireAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutInvitesInput
-  invitedBy?: UserUpdateOneInput
+export interface InviteUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: InviteWhereUniqueInput
+  data: InviteUpdateWithoutWorkspaceDataInput
+}
+
+export interface UserUpdateManyWithoutWorkspaceInput {
+  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutWorkspaceInput[] | UserUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?: UserUpsertWithWhereUniqueWithoutWorkspaceInput[] | UserUpsertWithWhereUniqueWithoutWorkspaceInput
 }
 
 export interface CandidateWhereUniqueInput {
@@ -1524,17 +1540,6 @@ export interface StageWhereInput {
   position_lte?: Int
   position_gt?: Int
   position_gte?: Int
-}
-
-export interface InviteUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: InviteWhereUniqueInput
-  update: InviteUpdateWithoutWorkspaceDataInput
-  create: InviteCreateWithoutWorkspaceInput
-}
-
-export interface WorkspaceUpsertWithoutInvitesInput {
-  update: WorkspaceUpdateWithoutInvitesDataInput
-  create: WorkspaceCreateWithoutInvitesInput
 }
 
 /*

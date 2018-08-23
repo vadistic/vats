@@ -6,7 +6,7 @@ import { getId, Mutation } from '../../utils'
 
 export const createWorkspace: Mutation['createWorkspace'] = async (
   parent,
-  { name, password: passwordRaw, ...args },
+  { data: { name, password: passwordRaw, ...args } },
   ctx,
   info
 ) => {
@@ -28,7 +28,12 @@ export const createWorkspace: Mutation['createWorkspace'] = async (
   }
 }
 
-export const invite: Mutation['invite'] = async (parent, { email }, ctx, info) => {
+export const createInvite: Mutation['createInvite'] = async (
+  parent,
+  { data: { email } },
+  ctx,
+  info
+) => {
   const { userId, workspaceId } = getId(ctx)
 
   const expireAt = dayjs()
@@ -48,9 +53,14 @@ export const invite: Mutation['invite'] = async (parent, { email }, ctx, info) =
   )
 }
 
-export const signup: Mutation['signup'] = async (parent, args, ctx, info) => {
+export const signup: Mutation['signup'] = async (
+  parent,
+  { data: { inviteId, password: passwordRaw, username } },
+  ctx,
+  info
+) => {
   const invite = await ctx.db.query.invite(
-    { where: { id: args.inviteId } },
+    { where: { id: inviteId } },
     `{email, expireAt, workspace {id}}`
   )
 
@@ -62,13 +72,13 @@ export const signup: Mutation['signup'] = async (parent, args, ctx, info) => {
     throw Error('Invitation token expired')
   }
 
-  const password = await bcrypt.hash(args.password, 10)
+  const password = await bcrypt.hash(passwordRaw, 10)
 
-  ctx.db.mutation.deleteInvite({ where: { id: args.inviteId } })
+  ctx.db.mutation.deleteInvite({ where: { id: inviteId } })
 
   const user = await ctx.db.mutation.createUser({
     data: {
-      username: args.username,
+      username,
       password,
       email: invite.email,
       workspace: { connect: { id: invite.workspace.id } },
@@ -83,7 +93,12 @@ export const signup: Mutation['signup'] = async (parent, args, ctx, info) => {
   }
 }
 
-export const login: Mutation['login'] = async (parent, { email, password }, ctx, info) => {
+export const login: Mutation['login'] = async (
+  parent,
+  { data: { email, password } },
+  ctx,
+  info
+) => {
   const user = await ctx.db.query.user({ where: { email } }, `{id, password, workspace {id}}`)
 
   if (!user) {
