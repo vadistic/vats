@@ -1,5 +1,197 @@
 # source: https://eu1.prisma.sh/vadistic-7a6c16/vats/dev
-# timestamp: Wed Aug 22 2018 01:05:05 GMT+0200 (Central European Summer Time)
+# timestamp: Sat Aug 25 2018 18:59:32 GMT+0200 (Central European Summer Time)
+
+type Action implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+}
+
+"""A connection to a list of items."""
+type ActionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ActionEdge]!
+  aggregate: AggregateAction!
+}
+
+input ActionCreateInput {
+  workspace: WorkspaceCreateOneInput!
+}
+
+"""An edge in a connection."""
+type ActionEdge {
+  """The item at the end of the edge."""
+  node: Action!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ActionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ActionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ActionSubscriptionPayload {
+  mutation: MutationType!
+  node: Action
+  updatedFields: [String!]
+  previousValues: ActionPreviousValues
+}
+
+input ActionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ActionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ActionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ActionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ActionWhereInput
+}
+
+input ActionUpdateInput {
+  workspace: WorkspaceUpdateOneInput
+}
+
+input ActionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ActionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ActionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ActionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  workspace: WorkspaceWhereInput
+}
+
+input ActionWhereUniqueInput {
+  id: ID
+}
+
+type AggregateAction {
+  count: Int!
+}
 
 type AggregateApplication {
   count: Int!
@@ -43,6 +235,9 @@ type AggregateWorkspace {
 
 type Application implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
   offer(where: OfferWhereInput): Offer!
   candidate(where: CandidateWhereInput): Candidate!
   stage(where: StageWhereInput): Stage!
@@ -59,6 +254,7 @@ type ApplicationConnection {
 }
 
 input ApplicationCreateInput {
+  workspace: WorkspaceCreateOneInput!
   offer: OfferCreateOneWithoutApplicationsInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
   stage: StageCreateOneInput!
@@ -75,11 +271,13 @@ input ApplicationCreateManyWithoutOfferInput {
 }
 
 input ApplicationCreateWithoutCandidateInput {
+  workspace: WorkspaceCreateOneInput!
   offer: OfferCreateOneWithoutApplicationsInput!
   stage: StageCreateOneInput!
 }
 
 input ApplicationCreateWithoutOfferInput {
+  workspace: WorkspaceCreateOneInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
   stage: StageCreateOneInput!
 }
@@ -96,14 +294,16 @@ type ApplicationEdge {
 enum ApplicationOrderByInput {
   id_ASC
   id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ApplicationPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ApplicationSubscriptionPayload {
@@ -146,6 +346,7 @@ input ApplicationSubscriptionWhereInput {
 }
 
 input ApplicationUpdateInput {
+  workspace: WorkspaceUpdateOneInput
   offer: OfferUpdateOneWithoutApplicationsInput
   candidate: CandidateUpdateOneWithoutApplicationsInput
   stage: StageUpdateOneInput
@@ -170,11 +371,13 @@ input ApplicationUpdateManyWithoutOfferInput {
 }
 
 input ApplicationUpdateWithoutCandidateDataInput {
+  workspace: WorkspaceUpdateOneInput
   offer: OfferUpdateOneWithoutApplicationsInput
   stage: StageUpdateOneInput
 }
 
 input ApplicationUpdateWithoutOfferDataInput {
+  workspace: WorkspaceUpdateOneInput
   candidate: CandidateUpdateOneWithoutApplicationsInput
   stage: StageUpdateOneInput
 }
@@ -250,6 +453,51 @@ input ApplicationWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  workspace: WorkspaceWhereInput
   offer: OfferWhereInput
   candidate: CandidateWhereInput
   stage: StageWhereInput
@@ -266,9 +514,9 @@ type BatchPayload {
 
 type Candidate implements Node {
   id: ID!
-  workspace(where: WorkspaceWhereInput): Workspace
   createdAt: DateTime!
   updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
   tags: [String!]!
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -278,7 +526,7 @@ type Candidate implements Node {
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
-  source: String!
+  source: [String!]!
 }
 
 """A connection to a list of items."""
@@ -298,12 +546,12 @@ input CandidateCreateemailsInput {
 input CandidateCreateInput {
   firstName: String!
   lastName: String!
-  source: String!
   tags: CandidateCreatetagsInput
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  workspace: WorkspaceCreateOneInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneInput!
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
   tasks: TaskCreateManyInput
@@ -322,6 +570,10 @@ input CandidateCreatephonesInput {
   set: [String!]
 }
 
+input CandidateCreatesourceInput {
+  set: [String!]
+}
+
 input CandidateCreatetagsInput {
   set: [String!]
 }
@@ -329,12 +581,12 @@ input CandidateCreatetagsInput {
 input CandidateCreateWithoutApplicationsInput {
   firstName: String!
   lastName: String!
-  source: String!
   tags: CandidateCreatetagsInput
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  workspace: WorkspaceCreateOneInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneInput!
   comments: CommentCreateManyInput
   tasks: TaskCreateManyInput
 }
@@ -359,8 +611,6 @@ enum CandidateOrderByInput {
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  source_ASC
-  source_DESC
 }
 
 type CandidatePreviousValues {
@@ -373,7 +623,7 @@ type CandidatePreviousValues {
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
-  source: String!
+  source: [String!]!
 }
 
 type CandidateSubscriptionPayload {
@@ -422,11 +672,11 @@ input CandidateUpdateemailsInput {
 input CandidateUpdateInput {
   firstName: String
   lastName: String
-  source: String
   tags: CandidateUpdatetagsInput
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
+  source: CandidateUpdatesourceInput
   workspace: WorkspaceUpdateOneInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
@@ -449,6 +699,10 @@ input CandidateUpdatephonesInput {
   set: [String!]
 }
 
+input CandidateUpdatesourceInput {
+  set: [String!]
+}
+
 input CandidateUpdatetagsInput {
   set: [String!]
 }
@@ -456,11 +710,11 @@ input CandidateUpdatetagsInput {
 input CandidateUpdateWithoutApplicationsDataInput {
   firstName: String
   lastName: String
-  source: String
   tags: CandidateUpdatetagsInput
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
+  source: CandidateUpdatesourceInput
   workspace: WorkspaceUpdateOneInput
   comments: CommentUpdateManyInput
   tasks: TaskUpdateManyInput
@@ -644,46 +898,6 @@ input CandidateWhereInput {
 
   """All values not ending with the given string."""
   lastName_not_ends_with: String
-  source: String
-
-  """All values that are not equal to given value."""
-  source_not: String
-
-  """All values that are contained in given list."""
-  source_in: [String!]
-
-  """All values that are not contained in given list."""
-  source_not_in: [String!]
-
-  """All values less than the given value."""
-  source_lt: String
-
-  """All values less than or equal the given value."""
-  source_lte: String
-
-  """All values greater than the given value."""
-  source_gt: String
-
-  """All values greater than or equal the given value."""
-  source_gte: String
-
-  """All values containing the given string."""
-  source_contains: String
-
-  """All values not containing the given string."""
-  source_not_contains: String
-
-  """All values starting with the given string."""
-  source_starts_with: String
-
-  """All values not starting with the given string."""
-  source_not_starts_with: String
-
-  """All values ending with the given string."""
-  source_ends_with: String
-
-  """All values not ending with the given string."""
-  source_not_ends_with: String
   workspace: WorkspaceWhereInput
   applications_every: ApplicationWhereInput
   applications_some: ApplicationWhereInput
@@ -702,9 +916,11 @@ input CandidateWhereUniqueInput {
 
 type Comment implements Node {
   id: ID!
-  content(where: UserWhereInput): User!
   createdAt: DateTime!
   updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  createdBy(where: UserWhereInput): User!
+  content: String!
 }
 
 """A connection to a list of items."""
@@ -718,7 +934,9 @@ type CommentConnection {
 }
 
 input CommentCreateInput {
-  content: UserCreateOneInput!
+  content: String!
+  workspace: WorkspaceCreateOneInput!
+  createdBy: UserCreateOneInput!
 }
 
 input CommentCreateManyInput {
@@ -742,12 +960,15 @@ enum CommentOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  content_ASC
+  content_DESC
 }
 
 type CommentPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  content: String!
 }
 
 type CommentSubscriptionPayload {
@@ -790,11 +1011,15 @@ input CommentSubscriptionWhereInput {
 }
 
 input CommentUpdateDataInput {
-  content: UserUpdateOneInput
+  content: String
+  workspace: WorkspaceUpdateOneInput
+  createdBy: UserUpdateOneInput
 }
 
 input CommentUpdateInput {
-  content: UserUpdateOneInput
+  content: String
+  workspace: WorkspaceUpdateOneInput
+  createdBy: UserUpdateOneInput
 }
 
 input CommentUpdateManyInput {
@@ -910,7 +1135,48 @@ input CommentWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  content: UserWhereInput
+  content: String
+
+  """All values that are not equal to given value."""
+  content_not: String
+
+  """All values that are contained in given list."""
+  content_in: [String!]
+
+  """All values that are not contained in given list."""
+  content_not_in: [String!]
+
+  """All values less than the given value."""
+  content_lt: String
+
+  """All values less than or equal the given value."""
+  content_lte: String
+
+  """All values greater than the given value."""
+  content_gt: String
+
+  """All values greater than or equal the given value."""
+  content_gte: String
+
+  """All values containing the given string."""
+  content_contains: String
+
+  """All values not containing the given string."""
+  content_not_contains: String
+
+  """All values starting with the given string."""
+  content_starts_with: String
+
+  """All values not starting with the given string."""
+  content_not_starts_with: String
+
+  """All values ending with the given string."""
+  content_ends_with: String
+
+  """All values not ending with the given string."""
+  content_not_ends_with: String
+  workspace: WorkspaceWhereInput
+  createdBy: UserWhereInput
 }
 
 input CommentWhereUniqueInput {
@@ -921,9 +1187,10 @@ scalar DateTime
 
 type Invite implements Node {
   id: ID!
-  email: String!
-  workspace(where: WorkspaceWhereInput): Workspace!
   createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  email: String!
   expireAt: DateTime!
   invitedBy(where: UserWhereInput): User!
 }
@@ -968,20 +1235,21 @@ type InviteEdge {
 enum InviteOrderByInput {
   id_ASC
   id_DESC
-  email_ASC
-  email_DESC
   createdAt_ASC
   createdAt_DESC
-  expireAt_ASC
-  expireAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  email_ASC
+  email_DESC
+  expireAt_ASC
+  expireAt_DESC
 }
 
 type InvitePreviousValues {
   id: ID!
-  email: String!
   createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
   expireAt: DateTime!
 }
 
@@ -1106,6 +1374,50 @@ input InviteWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   email: String
 
   """All values that are not equal to given value."""
@@ -1146,28 +1458,6 @@ input InviteWhereInput {
 
   """All values not ending with the given string."""
   email_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
   expireAt: DateTime
 
   """All values that are not equal to given value."""
@@ -1551,60 +1841,66 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createInvite(data: InviteCreateInput!): Invite!
+  createAction(data: ActionCreateInput!): Action!
   createCandidate(data: CandidateCreateInput!): Candidate!
   createApplication(data: ApplicationCreateInput!): Application!
   createOffer(data: OfferCreateInput!): Offer!
+  createInvite(data: InviteCreateInput!): Invite!
   createTask(data: TaskCreateInput!): Task!
   createComment(data: CommentCreateInput!): Comment!
   createUser(data: UserCreateInput!): User!
   createLocation(data: LocationCreateInput!): Location!
   createStage(data: StageCreateInput!): Stage!
   createWorkspace(data: WorkspaceCreateInput!): Workspace!
-  updateInvite(data: InviteUpdateInput!, where: InviteWhereUniqueInput!): Invite
+  updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
   updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
   updateOffer(data: OfferUpdateInput!, where: OfferWhereUniqueInput!): Offer
+  updateInvite(data: InviteUpdateInput!, where: InviteWhereUniqueInput!): Invite
   updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
   updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
   updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace
-  deleteInvite(where: InviteWhereUniqueInput!): Invite
+  deleteAction(where: ActionWhereUniqueInput!): Action
   deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   deleteOffer(where: OfferWhereUniqueInput!): Offer
+  deleteInvite(where: InviteWhereUniqueInput!): Invite
   deleteTask(where: TaskWhereUniqueInput!): Task
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteUser(where: UserWhereUniqueInput!): User
   deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteStage(where: StageWhereUniqueInput!): Stage
   deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace
-  upsertInvite(where: InviteWhereUniqueInput!, create: InviteCreateInput!, update: InviteUpdateInput!): Invite!
+  upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertCandidate(where: CandidateWhereUniqueInput!, create: CandidateCreateInput!, update: CandidateUpdateInput!): Candidate!
   upsertApplication(where: ApplicationWhereUniqueInput!, create: ApplicationCreateInput!, update: ApplicationUpdateInput!): Application!
   upsertOffer(where: OfferWhereUniqueInput!, create: OfferCreateInput!, update: OfferUpdateInput!): Offer!
+  upsertInvite(where: InviteWhereUniqueInput!, create: InviteCreateInput!, update: InviteUpdateInput!): Invite!
   upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   upsertStage(where: StageWhereUniqueInput!, create: StageCreateInput!, update: StageUpdateInput!): Stage!
   upsertWorkspace(where: WorkspaceWhereUniqueInput!, create: WorkspaceCreateInput!, update: WorkspaceUpdateInput!): Workspace!
-  updateManyInvites(data: InviteUpdateInput!, where: InviteWhereInput): BatchPayload!
+  updateManyActions(data: ActionUpdateInput!, where: ActionWhereInput): BatchPayload!
   updateManyCandidates(data: CandidateUpdateInput!, where: CandidateWhereInput): BatchPayload!
   updateManyApplications(data: ApplicationUpdateInput!, where: ApplicationWhereInput): BatchPayload!
   updateManyOffers(data: OfferUpdateInput!, where: OfferWhereInput): BatchPayload!
+  updateManyInvites(data: InviteUpdateInput!, where: InviteWhereInput): BatchPayload!
   updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
   updateManyStages(data: StageUpdateInput!, where: StageWhereInput): BatchPayload!
   updateManyWorkspaces(data: WorkspaceUpdateInput!, where: WorkspaceWhereInput): BatchPayload!
-  deleteManyInvites(where: InviteWhereInput): BatchPayload!
+  deleteManyActions(where: ActionWhereInput): BatchPayload!
   deleteManyCandidates(where: CandidateWhereInput): BatchPayload!
   deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
   deleteManyOffers(where: OfferWhereInput): BatchPayload!
+  deleteManyInvites(where: InviteWhereInput): BatchPayload!
   deleteManyTasks(where: TaskWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
@@ -1627,9 +1923,9 @@ interface Node {
 
 type Offer implements Node {
   id: ID!
-  workspace(where: WorkspaceWhereInput): Workspace
   createdAt: DateTime!
   updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
   title: String!
   department: String
   location(where: LocationWhereInput): Location
@@ -1654,7 +1950,7 @@ input OfferCreateInput {
   department: String
   description: String
   requirements: String
-  workspace: WorkspaceCreateOneInput
+  workspace: WorkspaceCreateOneInput!
   location: LocationCreateOneInput
   applications: ApplicationCreateManyWithoutOfferInput
   stages: StageCreateManyInput
@@ -1670,7 +1966,7 @@ input OfferCreateWithoutApplicationsInput {
   department: String
   description: String
   requirements: String
-  workspace: WorkspaceCreateOneInput
+  workspace: WorkspaceCreateOneInput!
   location: LocationCreateOneInput
   stages: StageCreateManyInput
 }
@@ -2067,30 +2363,33 @@ type PageInfo {
 }
 
 type Query {
-  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
+  actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action]!
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
   offers(where: OfferWhereInput, orderBy: OfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Offer]!
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
   workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
-  invite(where: InviteWhereUniqueInput!): Invite
+  action(where: ActionWhereUniqueInput!): Action
   candidate(where: CandidateWhereUniqueInput!): Candidate
   application(where: ApplicationWhereUniqueInput!): Application
   offer(where: OfferWhereUniqueInput!): Offer
+  invite(where: InviteWhereUniqueInput!): Invite
   task(where: TaskWhereUniqueInput!): Task
   comment(where: CommentWhereUniqueInput!): Comment
   user(where: UserWhereUniqueInput!): User
   location(where: LocationWhereUniqueInput!): Location
   stage(where: StageWhereUniqueInput!): Stage
   workspace(where: WorkspaceWhereUniqueInput!): Workspace
-  invitesConnection(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InviteConnection!
+  actionsConnection(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionConnection!
   candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
   applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
   offersConnection(where: OfferWhereInput, orderBy: OfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OfferConnection!
+  invitesConnection(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InviteConnection!
   tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -2107,6 +2406,8 @@ type Query {
 
 type Stage implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   description: String
   position: Int!
@@ -2150,20 +2451,22 @@ type StageEdge {
 enum StageOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   name_ASC
   name_DESC
   description_ASC
   description_DESC
   position_ASC
   position_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type StagePreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   description: String
   position: Int!
@@ -2302,6 +2605,50 @@ input StageWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -2411,10 +2758,11 @@ input StageWhereUniqueInput {
 }
 
 type Subscription {
-  invite(where: InviteSubscriptionWhereInput): InviteSubscriptionPayload
+  action(where: ActionSubscriptionWhereInput): ActionSubscriptionPayload
   candidate(where: CandidateSubscriptionWhereInput): CandidateSubscriptionPayload
   application(where: ApplicationSubscriptionWhereInput): ApplicationSubscriptionPayload
   offer(where: OfferSubscriptionWhereInput): OfferSubscriptionPayload
+  invite(where: InviteSubscriptionWhereInput): InviteSubscriptionPayload
   task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -2426,8 +2774,11 @@ type Subscription {
 type Task implements Node {
   id: ID!
   createdAt: DateTime!
-  dueAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
   owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  content: String!
+  dueAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -2441,13 +2792,26 @@ type TaskConnection {
 }
 
 input TaskCreateInput {
+  content: String!
   dueAt: DateTime!
-  owners: UserCreateManyInput
+  workspace: WorkspaceCreateOneInput!
+  owners: UserCreateManyWithoutTasksOwnerInput
 }
 
 input TaskCreateManyInput {
   create: [TaskCreateInput!]
   connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateManyWithoutOwnersInput {
+  create: [TaskCreateWithoutOwnersInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateWithoutOwnersInput {
+  content: String!
+  dueAt: DateTime!
+  workspace: WorkspaceCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -2464,15 +2828,19 @@ enum TaskOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  dueAt_ASC
-  dueAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  content_ASC
+  content_DESC
+  dueAt_ASC
+  dueAt_DESC
 }
 
 type TaskPreviousValues {
   id: ID!
   createdAt: DateTime!
+  updatedAt: DateTime!
+  content: String!
   dueAt: DateTime!
 }
 
@@ -2516,13 +2884,17 @@ input TaskSubscriptionWhereInput {
 }
 
 input TaskUpdateDataInput {
+  content: String
   dueAt: DateTime
-  owners: UserUpdateManyInput
+  workspace: WorkspaceUpdateOneInput
+  owners: UserUpdateManyWithoutTasksOwnerInput
 }
 
 input TaskUpdateInput {
+  content: String
   dueAt: DateTime
-  owners: UserUpdateManyInput
+  workspace: WorkspaceUpdateOneInput
+  owners: UserUpdateManyWithoutTasksOwnerInput
 }
 
 input TaskUpdateManyInput {
@@ -2534,15 +2906,41 @@ input TaskUpdateManyInput {
   upsert: [TaskUpsertWithWhereUniqueNestedInput!]
 }
 
+input TaskUpdateManyWithoutOwnersInput {
+  create: [TaskCreateWithoutOwnersInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutOwnersInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutOwnersInput!]
+}
+
+input TaskUpdateWithoutOwnersDataInput {
+  content: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+}
+
 input TaskUpdateWithWhereUniqueNestedInput {
   where: TaskWhereUniqueInput!
   data: TaskUpdateDataInput!
+}
+
+input TaskUpdateWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutOwnersDataInput!
 }
 
 input TaskUpsertWithWhereUniqueNestedInput {
   where: TaskWhereUniqueInput!
   update: TaskUpdateDataInput!
   create: TaskCreateInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutOwnersDataInput!
+  create: TaskCreateWithoutOwnersInput!
 }
 
 input TaskWhereInput {
@@ -2616,6 +3014,68 @@ input TaskWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  content: String
+
+  """All values that are not equal to given value."""
+  content_not: String
+
+  """All values that are contained in given list."""
+  content_in: [String!]
+
+  """All values that are not contained in given list."""
+  content_not_in: [String!]
+
+  """All values less than the given value."""
+  content_lt: String
+
+  """All values less than or equal the given value."""
+  content_lte: String
+
+  """All values greater than the given value."""
+  content_gt: String
+
+  """All values greater than or equal the given value."""
+  content_gte: String
+
+  """All values containing the given string."""
+  content_contains: String
+
+  """All values not containing the given string."""
+  content_not_contains: String
+
+  """All values starting with the given string."""
+  content_starts_with: String
+
+  """All values not starting with the given string."""
+  content_not_starts_with: String
+
+  """All values ending with the given string."""
+  content_ends_with: String
+
+  """All values not ending with the given string."""
+  content_not_ends_with: String
   dueAt: DateTime
 
   """All values that are not equal to given value."""
@@ -2638,6 +3098,7 @@ input TaskWhereInput {
 
   """All values greater than or equal the given value."""
   dueAt_gte: DateTime
+  workspace: WorkspaceWhereInput
   owners_every: UserWhereInput
   owners_some: UserWhereInput
   owners_none: UserWhereInput
@@ -2649,15 +3110,17 @@ input TaskWhereUniqueInput {
 
 type User implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   workspace(where: WorkspaceWhereInput): Workspace!
+  tasksOwner(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  lastLogin: DateTime
+  deletedAt: DateTime
   email: String!
   username: String!
   password: String!
   firstName: String
   lastName: String
-  lastLogin: DateTime
-  createdAt: DateTime!
-  deletedAt: DateTime
 }
 
 """A connection to a list of items."""
@@ -2671,18 +3134,19 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
   email: String!
   username: String!
   password: String!
   firstName: String
   lastName: String
-  lastLogin: DateTime
-  deletedAt: DateTime
   workspace: WorkspaceCreateOneWithoutUsersInput!
+  tasksOwner: TaskCreateManyWithoutOwnersInput
 }
 
-input UserCreateManyInput {
-  create: [UserCreateInput!]
+input UserCreateManyWithoutTasksOwnerInput {
+  create: [UserCreateWithoutTasksOwnerInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -2696,14 +3160,26 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutWorkspaceInput {
+input UserCreateWithoutTasksOwnerInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
   email: String!
   username: String!
   password: String!
   firstName: String
   lastName: String
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+}
+
+input UserCreateWithoutWorkspaceInput {
   lastLogin: DateTime
   deletedAt: DateTime
+  email: String!
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  tasksOwner: TaskCreateManyWithoutOwnersInput
 }
 
 """An edge in a connection."""
@@ -2718,6 +3194,14 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  lastLogin_ASC
+  lastLogin_DESC
+  deletedAt_ASC
+  deletedAt_DESC
   email_ASC
   email_DESC
   username_ASC
@@ -2728,26 +3212,19 @@ enum UserOrderByInput {
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  lastLogin_ASC
-  lastLogin_DESC
-  createdAt_ASC
-  createdAt_DESC
-  deletedAt_ASC
-  deletedAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type UserPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  lastLogin: DateTime
+  deletedAt: DateTime
   email: String!
   username: String!
   password: String!
   firstName: String
   lastName: String
-  lastLogin: DateTime
-  createdAt: DateTime!
-  deletedAt: DateTime
 }
 
 type UserSubscriptionPayload {
@@ -2790,34 +3267,36 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
   email: String
   username: String
   password: String
   firstName: String
   lastName: String
-  lastLogin: DateTime
-  deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
+  tasksOwner: TaskUpdateManyWithoutOwnersInput
 }
 
 input UserUpdateInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
   email: String
   username: String
   password: String
   firstName: String
   lastName: String
-  lastLogin: DateTime
-  deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
+  tasksOwner: TaskUpdateManyWithoutOwnersInput
 }
 
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
+input UserUpdateManyWithoutTasksOwnerInput {
+  create: [UserCreateWithoutTasksOwnerInput!]
   connect: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+  update: [UserUpdateWithWhereUniqueWithoutTasksOwnerInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutTasksOwnerInput!]
 }
 
 input UserUpdateManyWithoutWorkspaceInput {
@@ -2837,19 +3316,31 @@ input UserUpdateOneInput {
   upsert: UserUpsertNestedInput
 }
 
-input UserUpdateWithoutWorkspaceDataInput {
+input UserUpdateWithoutTasksOwnerDataInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
   email: String
   username: String
   password: String
   firstName: String
   lastName: String
-  lastLogin: DateTime
-  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
 }
 
-input UserUpdateWithWhereUniqueNestedInput {
+input UserUpdateWithoutWorkspaceDataInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+  tasksOwner: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateWithWhereUniqueWithoutTasksOwnerInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
+  data: UserUpdateWithoutTasksOwnerDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutWorkspaceInput {
@@ -2862,10 +3353,10 @@ input UserUpsertNestedInput {
   create: UserCreateInput!
 }
 
-input UserUpsertWithWhereUniqueNestedInput {
+input UserUpsertWithWhereUniqueWithoutTasksOwnerInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+  update: UserUpdateWithoutTasksOwnerDataInput!
+  create: UserCreateWithoutTasksOwnerInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutWorkspaceInput {
@@ -2923,6 +3414,94 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  lastLogin: DateTime
+
+  """All values that are not equal to given value."""
+  lastLogin_not: DateTime
+
+  """All values that are contained in given list."""
+  lastLogin_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  lastLogin_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  lastLogin_lt: DateTime
+
+  """All values less than or equal the given value."""
+  lastLogin_lte: DateTime
+
+  """All values greater than the given value."""
+  lastLogin_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  lastLogin_gte: DateTime
+  deletedAt: DateTime
+
+  """All values that are not equal to given value."""
+  deletedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  deletedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  deletedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  deletedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  deletedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  deletedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  deletedAt_gte: DateTime
   email: String
 
   """All values that are not equal to given value."""
@@ -3123,73 +3702,10 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   lastName_not_ends_with: String
-  lastLogin: DateTime
-
-  """All values that are not equal to given value."""
-  lastLogin_not: DateTime
-
-  """All values that are contained in given list."""
-  lastLogin_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  lastLogin_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  lastLogin_lt: DateTime
-
-  """All values less than or equal the given value."""
-  lastLogin_lte: DateTime
-
-  """All values greater than the given value."""
-  lastLogin_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  lastLogin_gte: DateTime
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  deletedAt: DateTime
-
-  """All values that are not equal to given value."""
-  deletedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  deletedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  deletedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  deletedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  deletedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  deletedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  deletedAt_gte: DateTime
   workspace: WorkspaceWhereInput
+  tasksOwner_every: TaskWhereInput
+  tasksOwner_some: TaskWhereInput
+  tasksOwner_none: TaskWhereInput
 }
 
 input UserWhereUniqueInput {
@@ -3199,8 +3715,11 @@ input UserWhereUniqueInput {
 
 type Workspace implements Node {
   id: ID!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
   name: String!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
 }
 
@@ -3216,6 +3735,7 @@ type WorkspaceConnection {
 
 input WorkspaceCreateInput {
   name: String!
+  workspace: WorkspaceCreateOneInput!
   users: UserCreateManyWithoutWorkspaceInput
   invites: InviteCreateManyWithoutWorkspaceInput
 }
@@ -3237,11 +3757,13 @@ input WorkspaceCreateOneWithoutUsersInput {
 
 input WorkspaceCreateWithoutInvitesInput {
   name: String!
+  workspace: WorkspaceCreateOneInput!
   users: UserCreateManyWithoutWorkspaceInput
 }
 
 input WorkspaceCreateWithoutUsersInput {
   name: String!
+  workspace: WorkspaceCreateOneInput!
   invites: InviteCreateManyWithoutWorkspaceInput
 }
 
@@ -3257,16 +3779,18 @@ type WorkspaceEdge {
 enum WorkspaceOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
 }
 
 type WorkspacePreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
 }
 
@@ -3311,12 +3835,14 @@ input WorkspaceSubscriptionWhereInput {
 
 input WorkspaceUpdateDataInput {
   name: String
+  workspace: WorkspaceUpdateOneInput
   users: UserUpdateManyWithoutWorkspaceInput
   invites: InviteUpdateManyWithoutWorkspaceInput
 }
 
 input WorkspaceUpdateInput {
   name: String
+  workspace: WorkspaceUpdateOneInput
   users: UserUpdateManyWithoutWorkspaceInput
   invites: InviteUpdateManyWithoutWorkspaceInput
 }
@@ -3324,7 +3850,6 @@ input WorkspaceUpdateInput {
 input WorkspaceUpdateOneInput {
   create: WorkspaceCreateInput
   connect: WorkspaceWhereUniqueInput
-  disconnect: Boolean
   delete: Boolean
   update: WorkspaceUpdateDataInput
   upsert: WorkspaceUpsertNestedInput
@@ -3348,11 +3873,13 @@ input WorkspaceUpdateOneWithoutUsersInput {
 
 input WorkspaceUpdateWithoutInvitesDataInput {
   name: String
+  workspace: WorkspaceUpdateOneInput
   users: UserUpdateManyWithoutWorkspaceInput
 }
 
 input WorkspaceUpdateWithoutUsersDataInput {
   name: String
+  workspace: WorkspaceUpdateOneInput
   invites: InviteUpdateManyWithoutWorkspaceInput
 }
 
@@ -3420,6 +3947,50 @@ input WorkspaceWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -3460,6 +4031,7 @@ input WorkspaceWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  workspace: WorkspaceWhereInput
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput

@@ -1,0 +1,16 @@
+input SignupInput {
+  password: String!
+  username: String!
+  inviteId: ID!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+# import AuthPayload from './types.graphql'
+type Mutation {
+  signup(data: SignupInput): AuthPayload!
+  login(data: LoginInput): AuthPayload!
+}

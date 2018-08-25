@@ -1,0 +1,18 @@
+type Query {
+    # User
+  # import User ,UserWhereUniqueInput, UserWhereInput, UserOrderByInput  from "../generated/prisma.graphql"
+  user(where: UserWhereUniqueInput!): User
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User]!
+}
+
+type Mutation {
+
+}

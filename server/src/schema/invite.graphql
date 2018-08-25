@@ -1,0 +1,60 @@
+# import Invite from "../generated/prisma.graphql"
+
+input InviteCreateInput {
+  email: String!
+}
+
+input InviteWhereUniqueInput {
+  id: ID!
+}
+
+input InviteWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [InviteWhereInput!]
+
+  """
+  Logical OR on all given filters.
+  """
+  OR: [InviteWhereInput!]
+
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [InviteWhereInput!]
+
+  id: ID
+  email: String
+  invitedBy: UserWhereInput
+}
+
+enum InviteOrderByInput {
+  email_ASC
+  email_DESC
+  createdAt_ASC
+  createdAt_DESC
+  expireAt_ASC
+  expireAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type Mutation {
+  createInvite(data: InviteCreateInput): Invite!
+  updateInvite(where: InviteWhereUniqueInput): Invite!
+  deleteInvite(where: InviteWhereUniqueInput): Invite!
+}
+
+type Query {
+  invite(where: InviteWhereUniqueInput!): Invite
+  invites(
+    where: InviteWhereInput
+    orderBy: InviteOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Invite]!
+}

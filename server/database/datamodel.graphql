@@ -1,0 +1,127 @@
+type Action {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+}
+
+type Candidate {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+  tags: [String!]
+  applications: [Application!]!
+  comments: [Comment!]!
+  tasks: [Task!]!
+  firstName: String!
+  lastName: String!
+  emails: [String!]
+  phones: [String!]
+  links: [String!]
+  source: [String!]
+}
+
+type Location {
+  id: ID! @unique
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+type Stage {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  position: Int!
+}
+
+type Application {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  offer: Offer!
+  candidate: Candidate!
+  stage: Stage!
+}
+
+type Offer {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  title: String!
+  department: String
+  location: Location
+  description: String
+  requirements: String
+  applications: [Application!]!
+  stages: [Stage!]!
+}
+
+type Comment {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  createdBy: User!
+  content: String!
+}
+
+type Task {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  owners: [User!]! @relation(name: "TasksOwners")
+  # createdBy: User! @relation(name: "TaskCreatedBy")
+  content: String!
+  dueAt: DateTime!
+}
+
+type Invite {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  email: String!
+  expireAt: DateTime!
+  invitedBy: User!
+}
+
+type Workspace {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  name: String!
+  users: [User!]!
+  invites: [Invite!]!
+}
+
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  tasksOwner: [Task!]! @relation(name: "TasksOwners")
+  # tasksCreator: [Task!]! @relation(name: "TaskCreatedBy")
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String! @unique
+  username: String!
+  password: String! @private
+  firstName: String
+  lastName: String
+}

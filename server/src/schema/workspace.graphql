@@ -1,0 +1,24 @@
+input WorkspaceCreateInput {
+  name: String!
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+}
+
+input WorkspaceWhereUniqueInput {
+  id: ID
+}
+
+type Workspace {
+  id: ID! @unique
+  users: [User!]!
+  name: String!
+  invites: [Invite!]!
+}
+
+type Mutation {
+  createWorkspace(data: WorkspaceCreateInput): AuthPayload!
+  deleteWorkspace(where: WorkspaceWhereUniqueInput): Workspace!
+}

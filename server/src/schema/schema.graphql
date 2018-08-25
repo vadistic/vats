@@ -1,4 +1,18 @@
-# import Query.* from "query/forwards.graphql"
+# Forwards
+# import Query.* from "./queryForwards.graphql"
+# import Mutation.* from "./mutationForwards.graphql"
+
+# Auth
+# import Mutation.*, * from "./auth.graphql"
+
+# Invite
+# import Mutation.*, Query.*, * from "./invite.graphql"
+
+# User
+# import Mutation.*, Query.*, * from "./user.graphql"
+
+# Workspace
+# import Mutation.*, * from "./workspace.graphql"
 
 # import Mutation.* from "mutation/auth.graphql"
 # import Mutation.* from "mutation/forwards.graphql"

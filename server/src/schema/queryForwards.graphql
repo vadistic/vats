@@ -1,0 +1,40 @@
+type Query {
+  # Candidate
+  # import Candidate, CandidateWhereUniqueInput, CandidateWhereInput, CandidateOrderByInput  from "../generated/prisma.graphql"
+  candidate(where: CandidateWhereUniqueInput!): Candidate
+  candidates(
+    where: CandidateWhereInput
+    orderBy: CandidateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Candidate]!
+
+  # Offer
+  # import Offer, OfferWhereUniqueInput, OfferWhereInput, OfferOrderByInput  from "../generated/prisma.graphql"
+  offer(where: OfferWhereUniqueInput!): Offer
+  offers(
+    where: OfferWhereInput
+    orderBy: OfferOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Offer]!
+
+  # Workspace
+  # import Workspace, WorkspaceWhereUniqueInput, WorkspaceWhereInput, WorkspaceOrderByInput  from "../generated/prisma.graphql"
+  workspace(where: WorkspaceWhereUniqueInput!): Workspace
+  workspaces(
+    where: WorkspaceWhereInput
+    orderBy: WorkspaceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Workspace]!
+}
