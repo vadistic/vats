@@ -13,6 +13,3 @@
 
 # Workspace
 # import Mutation.*, * from "./workspace.graphql"
-
-# import Mutation.* from "mutation/auth.graphql"
-# import Mutation.* from "mutation/forwards.graphql"

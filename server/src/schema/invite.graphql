@@ -1,5 +1,4 @@
 # import Invite from "../generated/prisma.graphql"
-
 input InviteCreateInput {
   email: String!
 }

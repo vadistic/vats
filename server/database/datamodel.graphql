@@ -10,6 +10,7 @@ type Candidate {
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
+
   tags: [String!]
   applications: [Application!]!
   comments: [Comment!]!
@@ -34,6 +35,7 @@ type Stage {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
+
   name: String!
   description: String
   position: Int!

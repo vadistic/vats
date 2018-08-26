@@ -8,7 +8,7 @@ projects:
       codegen:
         - generator: graphql-binding
           language: typescript
-          input: src/schema/index.ts
+          input: src/schema/schema.ts
           output:
             binding: src/generated/app.ts
 
