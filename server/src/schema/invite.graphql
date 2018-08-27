@@ -1,31 +1,29 @@
-# import Invite from "../generated/prisma.graphql"
-input InviteCreateInput {
-  email: String!
+type Query {
+  invite(where: InviteWhereUniqueInput!): Invite
+  invites(
+    where: InviteWhereInput
+    orderBy: InviteOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Invite]!
 }
 
-input InviteWhereUniqueInput {
+type Mutation {
+  createInvite(data: InviteCreateInput): Invite!
+  updateInvite(where: InviteWhereUniqueInput): Invite!
+  deleteInvite(where: InviteWhereUniqueInput): Invite!
+}
+
+type Invite {
   id: ID!
-}
-
-input InviteWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [InviteWhereInput!]
-
-  """
-  Logical OR on all given filters.
-  """
-  OR: [InviteWhereInput!]
-
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [InviteWhereInput!]
-
-  id: ID
-  email: String
-  invitedBy: UserWhereInput
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  expireAt: DateTime!
+  invitedBy(where: UserWhereInput): User!
 }
 
 enum InviteOrderByInput {
@@ -39,21 +37,20 @@ enum InviteOrderByInput {
   updatedAt_DESC
 }
 
-type Mutation {
-  createInvite(data: InviteCreateInput): Invite!
-  updateInvite(where: InviteWhereUniqueInput): Invite!
-  deleteInvite(where: InviteWhereUniqueInput): Invite!
+input InviteWhereUniqueInput {
+  id: ID!
 }
 
-type Query {
-  invite(where: InviteWhereUniqueInput!): Invite
-  invites(
-    where: InviteWhereInput
-    orderBy: InviteOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Invite]!
+input InviteWhereInput {
+  AND: [InviteWhereInput!]
+  OR: [InviteWhereInput!]
+  NOT: [InviteWhereInput!]
+
+  id: ID
+  email: String
+  invitedBy: UserWhereInput
+}
+
+input InviteCreateInput {
+  email: String!
 }

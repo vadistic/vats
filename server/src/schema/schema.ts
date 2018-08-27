@@ -3,8 +3,9 @@
 
 import { makeExecutableSchema } from 'graphql-tools'
 import { importSchema } from 'graphql-import'
+import * as path from 'path'
 
-const typeDefs = importSchema(__dirname + '/schema.graphql')
+export const typeDefs = importSchema(path.join(__dirname, 'schema.graphql'))
 
 const schema = makeExecutableSchema({
   typeDefs,

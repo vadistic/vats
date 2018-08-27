@@ -1,0 +1,95 @@
+type Query {
+  task(where: TaskWhereUniqueInput!): Task
+
+  tasks(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Task]!
+}
+
+type Mutation {
+  createTask(data: TaskCreateInput!): Task!
+
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+
+  deleteTask(where: TaskWhereUniqueInput!): Task
+}
+
+type Task {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  owners(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]
+  content: String!
+  dueAt: DateTime!
+}
+
+enum TaskOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  title_ASC
+  title_DESC
+  dueAt_ASC
+  dueAt_DESC
+}
+
+input TaskWhereUniqueInput {
+  id: ID
+}
+
+input TaskWhereInput {
+  AND: [TaskWhereInput!]
+  OR: [TaskWhereInput!]
+  NOT: [TaskWhereInput!]
+
+  id: ID
+
+  title: String
+  title_contains: String
+
+  description: String
+  description_contains: String
+
+  owners_every: UserWhereInput
+  owners_some: UserWhereInput
+  owners_none: UserWhereInput
+}
+
+input TaskCreateInput {
+  title: String!
+  description: String
+  dueAt: DateTime
+  owners: UserCreateManyWithoutTasksOwnerInput
+}
+
+input TaskUpdateInput {
+  title: String
+  description: String
+  dueAt: DateTime
+  owners: UserUpdateManyWithoutTasksOwnerInput
+}
+
+input UserCreateManyWithoutTasksOwnerInput {
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserUpdateManyWithoutTasksOwnerInput {
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+}

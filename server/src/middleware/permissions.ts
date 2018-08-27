@@ -28,8 +28,6 @@ export default shield({
     offer: and(isAuthenticated, isSameWorkspace('Offer')),
     offers: isAuthenticated,
     workspace: and(isAuthenticated, workspaceHasUser),
-    // disable in production
-    workspaces: allow,
   },
   Mutation: {
     createWorkspace: allow,

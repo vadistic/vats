@@ -1,0 +1,140 @@
+type Query {
+  candidate(where: CandidateWhereUniqueInput!): Candidate
+  candidates(
+    where: CandidateWhereInput
+    orderBy: CandidateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Candidate]!
+}
+
+type Mutation {
+  createCandidate(data: CandidateCreateInput!): Candidate!
+  updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
+  deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
+}
+
+type Candidate {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  tags: [String!]!
+  applications(
+    where: ApplicationWhereInput
+    orderBy: ApplicationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Application!]
+  comments(
+    where: CommentWhereInput
+    orderBy: CommentOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Comment!]
+  tasks(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Task!]
+  firstName: String!
+  lastName: String!
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  source: [String!]!
+}
+
+enum CandidateOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+input CandidateWhereUniqueInput {
+  id: ID
+}
+
+input CandidateWhereInput {
+  AND: [CandidateWhereInput!]
+  OR: [CandidateWhereInput!]
+  NOT: [CandidateWhereInput!]
+  id: ID
+
+  createdAt: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  firstName: String
+  firstName_contains: String
+  lastName: String
+  lastName_contains: String
+
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
+}
+
+# import CandidateCreatetagsInput from '../generated/prisma.graphql'
+# import CandidateCreateemailsInput from '../generated/prisma.graphql'
+# import CandidateCreatephonesInput from '../generated/prisma.graphql'
+# import CandidateCreatelinksInput from '../generated/prisma.graphql'
+# import CandidateCreatesourceInput from '../generated/prisma.graphql'
+input CandidateCreateInput {
+  firstName: String!
+  lastName: String!
+
+  tags: CandidateCreatetagsInput
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  source: CandidateCreatesourceInput
+}
+
+# import CandidateUpdatetagsInput from '../generated/prisma.graphql'
+# import CandidateUpdateemailsInput from '../generated/prisma.graphql'
+# import CandidateUpdatephonesInput from '../generated/prisma.graphql'
+# import CandidateUpdatelinksInput from '../generated/prisma.graphql'
+# import CandidateUpdatesourceInput from '../generated/prisma.graphql'
+input CandidateUpdateInput {
+  firstName: String
+  lastName: String
+
+  tags: CandidateUpdatetagsInput
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  source: CandidateUpdatesourceInput
+}

@@ -1,6 +1,4 @@
 type Query {
-  # User
-  # import User, UserWhereUniqueInput, UserWhereInput, UserOrderByInput  from "../generated/prisma.graphql"
   user(where: UserWhereUniqueInput!): User
   users(
     where: UserWhereInput
@@ -14,7 +12,87 @@ type Query {
 }
 
 type Mutation {
-  # import UserUpdateInput, UserWhereUniqueInput from "../generated/prisma.graphql"
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteUser(where: UserWhereUniqueInput!): User
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  tasksOwner(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Task!]
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String!
+  username: String!
+  firstName: String
+  lastName: String
+}
+
+enum UserOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  lastLogin_ASC
+  lastLogin_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+input UserWhereUniqueInput {
+  id: ID
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+
+  id: ID
+
+  email: String
+  email_contains: String
+
+  username: String
+  username_contains: String
+
+  firstName: String
+  firstName_contains: String
+
+  lastName: String
+  lastName_contains: String
+
+  tasksOwner_every: TaskWhereInput
+  tasksOwner_some: TaskWhereInput
+  tasksOwner_none: TaskWhereInput
+}
+
+input UserUpdateInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  tasksOwner: TaskUpdateManyWithoutOwnersInput
 }

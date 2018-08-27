@@ -1,15 +1,26 @@
-# Forwards
-# import Query.* from "./queryForwards.graphql"
-# import Mutation.* from "./mutationForwards.graphql"
+# Import universal types
+# import DateTime, Location from '../generated/prisma.graphql'
 
-# Auth
-# import Mutation.*, * from "./auth.graphql"
+# Import types typed
+# import * from "application.graphql"
+# import * from "auth.graphql"
+# import * from "candidate.graphql"
+# import * from "comment.graphql"
+# import * from "invite.graphql"
+# import * from "offer.graphql"
+# import * from "stage.graphql"
+# import * from "task.graphql"
+# import * from "user.graphql"
+# import * from "workspace.graphql"
 
-# Invite
-# import Mutation.*, Query.*, * from "./invite.graphql"
-
-# User
-# import Mutation.*, Query.*, * from "./user.graphql"
-
-# Workspace
-# import Mutation.*, * from "./workspace.graphql"
+# Import root fields
+# import Query.*, Mutation.* from "application.graphql"
+# import Query.*, Mutation.* from "auth.graphql"
+# import Query.*, Mutation.* from "candidate.graphql"
+# import Query.*, Mutation.* from "comment.graphql"
+# import Query.*, Mutation.* from "invite.graphql"
+# import Query.*, Mutation.* from "offer.graphql"
+# import Query.*, Mutation.* from "stage.graphql"
+# import Query.*, Mutation.* from "task.graphql"
+# import Query.*, Mutation.* from "user.graphql"
+# import Query.*, Mutation.* from "workspace.graphql"

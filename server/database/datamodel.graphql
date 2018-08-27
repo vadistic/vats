@@ -5,6 +5,17 @@ type Action {
   workspace: Workspace!
 }
 
+type Application {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  offer: Offer!
+  candidate: Candidate!
+  stage: Stage!
+}
+
 type Candidate {
   id: ID! @unique
   createdAt: DateTime!
@@ -23,33 +34,25 @@ type Candidate {
   source: [String!]
 }
 
-type Location {
-  id: ID! @unique
-  country: String!
-  region: String!
-  city: String!
-  zip: String!
-}
-
-type Stage {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-
-  name: String!
-  description: String
-  position: Int!
-}
-
-type Application {
+type Comment {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
 
-  offer: Offer!
-  candidate: Candidate!
-  stage: Stage!
+  createdBy: User!
+  content: String!
+}
+
+type Invite {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  email: String!
+  expireAt: DateTime!
+  invitedBy: User!
 }
 
 type Offer {
@@ -67,14 +70,14 @@ type Offer {
   stages: [Stage!]!
 }
 
-type Comment {
+type Stage {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
 
-  createdBy: User!
-  content: String!
+  name: String!
+  description: String
+  position: Int!
 }
 
 type Task {
@@ -85,30 +88,9 @@ type Task {
 
   owners: [User!]! @relation(name: "TasksOwners")
   # createdBy: User! @relation(name: "TaskCreatedBy")
-  content: String!
-  dueAt: DateTime!
-}
-
-type Invite {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace: Workspace!
-
-  email: String!
-  expireAt: DateTime!
-  invitedBy: User!
-}
-
-type Workspace {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace: Workspace!
-
-  name: String!
-  users: [User!]!
-  invites: [Invite!]!
+  title: String!
+  description: String
+  dueAt: DateTime
 }
 
 type User {
@@ -123,7 +105,26 @@ type User {
   deletedAt: DateTime
   email: String! @unique
   username: String!
-  password: String! @private
+  password: String!
   firstName: String
   lastName: String
+}
+
+type Workspace {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  users: [User!]!
+  invites: [Invite!]!
+}
+
+# Secondary types
+type Location {
+  id: ID! @unique
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
 }

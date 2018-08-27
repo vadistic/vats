@@ -2935,8 +2935,9 @@ type Task implements Node {
   updatedAt: DateTime!
   workspace(where: WorkspaceWhereInput): Workspace!
   owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  content: String!
-  dueAt: DateTime!
+  title: String!
+  description: String
+  dueAt: DateTime
 }
 
 """A connection to a list of items."""
@@ -2950,8 +2951,9 @@ type TaskConnection {
 }
 
 input TaskCreateInput {
-  content: String!
-  dueAt: DateTime!
+  title: String!
+  description: String
+  dueAt: DateTime
   workspace: WorkspaceCreateOneInput!
   owners: UserCreateManyWithoutTasksOwnerInput
 }
@@ -2967,8 +2969,9 @@ input TaskCreateManyWithoutOwnersInput {
 }
 
 input TaskCreateWithoutOwnersInput {
-  content: String!
-  dueAt: DateTime!
+  title: String!
+  description: String
+  dueAt: DateTime
   workspace: WorkspaceCreateOneInput!
 }
 
@@ -2988,8 +2991,10 @@ enum TaskOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  content_ASC
-  content_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
   dueAt_ASC
   dueAt_DESC
 }
@@ -2998,8 +3003,9 @@ type TaskPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  content: String!
-  dueAt: DateTime!
+  title: String!
+  description: String
+  dueAt: DateTime
 }
 
 type TaskSubscriptionPayload {
@@ -3042,14 +3048,16 @@ input TaskSubscriptionWhereInput {
 }
 
 input TaskUpdateDataInput {
-  content: String
+  title: String
+  description: String
   dueAt: DateTime
   workspace: WorkspaceUpdateOneInput
   owners: UserUpdateManyWithoutTasksOwnerInput
 }
 
 input TaskUpdateInput {
-  content: String
+  title: String
+  description: String
   dueAt: DateTime
   workspace: WorkspaceUpdateOneInput
   owners: UserUpdateManyWithoutTasksOwnerInput
@@ -3074,7 +3082,8 @@ input TaskUpdateManyWithoutOwnersInput {
 }
 
 input TaskUpdateWithoutOwnersDataInput {
-  content: String
+  title: String
+  description: String
   dueAt: DateTime
   workspace: WorkspaceUpdateOneInput
 }
@@ -3194,46 +3203,86 @@ input TaskWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  content: String
+  title: String
 
   """All values that are not equal to given value."""
-  content_not: String
+  title_not: String
 
   """All values that are contained in given list."""
-  content_in: [String!]
+  title_in: [String!]
 
   """All values that are not contained in given list."""
-  content_not_in: [String!]
+  title_not_in: [String!]
 
   """All values less than the given value."""
-  content_lt: String
+  title_lt: String
 
   """All values less than or equal the given value."""
-  content_lte: String
+  title_lte: String
 
   """All values greater than the given value."""
-  content_gt: String
+  title_gt: String
 
   """All values greater than or equal the given value."""
-  content_gte: String
+  title_gte: String
 
   """All values containing the given string."""
-  content_contains: String
+  title_contains: String
 
   """All values not containing the given string."""
-  content_not_contains: String
+  title_not_contains: String
 
   """All values starting with the given string."""
-  content_starts_with: String
+  title_starts_with: String
 
   """All values not starting with the given string."""
-  content_not_starts_with: String
+  title_not_starts_with: String
 
   """All values ending with the given string."""
-  content_ends_with: String
+  title_ends_with: String
 
   """All values not ending with the given string."""
-  content_not_ends_with: String
+  title_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
   dueAt: DateTime
 
   """All values that are not equal to given value."""
@@ -3875,7 +3924,6 @@ type Workspace implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
   name: String!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
@@ -3893,7 +3941,6 @@ type WorkspaceConnection {
 
 input WorkspaceCreateInput {
   name: String!
-  workspace: WorkspaceCreateOneInput!
   users: UserCreateManyWithoutWorkspaceInput
   invites: InviteCreateManyWithoutWorkspaceInput
 }
@@ -3915,13 +3962,11 @@ input WorkspaceCreateOneWithoutUsersInput {
 
 input WorkspaceCreateWithoutInvitesInput {
   name: String!
-  workspace: WorkspaceCreateOneInput!
   users: UserCreateManyWithoutWorkspaceInput
 }
 
 input WorkspaceCreateWithoutUsersInput {
   name: String!
-  workspace: WorkspaceCreateOneInput!
   invites: InviteCreateManyWithoutWorkspaceInput
 }
 
@@ -3993,14 +4038,12 @@ input WorkspaceSubscriptionWhereInput {
 
 input WorkspaceUpdateDataInput {
   name: String
-  workspace: WorkspaceUpdateOneInput
   users: UserUpdateManyWithoutWorkspaceInput
   invites: InviteUpdateManyWithoutWorkspaceInput
 }
 
 input WorkspaceUpdateInput {
   name: String
-  workspace: WorkspaceUpdateOneInput
   users: UserUpdateManyWithoutWorkspaceInput
   invites: InviteUpdateManyWithoutWorkspaceInput
 }
@@ -4031,13 +4074,11 @@ input WorkspaceUpdateOneWithoutUsersInput {
 
 input WorkspaceUpdateWithoutInvitesDataInput {
   name: String
-  workspace: WorkspaceUpdateOneInput
   users: UserUpdateManyWithoutWorkspaceInput
 }
 
 input WorkspaceUpdateWithoutUsersDataInput {
   name: String
-  workspace: WorkspaceUpdateOneInput
   invites: InviteUpdateManyWithoutWorkspaceInput
 }
 
@@ -4189,7 +4230,6 @@ input WorkspaceWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  workspace: WorkspaceWhereInput
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
@@ -4265,8 +4305,10 @@ export type TaskOrderByInput =   'id_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
-  'content_ASC' |
-  'content_DESC' |
+  'title_ASC' |
+  'title_DESC' |
+  'description_ASC' |
+  'description_DESC' |
   'dueAt_ASC' |
   'dueAt_DESC'
 
@@ -4385,8 +4427,9 @@ export interface ActionWhereInput {
 }
 
 export interface TaskCreateWithoutOwnersInput {
-  content: String
-  dueAt: DateTime
+  title: String
+  description?: String
+  dueAt?: DateTime
   workspace: WorkspaceCreateOneInput
 }
 
@@ -4402,7 +4445,6 @@ export interface InviteCreateManyWithoutWorkspaceInput {
 
 export interface WorkspaceCreateWithoutInvitesInput {
   name: String
-  workspace: WorkspaceCreateOneInput
   users?: UserCreateManyWithoutWorkspaceInput
 }
 
@@ -4693,7 +4735,6 @@ export interface LocationSubscriptionWhereInput {
 
 export interface WorkspaceCreateWithoutUsersInput {
   name: String
-  workspace: WorkspaceCreateOneInput
   invites?: InviteCreateManyWithoutWorkspaceInput
 }
 
@@ -4835,20 +4876,34 @@ export interface TaskWhereInput {
   updatedAt_lte?: DateTime
   updatedAt_gt?: DateTime
   updatedAt_gte?: DateTime
-  content?: String
-  content_not?: String
-  content_in?: String[] | String
-  content_not_in?: String[] | String
-  content_lt?: String
-  content_lte?: String
-  content_gt?: String
-  content_gte?: String
-  content_contains?: String
-  content_not_contains?: String
-  content_starts_with?: String
-  content_not_starts_with?: String
-  content_ends_with?: String
-  content_not_ends_with?: String
+  title?: String
+  title_not?: String
+  title_in?: String[] | String
+  title_not_in?: String[] | String
+  title_lt?: String
+  title_lte?: String
+  title_gt?: String
+  title_gte?: String
+  title_contains?: String
+  title_not_contains?: String
+  title_starts_with?: String
+  title_not_starts_with?: String
+  title_ends_with?: String
+  title_not_ends_with?: String
+  description?: String
+  description_not?: String
+  description_in?: String[] | String
+  description_not_in?: String[] | String
+  description_lt?: String
+  description_lte?: String
+  description_gt?: String
+  description_gte?: String
+  description_contains?: String
+  description_not_contains?: String
+  description_starts_with?: String
+  description_not_starts_with?: String
+  description_ends_with?: String
+  description_not_ends_with?: String
   dueAt?: DateTime
   dueAt_not?: DateTime
   dueAt_in?: DateTime[] | DateTime
@@ -5045,7 +5100,6 @@ export interface WorkspaceWhereInput {
   name_not_starts_with?: String
   name_ends_with?: String
   name_not_ends_with?: String
-  workspace?: WorkspaceWhereInput
   users_every?: UserWhereInput
   users_some?: UserWhereInput
   users_none?: UserWhereInput
@@ -5112,7 +5166,6 @@ export interface LocationCreateOneInput {
 
 export interface WorkspaceUpdateInput {
   name?: String
-  workspace?: WorkspaceUpdateOneInput
   users?: UserUpdateManyWithoutWorkspaceInput
   invites?: InviteUpdateManyWithoutWorkspaceInput
 }
@@ -5205,8 +5258,9 @@ export interface OfferUpdateInput {
 }
 
 export interface TaskCreateInput {
-  content: String
-  dueAt: DateTime
+  title: String
+  description?: String
+  dueAt?: DateTime
   workspace: WorkspaceCreateOneInput
   owners?: UserCreateManyWithoutTasksOwnerInput
 }
@@ -5272,7 +5326,8 @@ export interface StageUpsertWithWhereUniqueNestedInput {
 }
 
 export interface TaskUpdateDataInput {
-  content?: String
+  title?: String
+  description?: String
   dueAt?: DateTime
   workspace?: WorkspaceUpdateOneInput
   owners?: UserUpdateManyWithoutTasksOwnerInput
@@ -5405,7 +5460,6 @@ export interface StageSubscriptionWhereInput {
 
 export interface WorkspaceUpdateDataInput {
   name?: String
-  workspace?: WorkspaceUpdateOneInput
   users?: UserUpdateManyWithoutWorkspaceInput
   invites?: InviteUpdateManyWithoutWorkspaceInput
 }
@@ -5567,7 +5621,8 @@ export interface InviteWhereUniqueInput {
 }
 
 export interface TaskUpdateWithoutOwnersDataInput {
-  content?: String
+  title?: String
+  description?: String
   dueAt?: DateTime
   workspace?: WorkspaceUpdateOneInput
 }
@@ -5595,7 +5650,8 @@ export interface UserUpsertWithWhereUniqueWithoutWorkspaceInput {
 }
 
 export interface TaskUpdateInput {
-  content?: String
+  title?: String
+  description?: String
   dueAt?: DateTime
   workspace?: WorkspaceUpdateOneInput
   owners?: UserUpdateManyWithoutTasksOwnerInput
@@ -5696,7 +5752,6 @@ export interface CommentUpdateWithWhereUniqueNestedInput {
 
 export interface WorkspaceUpdateWithoutUsersDataInput {
   name?: String
-  workspace?: WorkspaceUpdateOneInput
   invites?: InviteUpdateManyWithoutWorkspaceInput
 }
 
@@ -5715,7 +5770,6 @@ export interface WorkspaceUpsertWithoutUsersInput {
 
 export interface WorkspaceCreateInput {
   name: String
-  workspace: WorkspaceCreateOneInput
   users?: UserCreateManyWithoutWorkspaceInput
   invites?: InviteCreateManyWithoutWorkspaceInput
 }
@@ -5842,7 +5896,6 @@ export interface CandidateUpdateemailsInput {
 
 export interface WorkspaceUpdateWithoutInvitesDataInput {
   name?: String
-  workspace?: WorkspaceUpdateOneInput
   users?: UserUpdateManyWithoutWorkspaceInput
 }
 
@@ -6105,7 +6158,6 @@ export interface Workspace extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  workspace: Workspace
   name: String
   users?: User[]
   invites?: Invite[]
@@ -6454,8 +6506,9 @@ export interface TaskPreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  content: String
-  dueAt: DateTime
+  title: String
+  description?: String
+  dueAt?: DateTime
 }
 
 /*
@@ -6508,8 +6561,9 @@ export interface Task extends Node {
   updatedAt: DateTime
   workspace: Workspace
   owners?: User[]
-  content: String
-  dueAt: DateTime
+  title: String
+  description?: String
+  dueAt?: DateTime
 }
 
 export interface Candidate extends Node {

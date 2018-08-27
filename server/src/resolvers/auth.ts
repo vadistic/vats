@@ -1,33 +1,8 @@
 import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 import * as dayjs from 'dayjs'
-import { forwardTo } from 'prisma-binding'
 
-import { getId, Mutation } from '../../utils'
-
-export const createWorkspace: Mutation['createWorkspace'] = async (
-  parent,
-  { data: { name, password: passwordRaw, ...args } },
-  ctx,
-  info
-) => {
-  const password = await bcrypt.hash(passwordRaw, 10)
-
-  const workspace = await ctx.db.mutation.createWorkspace({
-    data: { name },
-  })
-
-  const user = await ctx.db.mutation.createUser({
-    data: { ...args, password, workspace: { connect: { id: workspace.id } } },
-  })
-
-  return {
-    token: jwt.sign({ userId: user.id, workspaceId: workspace.id }, process.env.APP_SECRET, {
-      expiresIn: '7 days',
-    }),
-    user,
-  }
-}
+import { Mutation } from '../utils'
 
 export const signup: Mutation['signup'] = async (
   parent,
@@ -103,46 +78,7 @@ export const login: Mutation['login'] = async (
   }
 }
 
-export const createInvite: Mutation['createInvite'] = async (
-  parent,
-  { data: { email } },
-  ctx,
-  info
-) => {
-  const { userId, workspaceId } = getId(ctx)
-
-  const expireAt = dayjs()
-    .add(7, 'day')
-    .format()
-
-  // TODO: trriger invitation email
-
-  return ctx.db.mutation.createInvite(
-    {
-      data: {
-        email,
-        expireAt,
-        workspace: { connect: { id: workspaceId } },
-        invitedBy: { connect: { id: userId } },
-      },
-    },
-    info
-  )
+export const AuthMutations = {
+  signup,
+  login,
 }
-
-export const updateInvite: Mutation['updateInvite'] = async (
-  parent,
-  { where: { id } },
-  ctx,
-  info
-) => {
-  const expireAt = dayjs()
-    .add(7, 'day')
-    .format()
-
-  // TODO: trriger invitation email
-
-  return ctx.db.mutation.updateInvite({ where: { id }, data: { expireAt } }, info)
-}
-
-export const deleteInvite: Mutation['deleteInvite'] = forwardTo('db')

@@ -9,7 +9,11 @@ input LoginInput {
   password: String!
 }
 
-# import AuthPayload from './types.graphql'
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type Mutation {
   signup(data: SignupInput): AuthPayload!
   login(data: LoginInput): AuthPayload!

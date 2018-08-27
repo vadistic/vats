@@ -1,0 +1,1657 @@
+type Query {
+  application(where: ApplicationWhereUniqueInput!): Application
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
+  candidate(where: CandidateWhereUniqueInput!): Candidate
+  candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
+  invite(where: InviteWhereUniqueInput!): Invite
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
+  offer(where: OfferWhereUniqueInput!): Offer
+  offers(where: OfferWhereInput, orderBy: OfferOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Offer]!
+  task(where: TaskWhereUniqueInput!): Task
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  workspace(where: WorkspaceWhereUniqueInput!): Workspace
+}
+
+type Mutation {
+  createApplication(data: ApplicationCreateInput!): Application!
+  updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
+  deleteApplication(where: ApplicationWhereUniqueInput!): Application
+  signup(data: SignupInput): AuthPayload!
+  login(data: LoginInput): AuthPayload!
+  createCandidate(data: CandidateCreateInput!): Candidate!
+  updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
+  deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
+  createComment(data: CommentCreateInput!): Comment!
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
+  deleteComment(where: CommentWhereUniqueInput!): Comment
+  createInvite(data: InviteCreateInput): Invite!
+  updateInvite(where: InviteWhereUniqueInput): Invite!
+  deleteInvite(where: InviteWhereUniqueInput): Invite!
+  createOffer(data: OfferCreateInput!): Offer!
+  updateOffer(data: OfferUpdateInput!, where: OfferWhereUniqueInput!): Offer
+  deleteOffer(where: OfferWhereUniqueInput!): Offer
+  createStage(data: StageCreateInput!): Stage!
+  updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
+  deleteStage(where: StageWhereUniqueInput!): Stage
+  createTask(data: TaskCreateInput!): Task!
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+  deleteTask(where: TaskWhereUniqueInput!): Task
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteUser(where: UserWhereUniqueInput!): User
+  createWorkspace(data: WorkspaceCreateInput): AuthPayload!
+  deleteWorkspace(where: WorkspaceWhereUniqueInput): Workspace!
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+}
+
+type Application {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  offer(where: OfferWhereInput): Offer!
+  candidate(where: CandidateWhereInput): Candidate!
+  stage(where: StageWhereInput): Stage!
+}
+
+input ApplicationWhereUniqueInput {
+  id: ID
+}
+
+input ApplicationWhereInput {
+  AND: [ApplicationWhereInput!]
+  OR: [ApplicationWhereInput!]
+  NOT: [ApplicationWhereInput!]
+  id: ID
+  createdAt: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  offer: OfferWhereInput
+  candidate: CandidateWhereInput
+  stage: StageWhereInput
+}
+
+enum ApplicationOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type Candidate {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tags: [String!]!
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  firstName: String!
+  lastName: String!
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  source: [String!]!
+}
+
+input CandidateWhereUniqueInput {
+  id: ID
+}
+
+input CandidateWhereInput {
+  AND: [CandidateWhereInput!]
+  OR: [CandidateWhereInput!]
+  NOT: [CandidateWhereInput!]
+  id: ID
+  createdAt: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  firstName: String
+  firstName_contains: String
+  lastName: String
+  lastName_contains: String
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
+}
+
+enum CandidateOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+type Invite {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  expireAt: DateTime!
+  invitedBy(where: UserWhereInput): User!
+}
+
+input InviteWhereUniqueInput {
+  id: ID!
+}
+
+input InviteWhereInput {
+  AND: [InviteWhereInput!]
+  OR: [InviteWhereInput!]
+  NOT: [InviteWhereInput!]
+  id: ID
+  email: String
+  invitedBy: UserWhereInput
+}
+
+enum InviteOrderByInput {
+  email_ASC
+  email_DESC
+  createdAt_ASC
+  createdAt_DESC
+  expireAt_ASC
+  expireAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type Offer {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  department: String
+  location(where: LocationWhereInput): Location
+  description: String
+  requirements: String
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
+}
+
+input OfferWhereUniqueInput {
+  id: ID
+}
+
+input OfferWhereInput {
+  AND: [OfferWhereInput!]
+  OR: [OfferWhereInput!]
+  NOT: [OfferWhereInput!]
+  id: ID
+  title: String
+  title_contains: String
+  department: String
+  department_contains: String
+  description: String
+  description_contains: String
+  requirements: String
+  requirements_contains: String
+  location: LocationWhereInput
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+  stages_every: StageWhereInput
+  stages_some: StageWhereInput
+  stages_none: StageWhereInput
+}
+
+enum OfferOrderByInput {
+  title_ASC
+  title_DESC
+  department_ASC
+  department_DESC
+}
+
+type Task {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  content: String!
+  dueAt: DateTime!
+}
+
+input TaskWhereUniqueInput {
+  id: ID
+}
+
+input TaskWhereInput {
+  AND: [TaskWhereInput!]
+  OR: [TaskWhereInput!]
+  NOT: [TaskWhereInput!]
+  id: ID
+  title: String
+  title_contains: String
+  description: String
+  description_contains: String
+  owners_every: UserWhereInput
+  owners_some: UserWhereInput
+  owners_none: UserWhereInput
+}
+
+enum TaskOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  title_ASC
+  title_DESC
+  dueAt_ASC
+  dueAt_DESC
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tasksOwner(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String!
+  username: String!
+  firstName: String
+  lastName: String
+}
+
+input UserWhereUniqueInput {
+  id: ID
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  id: ID
+  email: String
+  email_contains: String
+  username: String
+  username_contains: String
+  firstName: String
+  firstName_contains: String
+  lastName: String
+  lastName_contains: String
+  tasksOwner_every: TaskWhereInput
+  tasksOwner_some: TaskWhereInput
+  tasksOwner_none: TaskWhereInput
+}
+
+enum UserOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  lastLogin_ASC
+  lastLogin_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+type Workspace {
+  id: ID!
+  users: [User!]!
+  name: String!
+  invites: [Invite!]!
+}
+
+input WorkspaceWhereUniqueInput {
+  id: ID
+}
+
+input ApplicationCreateInput {
+  offer: OfferCreateOneWithoutApplicationsInput!
+  candidate: CandidateCreateOneWithoutApplicationsInput!
+  stage: StageCreateOneInput!
+}
+
+input ApplicationUpdateInput {
+  workspace: WorkspaceUpdateOneInput
+  offer: OfferUpdateOneWithoutApplicationsInput
+  candidate: CandidateUpdateOneWithoutApplicationsInput
+  stage: StageUpdateOneInput
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input SignupInput {
+  password: String!
+  username: String!
+  inviteId: ID!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input CandidateCreateInput {
+  firstName: String!
+  lastName: String!
+  tags: CandidateCreatetagsInput
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  source: CandidateCreatesourceInput
+}
+
+input CandidateUpdateInput {
+  firstName: String
+  lastName: String
+  tags: CandidateUpdatetagsInput
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  source: CandidateUpdatesourceInput
+}
+
+type Comment implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  createdBy(where: UserWhereInput): User!
+  content: String!
+}
+
+input CommentCreateInput {
+  content: String!
+  workspace: WorkspaceCreateOneInput!
+  createdBy: UserCreateOneInput!
+}
+
+input CommentUpdateInput {
+  content: String
+  workspace: WorkspaceUpdateOneInput
+  createdBy: UserUpdateOneInput
+}
+
+input CommentWhereUniqueInput {
+  id: ID
+}
+
+input InviteCreateInput {
+  email: String!
+}
+
+input OfferCreateInput {
+  title: String!
+  department: String
+  description: String
+  requirements: String
+  location: LocationCreateOneInput
+  stages: StageCreateManyInput
+}
+
+input OfferUpdateInput {
+  title: String
+  department: String
+  description: String
+  requirements: String
+  location: LocationUpdateOneInput
+  stages: StageUpdateManyInput
+}
+
+type Stage implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  position: Int!
+}
+
+input StageCreateInput {
+  name: String!
+  description: String
+  position: Int!
+}
+
+input StageUpdateInput {
+  name: String
+  description: String
+  position: Int
+}
+
+input StageWhereUniqueInput {
+  id: ID
+}
+
+input TaskCreateInput {
+  title: String!
+  description: String
+  dueAt: DateTime
+  owners: UserCreateManyWithoutTasksOwnerInput
+}
+
+input TaskUpdateInput {
+  title: String
+  description: String
+  dueAt: DateTime
+  owners: UserUpdateManyWithoutTasksOwnerInput
+}
+
+input UserUpdateInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  tasksOwner: TaskUpdateManyWithoutOwnersInput
+}
+
+input WorkspaceCreateInput {
+  name: String!
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+}
+
+scalar DateTime
+
+input StageWhereInput {
+  AND: [StageWhereInput!]
+  OR: [StageWhereInput!]
+  NOT: [StageWhereInput!]
+  id: ID
+  name: String
+  position: Int
+}
+
+input OfferCreateOneWithoutApplicationsInput {
+  connect: OfferWhereUniqueInput
+}
+
+input CandidateCreateOneWithoutApplicationsInput {
+  connect: CandidateWhereUniqueInput
+}
+
+input StageCreateOneInput {
+  connect: StageWhereUniqueInput
+}
+
+input CommentWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CommentWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CommentWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [CommentWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  content: String
+  """
+  All values that are not equal to given value.
+  """
+  content_not: String
+  """
+  All values that are contained in given list.
+  """
+  content_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  content_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  content_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  content_lte: String
+  """
+  All values greater than the given value.
+  """
+  content_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  content_gte: String
+  """
+  All values containing the given string.
+  """
+  content_contains: String
+  """
+  All values not containing the given string.
+  """
+  content_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  content_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  content_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  content_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  content_not_ends_with: String
+  workspace: WorkspaceWhereInput
+  createdBy: UserWhereInput
+}
+
+enum CommentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  content_ASC
+  content_DESC
+}
+
+input CandidateCreatetagsInput {
+  set: [String!]
+}
+
+input CandidateCreateemailsInput {
+  set: [String!]
+}
+
+input CandidateCreatephonesInput {
+  set: [String!]
+}
+
+input CandidateCreatelinksInput {
+  set: [String!]
+}
+
+input CandidateCreatesourceInput {
+  set: [String!]
+}
+
+input CandidateUpdatetagsInput {
+  set: [String!]
+}
+
+input CandidateUpdateemailsInput {
+  set: [String!]
+}
+
+input CandidateUpdatephonesInput {
+  set: [String!]
+}
+
+input CandidateUpdatelinksInput {
+  set: [String!]
+}
+
+input CandidateUpdatesourceInput {
+  set: [String!]
+}
+
+type Location implements Node {
+  id: ID!
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+input LocationWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [LocationWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [LocationWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [LocationWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  country: String
+  """
+  All values that are not equal to given value.
+  """
+  country_not: String
+  """
+  All values that are contained in given list.
+  """
+  country_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  country_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  country_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  country_lte: String
+  """
+  All values greater than the given value.
+  """
+  country_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  country_gte: String
+  """
+  All values containing the given string.
+  """
+  country_contains: String
+  """
+  All values not containing the given string.
+  """
+  country_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  country_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  country_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  country_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  country_not_ends_with: String
+  region: String
+  """
+  All values that are not equal to given value.
+  """
+  region_not: String
+  """
+  All values that are contained in given list.
+  """
+  region_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  region_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  region_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  region_lte: String
+  """
+  All values greater than the given value.
+  """
+  region_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  region_gte: String
+  """
+  All values containing the given string.
+  """
+  region_contains: String
+  """
+  All values not containing the given string.
+  """
+  region_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  region_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  region_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  region_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  region_not_ends_with: String
+  city: String
+  """
+  All values that are not equal to given value.
+  """
+  city_not: String
+  """
+  All values that are contained in given list.
+  """
+  city_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  city_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  city_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  city_lte: String
+  """
+  All values greater than the given value.
+  """
+  city_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  city_gte: String
+  """
+  All values containing the given string.
+  """
+  city_contains: String
+  """
+  All values not containing the given string.
+  """
+  city_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  city_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  city_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  city_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  city_not_ends_with: String
+  zip: String
+  """
+  All values that are not equal to given value.
+  """
+  zip_not: String
+  """
+  All values that are contained in given list.
+  """
+  zip_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  zip_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  zip_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  zip_lte: String
+  """
+  All values greater than the given value.
+  """
+  zip_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  zip_gte: String
+  """
+  All values containing the given string.
+  """
+  zip_contains: String
+  """
+  All values not containing the given string.
+  """
+  zip_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  zip_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  zip_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  zip_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  zip_not_ends_with: String
+}
+
+enum StageOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  position_ASC
+  position_DESC
+}
+
+input LocationCreateOneInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
+}
+
+input StageCreateManyInput {
+  create: [StageCreateInput!]
+}
+
+input LocationCreateInput {
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+input LocationWhereUniqueInput {
+  id: ID
+}
+
+input LocationUpdateOneInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
+  disconnect: Boolean
+}
+
+input StageUpdateManyInput {
+  create: [StageCreateInput!]
+  delete: [StageWhereUniqueInput!]
+  update: [StageUpdateWithWhereUniqueNestedInput!]
+}
+
+input StageUpdateWithWhereUniqueNestedInput {
+  where: StageWhereUniqueInput!
+  data: StageUpdateDataInput!
+}
+
+input StageUpdateDataInput {
+  name: String
+  description: String
+  position: Int
+}
+
+input UserCreateManyWithoutTasksOwnerInput {
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserUpdateManyWithoutTasksOwnerInput {
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+}
+
+input WorkspaceUpdateOneWithoutUsersInput {
+  create: WorkspaceCreateWithoutUsersInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateWithoutUsersDataInput
+  upsert: WorkspaceUpsertWithoutUsersInput
+}
+
+input TaskUpdateManyWithoutOwnersInput {
+  create: [TaskCreateWithoutOwnersInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutOwnersInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutOwnersInput!]
+}
+
+type Action implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+}
+
+input WorkspaceUpdateOneInput {
+  create: WorkspaceCreateInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateDataInput
+  upsert: WorkspaceUpsertNestedInput
+}
+
+input OfferUpdateOneWithoutApplicationsInput {
+  create: OfferCreateWithoutApplicationsInput
+  connect: OfferWhereUniqueInput
+  delete: Boolean
+  update: OfferUpdateWithoutApplicationsDataInput
+  upsert: OfferUpsertWithoutApplicationsInput
+}
+
+input CandidateUpdateOneWithoutApplicationsInput {
+  create: CandidateCreateWithoutApplicationsInput
+  connect: CandidateWhereUniqueInput
+  delete: Boolean
+  update: CandidateUpdateWithoutApplicationsDataInput
+  upsert: CandidateUpsertWithoutApplicationsInput
+}
+
+input StageUpdateOneInput {
+  create: StageCreateInput
+  connect: StageWhereUniqueInput
+  delete: Boolean
+  update: StageUpdateDataInput
+  upsert: StageUpsertNestedInput
+}
+
+input WorkspaceWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [WorkspaceWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [WorkspaceWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [WorkspaceWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  invites_every: InviteWhereInput
+  invites_some: InviteWhereInput
+  invites_none: InviteWhereInput
+}
+
+input WorkspaceCreateOneInput {
+  create: WorkspaceCreateInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input WorkspaceCreateWithoutUsersInput {
+  name: String!
+  invites: InviteCreateManyWithoutWorkspaceInput
+}
+
+input WorkspaceUpdateWithoutUsersDataInput {
+  name: String
+  invites: InviteUpdateManyWithoutWorkspaceInput
+}
+
+input WorkspaceUpsertWithoutUsersInput {
+  update: WorkspaceUpdateWithoutUsersDataInput!
+  create: WorkspaceCreateWithoutUsersInput!
+}
+
+input TaskCreateWithoutOwnersInput {
+  title: String!
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceCreateOneInput!
+}
+
+input TaskUpdateWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutOwnersDataInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutOwnersDataInput!
+  create: TaskCreateWithoutOwnersInput!
+}
+
+input WorkspaceUpdateDataInput {
+  name: String
+  users: UserUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+}
+
+input WorkspaceUpsertNestedInput {
+  update: WorkspaceUpdateDataInput!
+  create: WorkspaceCreateInput!
+}
+
+input OfferCreateWithoutApplicationsInput {
+  title: String!
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceCreateOneInput!
+  location: LocationCreateOneInput
+  stages: StageCreateManyInput
+}
+
+input OfferUpdateWithoutApplicationsDataInput {
+  title: String
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceUpdateOneInput
+  location: LocationUpdateOneInput
+  stages: StageUpdateManyInput
+}
+
+input OfferUpsertWithoutApplicationsInput {
+  update: OfferUpdateWithoutApplicationsDataInput!
+  create: OfferCreateWithoutApplicationsInput!
+}
+
+input CandidateCreateWithoutApplicationsInput {
+  firstName: String!
+  lastName: String!
+  tags: CandidateCreatetagsInput
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneInput!
+  comments: CommentCreateManyInput
+  tasks: TaskCreateManyInput
+}
+
+input CandidateUpdateWithoutApplicationsDataInput {
+  firstName: String
+  lastName: String
+  tags: CandidateUpdatetagsInput
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  source: CandidateUpdatesourceInput
+  workspace: WorkspaceUpdateOneInput
+  comments: CommentUpdateManyInput
+  tasks: TaskUpdateManyInput
+}
+
+input CandidateUpsertWithoutApplicationsInput {
+  update: CandidateUpdateWithoutApplicationsDataInput!
+  create: CandidateCreateWithoutApplicationsInput!
+}
+
+input StageUpsertNestedInput {
+  update: StageUpdateDataInput!
+  create: StageCreateInput!
+}
+
+input UserCreateInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String!
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  tasksOwner: TaskCreateManyWithoutOwnersInput
+}
+
+input UserUpdateDataInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  tasksOwner: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input InviteCreateManyWithoutWorkspaceInput {
+  create: [InviteCreateWithoutWorkspaceInput!]
+  connect: [InviteWhereUniqueInput!]
+}
+
+input InviteUpdateManyWithoutWorkspaceInput {
+  create: [InviteCreateWithoutWorkspaceInput!]
+  connect: [InviteWhereUniqueInput!]
+  disconnect: [InviteWhereUniqueInput!]
+  delete: [InviteWhereUniqueInput!]
+  update: [InviteUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  upsert: [InviteUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input TaskUpdateWithoutOwnersDataInput {
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+}
+
+input UserUpdateManyWithoutWorkspaceInput {
+  create: [UserCreateWithoutWorkspaceInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input CommentCreateManyInput {
+  create: [CommentCreateInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input TaskCreateManyInput {
+  create: [TaskCreateInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input CommentUpdateManyInput {
+  create: [CommentCreateInput!]
+  connect: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  delete: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueNestedInput!]
+  upsert: [CommentUpsertWithWhereUniqueNestedInput!]
+}
+
+input TaskUpdateManyInput {
+  create: [TaskCreateInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueNestedInput!]
+  upsert: [TaskUpsertWithWhereUniqueNestedInput!]
+}
+
+input WorkspaceCreateOneWithoutUsersInput {
+  create: WorkspaceCreateWithoutUsersInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input TaskCreateManyWithoutOwnersInput {
+  create: [TaskCreateWithoutOwnersInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input InviteCreateWithoutWorkspaceInput {
+  email: String!
+  expireAt: DateTime!
+  invitedBy: UserCreateOneInput!
+}
+
+input InviteUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: InviteWhereUniqueInput!
+  data: InviteUpdateWithoutWorkspaceDataInput!
+}
+
+input InviteUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: InviteWhereUniqueInput!
+  update: InviteUpdateWithoutWorkspaceDataInput!
+  create: InviteCreateWithoutWorkspaceInput!
+}
+
+input UserCreateWithoutWorkspaceInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String!
+  username: String!
+  password: String!
+  firstName: String
+  lastName: String
+  tasksOwner: TaskCreateManyWithoutOwnersInput
+}
+
+input UserUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutWorkspaceDataInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutWorkspaceDataInput!
+  create: UserCreateWithoutWorkspaceInput!
+}
+
+input CommentUpdateWithWhereUniqueNestedInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateDataInput!
+}
+
+input CommentUpsertWithWhereUniqueNestedInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateDataInput!
+  create: CommentCreateInput!
+}
+
+input TaskUpdateWithWhereUniqueNestedInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateDataInput!
+}
+
+input TaskUpsertWithWhereUniqueNestedInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateDataInput!
+  create: TaskCreateInput!
+}
+
+input InviteUpdateWithoutWorkspaceDataInput {
+  email: String
+  expireAt: DateTime
+  invitedBy: UserUpdateOneInput
+}
+
+input UserUpdateWithoutWorkspaceDataInput {
+  lastLogin: DateTime
+  deletedAt: DateTime
+  email: String
+  username: String
+  password: String
+  firstName: String
+  lastName: String
+  tasksOwner: TaskUpdateManyWithoutOwnersInput
+}
+
+input CommentUpdateDataInput {
+  content: String
+  workspace: WorkspaceUpdateOneInput
+  createdBy: UserUpdateOneInput
+}
+
+input TaskUpdateDataInput {
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+  owners: UserUpdateManyWithoutTasksOwnerInput
+}
