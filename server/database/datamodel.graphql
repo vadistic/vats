@@ -1,17 +1,95 @@
-type Action {
+# GLOBAL TYPES
+type Workspace {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  # connections
+  events: [Event!]! @relation(name: "WorkspaceEventTarget")
+  users: [User!]!
+  jobs: [Job!]!
+  applications: [Application!]!
+  candidates: [Candidate!]!
+
+  # other?
+  invites: [Invite!]!
+  tags: [Tag!]!
+
+  # info
+  name: String!
+}
+
+type User {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
+
+  #notifications
+  events: Event @relation(name: "UserEventActor")
+  notifications: [Notification!]!
+
+  # subscribtions interface
+  subscriptions_jobs: [Job!]!
+  subscriptions_candidates: [Candidate!]!
+  subscriptions_tasks: [Task!]! @relation(name: "TaskSubscriber")
+
+  # connections
+  tasks: [Task!]! @relation(name: "TaskOwner")
+
+  #info
+  firstName: String
+  lastName: String
+  email: String! @unique
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+}
+
+type Job {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  # events
+  subscribers: [User!]!
+  events: [Event!]! @relation(name: "JobEventTarget")
+
+  # connections
+  applications: [Application!]!
+
+  # dependencies
+  stages: [Stage!]!
+  comments: [Comment!]!
+
+  # info
+  status: JobType!
+  title: String!
+  department: String
+  location: Location
+  description: String
+  requirements: String
+}
+
+enum JobType {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 type Application {
-  id: ID! @unique
   createdAt: DateTime!
+  id: ID! @unique
   updatedAt: DateTime!
   workspace: Workspace!
 
-  offer: Offer!
+  # ats
+  disqualifyReason: String
+
+  # connections
+  job: Job!
   candidate: Candidate!
   stage: Stage!
 }
@@ -22,28 +100,59 @@ type Candidate {
   updatedAt: DateTime!
   workspace: Workspace!
 
-  tags: [String!]
-  applications: [Application!]!
-  comments: [Comment!]!
-  tasks: [Task!]!
+  events: [Event!]! @relation(name: "CandidateEventTarget")
+  subscribers: [User!]!
+
+  # info
   firstName: String!
   lastName: String!
   emails: [String!]
   phones: [String!]
   links: [String!]
+
+  resume: [String!]
+  coverLetter: [String!]
+
+  tags: [Tag!]!
   source: [String!]
+  fields: [Field!]!
+
+  # conections
+  tasks: [Task!]!
+  applications: [Application!]!
+  comments: [Comment!]!
 }
 
-type Comment {
+type Task {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
 
-  createdBy: User!
-  content: String!
+  # event system
+  subscribers: [User!]! @relation(name: "TaskSubscriber")
+
+  # connections
+  owners: [User!]! @relation(name: "TaskOwner")
+
+  # target interface
+  target_type: TaskTarget
+  target_job: Job
+  target_candidate: Candidate
+
+  # info
+  title: String
+  description: String
+  dueAt: DateTime
 }
 
+enum TaskTarget {
+  NULL
+  JOB
+  CANIDATE
+}
+
+# DDEPENDENCIES
 type Invite {
   id: ID! @unique
   createdAt: DateTime!
@@ -55,21 +164,6 @@ type Invite {
   invitedBy: User!
 }
 
-type Offer {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace: Workspace!
-
-  title: String!
-  department: String
-  location: Location
-  description: String
-  requirements: String
-  applications: [Application!]!
-  stages: [Stage!]!
-}
-
 type Stage {
   id: ID! @unique
   createdAt: DateTime!
@@ -78,53 +172,110 @@ type Stage {
   name: String!
   description: String
   position: Int!
+  type: StageType!
 }
 
-type Task {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace: Workspace!
-
-  owners: [User!]! @relation(name: "TasksOwners")
-  # createdBy: User! @relation(name: "TaskCreatedBy")
-  title: String!
-  description: String
-  dueAt: DateTime
+enum StageType {
+  NEW
+  QUALIFIED
+  DISQUALIFIED
 }
 
-type User {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace: Workspace!
-
-  tasksOwner: [Task!]! @relation(name: "TasksOwners")
-  # tasksCreator: [Task!]! @relation(name: "TaskCreatedBy")
-  lastLogin: DateTime
-  deletedAt: DateTime
-  email: String! @unique
-  username: String!
-  password: String!
-  firstName: String
-  lastName: String
-}
-
-type Workspace {
+type Comment {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  name: String!
-  users: [User!]!
-  invites: [Invite!]!
+  # connections
+  createdBy: User!
+  parent: Comment
+
+  # info
+  content: String!
 }
 
-# Secondary types
+# NOTIFICATIONS
+type Event {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace! @relation(name: "WorkspaceEvent")
+
+  type: EventType!
+
+  # actor interface
+  actor_type: EventActorType!
+  actor_user: User @relation(name: "UserEventActor")
+  actor_candidate: Candidate @relation(name: "CandidateEventActor")
+
+  # target interface
+  target_type: EventTargetType!
+  target_candidate: Candidate @relation(name: "CandidateEventTarget")
+  target_job: Job @relation(name: "JobEventTarget")
+  target_task: Task @relation(name: "TaskEventTarget")
+  target_workspace: Workspace @relation(name: "WorkspaceEventTarget")
+}
+
+enum EventType {
+  DEFAULT
+  MESSAGE
+  COMMENT_CREATE
+  COMMENT_EDIT
+  COMMENT_DELETE
+}
+
+enum EventActorType {
+  SYSTEM
+  USER
+  CANDIDATE
+}
+
+enum EventTargetType {
+  CANDIDATE
+  JOB
+  TASK
+  WORKSPACE
+}
+
+type Notification {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  user: User!
+  event: Event!
+}
+
+# SYSTEM TYPES
 type Location {
   id: ID! @unique
   country: String!
   region: String!
   city: String!
   zip: String!
+}
+
+type Field {
+  id: ID! @unique
+
+  type: FieldType
+  label: String!
+  value: String!
+}
+
+enum FieldType {
+  INT
+  FLOAT
+  STRING
+  TEXT
+  BOOLEAN
+  DATE_TIME
+}
+
+type Tag {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  label: String!
 }

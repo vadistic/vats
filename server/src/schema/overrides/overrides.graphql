@@ -1,0 +1,59 @@
+# import * from "../../../node_modules/graphql-override/dist/directives.graphql"
+
+# import Query.*, Mutation.*, * from "../../generated/prisma.graphql"
+# import Query.*, Mutation.*, * from "../schema.graphql"
+
+input JobWhereInput @exclude {
+  workspace: Workspace!
+}
+
+type Application {
+  workspace: Workspace! @replace
+}
+
+type User {
+  password: String @remove
+  workspace: Workspace! @replace
+}
+
+enum UserOrderByInput @exclude {
+  password_ASC
+  password_DESC
+}
+
+type Job {
+  workspace: Workspace! @replace
+}
+
+input TaskCreateInput {
+  workspace: WorkspaceCreateOneInput! @remove
+
+  subscribers: UserCreateManyWithoutSubscriptions_tasksInput
+  owners: UserCreateManyWithoutTasksInput
+  target_job: JobCreateOneInput
+  target_candidate: CandidateCreateOneWithoutTasksInput
+}
+
+input CandidateConnect @create {
+  connect: CandidateWhereUniqueInput
+}
+
+input CandidateManyConnect @create {
+  connect: [CandidateWhereUniqueInput!]
+}
+
+input UserConnect @create {
+  connect: UserWhereUniqueInput
+}
+
+input UserManyConnect @create {
+  connect: [UserWhereUniqueInput!]
+}
+
+input TaskUpdateManyWithoutOwnersInput {
+  create: [TaskCreateWithoutOwnersInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutOwnersInput!]
+}

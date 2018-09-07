@@ -1,8 +1,7 @@
-import { QueryForwards, MutationForwards } from './forwards'
-
 import { AuthMutations } from './auth'
-import { InviteQueries, InviteMutations } from './invite'
-import { WorkspaceQueries, WorkspaceMutations } from './workspace'
+import { MutationForwards, QueryForwards } from './forwards'
+import { InviteMutations, InviteQueries } from './invite'
+import { WorkspaceMutations, WorkspaceQueries } from './workspace'
 
 export const Query = {
   ...QueryForwards,

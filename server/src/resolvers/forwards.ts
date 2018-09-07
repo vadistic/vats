@@ -1,89 +1,51 @@
 import { forwardTo } from 'prisma-binding'
+import { Mutation, Query } from '../utils'
 
-export const QueryForwards = {
-  // Action
-  // TODO
+export const QueryForwards: Query = {
+  notification: forwardTo('db'),
+  notifications: forwardTo('db'),
 
-  // Application
   application: forwardTo('db'),
   applications: forwardTo('db'),
 
-  // Auth
-  // Separeate file!
-
-  // Candidate
   candidate: forwardTo('db'),
   candidates: forwardTo('db'),
 
-  // Comments
-  // Only as subquery!
+  job: forwardTo('db'),
+  jobs: forwardTo('db'),
 
-  // Invite
-  // Separate file!
-
-  // Offer
-  offer: forwardTo('db'),
-  offers: forwardTo('db'),
-
-  // Stage
-  // Only as subquery!
-
-  // Task
   task: forwardTo('db'),
   tasks: forwardTo('db'),
 
-  // User
   user: forwardTo('db'),
   users: forwardTo('db'),
-
-  // Workspace
-  // Separate file!
 }
 
-export const MutationForwards = {
-  // Action
-  // TODO
-
-  // Application
+export const MutationForwards: Mutation = {
   createApplication: forwardTo('db'),
   updateApplication: forwardTo('db'),
   deleteApplication: forwardTo('db'),
 
-  // Auth
-  // Separeate file!
-
-  // Candidate
   createCandidate: forwardTo('db'),
   updateCandidate: forwardTo('db'),
   deleteCandidate: forwardTo('db'),
 
-  // Comment
   createComment: forwardTo('db'),
   updateComment: forwardTo('db'),
   deleteComment: forwardTo('db'),
 
-  // Invite
-  // Separate file!
+  createJob: forwardTo('db'),
+  updateJob: forwardTo('db'),
+  deleteJob: forwardTo('db'),
 
-  // Offer
-  createOffer: forwardTo('db'),
-  updateOffer: forwardTo('db'),
-  deleteOffer: forwardTo('db'),
-
-  // Stage
   createStage: forwardTo('db'),
   updateStage: forwardTo('db'),
   deleteStage: forwardTo('db'),
 
-  // Task
   createTask: forwardTo('db'),
   updateTask: forwardTo('db'),
   deleteTask: forwardTo('db'),
 
-  // User
   updateUser: forwardTo('db'),
   deleteUser: forwardTo('db'),
-
-  // Workspace
-  // Separate file!
 }

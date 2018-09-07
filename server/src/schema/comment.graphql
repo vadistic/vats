@@ -1,6 +1,0 @@
-type Mutation {
-  # import Comment, CommentCreateInput, CommentUpdateInput, CommentWhereUniqueInput from "../generated/prisma.graphql"
-  createComment(data: CommentCreateInput!): Comment!
-  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
-  deleteComment(where: CommentWhereUniqueInput!): Comment
-}

@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs'
-import * as jwt from 'jsonwebtoken'
 import * as dayjs from 'dayjs'
+import * as jwt from 'jsonwebtoken'
 
 import { Mutation } from '../utils'
 

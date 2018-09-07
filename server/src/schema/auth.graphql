@@ -1,3 +1,9 @@
+type Mutation {
+  signup(data: SignupInput): AuthPayload!
+  login(data: LoginInput): AuthPayload!
+  createWorkspace(data: WorkspaceCreateInput!): AuthPayload!
+}
+
 input SignupInput {
   password: String!
   username: String!
@@ -11,10 +17,15 @@ input LoginInput {
 
 type AuthPayload {
   token: String!
+  # import User from "user.graphql"
   user: User!
 }
 
-type Mutation {
-  signup(data: SignupInput): AuthPayload!
-  login(data: LoginInput): AuthPayload!
+input WorkspaceCreateInput {
+  name: String!
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
 }

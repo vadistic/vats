@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs'
 import { forwardTo } from 'prisma-binding'
 
-import { Mutation, getId } from '../utils'
+import { getId, Mutation } from '../utils'
 
 export const invite = forwardTo('db')
 export const invites = forwardTo('db')
