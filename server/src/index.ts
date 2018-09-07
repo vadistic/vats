@@ -8,7 +8,11 @@ import permissions from './middleware/permissions'
 import * as resolvers from './resolvers'
 import { typeDefs } from './schema/schema'
 
-const schema = makeExecutableSchema({ typeDefs, resolvers })
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+  resolverValidationOptions: { requireResolversForResolveType: false },
+})
 
 const protectedSchema = applyMiddleware(schema, permissions, filters)
 

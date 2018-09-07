@@ -1,13 +1,22 @@
 import { allow, and, deny, IRules, rule, shield } from 'graphql-shield'
 import * as R from 'ramda'
 
-import { Context, DataInputFieldsRules, getId, RuleMutation, RuleQuery } from '../utils'
+import {
+  Context,
+  DataInputFieldsRules,
+  getId,
+  RuleMutation,
+  RuleQuery,
+  WhereInputFieldsRules,
+} from '../utils'
 import { Args } from './filters'
+
+/* tslint:disable:no-console */
 
 // TODO: Evaluate if this is secure?
 const isAuthenticated = rule()(async (parent, args, ctx) => ctx.user !== null)
 
-const isSameWorkspace = (type: string) =>
+const whereWorkspaceArg = (type: string) =>
   rule()(async (parent, args, ctx: Context) => {
     const workspaceId = getId(ctx).workspaceId
     return ctx.db.exists[type]({
@@ -24,87 +33,56 @@ const workspaceHasUser = rule()(async (parent, args, ctx: Context) => {
   })
 })
 
-/* Input field permission */
-
-const arraize = (val: any) => (Array.isArray(val) ? val : [val])
-
-const createTaskInputRule: DataInputFieldsRules['createTask'] = {
-  data: {
-    owners: async (parent, args, ctx) => {
-      const workspaceId = getId(ctx).workspaceId
-
-      const ids = arraize(R.path(['data', 'owners', 'connect'], args))
-
-      const validations = ids.map(id =>
-        ctx.db.exists.Workspace({
-          AND: { users_some: { id }, id: workspaceId },
-        })
-      )
-
-      return R.all(R.equals(true), await Promise.all(validations))
-    },
-    subscribers: async (parent, args, ctx) => {
-      const workspaceId = getId(ctx).workspaceId
-
-      const ids = arraize(R.path(['data', 'owners', 'connect'], args))
-
-      const validations = ids.map(id =>
-        ctx.db.exists.Workspace({
-          AND: { users_some: { id }, id: workspaceId },
-        })
-      )
-
-      return R.all(R.equals(true), await Promise.all(validations))
-    },
-  },
-}
-
-interface InputRuleMap {
-  data: {
-    [name: string]: (parent, args, ctx: Context, info) => Promise<boolean>
-  }
-}
-
-const inputRule = (inputRuleMap: InputRuleMap) =>
-  rule()(async (parent, args: Args, ctx: Context, info) => {
-    const rulesP = R.keys(args.data).map(
-      async key =>
-        R.has(key, inputRuleMap)
-          ? inputRuleMap.data[key](parent, args, ctx, info)
-          : Promise.resolve(true)
-    )
-
-
-    return R.all(R.equals(true), await Promise.all(rulesP))
-  })
 
 interface Rules {
   Query: RuleQuery
   Mutation: RuleMutation
 }
 
+const verifyWorkspaceConnection = (field: string) => (target: string) =>
+  rule()(async (parent, args, ctx: Context) => {
+    const workspaceId = getId(ctx).workspaceId
+    const targetConnect = args.data[field].connect
+
+    if (!R.has(field, args.data)) {
+      console.log(`verifyConnection: no ${field} - shortcircut`)
+      return true
+    }
+
+    const validationP = targetConnect.map(connect => {
+      return ctx.db.exists[target]({
+        AND: {
+          id: connect.id,
+          workspace: { id: workspaceId },
+        },
+      }).then(res => (res === true ? Promise.resolve(true) : Promise.reject('Not Authorized')))
+    })
+
+    return R.all(R.equals(true), await Promise.all(validationP).catch(rej => [false]))
+  })
+
 export const rules: IRules = {
   Query: {
     // action
     // application
-    application: and(isAuthenticated, isSameWorkspace('User')),
+    application: and(isAuthenticated, whereWorkspaceArg('User')),
     applications: isAuthenticated,
     // auth
     // candidate
-    candidate: and(isAuthenticated, isSameWorkspace('Candidate')),
+    candidate: and(isAuthenticated, whereWorkspaceArg('Candidate')),
     candidates: isAuthenticated,
     // comment
     // invite
-    invite: and(isAuthenticated, isSameWorkspace('Invite')),
+    invite: and(isAuthenticated, whereWorkspaceArg('Invite')),
     invites: isAuthenticated,
     // job
-    job: and(isAuthenticated, isSameWorkspace('Offer')),
+    job: and(isAuthenticated, whereWorkspaceArg('Offer')),
     jobs: isAuthenticated,
     // stage
     // task
     // user
-    user: and(isAuthenticated, isSameWorkspace('User')),
-    users: allow,
+    user: and(isAuthenticated, whereWorkspaceArg('User')),
+    users: inputRule(usersWhereInputRule),
     // workspace
     workspace: and(isAuthenticated, workspaceHasUser),
   },
@@ -117,13 +95,16 @@ export const rules: IRules = {
     // candidate
     // comment
     // invite
-    createInvite: and(isAuthenticated, isSameWorkspace('Invite')),
-    updateInvite: and(isAuthenticated, isSameWorkspace('Invite')),
-    deleteInvite: and(isAuthenticated, isSameWorkspace('Invite')),
+    createInvite: and(isAuthenticated, whereWorkspaceArg('Invite')),
+    updateInvite: and(isAuthenticated, whereWorkspaceArg('Invite')),
+    deleteInvite: and(isAuthenticated, whereWorkspaceArg('Invite')),
     // job
     // stage
     // task
-    createTask: inputRule(createTaskInputRule),
+    createTask: and(
+      verifyWorkspaceConnection('owners')('User'),
+      verifyWorkspaceConnection('subscribers')('User')
+    ),
     updateTask: allow,
     deleteTask: allow,
     // user

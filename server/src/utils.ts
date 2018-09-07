@@ -85,3 +85,16 @@ export type DataInputFieldsRules<T = ApiMutation> = {
     }
   }
 }
+
+export type WhereInputFieldsRules<T = ApiQuery> = {
+  [P in keyof T]: {
+    where: {
+      [K in keyof FirstArgument<T[P]>['data']]: (
+        parent: null | undefined,
+        args: FirstArgument<T[P]>,
+        ctx: Context,
+        info?: GraphQLResolveInfo
+      ) => Promise<boolean>
+    }
+  }
+}

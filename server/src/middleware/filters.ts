@@ -90,7 +90,6 @@ const filters: IMiddleware & MiddlewareFieldMap = {
     // task
     tasks: composeFilters([whereWorkspaceFilter]),
     // user
-    users: composeFilters([whereWorkspaceFilter]),
     // workspace
     workspace: composeFilters([whereWorkspaceFilter]),
   },
