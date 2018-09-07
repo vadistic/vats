@@ -4,20 +4,6 @@ import * as R from 'ramda'
 
 import { Context, getId, MiddlewareFieldMap, MiddlewarePropMap } from '../utils'
 
-const whereWorkspace = async (resolve, parent, args, ctx, info) => {
-  const workspaceId = getId(ctx).workspaceId
-
-  return resolve(
-    parent,
-    {
-      ...args,
-      where: { AND: { ...args.where, workspace: { id: workspaceId } } },
-    },
-    ctx,
-    info
-  )
-}
-
 export interface Args {
   data?: object
   where?: object
@@ -58,7 +44,7 @@ const composeFilters: ComposeFilters = filterArr => async (resolve, parent, args
   return resolve(parent, { data, where: { AND: { ...args.where, ...where } } }, ctx, info)
 }
 
-const whereWorkspaceFilter: Filter = async (parent, args, ctx, info) => {
+const whereWorkspace: Filter = async (parent, args, ctx, info) => {
   const workspaceId = getId(ctx).workspaceId
   return { parent, args: { where: { workspace: { id: workspaceId } } }, ctx, info }
 }
@@ -68,7 +54,7 @@ const whereUserFilter: Filter = async (parent, args, ctx, info) => {
   return { parent, args: { where: { user: { id } } }, ctx, info }
 }
 
-const dataWorkspaceFilter: Filter = async (parent, args, ctx, info) => {
+const dataWorkspaceConnect: Filter = async (parent, args, ctx, info) => {
   const id = getId(ctx).workspaceId
   return { parent, args: { data: { workspace: { connect: { id } } } }, ctx, info }
 }
@@ -78,23 +64,23 @@ const filters: IMiddleware & MiddlewareFieldMap = {
     // action
     // application
     notifications: composeFilters([whereUserFilter]),
-    applications: composeFilters([whereWorkspaceFilter]),
+    applications: composeFilters([whereWorkspace]),
     // candidate
-    candidates: composeFilters([whereWorkspaceFilter]),
+    candidates: composeFilters([whereWorkspace]),
     // comment
     // invite
-    invites: composeFilters([whereWorkspaceFilter]),
+    invites: composeFilters([whereWorkspace]),
     // job
-    jobs: composeFilters([whereWorkspaceFilter]),
+    jobs: composeFilters([whereWorkspace]),
     // stage
     // task
-    tasks: composeFilters([whereWorkspaceFilter]),
+    tasks: composeFilters([whereWorkspace]),
     // user
     // workspace
-    workspace: composeFilters([whereWorkspaceFilter]),
+    workspace: composeFilters([whereWorkspace]),
   },
   Mutation: {
-    createTask: composeFilters([dataWorkspaceFilter]),
+    createTask: composeFilters([dataWorkspaceConnect]),
   },
 }
 

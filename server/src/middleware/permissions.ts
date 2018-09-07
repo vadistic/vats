@@ -1,6 +1,7 @@
-import { allow, and, deny, IRules, rule, shield } from 'graphql-shield'
+import { allow, and, deny, IRule, IRules, rule, shield } from 'graphql-shield'
 import * as R from 'ramda'
 
+import { ShieldRule } from 'graphql-shield/dist/types'
 import {
   Context,
   DataInputFieldsRules,
@@ -16,15 +17,6 @@ import { Args } from './filters'
 // TODO: Evaluate if this is secure?
 const isAuthenticated = rule()(async (parent, args, ctx) => ctx.user !== null)
 
-const whereWorkspaceArg = (type: string) =>
-  rule()(async (parent, args, ctx: Context) => {
-    const workspaceId = getId(ctx).workspaceId
-    return ctx.db.exists[type]({
-      id: args.where.id,
-      workspace: { id: workspaceId },
-    })
-  })
-
 const workspaceHasUser = rule()(async (parent, args, ctx: Context) => {
   const userId = getId(ctx).userId
   return ctx.db.exists.Workspace({
@@ -33,21 +25,20 @@ const workspaceHasUser = rule()(async (parent, args, ctx: Context) => {
   })
 })
 
-
 interface Rules {
   Query: RuleQuery
   Mutation: RuleMutation
 }
 
-const verifyWorkspaceConnection = (field: string) => (target: string) =>
+const toManyDataWorkspaceConnection = (target: string) => (field: string) =>
   rule()(async (parent, args, ctx: Context) => {
-    const workspaceId = getId(ctx).workspaceId
-    const targetConnect = args.data[field].connect
-
+    // shortcircuit
     if (!R.has(field, args.data)) {
-      console.log(`verifyConnection: no ${field} - shortcircut`)
       return true
     }
+
+    const workspaceId = getId(ctx).workspaceId
+    const targetConnect = args.data[field].connect
 
     const validationP = targetConnect.map(connect => {
       return ctx.db.exists[target]({
@@ -58,35 +49,97 @@ const verifyWorkspaceConnection = (field: string) => (target: string) =>
       }).then(res => (res === true ? Promise.resolve(true) : Promise.reject('Not Authorized')))
     })
 
-    return R.all(R.equals(true), await Promise.all(validationP).catch(rej => [false]))
+    const result = R.all(R.equals(true), await Promise.all(validationP).catch(rej => [false]))
+
+    return result
   })
+
+const toOneDataWorkspaceConnection = (target: string) => (field: string) =>
+  rule()(async (parent, args, ctx: Context) => {
+    // shortcircuit
+    if (!R.has(field, args.data)) {
+      return true
+    }
+
+    const workspaceId = getId(ctx).workspaceId
+
+    const result: boolean = await ctx.db.exists[target]({
+      AND: {
+        id: args.data[field].connect.id,
+        workspace: { id: workspaceId },
+      },
+    })
+
+    return result
+  })
+
+const toOneWhereWorkspace = (target: string) =>
+  rule()(async (parent, args, ctx: Context) => {
+    // shortcircuit
+    if (!R.has('id', args.where)) {
+      return true
+    }
+
+    const workspaceId = getId(ctx).workspaceId
+
+    const result: boolean = await ctx.db.exists[target]({
+      AND: {
+        id: args.where.id,
+        workspace: { id: workspaceId },
+      },
+    })
+    return result
+  })
+
+interface ConnectionRuleMap {
+  [key: string]: (field: string) => IRule
+}
+
+const verifyConnections = (connectionRuleMap: ConnectionRuleMap) => {
+  const rulesArr = Object.entries(connectionRuleMap).map(([key, fn]) => fn(key))
+  return and(...rulesArr)
+}
+
+type FieldRule = (fieldName: string) => IRule
+
+const fieldAnd = (fieldName: string) => (...args: FieldRule[]) =>
+  and(...args.map(arg => arg(fieldName)))
 
 export const rules: IRules = {
   Query: {
     // action
     // application
-    application: and(isAuthenticated, whereWorkspaceArg('User')),
+    application: and(isAuthenticated, toOneWhereWorkspace('User')),
     applications: isAuthenticated,
     // auth
     // candidate
-    candidate: and(isAuthenticated, whereWorkspaceArg('Candidate')),
+    candidate: and(isAuthenticated, toOneWhereWorkspace('Candidate')),
     candidates: isAuthenticated,
     // comment
     // invite
-    invite: and(isAuthenticated, whereWorkspaceArg('Invite')),
+    invite: and(isAuthenticated, toOneWhereWorkspace('Invite')),
     invites: isAuthenticated,
     // job
-    job: and(isAuthenticated, whereWorkspaceArg('Offer')),
+    job: and(isAuthenticated, toOneWhereWorkspace('Offer')),
     jobs: isAuthenticated,
     // stage
     // task
     // user
-    user: and(isAuthenticated, whereWorkspaceArg('User')),
-    users: inputRule(usersWhereInputRule),
+    user: and(isAuthenticated, toOneWhereWorkspace('User')),
+    users: allow,
     // workspace
     workspace: and(isAuthenticated, workspaceHasUser),
   },
   Mutation: {
+    createApplication: and(
+      isAuthenticated,
+      verifyConnections({
+        owners: toManyDataWorkspaceConnection('User'),
+        subscribers: toManyDataWorkspaceConnection('User'),
+        job: toOneDataWorkspaceConnection('Job'),
+        candidate: toOneDataWorkspaceConnection('Candidate'),
+      })
+    ),
     // action
     // application
     // auth
@@ -95,20 +148,34 @@ export const rules: IRules = {
     // candidate
     // comment
     // invite
-    createInvite: and(isAuthenticated, whereWorkspaceArg('Invite')),
-    updateInvite: and(isAuthenticated, whereWorkspaceArg('Invite')),
-    deleteInvite: and(isAuthenticated, whereWorkspaceArg('Invite')),
+    createInvite: and(isAuthenticated, toOneWhereWorkspace('Invite')),
+    updateInvite: and(isAuthenticated, toOneWhereWorkspace('Invite')),
+    deleteInvite: and(isAuthenticated, toOneWhereWorkspace('Invite')),
     // job
     // stage
     // task
+
+    // Task
     createTask: and(
-      verifyWorkspaceConnection('owners')('User'),
-      verifyWorkspaceConnection('subscribers')('User')
+      isAuthenticated,
+      verifyConnections({
+        owners: toManyDataWorkspaceConnection('User'),
+        subscribers: toManyDataWorkspaceConnection('User'),
+        job: toOneDataWorkspaceConnection('Job'),
+        candidate: toOneDataWorkspaceConnection('Candidate'),
+      })
     ),
-    updateTask: allow,
-    deleteTask: allow,
-    // user
-    // workspace
+    updateTask: and(
+      isAuthenticated,
+      verifyConnections({
+        owners: toManyDataWorkspaceConnection('User'),
+        subscribers: toManyDataWorkspaceConnection('User'),
+        job: toOneDataWorkspaceConnection('Job'),
+        candidate: toOneDataWorkspaceConnection('Candidate'),
+      })
+    ),
+    deleteTask: and(isAuthenticated, toOneWhereWorkspace('Task')),
+
     createWorkspace: allow,
   },
 }

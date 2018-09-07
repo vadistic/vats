@@ -29,10 +29,10 @@ type User {
   events: Event @relation(name: "UserEventActor")
   notifications: [Notification!]!
 
-  # subscribtions interface
-  subscriptions_jobs: [Job!]!
-  subscriptions_candidates: [Candidate!]!
-  subscriptions_tasks: [Task!]! @relation(name: "TaskSubscriber")
+  # subscribtion interface
+  subscriptionJobs: [Job!]!
+  subscriptionCandidates: [Candidate!]!
+  subscriptionTasks: [Task!]! @relation(name: "TaskSubscriber")
 
   # connections
   tasks: [Task!]! @relation(name: "TaskOwner")
@@ -136,9 +136,9 @@ type Task {
   owners: [User!]! @relation(name: "TaskOwner")
 
   # target interface
-  target_type: TaskTarget
-  target_job: Job
-  target_candidate: Candidate
+  targetType: TaskTargetEnum
+  job: Job
+  candidate: Candidate
 
   # info
   title: String
@@ -146,7 +146,7 @@ type Task {
   dueAt: DateTime
 }
 
-enum TaskTarget {
+enum TaskTargetEnum {
   NULL
   JOB
   CANIDATE
@@ -172,10 +172,10 @@ type Stage {
   name: String!
   description: String
   position: Int!
-  type: StageType!
+  type: StageTypeEnum!
 }
 
-enum StageType {
+enum StageTypeEnum {
   NEW
   QUALIFIED
   DISQUALIFIED
@@ -201,22 +201,22 @@ type Event {
   updatedAt: DateTime!
   workspace: Workspace! @relation(name: "WorkspaceEvent")
 
-  type: EventType!
+  type: EventTypeEnum!
 
   # actor interface
-  actor_type: EventActorType!
-  actor_user: User @relation(name: "UserEventActor")
-  actor_candidate: Candidate @relation(name: "CandidateEventActor")
+  actorType: EventActorTypeEnum!
+  actorUser: User @relation(name: "UserEventActor")
+  actorCandidate: Candidate @relation(name: "CandidateEventActor")
 
   # target interface
-  target_type: EventTargetType!
-  target_candidate: Candidate @relation(name: "CandidateEventTarget")
-  target_job: Job @relation(name: "JobEventTarget")
-  target_task: Task @relation(name: "TaskEventTarget")
-  target_workspace: Workspace @relation(name: "WorkspaceEventTarget")
+  targetType: EventTargetTypeEnum!
+  targetCandidate: Candidate @relation(name: "CandidateEventTarget")
+  targetJob: Job @relation(name: "JobEventTarget")
+  targetTask: Task @relation(name: "TaskEventTarget")
+  targetWorkspace: Workspace @relation(name: "WorkspaceEventTarget")
 }
 
-enum EventType {
+enum EventTypeEnum {
   DEFAULT
   MESSAGE
   COMMENT_CREATE
@@ -224,13 +224,13 @@ enum EventType {
   COMMENT_DELETE
 }
 
-enum EventActorType {
+enum EventActorTypeEnum {
   SYSTEM
   USER
   CANDIDATE
 }
 
-enum EventTargetType {
+enum EventTargetTypeEnum {
   CANDIDATE
   JOB
   TASK
@@ -242,8 +242,15 @@ type Notification {
   createdAt: DateTime!
   updatedAt: DateTime!
 
+  status: NotificationStatusEnum!
   user: User!
   event: Event!
+}
+
+enum NotificationStatusEnum {
+  NEW
+  UNREAD
+  READ
 }
 
 # SYSTEM TYPES
@@ -258,12 +265,12 @@ type Location {
 type Field {
   id: ID! @unique
 
-  type: FieldType
+  type: FieldTypeEnum!
   label: String!
   value: String!
 }
 
-enum FieldType {
+enum FieldTypeEnum {
   INT
   FLOAT
   STRING

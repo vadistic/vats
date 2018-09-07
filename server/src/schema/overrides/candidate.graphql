@@ -1,3 +1,0 @@
-type Candidate {
-  workspace: WorkspaceWhereInput @remove
-}

@@ -1,8 +1,30 @@
 # Import generated types
 # import * from "../generated/prisma.graphql"
 
-# Import custom rootfields
+# Import custom
 # import Query.*, Mutation.*, * from "auth.graphql"
+
+input WhereUniqueInput {
+  id: ID!
+}
+
+input Connect {
+  connect: WhereUniqueInput
+}
+
+input ConnectMany {
+  connect: [WhereUniqueInput!]
+}
+
+input ConnectDisconnect {
+  connect: WhereUniqueInput
+  disconnect: WhereUniqueInput
+}
+
+input ConnectDisconnectMany {
+  connect: [WhereUniqueInput!]
+  disconnect: [WhereUniqueInput!]
+}
 
 type Query {
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
@@ -49,10 +71,8 @@ type Query {
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
 }
 
-
 type Mutation {
   createApplication(data: ApplicationCreateInput!): Application!
-  createNotification(data: NotificationCreateInput!): Notification!
   createLocation(data: LocationCreateInput!): Location!
   createCandidate(data: CandidateCreateInput!): Candidate!
   createUser(data: UserCreateInput!): User!

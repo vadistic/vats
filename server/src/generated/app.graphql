@@ -45,7 +45,6 @@ type Query {
 
 type Mutation {
   createApplication(data: ApplicationCreateInput!): Application!
-  createNotification(data: NotificationCreateInput!): Notification!
   createLocation(data: LocationCreateInput!): Location!
   createCandidate(data: CandidateCreateInput!): Candidate!
   createUser(data: UserCreateInput!): User!
@@ -130,6 +129,28 @@ type Mutation {
   signup(data: SignupInput): AuthPayload!
   login(data: LoginInput): AuthPayload!
   createWorkspace(data: WorkspaceCreateInput!): AuthPayload!
+}
+
+input WhereUniqueInput {
+  id: ID!
+}
+
+input Connect {
+  connect: WhereUniqueInput
+}
+
+input ConnectMany {
+  connect: [WhereUniqueInput!]
+}
+
+input ConnectDisconnect {
+  connect: WhereUniqueInput
+  disconnect: WhereUniqueInput
+}
+
+input ConnectDisconnectMany {
+  connect: [WhereUniqueInput!]
+  disconnect: [WhereUniqueInput!]
 }
 
 type Application implements Node {
@@ -320,7 +341,6 @@ input ApplicationWhereInput {
   All values not ending with the given string.
   """
   disqualifyReason_not_ends_with: String
-  workspace: WorkspaceWhereInput
   job: JobWhereInput
   candidate: CandidateWhereInput
   stage: StageWhereInput
@@ -341,8 +361,9 @@ type Notification implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  user(where: UserWhereInput): User!
-  event(where: EventWhereInput): Event!
+  status: NotificationStatusEnum!
+  user: User!
+  event: Event!
 }
 
 input NotificationWhereInput {
@@ -469,6 +490,19 @@ input NotificationWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
+  status: NotificationStatusEnum
+  """
+  All values that are not equal to given value.
+  """
+  status_not: NotificationStatusEnum
+  """
+  All values that are contained in given list.
+  """
+  status_in: [NotificationStatusEnum!]
+  """
+  All values that are not contained in given list.
+  """
+  status_not_in: [NotificationStatusEnum!]
   user: UserWhereInput
   event: EventWhereInput
 }
@@ -480,6 +514,8 @@ enum NotificationOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  status_ASC
+  status_DESC
 }
 
 type Location implements Node {
@@ -791,7 +827,7 @@ type Candidate implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
+  workspace: Workspace!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   firstName: String!
@@ -1039,7 +1075,6 @@ input CandidateWhereInput {
   All values not ending with the given string.
   """
   lastName_not_ends_with: String
-  workspace: WorkspaceWhereInput
   events_every: EventWhereInput
   events_some: EventWhereInput
   events_none: EventWhereInput
@@ -1083,9 +1118,9 @@ type User implements Node {
   workspace: Workspace!
   events(where: EventWhereInput): Event
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
-  subscriptions_jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
-  subscriptions_candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
-  subscriptions_tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  subscriptionJobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
+  subscriptionCandidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
+  subscriptionTasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   firstName: String
   lastName: String
@@ -1431,59 +1466,6 @@ input UserWhereInput {
   All values not ending with the given string.
   """
   username_not_ends_with: String
-  password: String
-  """
-  All values that are not equal to given value.
-  """
-  password_not: String
-  """
-  All values that are contained in given list.
-  """
-  password_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  password_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  password_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  password_lte: String
-  """
-  All values greater than the given value.
-  """
-  password_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  password_gte: String
-  """
-  All values containing the given string.
-  """
-  password_contains: String
-  """
-  All values not containing the given string.
-  """
-  password_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  password_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  password_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  password_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  password_not_ends_with: String
   lastLogin: DateTime
   """
   All values that are not equal to given value.
@@ -1542,20 +1524,19 @@ input UserWhereInput {
   All values greater than or equal the given value.
   """
   deletedAt_gte: DateTime
-  workspace: WorkspaceWhereInput
   events: EventWhereInput
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput
-  subscriptions_jobs_every: JobWhereInput
-  subscriptions_jobs_some: JobWhereInput
-  subscriptions_jobs_none: JobWhereInput
-  subscriptions_candidates_every: CandidateWhereInput
-  subscriptions_candidates_some: CandidateWhereInput
-  subscriptions_candidates_none: CandidateWhereInput
-  subscriptions_tasks_every: TaskWhereInput
-  subscriptions_tasks_some: TaskWhereInput
-  subscriptions_tasks_none: TaskWhereInput
+  subscriptionJobs_every: JobWhereInput
+  subscriptionJobs_some: JobWhereInput
+  subscriptionJobs_none: JobWhereInput
+  subscriptionCandidates_every: CandidateWhereInput
+  subscriptionCandidates_some: CandidateWhereInput
+  subscriptionCandidates_none: CandidateWhereInput
+  subscriptionTasks_every: TaskWhereInput
+  subscriptionTasks_some: TaskWhereInput
+  subscriptionTasks_none: TaskWhereInput
   tasks_every: TaskWhereInput
   tasks_some: TaskWhereInput
   tasks_none: TaskWhereInput
@@ -1820,15 +1801,15 @@ type Event implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace(where: WorkspaceWhereInput): Workspace!
-  type: EventType!
-  actor_type: EventActorType!
-  actor_user(where: UserWhereInput): User
-  actor_candidate(where: CandidateWhereInput): Candidate
-  target_type: EventTargetType!
-  target_candidate(where: CandidateWhereInput): Candidate
-  target_job(where: JobWhereInput): Job
-  target_task(where: TaskWhereInput): Task
-  target_workspace(where: WorkspaceWhereInput): Workspace
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  actorUser(where: UserWhereInput): User
+  actorCandidate(where: CandidateWhereInput): Candidate
+  targetType: EventTargetTypeEnum!
+  targetCandidate(where: CandidateWhereInput): Candidate
+  targetJob(where: JobWhereInput): Job
+  targetTask(where: TaskWhereInput): Task
+  targetWorkspace(where: WorkspaceWhereInput): Workspace
 }
 
 input EventWhereInput {
@@ -1955,52 +1936,52 @@ input EventWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  type: EventType
+  type: EventTypeEnum
   """
   All values that are not equal to given value.
   """
-  type_not: EventType
+  type_not: EventTypeEnum
   """
   All values that are contained in given list.
   """
-  type_in: [EventType!]
+  type_in: [EventTypeEnum!]
   """
   All values that are not contained in given list.
   """
-  type_not_in: [EventType!]
-  actor_type: EventActorType
+  type_not_in: [EventTypeEnum!]
+  actorType: EventActorTypeEnum
   """
   All values that are not equal to given value.
   """
-  actor_type_not: EventActorType
+  actorType_not: EventActorTypeEnum
   """
   All values that are contained in given list.
   """
-  actor_type_in: [EventActorType!]
+  actorType_in: [EventActorTypeEnum!]
   """
   All values that are not contained in given list.
   """
-  actor_type_not_in: [EventActorType!]
-  target_type: EventTargetType
+  actorType_not_in: [EventActorTypeEnum!]
+  targetType: EventTargetTypeEnum
   """
   All values that are not equal to given value.
   """
-  target_type_not: EventTargetType
+  targetType_not: EventTargetTypeEnum
   """
   All values that are contained in given list.
   """
-  target_type_in: [EventTargetType!]
+  targetType_in: [EventTargetTypeEnum!]
   """
   All values that are not contained in given list.
   """
-  target_type_not_in: [EventTargetType!]
+  targetType_not_in: [EventTargetTypeEnum!]
   workspace: WorkspaceWhereInput
-  actor_user: UserWhereInput
-  actor_candidate: CandidateWhereInput
-  target_candidate: CandidateWhereInput
-  target_job: JobWhereInput
-  target_task: TaskWhereInput
-  target_workspace: WorkspaceWhereInput
+  actorUser: UserWhereInput
+  actorCandidate: CandidateWhereInput
+  targetCandidate: CandidateWhereInput
+  targetJob: JobWhereInput
+  targetTask: TaskWhereInput
+  targetWorkspace: WorkspaceWhereInput
 }
 
 enum EventOrderByInput {
@@ -2012,10 +1993,10 @@ enum EventOrderByInput {
   updatedAt_DESC
   type_ASC
   type_DESC
-  actor_type_ASC
-  actor_type_DESC
-  target_type_ASC
-  target_type_DESC
+  actorType_ASC
+  actorType_DESC
+  targetType_ASC
+  targetType_DESC
 }
 
 type Stage implements Node {
@@ -2025,7 +2006,7 @@ type Stage implements Node {
   name: String!
   description: String
   position: Int!
-  type: StageType!
+  type: StageTypeEnum!
 }
 
 input StageWhereInput {
@@ -2287,19 +2268,19 @@ input StageWhereInput {
   All values greater than or equal the given value.
   """
   position_gte: Int
-  type: StageType
+  type: StageTypeEnum
   """
   All values that are not equal to given value.
   """
-  type_not: StageType
+  type_not: StageTypeEnum
   """
   All values that are contained in given list.
   """
-  type_in: [StageType!]
+  type_in: [StageTypeEnum!]
   """
   All values that are not contained in given list.
   """
-  type_not_in: [StageType!]
+  type_not_in: [StageTypeEnum!]
 }
 
 enum StageOrderByInput {
@@ -2952,12 +2933,12 @@ type Task implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
+  workspace: Workspace!
   subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  target_type: TaskTarget
-  target_job(where: JobWhereInput): Job
-  target_candidate(where: CandidateWhereInput): Candidate
+  targetType: TaskTargetEnum
+  job(where: JobWhereInput): Job
+  candidate(where: CandidateWhereInput): Candidate
   title: String
   description: String
   dueAt: DateTime
@@ -3087,19 +3068,19 @@ input TaskWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   """
   All values that are not equal to given value.
   """
-  target_type_not: TaskTarget
+  targetType_not: TaskTargetEnum
   """
   All values that are contained in given list.
   """
-  target_type_in: [TaskTarget!]
+  targetType_in: [TaskTargetEnum!]
   """
   All values that are not contained in given list.
   """
-  target_type_not_in: [TaskTarget!]
+  targetType_not_in: [TaskTargetEnum!]
   title: String
   """
   All values that are not equal to given value.
@@ -3235,15 +3216,14 @@ input TaskWhereInput {
   All values greater than or equal the given value.
   """
   dueAt_gte: DateTime
-  workspace: WorkspaceWhereInput
   subscribers_every: UserWhereInput
   subscribers_some: UserWhereInput
   subscribers_none: UserWhereInput
   owners_every: UserWhereInput
   owners_some: UserWhereInput
   owners_none: UserWhereInput
-  target_job: JobWhereInput
-  target_candidate: CandidateWhereInput
+  job: JobWhereInput
+  candidate: CandidateWhereInput
 }
 
 enum TaskOrderByInput {
@@ -3253,8 +3233,8 @@ enum TaskOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  target_type_ASC
-  target_type_DESC
+  targetType_ASC
+  targetType_DESC
   title_ASC
   title_DESC
   description_ASC
@@ -3462,7 +3442,7 @@ enum TagOrderByInput {
 
 type Field implements Node {
   id: ID!
-  type: FieldType
+  type: FieldTypeEnum!
   label: String!
   value: String!
 }
@@ -3533,19 +3513,19 @@ input FieldWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
-  type: FieldType
+  type: FieldTypeEnum
   """
   All values that are not equal to given value.
   """
-  type_not: FieldType
+  type_not: FieldTypeEnum
   """
   All values that are contained in given list.
   """
-  type_in: [FieldType!]
+  type_in: [FieldTypeEnum!]
   """
   All values that are not contained in given list.
   """
-  type_not_in: [FieldType!]
+  type_not_in: [FieldTypeEnum!]
   label: String
   """
   All values that are not equal to given value.
@@ -4139,15 +4119,9 @@ type CommentConnection {
 
 input ApplicationCreateInput {
   disqualifyReason: String
-  workspace: WorkspaceCreateOneWithoutApplicationsInput!
-  job: JobCreateOneWithoutApplicationsInput!
-  candidate: CandidateCreateOneWithoutApplicationsInput!
-  stage: StageCreateOneInput!
-}
-
-input NotificationCreateInput {
-  user: UserCreateOneWithoutNotificationsInput!
-  event: EventCreateOneInput!
+  job: Connect!
+  candidate: Connect!
+  stage: Connect
 }
 
 input LocationCreateInput {
@@ -4167,11 +4141,11 @@ input CandidateCreateInput {
   coverLetter: CandidateCreatecoverLetterInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTarget_candidateInput
-  subscribers: UserCreateManyWithoutSubscriptions_candidatesInput
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   tags: TagCreateManyInput
   fields: FieldCreateManyInput
-  tasks: TaskCreateManyWithoutTarget_candidateInput
+  tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
@@ -4185,11 +4159,11 @@ input UserCreateInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActor_userInput
+  events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
-  subscriptions_jobs: JobCreateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskCreateManyWithoutSubscribersInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
 }
 
@@ -4201,23 +4175,23 @@ input InviteCreateInput {
 }
 
 input EventCreateInput {
-  type: EventType!
-  actor_type: EventActorType!
-  target_type: EventTargetType!
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
   workspace: WorkspaceCreateOneInput!
-  actor_user: UserCreateOneWithoutEventsInput
-  actor_candidate: CandidateCreateOneInput
-  target_candidate: CandidateCreateOneWithoutEventsInput
-  target_job: JobCreateOneWithoutEventsInput
-  target_task: TaskCreateOneInput
-  target_workspace: WorkspaceCreateOneWithoutEventsInput
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
 }
 
 input StageCreateInput {
   name: String!
   description: String
   position: Int!
-  type: StageType!
+  type: StageTypeEnum!
 }
 
 input JobCreateInput {
@@ -4226,24 +4200,20 @@ input JobCreateInput {
   department: String
   description: String
   requirements: String
-  workspace: WorkspaceCreateOneWithoutJobsInput!
-  subscribers: UserCreateManyWithoutSubscriptions_jobsInput
-  events: EventCreateManyWithoutTarget_jobInput
-  applications: ApplicationCreateManyWithoutJobInput
+  subscribers: ConnectMany
   stages: StageCreateManyInput
-  comments: CommentCreateManyInput
   location: LocationCreateOneInput
 }
 
 input TaskCreateInput {
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
-  subscribers: UserCreateManyWithoutSubscriptions_tasksInput
-  owners: UserCreateManyWithoutTasksInput
-  target_job: JobCreateOneInput
-  target_candidate: CandidateCreateOneWithoutTasksInput
+  subscribers: ConnectMany
+  owners: ConnectMany
+  job: Connect
+  candidate: Connect
 }
 
 input TagCreateInput {
@@ -4251,7 +4221,7 @@ input TagCreateInput {
 }
 
 input FieldCreateInput {
-  type: FieldType
+  type: FieldTypeEnum!
   label: String!
   value: String!
 }
@@ -4264,13 +4234,12 @@ input CommentCreateInput {
 
 input ApplicationUpdateInput {
   disqualifyReason: String
-  workspace: WorkspaceUpdateOneWithoutApplicationsInput
-  job: JobUpdateOneWithoutApplicationsInput
-  candidate: CandidateUpdateOneWithoutApplicationsInput
-  stage: StageUpdateOneInput
+  job: ConnectDisconnect
+  stage: Connect
 }
 
 input NotificationUpdateInput {
+  status: NotificationStatusEnum
   user: UserUpdateOneWithoutNotificationsInput
   event: EventUpdateOneInput
 }
@@ -4291,14 +4260,10 @@ input CandidateUpdateInput {
   resume: CandidateUpdateresumeInput
   coverLetter: CandidateUpdatecoverLetterInput
   source: CandidateUpdatesourceInput
-  workspace: WorkspaceUpdateOneWithoutCandidatesInput
-  events: EventUpdateManyWithoutTarget_candidateInput
-  subscribers: UserUpdateManyWithoutSubscriptions_candidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: Connect
   tags: TagUpdateManyInput
   fields: FieldUpdateManyInput
-  tasks: TaskUpdateManyWithoutTarget_candidateInput
-  applications: ApplicationUpdateManyWithoutCandidateInput
-  comments: CommentUpdateManyInput
 }
 
 input UserUpdateInput {
@@ -4306,15 +4271,13 @@ input UserUpdateInput {
   lastName: String
   email: String
   username: String
-  password: String
   lastLogin: DateTime
   deletedAt: DateTime
-  workspace: WorkspaceUpdateOneWithoutUsersInput
-  events: EventUpdateOneWithoutActor_userInput
+  events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -4326,28 +4289,28 @@ input InviteUpdateInput {
 }
 
 input EventUpdateInput {
-  type: EventType
-  actor_type: EventActorType
-  target_type: EventTargetType
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
   workspace: WorkspaceUpdateOneInput
-  actor_user: UserUpdateOneWithoutEventsInput
-  actor_candidate: CandidateUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutEventsInput
-  target_job: JobUpdateOneWithoutEventsInput
-  target_task: TaskUpdateOneInput
-  target_workspace: WorkspaceUpdateOneWithoutEventsInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
 }
 
 input StageUpdateInput {
   name: String
   description: String
   position: Int
-  type: StageType
+  type: StageTypeEnum
 }
 
 input WorkspaceUpdateInput {
   name: String
-  events: EventUpdateManyWithoutTarget_workspaceInput
+  events: EventUpdateManyWithoutTargetWorkspaceInput
   users: UserUpdateManyWithoutWorkspaceInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   applications: ApplicationUpdateManyWithoutWorkspaceInput
@@ -4362,25 +4325,21 @@ input JobUpdateInput {
   department: String
   description: String
   requirements: String
-  workspace: WorkspaceUpdateOneWithoutJobsInput
-  subscribers: UserUpdateManyWithoutSubscriptions_jobsInput
-  events: EventUpdateManyWithoutTarget_jobInput
-  applications: ApplicationUpdateManyWithoutJobInput
+  subscribers: ConnectDisconnectMany
   stages: StageUpdateManyInput
   comments: CommentUpdateManyInput
   location: LocationUpdateOneInput
 }
 
 input TaskUpdateInput {
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
-  workspace: WorkspaceUpdateOneInput
-  subscribers: UserUpdateManyWithoutSubscriptions_tasksInput
-  owners: UserUpdateManyWithoutTasksInput
-  target_job: JobUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutTasksInput
+  subscribers: ConnectDisconnectMany
+  owners: ConnectDisconnectMany
+  job: ConnectDisconnect
+  candidate: ConnectDisconnect
 }
 
 input TagUpdateInput {
@@ -4388,7 +4347,7 @@ input TagUpdateInput {
 }
 
 input FieldUpdateInput {
-  type: FieldType
+  type: FieldTypeEnum
   label: String
   value: String
 }
@@ -4397,6 +4356,12 @@ input CommentUpdateInput {
   content: String
   createdBy: UserUpdateOneInput
   parent: CommentUpdateOneInput
+}
+
+input NotificationCreateInput {
+  status: NotificationStatusEnum!
+  user: UserCreateOneWithoutNotificationsInput!
+  event: EventCreateOneInput!
 }
 
 input WorkspaceCreateInput {
@@ -4443,7 +4408,13 @@ interface Node {
 
 scalar DateTime
 
-enum EventType {
+enum NotificationStatusEnum {
+  NEW
+  UNREAD
+  READ
+}
+
+enum EventTypeEnum {
   DEFAULT
   MESSAGE
   COMMENT_CREATE
@@ -4451,20 +4422,20 @@ enum EventType {
   COMMENT_DELETE
 }
 
-enum EventActorType {
+enum EventActorTypeEnum {
   SYSTEM
   USER
   CANDIDATE
 }
 
-enum EventTargetType {
+enum EventTargetTypeEnum {
   CANDIDATE
   JOB
   TASK
   WORKSPACE
 }
 
-enum StageType {
+enum StageTypeEnum {
   NEW
   QUALIFIED
   DISQUALIFIED
@@ -4476,13 +4447,13 @@ enum JobType {
   ARCHIVED
 }
 
-enum TaskTarget {
+enum TaskTargetEnum {
   NULL
   JOB
   CANIDATE
 }
 
-enum FieldType {
+enum FieldTypeEnum {
   INT
   FLOAT
   STRING
@@ -4785,16 +4756,6 @@ input StageCreateOneInput {
   connect: StageWhereUniqueInput
 }
 
-input UserCreateOneWithoutNotificationsInput {
-  create: UserCreateWithoutNotificationsInput
-  connect: UserWhereUniqueInput
-}
-
-input EventCreateOneInput {
-  create: EventCreateInput
-  connect: EventWhereUniqueInput
-}
-
 input CandidateCreateemailsInput {
   set: [String!]
 }
@@ -4824,13 +4785,13 @@ input WorkspaceCreateOneWithoutCandidatesInput {
   connect: WorkspaceWhereUniqueInput
 }
 
-input EventCreateManyWithoutTarget_candidateInput {
-  create: [EventCreateWithoutTarget_candidateInput!]
+input EventCreateManyWithoutTargetCandidateInput {
+  create: [EventCreateWithoutTargetCandidateInput!]
   connect: [EventWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutSubscriptions_candidatesInput {
-  create: [UserCreateWithoutSubscriptions_candidatesInput!]
+input UserCreateManyWithoutSubscriptionCandidatesInput {
+  create: [UserCreateWithoutSubscriptionCandidatesInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -4844,8 +4805,8 @@ input FieldCreateManyInput {
   connect: [FieldWhereUniqueInput!]
 }
 
-input TaskCreateManyWithoutTarget_candidateInput {
-  create: [TaskCreateWithoutTarget_candidateInput!]
+input TaskCreateManyWithoutCandidateInput {
+  create: [TaskCreateWithoutCandidateInput!]
   connect: [TaskWhereUniqueInput!]
 }
 
@@ -4864,8 +4825,8 @@ input WorkspaceCreateOneWithoutUsersInput {
   connect: WorkspaceWhereUniqueInput
 }
 
-input EventCreateOneWithoutActor_userInput {
-  create: EventCreateWithoutActor_userInput
+input EventCreateOneWithoutActorUserInput {
+  create: EventCreateWithoutActorUserInput
   connect: EventWhereUniqueInput
 }
 
@@ -4944,13 +4905,13 @@ input WorkspaceCreateOneWithoutJobsInput {
   connect: WorkspaceWhereUniqueInput
 }
 
-input UserCreateManyWithoutSubscriptions_jobsInput {
-  create: [UserCreateWithoutSubscriptions_jobsInput!]
+input UserCreateManyWithoutSubscriptionJobsInput {
+  create: [UserCreateWithoutSubscriptionJobsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
-input EventCreateManyWithoutTarget_jobInput {
-  create: [EventCreateWithoutTarget_jobInput!]
+input EventCreateManyWithoutTargetJobInput {
+  create: [EventCreateWithoutTargetJobInput!]
   connect: [EventWhereUniqueInput!]
 }
 
@@ -4969,8 +4930,8 @@ input LocationCreateOneInput {
   connect: LocationWhereUniqueInput
 }
 
-input UserCreateManyWithoutSubscriptions_tasksInput {
-  create: [UserCreateWithoutSubscriptions_tasksInput!]
+input UserCreateManyWithoutSubscriptionTasksInput {
+  create: [UserCreateWithoutSubscriptionTasksInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -5074,22 +5035,22 @@ input WorkspaceUpdateOneWithoutCandidatesInput {
   upsert: WorkspaceUpsertWithoutCandidatesInput
 }
 
-input EventUpdateManyWithoutTarget_candidateInput {
-  create: [EventCreateWithoutTarget_candidateInput!]
+input EventUpdateManyWithoutTargetCandidateInput {
+  create: [EventCreateWithoutTargetCandidateInput!]
   connect: [EventWhereUniqueInput!]
   disconnect: [EventWhereUniqueInput!]
   delete: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutTarget_candidateInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutTarget_candidateInput!]
+  update: [EventUpdateWithWhereUniqueWithoutTargetCandidateInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutTargetCandidateInput!]
 }
 
-input UserUpdateManyWithoutSubscriptions_candidatesInput {
-  create: [UserCreateWithoutSubscriptions_candidatesInput!]
+input UserUpdateManyWithoutSubscriptionCandidatesInput {
+  create: [UserCreateWithoutSubscriptionCandidatesInput!]
   connect: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubscriptions_candidatesInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptions_candidatesInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput!]
 }
 
 input TagUpdateManyInput {
@@ -5110,13 +5071,13 @@ input FieldUpdateManyInput {
   upsert: [FieldUpsertWithWhereUniqueNestedInput!]
 }
 
-input TaskUpdateManyWithoutTarget_candidateInput {
-  create: [TaskCreateWithoutTarget_candidateInput!]
+input TaskUpdateManyWithoutCandidateInput {
+  create: [TaskCreateWithoutCandidateInput!]
   connect: [TaskWhereUniqueInput!]
   disconnect: [TaskWhereUniqueInput!]
   delete: [TaskWhereUniqueInput!]
-  update: [TaskUpdateWithWhereUniqueWithoutTarget_candidateInput!]
-  upsert: [TaskUpsertWithWhereUniqueWithoutTarget_candidateInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutCandidateInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutCandidateInput!]
 }
 
 input ApplicationUpdateManyWithoutCandidateInput {
@@ -5145,13 +5106,13 @@ input WorkspaceUpdateOneWithoutUsersInput {
   upsert: WorkspaceUpsertWithoutUsersInput
 }
 
-input EventUpdateOneWithoutActor_userInput {
-  create: EventCreateWithoutActor_userInput
+input EventUpdateOneWithoutActorUserInput {
+  create: EventCreateWithoutActorUserInput
   connect: EventWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: EventUpdateWithoutActor_userDataInput
-  upsert: EventUpsertWithoutActor_userInput
+  update: EventUpdateWithoutActorUserDataInput
+  upsert: EventUpsertWithoutActorUserInput
 }
 
 input NotificationUpdateManyWithoutUserInput {
@@ -5277,13 +5238,13 @@ input WorkspaceUpdateOneWithoutEventsInput {
   upsert: WorkspaceUpsertWithoutEventsInput
 }
 
-input EventUpdateManyWithoutTarget_workspaceInput {
-  create: [EventCreateWithoutTarget_workspaceInput!]
+input EventUpdateManyWithoutTargetWorkspaceInput {
+  create: [EventCreateWithoutTargetWorkspaceInput!]
   connect: [EventWhereUniqueInput!]
   disconnect: [EventWhereUniqueInput!]
   delete: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutTarget_workspaceInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutTarget_workspaceInput!]
+  update: [EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput!]
 }
 
 input UserUpdateManyWithoutWorkspaceInput {
@@ -5339,22 +5300,22 @@ input WorkspaceUpdateOneWithoutJobsInput {
   upsert: WorkspaceUpsertWithoutJobsInput
 }
 
-input UserUpdateManyWithoutSubscriptions_jobsInput {
-  create: [UserCreateWithoutSubscriptions_jobsInput!]
+input UserUpdateManyWithoutSubscriptionJobsInput {
+  create: [UserCreateWithoutSubscriptionJobsInput!]
   connect: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubscriptions_jobsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptions_jobsInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput!]
 }
 
-input EventUpdateManyWithoutTarget_jobInput {
-  create: [EventCreateWithoutTarget_jobInput!]
+input EventUpdateManyWithoutTargetJobInput {
+  create: [EventCreateWithoutTargetJobInput!]
   connect: [EventWhereUniqueInput!]
   disconnect: [EventWhereUniqueInput!]
   delete: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutTarget_jobInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutTarget_jobInput!]
+  update: [EventUpdateWithWhereUniqueWithoutTargetJobInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutTargetJobInput!]
 }
 
 input ApplicationUpdateManyWithoutJobInput {
@@ -5384,13 +5345,13 @@ input LocationUpdateOneInput {
   upsert: LocationUpsertNestedInput
 }
 
-input UserUpdateManyWithoutSubscriptions_tasksInput {
-  create: [UserCreateWithoutSubscriptions_tasksInput!]
+input UserUpdateManyWithoutSubscriptionTasksInput {
+  create: [UserCreateWithoutSubscriptionTasksInput!]
   connect: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubscriptions_tasksInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptions_tasksInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput!]
 }
 
 input UserUpdateManyWithoutTasksInput {
@@ -5429,6 +5390,16 @@ input CommentUpdateOneInput {
   upsert: CommentUpsertNestedInput
 }
 
+input UserCreateOneWithoutNotificationsInput {
+  create: UserCreateWithoutNotificationsInput
+  connect: UserWhereUniqueInput
+}
+
+input EventCreateOneInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -5437,7 +5408,7 @@ scalar Long
 
 input WorkspaceCreateWithoutApplicationsInput {
   name: String!
-  events: EventCreateManyWithoutTarget_workspaceInput
+  events: EventCreateManyWithoutTargetWorkspaceInput
   users: UserCreateManyWithoutWorkspaceInput
   jobs: JobCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyWithoutWorkspaceInput
@@ -5452,8 +5423,8 @@ input JobCreateWithoutApplicationsInput {
   description: String
   requirements: String
   workspace: WorkspaceCreateOneWithoutJobsInput!
-  subscribers: UserCreateManyWithoutSubscriptions_jobsInput
-  events: EventCreateManyWithoutTarget_jobInput
+  subscribers: UserCreateManyWithoutSubscriptionJobsInput
+  events: EventCreateManyWithoutTargetJobInput
   stages: StageCreateManyInput
   comments: CommentCreateManyInput
   location: LocationCreateOneInput
@@ -5469,33 +5440,17 @@ input CandidateCreateWithoutApplicationsInput {
   coverLetter: CandidateCreatecoverLetterInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTarget_candidateInput
-  subscribers: UserCreateManyWithoutSubscriptions_candidatesInput
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   tags: TagCreateManyInput
   fields: FieldCreateManyInput
-  tasks: TaskCreateManyWithoutTarget_candidateInput
+  tasks: TaskCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
-}
-
-input UserCreateWithoutNotificationsInput {
-  firstName: String
-  lastName: String
-  email: String!
-  username: String!
-  password: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActor_userInput
-  subscriptions_jobs: JobCreateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
 }
 
 input WorkspaceCreateWithoutCandidatesInput {
   name: String!
-  events: EventCreateManyWithoutTarget_workspaceInput
+  events: EventCreateManyWithoutTargetWorkspaceInput
   users: UserCreateManyWithoutWorkspaceInput
   jobs: JobCreateManyWithoutWorkspaceInput
   applications: ApplicationCreateManyWithoutWorkspaceInput
@@ -5503,19 +5458,19 @@ input WorkspaceCreateWithoutCandidatesInput {
   tags: TagCreateManyInput
 }
 
-input EventCreateWithoutTarget_candidateInput {
-  type: EventType!
-  actor_type: EventActorType!
-  target_type: EventTargetType!
+input EventCreateWithoutTargetCandidateInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
   workspace: WorkspaceCreateOneInput!
-  actor_user: UserCreateOneWithoutEventsInput
-  actor_candidate: CandidateCreateOneInput
-  target_job: JobCreateOneWithoutEventsInput
-  target_task: TaskCreateOneInput
-  target_workspace: WorkspaceCreateOneWithoutEventsInput
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
 }
 
-input UserCreateWithoutSubscriptions_candidatesInput {
+input UserCreateWithoutSubscriptionCandidatesInput {
   firstName: String
   lastName: String
   email: String!
@@ -5524,22 +5479,22 @@ input UserCreateWithoutSubscriptions_candidatesInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActor_userInput
+  events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
-  subscriptions_jobs: JobCreateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskCreateManyWithoutSubscribersInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
 }
 
-input TaskCreateWithoutTarget_candidateInput {
-  target_type: TaskTarget
+input TaskCreateWithoutCandidateInput {
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
   workspace: WorkspaceCreateOneInput!
-  subscribers: UserCreateManyWithoutSubscriptions_tasksInput
+  subscribers: UserCreateManyWithoutSubscriptionTasksInput
   owners: UserCreateManyWithoutTasksInput
-  target_job: JobCreateOneInput
+  job: JobCreateOneInput
 }
 
 input ApplicationCreateWithoutCandidateInput {
@@ -5551,7 +5506,7 @@ input ApplicationCreateWithoutCandidateInput {
 
 input WorkspaceCreateWithoutUsersInput {
   name: String!
-  events: EventCreateManyWithoutTarget_workspaceInput
+  events: EventCreateManyWithoutTargetWorkspaceInput
   jobs: JobCreateManyWithoutWorkspaceInput
   applications: ApplicationCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyWithoutWorkspaceInput
@@ -5559,19 +5514,20 @@ input WorkspaceCreateWithoutUsersInput {
   tags: TagCreateManyInput
 }
 
-input EventCreateWithoutActor_userInput {
-  type: EventType!
-  actor_type: EventActorType!
-  target_type: EventTargetType!
+input EventCreateWithoutActorUserInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
   workspace: WorkspaceCreateOneInput!
-  actor_candidate: CandidateCreateOneInput
-  target_candidate: CandidateCreateOneWithoutEventsInput
-  target_job: JobCreateOneWithoutEventsInput
-  target_task: TaskCreateOneInput
-  target_workspace: WorkspaceCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
 }
 
 input NotificationCreateWithoutUserInput {
+  status: NotificationStatusEnum!
   event: EventCreateOneInput!
 }
 
@@ -5582,7 +5538,7 @@ input JobCreateWithoutSubscribersInput {
   description: String
   requirements: String
   workspace: WorkspaceCreateOneWithoutJobsInput!
-  events: EventCreateManyWithoutTarget_jobInput
+  events: EventCreateManyWithoutTargetJobInput
   applications: ApplicationCreateManyWithoutJobInput
   stages: StageCreateManyInput
   comments: CommentCreateManyInput
@@ -5599,39 +5555,39 @@ input CandidateCreateWithoutSubscribersInput {
   coverLetter: CandidateCreatecoverLetterInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTarget_candidateInput
+  events: EventCreateManyWithoutTargetCandidateInput
   tags: TagCreateManyInput
   fields: FieldCreateManyInput
-  tasks: TaskCreateManyWithoutTarget_candidateInput
+  tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
 
 input TaskCreateWithoutSubscribersInput {
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
   workspace: WorkspaceCreateOneInput!
   owners: UserCreateManyWithoutTasksInput
-  target_job: JobCreateOneInput
-  target_candidate: CandidateCreateOneWithoutTasksInput
+  job: JobCreateOneInput
+  candidate: CandidateCreateOneWithoutTasksInput
 }
 
 input TaskCreateWithoutOwnersInput {
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
   workspace: WorkspaceCreateOneInput!
-  subscribers: UserCreateManyWithoutSubscriptions_tasksInput
-  target_job: JobCreateOneInput
-  target_candidate: CandidateCreateOneWithoutTasksInput
+  subscribers: UserCreateManyWithoutSubscriptionTasksInput
+  job: JobCreateOneInput
+  candidate: CandidateCreateOneWithoutTasksInput
 }
 
 input WorkspaceCreateWithoutInvitesInput {
   name: String!
-  events: EventCreateManyWithoutTarget_workspaceInput
+  events: EventCreateManyWithoutTargetWorkspaceInput
   users: UserCreateManyWithoutWorkspaceInput
   jobs: JobCreateManyWithoutWorkspaceInput
   applications: ApplicationCreateManyWithoutWorkspaceInput
@@ -5649,9 +5605,9 @@ input UserCreateWithoutEventsInput {
   deletedAt: DateTime
   workspace: WorkspaceCreateOneWithoutUsersInput!
   notifications: NotificationCreateManyWithoutUserInput
-  subscriptions_jobs: JobCreateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskCreateManyWithoutSubscribersInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
 }
 
@@ -5665,10 +5621,10 @@ input CandidateCreateWithoutEventsInput {
   coverLetter: CandidateCreatecoverLetterInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  subscribers: UserCreateManyWithoutSubscriptions_candidatesInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   tags: TagCreateManyInput
   fields: FieldCreateManyInput
-  tasks: TaskCreateManyWithoutTarget_candidateInput
+  tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
@@ -5680,7 +5636,7 @@ input JobCreateWithoutEventsInput {
   description: String
   requirements: String
   workspace: WorkspaceCreateOneWithoutJobsInput!
-  subscribers: UserCreateManyWithoutSubscriptions_jobsInput
+  subscribers: UserCreateManyWithoutSubscriptionJobsInput
   applications: ApplicationCreateManyWithoutJobInput
   stages: StageCreateManyInput
   comments: CommentCreateManyInput
@@ -5699,7 +5655,7 @@ input WorkspaceCreateWithoutEventsInput {
 
 input WorkspaceCreateWithoutJobsInput {
   name: String!
-  events: EventCreateManyWithoutTarget_workspaceInput
+  events: EventCreateManyWithoutTargetWorkspaceInput
   users: UserCreateManyWithoutWorkspaceInput
   applications: ApplicationCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyWithoutWorkspaceInput
@@ -5707,7 +5663,7 @@ input WorkspaceCreateWithoutJobsInput {
   tags: TagCreateManyInput
 }
 
-input UserCreateWithoutSubscriptions_jobsInput {
+input UserCreateWithoutSubscriptionJobsInput {
   firstName: String
   lastName: String
   email: String!
@@ -5716,23 +5672,23 @@ input UserCreateWithoutSubscriptions_jobsInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActor_userInput
+  events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
-  subscriptions_candidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
 }
 
-input EventCreateWithoutTarget_jobInput {
-  type: EventType!
-  actor_type: EventActorType!
-  target_type: EventTargetType!
+input EventCreateWithoutTargetJobInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
   workspace: WorkspaceCreateOneInput!
-  actor_user: UserCreateOneWithoutEventsInput
-  actor_candidate: CandidateCreateOneInput
-  target_candidate: CandidateCreateOneWithoutEventsInput
-  target_task: TaskCreateOneInput
-  target_workspace: WorkspaceCreateOneWithoutEventsInput
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
 }
 
 input ApplicationCreateWithoutJobInput {
@@ -5742,7 +5698,7 @@ input ApplicationCreateWithoutJobInput {
   stage: StageCreateOneInput!
 }
 
-input UserCreateWithoutSubscriptions_tasksInput {
+input UserCreateWithoutSubscriptionTasksInput {
   firstName: String
   lastName: String
   email: String!
@@ -5751,10 +5707,10 @@ input UserCreateWithoutSubscriptions_tasksInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActor_userInput
+  events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
-  subscriptions_jobs: JobCreateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
 }
 
@@ -5767,11 +5723,11 @@ input UserCreateWithoutTasksInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActor_userInput
+  events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
-  subscriptions_jobs: JobCreateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskCreateManyWithoutSubscribersInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
 }
 
 input CandidateCreateWithoutTasksInput {
@@ -5784,8 +5740,8 @@ input CandidateCreateWithoutTasksInput {
   coverLetter: CandidateCreatecoverLetterInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTarget_candidateInput
-  subscribers: UserCreateManyWithoutSubscriptions_candidatesInput
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   tags: TagCreateManyInput
   fields: FieldCreateManyInput
   applications: ApplicationCreateManyWithoutCandidateInput
@@ -5794,7 +5750,7 @@ input CandidateCreateWithoutTasksInput {
 
 input WorkspaceUpdateWithoutApplicationsDataInput {
   name: String
-  events: EventUpdateManyWithoutTarget_workspaceInput
+  events: EventUpdateManyWithoutTargetWorkspaceInput
   users: UserUpdateManyWithoutWorkspaceInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   candidates: CandidateUpdateManyWithoutWorkspaceInput
@@ -5814,8 +5770,8 @@ input JobUpdateWithoutApplicationsDataInput {
   description: String
   requirements: String
   workspace: WorkspaceUpdateOneWithoutJobsInput
-  subscribers: UserUpdateManyWithoutSubscriptions_jobsInput
-  events: EventUpdateManyWithoutTarget_jobInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
   stages: StageUpdateManyInput
   comments: CommentUpdateManyInput
   location: LocationUpdateOneInput
@@ -5836,11 +5792,11 @@ input CandidateUpdateWithoutApplicationsDataInput {
   coverLetter: CandidateUpdatecoverLetterInput
   source: CandidateUpdatesourceInput
   workspace: WorkspaceUpdateOneWithoutCandidatesInput
-  events: EventUpdateManyWithoutTarget_candidateInput
-  subscribers: UserUpdateManyWithoutSubscriptions_candidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   tags: TagUpdateManyInput
   fields: FieldUpdateManyInput
-  tasks: TaskUpdateManyWithoutTarget_candidateInput
+  tasks: TaskUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
 }
 
@@ -5853,12 +5809,28 @@ input StageUpdateDataInput {
   name: String
   description: String
   position: Int
-  type: StageType
+  type: StageTypeEnum
 }
 
 input StageUpsertNestedInput {
   update: StageUpdateDataInput!
   create: StageCreateInput!
+}
+
+input UserCreateWithoutNotificationsInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
 }
 
 input UserUpdateWithoutNotificationsDataInput {
@@ -5870,10 +5842,10 @@ input UserUpdateWithoutNotificationsDataInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
-  events: EventUpdateOneWithoutActor_userInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
+  events: EventUpdateOneWithoutActorUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -5883,16 +5855,16 @@ input UserUpsertWithoutNotificationsInput {
 }
 
 input EventUpdateDataInput {
-  type: EventType
-  actor_type: EventActorType
-  target_type: EventTargetType
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
   workspace: WorkspaceUpdateOneInput
-  actor_user: UserUpdateOneWithoutEventsInput
-  actor_candidate: CandidateUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutEventsInput
-  target_job: JobUpdateOneWithoutEventsInput
-  target_task: TaskUpdateOneInput
-  target_workspace: WorkspaceUpdateOneWithoutEventsInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
 }
 
 input EventUpsertNestedInput {
@@ -5902,7 +5874,7 @@ input EventUpsertNestedInput {
 
 input WorkspaceUpdateWithoutCandidatesDataInput {
   name: String
-  events: EventUpdateManyWithoutTarget_workspaceInput
+  events: EventUpdateManyWithoutTargetWorkspaceInput
   users: UserUpdateManyWithoutWorkspaceInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   applications: ApplicationUpdateManyWithoutWorkspaceInput
@@ -5915,26 +5887,26 @@ input WorkspaceUpsertWithoutCandidatesInput {
   create: WorkspaceCreateWithoutCandidatesInput!
 }
 
-input EventUpdateWithWhereUniqueWithoutTarget_candidateInput {
+input EventUpdateWithWhereUniqueWithoutTargetCandidateInput {
   where: EventWhereUniqueInput!
-  data: EventUpdateWithoutTarget_candidateDataInput!
+  data: EventUpdateWithoutTargetCandidateDataInput!
 }
 
-input EventUpsertWithWhereUniqueWithoutTarget_candidateInput {
+input EventUpsertWithWhereUniqueWithoutTargetCandidateInput {
   where: EventWhereUniqueInput!
-  update: EventUpdateWithoutTarget_candidateDataInput!
-  create: EventCreateWithoutTarget_candidateInput!
+  update: EventUpdateWithoutTargetCandidateDataInput!
+  create: EventCreateWithoutTargetCandidateInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutSubscriptions_candidatesInput {
+input UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubscriptions_candidatesDataInput!
+  data: UserUpdateWithoutSubscriptionCandidatesDataInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutSubscriptions_candidatesInput {
+input UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubscriptions_candidatesDataInput!
-  create: UserCreateWithoutSubscriptions_candidatesInput!
+  update: UserUpdateWithoutSubscriptionCandidatesDataInput!
+  create: UserCreateWithoutSubscriptionCandidatesInput!
 }
 
 input TagUpdateWithWhereUniqueNestedInput {
@@ -5959,15 +5931,15 @@ input FieldUpsertWithWhereUniqueNestedInput {
   create: FieldCreateInput!
 }
 
-input TaskUpdateWithWhereUniqueWithoutTarget_candidateInput {
+input TaskUpdateWithWhereUniqueWithoutCandidateInput {
   where: TaskWhereUniqueInput!
-  data: TaskUpdateWithoutTarget_candidateDataInput!
+  data: TaskUpdateWithoutCandidateDataInput!
 }
 
-input TaskUpsertWithWhereUniqueWithoutTarget_candidateInput {
+input TaskUpsertWithWhereUniqueWithoutCandidateInput {
   where: TaskWhereUniqueInput!
-  update: TaskUpdateWithoutTarget_candidateDataInput!
-  create: TaskCreateWithoutTarget_candidateInput!
+  update: TaskUpdateWithoutCandidateDataInput!
+  create: TaskCreateWithoutCandidateInput!
 }
 
 input ApplicationUpdateWithWhereUniqueWithoutCandidateInput {
@@ -5994,7 +5966,7 @@ input CommentUpsertWithWhereUniqueNestedInput {
 
 input WorkspaceUpdateWithoutUsersDataInput {
   name: String
-  events: EventUpdateManyWithoutTarget_workspaceInput
+  events: EventUpdateManyWithoutTargetWorkspaceInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   applications: ApplicationUpdateManyWithoutWorkspaceInput
   candidates: CandidateUpdateManyWithoutWorkspaceInput
@@ -6007,21 +5979,21 @@ input WorkspaceUpsertWithoutUsersInput {
   create: WorkspaceCreateWithoutUsersInput!
 }
 
-input EventUpdateWithoutActor_userDataInput {
-  type: EventType
-  actor_type: EventActorType
-  target_type: EventTargetType
+input EventUpdateWithoutActorUserDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
   workspace: WorkspaceUpdateOneInput
-  actor_candidate: CandidateUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutEventsInput
-  target_job: JobUpdateOneWithoutEventsInput
-  target_task: TaskUpdateOneInput
-  target_workspace: WorkspaceUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
 }
 
-input EventUpsertWithoutActor_userInput {
-  update: EventUpdateWithoutActor_userDataInput!
-  create: EventCreateWithoutActor_userInput!
+input EventUpsertWithoutActorUserInput {
+  update: EventUpdateWithoutActorUserDataInput!
+  create: EventCreateWithoutActorUserInput!
 }
 
 input NotificationUpdateWithWhereUniqueWithoutUserInput {
@@ -6081,7 +6053,7 @@ input TaskUpsertWithWhereUniqueWithoutOwnersInput {
 
 input WorkspaceUpdateWithoutInvitesDataInput {
   name: String
-  events: EventUpdateManyWithoutTarget_workspaceInput
+  events: EventUpdateManyWithoutTargetWorkspaceInput
   users: UserUpdateManyWithoutWorkspaceInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   applications: ApplicationUpdateManyWithoutWorkspaceInput
@@ -6103,11 +6075,11 @@ input UserUpdateDataInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
-  events: EventUpdateOneWithoutActor_userInput
+  events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -6118,7 +6090,7 @@ input UserUpsertNestedInput {
 
 input WorkspaceUpdateDataInput {
   name: String
-  events: EventUpdateManyWithoutTarget_workspaceInput
+  events: EventUpdateManyWithoutTargetWorkspaceInput
   users: UserUpdateManyWithoutWorkspaceInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   applications: ApplicationUpdateManyWithoutWorkspaceInput
@@ -6142,9 +6114,9 @@ input UserUpdateWithoutEventsDataInput {
   deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -6163,11 +6135,11 @@ input CandidateUpdateDataInput {
   coverLetter: CandidateUpdatecoverLetterInput
   source: CandidateUpdatesourceInput
   workspace: WorkspaceUpdateOneWithoutCandidatesInput
-  events: EventUpdateManyWithoutTarget_candidateInput
-  subscribers: UserUpdateManyWithoutSubscriptions_candidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   tags: TagUpdateManyInput
   fields: FieldUpdateManyInput
-  tasks: TaskUpdateManyWithoutTarget_candidateInput
+  tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
 }
@@ -6187,10 +6159,10 @@ input CandidateUpdateWithoutEventsDataInput {
   coverLetter: CandidateUpdatecoverLetterInput
   source: CandidateUpdatesourceInput
   workspace: WorkspaceUpdateOneWithoutCandidatesInput
-  subscribers: UserUpdateManyWithoutSubscriptions_candidatesInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   tags: TagUpdateManyInput
   fields: FieldUpdateManyInput
-  tasks: TaskUpdateManyWithoutTarget_candidateInput
+  tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
 }
@@ -6207,7 +6179,7 @@ input JobUpdateWithoutEventsDataInput {
   description: String
   requirements: String
   workspace: WorkspaceUpdateOneWithoutJobsInput
-  subscribers: UserUpdateManyWithoutSubscriptions_jobsInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
   applications: ApplicationUpdateManyWithoutJobInput
   stages: StageUpdateManyInput
   comments: CommentUpdateManyInput
@@ -6220,15 +6192,15 @@ input JobUpsertWithoutEventsInput {
 }
 
 input TaskUpdateDataInput {
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
   workspace: WorkspaceUpdateOneInput
-  subscribers: UserUpdateManyWithoutSubscriptions_tasksInput
+  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
   owners: UserUpdateManyWithoutTasksInput
-  target_job: JobUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutTasksInput
+  job: JobUpdateOneInput
+  candidate: CandidateUpdateOneWithoutTasksInput
 }
 
 input TaskUpsertNestedInput {
@@ -6251,27 +6223,27 @@ input WorkspaceUpsertWithoutEventsInput {
   create: WorkspaceCreateWithoutEventsInput!
 }
 
-input EventCreateWithoutTarget_workspaceInput {
-  type: EventType!
-  actor_type: EventActorType!
-  target_type: EventTargetType!
+input EventCreateWithoutTargetWorkspaceInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
   workspace: WorkspaceCreateOneInput!
-  actor_user: UserCreateOneWithoutEventsInput
-  actor_candidate: CandidateCreateOneInput
-  target_candidate: CandidateCreateOneWithoutEventsInput
-  target_job: JobCreateOneWithoutEventsInput
-  target_task: TaskCreateOneInput
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
 }
 
-input EventUpdateWithWhereUniqueWithoutTarget_workspaceInput {
+input EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput {
   where: EventWhereUniqueInput!
-  data: EventUpdateWithoutTarget_workspaceDataInput!
+  data: EventUpdateWithoutTargetWorkspaceDataInput!
 }
 
-input EventUpsertWithWhereUniqueWithoutTarget_workspaceInput {
+input EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput {
   where: EventWhereUniqueInput!
-  update: EventUpdateWithoutTarget_workspaceDataInput!
-  create: EventCreateWithoutTarget_workspaceInput!
+  update: EventUpdateWithoutTargetWorkspaceDataInput!
+  create: EventCreateWithoutTargetWorkspaceInput!
 }
 
 input UserCreateWithoutWorkspaceInput {
@@ -6282,11 +6254,11 @@ input UserCreateWithoutWorkspaceInput {
   password: String!
   lastLogin: DateTime
   deletedAt: DateTime
-  events: EventCreateOneWithoutActor_userInput
+  events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
-  subscriptions_jobs: JobCreateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskCreateManyWithoutSubscribersInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
 }
 
@@ -6307,8 +6279,8 @@ input JobCreateWithoutWorkspaceInput {
   department: String
   description: String
   requirements: String
-  subscribers: UserCreateManyWithoutSubscriptions_jobsInput
-  events: EventCreateManyWithoutTarget_jobInput
+  subscribers: UserCreateManyWithoutSubscriptionJobsInput
+  events: EventCreateManyWithoutTargetJobInput
   applications: ApplicationCreateManyWithoutJobInput
   stages: StageCreateManyInput
   comments: CommentCreateManyInput
@@ -6353,11 +6325,11 @@ input CandidateCreateWithoutWorkspaceInput {
   resume: CandidateCreateresumeInput
   coverLetter: CandidateCreatecoverLetterInput
   source: CandidateCreatesourceInput
-  events: EventCreateManyWithoutTarget_candidateInput
-  subscribers: UserCreateManyWithoutSubscriptions_candidatesInput
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   tags: TagCreateManyInput
   fields: FieldCreateManyInput
-  tasks: TaskCreateManyWithoutTarget_candidateInput
+  tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
@@ -6392,7 +6364,7 @@ input InviteUpsertWithWhereUniqueWithoutWorkspaceInput {
 
 input WorkspaceUpdateWithoutJobsDataInput {
   name: String
-  events: EventUpdateManyWithoutTarget_workspaceInput
+  events: EventUpdateManyWithoutTargetWorkspaceInput
   users: UserUpdateManyWithoutWorkspaceInput
   applications: ApplicationUpdateManyWithoutWorkspaceInput
   candidates: CandidateUpdateManyWithoutWorkspaceInput
@@ -6405,26 +6377,26 @@ input WorkspaceUpsertWithoutJobsInput {
   create: WorkspaceCreateWithoutJobsInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutSubscriptions_jobsInput {
+input UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubscriptions_jobsDataInput!
+  data: UserUpdateWithoutSubscriptionJobsDataInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutSubscriptions_jobsInput {
+input UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubscriptions_jobsDataInput!
-  create: UserCreateWithoutSubscriptions_jobsInput!
+  update: UserUpdateWithoutSubscriptionJobsDataInput!
+  create: UserCreateWithoutSubscriptionJobsInput!
 }
 
-input EventUpdateWithWhereUniqueWithoutTarget_jobInput {
+input EventUpdateWithWhereUniqueWithoutTargetJobInput {
   where: EventWhereUniqueInput!
-  data: EventUpdateWithoutTarget_jobDataInput!
+  data: EventUpdateWithoutTargetJobDataInput!
 }
 
-input EventUpsertWithWhereUniqueWithoutTarget_jobInput {
+input EventUpsertWithWhereUniqueWithoutTargetJobInput {
   where: EventWhereUniqueInput!
-  update: EventUpdateWithoutTarget_jobDataInput!
-  create: EventCreateWithoutTarget_jobInput!
+  update: EventUpdateWithoutTargetJobDataInput!
+  create: EventCreateWithoutTargetJobInput!
 }
 
 input ApplicationUpdateWithWhereUniqueWithoutJobInput {
@@ -6461,15 +6433,15 @@ input LocationUpsertNestedInput {
   create: LocationCreateInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutSubscriptions_tasksInput {
+input UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubscriptions_tasksDataInput!
+  data: UserUpdateWithoutSubscriptionTasksDataInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutSubscriptions_tasksInput {
+input UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubscriptions_tasksDataInput!
-  create: UserCreateWithoutSubscriptions_tasksInput!
+  update: UserUpdateWithoutSubscriptionTasksDataInput!
+  create: UserCreateWithoutSubscriptionTasksInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutTasksInput {
@@ -6490,8 +6462,8 @@ input JobUpdateDataInput {
   description: String
   requirements: String
   workspace: WorkspaceUpdateOneWithoutJobsInput
-  subscribers: UserUpdateManyWithoutSubscriptions_jobsInput
-  events: EventUpdateManyWithoutTarget_jobInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
   applications: ApplicationUpdateManyWithoutJobInput
   stages: StageUpdateManyInput
   comments: CommentUpdateManyInput
@@ -6513,8 +6485,8 @@ input CandidateUpdateWithoutTasksDataInput {
   coverLetter: CandidateUpdatecoverLetterInput
   source: CandidateUpdatesourceInput
   workspace: WorkspaceUpdateOneWithoutCandidatesInput
-  events: EventUpdateManyWithoutTarget_candidateInput
-  subscribers: UserUpdateManyWithoutSubscriptions_candidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   tags: TagUpdateManyInput
   fields: FieldUpdateManyInput
   applications: ApplicationUpdateManyWithoutCandidateInput
@@ -6537,8 +6509,8 @@ input CommentUpsertNestedInput {
   create: CommentCreateInput!
 }
 
-input EventCreateManyWithoutTarget_workspaceInput {
-  create: [EventCreateWithoutTarget_workspaceInput!]
+input EventCreateManyWithoutTargetWorkspaceInput {
+  create: [EventCreateWithoutTargetWorkspaceInput!]
   connect: [EventWhereUniqueInput!]
 }
 
@@ -6567,19 +6539,19 @@ input ApplicationCreateManyWithoutWorkspaceInput {
   connect: [ApplicationWhereUniqueInput!]
 }
 
-input EventUpdateWithoutTarget_candidateDataInput {
-  type: EventType
-  actor_type: EventActorType
-  target_type: EventTargetType
+input EventUpdateWithoutTargetCandidateDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
   workspace: WorkspaceUpdateOneInput
-  actor_user: UserUpdateOneWithoutEventsInput
-  actor_candidate: CandidateUpdateOneInput
-  target_job: JobUpdateOneWithoutEventsInput
-  target_task: TaskUpdateOneInput
-  target_workspace: WorkspaceUpdateOneWithoutEventsInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
 }
 
-input UserUpdateWithoutSubscriptions_candidatesDataInput {
+input UserUpdateWithoutSubscriptionCandidatesDataInput {
   firstName: String
   lastName: String
   email: String
@@ -6588,10 +6560,10 @@ input UserUpdateWithoutSubscriptions_candidatesDataInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
-  events: EventUpdateOneWithoutActor_userInput
+  events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -6600,20 +6572,20 @@ input TagUpdateDataInput {
 }
 
 input FieldUpdateDataInput {
-  type: FieldType
+  type: FieldTypeEnum
   label: String
   value: String
 }
 
-input TaskUpdateWithoutTarget_candidateDataInput {
-  target_type: TaskTarget
+input TaskUpdateWithoutCandidateDataInput {
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
   workspace: WorkspaceUpdateOneInput
-  subscribers: UserUpdateManyWithoutSubscriptions_tasksInput
+  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
   owners: UserUpdateManyWithoutTasksInput
-  target_job: JobUpdateOneInput
+  job: JobUpdateOneInput
 }
 
 input ApplicationUpdateWithoutCandidateDataInput {
@@ -6624,6 +6596,7 @@ input ApplicationUpdateWithoutCandidateDataInput {
 }
 
 input NotificationUpdateWithoutUserDataInput {
+  status: NotificationStatusEnum
   event: EventUpdateOneInput
 }
 
@@ -6634,7 +6607,7 @@ input JobUpdateWithoutSubscribersDataInput {
   description: String
   requirements: String
   workspace: WorkspaceUpdateOneWithoutJobsInput
-  events: EventUpdateManyWithoutTarget_jobInput
+  events: EventUpdateManyWithoutTargetJobInput
   applications: ApplicationUpdateManyWithoutJobInput
   stages: StageUpdateManyInput
   comments: CommentUpdateManyInput
@@ -6651,46 +6624,46 @@ input CandidateUpdateWithoutSubscribersDataInput {
   coverLetter: CandidateUpdatecoverLetterInput
   source: CandidateUpdatesourceInput
   workspace: WorkspaceUpdateOneWithoutCandidatesInput
-  events: EventUpdateManyWithoutTarget_candidateInput
+  events: EventUpdateManyWithoutTargetCandidateInput
   tags: TagUpdateManyInput
   fields: FieldUpdateManyInput
-  tasks: TaskUpdateManyWithoutTarget_candidateInput
+  tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
 }
 
 input TaskUpdateWithoutSubscribersDataInput {
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
   workspace: WorkspaceUpdateOneInput
   owners: UserUpdateManyWithoutTasksInput
-  target_job: JobUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutTasksInput
+  job: JobUpdateOneInput
+  candidate: CandidateUpdateOneWithoutTasksInput
 }
 
 input TaskUpdateWithoutOwnersDataInput {
-  target_type: TaskTarget
+  targetType: TaskTargetEnum
   title: String
   description: String
   dueAt: DateTime
   workspace: WorkspaceUpdateOneInput
-  subscribers: UserUpdateManyWithoutSubscriptions_tasksInput
-  target_job: JobUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutTasksInput
+  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
+  job: JobUpdateOneInput
+  candidate: CandidateUpdateOneWithoutTasksInput
 }
 
-input EventUpdateWithoutTarget_workspaceDataInput {
-  type: EventType
-  actor_type: EventActorType
-  target_type: EventTargetType
+input EventUpdateWithoutTargetWorkspaceDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
   workspace: WorkspaceUpdateOneInput
-  actor_user: UserUpdateOneWithoutEventsInput
-  actor_candidate: CandidateUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutEventsInput
-  target_job: JobUpdateOneWithoutEventsInput
-  target_task: TaskUpdateOneInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
 }
 
 input UserUpdateWithoutWorkspaceDataInput {
@@ -6701,11 +6674,11 @@ input UserUpdateWithoutWorkspaceDataInput {
   password: String
   lastLogin: DateTime
   deletedAt: DateTime
-  events: EventUpdateOneWithoutActor_userInput
+  events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -6715,8 +6688,8 @@ input JobUpdateWithoutWorkspaceDataInput {
   department: String
   description: String
   requirements: String
-  subscribers: UserUpdateManyWithoutSubscriptions_jobsInput
-  events: EventUpdateManyWithoutTarget_jobInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
   applications: ApplicationUpdateManyWithoutJobInput
   stages: StageUpdateManyInput
   comments: CommentUpdateManyInput
@@ -6739,11 +6712,11 @@ input CandidateUpdateWithoutWorkspaceDataInput {
   resume: CandidateUpdateresumeInput
   coverLetter: CandidateUpdatecoverLetterInput
   source: CandidateUpdatesourceInput
-  events: EventUpdateManyWithoutTarget_candidateInput
-  subscribers: UserUpdateManyWithoutSubscriptions_candidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   tags: TagUpdateManyInput
   fields: FieldUpdateManyInput
-  tasks: TaskUpdateManyWithoutTarget_candidateInput
+  tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
 }
@@ -6754,7 +6727,7 @@ input InviteUpdateWithoutWorkspaceDataInput {
   invitedBy: UserUpdateOneInput
 }
 
-input UserUpdateWithoutSubscriptions_jobsDataInput {
+input UserUpdateWithoutSubscriptionJobsDataInput {
   firstName: String
   lastName: String
   email: String
@@ -6763,23 +6736,23 @@ input UserUpdateWithoutSubscriptions_jobsDataInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
-  events: EventUpdateOneWithoutActor_userInput
+  events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
-input EventUpdateWithoutTarget_jobDataInput {
-  type: EventType
-  actor_type: EventActorType
-  target_type: EventTargetType
+input EventUpdateWithoutTargetJobDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
   workspace: WorkspaceUpdateOneInput
-  actor_user: UserUpdateOneWithoutEventsInput
-  actor_candidate: CandidateUpdateOneInput
-  target_candidate: CandidateUpdateOneWithoutEventsInput
-  target_task: TaskUpdateOneInput
-  target_workspace: WorkspaceUpdateOneWithoutEventsInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
 }
 
 input ApplicationUpdateWithoutJobDataInput {
@@ -6789,7 +6762,7 @@ input ApplicationUpdateWithoutJobDataInput {
   stage: StageUpdateOneInput
 }
 
-input UserUpdateWithoutSubscriptions_tasksDataInput {
+input UserUpdateWithoutSubscriptionTasksDataInput {
   firstName: String
   lastName: String
   email: String
@@ -6798,10 +6771,10 @@ input UserUpdateWithoutSubscriptions_tasksDataInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
-  events: EventUpdateOneWithoutActor_userInput
+  events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -6814,25 +6787,9 @@ input UserUpdateWithoutTasksDataInput {
   lastLogin: DateTime
   deletedAt: DateTime
   workspace: WorkspaceUpdateOneWithoutUsersInput
-  events: EventUpdateOneWithoutActor_userInput
+  events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptions_jobs: JobUpdateManyWithoutSubscribersInput
-  subscriptions_candidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptions_tasks: TaskUpdateManyWithoutSubscribersInput
-}
-
-input CandidateConnect {
-  connect: CandidateWhereUniqueInput
-}
-
-input CandidateManyConnect {
-  connect: [CandidateWhereUniqueInput!]
-}
-
-input UserConnect {
-  connect: UserWhereUniqueInput
-}
-
-input UserManyConnect {
-  connect: [UserWhereUniqueInput!]
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
 }

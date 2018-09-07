@@ -17,7 +17,6 @@ input LoginInput {
 
 type AuthPayload {
   token: String!
-  # import User from "user.graphql"
   user: User!
 }
 
