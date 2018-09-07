@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql'
 import { IMiddleware } from 'graphql-middleware'
 import * as R from 'ramda'
 
-import { Context, getId, MiddlewarePropMap, MiddlewareFieldMap } from '../utils'
+import { Context, getId, MiddlewareFieldMap, MiddlewarePropMap } from '../utils'
 
 const whereWorkspace = async (resolve, parent, args, ctx, info) => {
   const workspaceId = getId(ctx).workspaceId
@@ -68,6 +68,11 @@ const whereUserFilter: Filter = async (parent, args, ctx, info) => {
   return { parent, args: { where: { user: { id } } }, ctx, info }
 }
 
+const dataWorkspaceFilter: Filter = async (parent, args, ctx, info) => {
+  const id = getId(ctx).workspaceId
+  return { parent, args: { data: { workspace: { connect: { id } } } }, ctx, info }
+}
+
 const filters: IMiddleware & MiddlewareFieldMap = {
   Query: {
     // action
@@ -89,7 +94,9 @@ const filters: IMiddleware & MiddlewareFieldMap = {
     // workspace
     workspace: composeFilters([whereWorkspaceFilter]),
   },
-  Mutation: {},
+  Mutation: {
+    createTask: composeFilters([dataWorkspaceFilter]),
+  },
 }
 
 export default filters

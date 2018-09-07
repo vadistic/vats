@@ -1,10 +1,8 @@
-import { allow, and, rule, shield } from 'graphql-shield'
+import { allow, and, deny, IRules, rule, shield } from 'graphql-shield'
 import * as R from 'ramda'
 
 import { Context, DataInputFieldsRules, getId, RuleMutation, RuleQuery } from '../utils'
 import { Args } from './filters'
-
-/* tslint:disable:no-console */
 
 // TODO: Evaluate if this is secure?
 const isAuthenticated = rule()(async (parent, args, ctx) => ctx.user !== null)
@@ -26,11 +24,6 @@ const workspaceHasUser = rule()(async (parent, args, ctx: Context) => {
   })
 })
 
-interface Rules {
-  Query: RuleQuery
-  Mutation: RuleMutation
-}
-
 /* Input field permission */
 
 const arraize = (val: any) => (Array.isArray(val) ? val : [val])
@@ -47,12 +40,6 @@ const createTaskInputRule: DataInputFieldsRules['createTask'] = {
           AND: { users_some: { id }, id: workspaceId },
         })
       )
-      // tslint:disable-next-line:no-console
-      console.log('owners rule raw validations')
-      console.log(validations)
-
-      console.log('owners rule validation:')
-      console.log(R.all(R.equals(true), await Promise.all(validations)))
 
       return R.all(R.equals(true), await Promise.all(validations))
     },
@@ -87,13 +74,16 @@ const inputRule = (inputRuleMap: InputRuleMap) =>
           : Promise.resolve(true)
     )
 
-    console.log('input rule validation:')
-    console.log(R.all(R.equals(true), await Promise.all(rulesP)))
 
     return R.all(R.equals(true), await Promise.all(rulesP))
   })
 
-export const rules: Rules = {
+interface Rules {
+  Query: RuleQuery
+  Mutation: RuleMutation
+}
+
+export const rules: IRules = {
   Query: {
     // action
     // application
@@ -142,12 +132,6 @@ export const rules: Rules = {
   },
 }
 
-export const oneRule = {
-  Mutation: {
-    createTask: isAuthenticated,
-  },
-}
-
-const permissions = shield(oneRule)
+const permissions = shield(rules)
 
 export default permissions

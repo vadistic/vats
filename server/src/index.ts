@@ -1,15 +1,19 @@
+import { applyMiddleware } from 'graphql-middleware'
+import { makeExecutableSchema } from 'graphql-tools'
 import { GraphQLServer } from 'graphql-yoga'
 import { Prisma } from 'prisma-binding'
 
 import filters from './middleware/filters'
 import permissions from './middleware/permissions'
 import * as resolvers from './resolvers'
+import { typeDefs } from './schema/schema'
+
+const schema = makeExecutableSchema({ typeDefs, resolvers })
+
+const protectedSchema = applyMiddleware(schema, permissions, filters)
 
 const server = new GraphQLServer({
-  typeDefs: 'src/schema/schema.graphql',
-  resolvers,
-  resolverValidationOptions: { requireResolversForResolveType: false },
-  middlewares: [filters],
+  schema: protectedSchema,
   context: req => ({
     ...req,
     db: new Prisma({

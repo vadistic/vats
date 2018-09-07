@@ -37,7 +37,7 @@ export interface Context {
 export type FirstArgument<T> = T extends (arg1: infer U, ...args: any[]) => any ? U : any
 
 export type Remapped<T> = {
-  [P in keyof T]: (
+  [P in keyof T]?: (
     parent: null | undefined,
     args: FirstArgument<T[P]>,
     ctx: Context,
@@ -45,8 +45,8 @@ export type Remapped<T> = {
   ) => any
 }
 
-export type Query = Partial<Remapped<ApiQuery>>
-export type Mutation = Partial<Remapped<ApiMutation>>
+export type Query = Remapped<ApiQuery>
+export type Mutation = Remapped<ApiMutation>
 
 export type MiddlewareRemapped<T> = {
   [P in keyof T]: (
@@ -68,10 +68,10 @@ export interface MiddlewareFieldMap {
   Mutation: MiddlewarePropMap<ApiMutation>
 }
 
-export type RuleRemapped<T> = { [P in keyof T]: IRules }
+export type RuleRemapped<T> = { [P in keyof T]?: IRules }
 
-export type RuleQuery = Partial<RuleRemapped<ApiQuery>>
-export type RuleMutation = Partial<RuleRemapped<ApiMutation>>
+export type RuleQuery = RuleRemapped<ApiQuery>
+export type RuleMutation = RuleRemapped<ApiMutation>
 
 export type DataInputFieldsRules<T = ApiMutation> = {
   [P in keyof T]: {
