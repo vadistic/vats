@@ -1,9 +1,3 @@
-type Mutation {
-  signup(data: SignupInput): AuthPayload!
-  login(data: LoginInput): AuthPayload!
-  createWorkspace(data: WorkspaceCreateInput!): AuthPayload!
-}
-
 input SignupInput {
   password: String!
   username: String!

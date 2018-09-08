@@ -4,13 +4,10 @@ import { makeExecutableSchema } from 'graphql-tools'
 import * as jwt from 'jsonwebtoken'
 import { Prisma } from 'prisma-binding'
 
-import filters from './middleware/filters'
-import permissions from './middleware/permissions'
+import {filters, permissions} from './middleware'
 import * as resolvers from './resolvers'
 import { typeDefs } from './schema/schema'
 import { JWTPayload } from './utils';
-
-
 
 const prisma = new Prisma({
   typeDefs: 'src/generated/prisma.graphql',

@@ -1,0 +1,6 @@
+input InviteCreateInput {
+  email: String!
+  expireAt: DateTime!
+  workspace: WorkspaceCreateOneWithoutInvitesInput!
+  invitedBy: UserCreateOneInput!
+}

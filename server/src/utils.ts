@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql'
 import { IMiddlewareResolver } from 'graphql-middleware/dist/types'
 import { IRules } from 'graphql-shield'
+import { ShieldRule } from 'graphql-shield/dist/types'
 import * as jwt from 'jsonwebtoken'
 
 import { Mutation as ApiMutation, Query as ApiQuery } from './generated/app'
@@ -29,8 +30,8 @@ export type Remapped<T> = {
   ) => any
 }
 
-export type Query = Remapped<ApiQuery>
-export type Mutation = Remapped<ApiMutation>
+export type IQuery = Remapped<ApiQuery>
+export type IMutation = Remapped<ApiMutation>
 
 export type MiddlewareRemapped<T> = {
   [P in keyof T]: (
@@ -52,12 +53,16 @@ export interface MiddlewareFieldMap {
   Mutation: MiddlewarePropMap<ApiMutation>
 }
 
-export type RuleRemapped<T> = { [P in keyof T]?: IRules }
+export type RuleRemapped<T> = { [P in keyof T]?: ShieldRule }
 
-export type RuleQuery = RuleRemapped<ApiQuery>
-export type RuleMutation = RuleRemapped<ApiMutation>
+export type IRuleQuery = RuleRemapped<ApiQuery>
+export type IRuleMutation = RuleRemapped<ApiMutation>
 
-export type DataInputFieldsRules<T = ApiMutation> = {
+interface StringIndexed {
+  [index: string]: any
+}
+
+export type DataInputFieldsRules<T extends StringIndexed = ApiMutation> = {
   [P in keyof T]: {
     data: {
       [K in keyof FirstArgument<T[P]>['data']]: (

@@ -1,0 +1,21 @@
+input WhereUniqueInput @create {
+  id: ID!
+}
+
+input Connect @create {
+  connect: WhereUniqueInput
+}
+
+input ConnectMany @create {
+  connect: [WhereUniqueInput!]
+}
+
+input ConnectDisconnect @create {
+  connect: WhereUniqueInput
+  disconnect: WhereUniqueInput
+}
+
+input ConnectDisconnectMany @create {
+  connect: [WhereUniqueInput!]
+  disconnect: [WhereUniqueInput!]
+}

@@ -1,5 +1,9 @@
+# import * from "../../../node_modules/graphql-override/dist/directives.graphql"
+
 # import Query.*, Mutation.*, * from "../../generated/prisma.graphql"
 # import Query.*, Mutation.*, * from "../schema.graphql"
+
+# import * from "connections.graphql"
 
 # USER
 type User {

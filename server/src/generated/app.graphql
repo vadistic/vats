@@ -1,32 +1,33 @@
 type Query {
+  me: User!
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
-  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
-  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
-  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
-  workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
-  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
+  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
   application(where: ApplicationWhereUniqueInput!): Application
-  notification(where: NotificationWhereUniqueInput!): Notification
-  location(where: LocationWhereUniqueInput!): Location
   candidate(where: CandidateWhereUniqueInput!): Candidate
-  user(where: UserWhereUniqueInput!): User
-  invite(where: InviteWhereUniqueInput!): Invite
-  event(where: EventWhereUniqueInput!): Event
-  stage(where: StageWhereUniqueInput!): Stage
-  workspace(where: WorkspaceWhereUniqueInput!): Workspace
-  job(where: JobWhereUniqueInput!): Job
-  task(where: TaskWhereUniqueInput!): Task
-  tag(where: TagWhereUniqueInput!): Tag
-  field(where: FieldWhereUniqueInput!): Field
   comment(where: CommentWhereUniqueInput!): Comment
+  event(where: EventWhereUniqueInput!): Event
+  field(where: FieldWhereUniqueInput!): Field
+  invite(where: InviteWhereUniqueInput!): Invite
+  job(where: JobWhereUniqueInput!): Job
+  location(where: LocationWhereUniqueInput!): Location
+  notification(where: NotificationWhereUniqueInput!): Notification
+  stage(where: StageWhereUniqueInput!): Stage
+  tag(where: TagWhereUniqueInput!): Tag
+  task(where: TaskWhereUniqueInput!): Task
+  user(where: UserWhereUniqueInput!): User
+  workspace(where: WorkspaceWhereUniqueInput!): Workspace
   applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
   notificationsConnection(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NotificationConnection!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
@@ -44,6 +45,9 @@ type Query {
 }
 
 type Mutation {
+  signup(data: SignupInput): AuthPayload!
+  login(data: LoginInput): AuthPayload!
+  createWorkspace(data: WorkspaceCreateInput!): AuthPayload!
   createApplication(data: ApplicationCreateInput!): Application!
   createLocation(data: LocationCreateInput!): Location!
   createCandidate(data: CandidateCreateInput!): Candidate!
@@ -126,31 +130,25 @@ type Mutation {
   deleteManyTags(where: TagWhereInput): BatchPayload!
   deleteManyFields(where: FieldWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
-  signup(data: SignupInput): AuthPayload!
-  login(data: LoginInput): AuthPayload!
-  createWorkspace(data: WorkspaceCreateInput!): AuthPayload!
 }
 
-input WhereUniqueInput {
+type User implements Node {
   id: ID!
-}
-
-input Connect {
-  connect: WhereUniqueInput
-}
-
-input ConnectMany {
-  connect: [WhereUniqueInput!]
-}
-
-input ConnectDisconnect {
-  connect: WhereUniqueInput
-  disconnect: WhereUniqueInput
-}
-
-input ConnectDisconnectMany {
-  connect: [WhereUniqueInput!]
-  disconnect: [WhereUniqueInput!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+  events(where: EventWhereInput): Event
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  subscriptionJobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
+  subscriptionCandidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
+  subscriptionTasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
 }
 
 type Application implements Node {
@@ -357,28 +355,41 @@ enum ApplicationOrderByInput {
   disqualifyReason_DESC
 }
 
-type Notification implements Node {
+type Candidate implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  status: NotificationStatusEnum!
-  user: User!
-  event: Event!
+  workspace: Workspace!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
+  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  firstName: String!
+  lastName: String!
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  resume: [String!]!
+  coverLetter: [String!]!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  source: [String!]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
 }
 
-input NotificationWhereInput {
+input CandidateWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [NotificationWhereInput!]
+  AND: [CandidateWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [NotificationWhereInput!]
+  OR: [CandidateWhereInput!]
   """
   Logical NOT on all given filters combined by AND.
   """
-  NOT: [NotificationWhereInput!]
+  NOT: [CandidateWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -490,24 +501,1380 @@ input NotificationWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  status: NotificationStatusEnum
+  firstName: String
   """
   All values that are not equal to given value.
   """
-  status_not: NotificationStatusEnum
+  firstName_not: String
   """
   All values that are contained in given list.
   """
-  status_in: [NotificationStatusEnum!]
+  firstName_in: [String!]
   """
   All values that are not contained in given list.
   """
-  status_not_in: [NotificationStatusEnum!]
-  user: UserWhereInput
-  event: EventWhereInput
+  firstName_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  firstName_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  firstName_lte: String
+  """
+  All values greater than the given value.
+  """
+  firstName_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  firstName_gte: String
+  """
+  All values containing the given string.
+  """
+  firstName_contains: String
+  """
+  All values not containing the given string.
+  """
+  firstName_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  firstName_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  firstName_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  firstName_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  firstName_not_ends_with: String
+  lastName: String
+  """
+  All values that are not equal to given value.
+  """
+  lastName_not: String
+  """
+  All values that are contained in given list.
+  """
+  lastName_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  lastName_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  lastName_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  lastName_lte: String
+  """
+  All values greater than the given value.
+  """
+  lastName_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  lastName_gte: String
+  """
+  All values containing the given string.
+  """
+  lastName_contains: String
+  """
+  All values not containing the given string.
+  """
+  lastName_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  lastName_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  lastName_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  lastName_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  lastName_not_ends_with: String
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
+  subscribers_every: UserWhereInput
+  subscribers_some: UserWhereInput
+  subscribers_none: UserWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  fields_every: FieldWhereInput
+  fields_some: FieldWhereInput
+  fields_none: FieldWhereInput
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
 }
 
-enum NotificationOrderByInput {
+enum CandidateOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+type Comment implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy(where: UserWhereInput): User!
+  parent(where: CommentWhereInput): Comment
+  content: String!
+}
+
+input CommentWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CommentWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CommentWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [CommentWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  content: String
+  """
+  All values that are not equal to given value.
+  """
+  content_not: String
+  """
+  All values that are contained in given list.
+  """
+  content_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  content_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  content_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  content_lte: String
+  """
+  All values greater than the given value.
+  """
+  content_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  content_gte: String
+  """
+  All values containing the given string.
+  """
+  content_contains: String
+  """
+  All values not containing the given string.
+  """
+  content_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  content_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  content_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  content_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  content_not_ends_with: String
+  createdBy: UserWhereInput
+  parent: CommentWhereInput
+}
+
+enum CommentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  content_ASC
+  content_DESC
+}
+
+type Event implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  actorUser(where: UserWhereInput): User
+  actorCandidate(where: CandidateWhereInput): Candidate
+  targetType: EventTargetTypeEnum!
+  targetCandidate(where: CandidateWhereInput): Candidate
+  targetJob(where: JobWhereInput): Job
+  targetTask(where: TaskWhereInput): Task
+  targetWorkspace(where: WorkspaceWhereInput): Workspace
+}
+
+input EventWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [EventWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [EventWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [EventWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  type: EventTypeEnum
+  """
+  All values that are not equal to given value.
+  """
+  type_not: EventTypeEnum
+  """
+  All values that are contained in given list.
+  """
+  type_in: [EventTypeEnum!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [EventTypeEnum!]
+  actorType: EventActorTypeEnum
+  """
+  All values that are not equal to given value.
+  """
+  actorType_not: EventActorTypeEnum
+  """
+  All values that are contained in given list.
+  """
+  actorType_in: [EventActorTypeEnum!]
+  """
+  All values that are not contained in given list.
+  """
+  actorType_not_in: [EventActorTypeEnum!]
+  targetType: EventTargetTypeEnum
+  """
+  All values that are not equal to given value.
+  """
+  targetType_not: EventTargetTypeEnum
+  """
+  All values that are contained in given list.
+  """
+  targetType_in: [EventTargetTypeEnum!]
+  """
+  All values that are not contained in given list.
+  """
+  targetType_not_in: [EventTargetTypeEnum!]
+  workspace: WorkspaceWhereInput
+  actorUser: UserWhereInput
+  actorCandidate: CandidateWhereInput
+  targetCandidate: CandidateWhereInput
+  targetJob: JobWhereInput
+  targetTask: TaskWhereInput
+  targetWorkspace: WorkspaceWhereInput
+}
+
+enum EventOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  type_ASC
+  type_DESC
+  actorType_ASC
+  actorType_DESC
+  targetType_ASC
+  targetType_DESC
+}
+
+type Field implements Node {
+  id: ID!
+  type: FieldTypeEnum!
+  label: String!
+  value: String!
+}
+
+input FieldWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [FieldWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [FieldWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [FieldWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  type: FieldTypeEnum
+  """
+  All values that are not equal to given value.
+  """
+  type_not: FieldTypeEnum
+  """
+  All values that are contained in given list.
+  """
+  type_in: [FieldTypeEnum!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [FieldTypeEnum!]
+  label: String
+  """
+  All values that are not equal to given value.
+  """
+  label_not: String
+  """
+  All values that are contained in given list.
+  """
+  label_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  label_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  label_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  label_lte: String
+  """
+  All values greater than the given value.
+  """
+  label_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  label_gte: String
+  """
+  All values containing the given string.
+  """
+  label_contains: String
+  """
+  All values not containing the given string.
+  """
+  label_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  label_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  label_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  label_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  label_not_ends_with: String
+  value: String
+  """
+  All values that are not equal to given value.
+  """
+  value_not: String
+  """
+  All values that are contained in given list.
+  """
+  value_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  value_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  value_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  value_lte: String
+  """
+  All values greater than the given value.
+  """
+  value_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  value_gte: String
+  """
+  All values containing the given string.
+  """
+  value_contains: String
+  """
+  All values not containing the given string.
+  """
+  value_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  value_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  value_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  value_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  value_not_ends_with: String
+}
+
+enum FieldOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  label_ASC
+  label_DESC
+  value_ASC
+  value_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type Invite implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  email: String!
+  expireAt: DateTime!
+  invitedBy(where: UserWhereInput): User!
+}
+
+input InviteWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [InviteWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [InviteWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [InviteWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  email: String
+  """
+  All values that are not equal to given value.
+  """
+  email_not: String
+  """
+  All values that are contained in given list.
+  """
+  email_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  email_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  email_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  email_lte: String
+  """
+  All values greater than the given value.
+  """
+  email_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  email_gte: String
+  """
+  All values containing the given string.
+  """
+  email_contains: String
+  """
+  All values not containing the given string.
+  """
+  email_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  email_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  email_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  email_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  email_not_ends_with: String
+  expireAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  expireAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  expireAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  expireAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  expireAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  expireAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  expireAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  expireAt_gte: DateTime
+  workspace: WorkspaceWhereInput
+  invitedBy: UserWhereInput
+}
+
+enum InviteOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  email_ASC
+  email_DESC
+  expireAt_ASC
+  expireAt_DESC
+}
+
+type Job implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  status: JobType!
+  title: String!
+  department: String
+  location(where: LocationWhereInput): Location
+  description: String
+  requirements: String
+}
+
+input JobWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [JobWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [JobWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [JobWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  status: JobType
+  """
+  All values that are not equal to given value.
+  """
+  status_not: JobType
+  """
+  All values that are contained in given list.
+  """
+  status_in: [JobType!]
+  """
+  All values that are not contained in given list.
+  """
+  status_not_in: [JobType!]
+  title: String
+  """
+  All values that are not equal to given value.
+  """
+  title_not: String
+  """
+  All values that are contained in given list.
+  """
+  title_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  title_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  title_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  title_lte: String
+  """
+  All values greater than the given value.
+  """
+  title_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  title_gte: String
+  """
+  All values containing the given string.
+  """
+  title_contains: String
+  """
+  All values not containing the given string.
+  """
+  title_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  title_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  title_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  title_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  title_not_ends_with: String
+  department: String
+  """
+  All values that are not equal to given value.
+  """
+  department_not: String
+  """
+  All values that are contained in given list.
+  """
+  department_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  department_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  department_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  department_lte: String
+  """
+  All values greater than the given value.
+  """
+  department_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  department_gte: String
+  """
+  All values containing the given string.
+  """
+  department_contains: String
+  """
+  All values not containing the given string.
+  """
+  department_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  department_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  department_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  department_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  department_not_ends_with: String
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  description_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  description_lte: String
+  """
+  All values greater than the given value.
+  """
+  description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  description_gte: String
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  description_not_ends_with: String
+  requirements: String
+  """
+  All values that are not equal to given value.
+  """
+  requirements_not: String
+  """
+  All values that are contained in given list.
+  """
+  requirements_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  requirements_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  requirements_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  requirements_lte: String
+  """
+  All values greater than the given value.
+  """
+  requirements_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  requirements_gte: String
+  """
+  All values containing the given string.
+  """
+  requirements_contains: String
+  """
+  All values not containing the given string.
+  """
+  requirements_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  requirements_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  requirements_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  requirements_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  requirements_not_ends_with: String
+  subscribers_every: UserWhereInput
+  subscribers_some: UserWhereInput
+  subscribers_none: UserWhereInput
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+  stages_every: StageWhereInput
+  stages_some: StageWhereInput
+  stages_none: StageWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  location: LocationWhereInput
+}
+
+enum JobOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -516,6 +1883,14 @@ enum NotificationOrderByInput {
   updatedAt_DESC
   status_ASC
   status_DESC
+  title_ASC
+  title_DESC
+  department_ASC
+  department_DESC
+  description_ASC
+  description_DESC
+  requirements_ASC
+  requirements_DESC
 }
 
 type Location implements Node {
@@ -823,41 +2198,28 @@ enum LocationOrderByInput {
   createdAt_DESC
 }
 
-type Candidate implements Node {
+type Notification implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
-  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  firstName: String!
-  lastName: String!
-  emails: [String!]!
-  phones: [String!]!
-  links: [String!]!
-  resume: [String!]!
-  coverLetter: [String!]!
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  source: [String!]!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
-  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
-  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  status: NotificationStatusEnum!
+  user: User!
+  event: Event!
 }
 
-input CandidateWhereInput {
+input NotificationWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [CandidateWhereInput!]
+  AND: [NotificationWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [CandidateWhereInput!]
+  OR: [NotificationWhereInput!]
   """
   Logical NOT on all given filters combined by AND.
   """
-  NOT: [CandidateWhereInput!]
+  NOT: [NotificationWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -969,165 +2331,844 @@ input CandidateWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  firstName: String
+  status: NotificationStatusEnum
   """
   All values that are not equal to given value.
   """
-  firstName_not: String
+  status_not: NotificationStatusEnum
   """
   All values that are contained in given list.
   """
-  firstName_in: [String!]
+  status_in: [NotificationStatusEnum!]
   """
   All values that are not contained in given list.
   """
-  firstName_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  firstName_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  firstName_lte: String
-  """
-  All values greater than the given value.
-  """
-  firstName_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  firstName_gte: String
-  """
-  All values containing the given string.
-  """
-  firstName_contains: String
-  """
-  All values not containing the given string.
-  """
-  firstName_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  firstName_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  firstName_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  firstName_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  firstName_not_ends_with: String
-  lastName: String
-  """
-  All values that are not equal to given value.
-  """
-  lastName_not: String
-  """
-  All values that are contained in given list.
-  """
-  lastName_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  lastName_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  lastName_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  lastName_lte: String
-  """
-  All values greater than the given value.
-  """
-  lastName_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  lastName_gte: String
-  """
-  All values containing the given string.
-  """
-  lastName_contains: String
-  """
-  All values not containing the given string.
-  """
-  lastName_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  lastName_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  lastName_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  lastName_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  lastName_not_ends_with: String
-  events_every: EventWhereInput
-  events_some: EventWhereInput
-  events_none: EventWhereInput
-  subscribers_every: UserWhereInput
-  subscribers_some: UserWhereInput
-  subscribers_none: UserWhereInput
-  tags_every: TagWhereInput
-  tags_some: TagWhereInput
-  tags_none: TagWhereInput
-  fields_every: FieldWhereInput
-  fields_some: FieldWhereInput
-  fields_none: FieldWhereInput
-  tasks_every: TaskWhereInput
-  tasks_some: TaskWhereInput
-  tasks_none: TaskWhereInput
-  applications_every: ApplicationWhereInput
-  applications_some: ApplicationWhereInput
-  applications_none: ApplicationWhereInput
-  comments_every: CommentWhereInput
-  comments_some: CommentWhereInput
-  comments_none: CommentWhereInput
+  status_not_in: [NotificationStatusEnum!]
+  user: UserWhereInput
+  event: EventWhereInput
 }
 
-enum CandidateOrderByInput {
+enum NotificationOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  firstName_ASC
-  firstName_DESC
-  lastName_ASC
-  lastName_DESC
+  status_ASC
+  status_DESC
 }
 
-type User implements Node {
+type Stage implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  position: Int!
+  type: StageTypeEnum!
+}
+
+input StageWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [StageWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [StageWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [StageWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  description_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  description_lte: String
+  """
+  All values greater than the given value.
+  """
+  description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  description_gte: String
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  description_not_ends_with: String
+  position: Int
+  """
+  All values that are not equal to given value.
+  """
+  position_not: Int
+  """
+  All values that are contained in given list.
+  """
+  position_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  position_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  position_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  position_lte: Int
+  """
+  All values greater than the given value.
+  """
+  position_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  position_gte: Int
+  type: StageTypeEnum
+  """
+  All values that are not equal to given value.
+  """
+  type_not: StageTypeEnum
+  """
+  All values that are contained in given list.
+  """
+  type_in: [StageTypeEnum!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [StageTypeEnum!]
+}
+
+enum StageOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  position_ASC
+  position_DESC
+  type_ASC
+  type_DESC
+}
+
+type Tag implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+}
+
+input TagWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [TagWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [TagWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [TagWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  label: String
+  """
+  All values that are not equal to given value.
+  """
+  label_not: String
+  """
+  All values that are contained in given list.
+  """
+  label_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  label_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  label_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  label_lte: String
+  """
+  All values greater than the given value.
+  """
+  label_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  label_gte: String
+  """
+  All values containing the given string.
+  """
+  label_contains: String
+  """
+  All values not containing the given string.
+  """
+  label_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  label_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  label_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  label_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  label_not_ends_with: String
+}
+
+enum TagOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  label_ASC
+  label_DESC
+}
+
+type Task implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
-  events(where: EventWhereInput): Event
-  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
-  subscriptionJobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
-  subscriptionCandidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
-  subscriptionTasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
-  firstName: String
-  lastName: String
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
+  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  targetType: TaskTargetEnum
+  job(where: JobWhereInput): Job
+  candidate(where: CandidateWhereInput): Candidate
+  title: String
+  description: String
+  dueAt: DateTime
+}
+
+input TaskWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [TaskWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [TaskWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [TaskWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  targetType: TaskTargetEnum
+  """
+  All values that are not equal to given value.
+  """
+  targetType_not: TaskTargetEnum
+  """
+  All values that are contained in given list.
+  """
+  targetType_in: [TaskTargetEnum!]
+  """
+  All values that are not contained in given list.
+  """
+  targetType_not_in: [TaskTargetEnum!]
+  title: String
+  """
+  All values that are not equal to given value.
+  """
+  title_not: String
+  """
+  All values that are contained in given list.
+  """
+  title_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  title_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  title_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  title_lte: String
+  """
+  All values greater than the given value.
+  """
+  title_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  title_gte: String
+  """
+  All values containing the given string.
+  """
+  title_contains: String
+  """
+  All values not containing the given string.
+  """
+  title_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  title_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  title_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  title_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  title_not_ends_with: String
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  description_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  description_lte: String
+  """
+  All values greater than the given value.
+  """
+  description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  description_gte: String
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  description_not_ends_with: String
+  dueAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  dueAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  dueAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  dueAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  dueAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  dueAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  dueAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  dueAt_gte: DateTime
+  subscribers_every: UserWhereInput
+  subscribers_some: UserWhereInput
+  subscribers_none: UserWhereInput
+  owners_every: UserWhereInput
+  owners_some: UserWhereInput
+  owners_none: UserWhereInput
+  job: JobWhereInput
+  candidate: CandidateWhereInput
+}
+
+enum TaskOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  targetType_ASC
+  targetType_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  dueAt_ASC
+  dueAt_DESC
 }
 
 input UserWhereInput {
@@ -1563,743 +3604,6 @@ enum UserOrderByInput {
   deletedAt_DESC
 }
 
-type Invite implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
-  email: String!
-  expireAt: DateTime!
-  invitedBy(where: UserWhereInput): User!
-}
-
-input InviteWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [InviteWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [InviteWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [InviteWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  email: String
-  """
-  All values that are not equal to given value.
-  """
-  email_not: String
-  """
-  All values that are contained in given list.
-  """
-  email_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  email_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  email_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  email_lte: String
-  """
-  All values greater than the given value.
-  """
-  email_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  email_gte: String
-  """
-  All values containing the given string.
-  """
-  email_contains: String
-  """
-  All values not containing the given string.
-  """
-  email_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  email_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  email_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  email_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  email_not_ends_with: String
-  expireAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  expireAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  expireAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  expireAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  expireAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  expireAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  expireAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  expireAt_gte: DateTime
-  workspace: WorkspaceWhereInput
-  invitedBy: UserWhereInput
-}
-
-enum InviteOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  email_ASC
-  email_DESC
-  expireAt_ASC
-  expireAt_DESC
-}
-
-type Event implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
-  type: EventTypeEnum!
-  actorType: EventActorTypeEnum!
-  actorUser(where: UserWhereInput): User
-  actorCandidate(where: CandidateWhereInput): Candidate
-  targetType: EventTargetTypeEnum!
-  targetCandidate(where: CandidateWhereInput): Candidate
-  targetJob(where: JobWhereInput): Job
-  targetTask(where: TaskWhereInput): Task
-  targetWorkspace(where: WorkspaceWhereInput): Workspace
-}
-
-input EventWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [EventWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [EventWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [EventWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  type: EventTypeEnum
-  """
-  All values that are not equal to given value.
-  """
-  type_not: EventTypeEnum
-  """
-  All values that are contained in given list.
-  """
-  type_in: [EventTypeEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  type_not_in: [EventTypeEnum!]
-  actorType: EventActorTypeEnum
-  """
-  All values that are not equal to given value.
-  """
-  actorType_not: EventActorTypeEnum
-  """
-  All values that are contained in given list.
-  """
-  actorType_in: [EventActorTypeEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  actorType_not_in: [EventActorTypeEnum!]
-  targetType: EventTargetTypeEnum
-  """
-  All values that are not equal to given value.
-  """
-  targetType_not: EventTargetTypeEnum
-  """
-  All values that are contained in given list.
-  """
-  targetType_in: [EventTargetTypeEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  targetType_not_in: [EventTargetTypeEnum!]
-  workspace: WorkspaceWhereInput
-  actorUser: UserWhereInput
-  actorCandidate: CandidateWhereInput
-  targetCandidate: CandidateWhereInput
-  targetJob: JobWhereInput
-  targetTask: TaskWhereInput
-  targetWorkspace: WorkspaceWhereInput
-}
-
-enum EventOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  type_ASC
-  type_DESC
-  actorType_ASC
-  actorType_DESC
-  targetType_ASC
-  targetType_DESC
-}
-
-type Stage implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  name: String!
-  description: String
-  position: Int!
-  type: StageTypeEnum!
-}
-
-input StageWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [StageWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [StageWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [StageWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  name: String
-  """
-  All values that are not equal to given value.
-  """
-  name_not: String
-  """
-  All values that are contained in given list.
-  """
-  name_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  name_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  name_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  name_lte: String
-  """
-  All values greater than the given value.
-  """
-  name_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  name_gte: String
-  """
-  All values containing the given string.
-  """
-  name_contains: String
-  """
-  All values not containing the given string.
-  """
-  name_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  name_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  name_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  name_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  name_not_ends_with: String
-  description: String
-  """
-  All values that are not equal to given value.
-  """
-  description_not: String
-  """
-  All values that are contained in given list.
-  """
-  description_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  description_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  description_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  description_lte: String
-  """
-  All values greater than the given value.
-  """
-  description_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  description_gte: String
-  """
-  All values containing the given string.
-  """
-  description_contains: String
-  """
-  All values not containing the given string.
-  """
-  description_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  description_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  description_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  description_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  description_not_ends_with: String
-  position: Int
-  """
-  All values that are not equal to given value.
-  """
-  position_not: Int
-  """
-  All values that are contained in given list.
-  """
-  position_in: [Int!]
-  """
-  All values that are not contained in given list.
-  """
-  position_not_in: [Int!]
-  """
-  All values less than the given value.
-  """
-  position_lt: Int
-  """
-  All values less than or equal the given value.
-  """
-  position_lte: Int
-  """
-  All values greater than the given value.
-  """
-  position_gt: Int
-  """
-  All values greater than or equal the given value.
-  """
-  position_gte: Int
-  type: StageTypeEnum
-  """
-  All values that are not equal to given value.
-  """
-  type_not: StageTypeEnum
-  """
-  All values that are contained in given list.
-  """
-  type_in: [StageTypeEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  type_not_in: [StageTypeEnum!]
-}
-
-enum StageOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  position_ASC
-  position_DESC
-  type_ASC
-  type_DESC
-}
-
 type Workspace implements Node {
   id: ID!
   createdAt: DateTime!
@@ -2525,1336 +3829,31 @@ enum WorkspaceOrderByInput {
   name_DESC
 }
 
-type Job implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace: Workspace!
-  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
-  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
-  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
-  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  status: JobType!
-  title: String!
-  department: String
-  location(where: LocationWhereInput): Location
-  description: String
-  requirements: String
-}
-
-input JobWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [JobWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [JobWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [JobWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  status: JobType
-  """
-  All values that are not equal to given value.
-  """
-  status_not: JobType
-  """
-  All values that are contained in given list.
-  """
-  status_in: [JobType!]
-  """
-  All values that are not contained in given list.
-  """
-  status_not_in: [JobType!]
-  title: String
-  """
-  All values that are not equal to given value.
-  """
-  title_not: String
-  """
-  All values that are contained in given list.
-  """
-  title_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  title_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  title_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  title_lte: String
-  """
-  All values greater than the given value.
-  """
-  title_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  title_gte: String
-  """
-  All values containing the given string.
-  """
-  title_contains: String
-  """
-  All values not containing the given string.
-  """
-  title_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  title_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  title_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  title_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  title_not_ends_with: String
-  department: String
-  """
-  All values that are not equal to given value.
-  """
-  department_not: String
-  """
-  All values that are contained in given list.
-  """
-  department_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  department_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  department_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  department_lte: String
-  """
-  All values greater than the given value.
-  """
-  department_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  department_gte: String
-  """
-  All values containing the given string.
-  """
-  department_contains: String
-  """
-  All values not containing the given string.
-  """
-  department_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  department_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  department_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  department_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  department_not_ends_with: String
-  description: String
-  """
-  All values that are not equal to given value.
-  """
-  description_not: String
-  """
-  All values that are contained in given list.
-  """
-  description_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  description_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  description_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  description_lte: String
-  """
-  All values greater than the given value.
-  """
-  description_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  description_gte: String
-  """
-  All values containing the given string.
-  """
-  description_contains: String
-  """
-  All values not containing the given string.
-  """
-  description_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  description_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  description_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  description_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  description_not_ends_with: String
-  requirements: String
-  """
-  All values that are not equal to given value.
-  """
-  requirements_not: String
-  """
-  All values that are contained in given list.
-  """
-  requirements_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  requirements_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  requirements_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  requirements_lte: String
-  """
-  All values greater than the given value.
-  """
-  requirements_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  requirements_gte: String
-  """
-  All values containing the given string.
-  """
-  requirements_contains: String
-  """
-  All values not containing the given string.
-  """
-  requirements_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  requirements_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  requirements_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  requirements_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  requirements_not_ends_with: String
-  subscribers_every: UserWhereInput
-  subscribers_some: UserWhereInput
-  subscribers_none: UserWhereInput
-  events_every: EventWhereInput
-  events_some: EventWhereInput
-  events_none: EventWhereInput
-  applications_every: ApplicationWhereInput
-  applications_some: ApplicationWhereInput
-  applications_none: ApplicationWhereInput
-  stages_every: StageWhereInput
-  stages_some: StageWhereInput
-  stages_none: StageWhereInput
-  comments_every: CommentWhereInput
-  comments_some: CommentWhereInput
-  comments_none: CommentWhereInput
-  location: LocationWhereInput
-}
-
-enum JobOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  status_ASC
-  status_DESC
-  title_ASC
-  title_DESC
-  department_ASC
-  department_DESC
-  description_ASC
-  description_DESC
-  requirements_ASC
-  requirements_DESC
-}
-
-type Task implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace: Workspace!
-  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  targetType: TaskTargetEnum
-  job(where: JobWhereInput): Job
-  candidate(where: CandidateWhereInput): Candidate
-  title: String
-  description: String
-  dueAt: DateTime
-}
-
-input TaskWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [TaskWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [TaskWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [TaskWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  targetType: TaskTargetEnum
-  """
-  All values that are not equal to given value.
-  """
-  targetType_not: TaskTargetEnum
-  """
-  All values that are contained in given list.
-  """
-  targetType_in: [TaskTargetEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  targetType_not_in: [TaskTargetEnum!]
-  title: String
-  """
-  All values that are not equal to given value.
-  """
-  title_not: String
-  """
-  All values that are contained in given list.
-  """
-  title_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  title_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  title_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  title_lte: String
-  """
-  All values greater than the given value.
-  """
-  title_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  title_gte: String
-  """
-  All values containing the given string.
-  """
-  title_contains: String
-  """
-  All values not containing the given string.
-  """
-  title_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  title_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  title_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  title_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  title_not_ends_with: String
-  description: String
-  """
-  All values that are not equal to given value.
-  """
-  description_not: String
-  """
-  All values that are contained in given list.
-  """
-  description_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  description_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  description_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  description_lte: String
-  """
-  All values greater than the given value.
-  """
-  description_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  description_gte: String
-  """
-  All values containing the given string.
-  """
-  description_contains: String
-  """
-  All values not containing the given string.
-  """
-  description_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  description_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  description_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  description_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  description_not_ends_with: String
-  dueAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  dueAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  dueAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  dueAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  dueAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  dueAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  dueAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  dueAt_gte: DateTime
-  subscribers_every: UserWhereInput
-  subscribers_some: UserWhereInput
-  subscribers_none: UserWhereInput
-  owners_every: UserWhereInput
-  owners_some: UserWhereInput
-  owners_none: UserWhereInput
-  job: JobWhereInput
-  candidate: CandidateWhereInput
-}
-
-enum TaskOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  targetType_ASC
-  targetType_DESC
-  title_ASC
-  title_DESC
-  description_ASC
-  description_DESC
-  dueAt_ASC
-  dueAt_DESC
-}
-
-type Tag implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  label: String!
-}
-
-input TagWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [TagWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [TagWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [TagWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  label: String
-  """
-  All values that are not equal to given value.
-  """
-  label_not: String
-  """
-  All values that are contained in given list.
-  """
-  label_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  label_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  label_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  label_lte: String
-  """
-  All values greater than the given value.
-  """
-  label_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  label_gte: String
-  """
-  All values containing the given string.
-  """
-  label_contains: String
-  """
-  All values not containing the given string.
-  """
-  label_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  label_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  label_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  label_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  label_not_ends_with: String
-}
-
-enum TagOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  label_ASC
-  label_DESC
-}
-
-type Field implements Node {
-  id: ID!
-  type: FieldTypeEnum!
-  label: String!
-  value: String!
-}
-
-input FieldWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [FieldWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [FieldWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [FieldWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  type: FieldTypeEnum
-  """
-  All values that are not equal to given value.
-  """
-  type_not: FieldTypeEnum
-  """
-  All values that are contained in given list.
-  """
-  type_in: [FieldTypeEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  type_not_in: [FieldTypeEnum!]
-  label: String
-  """
-  All values that are not equal to given value.
-  """
-  label_not: String
-  """
-  All values that are contained in given list.
-  """
-  label_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  label_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  label_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  label_lte: String
-  """
-  All values greater than the given value.
-  """
-  label_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  label_gte: String
-  """
-  All values containing the given string.
-  """
-  label_contains: String
-  """
-  All values not containing the given string.
-  """
-  label_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  label_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  label_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  label_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  label_not_ends_with: String
-  value: String
-  """
-  All values that are not equal to given value.
-  """
-  value_not: String
-  """
-  All values that are contained in given list.
-  """
-  value_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  value_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  value_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  value_lte: String
-  """
-  All values greater than the given value.
-  """
-  value_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  value_gte: String
-  """
-  All values containing the given string.
-  """
-  value_contains: String
-  """
-  All values not containing the given string.
-  """
-  value_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  value_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  value_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  value_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  value_not_ends_with: String
-}
-
-enum FieldOrderByInput {
-  id_ASC
-  id_DESC
-  type_ASC
-  type_DESC
-  label_ASC
-  label_DESC
-  value_ASC
-  value_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type Comment implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  createdBy(where: UserWhereInput): User!
-  parent(where: CommentWhereInput): Comment
-  content: String!
-}
-
-input CommentWhereInput {
-  """
-  Logical AND on all given filters.
-  """
-  AND: [CommentWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
-  OR: [CommentWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [CommentWhereInput!]
-  id: ID
-  """
-  All values that are not equal to given value.
-  """
-  id_not: ID
-  """
-  All values that are contained in given list.
-  """
-  id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
-  id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
-  id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
-  id_lte: ID
-  """
-  All values greater than the given value.
-  """
-  id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
-  id_gte: ID
-  """
-  All values containing the given string.
-  """
-  id_contains: ID
-  """
-  All values not containing the given string.
-  """
-  id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
-  id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
-  id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
-  id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
-  id_not_ends_with: ID
-  createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
-  updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
-  updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
-  updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
-  updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
-  updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
-  updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
-  updatedAt_gte: DateTime
-  content: String
-  """
-  All values that are not equal to given value.
-  """
-  content_not: String
-  """
-  All values that are contained in given list.
-  """
-  content_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  content_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  content_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  content_lte: String
-  """
-  All values greater than the given value.
-  """
-  content_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  content_gte: String
-  """
-  All values containing the given string.
-  """
-  content_contains: String
-  """
-  All values not containing the given string.
-  """
-  content_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  content_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  content_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  content_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  content_not_ends_with: String
-  createdBy: UserWhereInput
-  parent: CommentWhereInput
-}
-
-enum CommentOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  content_ASC
-  content_DESC
-}
-
 input ApplicationWhereUniqueInput {
   id: ID
 }
 
-input NotificationWhereUniqueInput {
+input CandidateWhereUniqueInput {
+  id: ID
+}
+
+input CommentWhereUniqueInput {
+  id: ID
+}
+
+input EventWhereUniqueInput {
+  id: ID
+}
+
+input FieldWhereUniqueInput {
+  id: ID
+}
+
+input InviteWhereUniqueInput {
+  id: ID
+}
+
+input JobWhereUniqueInput {
   id: ID
 }
 
@@ -3862,7 +3861,19 @@ input LocationWhereUniqueInput {
   id: ID
 }
 
-input CandidateWhereUniqueInput {
+input NotificationWhereUniqueInput {
+  id: ID
+}
+
+input StageWhereUniqueInput {
+  id: ID
+}
+
+input TagWhereUniqueInput {
+  id: ID
+}
+
+input TaskWhereUniqueInput {
   id: ID
 }
 
@@ -3871,39 +3882,7 @@ input UserWhereUniqueInput {
   email: String
 }
 
-input InviteWhereUniqueInput {
-  id: ID
-}
-
-input EventWhereUniqueInput {
-  id: ID
-}
-
-input StageWhereUniqueInput {
-  id: ID
-}
-
 input WorkspaceWhereUniqueInput {
-  id: ID
-}
-
-input JobWhereUniqueInput {
-  id: ID
-}
-
-input TaskWhereUniqueInput {
-  id: ID
-}
-
-input TagWhereUniqueInput {
-  id: ID
-}
-
-input FieldWhereUniqueInput {
-  id: ID
-}
-
-input CommentWhereUniqueInput {
   id: ID
 }
 
@@ -4117,6 +4096,31 @@ type CommentConnection {
   aggregate: AggregateComment!
 }
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input SignupInput {
+  password: String!
+  username: String!
+  inviteId: ID!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input WorkspaceCreateInput {
+  name: String!
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+}
+
 input ApplicationCreateInput {
   disqualifyReason: String
   job: Connect!
@@ -4240,8 +4244,6 @@ input ApplicationUpdateInput {
 
 input NotificationUpdateInput {
   status: NotificationStatusEnum
-  user: UserUpdateOneWithoutNotificationsInput
-  event: EventUpdateOneInput
 }
 
 input LocationUpdateInput {
@@ -4275,9 +4277,9 @@ input UserUpdateInput {
   deletedAt: DateTime
   events: EventUpdateOneWithoutActorUserInput
   notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  subscriptionJobs: ConnectDisconnectMany
+  subscriptionCandidates: ConnectDisconnectMany
+  subscriptionTasks: ConnectDisconnectMany
   tasks: TaskUpdateManyWithoutOwnersInput
 }
 
@@ -4364,36 +4366,11 @@ input NotificationCreateInput {
   event: EventCreateOneInput!
 }
 
-input WorkspaceCreateInput {
-  name: String!
-  firstName: String
-  lastName: String
-  email: String!
-  username: String!
-  password: String!
-}
-
 type BatchPayload {
   """
   The number of nodes that have been affected by the Batch operation.
   """
   count: Long!
-}
-
-type AuthPayload {
-  token: String!
-  user: User!
-}
-
-input SignupInput {
-  password: String!
-  username: String!
-  inviteId: ID!
-}
-
-input LoginInput {
-  email: String!
-  password: String!
 }
 
 """
@@ -4407,12 +4384,6 @@ interface Node {
 }
 
 scalar DateTime
-
-enum NotificationStatusEnum {
-  NEW
-  UNREAD
-  READ
-}
 
 enum EventTypeEnum {
   DEFAULT
@@ -4435,10 +4406,13 @@ enum EventTargetTypeEnum {
   WORKSPACE
 }
 
-enum StageTypeEnum {
-  NEW
-  QUALIFIED
-  DISQUALIFIED
+enum FieldTypeEnum {
+  INT
+  FLOAT
+  STRING
+  TEXT
+  BOOLEAN
+  DATE_TIME
 }
 
 enum JobType {
@@ -4447,19 +4421,22 @@ enum JobType {
   ARCHIVED
 }
 
+enum NotificationStatusEnum {
+  NEW
+  UNREAD
+  READ
+}
+
+enum StageTypeEnum {
+  NEW
+  QUALIFIED
+  DISQUALIFIED
+}
+
 enum TaskTargetEnum {
   NULL
   JOB
   CANIDATE
-}
-
-enum FieldTypeEnum {
-  INT
-  FLOAT
-  STRING
-  TEXT
-  BOOLEAN
-  DATE_TIME
 }
 
 """
@@ -6792,4 +6769,26 @@ input UserUpdateWithoutTasksDataInput {
   subscriptionJobs: JobUpdateManyWithoutSubscribersInput
   subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
   subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+}
+
+input ConnectDisconnectMany {
+  connect: [WhereUniqueInput!]
+  disconnect: [WhereUniqueInput!]
+}
+
+input Connect {
+  connect: WhereUniqueInput
+}
+
+input ConnectMany {
+  connect: [WhereUniqueInput!]
+}
+
+input ConnectDisconnect {
+  connect: WhereUniqueInput
+  disconnect: WhereUniqueInput
+}
+
+input WhereUniqueInput {
+  id: ID!
 }

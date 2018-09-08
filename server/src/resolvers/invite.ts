@@ -1,17 +1,8 @@
 import * as dayjs from 'dayjs'
-import { forwardTo } from 'prisma-binding'
 
-import { Mutation } from '../utils'
+import { IMutation } from '../utils'
 
-export const invite = forwardTo('db')
-export const invites = forwardTo('db')
-
-export const InviteQueries = {
-  invite,
-  invites,
-}
-
-export const createInvite: Mutation['createInvite'] = async (
+export const createInvite: IMutation['createInvite'] = async (
   parent,
   { data: { email } },
   ctx,
@@ -36,7 +27,7 @@ export const createInvite: Mutation['createInvite'] = async (
   )
 }
 
-export const updateInvite: Mutation['updateInvite'] = async (
+export const updateInvite: IMutation['updateInvite'] = async (
   parent,
   { where: { id } },
   ctx,
@@ -49,12 +40,4 @@ export const updateInvite: Mutation['updateInvite'] = async (
   // TODO: trriger invitation email
 
   return ctx.db.mutation.updateInvite({ where: { id }, data: { expireAt } }, info)
-}
-
-export const deleteInvite: Mutation['deleteInvite'] = forwardTo('db')
-
-export const InviteMutations = {
-  createInvite,
-  updateInvite,
-  deleteInvite,
 }

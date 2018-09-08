@@ -1,157 +1,161 @@
 # Import generated types
 # import * from "../generated/prisma.graphql"
 
-# Import custom
-# import Query.*, Mutation.*, * from "auth.graphql"
-
-input WhereUniqueInput {
-  id: ID!
-}
-
-input Connect {
-  connect: WhereUniqueInput
-}
-
-input ConnectMany {
-  connect: [WhereUniqueInput!]
-}
-
-input ConnectDisconnect {
-  connect: WhereUniqueInput
-  disconnect: WhereUniqueInput
-}
-
-input ConnectDisconnectMany {
-  connect: [WhereUniqueInput!]
-  disconnect: [WhereUniqueInput!]
-}
+# Import custom types
+# import * from "definitions/auth.graphql"
+# import * from "definitions/invite.graphql"
+# import * from "definitions/connections.graphql"
 
 type Query {
+  # CUSTOM
+  me: User!
+
+  # MULTI
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
-  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
-  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
-  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
-  workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
-  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
-  application(where: ApplicationWhereUniqueInput!): Application
-  notification(where: NotificationWhereUniqueInput!): Notification
-  location(where: LocationWhereUniqueInput!): Location
-  candidate(where: CandidateWhereUniqueInput!): Candidate
-  user(where: UserWhereUniqueInput!): User
-  invite(where: InviteWhereUniqueInput!): Invite
-  event(where: EventWhereUniqueInput!): Event
-  stage(where: StageWhereUniqueInput!): Stage
-  workspace(where: WorkspaceWhereUniqueInput!): Workspace
-  job(where: JobWhereUniqueInput!): Job
-  task(where: TaskWhereUniqueInput!): Task
-  tag(where: TagWhereUniqueInput!): Tag
-  field(where: FieldWhereUniqueInput!): Field
-  comment(where: CommentWhereUniqueInput!): Comment
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
+  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
+
+  # SINGLE
+  application(where: WhereUniqueInput!): Application
+  candidate(where: WhereUniqueInput!): Candidate
+  comment(where: WhereUniqueInput!): Comment
+  event(where: WhereUniqueInput!): Event
+  field(where: WhereUniqueInput!): Field
+  invite(where: WhereUniqueInput!): Invite
+  job(where: WhereUniqueInput!): Job
+  location(where: WhereUniqueInput!): Location
+  notification(where: WhereUniqueInput!): Notification
+  stage(where: WhereUniqueInput!): Stage
+  tag(where: WhereUniqueInput!): Tag
+  task(where: WhereUniqueInput!): Task
+  user(where: WhereUniqueInput!): User
+  workspace(where: WhereUniqueInput!): Workspace
+
+  # CONNECTIONS
   applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
-  notificationsConnection(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NotificationConnection!
-  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
   candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  invitesConnection(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InviteConnection!
-  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
-  stagesConnection(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StageConnection!
-  workspacesConnection(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkspaceConnection!
-  jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
-  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
-  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
-  fieldsConnection(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
+  fieldsConnection(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldConnection!
+  invitesConnection(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InviteConnection!
+  jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
+  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  notificationsConnection(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NotificationConnection!
+  stagesConnection(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StageConnection!
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  workspacesConnection(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkspaceConnection!
 }
 
 type Mutation {
-  createApplication(data: ApplicationCreateInput!): Application!
-  createLocation(data: LocationCreateInput!): Location!
-  createCandidate(data: CandidateCreateInput!): Candidate!
-  createUser(data: UserCreateInput!): User!
+  # CUSTOM/ AUTH
+  createWorkspace(data: WorkspaceCreateInput!): AuthPayload!
+  signup(data: SignupInput): AuthPayload!
+  login(data: LoginInput): AuthPayload!
   createInvite(data: InviteCreateInput!): Invite!
-  createEvent(data: EventCreateInput!): Event!
-  createStage(data: StageCreateInput!): Stage!
-  createJob(data: JobCreateInput!): Job!
-  createTask(data: TaskCreateInput!): Task!
-  createTag(data: TagCreateInput!): Tag!
-  createField(data: FieldCreateInput!): Field!
+  updateInvite(where: WhereUniqueInput!): Invite
+
+  # CREATE
+  createApplication(data: ApplicationCreateInput!): Application!
+  createCandidate(data: CandidateCreateInput!): Candidate!
   createComment(data: CommentCreateInput!): Comment!
-  updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
-  updateNotification(data: NotificationUpdateInput!, where: NotificationWhereUniqueInput!): Notification
-  updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
-  updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateInvite(data: InviteUpdateInput!, where: InviteWhereUniqueInput!): Invite
-  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
-  updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
-  updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace
-  updateJob(data: JobUpdateInput!, where: JobWhereUniqueInput!): Job
-  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
-  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
-  updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
-  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
-  deleteApplication(where: ApplicationWhereUniqueInput!): Application
-  deleteNotification(where: NotificationWhereUniqueInput!): Notification
-  deleteLocation(where: LocationWhereUniqueInput!): Location
-  deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteInvite(where: InviteWhereUniqueInput!): Invite
-  deleteEvent(where: EventWhereUniqueInput!): Event
-  deleteStage(where: StageWhereUniqueInput!): Stage
-  deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace
-  deleteJob(where: JobWhereUniqueInput!): Job
-  deleteTask(where: TaskWhereUniqueInput!): Task
-  deleteTag(where: TagWhereUniqueInput!): Tag
-  deleteField(where: FieldWhereUniqueInput!): Field
-  deleteComment(where: CommentWhereUniqueInput!): Comment
+  createEvent(data: EventCreateInput!): Event!
+  createField(data: FieldCreateInput!): Field!
+  createJob(data: JobCreateInput!): Job!
+  createLocation(data: LocationCreateInput!): Location!
+  createStage(data: StageCreateInput!): Stage!
+  createTag(data: TagCreateInput!): Tag!
+  createTask(data: TaskCreateInput!): Task!
+  createUser(data: UserCreateInput!): User!
+
+  # UPDATE
+  updateApplication(data: ApplicationUpdateInput!, where: WhereUniqueInput!): Application
+  updateCandidate(data: CandidateUpdateInput!, where: WhereUniqueInput!): Candidate
+  updateComment(data: CommentUpdateInput!, where: WhereUniqueInput!): Comment
+  updateEvent(data: EventUpdateInput!, where: WhereUniqueInput!): Event
+  updateField(data: FieldUpdateInput!, where: WhereUniqueInput!): Field
+  updateJob(data: JobUpdateInput!, where: WhereUniqueInput!): Job
+  updateLocation(data: LocationUpdateInput!, where: WhereUniqueInput!): Location
+  updateNotification(data: NotificationUpdateInput!, where: WhereUniqueInput!): Notification
+  updateStage(data: StageUpdateInput!, where: WhereUniqueInput!): Stage
+  updateTag(data: TagUpdateInput!, where: WhereUniqueInput!): Tag
+  updateTask(data: TaskUpdateInput!, where: WhereUniqueInput!): Task
+  updateUser(data: UserUpdateInput!, where: WhereUniqueInput!): User
+  updateWorkspace(data: WorkspaceUpdateInput!, where: WhereUniqueInput!): Workspace
+
+  # DELETE
+  deleteApplication(where: WhereUniqueInput!): Application
+  deleteCandidate(where: WhereUniqueInput!): Candidate
+  deleteComment(where: WhereUniqueInput!): Comment
+  deleteEvent(where: WhereUniqueInput!): Event
+  deleteField(where: WhereUniqueInput!): Field
+  deleteInvite(where: WhereUniqueInput!): Invite
+  deleteJob(where: WhereUniqueInput!): Job
+  deleteLocation(where: WhereUniqueInput!): Location
+  deleteNotification(where: WhereUniqueInput!): Notification
+  deleteStage(where: WhereUniqueInput!): Stage
+  deleteTag(where: WhereUniqueInput!): Tag
+  deleteTask(where: WhereUniqueInput!): Task
+  deleteUser(where: WhereUniqueInput!): User
+  deleteWorkspace(where: WhereUniqueInput!): Workspace
+
+  # UPSERT
   upsertApplication(where: ApplicationWhereUniqueInput!, create: ApplicationCreateInput!, update: ApplicationUpdateInput!): Application!
-  upsertNotification(where: NotificationWhereUniqueInput!, create: NotificationCreateInput!, update: NotificationUpdateInput!): Notification!
-  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   upsertCandidate(where: CandidateWhereUniqueInput!, create: CandidateCreateInput!, update: CandidateUpdateInput!): Candidate!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertInvite(where: InviteWhereUniqueInput!, create: InviteCreateInput!, update: InviteUpdateInput!): Invite!
-  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
-  upsertStage(where: StageWhereUniqueInput!, create: StageCreateInput!, update: StageUpdateInput!): Stage!
-  upsertWorkspace(where: WorkspaceWhereUniqueInput!, create: WorkspaceCreateInput!, update: WorkspaceUpdateInput!): Workspace!
-  upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
-  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
-  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
-  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
+  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
+  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
+  upsertInvite(where: InviteWhereUniqueInput!, create: InviteCreateInput!, update: InviteUpdateInput!): Invite!
+  upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
+  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
+  upsertNotification(where: NotificationWhereUniqueInput!, create: NotificationCreateInput!, update: NotificationUpdateInput!): Notification!
+  upsertStage(where: StageWhereUniqueInput!, create: StageCreateInput!, update: StageUpdateInput!): Stage!
+  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
+  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertWorkspace(where: WorkspaceWhereUniqueInput!, create: WorkspaceCreateInput!, update: WorkspaceUpdateInput!): Workspace!
+
+  # UPDATE MANY
   updateManyApplications(data: ApplicationUpdateInput!, where: ApplicationWhereInput): BatchPayload!
-  updateManyNotifications(data: NotificationUpdateInput!, where: NotificationWhereInput): BatchPayload!
-  updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
   updateManyCandidates(data: CandidateUpdateInput!, where: CandidateWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyInvites(data: InviteUpdateInput!, where: InviteWhereInput): BatchPayload!
-  updateManyEvents(data: EventUpdateInput!, where: EventWhereInput): BatchPayload!
-  updateManyStages(data: StageUpdateInput!, where: StageWhereInput): BatchPayload!
-  updateManyWorkspaces(data: WorkspaceUpdateInput!, where: WorkspaceWhereInput): BatchPayload!
-  updateManyJobs(data: JobUpdateInput!, where: JobWhereInput): BatchPayload!
-  updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
-  updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
-  updateManyFields(data: FieldUpdateInput!, where: FieldWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
+  updateManyEvents(data: EventUpdateInput!, where: EventWhereInput): BatchPayload!
+  updateManyFields(data: FieldUpdateInput!, where: FieldWhereInput): BatchPayload!
+  updateManyInvites(data: InviteUpdateInput!, where: InviteWhereInput): BatchPayload!
+  updateManyJobs(data: JobUpdateInput!, where: JobWhereInput): BatchPayload!
+  updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
+  updateManyNotifications(data: NotificationUpdateInput!, where: NotificationWhereInput): BatchPayload!
+  updateManyStages(data: StageUpdateInput!, where: StageWhereInput): BatchPayload!
+  updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
+  updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyWorkspaces(data: WorkspaceUpdateInput!, where: WorkspaceWhereInput): BatchPayload!
+
+  # DELETE MANY
   deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
-  deleteManyNotifications(where: NotificationWhereInput): BatchPayload!
-  deleteManyLocations(where: LocationWhereInput): BatchPayload!
   deleteManyCandidates(where: CandidateWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyInvites(where: InviteWhereInput): BatchPayload!
-  deleteManyEvents(where: EventWhereInput): BatchPayload!
-  deleteManyStages(where: StageWhereInput): BatchPayload!
-  deleteManyWorkspaces(where: WorkspaceWhereInput): BatchPayload!
-  deleteManyJobs(where: JobWhereInput): BatchPayload!
-  deleteManyTasks(where: TaskWhereInput): BatchPayload!
-  deleteManyTags(where: TagWhereInput): BatchPayload!
-  deleteManyFields(where: FieldWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  deleteManyEvents(where: EventWhereInput): BatchPayload!
+  deleteManyFields(where: FieldWhereInput): BatchPayload!
+  deleteManyInvites(where: InviteWhereInput): BatchPayload!
+  deleteManyJobs(where: JobWhereInput): BatchPayload!
+  deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  deleteManyNotifications(where: NotificationWhereInput): BatchPayload!
+  deleteManyStages(where: StageWhereInput): BatchPayload!
+  deleteManyTags(where: TagWhereInput): BatchPayload!
+  deleteManyTasks(where: TaskWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyWorkspaces(where: WorkspaceWhereInput): BatchPayload!
 }

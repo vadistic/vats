@@ -2,9 +2,44 @@ import * as bcrypt from 'bcryptjs'
 import * as dayjs from 'dayjs'
 import * as jwt from 'jsonwebtoken'
 
-import { Mutation } from '../utils'
+import { IMutation } from '../utils'
+import { Context } from '../utils'
 
-export const signup: Mutation['signup'] = async (
+export const AuthPayload = {
+  user: async ({ user: { id } }, args, ctx: Context, info) => {
+    return ctx.db.query.user({ where: { id } }, info)
+  },
+}
+
+export const signToken = (userId, workspaceId) =>
+  jwt.sign({ userId, workspaceId }, process.env.APP_SECRET, {
+    expiresIn: '7 days',
+  })
+
+export const createWorkspace: IMutation['createWorkspace'] = async (
+  parent,
+  { data: { name, password: passwordRaw, ...args } },
+  ctx,
+  info
+) => {
+
+  const password = await bcrypt.hash(passwordRaw, 10)
+
+  const workspace = await ctx.db.mutation.createWorkspace({
+    data: { name },
+  })
+
+  const user = await ctx.db.mutation.createUser({
+    data: { ...args, password, workspace: { connect: { id: workspace.id } } },
+  })
+
+  return {
+    token: signToken(user.id, workspace.id),
+    user,
+  }
+}
+
+export const signup: IMutation['signup'] = async (
   parent,
   { data: { inviteId, password: passwordRaw, username } },
   ctx,
@@ -45,14 +80,12 @@ export const signup: Mutation['signup'] = async (
   }
 
   return {
-    token: jwt.sign({ userId: user.id, workspaceId: invite.workspace.id }, process.env.APP_SECRET, {
-      expiresIn: '7 days',
-    }),
+    token: signToken(user.id, invite.workspace.id),
     user,
   }
 }
 
-export const login: Mutation['login'] = async (
+export const login: IMutation['login'] = async (
   parent,
   { data: { email, password } },
   ctx,
@@ -71,14 +104,7 @@ export const login: Mutation['login'] = async (
   }
 
   return {
-    token: jwt.sign({ userId: user.id, workspaceId: user.workspace.id }, process.env.APP_SECRET, {
-      expiresIn: '7 days',
-    }),
+    token: signToken(user.id, user.workspace.id),
     user,
   }
-}
-
-export const AuthMutations = {
-  signup,
-  login,
 }
