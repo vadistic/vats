@@ -3,7 +3,105 @@
 # import Query.*, Mutation.*, * from "../../generated/prisma.graphql"
 # import Query.*, Mutation.*, * from "../schema.graphql"
 
-# import * from "connections.graphql"
+
+# APPLICATION
+type Application {
+  workspace: Workspace! @replace
+}
+
+input ApplicationWhereInput @exclude {
+  workspace: Workspace!
+}
+
+input ApplicationCreateInput {
+  workspace: WorkspaceCreateOneWithoutApplicationsInput! @remove
+
+  # connections
+  job: Connect! @replace
+  candidate: Connect! @replace
+  stage: Connect @replace
+}
+
+input ApplicationUpdateInput {
+  workspace: WorkspaceUpdateOneWithoutApplicationsInput @remove
+
+  # connections
+  # job/candidate is fixed for application
+  job: ConnectDisconnect @remove
+  candidate: ConnectDisconnect @remove
+  # Application must have a stage so only connect
+  stage: Connect @replace
+}
+
+# CANDIDATE
+type Candidate {
+  workspace: Workspace! @replace
+}
+
+input CandidateWhereInput @exclude {
+  workspace: Workspace!
+}
+
+input CandidateCreateInput {
+  # system
+  workspace: WorkspaceCreateOneWithoutCandidatesInput! @remove
+  # auto-subscribe author
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput @remove
+
+  # too complex
+  tasks: TaskCreateManyWithoutCandidateInput @remove
+
+  # TODO: Seems quite usefule for drag and drop to job
+  applications: ApplicationCreateManyWithoutCandidateInput @remove
+}
+
+input CandidateUpdateInput {
+  # system
+  workspace: WorkspaceUpdateOneWithoutCandidatesInput @remove
+  events: EventUpdateManyWithoutTargetCandidateInput @remove
+
+  # too complex
+  tasks: TaskUpdateManyWithoutCandidateInput @remove
+  applications: ApplicationUpdateManyWithoutCandidateInput @remove
+  comments: CommentUpdateManyInput @remove
+
+  # connections
+  subscribers: Connect @replace
+}
+
+# JOB
+type Job {
+  workspace: Workspace! @replace
+}
+
+input JobWhereInput @exclude {
+  workspace: Workspace!
+}
+
+input JobCreateInput {
+  # system
+  workspace: WorkspaceCreateOneWithoutJobsInput! @remove
+  events: EventCreateManyWithoutTargetJobInput @remove
+
+  # doesn't make sense on job creation
+  applications: ApplicationCreateManyWithoutJobInput @remove
+  comments: CommentCreateManyInput @remove
+
+  #connections
+  subscribers: ConnectMany @replace
+}
+
+input JobUpdateInput {
+  # system
+  workspace: WorkspaceUpdateOneWithoutJobsInput @remove
+  events: EventUpdateManyWithoutTargetJobInput @remove
+
+  # connections
+  subscribers: ConnectDisconnectMany @replace
+
+  # Too complicated
+  applications: ApplicationUpdateManyWithoutJobInput @remove
+}
 
 # USER
 type User {
@@ -51,104 +149,6 @@ enum UserOrderByInput @exclude {
   password_DESC
 }
 
-# NOTIFICATION
-type Notification {
-  # replacing where inputs
-  user: User! @replace
-  event: Event! @replace
-}
-
-input NotificationUpdateInput {
-  # user & event are binded for whole lifecycle of notification
-  user: UserUpdateOneWithoutNotificationsInput @remove
-  event: EventUpdateOneInput @remove
-}
-
-# CANDIDATE
-type Candidate {
-  workspace: Workspace! @replace
-}
-
-input CandidateWhereInput @exclude {
-  workspace: Workspace!
-}
-
-input CandidateUpdateInput {
-  # system
-  workspace: WorkspaceUpdateOneWithoutCandidatesInput @remove
-
-  # too complex
-  tasks: TaskUpdateManyWithoutCandidateInput @remove
-  applications: ApplicationUpdateManyWithoutCandidateInput @remove
-  comments: CommentUpdateManyInput @remove
-
-  # connections
-  subscribers: Connect @replace
-}
-
-# JOB
-type Job {
-  workspace: Workspace! @replace
-}
-
-input JobWhereInput @exclude {
-  workspace: Workspace!
-}
-
-input JobCreateInput {
-  # system
-  workspace: WorkspaceCreateOneWithoutJobsInput! @remove
-  events: EventCreateManyWithoutTargetJobInput @remove
-
-  # doesn't make sense on job creation
-  applications: ApplicationCreateManyWithoutJobInput @remove
-  comments: CommentCreateManyInput @remove
-
-  #connections
-  subscribers: ConnectMany @replace
-}
-
-input JobUpdateInput {
-  # system
-  workspace: WorkspaceUpdateOneWithoutJobsInput @remove
-  events: EventUpdateManyWithoutTargetJobInput @remove
-
-  # connections
-  subscribers: ConnectDisconnectMany @replace
-
-  # Too complicated
-  applications: ApplicationUpdateManyWithoutJobInput @remove
-}
-
-# APPLICATION
-type Application {
-  workspace: Workspace! @replace
-}
-
-input ApplicationWhereInput @exclude {
-  workspace: Workspace!
-}
-
-input ApplicationCreateInput {
-  workspace: WorkspaceCreateOneWithoutApplicationsInput! @remove
-
-  # connections
-  job: Connect! @replace
-  candidate: Connect! @replace
-  stage: Connect @replace
-}
-
-input ApplicationUpdateInput {
-  workspace: WorkspaceUpdateOneWithoutApplicationsInput @remove
-
-  # connections
-  # job/candidate is fixed for application
-  job: ConnectDisconnect @replace
-  candidate: ConnectDisconnect @remove
-  # Application must have a stage so only connect
-  stage: Connect @replace
-}
-
 # TASK
 type Task {
   workspace: Workspace! @replace
@@ -179,3 +179,51 @@ input TaskUpdateInput {
   job: ConnectDisconnect @replace
   candidate: ConnectDisconnect @replace
 }
+
+# WORKSPACE
+input WorkspaceUpdateInput {
+  # no-sense
+  events: EventUpdateManyWithoutTargetWorkspaceInput @remove
+  users: UserUpdateManyWithoutWorkspaceInput @remove
+  jobs: JobUpdateManyWithoutWorkspaceInput @remove
+  applications: ApplicationUpdateManyWithoutWorkspaceInput @remove
+  candidates: CandidateUpdateManyWithoutWorkspaceInput @remove
+  invites: InviteUpdateManyWithoutWorkspaceInput @remove
+
+}
+
+# DERIVATIVE?
+
+# INVITE
+input InviteCreateInput @exclude {
+  expireAt: DateTime!
+  workspace: WorkspaceCreateOneWithoutInvitesInput!
+  invitedBy: UserCreateOneInput!
+}
+
+
+# COMMENT
+
+# EVENT
+type Event {
+  workspace: Workspace! @replace
+  targetWorkspace: Workspace @replace
+}
+
+# NOTIFICATION
+type Notification {
+  # replacing where inputs
+  user: User! @replace
+  event: Event! @replace
+}
+
+input NotificationUpdateInput {
+  # user & event are binded for whole lifecycle of notification
+  user: UserUpdateOneWithoutNotificationsInput @remove
+  event: EventUpdateOneInput @remove
+}
+
+# FIELD
+
+# LOCATION
+

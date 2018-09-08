@@ -1,22 +1,23 @@
 import { GraphQLResolveInfo } from 'graphql'
 import * as R from 'ramda'
 
-import { Context } from '../../utils'
+import { IMiddlewareFunction } from 'graphql-middleware'
+import { IContext } from '../../utils'
 
-export interface Args {
+export interface IArgs {
   data?: object
   where?: object
 }
 
 export type Filter = (
   parent: any,
-  args: Args,
-  ctx: Context,
+  args: IArgs,
+  ctx: IContext,
   info: GraphQLResolveInfo
 ) => Promise<{
   parent: any
-  args: Args
-  ctx: Context
+  args: IArgs
+  ctx: IContext
   info: GraphQLResolveInfo
 }>
 
@@ -49,13 +50,26 @@ export const composeFilters: ComposeFilters = filterArr => async (
   return resolve(parent, { data, where: { AND: { ...args.where, ...where } } }, ctx, info)
 }
 
-export const whereWorkspaceF: Filter = async (parent, args, ctx, info) => {
-  return { parent, args: { where: { workspace: { id: ctx.auth.workspaceId } } }, ctx, info }
-}
+export const whereWorkspaceF: Filter = async (parent, args, ctx, info) => ({
+  parent,
+  args: { where: { workspace: { id: ctx.auth.workspaceId } } },
+  ctx,
+  info,
+})
 
-export const whereUserF: Filter = async (parent, args, ctx, info) => {
-  return { parent, args: { where: { user: { id: ctx.auth.userId } } }, ctx, info }
-}
+export const whereUserF: Filter = async (parent, args, ctx, info) => ({
+  parent,
+  args: { where: { user: { id: ctx.auth.userId } } },
+  ctx,
+  info,
+})
+
+export const dataWorkspaceConnectF: Filter = async (parent, args, ctx, info) => ({
+  parent,
+  args: { data: { workspace: { connect: { id: ctx.auth.userId } } } },
+  ctx,
+  info,
+})
 
 export const noopF: Filter = async (parent, args, ctx, info) => ({
   parent,
@@ -63,3 +77,20 @@ export const noopF: Filter = async (parent, args, ctx, info) => ({
   ctx,
   info,
 })
+
+// fix input
+export const whereFixToUser: IMiddlewareFunction<any, IContext, any> = async (
+  resolve,
+  parent,
+  args,
+  ctx,
+  info
+) => resolve(parent, { where: { user: { id: ctx.auth.userId } } }, ctx, info)
+
+export const whereFixToWorkspace: IMiddlewareFunction<any, IContext, any> = async (
+  resolve,
+  parent,
+  args,
+  ctx,
+  info
+) => resolve(parent, { where: { workspace: { id: ctx.auth.workspaceId } } }, ctx, info)

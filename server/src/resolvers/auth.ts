@@ -3,10 +3,10 @@ import * as dayjs from 'dayjs'
 import * as jwt from 'jsonwebtoken'
 
 import { IMutation } from '../utils'
-import { Context } from '../utils'
+import { IContext } from '../utils'
 
 export const AuthPayload = {
-  user: async ({ user: { id } }, args, ctx: Context, info) => {
+  user: async ({ user: { id } }, args, ctx: IContext, info) => {
     return ctx.db.query.user({ where: { id } }, info)
   },
 }

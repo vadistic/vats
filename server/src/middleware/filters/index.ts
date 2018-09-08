@@ -1,25 +1,46 @@
-import { IMiddleware } from 'graphql-middleware'
-
-import { MiddlewareFieldMap } from '../../utils'
-import { composeFilters, whereUserF, whereWorkspaceF } from './filters'
+import { IMiddlewareTypeMap } from '../../utils'
+import {
+  composeFilters,
+  dataWorkspaceConnectF,
+  whereFixToWorkspace,
+  whereUserF,
+  whereWorkspaceF,
+} from './filters'
 
 /*
   Filters secure:
-  singleQueries => Nope
-  multiQueries => by narrowing where with AND
-  createOne => Nope
-  updateOne => Nope
+  singleQueries => Fix whole inputs on some fields
+  multiQueries => By narrowing where with AND
+  createOne => Data filters for fixed value fields
+  updateOne => Fix where for workspace?
   deleteOne => Nope
 */
 
-export const filters: IMiddleware & MiddlewareFieldMap = {
+export const filters: IMiddlewareTypeMap = {
   Query: {
+    workspace: whereFixToWorkspace,
+
+    // MULTI
     applications: composeFilters([whereWorkspaceF]),
     candidates: composeFilters([whereWorkspaceF]),
-    invites: composeFilters([whereWorkspaceF]),
     jobs: composeFilters([whereWorkspaceF]),
-    notifications: composeFilters([whereUserF]),
     tasks: composeFilters([whereWorkspaceF]),
+
+    invites: composeFilters([whereWorkspaceF]),
+    notifications: composeFilters([whereUserF]),
   },
-  Mutation: {},
+  Mutation: {
+    // CREATE
+    createApplication: composeFilters([dataWorkspaceConnectF]),
+    createCandidate: composeFilters([dataWorkspaceConnectF]),
+    createJob: composeFilters([dataWorkspaceConnectF]),
+    createTask: composeFilters([dataWorkspaceConnectF]),
+
+    // UPDATE
+    // updateApplication
+    updateWorkspace: whereFixToWorkspace,
+
+    // DELETE
+    deleteWorkspace: whereFixToWorkspace,
+  },
 }

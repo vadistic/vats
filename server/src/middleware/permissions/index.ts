@@ -1,11 +1,13 @@
-import { allow, and, IRule, IRules, shield } from 'graphql-shield'
+import { allow, and, shield } from 'graphql-shield'
 
 import { IRuleMutation, IRuleQuery } from '../../utils'
 import {
+  connectToManyByWorkspace,
+  connectToOneByWorkspace,
   fieldRules,
+  hasSpecialPermission,
   isAuthenticated,
-  toManyDataWorkspaceConnection,
-  toOneDataWorkspaceConnection,
+  whereSameUser,
   whereSameWorkspace,
 } from './rules'
 
@@ -18,68 +20,71 @@ import {
   deleteOne => Nope
 */
 
-const QueryRules: IRuleQuery = {
-  application: and(isAuthenticated, whereSameWorkspace('Application')),
-  applications: isAuthenticated,
-  candidate: and(isAuthenticated, whereSameWorkspace('Candidate')),
-  candidates: isAuthenticated,
-  invite: and(isAuthenticated, whereSameWorkspace('Invite')),
-  invites: isAuthenticated,
-  job: and(isAuthenticated, whereSameWorkspace('Job')),
-  jobs: isAuthenticated,
-  user: and(isAuthenticated, whereSameWorkspace('User')),
-  users: isAuthenticated,
-  // args fixed in reolver
-  workspace: isAuthenticated,
+const Query: IRuleQuery = {
+  // CUSTOM
   me: isAuthenticated,
+  workspace: isAuthenticated,
+
+  // SINGLE
+  application: and(isAuthenticated, whereSameWorkspace('Application')),
+  candidate: and(isAuthenticated, whereSameWorkspace('Candidate')),
+  invite: and(isAuthenticated, whereSameWorkspace('Invite')),
+  job: and(isAuthenticated, whereSameWorkspace('Job')),
+  user: and(isAuthenticated, whereSameWorkspace('User')),
+
+  // MULTI
+  applications: isAuthenticated,
+  candidates: isAuthenticated,
+  invites: isAuthenticated,
+  jobs: isAuthenticated,
+  notifications: isAuthenticated,
+  tasks: isAuthenticated,
 }
-const MutationRules: IRuleMutation = {
-  createApplication: and(
-    isAuthenticated,
-    fieldRules({
-      owners: toManyDataWorkspaceConnection('User'),
-      subscribers: toManyDataWorkspaceConnection('User'),
-      job: toOneDataWorkspaceConnection('Job'),
-      candidate: toOneDataWorkspaceConnection('Candidate'),
-    })
-  ),
-  // action
-  // application
-  // auth
+
+const Mutation: IRuleMutation = {
+  // CUSTOM/ AUTH
+  createWorkspace: allow,
   signup: allow,
   login: allow,
-  // candidate
-  // comment
-  // invite
   createInvite: and(isAuthenticated, whereSameWorkspace('Invite')),
   updateInvite: and(isAuthenticated, whereSameWorkspace('Invite')),
-  deleteInvite: and(isAuthenticated, whereSameWorkspace('Invite')),
-  // job
-  // stage
-  // task
 
-  // Task
+  // CREATE
+  createApplication: and(isAuthenticated, fieldRules({})),
+  createCandidate: and(isAuthenticated, fieldRules({})),
   createTask: and(
     isAuthenticated,
     fieldRules({
-      owners: toManyDataWorkspaceConnection('User'),
-      subscribers: toManyDataWorkspaceConnection('User'),
-      job: toOneDataWorkspaceConnection('Job'),
-      candidate: toOneDataWorkspaceConnection('Candidate'),
+      owners: connectToManyByWorkspace('User'),
+      subscribers: connectToManyByWorkspace('User'),
+      job: connectToOneByWorkspace('Job'),
+      candidate: connectToOneByWorkspace('Candidate'),
     })
   ),
+
+  // UPDATE
+  updateApplication: and(isAuthenticated, whereSameWorkspace('Application')),
+  updateCandidate: and(isAuthenticated, whereSameWorkspace('Candidate')),
   updateTask: and(
     isAuthenticated,
+    whereSameWorkspace('Task'),
     fieldRules({
-      owners: toManyDataWorkspaceConnection('User'),
-      subscribers: toManyDataWorkspaceConnection('User'),
-      job: toOneDataWorkspaceConnection('Job'),
-      candidate: toOneDataWorkspaceConnection('Candidate'),
+      owners: connectToManyByWorkspace('User'),
+      subscribers: connectToManyByWorkspace('User'),
+      job: connectToOneByWorkspace('Job'),
+      candidate: connectToOneByWorkspace('Candidate'),
     })
   ),
-  deleteTask: and(isAuthenticated, whereSameWorkspace('Task')),
+  updateUser: and(isAuthenticated, whereSameWorkspace('User'), hasSpecialPermission),
+  updateWorkspace: and(isAuthenticated, hasSpecialPermission),
 
-  createWorkspace: allow,
+  updateNotification: and(isAuthenticated, whereSameUser('Notification')),
+
+  // DELETE
+  deleteTask: and(isAuthenticated, whereSameWorkspace('Task')),
+  deleteWorkspace: and(isAuthenticated, hasSpecialPermission),
+
+  deleteInvite: and(isAuthenticated, whereSameWorkspace('Invite')),
 }
 
-export const permissions = shield({ QueryRules, MutationRules })
+export const permissions = shield({ Query, Mutation })

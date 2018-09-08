@@ -7,7 +7,7 @@ import { Prisma } from 'prisma-binding'
 import {filters, permissions} from './middleware'
 import * as resolvers from './resolvers'
 import { typeDefs } from './schema/schema'
-import { JWTPayload } from './utils';
+import { IJWTPayload } from './utils';
 
 const prisma = new Prisma({
   typeDefs: 'src/generated/prisma.graphql',
@@ -21,7 +21,7 @@ const context = ({ req }) => {
 
   if (authorization) {
     const token = authorization.replace('Bearer ', '')
-    const auth = jwt.verify(token, process.env.APP_SECRET) as JWTPayload
+    const auth = jwt.verify(token, process.env.APP_SECRET) as IJWTPayload
     if (!(auth.userId && auth.workspaceId)) {
       throw new Error('Invalid Authorization Token')
     }

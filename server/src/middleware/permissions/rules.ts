@@ -1,16 +1,18 @@
-import { and, IRule, rule } from 'graphql-shield'
+import { allow, and, IRule, rule } from 'graphql-shield'
 import * as R from 'ramda'
 
-import { Context } from '../../utils'
+import { IContext } from '../../utils'
 
 /* Syntax for input field rules */
 export type FieldRule = (fieldName: string) => IRule
 
-export interface FieldRuleMap {
+export interface IFieldRuleMap {
   [key: string]: FieldRule
 }
 
-export const fieldRules = (connectionRuleMap: FieldRuleMap) => {
+export const hasSpecialPermission = allow
+
+export const fieldRules = (connectionRuleMap: IFieldRuleMap) => {
   const rulesArr = Object.entries(connectionRuleMap).map(([key, fn]) => fn(key))
   return and(...rulesArr)
 }
@@ -21,8 +23,24 @@ export const fieldAnd = (fieldName: string) => (...args: FieldRule[]) =>
 /* Standard Rules */
 export const isAuthenticated = rule()(async (parent, args, ctx) => ctx.auth !== null)
 
+export const whereSameUser = (target: string) =>
+  rule()(async (parent, args, ctx: IContext) => {
+    // shortcircuit
+    if (!R.has('id', args.where)) {
+      return true
+    }
+
+    const result: boolean = await ctx.db.exists[target]({
+      AND: {
+        id: args.where.id,
+        user: { id: ctx.auth.userId },
+      },
+    })
+    return result
+  })
+
 export const whereSameWorkspace = (target: string) =>
-  rule()(async (parent, args, ctx: Context) => {
+  rule()(async (parent, args, ctx: IContext) => {
     // shortcircuit
     if (!R.has('id', args.where)) {
       return true
@@ -37,25 +55,9 @@ export const whereSameWorkspace = (target: string) =>
     return result
   })
 
-export const toOneWhereUser = (target: string) =>
-  rule()(async (parent, args, ctx: Context) => {
-    // shortcircuit
-    if (!R.has('id', args.where)) {
-      return true
-    }
-
-    const result: boolean = await ctx.db.exists.User({
-      AND: {
-        id: args.where.id,
-        workspace: { id: ctx.auth.workspaceId },
-      },
-    })
-    return result
-  })
-
 /* Field rules */
-export const toOneDataWorkspaceConnection = (target: string) => (field: string) =>
-  rule()(async (parent, args, ctx: Context) => {
+export const connectToOneByWorkspace = (target: string) => (field: string) =>
+  rule()(async (parent, args, ctx: IContext) => {
     // shortcircuit
     if (!R.has(field, args.data)) {
       return true
@@ -71,8 +73,8 @@ export const toOneDataWorkspaceConnection = (target: string) => (field: string) 
     return result
   })
 
-export const toManyDataWorkspaceConnection = (target: string) => (field: string) =>
-  rule()(async (parent, args, ctx: Context) => {
+export const connectToManyByWorkspace = (target: string) => (field: string) =>
+  rule()(async (parent, args, ctx: IContext) => {
     // shortcircuit
     if (!R.has(field, args.data)) {
       return true

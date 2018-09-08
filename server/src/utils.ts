@@ -1,20 +1,22 @@
 import { GraphQLResolveInfo } from 'graphql'
-import { IMiddlewareResolver } from 'graphql-middleware/dist/types'
-import { IRules } from 'graphql-shield'
+import { IMiddlewareFunction } from 'graphql-middleware/dist/types'
 import { ShieldRule } from 'graphql-shield/dist/types'
-import * as jwt from 'jsonwebtoken'
 
 import { Mutation as ApiMutation, Query as ApiQuery } from './generated/app'
-import { Prisma, User } from './generated/prisma'
+import { Prisma } from './generated/prisma'
 
-export interface JWTPayload {
+export interface IJWTPayload {
   userId: string
   workspaceId: string
 }
 
-export interface Context {
+export interface IStringIndexSignature {
+  [index: string]: any
+}
+
+export interface IContext {
   db: Prisma
-  auth: JWTPayload
+  auth: IJWTPayload
   request: any
 }
 
@@ -25,7 +27,7 @@ export type Remapped<T> = {
   [P in keyof T]?: (
     parent: null | undefined,
     args: FirstArgument<T[P]>,
-    ctx: Context,
+    ctx: IContext,
     info?: GraphQLResolveInfo
   ) => any
 }
@@ -38,19 +40,19 @@ export type MiddlewareRemapped<T> = {
     resolve: Promise<any>,
     parent: null | undefined,
     args: FirstArgument<T[P]>,
-    ctx: Context,
+    ctx: IContext,
     info?: GraphQLResolveInfo
   ) => any
 }
 
-export type MiddlewarePropMap<T> = {
-  [P in keyof T]?: IMiddlewareResolver<any, Context, FirstArgument<T[P]>>
+export type MiddlewareFieldMap<T extends IStringIndexSignature> = {
+  [P in keyof T]?: IMiddlewareFunction<any, IContext, FirstArgument<T[P]>>
 }
 
 // TODO: Add subscriptions and custom types
-export interface MiddlewareFieldMap {
-  Query: MiddlewarePropMap<ApiQuery>
-  Mutation: MiddlewarePropMap<ApiMutation>
+export interface IMiddlewareTypeMap extends IStringIndexSignature {
+  Query: MiddlewareFieldMap<ApiQuery>
+  Mutation: MiddlewareFieldMap<ApiMutation>
 }
 
 export type RuleRemapped<T> = { [P in keyof T]?: ShieldRule }
@@ -58,17 +60,13 @@ export type RuleRemapped<T> = { [P in keyof T]?: ShieldRule }
 export type IRuleQuery = RuleRemapped<ApiQuery>
 export type IRuleMutation = RuleRemapped<ApiMutation>
 
-interface StringIndexed {
-  [index: string]: any
-}
-
-export type DataInputFieldsRules<T extends StringIndexed = ApiMutation> = {
+export type DataInputFieldsRules<T extends IStringIndexSignature = ApiMutation> = {
   [P in keyof T]: {
     data: {
       [K in keyof FirstArgument<T[P]>['data']]: (
         parent: null | undefined,
         args: FirstArgument<T[P]>,
-        ctx: Context,
+        ctx: IContext,
         info?: GraphQLResolveInfo
       ) => Promise<boolean>
     }
@@ -81,7 +79,7 @@ export type WhereInputFieldsRules<T = ApiQuery> = {
       [K in keyof FirstArgument<T[P]>['data']]: (
         parent: null | undefined,
         args: FirstArgument<T[P]>,
-        ctx: Context,
+        ctx: IContext,
         info?: GraphQLResolveInfo
       ) => Promise<boolean>
     }

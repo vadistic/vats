@@ -4,15 +4,12 @@ import { IMutation, IQuery } from '../utils'
 import { createWorkspace, login, signup } from './auth'
 import { createInvite, updateInvite } from './invite'
 
-const workspace = async (parent, args, ctx, info) =>
-  ctx.db.query.workspace({ where: { id: ctx.auth.workspaceId } }, info)
-
 const me = async (parent, args, ctx, info) =>
   ctx.db.query.user({ where: { id: ctx.auth.userId } }, info)
 
 export const Query: IQuery = {
   // CUSTOM
-  me,
+  me: forwardTo('db'),
 
   // SINGLE
   application: forwardTo('db'),
@@ -22,7 +19,7 @@ export const Query: IQuery = {
   notification: forwardTo('db'),
   task: forwardTo('db'),
   user: forwardTo('db'),
-  workspace,
+  workspace: forwardTo('db'),
 
   // MULTI
   applications: forwardTo('db'),

@@ -2,7 +2,6 @@
   "defaultSeverity": "error",
   "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
-    "interface-name": [true, "never-prefix"],
     "jsx-boolean-value": false,
     "no-empty-interface": false,
     "only-arrow-functions": true,
