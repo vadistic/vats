@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs'
 import { forwardTo } from 'prisma-binding'
 
-import { getId, Mutation } from '../utils'
+import { Mutation } from '../utils'
 
 export const invite = forwardTo('db')
 export const invites = forwardTo('db')
@@ -17,8 +17,6 @@ export const createInvite: Mutation['createInvite'] = async (
   ctx,
   info
 ) => {
-  const { userId, workspaceId } = getId(ctx)
-
   const expireAt = dayjs()
     .add(7, 'day')
     .format()
@@ -30,8 +28,8 @@ export const createInvite: Mutation['createInvite'] = async (
       data: {
         email,
         expireAt,
-        workspace: { connect: { id: workspaceId } },
-        invitedBy: { connect: { id: userId } },
+        workspace: { connect: { id: ctx.auth.workspaceId } },
+        invitedBy: { connect: { id: ctx.auth.userId } },
       },
     },
     info

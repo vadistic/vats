@@ -12,7 +12,7 @@ export const signup: Mutation['signup'] = async (
 ) => {
   const invite = await ctx.db.query.invite(
     { where: { id: inviteId } },
-    `{email, expireAt, workspace {id}}`
+    `{email, expireAt, workspace { id }}`
   )
 
   if (!invite) {
@@ -58,7 +58,7 @@ export const login: Mutation['login'] = async (
   ctx,
   info
 ) => {
-  const user = await ctx.db.query.user({ where: { email } }, `{id, password, workspace {id}}`)
+  const user = await ctx.db.query.user({ where: { email } }, `{id, password, workspace { id }}`)
 
   if (!user) {
     throw new Error(`No such user found for email: ${email}`)

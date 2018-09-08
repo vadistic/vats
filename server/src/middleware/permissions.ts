@@ -5,7 +5,6 @@ import { ShieldRule } from 'graphql-shield/dist/types'
 import {
   Context,
   DataInputFieldsRules,
-  getId,
   RuleMutation,
   RuleQuery,
   WhereInputFieldsRules,
@@ -14,14 +13,12 @@ import { Args } from './filters'
 
 /* tslint:disable:no-console */
 
-// TODO: Evaluate if this is secure?
-const isAuthenticated = rule()(async (parent, args, ctx) => ctx.user !== null)
+const isAuthenticated = rule()(async (parent, args, ctx) => ctx.auth !== null)
 
 const workspaceHasUser = rule()(async (parent, args, ctx: Context) => {
-  const userId = getId(ctx).userId
   return ctx.db.exists.Workspace({
     id: args.where.id,
-    users_some: { id: userId },
+    users_some: { id: ctx.auth.userId },
   })
 })
 
@@ -37,14 +34,13 @@ const toManyDataWorkspaceConnection = (target: string) => (field: string) =>
       return true
     }
 
-    const workspaceId = getId(ctx).workspaceId
     const targetConnect = args.data[field].connect
 
     const validationP = targetConnect.map(connect => {
       return ctx.db.exists[target]({
         AND: {
           id: connect.id,
-          workspace: { id: workspaceId },
+          workspace: { id: ctx.auth.workspaceId },
         },
       }).then(res => (res === true ? Promise.resolve(true) : Promise.reject('Not Authorized')))
     })
@@ -61,12 +57,10 @@ const toOneDataWorkspaceConnection = (target: string) => (field: string) =>
       return true
     }
 
-    const workspaceId = getId(ctx).workspaceId
-
     const result: boolean = await ctx.db.exists[target]({
       AND: {
         id: args.data[field].connect.id,
-        workspace: { id: workspaceId },
+        workspace: { id: ctx.auth.workspaceId },
       },
     })
 
@@ -80,12 +74,10 @@ const toOneWhereWorkspace = (target: string) =>
       return true
     }
 
-    const workspaceId = getId(ctx).workspaceId
-
     const result: boolean = await ctx.db.exists[target]({
       AND: {
         id: args.where.id,
-        workspace: { id: workspaceId },
+        workspace: { id: ctx.auth.workspaceId },
       },
     })
     return result
@@ -156,15 +148,7 @@ export const rules: IRules = {
     // task
 
     // Task
-    createTask: and(
-      isAuthenticated,
-      verifyConnections({
-        owners: toManyDataWorkspaceConnection('User'),
-        subscribers: toManyDataWorkspaceConnection('User'),
-        job: toOneDataWorkspaceConnection('Job'),
-        candidate: toOneDataWorkspaceConnection('Candidate'),
-      })
-    ),
+    createTask: and(isAuthenticated),
     updateTask: and(
       isAuthenticated,
       verifyConnections({

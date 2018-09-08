@@ -4,32 +4,16 @@ import { IRules } from 'graphql-shield'
 import * as jwt from 'jsonwebtoken'
 
 import { Mutation as ApiMutation, Query as ApiQuery } from './generated/app'
-import { Prisma } from './generated/prisma'
+import { Prisma, User } from './generated/prisma'
 
 export interface JWTPayload {
   userId: string
   workspaceId: string
 }
 
-export const getId = (ctx: Context) => {
-  const Authorization = ctx.request.get('Authorization')
-
-  if (Authorization) {
-    const token = Authorization.replace('Bearer ', '')
-    const { userId, workspaceId } = jwt.verify(token, process.env.APP_SECRET) as JWTPayload
-
-    if (!(userId && workspaceId)) {
-      throw new Error('Invalid Authorization Token')
-    } else {
-      return { userId, workspaceId }
-    }
-  }
-
-  throw new Error('Not Authorized!')
-}
-
 export interface Context {
   db: Prisma
+  auth: JWTPayload
   request: any
 }
 

@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql'
 import { IMiddleware } from 'graphql-middleware'
 import * as R from 'ramda'
 
-import { Context, getId, MiddlewareFieldMap, MiddlewarePropMap } from '../utils'
+import { Context, MiddlewareFieldMap } from '../utils'
 
 export interface Args {
   data?: object
@@ -45,18 +45,20 @@ const composeFilters: ComposeFilters = filterArr => async (resolve, parent, args
 }
 
 const whereWorkspace: Filter = async (parent, args, ctx, info) => {
-  const workspaceId = getId(ctx).workspaceId
-  return { parent, args: { where: { workspace: { id: workspaceId } } }, ctx, info }
+  return { parent, args: { where: { workspace: { id: ctx.auth.workspaceId } } }, ctx, info }
 }
 
 const whereUserFilter: Filter = async (parent, args, ctx, info) => {
-  const id = getId(ctx).userId
-  return { parent, args: { where: { user: { id } } }, ctx, info }
+  return { parent, args: { where: { user: { id: ctx.auth.userId } } }, ctx, info }
 }
 
 const dataWorkspaceConnect: Filter = async (parent, args, ctx, info) => {
-  const id = getId(ctx).workspaceId
-  return { parent, args: { data: { workspace: { connect: { id } } } }, ctx, info }
+  return {
+    parent,
+    args: { data: { workspace: { connect: { id: ctx.auth.workspaceId } } } },
+    ctx,
+    info,
+  }
 }
 
 const filters: IMiddleware & MiddlewareFieldMap = {
