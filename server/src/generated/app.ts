@@ -5,136 +5,89 @@ import schema from  '../schema/schema'
 
 export interface Query {
     me: <T = User>(args?: {}, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    application: <T = Application | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    candidate: <T = Candidate | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    invite: <T = Invite | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    job: <T = Job | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    task: <T = Task | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    user: <T = User | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    workspace: <T = Workspace>(args?: {}, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    comment: <T = Comment | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    event: <T = Event | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    field: <T = Field | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    location: <T = Location | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    notification: <T = Notification | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    stage: <T = Stage | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tag: <T = Tag | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     applications: <T = Application[]>(args: { where?: ApplicationWhereInput, orderBy?: ApplicationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     candidates: <T = Candidate[]>(args: { where?: CandidateWhereInput, orderBy?: CandidateOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    invites: <T = Invite[]>(args: { where?: InviteWhereInput, orderBy?: InviteOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    jobs: <T = Job[]>(args: { where?: JobWhereInput, orderBy?: JobOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tasks: <T = Task[]>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     comments: <T = Comment[]>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     events: <T = Event[]>(args: { where?: EventWhereInput, orderBy?: EventOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     fields: <T = Field[]>(args: { where?: FieldWhereInput, orderBy?: FieldOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    invites: <T = Invite[]>(args: { where?: InviteWhereInput, orderBy?: InviteOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    jobs: <T = Job[]>(args: { where?: JobWhereInput, orderBy?: JobOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     locations: <T = Location[]>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     notifications: <T = Notification[]>(args: { where?: NotificationWhereInput, orderBy?: NotificationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     stages: <T = Stage[]>(args: { where?: StageWhereInput, orderBy?: StageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     tags: <T = Tag[]>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tasks: <T = Task[]>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workspaces: <T = Workspace[]>(args: { where?: WorkspaceWhereInput, orderBy?: WorkspaceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    application: <T = Application | null>(args: { where: ApplicationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    candidate: <T = Candidate | null>(args: { where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    comment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    event: <T = Event | null>(args: { where: EventWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    field: <T = Field | null>(args: { where: FieldWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    invite: <T = Invite | null>(args: { where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    job: <T = Job | null>(args: { where: JobWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    location: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    notification: <T = Notification | null>(args: { where: NotificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    stage: <T = Stage | null>(args: { where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    task: <T = Task | null>(args: { where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workspace: <T = Workspace | null>(args: { where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     applicationsConnection: <T = ApplicationConnection>(args: { where?: ApplicationWhereInput, orderBy?: ApplicationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    notificationsConnection: <T = NotificationConnection>(args: { where?: NotificationWhereInput, orderBy?: NotificationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    locationsConnection: <T = LocationConnection>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     candidatesConnection: <T = CandidateConnection>(args: { where?: CandidateWhereInput, orderBy?: CandidateOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    invitesConnection: <T = InviteConnection>(args: { where?: InviteWhereInput, orderBy?: InviteOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    commentsConnection: <T = CommentConnection>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     eventsConnection: <T = EventConnection>(args: { where?: EventWhereInput, orderBy?: EventOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    stagesConnection: <T = StageConnection>(args: { where?: StageWhereInput, orderBy?: StageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workspacesConnection: <T = WorkspaceConnection>(args: { where?: WorkspaceWhereInput, orderBy?: WorkspaceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    jobsConnection: <T = JobConnection>(args: { where?: JobWhereInput, orderBy?: JobOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tasksConnection: <T = TaskConnection>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tagsConnection: <T = TagConnection>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     fieldsConnection: <T = FieldConnection>(args: { where?: FieldWhereInput, orderBy?: FieldOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    commentsConnection: <T = CommentConnection>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
+    invitesConnection: <T = InviteConnection>(args: { where?: InviteWhereInput, orderBy?: InviteOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    jobsConnection: <T = JobConnection>(args: { where?: JobWhereInput, orderBy?: JobOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    locationsConnection: <T = LocationConnection>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    notificationsConnection: <T = NotificationConnection>(args: { where?: NotificationWhereInput, orderBy?: NotificationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    stagesConnection: <T = StageConnection>(args: { where?: StageWhereInput, orderBy?: StageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tagsConnection: <T = TagConnection>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    tasksConnection: <T = TaskConnection>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    workspacesConnection: <T = WorkspaceConnection>(args: { where?: WorkspaceWhereInput, orderBy?: WorkspaceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Mutation {
+    createWorkspace: <T = AuthPayload>(args: { data: WorkspaceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     signup: <T = AuthPayload>(args: { data?: SignupInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     login: <T = AuthPayload>(args: { data?: LoginInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createWorkspace: <T = AuthPayload>(args: { data: WorkspaceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createApplication: <T = Application>(args: { data: ApplicationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createLocation: <T = Location>(args: { data: LocationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createCandidate: <T = Candidate>(args: { data: CandidateCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createInvite: <T = Invite>(args: { data: InviteCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createEvent: <T = Event>(args: { data: EventCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createStage: <T = Stage>(args: { data: StageCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateInvite: <T = Invite | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createApplication: <T = Application>(args: { data: ApplicationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createCandidate: <T = Candidate>(args: { data: CandidateCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createJob: <T = Job>(args: { data: JobCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createTask: <T = Task>(args: { data: TaskCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createTag: <T = Tag>(args: { data: TagCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createField: <T = Field>(args: { data: FieldCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createComment: <T = Comment>(args: { data: CommentCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateApplication: <T = Application | null>(args: { data: ApplicationUpdateInput, where: ApplicationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateNotification: <T = Notification | null>(args: { data: NotificationUpdateInput, where: NotificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateLocation: <T = Location | null>(args: { data: LocationUpdateInput, where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateCandidate: <T = Candidate | null>(args: { data: CandidateUpdateInput, where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateInvite: <T = Invite | null>(args: { data: InviteUpdateInput, where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateEvent: <T = Event | null>(args: { data: EventUpdateInput, where: EventWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateStage: <T = Stage | null>(args: { data: StageUpdateInput, where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateWorkspace: <T = Workspace | null>(args: { data: WorkspaceUpdateInput, where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateJob: <T = Job | null>(args: { data: JobUpdateInput, where: JobWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateTask: <T = Task | null>(args: { data: TaskUpdateInput, where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateTag: <T = Tag | null>(args: { data: TagUpdateInput, where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateField: <T = Field | null>(args: { data: FieldUpdateInput, where: FieldWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateComment: <T = Comment | null>(args: { data: CommentUpdateInput, where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteApplication: <T = Application | null>(args: { where: ApplicationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteNotification: <T = Notification | null>(args: { where: NotificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteLocation: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteCandidate: <T = Candidate | null>(args: { where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteInvite: <T = Invite | null>(args: { where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteEvent: <T = Event | null>(args: { where: EventWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteStage: <T = Stage | null>(args: { where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteWorkspace: <T = Workspace | null>(args: { where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteJob: <T = Job | null>(args: { where: JobWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteTask: <T = Task | null>(args: { where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteTag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteField: <T = Field | null>(args: { where: FieldWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteComment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertApplication: <T = Application>(args: { where: ApplicationWhereUniqueInput, create: ApplicationCreateInput, update: ApplicationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertNotification: <T = Notification>(args: { where: NotificationWhereUniqueInput, create: NotificationCreateInput, update: NotificationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertLocation: <T = Location>(args: { where: LocationWhereUniqueInput, create: LocationCreateInput, update: LocationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertCandidate: <T = Candidate>(args: { where: CandidateWhereUniqueInput, create: CandidateCreateInput, update: CandidateUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertInvite: <T = Invite>(args: { where: InviteWhereUniqueInput, create: InviteCreateInput, update: InviteUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertEvent: <T = Event>(args: { where: EventWhereUniqueInput, create: EventCreateInput, update: EventUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertStage: <T = Stage>(args: { where: StageWhereUniqueInput, create: StageCreateInput, update: StageUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertWorkspace: <T = Workspace>(args: { where: WorkspaceWhereUniqueInput, create: WorkspaceCreateInput, update: WorkspaceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertJob: <T = Job>(args: { where: JobWhereUniqueInput, create: JobCreateInput, update: JobUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertTask: <T = Task>(args: { where: TaskWhereUniqueInput, create: TaskCreateInput, update: TaskUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertTag: <T = Tag>(args: { where: TagWhereUniqueInput, create: TagCreateInput, update: TagUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertField: <T = Field>(args: { where: FieldWhereUniqueInput, create: FieldCreateInput, update: FieldUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertComment: <T = Comment>(args: { where: CommentWhereUniqueInput, create: CommentCreateInput, update: CommentUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyApplications: <T = BatchPayload>(args: { data: ApplicationUpdateInput, where?: ApplicationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyNotifications: <T = BatchPayload>(args: { data: NotificationUpdateInput, where?: NotificationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyLocations: <T = BatchPayload>(args: { data: LocationUpdateInput, where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyCandidates: <T = BatchPayload>(args: { data: CandidateUpdateInput, where?: CandidateWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyInvites: <T = BatchPayload>(args: { data: InviteUpdateInput, where?: InviteWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyEvents: <T = BatchPayload>(args: { data: EventUpdateInput, where?: EventWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyStages: <T = BatchPayload>(args: { data: StageUpdateInput, where?: StageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyWorkspaces: <T = BatchPayload>(args: { data: WorkspaceUpdateInput, where?: WorkspaceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyJobs: <T = BatchPayload>(args: { data: JobUpdateInput, where?: JobWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyTasks: <T = BatchPayload>(args: { data: TaskUpdateInput, where?: TaskWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyTags: <T = BatchPayload>(args: { data: TagUpdateInput, where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyFields: <T = BatchPayload>(args: { data: FieldUpdateInput, where?: FieldWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyComments: <T = BatchPayload>(args: { data: CommentUpdateInput, where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyApplications: <T = BatchPayload>(args: { where?: ApplicationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyNotifications: <T = BatchPayload>(args: { where?: NotificationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyLocations: <T = BatchPayload>(args: { where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyCandidates: <T = BatchPayload>(args: { where?: CandidateWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyInvites: <T = BatchPayload>(args: { where?: InviteWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyEvents: <T = BatchPayload>(args: { where?: EventWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyStages: <T = BatchPayload>(args: { where?: StageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyWorkspaces: <T = BatchPayload>(args: { where?: WorkspaceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyJobs: <T = BatchPayload>(args: { where?: JobWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyTasks: <T = BatchPayload>(args: { where?: TaskWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyTags: <T = BatchPayload>(args: { where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyFields: <T = BatchPayload>(args: { where?: FieldWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyComments: <T = BatchPayload>(args: { where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
+    createField: <T = Field>(args: { data: FieldCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createLocation: <T = Location>(args: { data: LocationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createStage: <T = Stage>(args: { data: StageCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createTag: <T = Tag>(args: { data: TagCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateApplication: <T = Application | null>(args: { data: ApplicationUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateCandidate: <T = Candidate | null>(args: { data: CandidateUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateJob: <T = Job | null>(args: { data: JobUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateTask: <T = Task | null>(args: { data: TaskUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateUser: <T = User | null>(args: { data: UserUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateWorkspace: <T = Workspace | null>(args: { data: WorkspaceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateComment: <T = Comment | null>(args: { data: CommentUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateField: <T = Field | null>(args: { data: FieldUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateLocation: <T = Location | null>(args: { data: LocationUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateNotification: <T = Notification | null>(args: { data: NotificationUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateStage: <T = Stage | null>(args: { data: StageUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateTag: <T = Tag | null>(args: { data: TagUpdateInput, where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteApplication: <T = Application | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteCandidate: <T = Candidate | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteJob: <T = Job | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteTask: <T = Task | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteUser: <T = User | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteWorkspace: <T = Workspace | null>(args?: {}, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteComment: <T = Comment | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteField: <T = Field | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteInvite: <T = Invite | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteLocation: <T = Location | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteNotification: <T = Notification | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteStage: <T = Stage | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteTag: <T = Tag | null>(args: { where: WhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Subscription {}
@@ -375,10 +328,9 @@ export type EventTargetTypeEnum =   'CANDIDATE' |
   'TASK' |
   'WORKSPACE'
 
-export interface InviteCreateWithoutWorkspaceInput {
-  email: String
-  expireAt: DateTime
-  invitedBy: UserCreateOneInput
+export interface ApplicationCreateManyWithoutCandidateInput {
+  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
 }
 
 export interface UserUpsertWithoutNotificationsInput {
@@ -386,9 +338,10 @@ export interface UserUpsertWithoutNotificationsInput {
   create: UserCreateWithoutNotificationsInput
 }
 
-export interface WorkspaceCreateOneWithoutInvitesInput {
-  create?: WorkspaceCreateWithoutInvitesInput
-  connect?: WorkspaceWhereUniqueInput
+export interface InviteCreateWithoutWorkspaceInput {
+  email: String
+  expireAt: DateTime
+  invitedBy: UserCreateOneInput
 }
 
 export interface StageWhereInput {
@@ -467,14 +420,8 @@ export interface StageWhereInput {
   type_not_in?: StageTypeEnum[] | StageTypeEnum
 }
 
-export interface WorkspaceCreateWithoutInvitesInput {
-  name: String
-  events?: EventCreateManyWithoutTargetWorkspaceInput
-  users?: UserCreateManyWithoutWorkspaceInput
-  jobs?: JobCreateManyWithoutWorkspaceInput
-  applications?: ApplicationCreateManyWithoutWorkspaceInput
-  candidates?: CandidateCreateManyWithoutWorkspaceInput
-  tags?: TagCreateManyInput
+export interface InviteWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface CommentWhereInput {
@@ -529,10 +476,9 @@ export interface CommentWhereInput {
   parent?: CommentWhereInput
 }
 
-export interface ApplicationUpdateInput {
-  disqualifyReason?: String
-  job?: ConnectDisconnect
-  stage?: Connect
+export interface CandidateCreateOneWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput
+  connect?: CandidateWhereUniqueInput
 }
 
 export interface InviteWhereInput {
@@ -595,43 +541,56 @@ export interface InviteWhereInput {
   invitedBy?: UserWhereInput
 }
 
-export interface UserCreateManyWithoutSubscriptionTasksInput {
-  create?: UserCreateWithoutSubscriptionTasksInput[] | UserCreateWithoutSubscriptionTasksInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+export interface CandidateCreateManyWithoutSubscribersInput {
+  create?: CandidateCreateWithoutSubscribersInput[] | CandidateCreateWithoutSubscribersInput
+  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
 }
 
-export interface CandidateUpdateOneWithoutApplicationsInput {
-  create?: CandidateCreateWithoutApplicationsInput
-  connect?: CandidateWhereUniqueInput
-  delete?: Boolean
-  update?: CandidateUpdateWithoutApplicationsDataInput
-  upsert?: CandidateUpsertWithoutApplicationsInput
+export interface ApplicationUpsertWithWhereUniqueWithoutCandidateInput {
+  where: ApplicationWhereUniqueInput
+  update: ApplicationUpdateWithoutCandidateDataInput
+  create: ApplicationCreateWithoutCandidateInput
 }
 
-export interface UserCreateWithoutSubscriptionTasksInput {
-  firstName?: String
-  lastName?: String
-  email: String
-  username: String
-  password: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
-  events?: EventCreateOneWithoutActorUserInput
-  notifications?: NotificationCreateManyWithoutUserInput
-  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
-  tasks?: TaskCreateManyWithoutOwnersInput
+export interface CandidateCreateWithoutSubscribersInput {
+  firstName: String
+  lastName: String
+  emails?: CandidateCreateemailsInput
+  phones?: CandidateCreatephonesInput
+  links?: CandidateCreatelinksInput
+  resume?: CandidateCreateresumeInput
+  coverLetter?: CandidateCreatecoverLetterInput
+  source?: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput
+  events?: EventCreateManyWithoutTargetCandidateInput
+  tags?: TagCreateManyInput
+  fields?: FieldCreateManyInput
+  tasks?: TaskCreateManyWithoutCandidateInput
+  applications?: ApplicationCreateManyWithoutCandidateInput
+  comments?: CommentCreateManyInput
 }
 
-export interface ConnectDisconnect {
-  connect?: WhereUniqueInput
-  disconnect?: WhereUniqueInput
+export interface CandidateCreateWithoutApplicationsInput {
+  firstName: String
+  lastName: String
+  emails?: CandidateCreateemailsInput
+  phones?: CandidateCreatephonesInput
+  links?: CandidateCreatelinksInput
+  resume?: CandidateCreateresumeInput
+  coverLetter?: CandidateCreatecoverLetterInput
+  source?: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput
+  events?: EventCreateManyWithoutTargetCandidateInput
+  subscribers?: UserCreateManyWithoutSubscriptionCandidatesInput
+  tags?: TagCreateManyInput
+  fields?: FieldCreateManyInput
+  tasks?: TaskCreateManyWithoutCandidateInput
+  comments?: CommentCreateManyInput
 }
 
-export interface TaskCreateManyWithoutOwnersInput {
-  create?: TaskCreateWithoutOwnersInput[] | TaskCreateWithoutOwnersInput
-  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+export interface TagCreateManyInput {
+  create?: TagCreateInput[] | TagCreateInput
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
 }
 
 export interface TagWhereInput {
@@ -684,15 +643,8 @@ export interface TagWhereInput {
   label_not_ends_with?: String
 }
 
-export interface TaskCreateWithoutOwnersInput {
-  targetType?: TaskTargetEnum
-  title?: String
-  description?: String
-  dueAt?: DateTime
-  workspace: WorkspaceCreateOneInput
-  subscribers?: UserCreateManyWithoutSubscriptionTasksInput
-  job?: JobCreateOneInput
-  candidate?: CandidateCreateOneWithoutTasksInput
+export interface TagCreateInput {
+  label: String
 }
 
 export interface CandidateWhereInput {
@@ -780,9 +732,8 @@ export interface CandidateWhereInput {
   comments_none?: CommentWhereInput
 }
 
-export interface JobCreateOneInput {
-  create?: JobCreateInput
-  connect?: JobWhereUniqueInput
+export interface TagWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface ApplicationWhereInput {
@@ -838,36 +789,30 @@ export interface ApplicationWhereInput {
   stage?: StageWhereInput
 }
 
-export interface JobCreateInput {
-  status: JobType
-  title: String
-  department?: String
+export interface FieldCreateManyInput {
+  create?: FieldCreateInput[] | FieldCreateInput
+  connect?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
+}
+
+export interface TagUpdateInput {
+  label?: String
+}
+
+export interface FieldCreateInput {
+  type: FieldTypeEnum
+  label: String
+  value: String
+}
+
+export interface StageUpdateInput {
+  name?: String
   description?: String
-  requirements?: String
-  subscribers?: ConnectMany
-  stages?: StageCreateManyInput
-  location?: LocationCreateOneInput
+  position?: Int
+  type?: StageTypeEnum
 }
 
-export interface UserCreateOneWithoutNotificationsInput {
-  create?: UserCreateWithoutNotificationsInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface LocationCreateOneInput {
-  create?: LocationCreateInput
-  connect?: LocationWhereUniqueInput
-}
-
-export interface NotificationCreateInput {
-  status: NotificationStatusEnum
-  user: UserCreateOneWithoutNotificationsInput
-  event: EventCreateOneInput
-}
-
-export interface CandidateCreateOneWithoutTasksInput {
-  create?: CandidateCreateWithoutTasksInput
-  connect?: CandidateWhereUniqueInput
+export interface FieldWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface NotificationWhereInput {
@@ -912,51 +857,38 @@ export interface NotificationWhereInput {
   event?: EventWhereInput
 }
 
-export interface CandidateCreateWithoutTasksInput {
-  firstName: String
-  lastName: String
-  emails?: CandidateCreateemailsInput
-  phones?: CandidateCreatephonesInput
-  links?: CandidateCreatelinksInput
-  resume?: CandidateCreateresumeInput
-  coverLetter?: CandidateCreatecoverLetterInput
-  source?: CandidateCreatesourceInput
-  workspace: WorkspaceCreateOneWithoutCandidatesInput
-  events?: EventCreateManyWithoutTargetCandidateInput
-  subscribers?: UserCreateManyWithoutSubscriptionCandidatesInput
-  tags?: TagCreateManyInput
-  fields?: FieldCreateManyInput
-  applications?: ApplicationCreateManyWithoutCandidateInput
-  comments?: CommentCreateManyInput
+export interface TaskCreateManyWithoutCandidateInput {
+  create?: TaskCreateWithoutCandidateInput[] | TaskCreateWithoutCandidateInput
+  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
 }
 
-export interface FieldUpdateInput {
-  type?: FieldTypeEnum
-  label?: String
-  value?: String
+export interface LocationUpdateInput {
+  country?: String
+  region?: String
+  city?: String
+  zip?: String
 }
 
-export interface ApplicationCreateManyWithoutCandidateInput {
-  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-}
-
-export interface TaskUpdateInput {
+export interface TaskCreateWithoutCandidateInput {
   targetType?: TaskTargetEnum
   title?: String
   description?: String
   dueAt?: DateTime
-  subscribers?: ConnectDisconnectMany
-  owners?: ConnectDisconnectMany
-  job?: ConnectDisconnect
-  candidate?: ConnectDisconnect
+  workspace: WorkspaceCreateOneInput
+  subscribers?: UserCreateManyWithoutSubscriptionTasksInput
+  owners?: UserCreateManyWithoutTasksInput
+  job?: JobCreateOneInput
 }
 
-export interface ApplicationCreateWithoutCandidateInput {
-  disqualifyReason?: String
-  workspace: WorkspaceCreateOneWithoutApplicationsInput
-  job: JobCreateOneWithoutApplicationsInput
-  stage: StageCreateOneInput
+export interface CommentUpdateInput {
+  content?: String
+  createdBy?: UserUpdateOneInput
+  parent?: CommentUpdateOneInput
+}
+
+export interface UserCreateManyWithoutSubscriptionTasksInput {
+  create?: UserCreateWithoutSubscriptionTasksInput[] | UserCreateWithoutSubscriptionTasksInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
 }
 
 export interface EventWhereInput {
@@ -1014,55 +946,78 @@ export interface EventWhereInput {
   targetWorkspace?: WorkspaceWhereInput
 }
 
-export interface WorkspaceCreateOneWithoutApplicationsInput {
-  create?: WorkspaceCreateWithoutApplicationsInput
-  connect?: WorkspaceWhereUniqueInput
+export interface UserCreateWithoutSubscriptionTasksInput {
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput
+  events?: EventCreateOneWithoutActorUserInput
+  notifications?: NotificationCreateManyWithoutUserInput
+  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
+  tasks?: TaskCreateManyWithoutOwnersInput
 }
 
-export interface WorkspaceUpdateInput {
-  name?: String
-  events?: EventUpdateManyWithoutTargetWorkspaceInput
-  users?: UserUpdateManyWithoutWorkspaceInput
-  jobs?: JobUpdateManyWithoutWorkspaceInput
-  applications?: ApplicationUpdateManyWithoutWorkspaceInput
-  candidates?: CandidateUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
+export interface UserUpdateInput {
+  firstName?: String
+  lastName?: String
+  email?: String
+  username?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  events?: EventUpdateOneWithoutActorUserInput
+  notifications?: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs?: ConnectDisconnectMany
+  subscriptionCandidates?: ConnectDisconnectMany
+  subscriptionTasks?: ConnectDisconnectMany
+  tasks?: TaskUpdateManyWithoutOwnersInput
 }
 
-export interface WorkspaceCreateWithoutApplicationsInput {
-  name: String
-  events?: EventCreateManyWithoutTargetWorkspaceInput
-  users?: UserCreateManyWithoutWorkspaceInput
-  jobs?: JobCreateManyWithoutWorkspaceInput
-  candidates?: CandidateCreateManyWithoutWorkspaceInput
-  invites?: InviteCreateManyWithoutWorkspaceInput
-  tags?: TagCreateManyInput
+export interface TaskCreateManyWithoutOwnersInput {
+  create?: TaskCreateWithoutOwnersInput[] | TaskCreateWithoutOwnersInput
+  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
 }
 
-export interface EventUpdateInput {
-  type?: EventTypeEnum
-  actorType?: EventActorTypeEnum
-  targetType?: EventTargetTypeEnum
-  workspace?: WorkspaceUpdateOneInput
-  actorUser?: UserUpdateOneWithoutEventsInput
-  actorCandidate?: CandidateUpdateOneInput
-  targetCandidate?: CandidateUpdateOneWithoutEventsInput
-  targetJob?: JobUpdateOneWithoutEventsInput
-  targetTask?: TaskUpdateOneInput
-  targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
+export interface WhereUniqueInput {
+  id: ID_Input
 }
 
-export interface CandidateCreateManyWithoutWorkspaceInput {
-  create?: CandidateCreateWithoutWorkspaceInput[] | CandidateCreateWithoutWorkspaceInput
-  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+export interface TaskCreateWithoutOwnersInput {
+  targetType?: TaskTargetEnum
+  title?: String
+  description?: String
+  dueAt?: DateTime
+  workspace: WorkspaceCreateOneInput
+  subscribers?: UserCreateManyWithoutSubscriptionTasksInput
+  job?: JobCreateOneInput
+  candidate?: CandidateCreateOneWithoutTasksInput
 }
 
-export interface ApplicationWhereUniqueInput {
-  id?: ID_Input
+export interface CommentUpsertWithWhereUniqueNestedInput {
+  where: CommentWhereUniqueInput
+  update: CommentUpdateDataInput
+  create: CommentCreateInput
 }
 
-export interface CandidateCreateWithoutWorkspaceInput {
+export interface CandidateCreateOneWithoutTasksInput {
+  create?: CandidateCreateWithoutTasksInput
+  connect?: CandidateWhereUniqueInput
+}
+
+export interface CommentUpdateOneInput {
+  create?: CommentCreateInput
+  connect?: CommentWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: CommentUpdateDataInput
+  upsert?: CommentUpsertNestedInput
+}
+
+export interface CandidateCreateWithoutTasksInput {
   firstName: String
   lastName: String
   emails?: CandidateCreateemailsInput
@@ -1071,34 +1026,40 @@ export interface CandidateCreateWithoutWorkspaceInput {
   resume?: CandidateCreateresumeInput
   coverLetter?: CandidateCreatecoverLetterInput
   source?: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput
   events?: EventCreateManyWithoutTargetCandidateInput
   subscribers?: UserCreateManyWithoutSubscriptionCandidatesInput
   tags?: TagCreateManyInput
   fields?: FieldCreateManyInput
-  tasks?: TaskCreateManyWithoutCandidateInput
   applications?: ApplicationCreateManyWithoutCandidateInput
   comments?: CommentCreateManyInput
 }
 
-export interface CommentWhereUniqueInput {
-  id?: ID_Input
+export interface WorkspaceUpsertWithoutUsersInput {
+  update: WorkspaceUpdateWithoutUsersDataInput
+  create: WorkspaceCreateWithoutUsersInput
 }
 
-export interface InviteCreateManyWithoutWorkspaceInput {
-  create?: InviteCreateWithoutWorkspaceInput[] | InviteCreateWithoutWorkspaceInput
-  connect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
+export interface WorkspaceUpsertNestedInput {
+  update: WorkspaceUpdateDataInput
+  create: WorkspaceCreateInput
 }
 
-export interface FieldWhereUniqueInput {
-  id?: ID_Input
+export interface EventUpsertWithoutActorUserInput {
+  update: EventUpdateWithoutActorUserDataInput
+  create: EventCreateWithoutActorUserInput
 }
 
-export interface JobWhereUniqueInput {
-  id?: ID_Input
+export interface ApplicationCreateWithoutCandidateInput {
+  disqualifyReason?: String
+  workspace: WorkspaceCreateOneWithoutApplicationsInput
+  job: JobCreateOneWithoutApplicationsInput
+  stage: StageCreateOneInput
 }
 
-export interface NotificationWhereUniqueInput {
-  id?: ID_Input
+export interface WorkspaceUpsertWithoutCandidatesInput {
+  update: WorkspaceUpdateWithoutCandidatesDataInput
+  create: WorkspaceCreateWithoutCandidatesInput
 }
 
 export interface StageCreateOneInput {
@@ -1106,8 +1067,30 @@ export interface StageCreateOneInput {
   connect?: StageWhereUniqueInput
 }
 
-export interface TagWhereUniqueInput {
+export interface UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutSubscriptionJobsDataInput
+  create: UserCreateWithoutSubscriptionJobsInput
+}
+
+export interface ApplicationWhereUniqueInput {
   id?: ID_Input
+}
+
+export interface EventUpsertNestedInput {
+  update: EventUpdateDataInput
+  create: EventCreateInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
+export interface JobUpsertWithWhereUniqueWithoutSubscribersInput {
+  where: JobWhereUniqueInput
+  update: JobUpdateWithoutSubscribersDataInput
+  create: JobCreateWithoutSubscribersInput
 }
 
 export interface UserCreateManyWithoutTasksInput {
@@ -1115,9 +1098,10 @@ export interface UserCreateManyWithoutTasksInput {
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
 }
 
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
+export interface ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: ApplicationWhereUniqueInput
+  update: ApplicationUpdateWithoutWorkspaceDataInput
+  create: ApplicationCreateWithoutWorkspaceInput
 }
 
 export interface UserCreateWithoutTasksInput {
@@ -1136,14 +1120,10 @@ export interface UserCreateWithoutTasksInput {
   subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
 }
 
-export interface WorkspaceUpdateWithoutInvitesDataInput {
-  name?: String
-  events?: EventUpdateManyWithoutTargetWorkspaceInput
-  users?: UserUpdateManyWithoutWorkspaceInput
-  jobs?: JobUpdateManyWithoutWorkspaceInput
-  applications?: ApplicationUpdateManyWithoutWorkspaceInput
-  candidates?: CandidateUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
+export interface EventUpsertWithWhereUniqueWithoutTargetJobInput {
+  where: EventWhereUniqueInput
+  update: EventUpdateWithoutTargetJobDataInput
+  create: EventCreateWithoutTargetJobInput
 }
 
 export interface TaskCreateManyWithoutSubscribersInput {
@@ -1151,11 +1131,10 @@ export interface TaskCreateManyWithoutSubscribersInput {
   connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
 }
 
-export interface InviteUpdateInput {
-  email?: String
-  expireAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutInvitesInput
-  invitedBy?: UserUpdateOneInput
+export interface UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutSubscriptionCandidatesDataInput
+  create: UserCreateWithoutSubscriptionCandidatesInput
 }
 
 export interface TaskCreateWithoutSubscribersInput {
@@ -1169,19 +1148,10 @@ export interface TaskCreateWithoutSubscribersInput {
   candidate?: CandidateCreateOneWithoutTasksInput
 }
 
-export interface UserUpdateInput {
-  firstName?: String
-  lastName?: String
-  email?: String
-  username?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  events?: EventUpdateOneWithoutActorUserInput
-  notifications?: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs?: ConnectDisconnectMany
-  subscriptionCandidates?: ConnectDisconnectMany
-  subscriptionTasks?: ConnectDisconnectMany
-  tasks?: TaskUpdateManyWithoutOwnersInput
+export interface UserUpsertWithWhereUniqueWithoutTasksInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutTasksDataInput
+  create: UserCreateWithoutTasksInput
 }
 
 export interface CommentCreateOneInput {
@@ -1189,88 +1159,49 @@ export interface CommentCreateOneInput {
   connect?: CommentWhereUniqueInput
 }
 
-export interface WorkspaceUpsertNestedInput {
-  update: WorkspaceUpdateDataInput
-  create: WorkspaceCreateInput
+export interface EventUpsertWithWhereUniqueWithoutTargetCandidateInput {
+  where: EventWhereUniqueInput
+  update: EventUpdateWithoutTargetCandidateDataInput
+  create: EventCreateWithoutTargetCandidateInput
 }
 
-export interface CandidateCreateOneWithoutApplicationsInput {
-  create?: CandidateCreateWithoutApplicationsInput
-  connect?: CandidateWhereUniqueInput
+export interface CommentWhereUniqueInput {
+  id?: ID_Input
 }
 
-export interface UserUpsertWithoutEventsInput {
-  update: UserUpdateWithoutEventsDataInput
-  create: UserCreateWithoutEventsInput
+export interface WorkspaceUpdateWithoutEventsDataInput {
+  name?: String
+  users?: UserUpdateManyWithoutWorkspaceInput
+  jobs?: JobUpdateManyWithoutWorkspaceInput
+  applications?: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates?: CandidateUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
+  tags?: TagUpdateManyInput
 }
 
-export interface CandidateCreateWithoutApplicationsInput {
-  firstName: String
-  lastName: String
-  emails?: CandidateCreateemailsInput
-  phones?: CandidateCreatephonesInput
-  links?: CandidateCreatelinksInput
-  resume?: CandidateCreateresumeInput
-  coverLetter?: CandidateCreatecoverLetterInput
-  source?: CandidateCreatesourceInput
-  workspace: WorkspaceCreateOneWithoutCandidatesInput
-  events?: EventCreateManyWithoutTargetCandidateInput
-  subscribers?: UserCreateManyWithoutSubscriptionCandidatesInput
-  tags?: TagCreateManyInput
-  fields?: FieldCreateManyInput
-  tasks?: TaskCreateManyWithoutCandidateInput
-  comments?: CommentCreateManyInput
+export interface InviteCreateManyWithoutWorkspaceInput {
+  create?: InviteCreateWithoutWorkspaceInput[] | InviteCreateWithoutWorkspaceInput
+  connect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
 }
 
-export interface JobUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: JobWhereUniqueInput
-  update: JobUpdateWithoutWorkspaceDataInput
-  create: JobCreateWithoutWorkspaceInput
+export interface TaskUpsertNestedInput {
+  update: TaskUpdateDataInput
+  create: TaskCreateInput
 }
 
-export interface ApplicationCreateManyWithoutJobInput {
-  create?: ApplicationCreateWithoutJobInput[] | ApplicationCreateWithoutJobInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+export interface TaskUpsertWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput
+  update: TaskUpdateWithoutOwnersDataInput
+  create: TaskCreateWithoutOwnersInput
 }
 
-export interface EventUpsertWithoutActorUserInput {
-  update: EventUpdateWithoutActorUserDataInput
-  create: EventCreateWithoutActorUserInput
-}
-
-export interface ApplicationCreateWithoutJobInput {
-  disqualifyReason?: String
-  workspace: WorkspaceCreateOneWithoutApplicationsInput
-  candidate: CandidateCreateOneWithoutApplicationsInput
-  stage: StageCreateOneInput
-}
-
-export interface WorkspaceUpsertWithoutCandidatesInput {
-  update: WorkspaceUpdateWithoutCandidatesDataInput
-  create: WorkspaceCreateWithoutCandidatesInput
-}
-
-export interface InviteCreateInput {
-  email: String
-  expireAt: DateTime
-  workspace: WorkspaceCreateOneWithoutInvitesInput
-  invitedBy: UserCreateOneInput
-}
-
-export interface NotificationUpsertWithWhereUniqueWithoutUserInput {
-  where: NotificationWhereUniqueInput
-  update: NotificationUpdateWithoutUserDataInput
-  create: NotificationCreateWithoutUserInput
-}
-
-export interface CandidateUpsertWithoutApplicationsInput {
-  update: CandidateUpdateWithoutApplicationsDataInput
-  create: CandidateCreateWithoutApplicationsInput
-}
-
-export interface JobUpsertWithoutEventsInput {
-  update: JobUpdateWithoutEventsDataInput
-  create: JobCreateWithoutEventsInput
+export interface TaskUpdateOneInput {
+  create?: TaskCreateInput
+  connect?: TaskWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: TaskUpdateDataInput
+  upsert?: TaskUpsertNestedInput
 }
 
 export interface LocationWhereInput {
@@ -1349,13 +1280,10 @@ export interface LocationWhereInput {
   zip_not_ends_with?: String
 }
 
-export interface JobUpdateOneWithoutEventsInput {
-  create?: JobCreateWithoutEventsInput
-  connect?: JobWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: JobUpdateWithoutEventsDataInput
-  upsert?: JobUpsertWithoutEventsInput
+export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
+  where: ApplicationWhereUniqueInput
+  update: ApplicationUpdateWithoutJobDataInput
+  create: ApplicationCreateWithoutJobInput
 }
 
 export interface TaskWhereInput {
@@ -1442,12 +1370,6 @@ export interface TaskWhereInput {
   candidate?: CandidateWhereInput
 }
 
-export interface UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutSubscriptionCandidatesDataInput
-  create: UserCreateWithoutSubscriptionCandidatesInput
-}
-
 export interface CandidateUpdateWithoutApplicationsDataInput {
   firstName?: String
   lastName?: String
@@ -1466,30 +1388,38 @@ export interface CandidateUpdateWithoutApplicationsDataInput {
   comments?: CommentUpdateManyInput
 }
 
-export interface WorkspaceUpsertWithoutJobsInput {
-  update: WorkspaceUpdateWithoutJobsDataInput
-  create: WorkspaceCreateWithoutJobsInput
+export interface CandidateUpsertWithoutTasksInput {
+  update: CandidateUpdateWithoutTasksDataInput
+  create: CandidateCreateWithoutTasksInput
 }
 
-export interface NotificationUpdateInput {
-  status?: NotificationStatusEnum
+export interface WorkspaceUpsertWithoutApplicationsInput {
+  update: WorkspaceUpdateWithoutApplicationsDataInput
+  create: WorkspaceCreateWithoutApplicationsInput
 }
 
-export interface JobUpsertWithoutApplicationsInput {
-  update: JobUpdateWithoutApplicationsDataInput
-  create: JobCreateWithoutApplicationsInput
+export interface NotificationWhereUniqueInput {
+  id?: ID_Input
 }
 
-export interface LocationUpdateInput {
-  country?: String
-  region?: String
-  city?: String
-  zip?: String
+export interface InviteUpdateWithoutWorkspaceDataInput {
+  email?: String
+  expireAt?: DateTime
+  invitedBy?: UserUpdateOneInput
 }
 
-export interface WorkspaceUpsertWithoutEventsInput {
-  update: WorkspaceUpdateWithoutEventsDataInput
-  create: WorkspaceCreateWithoutEventsInput
+export interface ApplicationUpdateInput {
+  disqualifyReason?: String
+  stage?: Connect
+}
+
+export interface InviteUpdateManyWithoutWorkspaceInput {
+  create?: InviteCreateWithoutWorkspaceInput[] | InviteCreateWithoutWorkspaceInput
+  connect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
+  disconnect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
+  delete?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
+  update?: InviteUpdateWithWhereUniqueWithoutWorkspaceInput[] | InviteUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?: InviteUpsertWithWhereUniqueWithoutWorkspaceInput[] | InviteUpsertWithWhereUniqueWithoutWorkspaceInput
 }
 
 export interface CandidateUpdateInput {
@@ -1501,19 +1431,15 @@ export interface CandidateUpdateInput {
   resume?: CandidateUpdateresumeInput
   coverLetter?: CandidateUpdatecoverLetterInput
   source?: CandidateUpdatesourceInput
-  events?: EventUpdateManyWithoutTargetCandidateInput
   subscribers?: Connect
   tags?: TagUpdateManyInput
   fields?: FieldUpdateManyInput
 }
 
-export interface WorkspaceUpdateOneWithoutEventsInput {
-  create?: WorkspaceCreateWithoutEventsInput
-  connect?: WorkspaceWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: WorkspaceUpdateWithoutEventsDataInput
-  upsert?: WorkspaceUpsertWithoutEventsInput
+export interface TaskUpsertWithWhereUniqueWithoutCandidateInput {
+  where: TaskWhereUniqueInput
+  update: TaskUpdateWithoutCandidateDataInput
+  create: TaskCreateWithoutCandidateInput
 }
 
 export interface CandidateUpdateemailsInput {
@@ -1530,88 +1456,13 @@ export interface CandidateUpdatephonesInput {
   set?: String[] | String
 }
 
-export interface TaskUpsertWithWhereUniqueWithoutCandidateInput {
-  where: TaskWhereUniqueInput
-  update: TaskUpdateWithoutCandidateDataInput
-  create: TaskCreateWithoutCandidateInput
-}
-
-export interface CandidateUpdatelinksInput {
-  set?: String[] | String
-}
-
-export interface TaskUpsertWithWhereUniqueWithoutSubscribersInput {
-  where: TaskWhereUniqueInput
-  update: TaskUpdateWithoutSubscribersDataInput
-  create: TaskCreateWithoutSubscribersInput
-}
-
-export interface CandidateUpdateresumeInput {
-  set?: String[] | String
-}
-
-export interface LocationUpsertNestedInput {
-  update: LocationUpdateDataInput
-  create: LocationCreateInput
-}
-
-export interface CandidateUpdatecoverLetterInput {
-  set?: String[] | String
-}
-
-export interface LocationUpdateOneInput {
-  create?: LocationCreateInput
-  connect?: LocationWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: LocationUpdateDataInput
-  upsert?: LocationUpsertNestedInput
-}
-
-export interface CandidateUpdatesourceInput {
-  set?: String[] | String
-}
-
-export interface StageUpdateWithWhereUniqueNestedInput {
-  where: StageWhereUniqueInput
-  data: StageUpdateDataInput
-}
-
-export interface EventUpdateManyWithoutTargetCandidateInput {
-  create?: EventCreateWithoutTargetCandidateInput[] | EventCreateWithoutTargetCandidateInput
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  update?: EventUpdateWithWhereUniqueWithoutTargetCandidateInput[] | EventUpdateWithWhereUniqueWithoutTargetCandidateInput
-  upsert?: EventUpsertWithWhereUniqueWithoutTargetCandidateInput[] | EventUpsertWithWhereUniqueWithoutTargetCandidateInput
-}
-
-export interface SignupInput {
-  password: String
-  username: String
-  inviteId: ID_Input
-}
-
-export interface EventUpdateWithWhereUniqueWithoutTargetCandidateInput {
-  where: EventWhereUniqueInput
-  data: EventUpdateWithoutTargetCandidateDataInput
-}
-
 export interface LoginInput {
   email: String
   password: String
 }
 
-export interface EventUpdateWithoutTargetCandidateDataInput {
-  type?: EventTypeEnum
-  actorType?: EventActorTypeEnum
-  targetType?: EventTargetTypeEnum
-  workspace?: WorkspaceUpdateOneInput
-  actorUser?: UserUpdateOneWithoutEventsInput
-  actorCandidate?: CandidateUpdateOneInput
-  targetJob?: JobUpdateOneWithoutEventsInput
-  targetTask?: TaskUpdateOneInput
-  targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
+export interface CandidateUpdatelinksInput {
+  set?: String[] | String
 }
 
 export interface ApplicationCreateInput {
@@ -1621,27 +1472,8 @@ export interface ApplicationCreateInput {
   stage?: Connect
 }
 
-export interface WorkspaceUpdateOneInput {
-  create?: WorkspaceCreateInput
-  connect?: WorkspaceWhereUniqueInput
-  delete?: Boolean
-  update?: WorkspaceUpdateDataInput
-  upsert?: WorkspaceUpsertNestedInput
-}
-
-export interface WhereUniqueInput {
-  id: ID_Input
-}
-
-export interface WorkspaceUpdateDataInput {
-  name?: String
-  events?: EventUpdateManyWithoutTargetWorkspaceInput
-  users?: UserUpdateManyWithoutWorkspaceInput
-  jobs?: JobUpdateManyWithoutWorkspaceInput
-  applications?: ApplicationUpdateManyWithoutWorkspaceInput
-  candidates?: CandidateUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
+export interface CandidateUpdateresumeInput {
+  set?: String[] | String
 }
 
 export interface CandidateCreateInput {
@@ -1653,87 +1485,110 @@ export interface CandidateCreateInput {
   resume?: CandidateCreateresumeInput
   coverLetter?: CandidateCreatecoverLetterInput
   source?: CandidateCreatesourceInput
-  workspace: WorkspaceCreateOneWithoutCandidatesInput
   events?: EventCreateManyWithoutTargetCandidateInput
-  subscribers?: UserCreateManyWithoutSubscriptionCandidatesInput
   tags?: TagCreateManyInput
   fields?: FieldCreateManyInput
-  tasks?: TaskCreateManyWithoutCandidateInput
-  applications?: ApplicationCreateManyWithoutCandidateInput
   comments?: CommentCreateManyInput
 }
 
-export interface EventUpdateManyWithoutTargetWorkspaceInput {
-  create?: EventCreateWithoutTargetWorkspaceInput[] | EventCreateWithoutTargetWorkspaceInput
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  update?: EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput[] | EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput
-  upsert?: EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput[] | EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput
+export interface CandidateUpdatecoverLetterInput {
+  set?: String[] | String
 }
 
 export interface CandidateCreatephonesInput {
   set?: String[] | String
 }
 
-export interface EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput {
-  where: EventWhereUniqueInput
-  data: EventUpdateWithoutTargetWorkspaceDataInput
+export interface CandidateUpdatesourceInput {
+  set?: String[] | String
 }
 
 export interface CandidateCreateresumeInput {
   set?: String[] | String
 }
 
-export interface EventUpdateWithoutTargetWorkspaceDataInput {
-  type?: EventTypeEnum
-  actorType?: EventActorTypeEnum
-  targetType?: EventTargetTypeEnum
-  workspace?: WorkspaceUpdateOneInput
-  actorUser?: UserUpdateOneWithoutEventsInput
-  actorCandidate?: CandidateUpdateOneInput
-  targetCandidate?: CandidateUpdateOneWithoutEventsInput
-  targetJob?: JobUpdateOneWithoutEventsInput
-  targetTask?: TaskUpdateOneInput
+export interface TagUpdateManyInput {
+  create?: TagCreateInput[] | TagCreateInput
+  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  disconnect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  delete?: TagWhereUniqueInput[] | TagWhereUniqueInput
+  update?: TagUpdateWithWhereUniqueNestedInput[] | TagUpdateWithWhereUniqueNestedInput
+  upsert?: TagUpsertWithWhereUniqueNestedInput[] | TagUpsertWithWhereUniqueNestedInput
 }
 
 export interface CandidateCreatesourceInput {
   set?: String[] | String
 }
 
-export interface UserUpdateOneWithoutEventsInput {
-  create?: UserCreateWithoutEventsInput
-  connect?: UserWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: UserUpdateWithoutEventsDataInput
-  upsert?: UserUpsertWithoutEventsInput
+export interface TagUpdateWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput
+  data: TagUpdateDataInput
 }
 
-export interface WorkspaceCreateWithoutCandidatesInput {
+export interface EventCreateWithoutTargetCandidateInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceCreateOneInput
+  actorUser?: UserCreateOneWithoutEventsInput
+  actorCandidate?: CandidateCreateOneInput
+  targetJob?: JobCreateOneWithoutEventsInput
+  targetTask?: TaskCreateOneInput
+  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
+}
+
+export interface TagUpdateDataInput {
+  label?: String
+}
+
+export interface WorkspaceWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TagUpsertWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput
+  update: TagUpdateDataInput
+  create: TagCreateInput
+}
+
+export interface UserCreateWithoutEventsInput {
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput
+  notifications?: NotificationCreateManyWithoutUserInput
+  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
+  tasks?: TaskCreateManyWithoutOwnersInput
+}
+
+export interface FieldUpdateManyInput {
+  create?: FieldCreateInput[] | FieldCreateInput
+  connect?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
+  disconnect?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
+  delete?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
+  update?: FieldUpdateWithWhereUniqueNestedInput[] | FieldUpdateWithWhereUniqueNestedInput
+  upsert?: FieldUpsertWithWhereUniqueNestedInput[] | FieldUpsertWithWhereUniqueNestedInput
+}
+
+export interface WorkspaceCreateWithoutUsersInput {
   name: String
   events?: EventCreateManyWithoutTargetWorkspaceInput
-  users?: UserCreateManyWithoutWorkspaceInput
   jobs?: JobCreateManyWithoutWorkspaceInput
   applications?: ApplicationCreateManyWithoutWorkspaceInput
+  candidates?: CandidateCreateManyWithoutWorkspaceInput
   invites?: InviteCreateManyWithoutWorkspaceInput
   tags?: TagCreateManyInput
 }
 
-export interface UserUpdateWithoutEventsDataInput {
-  firstName?: String
-  lastName?: String
-  email?: String
-  username?: String
-  password?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutUsersInput
-  notifications?: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
-  tasks?: TaskUpdateManyWithoutOwnersInput
+export interface FieldUpdateWithWhereUniqueNestedInput {
+  where: FieldWhereUniqueInput
+  data: FieldUpdateDataInput
 }
 
 export interface EventCreateWithoutTargetWorkspaceInput {
@@ -1748,94 +1603,20 @@ export interface EventCreateWithoutTargetWorkspaceInput {
   targetTask?: TaskCreateOneInput
 }
 
-export interface WorkspaceUpdateOneWithoutUsersInput {
-  create?: WorkspaceCreateWithoutUsersInput
-  connect?: WorkspaceWhereUniqueInput
-  delete?: Boolean
-  update?: WorkspaceUpdateWithoutUsersDataInput
-  upsert?: WorkspaceUpsertWithoutUsersInput
+export interface FieldUpdateDataInput {
+  type?: FieldTypeEnum
+  label?: String
+  value?: String
 }
 
-export interface UserCreateOneWithoutEventsInput {
-  create?: UserCreateWithoutEventsInput
-  connect?: UserWhereUniqueInput
+export interface CandidateWhereUniqueInput {
+  id?: ID_Input
 }
 
-export interface WorkspaceUpdateWithoutUsersDataInput {
-  name?: String
-  events?: EventUpdateManyWithoutTargetWorkspaceInput
-  jobs?: JobUpdateManyWithoutWorkspaceInput
-  applications?: ApplicationUpdateManyWithoutWorkspaceInput
-  candidates?: CandidateUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
-}
-
-export interface WorkspaceCreateOneWithoutUsersInput {
-  create?: WorkspaceCreateWithoutUsersInput
-  connect?: WorkspaceWhereUniqueInput
-}
-
-export interface JobUpdateManyWithoutWorkspaceInput {
-  create?: JobCreateWithoutWorkspaceInput[] | JobCreateWithoutWorkspaceInput
-  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  disconnect?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  delete?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  update?: JobUpdateWithWhereUniqueWithoutWorkspaceInput[] | JobUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: JobUpsertWithWhereUniqueWithoutWorkspaceInput[] | JobUpsertWithWhereUniqueWithoutWorkspaceInput
-}
-
-export interface JobCreateManyWithoutWorkspaceInput {
-  create?: JobCreateWithoutWorkspaceInput[] | JobCreateWithoutWorkspaceInput
-  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
-}
-
-export interface JobUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: JobWhereUniqueInput
-  data: JobUpdateWithoutWorkspaceDataInput
-}
-
-export interface UserCreateManyWithoutSubscriptionJobsInput {
-  create?: UserCreateWithoutSubscriptionJobsInput[] | UserCreateWithoutSubscriptionJobsInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-}
-
-export interface JobUpdateWithoutWorkspaceDataInput {
-  status?: JobType
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
-  events?: EventUpdateManyWithoutTargetJobInput
-  applications?: ApplicationUpdateManyWithoutJobInput
-  stages?: StageUpdateManyInput
-  comments?: CommentUpdateManyInput
-  location?: LocationUpdateOneInput
-}
-
-export interface EventCreateOneWithoutActorUserInput {
-  create?: EventCreateWithoutActorUserInput
-  connect?: EventWhereUniqueInput
-}
-
-export interface UserUpdateManyWithoutSubscriptionJobsInput {
-  create?: UserCreateWithoutSubscriptionJobsInput[] | UserCreateWithoutSubscriptionJobsInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput[] | UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput
-  upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput
-}
-
-export interface CandidateCreateOneInput {
-  create?: CandidateCreateInput
-  connect?: CandidateWhereUniqueInput
-}
-
-export interface UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutSubscriptionJobsDataInput
+export interface FieldUpsertWithWhereUniqueNestedInput {
+  where: FieldWhereUniqueInput
+  update: FieldUpdateDataInput
+  create: FieldCreateInput
 }
 
 export interface CandidateCreateWithoutEventsInput {
@@ -1856,7 +1637,196 @@ export interface CandidateCreateWithoutEventsInput {
   comments?: CommentCreateManyInput
 }
 
-export interface UserUpdateWithoutSubscriptionJobsDataInput {
+export interface JobUpdateInput {
+  status?: JobType
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  subscribers?: ConnectDisconnectMany
+  stages?: StageUpdateManyInput
+  comments?: CommentUpdateManyInput
+  location?: LocationUpdateOneInput
+}
+
+export interface WorkspaceCreateWithoutCandidatesInput {
+  name: String
+  events?: EventCreateManyWithoutTargetWorkspaceInput
+  users?: UserCreateManyWithoutWorkspaceInput
+  jobs?: JobCreateManyWithoutWorkspaceInput
+  applications?: ApplicationCreateManyWithoutWorkspaceInput
+  invites?: InviteCreateManyWithoutWorkspaceInput
+  tags?: TagCreateManyInput
+}
+
+export interface ConnectDisconnectMany {
+  connect?: WhereUniqueInput[] | WhereUniqueInput
+  disconnect?: WhereUniqueInput[] | WhereUniqueInput
+}
+
+export interface UserCreateWithoutWorkspaceInput {
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  events?: EventCreateOneWithoutActorUserInput
+  notifications?: NotificationCreateManyWithoutUserInput
+  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
+  tasks?: TaskCreateManyWithoutOwnersInput
+}
+
+export interface StageUpdateManyInput {
+  create?: StageCreateInput[] | StageCreateInput
+  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
+  disconnect?: StageWhereUniqueInput[] | StageWhereUniqueInput
+  delete?: StageWhereUniqueInput[] | StageWhereUniqueInput
+  update?: StageUpdateWithWhereUniqueNestedInput[] | StageUpdateWithWhereUniqueNestedInput
+  upsert?: StageUpsertWithWhereUniqueNestedInput[] | StageUpsertWithWhereUniqueNestedInput
+}
+
+export interface EventCreateWithoutActorUserInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceCreateOneInput
+  actorCandidate?: CandidateCreateOneInput
+  targetCandidate?: CandidateCreateOneWithoutEventsInput
+  targetJob?: JobCreateOneWithoutEventsInput
+  targetTask?: TaskCreateOneInput
+  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
+}
+
+export interface StageUpdateWithWhereUniqueNestedInput {
+  where: StageWhereUniqueInput
+  data: StageUpdateDataInput
+}
+
+export interface JobCreateWithoutEventsInput {
+  status: JobType
+  title: String
+  department?: String
+  description?: String
+  requirements?: String
+  workspace: WorkspaceCreateOneWithoutJobsInput
+  subscribers?: UserCreateManyWithoutSubscriptionJobsInput
+  applications?: ApplicationCreateManyWithoutJobInput
+  stages?: StageCreateManyInput
+  comments?: CommentCreateManyInput
+  location?: LocationCreateOneInput
+}
+
+export interface StageUpdateDataInput {
+  name?: String
+  description?: String
+  position?: Int
+  type?: StageTypeEnum
+}
+
+export interface WorkspaceCreateWithoutJobsInput {
+  name: String
+  events?: EventCreateManyWithoutTargetWorkspaceInput
+  users?: UserCreateManyWithoutWorkspaceInput
+  applications?: ApplicationCreateManyWithoutWorkspaceInput
+  candidates?: CandidateCreateManyWithoutWorkspaceInput
+  invites?: InviteCreateManyWithoutWorkspaceInput
+  tags?: TagCreateManyInput
+}
+
+export interface StageUpsertWithWhereUniqueNestedInput {
+  where: StageWhereUniqueInput
+  update: StageUpdateDataInput
+  create: StageCreateInput
+}
+
+export interface ApplicationCreateWithoutWorkspaceInput {
+  disqualifyReason?: String
+  job: JobCreateOneWithoutApplicationsInput
+  candidate: CandidateCreateOneWithoutApplicationsInput
+  stage: StageCreateOneInput
+}
+
+export interface CommentUpdateManyInput {
+  create?: CommentCreateInput[] | CommentCreateInput
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+  update?: CommentUpdateWithWhereUniqueNestedInput[] | CommentUpdateWithWhereUniqueNestedInput
+  upsert?: CommentUpsertWithWhereUniqueNestedInput[] | CommentUpsertWithWhereUniqueNestedInput
+}
+
+export interface JobCreateWithoutApplicationsInput {
+  status: JobType
+  title: String
+  department?: String
+  description?: String
+  requirements?: String
+  workspace: WorkspaceCreateOneWithoutJobsInput
+  subscribers?: UserCreateManyWithoutSubscriptionJobsInput
+  events?: EventCreateManyWithoutTargetJobInput
+  stages?: StageCreateManyInput
+  comments?: CommentCreateManyInput
+  location?: LocationCreateOneInput
+}
+
+export interface CommentUpdateWithWhereUniqueNestedInput {
+  where: CommentWhereUniqueInput
+  data: CommentUpdateDataInput
+}
+
+export interface UserCreateWithoutSubscriptionJobsInput {
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput
+  events?: EventCreateOneWithoutActorUserInput
+  notifications?: NotificationCreateManyWithoutUserInput
+  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
+  tasks?: TaskCreateManyWithoutOwnersInput
+}
+
+export interface CommentUpdateDataInput {
+  content?: String
+  createdBy?: UserUpdateOneInput
+  parent?: CommentUpdateOneInput
+}
+
+export interface NotificationCreateWithoutUserInput {
+  status: NotificationStatusEnum
+  event: EventCreateOneInput
+}
+
+export interface UserUpdateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateDataInput
+  upsert?: UserUpsertNestedInput
+}
+
+export interface EventCreateInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceCreateOneInput
+  actorUser?: UserCreateOneWithoutEventsInput
+  actorCandidate?: CandidateCreateOneInput
+  targetCandidate?: CandidateCreateOneWithoutEventsInput
+  targetJob?: JobCreateOneWithoutEventsInput
+  targetTask?: TaskCreateOneInput
+  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
+}
+
+export interface UserUpdateDataInput {
   firstName?: String
   lastName?: String
   email?: String
@@ -1867,9 +1837,223 @@ export interface UserUpdateWithoutSubscriptionJobsDataInput {
   workspace?: WorkspaceUpdateOneWithoutUsersInput
   events?: EventUpdateOneWithoutActorUserInput
   notifications?: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
   subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
   subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
   tasks?: TaskUpdateManyWithoutOwnersInput
+}
+
+export interface TaskCreateInput {
+  targetType?: TaskTargetEnum
+  title?: String
+  description?: String
+  dueAt?: DateTime
+  subscribers?: ConnectMany
+  owners?: ConnectMany
+  job?: JobCreateOneInput
+  candidate?: Connect
+}
+
+export interface WorkspaceUpdateOneWithoutUsersInput {
+  create?: WorkspaceCreateWithoutUsersInput
+  connect?: WorkspaceWhereUniqueInput
+  delete?: Boolean
+  update?: WorkspaceUpdateWithoutUsersDataInput
+  upsert?: WorkspaceUpsertWithoutUsersInput
+}
+
+export interface JobCreateOneInput {
+  create?: JobCreateInput
+  connect?: JobWhereUniqueInput
+}
+
+export interface WorkspaceUpdateWithoutUsersDataInput {
+  name?: String
+  events?: EventUpdateManyWithoutTargetWorkspaceInput
+  jobs?: JobUpdateManyWithoutWorkspaceInput
+  applications?: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates?: CandidateUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
+  tags?: TagUpdateManyInput
+}
+
+export interface StageCreateManyInput {
+  create?: StageCreateInput[] | StageCreateInput
+  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
+}
+
+export interface EventUpdateManyWithoutTargetWorkspaceInput {
+  create?: EventCreateWithoutTargetWorkspaceInput[] | EventCreateWithoutTargetWorkspaceInput
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  update?: EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput[] | EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput
+  upsert?: EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput[] | EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput
+}
+
+export interface StageWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput {
+  where: EventWhereUniqueInput
+  data: EventUpdateWithoutTargetWorkspaceDataInput
+}
+
+export interface LocationCreateInput {
+  country: String
+  region: String
+  city: String
+  zip: String
+}
+
+export interface EventUpdateWithoutTargetWorkspaceDataInput {
+  type?: EventTypeEnum
+  actorType?: EventActorTypeEnum
+  targetType?: EventTargetTypeEnum
+  workspace?: WorkspaceUpdateOneInput
+  actorUser?: UserUpdateOneWithoutEventsInput
+  actorCandidate?: CandidateUpdateOneInput
+  targetCandidate?: CandidateUpdateOneWithoutEventsInput
+  targetJob?: JobUpdateOneWithoutEventsInput
+  targetTask?: TaskUpdateOneInput
+}
+
+export interface JobWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface WorkspaceUpdateOneInput {
+  create?: WorkspaceCreateInput
+  connect?: WorkspaceWhereUniqueInput
+  delete?: Boolean
+  update?: WorkspaceUpdateDataInput
+  upsert?: WorkspaceUpsertNestedInput
+}
+
+export interface WorkspaceCreateOneWithoutEventsInput {
+  create?: WorkspaceCreateWithoutEventsInput
+  connect?: WorkspaceWhereUniqueInput
+}
+
+export interface WorkspaceUpdateDataInput {
+  name?: String
+  events?: EventUpdateManyWithoutTargetWorkspaceInput
+  users?: UserUpdateManyWithoutWorkspaceInput
+  jobs?: JobUpdateManyWithoutWorkspaceInput
+  applications?: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates?: CandidateUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
+  tags?: TagUpdateManyInput
+}
+
+export interface JobCreateManyWithoutWorkspaceInput {
+  create?: JobCreateWithoutWorkspaceInput[] | JobCreateWithoutWorkspaceInput
+  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
+}
+
+export interface UserUpdateManyWithoutWorkspaceInput {
+  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutWorkspaceInput[] | UserUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?: UserUpsertWithWhereUniqueWithoutWorkspaceInput[] | UserUpsertWithWhereUniqueWithoutWorkspaceInput
+}
+
+export interface EventCreateManyWithoutTargetJobInput {
+  create?: EventCreateWithoutTargetJobInput[] | EventCreateWithoutTargetJobInput
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+}
+
+export interface UserUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutWorkspaceDataInput
+}
+
+export interface EventWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserUpdateWithoutWorkspaceDataInput {
+  firstName?: String
+  lastName?: String
+  email?: String
+  username?: String
+  password?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  events?: EventUpdateOneWithoutActorUserInput
+  notifications?: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
+  tasks?: TaskUpdateManyWithoutOwnersInput
+}
+
+export interface ApplicationCreateWithoutJobInput {
+  disqualifyReason?: String
+  workspace: WorkspaceCreateOneWithoutApplicationsInput
+  candidate: CandidateCreateOneWithoutApplicationsInput
+  stage: StageCreateOneInput
+}
+
+export interface EventUpdateOneWithoutActorUserInput {
+  create?: EventCreateWithoutActorUserInput
+  connect?: EventWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: EventUpdateWithoutActorUserDataInput
+  upsert?: EventUpsertWithoutActorUserInput
+}
+
+export interface WorkspaceCreateWithoutApplicationsInput {
+  name: String
+  events?: EventCreateManyWithoutTargetWorkspaceInput
+  users?: UserCreateManyWithoutWorkspaceInput
+  jobs?: JobCreateManyWithoutWorkspaceInput
+  candidates?: CandidateCreateManyWithoutWorkspaceInput
+  invites?: InviteCreateManyWithoutWorkspaceInput
+  tags?: TagCreateManyInput
+}
+
+export interface EventUpdateWithoutActorUserDataInput {
+  type?: EventTypeEnum
+  actorType?: EventActorTypeEnum
+  targetType?: EventTargetTypeEnum
+  workspace?: WorkspaceUpdateOneInput
+  actorCandidate?: CandidateUpdateOneInput
+  targetCandidate?: CandidateUpdateOneWithoutEventsInput
+  targetJob?: JobUpdateOneWithoutEventsInput
+  targetTask?: TaskUpdateOneInput
+  targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
+}
+
+export interface CandidateCreateWithoutWorkspaceInput {
+  firstName: String
+  lastName: String
+  emails?: CandidateCreateemailsInput
+  phones?: CandidateCreatephonesInput
+  links?: CandidateCreatelinksInput
+  resume?: CandidateCreateresumeInput
+  coverLetter?: CandidateCreatecoverLetterInput
+  source?: CandidateCreatesourceInput
+  events?: EventCreateManyWithoutTargetCandidateInput
+  subscribers?: UserCreateManyWithoutSubscriptionCandidatesInput
+  tags?: TagCreateManyInput
+  fields?: FieldCreateManyInput
+  tasks?: TaskCreateManyWithoutCandidateInput
+  applications?: ApplicationCreateManyWithoutCandidateInput
+  comments?: CommentCreateManyInput
+}
+
+export interface CandidateUpdateOneInput {
+  create?: CandidateCreateInput
+  connect?: CandidateWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: CandidateUpdateDataInput
+  upsert?: CandidateUpsertNestedInput
 }
 
 export interface UserCreateWithoutSubscriptionCandidatesInput {
@@ -1886,68 +2070,6 @@ export interface UserCreateWithoutSubscriptionCandidatesInput {
   subscriptionJobs?: JobCreateManyWithoutSubscribersInput
   subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
   tasks?: TaskCreateManyWithoutOwnersInput
-}
-
-export interface EventUpdateOneWithoutActorUserInput {
-  create?: EventCreateWithoutActorUserInput
-  connect?: EventWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: EventUpdateWithoutActorUserDataInput
-  upsert?: EventUpsertWithoutActorUserInput
-}
-
-export interface NotificationCreateWithoutUserInput {
-  status: NotificationStatusEnum
-  event: EventCreateOneInput
-}
-
-export interface EventUpdateWithoutActorUserDataInput {
-  type?: EventTypeEnum
-  actorType?: EventActorTypeEnum
-  targetType?: EventTargetTypeEnum
-  workspace?: WorkspaceUpdateOneInput
-  actorCandidate?: CandidateUpdateOneInput
-  targetCandidate?: CandidateUpdateOneWithoutEventsInput
-  targetJob?: JobUpdateOneWithoutEventsInput
-  targetTask?: TaskUpdateOneInput
-  targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
-}
-
-export interface EventCreateInput {
-  type: EventTypeEnum
-  actorType: EventActorTypeEnum
-  targetType: EventTargetTypeEnum
-  workspace: WorkspaceCreateOneInput
-  actorUser?: UserCreateOneWithoutEventsInput
-  actorCandidate?: CandidateCreateOneInput
-  targetCandidate?: CandidateCreateOneWithoutEventsInput
-  targetJob?: JobCreateOneWithoutEventsInput
-  targetTask?: TaskCreateOneInput
-  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
-}
-
-export interface CandidateUpdateOneInput {
-  create?: CandidateCreateInput
-  connect?: CandidateWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: CandidateUpdateDataInput
-  upsert?: CandidateUpsertNestedInput
-}
-
-export interface JobCreateWithoutEventsInput {
-  status: JobType
-  title: String
-  department?: String
-  description?: String
-  requirements?: String
-  workspace: WorkspaceCreateOneWithoutJobsInput
-  subscribers?: UserCreateManyWithoutSubscriptionJobsInput
-  applications?: ApplicationCreateManyWithoutJobInput
-  stages?: StageCreateManyInput
-  comments?: CommentCreateManyInput
-  location?: LocationCreateOneInput
 }
 
 export interface CandidateUpdateDataInput {
@@ -1969,50 +2091,6 @@ export interface CandidateUpdateDataInput {
   comments?: CommentUpdateManyInput
 }
 
-export interface WorkspaceCreateWithoutJobsInput {
-  name: String
-  events?: EventCreateManyWithoutTargetWorkspaceInput
-  users?: UserCreateManyWithoutWorkspaceInput
-  applications?: ApplicationCreateManyWithoutWorkspaceInput
-  candidates?: CandidateCreateManyWithoutWorkspaceInput
-  invites?: InviteCreateManyWithoutWorkspaceInput
-  tags?: TagCreateManyInput
-}
-
-export interface WorkspaceUpdateOneWithoutCandidatesInput {
-  create?: WorkspaceCreateWithoutCandidatesInput
-  connect?: WorkspaceWhereUniqueInput
-  delete?: Boolean
-  update?: WorkspaceUpdateWithoutCandidatesDataInput
-  upsert?: WorkspaceUpsertWithoutCandidatesInput
-}
-
-export interface UserCreateWithoutWorkspaceInput {
-  firstName?: String
-  lastName?: String
-  email: String
-  username: String
-  password: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  events?: EventCreateOneWithoutActorUserInput
-  notifications?: NotificationCreateManyWithoutUserInput
-  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
-  tasks?: TaskCreateManyWithoutOwnersInput
-}
-
-export interface WorkspaceUpdateWithoutCandidatesDataInput {
-  name?: String
-  events?: EventUpdateManyWithoutTargetWorkspaceInput
-  users?: UserUpdateManyWithoutWorkspaceInput
-  jobs?: JobUpdateManyWithoutWorkspaceInput
-  applications?: ApplicationUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
-}
-
 export interface JobCreateWithoutSubscribersInput {
   status: JobType
   title: String
@@ -2027,44 +2105,57 @@ export interface JobCreateWithoutSubscribersInput {
   location?: LocationCreateOneInput
 }
 
-export interface UserUpdateManyWithoutWorkspaceInput {
-  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutWorkspaceInput[] | UserUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: UserUpsertWithWhereUniqueWithoutWorkspaceInput[] | UserUpsertWithWhereUniqueWithoutWorkspaceInput
+export interface WorkspaceUpdateOneWithoutCandidatesInput {
+  create?: WorkspaceCreateWithoutCandidatesInput
+  connect?: WorkspaceWhereUniqueInput
+  delete?: Boolean
+  update?: WorkspaceUpdateWithoutCandidatesDataInput
+  upsert?: WorkspaceUpsertWithoutCandidatesInput
 }
 
-export interface EventCreateWithoutTargetJobInput {
-  type: EventTypeEnum
-  actorType: EventActorTypeEnum
-  targetType: EventTargetTypeEnum
-  workspace: WorkspaceCreateOneInput
-  actorUser?: UserCreateOneWithoutEventsInput
-  actorCandidate?: CandidateCreateOneInput
-  targetCandidate?: CandidateCreateOneWithoutEventsInput
-  targetTask?: TaskCreateOneInput
-  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
+export interface CommentCreateInput {
+  content: String
+  createdBy: UserCreateOneInput
+  parent?: CommentCreateOneInput
 }
 
-export interface UserUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutWorkspaceDataInput
+export interface WorkspaceUpdateWithoutCandidatesDataInput {
+  name?: String
+  events?: EventUpdateManyWithoutTargetWorkspaceInput
+  users?: UserUpdateManyWithoutWorkspaceInput
+  jobs?: JobUpdateManyWithoutWorkspaceInput
+  applications?: ApplicationUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
+  tags?: TagUpdateManyInput
 }
 
-export interface TaskCreateInput {
-  targetType?: TaskTargetEnum
-  title?: String
-  description?: String
-  dueAt?: DateTime
-  subscribers?: ConnectMany
-  owners?: ConnectMany
-  job?: Connect
-  candidate?: Connect
+export interface UserCreateInput {
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput
+  events?: EventCreateOneWithoutActorUserInput
+  notifications?: NotificationCreateManyWithoutUserInput
+  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
+  tasks?: TaskCreateManyWithoutOwnersInput
 }
 
-export interface UserUpdateWithoutWorkspaceDataInput {
+export interface JobUpdateManyWithoutWorkspaceInput {
+  create?: JobCreateWithoutWorkspaceInput[] | JobCreateWithoutWorkspaceInput
+  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
+  disconnect?: JobWhereUniqueInput[] | JobWhereUniqueInput
+  delete?: JobWhereUniqueInput[] | JobWhereUniqueInput
+  update?: JobUpdateWithWhereUniqueWithoutWorkspaceInput[] | JobUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?: JobUpsertWithWhereUniqueWithoutWorkspaceInput[] | JobUpsertWithWhereUniqueWithoutWorkspaceInput
+}
+
+export interface UserUpdateWithoutNotificationsDataInput {
   firstName?: String
   lastName?: String
   email?: String
@@ -2072,17 +2163,95 @@ export interface UserUpdateWithoutWorkspaceDataInput {
   password?: String
   lastLogin?: DateTime
   deletedAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutUsersInput
   events?: EventUpdateOneWithoutActorUserInput
-  notifications?: NotificationUpdateManyWithoutUserInput
   subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
   subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
   subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
   tasks?: TaskUpdateManyWithoutOwnersInput
 }
 
-export interface WorkspaceCreateOneWithoutEventsInput {
-  create?: WorkspaceCreateWithoutEventsInput
-  connect?: WorkspaceWhereUniqueInput
+export interface JobUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: JobWhereUniqueInput
+  data: JobUpdateWithoutWorkspaceDataInput
+}
+
+export interface UserUpdateOneWithoutNotificationsInput {
+  create?: UserCreateWithoutNotificationsInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateWithoutNotificationsDataInput
+  upsert?: UserUpsertWithoutNotificationsInput
+}
+
+export interface JobUpdateWithoutWorkspaceDataInput {
+  status?: JobType
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
+  events?: EventUpdateManyWithoutTargetJobInput
+  applications?: ApplicationUpdateManyWithoutJobInput
+  stages?: StageUpdateManyInput
+  comments?: CommentUpdateManyInput
+  location?: LocationUpdateOneInput
+}
+
+export interface NotificationUpdateInput {
+  status?: NotificationStatusEnum
+}
+
+export interface UserUpdateManyWithoutSubscriptionJobsInput {
+  create?: UserCreateWithoutSubscriptionJobsInput[] | UserCreateWithoutSubscriptionJobsInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput[] | UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput
+  upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput
+}
+
+export interface FieldUpdateInput {
+  type?: FieldTypeEnum
+  label?: String
+  value?: String
+}
+
+export interface UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutSubscriptionJobsDataInput
+}
+
+export interface WorkspaceUpdateInput {
+  name?: String
+  tags?: TagUpdateManyInput
+}
+
+export interface UserUpdateWithoutSubscriptionJobsDataInput {
+  firstName?: String
+  lastName?: String
+  email?: String
+  username?: String
+  password?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutUsersInput
+  events?: EventUpdateOneWithoutActorUserInput
+  notifications?: NotificationUpdateManyWithoutUserInput
+  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
+  tasks?: TaskUpdateManyWithoutOwnersInput
+}
+
+export interface TaskUpdateInput {
+  targetType?: TaskTargetEnum
+  title?: String
+  description?: String
+  dueAt?: DateTime
+  subscribers?: ConnectDisconnectMany
+  owners?: ConnectDisconnectMany
+  job?: JobUpdateOneInput
+  candidate?: ConnectDisconnect
 }
 
 export interface NotificationUpdateManyWithoutUserInput {
@@ -2094,9 +2263,9 @@ export interface NotificationUpdateManyWithoutUserInput {
   upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput[] | NotificationUpsertWithWhereUniqueWithoutUserInput
 }
 
-export interface ApplicationCreateManyWithoutWorkspaceInput {
-  create?: ApplicationCreateWithoutWorkspaceInput[] | ApplicationCreateWithoutWorkspaceInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput
+  create: UserCreateInput
 }
 
 export interface NotificationUpdateWithWhereUniqueWithoutUserInput {
@@ -2104,9 +2273,10 @@ export interface NotificationUpdateWithWhereUniqueWithoutUserInput {
   data: NotificationUpdateWithoutUserDataInput
 }
 
-export interface JobCreateOneWithoutApplicationsInput {
-  create?: JobCreateWithoutApplicationsInput
-  connect?: JobWhereUniqueInput
+export interface UserUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutWorkspaceDataInput
+  create: UserCreateWithoutWorkspaceInput
 }
 
 export interface NotificationUpdateWithoutUserDataInput {
@@ -2114,9 +2284,10 @@ export interface NotificationUpdateWithoutUserDataInput {
   event?: EventUpdateOneInput
 }
 
-export interface StageCreateManyInput {
-  create?: StageCreateInput[] | StageCreateInput
-  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
+export interface JobUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: JobWhereUniqueInput
+  update: JobUpdateWithoutWorkspaceDataInput
+  create: JobCreateWithoutWorkspaceInput
 }
 
 export interface EventUpdateOneInput {
@@ -2127,9 +2298,9 @@ export interface EventUpdateOneInput {
   upsert?: EventUpsertNestedInput
 }
 
-export interface CommentCreateManyInput {
-  create?: CommentCreateInput[] | CommentCreateInput
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+export interface UserUpsertWithoutEventsInput {
+  update: UserUpdateWithoutEventsDataInput
+  create: UserCreateWithoutEventsInput
 }
 
 export interface EventUpdateDataInput {
@@ -2145,9 +2316,233 @@ export interface EventUpdateDataInput {
   targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
 }
 
-export interface UserCreateOneInput {
-  create?: UserCreateInput
+export interface JobUpsertWithoutApplicationsInput {
+  update: JobUpdateWithoutApplicationsDataInput
+  create: JobCreateWithoutApplicationsInput
+}
+
+export interface UserUpdateOneWithoutEventsInput {
+  create?: UserCreateWithoutEventsInput
   connect?: UserWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: UserUpdateWithoutEventsDataInput
+  upsert?: UserUpsertWithoutEventsInput
+}
+
+export interface TaskUpsertWithWhereUniqueWithoutSubscribersInput {
+  where: TaskWhereUniqueInput
+  update: TaskUpdateWithoutSubscribersDataInput
+  create: TaskCreateWithoutSubscribersInput
+}
+
+export interface UserUpdateWithoutEventsDataInput {
+  firstName?: String
+  lastName?: String
+  email?: String
+  username?: String
+  password?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutUsersInput
+  notifications?: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
+  tasks?: TaskUpdateManyWithoutOwnersInput
+}
+
+export interface WorkspaceUpsertWithoutEventsInput {
+  update: WorkspaceUpdateWithoutEventsDataInput
+  create: WorkspaceCreateWithoutEventsInput
+}
+
+export interface JobUpdateManyWithoutSubscribersInput {
+  create?: JobCreateWithoutSubscribersInput[] | JobCreateWithoutSubscribersInput
+  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
+  disconnect?: JobWhereUniqueInput[] | JobWhereUniqueInput
+  delete?: JobWhereUniqueInput[] | JobWhereUniqueInput
+  update?: JobUpdateWithWhereUniqueWithoutSubscribersInput[] | JobUpdateWithWhereUniqueWithoutSubscribersInput
+  upsert?: JobUpsertWithWhereUniqueWithoutSubscribersInput[] | JobUpsertWithWhereUniqueWithoutSubscribersInput
+}
+
+export interface TaskUpdateDataInput {
+  targetType?: TaskTargetEnum
+  title?: String
+  description?: String
+  dueAt?: DateTime
+  workspace?: WorkspaceUpdateOneInput
+  subscribers?: UserUpdateManyWithoutSubscriptionTasksInput
+  owners?: UserUpdateManyWithoutTasksInput
+  job?: JobUpdateOneInput
+  candidate?: CandidateUpdateOneWithoutTasksInput
+}
+
+export interface JobUpdateWithWhereUniqueWithoutSubscribersInput {
+  where: JobWhereUniqueInput
+  data: JobUpdateWithoutSubscribersDataInput
+}
+
+export interface CandidateUpsertWithoutApplicationsInput {
+  update: CandidateUpdateWithoutApplicationsDataInput
+  create: CandidateCreateWithoutApplicationsInput
+}
+
+export interface JobUpdateWithoutSubscribersDataInput {
+  status?: JobType
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  workspace?: WorkspaceUpdateOneWithoutJobsInput
+  events?: EventUpdateManyWithoutTargetJobInput
+  applications?: ApplicationUpdateManyWithoutJobInput
+  stages?: StageUpdateManyInput
+  comments?: CommentUpdateManyInput
+  location?: LocationUpdateOneInput
+}
+
+export interface InviteUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: InviteWhereUniqueInput
+  update: InviteUpdateWithoutWorkspaceDataInput
+  create: InviteCreateWithoutWorkspaceInput
+}
+
+export interface WorkspaceUpdateOneWithoutJobsInput {
+  create?: WorkspaceCreateWithoutJobsInput
+  connect?: WorkspaceWhereUniqueInput
+  delete?: Boolean
+  update?: WorkspaceUpdateWithoutJobsDataInput
+  upsert?: WorkspaceUpsertWithoutJobsInput
+}
+
+export interface CandidateUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: CandidateWhereUniqueInput
+  update: CandidateUpdateWithoutWorkspaceDataInput
+  create: CandidateCreateWithoutWorkspaceInput
+}
+
+export interface WorkspaceUpdateWithoutJobsDataInput {
+  name?: String
+  events?: EventUpdateManyWithoutTargetWorkspaceInput
+  users?: UserUpdateManyWithoutWorkspaceInput
+  applications?: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates?: CandidateUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
+  tags?: TagUpdateManyInput
+}
+
+export interface SignupInput {
+  password: String
+  username: String
+  inviteId: ID_Input
+}
+
+export interface ApplicationUpdateManyWithoutWorkspaceInput {
+  create?: ApplicationCreateWithoutWorkspaceInput[] | ApplicationCreateWithoutWorkspaceInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  update?: ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput[] | ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?: ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput[] | ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput
+}
+
+export interface Connect {
+  connect?: WhereUniqueInput
+}
+
+export interface ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: ApplicationWhereUniqueInput
+  data: ApplicationUpdateWithoutWorkspaceDataInput
+}
+
+export interface CandidateCreatelinksInput {
+  set?: String[] | String
+}
+
+export interface ApplicationUpdateWithoutWorkspaceDataInput {
+  disqualifyReason?: String
+  job?: JobUpdateOneWithoutApplicationsInput
+  candidate?: CandidateUpdateOneWithoutApplicationsInput
+  stage?: StageUpdateOneInput
+}
+
+export interface EventCreateManyWithoutTargetCandidateInput {
+  create?: EventCreateWithoutTargetCandidateInput[] | EventCreateWithoutTargetCandidateInput
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+}
+
+export interface JobUpdateOneWithoutApplicationsInput {
+  create?: JobCreateWithoutApplicationsInput
+  connect?: JobWhereUniqueInput
+  delete?: Boolean
+  update?: JobUpdateWithoutApplicationsDataInput
+  upsert?: JobUpsertWithoutApplicationsInput
+}
+
+export interface UserCreateOneWithoutEventsInput {
+  create?: UserCreateWithoutEventsInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface JobUpdateWithoutApplicationsDataInput {
+  status?: JobType
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  workspace?: WorkspaceUpdateOneWithoutJobsInput
+  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
+  events?: EventUpdateManyWithoutTargetJobInput
+  stages?: StageUpdateManyInput
+  comments?: CommentUpdateManyInput
+  location?: LocationUpdateOneInput
+}
+
+export interface EventCreateManyWithoutTargetWorkspaceInput {
+  create?: EventCreateWithoutTargetWorkspaceInput[] | EventCreateWithoutTargetWorkspaceInput
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+}
+
+export interface EventUpdateManyWithoutTargetJobInput {
+  create?: EventCreateWithoutTargetJobInput[] | EventCreateWithoutTargetJobInput
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  update?: EventUpdateWithWhereUniqueWithoutTargetJobInput[] | EventUpdateWithWhereUniqueWithoutTargetJobInput
+  upsert?: EventUpsertWithWhereUniqueWithoutTargetJobInput[] | EventUpsertWithWhereUniqueWithoutTargetJobInput
+}
+
+export interface CandidateCreateOneWithoutEventsInput {
+  create?: CandidateCreateWithoutEventsInput
+  connect?: CandidateWhereUniqueInput
+}
+
+export interface EventUpdateWithWhereUniqueWithoutTargetJobInput {
+  where: EventWhereUniqueInput
+  data: EventUpdateWithoutTargetJobDataInput
+}
+
+export interface UserCreateManyWithoutWorkspaceInput {
+  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
+export interface EventUpdateWithoutTargetJobDataInput {
+  type?: EventTypeEnum
+  actorType?: EventActorTypeEnum
+  targetType?: EventTargetTypeEnum
+  workspace?: WorkspaceUpdateOneInput
+  actorUser?: UserUpdateOneWithoutEventsInput
+  actorCandidate?: CandidateUpdateOneInput
+  targetCandidate?: CandidateUpdateOneWithoutEventsInput
+  targetTask?: TaskUpdateOneInput
+  targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
+}
+
+export interface JobCreateOneWithoutEventsInput {
+  create?: JobCreateWithoutEventsInput
+  connect?: JobWhereUniqueInput
 }
 
 export interface CandidateUpdateOneWithoutEventsInput {
@@ -2159,9 +2554,9 @@ export interface CandidateUpdateOneWithoutEventsInput {
   upsert?: CandidateUpsertWithoutEventsInput
 }
 
-export interface CandidateCreateManyWithoutSubscribersInput {
-  create?: CandidateCreateWithoutSubscribersInput[] | CandidateCreateWithoutSubscribersInput
-  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+export interface ApplicationCreateManyWithoutWorkspaceInput {
+  create?: ApplicationCreateWithoutWorkspaceInput[] | ApplicationCreateWithoutWorkspaceInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
 }
 
 export interface CandidateUpdateWithoutEventsDataInput {
@@ -2182,9 +2577,9 @@ export interface CandidateUpdateWithoutEventsDataInput {
   comments?: CommentUpdateManyInput
 }
 
-export interface EventCreateManyWithoutTargetCandidateInput {
-  create?: EventCreateWithoutTargetCandidateInput[] | EventCreateWithoutTargetCandidateInput
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+export interface UserCreateManyWithoutSubscriptionJobsInput {
+  create?: UserCreateWithoutSubscriptionJobsInput[] | UserCreateWithoutSubscriptionJobsInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
 }
 
 export interface UserUpdateManyWithoutSubscriptionCandidatesInput {
@@ -2196,9 +2591,9 @@ export interface UserUpdateManyWithoutSubscriptionCandidatesInput {
   upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput
 }
 
-export interface TagCreateManyInput {
-  create?: TagCreateInput[] | TagCreateInput
-  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
+export interface EventCreateOneInput {
+  create?: EventCreateInput
+  connect?: EventWhereUniqueInput
 }
 
 export interface UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput {
@@ -2206,9 +2601,8 @@ export interface UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput {
   data: UserUpdateWithoutSubscriptionCandidatesDataInput
 }
 
-export interface FieldCreateManyInput {
-  create?: FieldCreateInput[] | FieldCreateInput
-  connect?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
+export interface ConnectMany {
+  connect?: WhereUniqueInput[] | WhereUniqueInput
 }
 
 export interface UserUpdateWithoutSubscriptionCandidatesDataInput {
@@ -2227,18 +2621,116 @@ export interface UserUpdateWithoutSubscriptionCandidatesDataInput {
   tasks?: TaskUpdateManyWithoutOwnersInput
 }
 
-export interface TaskCreateManyWithoutCandidateInput {
-  create?: TaskCreateWithoutCandidateInput[] | TaskCreateWithoutCandidateInput
-  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+export interface StageCreateInput {
+  name: String
+  description?: String
+  position: Int
+  type: StageTypeEnum
 }
 
-export interface JobUpdateManyWithoutSubscribersInput {
-  create?: JobCreateWithoutSubscribersInput[] | JobCreateWithoutSubscribersInput
-  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  disconnect?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  delete?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  update?: JobUpdateWithWhereUniqueWithoutSubscribersInput[] | JobUpdateWithWhereUniqueWithoutSubscribersInput
-  upsert?: JobUpsertWithWhereUniqueWithoutSubscribersInput[] | JobUpsertWithWhereUniqueWithoutSubscribersInput
+export interface TaskUpdateManyWithoutSubscribersInput {
+  create?: TaskCreateWithoutSubscribersInput[] | TaskCreateWithoutSubscribersInput
+  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  update?: TaskUpdateWithWhereUniqueWithoutSubscribersInput[] | TaskUpdateWithWhereUniqueWithoutSubscribersInput
+  upsert?: TaskUpsertWithWhereUniqueWithoutSubscribersInput[] | TaskUpsertWithWhereUniqueWithoutSubscribersInput
+}
+
+export interface LocationWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TaskUpdateWithWhereUniqueWithoutSubscribersInput {
+  where: TaskWhereUniqueInput
+  data: TaskUpdateWithoutSubscribersDataInput
+}
+
+export interface WorkspaceCreateWithoutEventsInput {
+  name: String
+  users?: UserCreateManyWithoutWorkspaceInput
+  jobs?: JobCreateManyWithoutWorkspaceInput
+  applications?: ApplicationCreateManyWithoutWorkspaceInput
+  candidates?: CandidateCreateManyWithoutWorkspaceInput
+  invites?: InviteCreateManyWithoutWorkspaceInput
+  tags?: TagCreateManyInput
+}
+
+export interface TaskUpdateWithoutSubscribersDataInput {
+  targetType?: TaskTargetEnum
+  title?: String
+  description?: String
+  dueAt?: DateTime
+  workspace?: WorkspaceUpdateOneInput
+  owners?: UserUpdateManyWithoutTasksInput
+  job?: JobUpdateOneInput
+  candidate?: CandidateUpdateOneWithoutTasksInput
+}
+
+export interface EventCreateWithoutTargetJobInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceCreateOneInput
+  actorUser?: UserCreateOneWithoutEventsInput
+  actorCandidate?: CandidateCreateOneInput
+  targetCandidate?: CandidateCreateOneWithoutEventsInput
+  targetTask?: TaskCreateOneInput
+  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
+}
+
+export interface UserUpdateManyWithoutTasksInput {
+  create?: UserCreateWithoutTasksInput[] | UserCreateWithoutTasksInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutTasksInput[] | UserUpdateWithWhereUniqueWithoutTasksInput
+  upsert?: UserUpsertWithWhereUniqueWithoutTasksInput[] | UserUpsertWithWhereUniqueWithoutTasksInput
+}
+
+export interface WorkspaceCreateOneWithoutApplicationsInput {
+  create?: WorkspaceCreateWithoutApplicationsInput
+  connect?: WorkspaceWhereUniqueInput
+}
+
+export interface UserUpdateWithWhereUniqueWithoutTasksInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutTasksDataInput
+}
+
+export interface UserCreateManyWithoutSubscriptionCandidatesInput {
+  create?: UserCreateWithoutSubscriptionCandidatesInput[] | UserCreateWithoutSubscriptionCandidatesInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
+export interface UserUpdateWithoutTasksDataInput {
+  firstName?: String
+  lastName?: String
+  email?: String
+  username?: String
+  password?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutUsersInput
+  events?: EventUpdateOneWithoutActorUserInput
+  notifications?: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
+}
+
+export interface CommentCreateManyInput {
+  create?: CommentCreateInput[] | CommentCreateInput
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+}
+
+export interface CandidateUpdateManyWithoutSubscribersInput {
+  create?: CandidateCreateWithoutSubscribersInput[] | CandidateCreateWithoutSubscribersInput
+  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+  disconnect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+  delete?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+  update?: CandidateUpdateWithWhereUniqueWithoutSubscribersInput[] | CandidateUpdateWithWhereUniqueWithoutSubscribersInput
+  upsert?: CandidateUpsertWithWhereUniqueWithoutSubscribersInput[] | CandidateUpsertWithWhereUniqueWithoutSubscribersInput
 }
 
 export interface FieldWhereInput {
@@ -2293,31 +2785,9 @@ export interface FieldWhereInput {
   value_not_ends_with?: String
 }
 
-export interface JobUpdateWithWhereUniqueWithoutSubscribersInput {
-  where: JobWhereUniqueInput
-  data: JobUpdateWithoutSubscribersDataInput
-}
-
-export interface UserUpdateOneWithoutNotificationsInput {
-  create?: UserCreateWithoutNotificationsInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateWithoutNotificationsDataInput
-  upsert?: UserUpsertWithoutNotificationsInput
-}
-
-export interface JobUpdateWithoutSubscribersDataInput {
-  status?: JobType
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  workspace?: WorkspaceUpdateOneWithoutJobsInput
-  events?: EventUpdateManyWithoutTargetJobInput
-  applications?: ApplicationUpdateManyWithoutJobInput
-  stages?: StageUpdateManyInput
-  comments?: CommentUpdateManyInput
-  location?: LocationUpdateOneInput
+export interface CandidateUpdateWithWhereUniqueWithoutSubscribersInput {
+  where: CandidateWhereUniqueInput
+  data: CandidateUpdateWithoutSubscribersDataInput
 }
 
 export interface JobWhereInput {
@@ -2432,12 +2902,566 @@ export interface JobWhereInput {
   location?: LocationWhereInput
 }
 
-export interface WorkspaceUpdateOneWithoutJobsInput {
-  create?: WorkspaceCreateWithoutJobsInput
+export interface CandidateUpdateWithoutSubscribersDataInput {
+  firstName?: String
+  lastName?: String
+  emails?: CandidateUpdateemailsInput
+  phones?: CandidateUpdatephonesInput
+  links?: CandidateUpdatelinksInput
+  resume?: CandidateUpdateresumeInput
+  coverLetter?: CandidateUpdatecoverLetterInput
+  source?: CandidateUpdatesourceInput
+  workspace?: WorkspaceUpdateOneWithoutCandidatesInput
+  events?: EventUpdateManyWithoutTargetCandidateInput
+  tags?: TagUpdateManyInput
+  fields?: FieldUpdateManyInput
+  tasks?: TaskUpdateManyWithoutCandidateInput
+  applications?: ApplicationUpdateManyWithoutCandidateInput
+  comments?: CommentUpdateManyInput
+}
+
+export interface WorkspaceWhereInput {
+  AND?: WorkspaceWhereInput[] | WorkspaceWhereInput
+  OR?: WorkspaceWhereInput[] | WorkspaceWhereInput
+  NOT?: WorkspaceWhereInput[] | WorkspaceWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  events_every?: EventWhereInput
+  events_some?: EventWhereInput
+  events_none?: EventWhereInput
+  users_every?: UserWhereInput
+  users_some?: UserWhereInput
+  users_none?: UserWhereInput
+  jobs_every?: JobWhereInput
+  jobs_some?: JobWhereInput
+  jobs_none?: JobWhereInput
+  applications_every?: ApplicationWhereInput
+  applications_some?: ApplicationWhereInput
+  applications_none?: ApplicationWhereInput
+  candidates_every?: CandidateWhereInput
+  candidates_some?: CandidateWhereInput
+  candidates_none?: CandidateWhereInput
+  invites_every?: InviteWhereInput
+  invites_some?: InviteWhereInput
+  invites_none?: InviteWhereInput
+  tags_every?: TagWhereInput
+  tags_some?: TagWhereInput
+  tags_none?: TagWhereInput
+}
+
+export interface EventUpdateManyWithoutTargetCandidateInput {
+  create?: EventCreateWithoutTargetCandidateInput[] | EventCreateWithoutTargetCandidateInput
+  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
+  update?: EventUpdateWithWhereUniqueWithoutTargetCandidateInput[] | EventUpdateWithWhereUniqueWithoutTargetCandidateInput
+  upsert?: EventUpsertWithWhereUniqueWithoutTargetCandidateInput[] | EventUpsertWithWhereUniqueWithoutTargetCandidateInput
+}
+
+export interface CommentUpsertNestedInput {
+  update: CommentUpdateDataInput
+  create: CommentCreateInput
+}
+
+export interface EventUpdateWithWhereUniqueWithoutTargetCandidateInput {
+  where: EventWhereUniqueInput
+  data: EventUpdateWithoutTargetCandidateDataInput
+}
+
+export interface CandidateUpsertNestedInput {
+  update: CandidateUpdateDataInput
+  create: CandidateCreateInput
+}
+
+export interface EventUpdateWithoutTargetCandidateDataInput {
+  type?: EventTypeEnum
+  actorType?: EventActorTypeEnum
+  targetType?: EventTargetTypeEnum
+  workspace?: WorkspaceUpdateOneInput
+  actorUser?: UserUpdateOneWithoutEventsInput
+  actorCandidate?: CandidateUpdateOneInput
+  targetJob?: JobUpdateOneWithoutEventsInput
+  targetTask?: TaskUpdateOneInput
+  targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
+}
+
+export interface WorkspaceUpsertWithoutJobsInput {
+  update: WorkspaceUpdateWithoutJobsDataInput
+  create: WorkspaceCreateWithoutJobsInput
+}
+
+export interface JobUpdateOneWithoutEventsInput {
+  create?: JobCreateWithoutEventsInput
+  connect?: JobWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: JobUpdateWithoutEventsDataInput
+  upsert?: JobUpsertWithoutEventsInput
+}
+
+export interface CandidateUpsertWithWhereUniqueWithoutSubscribersInput {
+  where: CandidateWhereUniqueInput
+  update: CandidateUpdateWithoutSubscribersDataInput
+  create: CandidateCreateWithoutSubscribersInput
+}
+
+export interface JobUpdateWithoutEventsDataInput {
+  status?: JobType
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  workspace?: WorkspaceUpdateOneWithoutJobsInput
+  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
+  applications?: ApplicationUpdateManyWithoutJobInput
+  stages?: StageUpdateManyInput
+  comments?: CommentUpdateManyInput
+  location?: LocationUpdateOneInput
+}
+
+export interface JobUpsertWithoutEventsInput {
+  update: JobUpdateWithoutEventsDataInput
+  create: JobCreateWithoutEventsInput
+}
+
+export interface ApplicationUpdateManyWithoutJobInput {
+  create?: ApplicationCreateWithoutJobInput[] | ApplicationCreateWithoutJobInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  update?: ApplicationUpdateWithWhereUniqueWithoutJobInput[] | ApplicationUpdateWithWhereUniqueWithoutJobInput
+  upsert?: ApplicationUpsertWithWhereUniqueWithoutJobInput[] | ApplicationUpsertWithWhereUniqueWithoutJobInput
+}
+
+export interface InviteUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: InviteWhereUniqueInput
+  data: InviteUpdateWithoutWorkspaceDataInput
+}
+
+export interface ApplicationUpdateWithWhereUniqueWithoutJobInput {
+  where: ApplicationWhereUniqueInput
+  data: ApplicationUpdateWithoutJobDataInput
+}
+
+export interface InviteCreateInput {
+  email: String
+}
+
+export interface ApplicationUpdateWithoutJobDataInput {
+  disqualifyReason?: String
+  workspace?: WorkspaceUpdateOneWithoutApplicationsInput
+  candidate?: CandidateUpdateOneWithoutApplicationsInput
+  stage?: StageUpdateOneInput
+}
+
+export interface CandidateCreatecoverLetterInput {
+  set?: String[] | String
+}
+
+export interface WorkspaceUpdateOneWithoutApplicationsInput {
+  create?: WorkspaceCreateWithoutApplicationsInput
   connect?: WorkspaceWhereUniqueInput
   delete?: Boolean
-  update?: WorkspaceUpdateWithoutJobsDataInput
-  upsert?: WorkspaceUpsertWithoutJobsInput
+  update?: WorkspaceUpdateWithoutApplicationsDataInput
+  upsert?: WorkspaceUpsertWithoutApplicationsInput
+}
+
+export interface WorkspaceCreateOneWithoutUsersInput {
+  create?: WorkspaceCreateWithoutUsersInput
+  connect?: WorkspaceWhereUniqueInput
+}
+
+export interface WorkspaceUpdateWithoutApplicationsDataInput {
+  name?: String
+  events?: EventUpdateManyWithoutTargetWorkspaceInput
+  users?: UserUpdateManyWithoutWorkspaceInput
+  jobs?: JobUpdateManyWithoutWorkspaceInput
+  candidates?: CandidateUpdateManyWithoutWorkspaceInput
+  invites?: InviteUpdateManyWithoutWorkspaceInput
+  tags?: TagUpdateManyInput
+}
+
+export interface WorkspaceCreateOneWithoutCandidatesInput {
+  create?: WorkspaceCreateWithoutCandidatesInput
+  connect?: WorkspaceWhereUniqueInput
+}
+
+export interface CandidateUpdateManyWithoutWorkspaceInput {
+  create?: CandidateCreateWithoutWorkspaceInput[] | CandidateCreateWithoutWorkspaceInput
+  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+  disconnect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+  delete?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
+  update?: CandidateUpdateWithWhereUniqueWithoutWorkspaceInput[] | CandidateUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?: CandidateUpsertWithWhereUniqueWithoutWorkspaceInput[] | CandidateUpsertWithWhereUniqueWithoutWorkspaceInput
+}
+
+export interface WorkspaceCreateOneWithoutJobsInput {
+  create?: WorkspaceCreateWithoutJobsInput
+  connect?: WorkspaceWhereUniqueInput
+}
+
+export interface CandidateUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: CandidateWhereUniqueInput
+  data: CandidateUpdateWithoutWorkspaceDataInput
+}
+
+export interface NotificationCreateManyWithoutUserInput {
+  create?: NotificationCreateWithoutUserInput[] | NotificationCreateWithoutUserInput
+  connect?: NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+}
+
+export interface CandidateUpdateWithoutWorkspaceDataInput {
+  firstName?: String
+  lastName?: String
+  emails?: CandidateUpdateemailsInput
+  phones?: CandidateUpdatephonesInput
+  links?: CandidateUpdatelinksInput
+  resume?: CandidateUpdateresumeInput
+  coverLetter?: CandidateUpdatecoverLetterInput
+  source?: CandidateUpdatesourceInput
+  events?: EventUpdateManyWithoutTargetCandidateInput
+  subscribers?: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags?: TagUpdateManyInput
+  fields?: FieldUpdateManyInput
+  tasks?: TaskUpdateManyWithoutCandidateInput
+  applications?: ApplicationUpdateManyWithoutCandidateInput
+  comments?: CommentUpdateManyInput
+}
+
+export interface JobCreateInput {
+  status: JobType
+  title: String
+  department?: String
+  description?: String
+  requirements?: String
+  subscribers?: ConnectMany
+  stages?: StageCreateManyInput
+  location?: LocationCreateOneInput
+}
+
+export interface TaskUpdateManyWithoutCandidateInput {
+  create?: TaskCreateWithoutCandidateInput[] | TaskCreateWithoutCandidateInput
+  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  update?: TaskUpdateWithWhereUniqueWithoutCandidateInput[] | TaskUpdateWithWhereUniqueWithoutCandidateInput
+  upsert?: TaskUpsertWithWhereUniqueWithoutCandidateInput[] | TaskUpsertWithWhereUniqueWithoutCandidateInput
+}
+
+export interface TaskWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface TaskUpdateWithWhereUniqueWithoutCandidateInput {
+  where: TaskWhereUniqueInput
+  data: TaskUpdateWithoutCandidateDataInput
+}
+
+export interface ApplicationCreateManyWithoutJobInput {
+  create?: ApplicationCreateWithoutJobInput[] | ApplicationCreateWithoutJobInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+}
+
+export interface TaskUpdateWithoutCandidateDataInput {
+  targetType?: TaskTargetEnum
+  title?: String
+  description?: String
+  dueAt?: DateTime
+  workspace?: WorkspaceUpdateOneInput
+  subscribers?: UserUpdateManyWithoutSubscriptionTasksInput
+  owners?: UserUpdateManyWithoutTasksInput
+  job?: JobUpdateOneInput
+}
+
+export interface JobCreateManyWithoutSubscribersInput {
+  create?: JobCreateWithoutSubscribersInput[] | JobCreateWithoutSubscribersInput
+  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
+}
+
+export interface UserUpdateManyWithoutSubscriptionTasksInput {
+  create?: UserCreateWithoutSubscriptionTasksInput[] | UserCreateWithoutSubscriptionTasksInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput[] | UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput
+  upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput
+}
+
+export interface UserCreateWithoutNotificationsInput {
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput
+  events?: EventCreateOneWithoutActorUserInput
+  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
+  tasks?: TaskCreateManyWithoutOwnersInput
+}
+
+export interface UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutSubscriptionTasksDataInput
+}
+
+export interface ConnectDisconnect {
+  connect?: WhereUniqueInput
+  disconnect?: WhereUniqueInput
+}
+
+export interface UserUpdateWithoutSubscriptionTasksDataInput {
+  firstName?: String
+  lastName?: String
+  email?: String
+  username?: String
+  password?: String
+  lastLogin?: DateTime
+  deletedAt?: DateTime
+  workspace?: WorkspaceUpdateOneWithoutUsersInput
+  events?: EventUpdateOneWithoutActorUserInput
+  notifications?: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
+  tasks?: TaskUpdateManyWithoutOwnersInput
+}
+
+export interface NotificationUpsertWithWhereUniqueWithoutUserInput {
+  where: NotificationWhereUniqueInput
+  update: NotificationUpdateWithoutUserDataInput
+  create: NotificationCreateWithoutUserInput
+}
+
+export interface TaskUpdateManyWithoutOwnersInput {
+  create?: TaskCreateWithoutOwnersInput[] | TaskCreateWithoutOwnersInput
+  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
+  update?: TaskUpdateWithWhereUniqueWithoutOwnersInput[] | TaskUpdateWithWhereUniqueWithoutOwnersInput
+  upsert?: TaskUpsertWithWhereUniqueWithoutOwnersInput[] | TaskUpsertWithWhereUniqueWithoutOwnersInput
+}
+
+export interface WorkspaceUpdateOneWithoutEventsInput {
+  create?: WorkspaceCreateWithoutEventsInput
+  connect?: WorkspaceWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: WorkspaceUpdateWithoutEventsDataInput
+  upsert?: WorkspaceUpsertWithoutEventsInput
+}
+
+export interface TaskUpdateWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput
+  data: TaskUpdateWithoutOwnersDataInput
+}
+
+export interface WorkspaceCreateInput {
+  name: String
+  firstName?: String
+  lastName?: String
+  email: String
+  username: String
+  password: String
+}
+
+export interface TaskUpdateWithoutOwnersDataInput {
+  targetType?: TaskTargetEnum
+  title?: String
+  description?: String
+  dueAt?: DateTime
+  workspace?: WorkspaceUpdateOneInput
+  subscribers?: UserUpdateManyWithoutSubscriptionTasksInput
+  job?: JobUpdateOneInput
+  candidate?: CandidateUpdateOneWithoutTasksInput
+}
+
+export interface WorkspaceCreateOneInput {
+  create?: WorkspaceCreateInput
+  connect?: WorkspaceWhereUniqueInput
+}
+
+export interface JobUpdateOneInput {
+  create?: JobCreateInput
+  connect?: JobWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: JobUpdateDataInput
+  upsert?: JobUpsertNestedInput
+}
+
+export interface EventCreateOneWithoutActorUserInput {
+  create?: EventCreateWithoutActorUserInput
+  connect?: EventWhereUniqueInput
+}
+
+export interface JobUpdateDataInput {
+  status?: JobType
+  title?: String
+  department?: String
+  description?: String
+  requirements?: String
+  workspace?: WorkspaceUpdateOneWithoutJobsInput
+  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
+  events?: EventUpdateManyWithoutTargetJobInput
+  applications?: ApplicationUpdateManyWithoutJobInput
+  stages?: StageUpdateManyInput
+  comments?: CommentUpdateManyInput
+  location?: LocationUpdateOneInput
+}
+
+export interface TaskCreateOneInput {
+  create?: TaskCreateInput
+  connect?: TaskWhereUniqueInput
+}
+
+export interface LocationUpdateOneInput {
+  create?: LocationCreateInput
+  connect?: LocationWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: LocationUpdateDataInput
+  upsert?: LocationUpsertNestedInput
+}
+
+export interface JobCreateWithoutWorkspaceInput {
+  status: JobType
+  title: String
+  department?: String
+  description?: String
+  requirements?: String
+  subscribers?: UserCreateManyWithoutSubscriptionJobsInput
+  events?: EventCreateManyWithoutTargetJobInput
+  applications?: ApplicationCreateManyWithoutJobInput
+  stages?: StageCreateManyInput
+  comments?: CommentCreateManyInput
+  location?: LocationCreateOneInput
+}
+
+export interface LocationUpdateDataInput {
+  country?: String
+  region?: String
+  city?: String
+  zip?: String
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface LocationUpsertNestedInput {
+  update: LocationUpdateDataInput
+  create: LocationCreateInput
+}
+
+export interface EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput {
+  where: EventWhereUniqueInput
+  update: EventUpdateWithoutTargetWorkspaceDataInput
+  create: EventCreateWithoutTargetWorkspaceInput
+}
+
+export interface JobUpsertNestedInput {
+  update: JobUpdateDataInput
+  create: JobCreateInput
+}
+
+export interface CandidateUpdateOneWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput
+  connect?: CandidateWhereUniqueInput
+  delete?: Boolean
+  update?: CandidateUpdateWithoutApplicationsDataInput
+  upsert?: CandidateUpsertWithoutApplicationsInput
+}
+
+export interface CandidateUpdateOneWithoutTasksInput {
+  create?: CandidateCreateWithoutTasksInput
+  connect?: CandidateWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: CandidateUpdateWithoutTasksDataInput
+  upsert?: CandidateUpsertWithoutTasksInput
+}
+
+export interface CandidateCreateOneInput {
+  create?: CandidateCreateInput
+  connect?: CandidateWhereUniqueInput
+}
+
+export interface CandidateUpdateWithoutTasksDataInput {
+  firstName?: String
+  lastName?: String
+  emails?: CandidateUpdateemailsInput
+  phones?: CandidateUpdatephonesInput
+  links?: CandidateUpdatelinksInput
+  resume?: CandidateUpdateresumeInput
+  coverLetter?: CandidateUpdatecoverLetterInput
+  source?: CandidateUpdatesourceInput
+  workspace?: WorkspaceUpdateOneWithoutCandidatesInput
+  events?: EventUpdateManyWithoutTargetCandidateInput
+  subscribers?: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags?: TagUpdateManyInput
+  fields?: FieldUpdateManyInput
+  applications?: ApplicationUpdateManyWithoutCandidateInput
+  comments?: CommentUpdateManyInput
+}
+
+export interface LocationCreateOneInput {
+  create?: LocationCreateInput
+  connect?: LocationWhereUniqueInput
+}
+
+export interface ApplicationUpdateManyWithoutCandidateInput {
+  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
+  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
+  update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput[] | ApplicationUpdateWithWhereUniqueWithoutCandidateInput
+  upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput[] | ApplicationUpsertWithWhereUniqueWithoutCandidateInput
 }
 
 export interface UserWhereInput {
@@ -2564,799 +3588,9 @@ export interface UserWhereInput {
   tasks_none?: TaskWhereInput
 }
 
-export interface WorkspaceUpdateWithoutJobsDataInput {
-  name?: String
-  events?: EventUpdateManyWithoutTargetWorkspaceInput
-  users?: UserUpdateManyWithoutWorkspaceInput
-  applications?: ApplicationUpdateManyWithoutWorkspaceInput
-  candidates?: CandidateUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
-}
-
-export interface WorkspaceWhereInput {
-  AND?: WorkspaceWhereInput[] | WorkspaceWhereInput
-  OR?: WorkspaceWhereInput[] | WorkspaceWhereInput
-  NOT?: WorkspaceWhereInput[] | WorkspaceWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  events_every?: EventWhereInput
-  events_some?: EventWhereInput
-  events_none?: EventWhereInput
-  users_every?: UserWhereInput
-  users_some?: UserWhereInput
-  users_none?: UserWhereInput
-  jobs_every?: JobWhereInput
-  jobs_some?: JobWhereInput
-  jobs_none?: JobWhereInput
-  applications_every?: ApplicationWhereInput
-  applications_some?: ApplicationWhereInput
-  applications_none?: ApplicationWhereInput
-  candidates_every?: CandidateWhereInput
-  candidates_some?: CandidateWhereInput
-  candidates_none?: CandidateWhereInput
-  invites_every?: InviteWhereInput
-  invites_some?: InviteWhereInput
-  invites_none?: InviteWhereInput
-  tags_every?: TagWhereInput
-  tags_some?: TagWhereInput
-  tags_none?: TagWhereInput
-}
-
-export interface ApplicationUpdateManyWithoutWorkspaceInput {
-  create?: ApplicationCreateWithoutWorkspaceInput[] | ApplicationCreateWithoutWorkspaceInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  update?: ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput[] | ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput[] | ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput
-}
-
-export interface StageUpdateInput {
-  name?: String
-  description?: String
-  position?: Int
-  type?: StageTypeEnum
-}
-
-export interface ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: ApplicationWhereUniqueInput
-  data: ApplicationUpdateWithoutWorkspaceDataInput
-}
-
-export interface CandidateWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface ApplicationUpdateWithoutWorkspaceDataInput {
-  disqualifyReason?: String
-  job?: JobUpdateOneWithoutApplicationsInput
-  candidate?: CandidateUpdateOneWithoutApplicationsInput
-  stage?: StageUpdateOneInput
-}
-
-export interface InviteWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface JobUpdateOneWithoutApplicationsInput {
-  create?: JobCreateWithoutApplicationsInput
-  connect?: JobWhereUniqueInput
-  delete?: Boolean
-  update?: JobUpdateWithoutApplicationsDataInput
-  upsert?: JobUpsertWithoutApplicationsInput
-}
-
-export interface StageWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface JobUpdateWithoutApplicationsDataInput {
-  status?: JobType
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  workspace?: WorkspaceUpdateOneWithoutJobsInput
-  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
-  events?: EventUpdateManyWithoutTargetJobInput
-  stages?: StageUpdateManyInput
-  comments?: CommentUpdateManyInput
-  location?: LocationUpdateOneInput
-}
-
-export interface WorkspaceWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface EventUpdateManyWithoutTargetJobInput {
-  create?: EventCreateWithoutTargetJobInput[] | EventCreateWithoutTargetJobInput
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  update?: EventUpdateWithWhereUniqueWithoutTargetJobInput[] | EventUpdateWithWhereUniqueWithoutTargetJobInput
-  upsert?: EventUpsertWithWhereUniqueWithoutTargetJobInput[] | EventUpsertWithWhereUniqueWithoutTargetJobInput
-}
-
-export interface ConnectDisconnectMany {
-  connect?: WhereUniqueInput[] | WhereUniqueInput
-  disconnect?: WhereUniqueInput[] | WhereUniqueInput
-}
-
-export interface EventUpdateWithWhereUniqueWithoutTargetJobInput {
-  where: EventWhereUniqueInput
-  data: EventUpdateWithoutTargetJobDataInput
-}
-
-export interface EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput {
-  where: EventWhereUniqueInput
-  update: EventUpdateWithoutTargetWorkspaceDataInput
-  create: EventCreateWithoutTargetWorkspaceInput
-}
-
-export interface EventUpdateWithoutTargetJobDataInput {
-  type?: EventTypeEnum
-  actorType?: EventActorTypeEnum
-  targetType?: EventTargetTypeEnum
-  workspace?: WorkspaceUpdateOneInput
-  actorUser?: UserUpdateOneWithoutEventsInput
-  actorCandidate?: CandidateUpdateOneInput
-  targetCandidate?: CandidateUpdateOneWithoutEventsInput
-  targetTask?: TaskUpdateOneInput
-  targetWorkspace?: WorkspaceUpdateOneWithoutEventsInput
-}
-
-export interface UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutSubscriptionJobsDataInput
-  create: UserCreateWithoutSubscriptionJobsInput
-}
-
-export interface TaskUpdateOneInput {
-  create?: TaskCreateInput
-  connect?: TaskWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: TaskUpdateDataInput
-  upsert?: TaskUpsertNestedInput
-}
-
-export interface UserUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutWorkspaceDataInput
-  create: UserCreateWithoutWorkspaceInput
-}
-
-export interface TaskUpdateDataInput {
-  targetType?: TaskTargetEnum
-  title?: String
-  description?: String
-  dueAt?: DateTime
-  workspace?: WorkspaceUpdateOneInput
-  subscribers?: UserUpdateManyWithoutSubscriptionTasksInput
-  owners?: UserUpdateManyWithoutTasksInput
-  job?: JobUpdateOneInput
-  candidate?: CandidateUpdateOneWithoutTasksInput
-}
-
-export interface JobUpdateWithoutEventsDataInput {
-  status?: JobType
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  workspace?: WorkspaceUpdateOneWithoutJobsInput
-  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
-  applications?: ApplicationUpdateManyWithoutJobInput
-  stages?: StageUpdateManyInput
-  comments?: CommentUpdateManyInput
-  location?: LocationUpdateOneInput
-}
-
-export interface UserUpdateManyWithoutSubscriptionTasksInput {
-  create?: UserCreateWithoutSubscriptionTasksInput[] | UserCreateWithoutSubscriptionTasksInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput[] | UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput
-  upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput
-}
-
-export interface JobUpsertWithWhereUniqueWithoutSubscribersInput {
-  where: JobWhereUniqueInput
-  update: JobUpdateWithoutSubscribersDataInput
-  create: JobCreateWithoutSubscribersInput
-}
-
-export interface UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutSubscriptionTasksDataInput
-}
-
-export interface EventUpsertWithWhereUniqueWithoutTargetJobInput {
-  where: EventWhereUniqueInput
-  update: EventUpdateWithoutTargetJobDataInput
-  create: EventCreateWithoutTargetJobInput
-}
-
-export interface UserUpdateWithoutSubscriptionTasksDataInput {
-  firstName?: String
-  lastName?: String
-  email?: String
-  username?: String
-  password?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutUsersInput
-  events?: EventUpdateOneWithoutActorUserInput
-  notifications?: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
-  tasks?: TaskUpdateManyWithoutOwnersInput
-}
-
-export interface TaskUpsertNestedInput {
-  update: TaskUpdateDataInput
-  create: TaskCreateInput
-}
-
-export interface CandidateUpdateManyWithoutSubscribersInput {
-  create?: CandidateCreateWithoutSubscribersInput[] | CandidateCreateWithoutSubscribersInput
-  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  disconnect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  delete?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  update?: CandidateUpdateWithWhereUniqueWithoutSubscribersInput[] | CandidateUpdateWithWhereUniqueWithoutSubscribersInput
-  upsert?: CandidateUpsertWithWhereUniqueWithoutSubscribersInput[] | CandidateUpsertWithWhereUniqueWithoutSubscribersInput
-}
-
-export interface UserUpsertWithWhereUniqueWithoutTasksInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutTasksDataInput
-  create: UserCreateWithoutTasksInput
-}
-
-export interface CandidateUpdateWithWhereUniqueWithoutSubscribersInput {
-  where: CandidateWhereUniqueInput
-  data: CandidateUpdateWithoutSubscribersDataInput
-}
-
-export interface LocationUpdateDataInput {
-  country?: String
-  region?: String
-  city?: String
-  zip?: String
-}
-
-export interface CandidateUpdateWithoutSubscribersDataInput {
-  firstName?: String
-  lastName?: String
-  emails?: CandidateUpdateemailsInput
-  phones?: CandidateUpdatephonesInput
-  links?: CandidateUpdatelinksInput
-  resume?: CandidateUpdateresumeInput
-  coverLetter?: CandidateUpdatecoverLetterInput
-  source?: CandidateUpdatesourceInput
-  workspace?: WorkspaceUpdateOneWithoutCandidatesInput
-  events?: EventUpdateManyWithoutTargetCandidateInput
-  tags?: TagUpdateManyInput
-  fields?: FieldUpdateManyInput
-  tasks?: TaskUpdateManyWithoutCandidateInput
-  applications?: ApplicationUpdateManyWithoutCandidateInput
-  comments?: CommentUpdateManyInput
-}
-
-export interface StageUpdateManyInput {
-  create?: StageCreateInput[] | StageCreateInput
-  connect?: StageWhereUniqueInput[] | StageWhereUniqueInput
-  disconnect?: StageWhereUniqueInput[] | StageWhereUniqueInput
-  delete?: StageWhereUniqueInput[] | StageWhereUniqueInput
-  update?: StageUpdateWithWhereUniqueNestedInput[] | StageUpdateWithWhereUniqueNestedInput
-  upsert?: StageUpsertWithWhereUniqueNestedInput[] | StageUpsertWithWhereUniqueNestedInput
-}
-
-export interface TagUpdateManyInput {
-  create?: TagCreateInput[] | TagCreateInput
-  connect?: TagWhereUniqueInput[] | TagWhereUniqueInput
-  disconnect?: TagWhereUniqueInput[] | TagWhereUniqueInput
-  delete?: TagWhereUniqueInput[] | TagWhereUniqueInput
-  update?: TagUpdateWithWhereUniqueNestedInput[] | TagUpdateWithWhereUniqueNestedInput
-  upsert?: TagUpsertWithWhereUniqueNestedInput[] | TagUpsertWithWhereUniqueNestedInput
-}
-
-export interface WorkspaceCreateInput {
-  name: String
-  firstName?: String
-  lastName?: String
-  email: String
-  username: String
-  password: String
-}
-
-export interface TagUpdateWithWhereUniqueNestedInput {
-  where: TagWhereUniqueInput
-  data: TagUpdateDataInput
-}
-
-export interface LocationCreateInput {
-  country: String
-  region: String
-  city: String
-  zip: String
-}
-
-export interface TagUpdateDataInput {
-  label?: String
-}
-
-export interface CandidateCreatelinksInput {
-  set?: String[] | String
-}
-
-export interface TagUpsertWithWhereUniqueNestedInput {
-  where: TagWhereUniqueInput
-  update: TagUpdateDataInput
-  create: TagCreateInput
-}
-
-export interface WorkspaceCreateOneWithoutCandidatesInput {
-  create?: WorkspaceCreateWithoutCandidatesInput
-  connect?: WorkspaceWhereUniqueInput
-}
-
-export interface FieldUpdateManyInput {
-  create?: FieldCreateInput[] | FieldCreateInput
-  connect?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
-  disconnect?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
-  delete?: FieldWhereUniqueInput[] | FieldWhereUniqueInput
-  update?: FieldUpdateWithWhereUniqueNestedInput[] | FieldUpdateWithWhereUniqueNestedInput
-  upsert?: FieldUpsertWithWhereUniqueNestedInput[] | FieldUpsertWithWhereUniqueNestedInput
-}
-
-export interface WorkspaceCreateOneInput {
-  create?: WorkspaceCreateInput
-  connect?: WorkspaceWhereUniqueInput
-}
-
-export interface FieldUpdateWithWhereUniqueNestedInput {
-  where: FieldWhereUniqueInput
-  data: FieldUpdateDataInput
-}
-
-export interface WorkspaceCreateWithoutUsersInput {
-  name: String
-  events?: EventCreateManyWithoutTargetWorkspaceInput
-  jobs?: JobCreateManyWithoutWorkspaceInput
-  applications?: ApplicationCreateManyWithoutWorkspaceInput
-  candidates?: CandidateCreateManyWithoutWorkspaceInput
-  invites?: InviteCreateManyWithoutWorkspaceInput
-  tags?: TagCreateManyInput
-}
-
-export interface FieldUpdateDataInput {
-  type?: FieldTypeEnum
-  label?: String
-  value?: String
-}
-
-export interface UserCreateWithoutSubscriptionJobsInput {
-  firstName?: String
-  lastName?: String
-  email: String
-  username: String
-  password: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
-  events?: EventCreateOneWithoutActorUserInput
-  notifications?: NotificationCreateManyWithoutUserInput
-  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
-  tasks?: TaskCreateManyWithoutOwnersInput
-}
-
-export interface FieldUpsertWithWhereUniqueNestedInput {
-  where: FieldWhereUniqueInput
-  update: FieldUpdateDataInput
-  create: FieldCreateInput
-}
-
-export interface CandidateCreateOneWithoutEventsInput {
-  create?: CandidateCreateWithoutEventsInput
-  connect?: CandidateWhereUniqueInput
-}
-
-export interface TaskUpdateManyWithoutCandidateInput {
-  create?: TaskCreateWithoutCandidateInput[] | TaskCreateWithoutCandidateInput
-  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  update?: TaskUpdateWithWhereUniqueWithoutCandidateInput[] | TaskUpdateWithWhereUniqueWithoutCandidateInput
-  upsert?: TaskUpsertWithWhereUniqueWithoutCandidateInput[] | TaskUpsertWithWhereUniqueWithoutCandidateInput
-}
-
-export interface NotificationCreateManyWithoutUserInput {
-  create?: NotificationCreateWithoutUserInput[] | NotificationCreateWithoutUserInput
-  connect?: NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-}
-
-export interface TaskUpdateWithWhereUniqueWithoutCandidateInput {
-  where: TaskWhereUniqueInput
-  data: TaskUpdateWithoutCandidateDataInput
-}
-
-export interface JobCreateOneWithoutEventsInput {
-  create?: JobCreateWithoutEventsInput
-  connect?: JobWhereUniqueInput
-}
-
-export interface TaskUpdateWithoutCandidateDataInput {
-  targetType?: TaskTargetEnum
-  title?: String
-  description?: String
-  dueAt?: DateTime
-  workspace?: WorkspaceUpdateOneInput
-  subscribers?: UserUpdateManyWithoutSubscriptionTasksInput
-  owners?: UserUpdateManyWithoutTasksInput
-  job?: JobUpdateOneInput
-}
-
-export interface UserCreateManyWithoutWorkspaceInput {
-  create?: UserCreateWithoutWorkspaceInput[] | UserCreateWithoutWorkspaceInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-}
-
-export interface UserUpdateManyWithoutTasksInput {
-  create?: UserCreateWithoutTasksInput[] | UserCreateWithoutTasksInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutTasksInput[] | UserUpdateWithWhereUniqueWithoutTasksInput
-  upsert?: UserUpsertWithWhereUniqueWithoutTasksInput[] | UserUpsertWithWhereUniqueWithoutTasksInput
-}
-
-export interface EventCreateManyWithoutTargetJobInput {
-  create?: EventCreateWithoutTargetJobInput[] | EventCreateWithoutTargetJobInput
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
-}
-
-export interface UserUpdateWithWhereUniqueWithoutTasksInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutTasksDataInput
-}
-
-export interface ConnectMany {
-  connect?: WhereUniqueInput[] | WhereUniqueInput
-}
-
-export interface UserUpdateWithoutTasksDataInput {
-  firstName?: String
-  lastName?: String
-  email?: String
-  username?: String
-  password?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutUsersInput
-  events?: EventUpdateOneWithoutActorUserInput
-  notifications?: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
-}
-
-export interface ApplicationCreateWithoutWorkspaceInput {
-  disqualifyReason?: String
-  job: JobCreateOneWithoutApplicationsInput
-  candidate: CandidateCreateOneWithoutApplicationsInput
-  stage: StageCreateOneInput
-}
-
-export interface TaskUpdateManyWithoutSubscribersInput {
-  create?: TaskCreateWithoutSubscribersInput[] | TaskCreateWithoutSubscribersInput
-  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  update?: TaskUpdateWithWhereUniqueWithoutSubscribersInput[] | TaskUpdateWithWhereUniqueWithoutSubscribersInput
-  upsert?: TaskUpsertWithWhereUniqueWithoutSubscribersInput[] | TaskUpsertWithWhereUniqueWithoutSubscribersInput
-}
-
-export interface StageCreateInput {
-  name: String
-  description?: String
-  position: Int
-  type: StageTypeEnum
-}
-
-export interface TaskUpdateWithWhereUniqueWithoutSubscribersInput {
-  where: TaskWhereUniqueInput
-  data: TaskUpdateWithoutSubscribersDataInput
-}
-
-export interface UserCreateInput {
-  firstName?: String
-  lastName?: String
-  email: String
-  username: String
-  password: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
-  events?: EventCreateOneWithoutActorUserInput
-  notifications?: NotificationCreateManyWithoutUserInput
-  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
-  tasks?: TaskCreateManyWithoutOwnersInput
-}
-
-export interface TaskUpdateWithoutSubscribersDataInput {
-  targetType?: TaskTargetEnum
-  title?: String
-  description?: String
-  dueAt?: DateTime
-  workspace?: WorkspaceUpdateOneInput
-  owners?: UserUpdateManyWithoutTasksInput
-  job?: JobUpdateOneInput
-  candidate?: CandidateUpdateOneWithoutTasksInput
-}
-
-export interface EventCreateWithoutTargetCandidateInput {
-  type: EventTypeEnum
-  actorType: EventActorTypeEnum
-  targetType: EventTargetTypeEnum
-  workspace: WorkspaceCreateOneInput
-  actorUser?: UserCreateOneWithoutEventsInput
-  actorCandidate?: CandidateCreateOneInput
-  targetJob?: JobCreateOneWithoutEventsInput
-  targetTask?: TaskCreateOneInput
-  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
-}
-
-export interface JobUpdateOneInput {
-  create?: JobCreateInput
-  connect?: JobWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: JobUpdateDataInput
-  upsert?: JobUpsertNestedInput
-}
-
-export interface FieldCreateInput {
-  type: FieldTypeEnum
-  label: String
-  value: String
-}
-
-export interface JobUpdateDataInput {
-  status?: JobType
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  workspace?: WorkspaceUpdateOneWithoutJobsInput
-  subscribers?: UserUpdateManyWithoutSubscriptionJobsInput
-  events?: EventUpdateManyWithoutTargetJobInput
-  applications?: ApplicationUpdateManyWithoutJobInput
-  stages?: StageUpdateManyInput
-  comments?: CommentUpdateManyInput
-  location?: LocationUpdateOneInput
-}
-
-export interface UserUpdateWithoutNotificationsDataInput {
-  firstName?: String
-  lastName?: String
-  email?: String
-  username?: String
-  password?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutUsersInput
-  events?: EventUpdateOneWithoutActorUserInput
-  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
-  tasks?: TaskUpdateManyWithoutOwnersInput
-}
-
-export interface ApplicationUpdateManyWithoutJobInput {
-  create?: ApplicationCreateWithoutJobInput[] | ApplicationCreateWithoutJobInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  update?: ApplicationUpdateWithWhereUniqueWithoutJobInput[] | ApplicationUpdateWithWhereUniqueWithoutJobInput
-  upsert?: ApplicationUpsertWithWhereUniqueWithoutJobInput[] | ApplicationUpsertWithWhereUniqueWithoutJobInput
-}
-
-export interface CommentUpdateInput {
-  content?: String
-  createdBy?: UserUpdateOneInput
-  parent?: CommentUpdateOneInput
-}
-
-export interface ApplicationUpdateWithWhereUniqueWithoutJobInput {
-  where: ApplicationWhereUniqueInput
-  data: ApplicationUpdateWithoutJobDataInput
-}
-
-export interface JobUpdateInput {
-  status?: JobType
-  title?: String
-  department?: String
-  description?: String
-  requirements?: String
-  subscribers?: ConnectDisconnectMany
-  stages?: StageUpdateManyInput
-  comments?: CommentUpdateManyInput
-  location?: LocationUpdateOneInput
-}
-
-export interface ApplicationUpdateWithoutJobDataInput {
-  disqualifyReason?: String
-  workspace?: WorkspaceUpdateOneWithoutApplicationsInput
-  candidate?: CandidateUpdateOneWithoutApplicationsInput
-  stage?: StageUpdateOneInput
-}
-
-export interface EventWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface WorkspaceUpdateOneWithoutApplicationsInput {
-  create?: WorkspaceCreateWithoutApplicationsInput
-  connect?: WorkspaceWhereUniqueInput
-  delete?: Boolean
-  update?: WorkspaceUpdateWithoutApplicationsDataInput
-  upsert?: WorkspaceUpsertWithoutApplicationsInput
-}
-
-export interface TaskWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface WorkspaceUpdateWithoutApplicationsDataInput {
-  name?: String
-  events?: EventUpdateManyWithoutTargetWorkspaceInput
-  users?: UserUpdateManyWithoutWorkspaceInput
-  jobs?: JobUpdateManyWithoutWorkspaceInput
-  candidates?: CandidateUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
-}
-
-export interface EventUpsertWithWhereUniqueWithoutTargetCandidateInput {
-  where: EventWhereUniqueInput
-  update: EventUpdateWithoutTargetCandidateDataInput
-  create: EventCreateWithoutTargetCandidateInput
-}
-
-export interface CandidateUpdateManyWithoutWorkspaceInput {
-  create?: CandidateCreateWithoutWorkspaceInput[] | CandidateCreateWithoutWorkspaceInput
-  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  disconnect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  delete?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  update?: CandidateUpdateWithWhereUniqueWithoutWorkspaceInput[] | CandidateUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: CandidateUpsertWithWhereUniqueWithoutWorkspaceInput[] | CandidateUpsertWithWhereUniqueWithoutWorkspaceInput
-}
-
-export interface CandidateUpsertNestedInput {
-  update: CandidateUpdateDataInput
-  create: CandidateCreateInput
-}
-
-export interface CandidateUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: CandidateWhereUniqueInput
-  data: CandidateUpdateWithoutWorkspaceDataInput
-}
-
-export interface CandidateUpsertWithoutEventsInput {
-  update: CandidateUpdateWithoutEventsDataInput
-  create: CandidateCreateWithoutEventsInput
-}
-
-export interface CandidateUpdateWithoutWorkspaceDataInput {
-  firstName?: String
-  lastName?: String
-  emails?: CandidateUpdateemailsInput
-  phones?: CandidateUpdatephonesInput
-  links?: CandidateUpdatelinksInput
-  resume?: CandidateUpdateresumeInput
-  coverLetter?: CandidateUpdatecoverLetterInput
-  source?: CandidateUpdatesourceInput
-  events?: EventUpdateManyWithoutTargetCandidateInput
-  subscribers?: UserUpdateManyWithoutSubscriptionCandidatesInput
-  tags?: TagUpdateManyInput
-  fields?: FieldUpdateManyInput
-  tasks?: TaskUpdateManyWithoutCandidateInput
-  applications?: ApplicationUpdateManyWithoutCandidateInput
-  comments?: CommentUpdateManyInput
-}
-
-export interface WorkspaceUpdateWithoutEventsDataInput {
-  name?: String
-  users?: UserUpdateManyWithoutWorkspaceInput
-  jobs?: JobUpdateManyWithoutWorkspaceInput
-  applications?: ApplicationUpdateManyWithoutWorkspaceInput
-  candidates?: CandidateUpdateManyWithoutWorkspaceInput
-  invites?: InviteUpdateManyWithoutWorkspaceInput
-  tags?: TagUpdateManyInput
-}
-
-export interface ApplicationUpdateManyWithoutCandidateInput {
-  create?: ApplicationCreateWithoutCandidateInput[] | ApplicationCreateWithoutCandidateInput
-  connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput[] | ApplicationUpdateWithWhereUniqueWithoutCandidateInput
-  upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput[] | ApplicationUpsertWithWhereUniqueWithoutCandidateInput
-}
-
-export interface JobUpsertNestedInput {
-  update: JobUpdateDataInput
-  create: JobCreateInput
-}
-
-export interface ApplicationUpdateWithWhereUniqueWithoutCandidateInput {
-  where: ApplicationWhereUniqueInput
-  data: ApplicationUpdateWithoutCandidateDataInput
-}
-
-export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
-  where: ApplicationWhereUniqueInput
-  update: ApplicationUpdateWithoutJobDataInput
-  create: ApplicationCreateWithoutJobInput
-}
-
-export interface ApplicationUpdateWithoutCandidateDataInput {
-  disqualifyReason?: String
-  workspace?: WorkspaceUpdateOneWithoutApplicationsInput
-  job?: JobUpdateOneWithoutApplicationsInput
-  stage?: StageUpdateOneInput
-}
-
-export interface CandidateCreateemailsInput {
-  set?: String[] | String
+export interface StageUpsertNestedInput {
+  update: StageUpdateDataInput
+  create: StageCreateInput
 }
 
 export interface StageUpdateOneInput {
@@ -3367,400 +3601,35 @@ export interface StageUpdateOneInput {
   upsert?: StageUpsertNestedInput
 }
 
-export interface EventCreateManyWithoutTargetWorkspaceInput {
-  create?: EventCreateWithoutTargetWorkspaceInput[] | EventCreateWithoutTargetWorkspaceInput
-  connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
+export interface ApplicationUpdateWithoutCandidateDataInput {
+  disqualifyReason?: String
+  workspace?: WorkspaceUpdateOneWithoutApplicationsInput
+  job?: JobUpdateOneWithoutApplicationsInput
+  stage?: StageUpdateOneInput
 }
 
-export interface StageUpdateDataInput {
-  name?: String
-  description?: String
-  position?: Int
-  type?: StageTypeEnum
-}
-
-export interface JobCreateWithoutWorkspaceInput {
-  status: JobType
-  title: String
-  department?: String
-  description?: String
-  requirements?: String
-  subscribers?: UserCreateManyWithoutSubscriptionJobsInput
-  events?: EventCreateManyWithoutTargetJobInput
-  applications?: ApplicationCreateManyWithoutJobInput
-  stages?: StageCreateManyInput
-  comments?: CommentCreateManyInput
-  location?: LocationCreateOneInput
-}
-
-export interface StageUpsertNestedInput {
-  update: StageUpdateDataInput
-  create: StageCreateInput
-}
-
-export interface UserCreateManyWithoutSubscriptionCandidatesInput {
-  create?: UserCreateWithoutSubscriptionCandidatesInput[] | UserCreateWithoutSubscriptionCandidatesInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-}
-
-export interface ApplicationUpsertWithWhereUniqueWithoutCandidateInput {
+export interface ApplicationUpdateWithWhereUniqueWithoutCandidateInput {
   where: ApplicationWhereUniqueInput
-  update: ApplicationUpdateWithoutCandidateDataInput
-  create: ApplicationCreateWithoutCandidateInput
+  data: ApplicationUpdateWithoutCandidateDataInput
 }
 
-export interface WorkspaceCreateOneWithoutJobsInput {
-  create?: WorkspaceCreateWithoutJobsInput
-  connect?: WorkspaceWhereUniqueInput
+export interface CandidateUpsertWithoutEventsInput {
+  update: CandidateUpdateWithoutEventsDataInput
+  create: CandidateCreateWithoutEventsInput
 }
 
-export interface CommentUpdateManyInput {
-  create?: CommentCreateInput[] | CommentCreateInput
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
-  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
-  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
-  update?: CommentUpdateWithWhereUniqueNestedInput[] | CommentUpdateWithWhereUniqueNestedInput
-  upsert?: CommentUpsertWithWhereUniqueNestedInput[] | CommentUpsertWithWhereUniqueNestedInput
+export interface CandidateCreateManyWithoutWorkspaceInput {
+  create?: CandidateCreateWithoutWorkspaceInput[] | CandidateCreateWithoutWorkspaceInput
+  connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
 }
 
-export interface TaskCreateOneInput {
-  create?: TaskCreateInput
-  connect?: TaskWhereUniqueInput
+export interface JobCreateOneWithoutApplicationsInput {
+  create?: JobCreateWithoutApplicationsInput
+  connect?: JobWhereUniqueInput
 }
 
-export interface CommentUpdateWithWhereUniqueNestedInput {
-  where: CommentWhereUniqueInput
-  data: CommentUpdateDataInput
-}
-
-export interface JobCreateWithoutApplicationsInput {
-  status: JobType
-  title: String
-  department?: String
-  description?: String
-  requirements?: String
-  workspace: WorkspaceCreateOneWithoutJobsInput
-  subscribers?: UserCreateManyWithoutSubscriptionJobsInput
-  events?: EventCreateManyWithoutTargetJobInput
-  stages?: StageCreateManyInput
-  comments?: CommentCreateManyInput
-  location?: LocationCreateOneInput
-}
-
-export interface CommentUpdateDataInput {
-  content?: String
-  createdBy?: UserUpdateOneInput
-  parent?: CommentUpdateOneInput
-}
-
-export interface CandidateCreateWithoutSubscribersInput {
-  firstName: String
-  lastName: String
-  emails?: CandidateCreateemailsInput
-  phones?: CandidateCreatephonesInput
-  links?: CandidateCreatelinksInput
-  resume?: CandidateCreateresumeInput
-  coverLetter?: CandidateCreatecoverLetterInput
-  source?: CandidateCreatesourceInput
-  workspace: WorkspaceCreateOneWithoutCandidatesInput
-  events?: EventCreateManyWithoutTargetCandidateInput
-  tags?: TagCreateManyInput
-  fields?: FieldCreateManyInput
-  tasks?: TaskCreateManyWithoutCandidateInput
-  applications?: ApplicationCreateManyWithoutCandidateInput
-  comments?: CommentCreateManyInput
-}
-
-export interface UserUpdateOneInput {
-  create?: UserCreateInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateDataInput
-  upsert?: UserUpsertNestedInput
-}
-
-export interface TaskCreateWithoutCandidateInput {
-  targetType?: TaskTargetEnum
-  title?: String
-  description?: String
-  dueAt?: DateTime
-  workspace: WorkspaceCreateOneInput
-  subscribers?: UserCreateManyWithoutSubscriptionTasksInput
-  owners?: UserCreateManyWithoutTasksInput
-  job?: JobCreateOneInput
-}
-
-export interface UserUpdateDataInput {
-  firstName?: String
-  lastName?: String
-  email?: String
-  username?: String
-  password?: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace?: WorkspaceUpdateOneWithoutUsersInput
-  events?: EventUpdateOneWithoutActorUserInput
-  notifications?: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs?: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskUpdateManyWithoutSubscribersInput
-  tasks?: TaskUpdateManyWithoutOwnersInput
-}
-
-export interface TagUpdateInput {
-  label?: String
-}
-
-export interface TaskUpdateManyWithoutOwnersInput {
-  create?: TaskCreateWithoutOwnersInput[] | TaskCreateWithoutOwnersInput
-  connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  update?: TaskUpdateWithWhereUniqueWithoutOwnersInput[] | TaskUpdateWithWhereUniqueWithoutOwnersInput
-  upsert?: TaskUpsertWithWhereUniqueWithoutOwnersInput[] | TaskUpsertWithWhereUniqueWithoutOwnersInput
-}
-
-export interface LocationWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface TaskUpdateWithWhereUniqueWithoutOwnersInput {
-  where: TaskWhereUniqueInput
-  data: TaskUpdateWithoutOwnersDataInput
-}
-
-export interface WorkspaceUpsertWithoutUsersInput {
-  update: WorkspaceUpdateWithoutUsersDataInput
-  create: WorkspaceCreateWithoutUsersInput
-}
-
-export interface TaskUpdateWithoutOwnersDataInput {
-  targetType?: TaskTargetEnum
-  title?: String
-  description?: String
-  dueAt?: DateTime
-  workspace?: WorkspaceUpdateOneInput
-  subscribers?: UserUpdateManyWithoutSubscriptionTasksInput
-  job?: JobUpdateOneInput
-  candidate?: CandidateUpdateOneWithoutTasksInput
-}
-
-export interface ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: ApplicationWhereUniqueInput
-  update: ApplicationUpdateWithoutWorkspaceDataInput
-  create: ApplicationCreateWithoutWorkspaceInput
-}
-
-export interface CandidateUpdateOneWithoutTasksInput {
-  create?: CandidateCreateWithoutTasksInput
-  connect?: CandidateWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: CandidateUpdateWithoutTasksDataInput
-  upsert?: CandidateUpsertWithoutTasksInput
-}
-
-export interface StageUpsertWithWhereUniqueNestedInput {
-  where: StageWhereUniqueInput
-  update: StageUpdateDataInput
-  create: StageCreateInput
-}
-
-export interface CandidateUpdateWithoutTasksDataInput {
-  firstName?: String
-  lastName?: String
-  emails?: CandidateUpdateemailsInput
-  phones?: CandidateUpdatephonesInput
-  links?: CandidateUpdatelinksInput
-  resume?: CandidateUpdateresumeInput
-  coverLetter?: CandidateUpdatecoverLetterInput
-  source?: CandidateUpdatesourceInput
-  workspace?: WorkspaceUpdateOneWithoutCandidatesInput
-  events?: EventUpdateManyWithoutTargetCandidateInput
-  subscribers?: UserUpdateManyWithoutSubscriptionCandidatesInput
-  tags?: TagUpdateManyInput
-  fields?: FieldUpdateManyInput
-  applications?: ApplicationUpdateManyWithoutCandidateInput
-  comments?: CommentUpdateManyInput
-}
-
-export interface CandidateCreatecoverLetterInput {
+export interface CandidateCreateemailsInput {
   set?: String[] | String
-}
-
-export interface CandidateUpsertWithoutTasksInput {
-  update: CandidateUpdateWithoutTasksDataInput
-  create: CandidateCreateWithoutTasksInput
-}
-
-export interface EventCreateWithoutActorUserInput {
-  type: EventTypeEnum
-  actorType: EventActorTypeEnum
-  targetType: EventTargetTypeEnum
-  workspace: WorkspaceCreateOneInput
-  actorCandidate?: CandidateCreateOneInput
-  targetCandidate?: CandidateCreateOneWithoutEventsInput
-  targetJob?: JobCreateOneWithoutEventsInput
-  targetTask?: TaskCreateOneInput
-  targetWorkspace?: WorkspaceCreateOneWithoutEventsInput
-}
-
-export interface TaskUpsertWithWhereUniqueWithoutOwnersInput {
-  where: TaskWhereUniqueInput
-  update: TaskUpdateWithoutOwnersDataInput
-  create: TaskCreateWithoutOwnersInput
-}
-
-export interface JobCreateManyWithoutSubscribersInput {
-  create?: JobCreateWithoutSubscribersInput[] | JobCreateWithoutSubscribersInput
-  connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput
-  create: UserCreateInput
-}
-
-export interface CommentCreateInput {
-  content: String
-  createdBy: UserCreateOneInput
-  parent?: CommentCreateOneInput
-}
-
-export interface CommentUpdateOneInput {
-  create?: CommentCreateInput
-  connect?: CommentWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: CommentUpdateDataInput
-  upsert?: CommentUpsertNestedInput
-}
-
-export interface UserCreateWithoutNotificationsInput {
-  firstName?: String
-  lastName?: String
-  email: String
-  username: String
-  password: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
-  events?: EventCreateOneWithoutActorUserInput
-  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
-  tasks?: TaskCreateManyWithoutOwnersInput
-}
-
-export interface CommentUpsertNestedInput {
-  update: CommentUpdateDataInput
-  create: CommentCreateInput
-}
-
-export interface WorkspaceUpdateOneWithoutInvitesInput {
-  create?: WorkspaceCreateWithoutInvitesInput
-  connect?: WorkspaceWhereUniqueInput
-  delete?: Boolean
-  update?: WorkspaceUpdateWithoutInvitesDataInput
-  upsert?: WorkspaceUpsertWithoutInvitesInput
-}
-
-export interface CommentUpsertWithWhereUniqueNestedInput {
-  where: CommentWhereUniqueInput
-  update: CommentUpdateDataInput
-  create: CommentCreateInput
-}
-
-export interface CandidateUpsertWithWhereUniqueWithoutSubscribersInput {
-  where: CandidateWhereUniqueInput
-  update: CandidateUpdateWithoutSubscribersDataInput
-  create: CandidateCreateWithoutSubscribersInput
-}
-
-export interface CandidateUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: CandidateWhereUniqueInput
-  update: CandidateUpdateWithoutWorkspaceDataInput
-  create: CandidateCreateWithoutWorkspaceInput
-}
-
-export interface UserCreateWithoutEventsInput {
-  firstName?: String
-  lastName?: String
-  email: String
-  username: String
-  password: String
-  lastLogin?: DateTime
-  deletedAt?: DateTime
-  workspace: WorkspaceCreateOneWithoutUsersInput
-  notifications?: NotificationCreateManyWithoutUserInput
-  subscriptionJobs?: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates?: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks?: TaskCreateManyWithoutSubscribersInput
-  tasks?: TaskCreateManyWithoutOwnersInput
-}
-
-export interface InviteUpdateManyWithoutWorkspaceInput {
-  create?: InviteCreateWithoutWorkspaceInput[] | InviteCreateWithoutWorkspaceInput
-  connect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
-  disconnect?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
-  delete?: InviteWhereUniqueInput[] | InviteWhereUniqueInput
-  update?: InviteUpdateWithWhereUniqueWithoutWorkspaceInput[] | InviteUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: InviteUpsertWithWhereUniqueWithoutWorkspaceInput[] | InviteUpsertWithWhereUniqueWithoutWorkspaceInput
-}
-
-export interface WorkspaceCreateWithoutEventsInput {
-  name: String
-  users?: UserCreateManyWithoutWorkspaceInput
-  jobs?: JobCreateManyWithoutWorkspaceInput
-  applications?: ApplicationCreateManyWithoutWorkspaceInput
-  candidates?: CandidateCreateManyWithoutWorkspaceInput
-  invites?: InviteCreateManyWithoutWorkspaceInput
-  tags?: TagCreateManyInput
-}
-
-export interface WorkspaceUpsertWithoutApplicationsInput {
-  update: WorkspaceUpdateWithoutApplicationsDataInput
-  create: WorkspaceCreateWithoutApplicationsInput
-}
-
-export interface InviteUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: InviteWhereUniqueInput
-  update: InviteUpdateWithoutWorkspaceDataInput
-  create: InviteCreateWithoutWorkspaceInput
-}
-
-export interface InviteUpdateWithoutWorkspaceDataInput {
-  email?: String
-  expireAt?: DateTime
-  invitedBy?: UserUpdateOneInput
-}
-
-export interface InviteUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: InviteWhereUniqueInput
-  data: InviteUpdateWithoutWorkspaceDataInput
-}
-
-export interface TagCreateInput {
-  label: String
-}
-
-export interface EventCreateOneInput {
-  create?: EventCreateInput
-  connect?: EventWhereUniqueInput
-}
-
-export interface Connect {
-  connect?: WhereUniqueInput
-}
-
-export interface EventUpsertNestedInput {
-  update: EventUpdateDataInput
-  create: EventCreateInput
-}
-
-export interface WorkspaceUpsertWithoutInvitesInput {
-  update: WorkspaceUpdateWithoutInvitesDataInput
-  create: WorkspaceCreateWithoutInvitesInput
 }
 
 /*
@@ -3790,14 +3659,8 @@ export interface User extends Node {
   deletedAt?: DateTime
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface UserConnection {
-  pageInfo: PageInfo
-  edges: UserEdge[]
-  aggregate: AggregateUser
+export interface AggregateField {
+  count: Int
 }
 
 export interface Event extends Node {
@@ -3816,8 +3679,13 @@ export interface Event extends Node {
   targetWorkspace?: Workspace
 }
 
-export interface AggregateCandidate {
-  count: Int
+/*
+ * An edge in a connection.
+
+ */
+export interface FieldEdge {
+  node: Field
+  cursor: String
 }
 
 export interface Candidate extends Node {
@@ -3843,6 +3711,126 @@ export interface Candidate extends Node {
 }
 
 /*
+ * A connection to a list of items.
+
+ */
+export interface FieldConnection {
+  pageInfo: PageInfo
+  edges: FieldEdge[]
+  aggregate: AggregateField
+}
+
+export interface AuthPayload {
+  token: String
+  user: User
+}
+
+export interface AggregateEvent {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface WorkspaceEdge {
+  node: Workspace
+  cursor: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface EventEdge {
+  node: Event
+  cursor: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface EventConnection {
+  pageInfo: PageInfo
+  edges: EventEdge[]
+  aggregate: AggregateEvent
+}
+
+export interface AggregateTask {
+  count: Int
+}
+
+export interface AggregateComment {
+  count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface TaskConnection {
+  pageInfo: PageInfo
+  edges: TaskEdge[]
+  aggregate: AggregateTask
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CommentEdge {
+  node: Comment
+  cursor: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface TagEdge {
+  node: Tag
+  cursor: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CommentConnection {
+  pageInfo: PageInfo
+  edges: CommentEdge[]
+  aggregate: AggregateComment
+}
+
+export interface AggregateStage {
+  count: Int
+}
+
+export interface AggregateCandidate {
+  count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface StageConnection {
+  pageInfo: PageInfo
+  edges: StageEdge[]
+  aggregate: AggregateStage
+}
+
+/*
  * An edge in a connection.
 
  */
@@ -3851,9 +3839,13 @@ export interface CandidateEdge {
   cursor: String
 }
 
-export interface AuthPayload {
-  token: String
-  user: User
+/*
+ * An edge in a connection.
+
+ */
+export interface NotificationEdge {
+  node: Notification
+  cursor: String
 }
 
 /*
@@ -3866,40 +3858,12 @@ export interface CandidateConnection {
   aggregate: AggregateCandidate
 }
 
-/*
- * An edge in a connection.
-
- */
-export interface CommentEdge {
-  node: Comment
-  cursor: String
-}
-
 export interface AggregateLocation {
   count: Int
 }
 
-export interface AggregateField {
+export interface AggregateApplication {
   count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface LocationEdge {
-  node: Location
-  cursor: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface FieldConnection {
-  pageInfo: PageInfo
-  edges: FieldEdge[]
-  aggregate: AggregateField
 }
 
 /*
@@ -3916,46 +3880,9 @@ export interface LocationConnection {
  * An edge in a connection.
 
  */
-export interface TagEdge {
-  node: Tag
+export interface ApplicationEdge {
+  node: Application
   cursor: String
-}
-
-export interface AggregateNotification {
-  count: Int
-}
-
-export interface AggregateTask {
-  count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface NotificationEdge {
-  node: Notification
-  cursor: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface TaskConnection {
-  pageInfo: PageInfo
-  edges: TaskEdge[]
-  aggregate: AggregateTask
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface NotificationConnection {
-  pageInfo: PageInfo
-  edges: NotificationEdge[]
-  aggregate: AggregateNotification
 }
 
 /*
@@ -3967,234 +3894,7 @@ export interface JobEdge {
   cursor: String
 }
 
-export interface AggregateApplication {
-  count: Int
-}
-
-export interface AggregateWorkspace {
-  count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface ApplicationEdge {
-  node: Application
-  cursor: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface WorkspaceConnection {
-  pageInfo: PageInfo
-  edges: WorkspaceEdge[]
-  aggregate: AggregateWorkspace
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface StageEdge {
-  node: Stage
-  cursor: String
-}
-
-export interface AggregateEvent {
-  count: Int
-}
-
-/*
- * Information about pagination in a connection.
-
- */
-export interface PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor?: String
-  endCursor?: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface EventConnection {
-  pageInfo: PageInfo
-  edges: EventEdge[]
-  aggregate: AggregateEvent
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface ApplicationConnection {
-  pageInfo: PageInfo
-  edges: ApplicationEdge[]
-  aggregate: AggregateApplication
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface InviteEdge {
-  node: Invite
-  cursor: String
-}
-
-export interface AggregateInvite {
-  count: Int
-}
-
-export interface Task extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  workspace: Workspace
-  subscribers?: User[]
-  owners?: User[]
-  targetType?: TaskTargetEnum
-  job?: Job
-  candidate?: Candidate
-  title?: String
-  description?: String
-  dueAt?: DateTime
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface InviteConnection {
-  pageInfo: PageInfo
-  edges: InviteEdge[]
-  aggregate: AggregateInvite
-}
-
-export interface AggregateUser {
-  count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
-}
-
-export interface AggregateComment {
-  count: Int
-}
-
-export interface Field extends Node {
-  id: ID_Output
-  type: FieldTypeEnum
-  label: String
-  value: String
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface FieldEdge {
-  node: Field
-  cursor: String
-}
-
-export interface Notification extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  status: NotificationStatusEnum
-  user: User
-  event: Event
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface TagConnection {
-  pageInfo: PageInfo
-  edges: TagEdge[]
-  aggregate: AggregateTag
-}
-
-export interface Workspace extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  events?: Event[]
-  users?: User[]
-  jobs?: Job[]
-  applications?: Application[]
-  candidates?: Candidate[]
-  invites?: Invite[]
-  tags?: Tag[]
-  name: String
-}
-
 export interface AggregateJob {
-  count: Int
-}
-
-export interface Invite extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  workspace: Workspace
-  email: String
-  expireAt: DateTime
-  invitedBy: User
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface WorkspaceEdge {
-  node: Workspace
-  cursor: String
-}
-
-export interface BatchPayload {
-  count: Long
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface StageConnection {
-  pageInfo: PageInfo
-  edges: StageEdge[]
-  aggregate: AggregateStage
-}
-
-export interface Location extends Node {
-  id: ID_Output
-  country: String
-  region: String
-  city: String
-  zip: String
-}
-
-export interface Tag extends Node {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  label: String
-}
-
-export interface AggregateTag {
   count: Int
 }
 
@@ -4214,6 +3914,179 @@ export interface Job extends Node {
   location?: Location
   description?: String
   requirements?: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface JobConnection {
+  pageInfo: PageInfo
+  edges: JobEdge[]
+  aggregate: AggregateJob
+}
+
+export interface AggregateInvite {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface InviteEdge {
+  node: Invite
+  cursor: String
+}
+
+export interface Tag extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  label: String
+}
+
+/*
+ * Information about pagination in a connection.
+
+ */
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface WorkspaceConnection {
+  pageInfo: PageInfo
+  edges: WorkspaceEdge[]
+  aggregate: AggregateWorkspace
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface ApplicationConnection {
+  pageInfo: PageInfo
+  edges: ApplicationEdge[]
+  aggregate: AggregateApplication
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface UserConnection {
+  pageInfo: PageInfo
+  edges: UserEdge[]
+  aggregate: AggregateUser
+}
+
+export interface Field extends Node {
+  id: ID_Output
+  type: FieldTypeEnum
+  label: String
+  value: String
+}
+
+export interface AggregateTag {
+  count: Int
+}
+
+export interface Notification extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: NotificationStatusEnum
+  user: User
+  event: Event
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface StageEdge {
+  node: Stage
+  cursor: String
+}
+
+export interface Workspace extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  events?: Event[]
+  users?: User[]
+  jobs?: Job[]
+  applications?: Application[]
+  candidates?: Candidate[]
+  invites?: Invite[]
+  tags?: Tag[]
+  name: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface NotificationConnection {
+  pageInfo: PageInfo
+  edges: NotificationEdge[]
+  aggregate: AggregateNotification
+}
+
+export interface Invite extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  workspace: Workspace
+  email: String
+  expireAt: DateTime
+  invitedBy: User
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface InviteConnection {
+  pageInfo: PageInfo
+  edges: InviteEdge[]
+  aggregate: AggregateInvite
+}
+
+export interface Task extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  workspace: Workspace
+  subscribers?: User[]
+  owners?: User[]
+  targetType?: TaskTargetEnum
+  job?: Job
+  candidate?: Candidate
+  title?: String
+  description?: String
+  dueAt?: DateTime
+}
+
+export interface AggregateUser {
+  count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface TagConnection {
+  pageInfo: PageInfo
+  edges: TagEdge[]
+  aggregate: AggregateTag
 }
 
 export interface Application extends Node {
@@ -4246,6 +4119,18 @@ export interface Comment extends Node {
   content: String
 }
 
+export interface Location extends Node {
+  id: ID_Output
+  country: String
+  region: String
+  city: String
+  zip: String
+}
+
+export interface AggregateNotification {
+  count: Int
+}
+
 /*
  * An edge in a connection.
 
@@ -4255,38 +4140,23 @@ export interface TaskEdge {
   cursor: String
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface CommentConnection {
-  pageInfo: PageInfo
-  edges: CommentEdge[]
-  aggregate: AggregateComment
+export interface AggregateWorkspace {
+  count: Int
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface EventEdge {
-  node: Event
+export interface LocationEdge {
+  node: Location
   cursor: String
 }
 
-export interface AggregateStage {
-  count: Int
-}
-
 /*
- * A connection to a list of items.
-
- */
-export interface JobConnection {
-  pageInfo: PageInfo
-  edges: JobEdge[]
-  aggregate: AggregateJob
-}
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -4295,22 +4165,11 @@ export type ID_Input = string | number
 export type ID_Output = string
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
-
-/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number
 
 export type DateTime = Date | string
-
-/*
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-*/
-export type Long = string
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.

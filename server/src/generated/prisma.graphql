@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/vadistic-7a6c16/vats/dev
-# timestamp: Sat Sep 08 2018 04:32:49 GMT+0200 (Central European Summer Time)
+# timestamp: Sat Sep 08 2018 17:02:34 GMT+0200 (Central European Summer Time)
 
 type AggregateApplication {
   count: Int!

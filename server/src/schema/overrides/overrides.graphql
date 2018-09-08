@@ -3,6 +3,7 @@
 # import Query.*, Mutation.*, * from "../../generated/prisma.graphql"
 # import Query.*, Mutation.*, * from "../schema.graphql"
 
+# import * from "connections.graphql"
 
 # APPLICATION
 type Application {
@@ -38,8 +39,8 @@ type Candidate {
   workspace: Workspace! @replace
 }
 
-input CandidateWhereInput @exclude {
-  workspace: Workspace!
+input CandidateWhereInput {
+  workspace: Workspace! @remove
 }
 
 input CandidateCreateInput {
@@ -165,7 +166,6 @@ input TaskCreateInput {
   # connections
   subscribers: ConnectMany @replace
   owners: ConnectMany @replace
-  job: Connect @replace
   candidate: Connect @replace
 }
 
@@ -176,7 +176,6 @@ input TaskUpdateInput {
   # connections
   subscribers: ConnectDisconnectMany @replace
   owners: ConnectDisconnectMany @replace
-  job: ConnectDisconnect @replace
   candidate: ConnectDisconnect @replace
 }
 
@@ -189,7 +188,6 @@ input WorkspaceUpdateInput {
   applications: ApplicationUpdateManyWithoutWorkspaceInput @remove
   candidates: CandidateUpdateManyWithoutWorkspaceInput @remove
   invites: InviteUpdateManyWithoutWorkspaceInput @remove
-
 }
 
 # DERIVATIVE?
@@ -200,7 +198,6 @@ input InviteCreateInput @exclude {
   workspace: WorkspaceCreateOneWithoutInvitesInput!
   invitedBy: UserCreateOneInput!
 }
-
 
 # COMMENT
 
@@ -226,4 +223,3 @@ input NotificationUpdateInput {
 # FIELD
 
 # LOCATION
-

@@ -22,3 +22,7 @@ input WorkspaceCreateInput {
   username: String!
   password: String!
 }
+
+input InviteCreateInput {
+  email: String!
+}

@@ -1,23 +1,23 @@
 # import * from "../../../node_modules/graphql-override/dist/directives.graphql"
 
-input WhereUniqueInput @create {
+input WhereUniqueInput @upsert {
   id: ID!
 }
 
-input Connect @create {
+input Connect @upsert {
   connect: WhereUniqueInput
 }
 
-input ConnectMany @create {
+input ConnectMany @upsert {
   connect: [WhereUniqueInput!]
 }
 
-input ConnectDisconnect @create {
+input ConnectDisconnect @upsert {
   connect: WhereUniqueInput
   disconnect: WhereUniqueInput
 }
 
-input ConnectDisconnectMany @create {
+input ConnectDisconnectMany @upsert {
   connect: [WhereUniqueInput!]
   disconnect: [WhereUniqueInput!]
 }

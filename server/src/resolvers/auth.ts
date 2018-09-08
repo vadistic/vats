@@ -22,7 +22,6 @@ export const createWorkspace: IMutation['createWorkspace'] = async (
   ctx,
   info
 ) => {
-
   const password = await bcrypt.hash(passwordRaw, 10)
 
   const workspace = await ctx.db.mutation.createWorkspace({
@@ -102,6 +101,9 @@ export const login: IMutation['login'] = async (
   if (!valid) {
     throw new Error('Invalid password')
   }
+
+  // update last login
+  ctx.db.mutation.updateUser({ data: { lastLogin: dayjs().format() }, where: { id: user.id } })
 
   return {
     token: signToken(user.id, user.workspace.id),

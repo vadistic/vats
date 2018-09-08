@@ -3,7 +3,6 @@
 
 # Import custom types
 # import * from "definitions/auth.graphql"
-# import * from "definitions/types.graphql"
 # import * from "definitions/connections.graphql"
 
 type Query {
@@ -13,34 +12,35 @@ type Query {
   # SINGLE
   application(where: WhereUniqueInput!): Application
   candidate(where: WhereUniqueInput!): Candidate
+  invite(where: WhereUniqueInput!): Invite
   job(where: WhereUniqueInput!): Job
+  task(where: WhereUniqueInput!): Task
+  user(where: WhereUniqueInput!): User
   workspace: Workspace!
 
+  comment(where: WhereUniqueInput!): Comment
   event(where: WhereUniqueInput!): Event
   field(where: WhereUniqueInput!): Field
-  invite(where: WhereUniqueInput!): Invite
   location(where: WhereUniqueInput!): Location
   notification(where: WhereUniqueInput!): Notification
   stage(where: WhereUniqueInput!): Stage
   tag(where: WhereUniqueInput!): Tag
-  task(where: WhereUniqueInput!): Task
-  user(where: WhereUniqueInput!): User
-  comment(where: WhereUniqueInput!): Comment
 
   # MULTI
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
+  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
   fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
-  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
-  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
 
   # CONNECTIONS
   applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
