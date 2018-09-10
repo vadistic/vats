@@ -1,5 +1,5 @@
 # The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-endpoint: https://eu1.prisma.sh/vadistic-7a6c16/vats/dev
+endpoint: ${env:PRISMA_ENDPOINT}
 
 # The file containing the definition of your data model.
 datamodel:
@@ -24,4 +24,4 @@ hooks:
 # If specified, the `secret` must be used to generate a JWT which is attached
 # to the `Authorization` header of HTTP requests made against the Prisma API.
 # Info: https://www.prisma.io/docs/reference/prisma-api/concepts-utee3eiquo#authentication
-# secret: mysecret123
+secret: ${env:PRISMA_SECRET}
