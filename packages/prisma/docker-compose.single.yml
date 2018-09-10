@@ -1,0 +1,15 @@
+version: '3'
+services:
+  prisma:
+    environment:
+      PRISMA_CONFIG: |
+        managementApiSecret: ${PRISMA_MANAGEMENT_API_JWT_SECRET}
+        port: ${PRISMA_PORT}
+        databases:
+          default:
+            connector: postgres
+            host: ${DB_HOST}
+            port: 5432
+            user: ${DB_USER}
+            password: ${DB_PASSWORD}
+            migrations: true

@@ -1,0 +1,8 @@
+{
+  "name": "prisma",
+  "version": "0.1.0",
+  "description": "Prisma service deployment toolkit",
+  "author": "Jakub Wadas <vadistic@gmail.com>",
+  "license": "No license",
+  "private": true
+}

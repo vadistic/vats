@@ -1,0 +1,38 @@
+{
+  "name": "vats",
+  "version": "0.1.0",
+  "description": "Attempt on ATS",
+  "main": "index.js",
+  "repository": "https://github.com/vadistic/vats",
+  "author": "vadistic <vadistic@gmail.com>",
+  "license": "No license",
+  "private": true,
+  "scripts": {
+    "prisma:deploy": "env-cmd .env lerna run deploy",
+    "graphql:get-schema": "graphql get-schema --project db-auth --project db-resc",
+    "graphql:override": "graphql-override",
+    "graphql:codegen": "graphql codegen",
+    "prepare": "yarn prisma:deploy && yarn graphql:get-schema && yarn graphql:override && yarn graphql:codegen"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "cross-env": "^5.2.0",
+    "env-cmd": "^8.0.2",
+    "graphql": "^14.0.2",
+    "graphql-cli": "^2.16.7",
+    "graphql-override": "^0.1.0",
+    "jest": "^23.6.0",
+    "lerna": "^3.3.0",
+    "prettier": "^1.14.2",
+    "prisma": "^1.15.3",
+    "prisma-binding": "^2.1.5",
+    "ts-jest": "^23.1.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.3"
+  }
+}

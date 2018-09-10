@@ -1,0 +1,6584 @@
+# source: https://eu1.prisma.sh/vadistic-7a6c16/vats/dev
+# timestamp: Mon Sep 10 2018 22:57:18 GMT+0200 (Central European Summer Time)
+
+type AggregateApplication {
+  count: Int!
+}
+
+type AggregateCandidate {
+  count: Int!
+}
+
+type AggregateComment {
+  count: Int!
+}
+
+type AggregateEvent {
+  count: Int!
+}
+
+type AggregateField {
+  count: Int!
+}
+
+type AggregateInvite {
+  count: Int!
+}
+
+type AggregateJob {
+  count: Int!
+}
+
+type AggregateLocation {
+  count: Int!
+}
+
+type AggregateNotification {
+  count: Int!
+}
+
+type AggregateStage {
+  count: Int!
+}
+
+type AggregateTag {
+  count: Int!
+}
+
+type AggregateTask {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type AggregateWorkspace {
+  count: Int!
+}
+
+type Application implements Node {
+  createdAt: DateTime!
+  id: ID!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  disqualifyReason: String
+  job(where: JobWhereInput): Job!
+  candidate(where: CandidateWhereInput): Candidate!
+  stage(where: StageWhereInput): Stage!
+}
+
+"""A connection to a list of items."""
+type ApplicationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ApplicationEdge]!
+  aggregate: AggregateApplication!
+}
+
+input ApplicationCreateInput {
+  disqualifyReason: String
+  workspace: WorkspaceCreateOneWithoutApplicationsInput!
+  job: JobCreateOneWithoutApplicationsInput!
+  candidate: CandidateCreateOneWithoutApplicationsInput!
+  stage: StageCreateOneInput!
+}
+
+input ApplicationCreateManyWithoutCandidateInput {
+  create: [ApplicationCreateWithoutCandidateInput!]
+  connect: [ApplicationWhereUniqueInput!]
+}
+
+input ApplicationCreateManyWithoutJobInput {
+  create: [ApplicationCreateWithoutJobInput!]
+  connect: [ApplicationWhereUniqueInput!]
+}
+
+input ApplicationCreateManyWithoutWorkspaceInput {
+  create: [ApplicationCreateWithoutWorkspaceInput!]
+  connect: [ApplicationWhereUniqueInput!]
+}
+
+input ApplicationCreateWithoutCandidateInput {
+  disqualifyReason: String
+  workspace: WorkspaceCreateOneWithoutApplicationsInput!
+  job: JobCreateOneWithoutApplicationsInput!
+  stage: StageCreateOneInput!
+}
+
+input ApplicationCreateWithoutJobInput {
+  disqualifyReason: String
+  workspace: WorkspaceCreateOneWithoutApplicationsInput!
+  candidate: CandidateCreateOneWithoutApplicationsInput!
+  stage: StageCreateOneInput!
+}
+
+input ApplicationCreateWithoutWorkspaceInput {
+  disqualifyReason: String
+  job: JobCreateOneWithoutApplicationsInput!
+  candidate: CandidateCreateOneWithoutApplicationsInput!
+  stage: StageCreateOneInput!
+}
+
+"""An edge in a connection."""
+type ApplicationEdge {
+  """The item at the end of the edge."""
+  node: Application!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ApplicationOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  disqualifyReason_ASC
+  disqualifyReason_DESC
+}
+
+type ApplicationPreviousValues {
+  createdAt: DateTime!
+  id: ID!
+  updatedAt: DateTime!
+  disqualifyReason: String
+}
+
+type ApplicationSubscriptionPayload {
+  mutation: MutationType!
+  node: Application
+  updatedFields: [String!]
+  previousValues: ApplicationPreviousValues
+}
+
+input ApplicationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ApplicationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ApplicationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ApplicationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ApplicationWhereInput
+}
+
+input ApplicationUpdateInput {
+  disqualifyReason: String
+  workspace: WorkspaceUpdateOneWithoutApplicationsInput
+  job: JobUpdateOneWithoutApplicationsInput
+  candidate: CandidateUpdateOneWithoutApplicationsInput
+  stage: StageUpdateOneInput
+}
+
+input ApplicationUpdateManyWithoutCandidateInput {
+  create: [ApplicationCreateWithoutCandidateInput!]
+  connect: [ApplicationWhereUniqueInput!]
+  disconnect: [ApplicationWhereUniqueInput!]
+  delete: [ApplicationWhereUniqueInput!]
+  update: [ApplicationUpdateWithWhereUniqueWithoutCandidateInput!]
+  upsert: [ApplicationUpsertWithWhereUniqueWithoutCandidateInput!]
+}
+
+input ApplicationUpdateManyWithoutJobInput {
+  create: [ApplicationCreateWithoutJobInput!]
+  connect: [ApplicationWhereUniqueInput!]
+  disconnect: [ApplicationWhereUniqueInput!]
+  delete: [ApplicationWhereUniqueInput!]
+  update: [ApplicationUpdateWithWhereUniqueWithoutJobInput!]
+  upsert: [ApplicationUpsertWithWhereUniqueWithoutJobInput!]
+}
+
+input ApplicationUpdateManyWithoutWorkspaceInput {
+  create: [ApplicationCreateWithoutWorkspaceInput!]
+  connect: [ApplicationWhereUniqueInput!]
+  disconnect: [ApplicationWhereUniqueInput!]
+  delete: [ApplicationWhereUniqueInput!]
+  update: [ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  upsert: [ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input ApplicationUpdateWithoutCandidateDataInput {
+  disqualifyReason: String
+  workspace: WorkspaceUpdateOneWithoutApplicationsInput
+  job: JobUpdateOneWithoutApplicationsInput
+  stage: StageUpdateOneInput
+}
+
+input ApplicationUpdateWithoutJobDataInput {
+  disqualifyReason: String
+  workspace: WorkspaceUpdateOneWithoutApplicationsInput
+  candidate: CandidateUpdateOneWithoutApplicationsInput
+  stage: StageUpdateOneInput
+}
+
+input ApplicationUpdateWithoutWorkspaceDataInput {
+  disqualifyReason: String
+  job: JobUpdateOneWithoutApplicationsInput
+  candidate: CandidateUpdateOneWithoutApplicationsInput
+  stage: StageUpdateOneInput
+}
+
+input ApplicationUpdateWithWhereUniqueWithoutCandidateInput {
+  where: ApplicationWhereUniqueInput!
+  data: ApplicationUpdateWithoutCandidateDataInput!
+}
+
+input ApplicationUpdateWithWhereUniqueWithoutJobInput {
+  where: ApplicationWhereUniqueInput!
+  data: ApplicationUpdateWithoutJobDataInput!
+}
+
+input ApplicationUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: ApplicationWhereUniqueInput!
+  data: ApplicationUpdateWithoutWorkspaceDataInput!
+}
+
+input ApplicationUpsertWithWhereUniqueWithoutCandidateInput {
+  where: ApplicationWhereUniqueInput!
+  update: ApplicationUpdateWithoutCandidateDataInput!
+  create: ApplicationCreateWithoutCandidateInput!
+}
+
+input ApplicationUpsertWithWhereUniqueWithoutJobInput {
+  where: ApplicationWhereUniqueInput!
+  update: ApplicationUpdateWithoutJobDataInput!
+  create: ApplicationCreateWithoutJobInput!
+}
+
+input ApplicationUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: ApplicationWhereUniqueInput!
+  update: ApplicationUpdateWithoutWorkspaceDataInput!
+  create: ApplicationCreateWithoutWorkspaceInput!
+}
+
+input ApplicationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ApplicationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ApplicationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ApplicationWhereInput!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  disqualifyReason: String
+
+  """All values that are not equal to given value."""
+  disqualifyReason_not: String
+
+  """All values that are contained in given list."""
+  disqualifyReason_in: [String!]
+
+  """All values that are not contained in given list."""
+  disqualifyReason_not_in: [String!]
+
+  """All values less than the given value."""
+  disqualifyReason_lt: String
+
+  """All values less than or equal the given value."""
+  disqualifyReason_lte: String
+
+  """All values greater than the given value."""
+  disqualifyReason_gt: String
+
+  """All values greater than or equal the given value."""
+  disqualifyReason_gte: String
+
+  """All values containing the given string."""
+  disqualifyReason_contains: String
+
+  """All values not containing the given string."""
+  disqualifyReason_not_contains: String
+
+  """All values starting with the given string."""
+  disqualifyReason_starts_with: String
+
+  """All values not starting with the given string."""
+  disqualifyReason_not_starts_with: String
+
+  """All values ending with the given string."""
+  disqualifyReason_ends_with: String
+
+  """All values not ending with the given string."""
+  disqualifyReason_not_ends_with: String
+  workspace: WorkspaceWhereInput
+  job: JobWhereInput
+  candidate: CandidateWhereInput
+  stage: StageWhereInput
+}
+
+input ApplicationWhereUniqueInput {
+  id: ID
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Candidate implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
+  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  firstName: String!
+  lastName: String!
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  resume: [String!]!
+  coverLetter: [String!]!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  source: [String!]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+}
+
+"""A connection to a list of items."""
+type CandidateConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CandidateEdge]!
+  aggregate: AggregateCandidate!
+}
+
+input CandidateCreatecoverLetterInput {
+  set: [String!]
+}
+
+input CandidateCreateemailsInput {
+  set: [String!]
+}
+
+input CandidateCreateInput {
+  firstName: String!
+  lastName: String!
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  resume: CandidateCreateresumeInput
+  coverLetter: CandidateCreatecoverLetterInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput!
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  tags: TagCreateManyInput
+  fields: FieldCreateManyInput
+  tasks: TaskCreateManyWithoutCandidateInput
+  applications: ApplicationCreateManyWithoutCandidateInput
+  comments: CommentCreateManyInput
+}
+
+input CandidateCreatelinksInput {
+  set: [String!]
+}
+
+input CandidateCreateManyWithoutSubscribersInput {
+  create: [CandidateCreateWithoutSubscribersInput!]
+  connect: [CandidateWhereUniqueInput!]
+}
+
+input CandidateCreateManyWithoutWorkspaceInput {
+  create: [CandidateCreateWithoutWorkspaceInput!]
+  connect: [CandidateWhereUniqueInput!]
+}
+
+input CandidateCreateOneInput {
+  create: CandidateCreateInput
+  connect: CandidateWhereUniqueInput
+}
+
+input CandidateCreateOneWithoutApplicationsInput {
+  create: CandidateCreateWithoutApplicationsInput
+  connect: CandidateWhereUniqueInput
+}
+
+input CandidateCreateOneWithoutEventsInput {
+  create: CandidateCreateWithoutEventsInput
+  connect: CandidateWhereUniqueInput
+}
+
+input CandidateCreateOneWithoutTasksInput {
+  create: CandidateCreateWithoutTasksInput
+  connect: CandidateWhereUniqueInput
+}
+
+input CandidateCreatephonesInput {
+  set: [String!]
+}
+
+input CandidateCreateresumeInput {
+  set: [String!]
+}
+
+input CandidateCreatesourceInput {
+  set: [String!]
+}
+
+input CandidateCreateWithoutApplicationsInput {
+  firstName: String!
+  lastName: String!
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  resume: CandidateCreateresumeInput
+  coverLetter: CandidateCreatecoverLetterInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput!
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  tags: TagCreateManyInput
+  fields: FieldCreateManyInput
+  tasks: TaskCreateManyWithoutCandidateInput
+  comments: CommentCreateManyInput
+}
+
+input CandidateCreateWithoutEventsInput {
+  firstName: String!
+  lastName: String!
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  resume: CandidateCreateresumeInput
+  coverLetter: CandidateCreatecoverLetterInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput!
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  tags: TagCreateManyInput
+  fields: FieldCreateManyInput
+  tasks: TaskCreateManyWithoutCandidateInput
+  applications: ApplicationCreateManyWithoutCandidateInput
+  comments: CommentCreateManyInput
+}
+
+input CandidateCreateWithoutSubscribersInput {
+  firstName: String!
+  lastName: String!
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  resume: CandidateCreateresumeInput
+  coverLetter: CandidateCreatecoverLetterInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput!
+  events: EventCreateManyWithoutTargetCandidateInput
+  tags: TagCreateManyInput
+  fields: FieldCreateManyInput
+  tasks: TaskCreateManyWithoutCandidateInput
+  applications: ApplicationCreateManyWithoutCandidateInput
+  comments: CommentCreateManyInput
+}
+
+input CandidateCreateWithoutTasksInput {
+  firstName: String!
+  lastName: String!
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  resume: CandidateCreateresumeInput
+  coverLetter: CandidateCreatecoverLetterInput
+  source: CandidateCreatesourceInput
+  workspace: WorkspaceCreateOneWithoutCandidatesInput!
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  tags: TagCreateManyInput
+  fields: FieldCreateManyInput
+  applications: ApplicationCreateManyWithoutCandidateInput
+  comments: CommentCreateManyInput
+}
+
+input CandidateCreateWithoutWorkspaceInput {
+  firstName: String!
+  lastName: String!
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  resume: CandidateCreateresumeInput
+  coverLetter: CandidateCreatecoverLetterInput
+  source: CandidateCreatesourceInput
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  tags: TagCreateManyInput
+  fields: FieldCreateManyInput
+  tasks: TaskCreateManyWithoutCandidateInput
+  applications: ApplicationCreateManyWithoutCandidateInput
+  comments: CommentCreateManyInput
+}
+
+"""An edge in a connection."""
+type CandidateEdge {
+  """The item at the end of the edge."""
+  node: Candidate!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CandidateOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+}
+
+type CandidatePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  firstName: String!
+  lastName: String!
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  resume: [String!]!
+  coverLetter: [String!]!
+  source: [String!]!
+}
+
+type CandidateSubscriptionPayload {
+  mutation: MutationType!
+  node: Candidate
+  updatedFields: [String!]
+  previousValues: CandidatePreviousValues
+}
+
+input CandidateSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CandidateSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CandidateSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CandidateSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CandidateWhereInput
+}
+
+input CandidateUpdatecoverLetterInput {
+  set: [String!]
+}
+
+input CandidateUpdateDataInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  resume: CandidateUpdateresumeInput
+  coverLetter: CandidateUpdatecoverLetterInput
+  source: CandidateUpdatesourceInput
+  workspace: WorkspaceUpdateOneWithoutCandidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags: TagUpdateManyInput
+  fields: FieldUpdateManyInput
+  tasks: TaskUpdateManyWithoutCandidateInput
+  applications: ApplicationUpdateManyWithoutCandidateInput
+  comments: CommentUpdateManyInput
+}
+
+input CandidateUpdateemailsInput {
+  set: [String!]
+}
+
+input CandidateUpdateInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  resume: CandidateUpdateresumeInput
+  coverLetter: CandidateUpdatecoverLetterInput
+  source: CandidateUpdatesourceInput
+  workspace: WorkspaceUpdateOneWithoutCandidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags: TagUpdateManyInput
+  fields: FieldUpdateManyInput
+  tasks: TaskUpdateManyWithoutCandidateInput
+  applications: ApplicationUpdateManyWithoutCandidateInput
+  comments: CommentUpdateManyInput
+}
+
+input CandidateUpdatelinksInput {
+  set: [String!]
+}
+
+input CandidateUpdateManyWithoutSubscribersInput {
+  create: [CandidateCreateWithoutSubscribersInput!]
+  connect: [CandidateWhereUniqueInput!]
+  disconnect: [CandidateWhereUniqueInput!]
+  delete: [CandidateWhereUniqueInput!]
+  update: [CandidateUpdateWithWhereUniqueWithoutSubscribersInput!]
+  upsert: [CandidateUpsertWithWhereUniqueWithoutSubscribersInput!]
+}
+
+input CandidateUpdateManyWithoutWorkspaceInput {
+  create: [CandidateCreateWithoutWorkspaceInput!]
+  connect: [CandidateWhereUniqueInput!]
+  disconnect: [CandidateWhereUniqueInput!]
+  delete: [CandidateWhereUniqueInput!]
+  update: [CandidateUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  upsert: [CandidateUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input CandidateUpdateOneInput {
+  create: CandidateCreateInput
+  connect: CandidateWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CandidateUpdateDataInput
+  upsert: CandidateUpsertNestedInput
+}
+
+input CandidateUpdateOneWithoutApplicationsInput {
+  create: CandidateCreateWithoutApplicationsInput
+  connect: CandidateWhereUniqueInput
+  delete: Boolean
+  update: CandidateUpdateWithoutApplicationsDataInput
+  upsert: CandidateUpsertWithoutApplicationsInput
+}
+
+input CandidateUpdateOneWithoutEventsInput {
+  create: CandidateCreateWithoutEventsInput
+  connect: CandidateWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CandidateUpdateWithoutEventsDataInput
+  upsert: CandidateUpsertWithoutEventsInput
+}
+
+input CandidateUpdateOneWithoutTasksInput {
+  create: CandidateCreateWithoutTasksInput
+  connect: CandidateWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CandidateUpdateWithoutTasksDataInput
+  upsert: CandidateUpsertWithoutTasksInput
+}
+
+input CandidateUpdatephonesInput {
+  set: [String!]
+}
+
+input CandidateUpdateresumeInput {
+  set: [String!]
+}
+
+input CandidateUpdatesourceInput {
+  set: [String!]
+}
+
+input CandidateUpdateWithoutApplicationsDataInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  resume: CandidateUpdateresumeInput
+  coverLetter: CandidateUpdatecoverLetterInput
+  source: CandidateUpdatesourceInput
+  workspace: WorkspaceUpdateOneWithoutCandidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags: TagUpdateManyInput
+  fields: FieldUpdateManyInput
+  tasks: TaskUpdateManyWithoutCandidateInput
+  comments: CommentUpdateManyInput
+}
+
+input CandidateUpdateWithoutEventsDataInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  resume: CandidateUpdateresumeInput
+  coverLetter: CandidateUpdatecoverLetterInput
+  source: CandidateUpdatesourceInput
+  workspace: WorkspaceUpdateOneWithoutCandidatesInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags: TagUpdateManyInput
+  fields: FieldUpdateManyInput
+  tasks: TaskUpdateManyWithoutCandidateInput
+  applications: ApplicationUpdateManyWithoutCandidateInput
+  comments: CommentUpdateManyInput
+}
+
+input CandidateUpdateWithoutSubscribersDataInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  resume: CandidateUpdateresumeInput
+  coverLetter: CandidateUpdatecoverLetterInput
+  source: CandidateUpdatesourceInput
+  workspace: WorkspaceUpdateOneWithoutCandidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  tags: TagUpdateManyInput
+  fields: FieldUpdateManyInput
+  tasks: TaskUpdateManyWithoutCandidateInput
+  applications: ApplicationUpdateManyWithoutCandidateInput
+  comments: CommentUpdateManyInput
+}
+
+input CandidateUpdateWithoutTasksDataInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  resume: CandidateUpdateresumeInput
+  coverLetter: CandidateUpdatecoverLetterInput
+  source: CandidateUpdatesourceInput
+  workspace: WorkspaceUpdateOneWithoutCandidatesInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags: TagUpdateManyInput
+  fields: FieldUpdateManyInput
+  applications: ApplicationUpdateManyWithoutCandidateInput
+  comments: CommentUpdateManyInput
+}
+
+input CandidateUpdateWithoutWorkspaceDataInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  resume: CandidateUpdateresumeInput
+  coverLetter: CandidateUpdatecoverLetterInput
+  source: CandidateUpdatesourceInput
+  events: EventUpdateManyWithoutTargetCandidateInput
+  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
+  tags: TagUpdateManyInput
+  fields: FieldUpdateManyInput
+  tasks: TaskUpdateManyWithoutCandidateInput
+  applications: ApplicationUpdateManyWithoutCandidateInput
+  comments: CommentUpdateManyInput
+}
+
+input CandidateUpdateWithWhereUniqueWithoutSubscribersInput {
+  where: CandidateWhereUniqueInput!
+  data: CandidateUpdateWithoutSubscribersDataInput!
+}
+
+input CandidateUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: CandidateWhereUniqueInput!
+  data: CandidateUpdateWithoutWorkspaceDataInput!
+}
+
+input CandidateUpsertNestedInput {
+  update: CandidateUpdateDataInput!
+  create: CandidateCreateInput!
+}
+
+input CandidateUpsertWithoutApplicationsInput {
+  update: CandidateUpdateWithoutApplicationsDataInput!
+  create: CandidateCreateWithoutApplicationsInput!
+}
+
+input CandidateUpsertWithoutEventsInput {
+  update: CandidateUpdateWithoutEventsDataInput!
+  create: CandidateCreateWithoutEventsInput!
+}
+
+input CandidateUpsertWithoutTasksInput {
+  update: CandidateUpdateWithoutTasksDataInput!
+  create: CandidateCreateWithoutTasksInput!
+}
+
+input CandidateUpsertWithWhereUniqueWithoutSubscribersInput {
+  where: CandidateWhereUniqueInput!
+  update: CandidateUpdateWithoutSubscribersDataInput!
+  create: CandidateCreateWithoutSubscribersInput!
+}
+
+input CandidateUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: CandidateWhereUniqueInput!
+  update: CandidateUpdateWithoutWorkspaceDataInput!
+  create: CandidateCreateWithoutWorkspaceInput!
+}
+
+input CandidateWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CandidateWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CandidateWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CandidateWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  lastName: String
+
+  """All values that are not equal to given value."""
+  lastName_not: String
+
+  """All values that are contained in given list."""
+  lastName_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastName_not_in: [String!]
+
+  """All values less than the given value."""
+  lastName_lt: String
+
+  """All values less than or equal the given value."""
+  lastName_lte: String
+
+  """All values greater than the given value."""
+  lastName_gt: String
+
+  """All values greater than or equal the given value."""
+  lastName_gte: String
+
+  """All values containing the given string."""
+  lastName_contains: String
+
+  """All values not containing the given string."""
+  lastName_not_contains: String
+
+  """All values starting with the given string."""
+  lastName_starts_with: String
+
+  """All values not starting with the given string."""
+  lastName_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastName_ends_with: String
+
+  """All values not ending with the given string."""
+  lastName_not_ends_with: String
+  workspace: WorkspaceWhereInput
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
+  subscribers_every: UserWhereInput
+  subscribers_some: UserWhereInput
+  subscribers_none: UserWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  fields_every: FieldWhereInput
+  fields_some: FieldWhereInput
+  fields_none: FieldWhereInput
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+}
+
+input CandidateWhereUniqueInput {
+  id: ID
+}
+
+type Comment implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy(where: UserWhereInput): User!
+  parent(where: CommentWhereInput): Comment
+  content: String!
+}
+
+"""A connection to a list of items."""
+type CommentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommentEdge]!
+  aggregate: AggregateComment!
+}
+
+input CommentCreateInput {
+  content: String!
+  createdBy: UserCreateOneInput!
+  parent: CommentCreateOneInput
+}
+
+input CommentCreateManyInput {
+  create: [CommentCreateInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateOneInput {
+  create: CommentCreateInput
+  connect: CommentWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type CommentEdge {
+  """The item at the end of the edge."""
+  node: Comment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CommentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  content_ASC
+  content_DESC
+}
+
+type CommentPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  content: String!
+}
+
+type CommentSubscriptionPayload {
+  mutation: MutationType!
+  node: Comment
+  updatedFields: [String!]
+  previousValues: CommentPreviousValues
+}
+
+input CommentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CommentWhereInput
+}
+
+input CommentUpdateDataInput {
+  content: String
+  createdBy: UserUpdateOneInput
+  parent: CommentUpdateOneInput
+}
+
+input CommentUpdateInput {
+  content: String
+  createdBy: UserUpdateOneInput
+  parent: CommentUpdateOneInput
+}
+
+input CommentUpdateManyInput {
+  create: [CommentCreateInput!]
+  connect: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  delete: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueNestedInput!]
+  upsert: [CommentUpsertWithWhereUniqueNestedInput!]
+}
+
+input CommentUpdateOneInput {
+  create: CommentCreateInput
+  connect: CommentWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CommentUpdateDataInput
+  upsert: CommentUpsertNestedInput
+}
+
+input CommentUpdateWithWhereUniqueNestedInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateDataInput!
+}
+
+input CommentUpsertNestedInput {
+  update: CommentUpdateDataInput!
+  create: CommentCreateInput!
+}
+
+input CommentUpsertWithWhereUniqueNestedInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateDataInput!
+  create: CommentCreateInput!
+}
+
+input CommentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  content: String
+
+  """All values that are not equal to given value."""
+  content_not: String
+
+  """All values that are contained in given list."""
+  content_in: [String!]
+
+  """All values that are not contained in given list."""
+  content_not_in: [String!]
+
+  """All values less than the given value."""
+  content_lt: String
+
+  """All values less than or equal the given value."""
+  content_lte: String
+
+  """All values greater than the given value."""
+  content_gt: String
+
+  """All values greater than or equal the given value."""
+  content_gte: String
+
+  """All values containing the given string."""
+  content_contains: String
+
+  """All values not containing the given string."""
+  content_not_contains: String
+
+  """All values starting with the given string."""
+  content_starts_with: String
+
+  """All values not starting with the given string."""
+  content_not_starts_with: String
+
+  """All values ending with the given string."""
+  content_ends_with: String
+
+  """All values not ending with the given string."""
+  content_not_ends_with: String
+  createdBy: UserWhereInput
+  parent: CommentWhereInput
+}
+
+input CommentWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
+type Event implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  actorUser(where: UserWhereInput): User
+  actorCandidate(where: CandidateWhereInput): Candidate
+  targetType: EventTargetTypeEnum!
+  targetCandidate(where: CandidateWhereInput): Candidate
+  targetJob(where: JobWhereInput): Job
+  targetTask(where: TaskWhereInput): Task
+  targetWorkspace(where: WorkspaceWhereInput): Workspace
+}
+
+enum EventActorTypeEnum {
+  SYSTEM
+  USER
+  CANDIDATE
+}
+
+"""A connection to a list of items."""
+type EventConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EventEdge]!
+  aggregate: AggregateEvent!
+}
+
+input EventCreateInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
+  workspace: WorkspaceCreateOneInput!
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
+}
+
+input EventCreateManyWithoutTargetCandidateInput {
+  create: [EventCreateWithoutTargetCandidateInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateManyWithoutTargetJobInput {
+  create: [EventCreateWithoutTargetJobInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateManyWithoutTargetWorkspaceInput {
+  create: [EventCreateWithoutTargetWorkspaceInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateOneInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+}
+
+input EventCreateOneWithoutActorUserInput {
+  create: EventCreateWithoutActorUserInput
+  connect: EventWhereUniqueInput
+}
+
+input EventCreateWithoutActorUserInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
+  workspace: WorkspaceCreateOneInput!
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
+}
+
+input EventCreateWithoutTargetCandidateInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
+  workspace: WorkspaceCreateOneInput!
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
+}
+
+input EventCreateWithoutTargetJobInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
+  workspace: WorkspaceCreateOneInput!
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
+}
+
+input EventCreateWithoutTargetWorkspaceInput {
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
+  workspace: WorkspaceCreateOneInput!
+  actorUser: UserCreateOneWithoutEventsInput
+  actorCandidate: CandidateCreateOneInput
+  targetCandidate: CandidateCreateOneWithoutEventsInput
+  targetJob: JobCreateOneWithoutEventsInput
+  targetTask: TaskCreateOneInput
+}
+
+"""An edge in a connection."""
+type EventEdge {
+  """The item at the end of the edge."""
+  node: Event!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EventOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  type_ASC
+  type_DESC
+  actorType_ASC
+  actorType_DESC
+  targetType_ASC
+  targetType_DESC
+}
+
+type EventPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  type: EventTypeEnum!
+  actorType: EventActorTypeEnum!
+  targetType: EventTargetTypeEnum!
+}
+
+type EventSubscriptionPayload {
+  mutation: MutationType!
+  node: Event
+  updatedFields: [String!]
+  previousValues: EventPreviousValues
+}
+
+input EventSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EventWhereInput
+}
+
+enum EventTargetTypeEnum {
+  CANDIDATE
+  JOB
+  TASK
+  WORKSPACE
+}
+
+enum EventTypeEnum {
+  DEFAULT
+  MESSAGE
+  COMMENT_CREATE
+  COMMENT_EDIT
+  COMMENT_DELETE
+}
+
+input EventUpdateDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceUpdateOneInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
+}
+
+input EventUpdateInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceUpdateOneInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
+}
+
+input EventUpdateManyWithoutTargetCandidateInput {
+  create: [EventCreateWithoutTargetCandidateInput!]
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  delete: [EventWhereUniqueInput!]
+  update: [EventUpdateWithWhereUniqueWithoutTargetCandidateInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutTargetCandidateInput!]
+}
+
+input EventUpdateManyWithoutTargetJobInput {
+  create: [EventCreateWithoutTargetJobInput!]
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  delete: [EventWhereUniqueInput!]
+  update: [EventUpdateWithWhereUniqueWithoutTargetJobInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutTargetJobInput!]
+}
+
+input EventUpdateManyWithoutTargetWorkspaceInput {
+  create: [EventCreateWithoutTargetWorkspaceInput!]
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  delete: [EventWhereUniqueInput!]
+  update: [EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput!]
+}
+
+input EventUpdateOneInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+  delete: Boolean
+  update: EventUpdateDataInput
+  upsert: EventUpsertNestedInput
+}
+
+input EventUpdateOneWithoutActorUserInput {
+  create: EventCreateWithoutActorUserInput
+  connect: EventWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: EventUpdateWithoutActorUserDataInput
+  upsert: EventUpsertWithoutActorUserInput
+}
+
+input EventUpdateWithoutActorUserDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceUpdateOneInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
+}
+
+input EventUpdateWithoutTargetCandidateDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceUpdateOneInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
+}
+
+input EventUpdateWithoutTargetJobDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceUpdateOneInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
+}
+
+input EventUpdateWithoutTargetWorkspaceDataInput {
+  type: EventTypeEnum
+  actorType: EventActorTypeEnum
+  targetType: EventTargetTypeEnum
+  workspace: WorkspaceUpdateOneInput
+  actorUser: UserUpdateOneWithoutEventsInput
+  actorCandidate: CandidateUpdateOneInput
+  targetCandidate: CandidateUpdateOneWithoutEventsInput
+  targetJob: JobUpdateOneWithoutEventsInput
+  targetTask: TaskUpdateOneInput
+}
+
+input EventUpdateWithWhereUniqueWithoutTargetCandidateInput {
+  where: EventWhereUniqueInput!
+  data: EventUpdateWithoutTargetCandidateDataInput!
+}
+
+input EventUpdateWithWhereUniqueWithoutTargetJobInput {
+  where: EventWhereUniqueInput!
+  data: EventUpdateWithoutTargetJobDataInput!
+}
+
+input EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput {
+  where: EventWhereUniqueInput!
+  data: EventUpdateWithoutTargetWorkspaceDataInput!
+}
+
+input EventUpsertNestedInput {
+  update: EventUpdateDataInput!
+  create: EventCreateInput!
+}
+
+input EventUpsertWithoutActorUserInput {
+  update: EventUpdateWithoutActorUserDataInput!
+  create: EventCreateWithoutActorUserInput!
+}
+
+input EventUpsertWithWhereUniqueWithoutTargetCandidateInput {
+  where: EventWhereUniqueInput!
+  update: EventUpdateWithoutTargetCandidateDataInput!
+  create: EventCreateWithoutTargetCandidateInput!
+}
+
+input EventUpsertWithWhereUniqueWithoutTargetJobInput {
+  where: EventWhereUniqueInput!
+  update: EventUpdateWithoutTargetJobDataInput!
+  create: EventCreateWithoutTargetJobInput!
+}
+
+input EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput {
+  where: EventWhereUniqueInput!
+  update: EventUpdateWithoutTargetWorkspaceDataInput!
+  create: EventCreateWithoutTargetWorkspaceInput!
+}
+
+input EventWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  type: EventTypeEnum
+
+  """All values that are not equal to given value."""
+  type_not: EventTypeEnum
+
+  """All values that are contained in given list."""
+  type_in: [EventTypeEnum!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [EventTypeEnum!]
+  actorType: EventActorTypeEnum
+
+  """All values that are not equal to given value."""
+  actorType_not: EventActorTypeEnum
+
+  """All values that are contained in given list."""
+  actorType_in: [EventActorTypeEnum!]
+
+  """All values that are not contained in given list."""
+  actorType_not_in: [EventActorTypeEnum!]
+  targetType: EventTargetTypeEnum
+
+  """All values that are not equal to given value."""
+  targetType_not: EventTargetTypeEnum
+
+  """All values that are contained in given list."""
+  targetType_in: [EventTargetTypeEnum!]
+
+  """All values that are not contained in given list."""
+  targetType_not_in: [EventTargetTypeEnum!]
+  workspace: WorkspaceWhereInput
+  actorUser: UserWhereInput
+  actorCandidate: CandidateWhereInput
+  targetCandidate: CandidateWhereInput
+  targetJob: JobWhereInput
+  targetTask: TaskWhereInput
+  targetWorkspace: WorkspaceWhereInput
+}
+
+input EventWhereUniqueInput {
+  id: ID
+}
+
+type Field implements Node {
+  id: ID!
+  type: FieldTypeEnum!
+  label: String!
+  value: String!
+}
+
+"""A connection to a list of items."""
+type FieldConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FieldEdge]!
+  aggregate: AggregateField!
+}
+
+input FieldCreateInput {
+  type: FieldTypeEnum!
+  label: String!
+  value: String!
+}
+
+input FieldCreateManyInput {
+  create: [FieldCreateInput!]
+  connect: [FieldWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type FieldEdge {
+  """The item at the end of the edge."""
+  node: Field!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FieldOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  label_ASC
+  label_DESC
+  value_ASC
+  value_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FieldPreviousValues {
+  id: ID!
+  type: FieldTypeEnum!
+  label: String!
+  value: String!
+}
+
+type FieldSubscriptionPayload {
+  mutation: MutationType!
+  node: Field
+  updatedFields: [String!]
+  previousValues: FieldPreviousValues
+}
+
+input FieldSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FieldWhereInput
+}
+
+enum FieldTypeEnum {
+  INT
+  FLOAT
+  STRING
+  TEXT
+  BOOLEAN
+  DATE_TIME
+}
+
+input FieldUpdateDataInput {
+  type: FieldTypeEnum
+  label: String
+  value: String
+}
+
+input FieldUpdateInput {
+  type: FieldTypeEnum
+  label: String
+  value: String
+}
+
+input FieldUpdateManyInput {
+  create: [FieldCreateInput!]
+  connect: [FieldWhereUniqueInput!]
+  disconnect: [FieldWhereUniqueInput!]
+  delete: [FieldWhereUniqueInput!]
+  update: [FieldUpdateWithWhereUniqueNestedInput!]
+  upsert: [FieldUpsertWithWhereUniqueNestedInput!]
+}
+
+input FieldUpdateWithWhereUniqueNestedInput {
+  where: FieldWhereUniqueInput!
+  data: FieldUpdateDataInput!
+}
+
+input FieldUpsertWithWhereUniqueNestedInput {
+  where: FieldWhereUniqueInput!
+  update: FieldUpdateDataInput!
+  create: FieldCreateInput!
+}
+
+input FieldWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  type: FieldTypeEnum
+
+  """All values that are not equal to given value."""
+  type_not: FieldTypeEnum
+
+  """All values that are contained in given list."""
+  type_in: [FieldTypeEnum!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [FieldTypeEnum!]
+  label: String
+
+  """All values that are not equal to given value."""
+  label_not: String
+
+  """All values that are contained in given list."""
+  label_in: [String!]
+
+  """All values that are not contained in given list."""
+  label_not_in: [String!]
+
+  """All values less than the given value."""
+  label_lt: String
+
+  """All values less than or equal the given value."""
+  label_lte: String
+
+  """All values greater than the given value."""
+  label_gt: String
+
+  """All values greater than or equal the given value."""
+  label_gte: String
+
+  """All values containing the given string."""
+  label_contains: String
+
+  """All values not containing the given string."""
+  label_not_contains: String
+
+  """All values starting with the given string."""
+  label_starts_with: String
+
+  """All values not starting with the given string."""
+  label_not_starts_with: String
+
+  """All values ending with the given string."""
+  label_ends_with: String
+
+  """All values not ending with the given string."""
+  label_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+}
+
+input FieldWhereUniqueInput {
+  id: ID
+}
+
+type Invite implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  email: String!
+  expireAt: DateTime!
+  invitedBy(where: UserWhereInput): User!
+}
+
+"""A connection to a list of items."""
+type InviteConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [InviteEdge]!
+  aggregate: AggregateInvite!
+}
+
+input InviteCreateInput {
+  email: String!
+  expireAt: DateTime!
+  workspace: WorkspaceCreateOneWithoutInvitesInput!
+  invitedBy: UserCreateOneInput!
+}
+
+input InviteCreateManyWithoutWorkspaceInput {
+  create: [InviteCreateWithoutWorkspaceInput!]
+  connect: [InviteWhereUniqueInput!]
+}
+
+input InviteCreateWithoutWorkspaceInput {
+  email: String!
+  expireAt: DateTime!
+  invitedBy: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type InviteEdge {
+  """The item at the end of the edge."""
+  node: Invite!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum InviteOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  email_ASC
+  email_DESC
+  expireAt_ASC
+  expireAt_DESC
+}
+
+type InvitePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  expireAt: DateTime!
+}
+
+type InviteSubscriptionPayload {
+  mutation: MutationType!
+  node: Invite
+  updatedFields: [String!]
+  previousValues: InvitePreviousValues
+}
+
+input InviteSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InviteSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InviteSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InviteSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: InviteWhereInput
+}
+
+input InviteUpdateInput {
+  email: String
+  expireAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutInvitesInput
+  invitedBy: UserUpdateOneInput
+}
+
+input InviteUpdateManyWithoutWorkspaceInput {
+  create: [InviteCreateWithoutWorkspaceInput!]
+  connect: [InviteWhereUniqueInput!]
+  disconnect: [InviteWhereUniqueInput!]
+  delete: [InviteWhereUniqueInput!]
+  update: [InviteUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  upsert: [InviteUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input InviteUpdateWithoutWorkspaceDataInput {
+  email: String
+  expireAt: DateTime
+  invitedBy: UserUpdateOneInput
+}
+
+input InviteUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: InviteWhereUniqueInput!
+  data: InviteUpdateWithoutWorkspaceDataInput!
+}
+
+input InviteUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: InviteWhereUniqueInput!
+  update: InviteUpdateWithoutWorkspaceDataInput!
+  create: InviteCreateWithoutWorkspaceInput!
+}
+
+input InviteWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InviteWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InviteWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InviteWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  expireAt: DateTime
+
+  """All values that are not equal to given value."""
+  expireAt_not: DateTime
+
+  """All values that are contained in given list."""
+  expireAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  expireAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  expireAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  expireAt_lte: DateTime
+
+  """All values greater than the given value."""
+  expireAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  expireAt_gte: DateTime
+  workspace: WorkspaceWhereInput
+  invitedBy: UserWhereInput
+}
+
+input InviteWhereUniqueInput {
+  id: ID
+}
+
+type Job implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  status: JobType!
+  title: String!
+  department: String
+  location(where: LocationWhereInput): Location
+  description: String
+  requirements: String
+}
+
+"""A connection to a list of items."""
+type JobConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [JobEdge]!
+  aggregate: AggregateJob!
+}
+
+input JobCreateInput {
+  status: JobType!
+  title: String!
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceCreateOneWithoutJobsInput!
+  subscribers: UserCreateManyWithoutSubscriptionJobsInput
+  events: EventCreateManyWithoutTargetJobInput
+  applications: ApplicationCreateManyWithoutJobInput
+  stages: StageCreateManyInput
+  comments: CommentCreateManyInput
+  location: LocationCreateOneInput
+}
+
+input JobCreateManyWithoutSubscribersInput {
+  create: [JobCreateWithoutSubscribersInput!]
+  connect: [JobWhereUniqueInput!]
+}
+
+input JobCreateManyWithoutWorkspaceInput {
+  create: [JobCreateWithoutWorkspaceInput!]
+  connect: [JobWhereUniqueInput!]
+}
+
+input JobCreateOneInput {
+  create: JobCreateInput
+  connect: JobWhereUniqueInput
+}
+
+input JobCreateOneWithoutApplicationsInput {
+  create: JobCreateWithoutApplicationsInput
+  connect: JobWhereUniqueInput
+}
+
+input JobCreateOneWithoutEventsInput {
+  create: JobCreateWithoutEventsInput
+  connect: JobWhereUniqueInput
+}
+
+input JobCreateWithoutApplicationsInput {
+  status: JobType!
+  title: String!
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceCreateOneWithoutJobsInput!
+  subscribers: UserCreateManyWithoutSubscriptionJobsInput
+  events: EventCreateManyWithoutTargetJobInput
+  stages: StageCreateManyInput
+  comments: CommentCreateManyInput
+  location: LocationCreateOneInput
+}
+
+input JobCreateWithoutEventsInput {
+  status: JobType!
+  title: String!
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceCreateOneWithoutJobsInput!
+  subscribers: UserCreateManyWithoutSubscriptionJobsInput
+  applications: ApplicationCreateManyWithoutJobInput
+  stages: StageCreateManyInput
+  comments: CommentCreateManyInput
+  location: LocationCreateOneInput
+}
+
+input JobCreateWithoutSubscribersInput {
+  status: JobType!
+  title: String!
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceCreateOneWithoutJobsInput!
+  events: EventCreateManyWithoutTargetJobInput
+  applications: ApplicationCreateManyWithoutJobInput
+  stages: StageCreateManyInput
+  comments: CommentCreateManyInput
+  location: LocationCreateOneInput
+}
+
+input JobCreateWithoutWorkspaceInput {
+  status: JobType!
+  title: String!
+  department: String
+  description: String
+  requirements: String
+  subscribers: UserCreateManyWithoutSubscriptionJobsInput
+  events: EventCreateManyWithoutTargetJobInput
+  applications: ApplicationCreateManyWithoutJobInput
+  stages: StageCreateManyInput
+  comments: CommentCreateManyInput
+  location: LocationCreateOneInput
+}
+
+"""An edge in a connection."""
+type JobEdge {
+  """The item at the end of the edge."""
+  node: Job!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum JobOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  status_ASC
+  status_DESC
+  title_ASC
+  title_DESC
+  department_ASC
+  department_DESC
+  description_ASC
+  description_DESC
+  requirements_ASC
+  requirements_DESC
+}
+
+type JobPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  status: JobType!
+  title: String!
+  department: String
+  description: String
+  requirements: String
+}
+
+type JobSubscriptionPayload {
+  mutation: MutationType!
+  node: Job
+  updatedFields: [String!]
+  previousValues: JobPreviousValues
+}
+
+input JobSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [JobSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [JobSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [JobSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: JobWhereInput
+}
+
+enum JobType {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+input JobUpdateDataInput {
+  status: JobType
+  title: String
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceUpdateOneWithoutJobsInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
+  applications: ApplicationUpdateManyWithoutJobInput
+  stages: StageUpdateManyInput
+  comments: CommentUpdateManyInput
+  location: LocationUpdateOneInput
+}
+
+input JobUpdateInput {
+  status: JobType
+  title: String
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceUpdateOneWithoutJobsInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
+  applications: ApplicationUpdateManyWithoutJobInput
+  stages: StageUpdateManyInput
+  comments: CommentUpdateManyInput
+  location: LocationUpdateOneInput
+}
+
+input JobUpdateManyWithoutSubscribersInput {
+  create: [JobCreateWithoutSubscribersInput!]
+  connect: [JobWhereUniqueInput!]
+  disconnect: [JobWhereUniqueInput!]
+  delete: [JobWhereUniqueInput!]
+  update: [JobUpdateWithWhereUniqueWithoutSubscribersInput!]
+  upsert: [JobUpsertWithWhereUniqueWithoutSubscribersInput!]
+}
+
+input JobUpdateManyWithoutWorkspaceInput {
+  create: [JobCreateWithoutWorkspaceInput!]
+  connect: [JobWhereUniqueInput!]
+  disconnect: [JobWhereUniqueInput!]
+  delete: [JobWhereUniqueInput!]
+  update: [JobUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  upsert: [JobUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input JobUpdateOneInput {
+  create: JobCreateInput
+  connect: JobWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: JobUpdateDataInput
+  upsert: JobUpsertNestedInput
+}
+
+input JobUpdateOneWithoutApplicationsInput {
+  create: JobCreateWithoutApplicationsInput
+  connect: JobWhereUniqueInput
+  delete: Boolean
+  update: JobUpdateWithoutApplicationsDataInput
+  upsert: JobUpsertWithoutApplicationsInput
+}
+
+input JobUpdateOneWithoutEventsInput {
+  create: JobCreateWithoutEventsInput
+  connect: JobWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: JobUpdateWithoutEventsDataInput
+  upsert: JobUpsertWithoutEventsInput
+}
+
+input JobUpdateWithoutApplicationsDataInput {
+  status: JobType
+  title: String
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceUpdateOneWithoutJobsInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
+  stages: StageUpdateManyInput
+  comments: CommentUpdateManyInput
+  location: LocationUpdateOneInput
+}
+
+input JobUpdateWithoutEventsDataInput {
+  status: JobType
+  title: String
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceUpdateOneWithoutJobsInput
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  applications: ApplicationUpdateManyWithoutJobInput
+  stages: StageUpdateManyInput
+  comments: CommentUpdateManyInput
+  location: LocationUpdateOneInput
+}
+
+input JobUpdateWithoutSubscribersDataInput {
+  status: JobType
+  title: String
+  department: String
+  description: String
+  requirements: String
+  workspace: WorkspaceUpdateOneWithoutJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
+  applications: ApplicationUpdateManyWithoutJobInput
+  stages: StageUpdateManyInput
+  comments: CommentUpdateManyInput
+  location: LocationUpdateOneInput
+}
+
+input JobUpdateWithoutWorkspaceDataInput {
+  status: JobType
+  title: String
+  department: String
+  description: String
+  requirements: String
+  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
+  events: EventUpdateManyWithoutTargetJobInput
+  applications: ApplicationUpdateManyWithoutJobInput
+  stages: StageUpdateManyInput
+  comments: CommentUpdateManyInput
+  location: LocationUpdateOneInput
+}
+
+input JobUpdateWithWhereUniqueWithoutSubscribersInput {
+  where: JobWhereUniqueInput!
+  data: JobUpdateWithoutSubscribersDataInput!
+}
+
+input JobUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: JobWhereUniqueInput!
+  data: JobUpdateWithoutWorkspaceDataInput!
+}
+
+input JobUpsertNestedInput {
+  update: JobUpdateDataInput!
+  create: JobCreateInput!
+}
+
+input JobUpsertWithoutApplicationsInput {
+  update: JobUpdateWithoutApplicationsDataInput!
+  create: JobCreateWithoutApplicationsInput!
+}
+
+input JobUpsertWithoutEventsInput {
+  update: JobUpdateWithoutEventsDataInput!
+  create: JobCreateWithoutEventsInput!
+}
+
+input JobUpsertWithWhereUniqueWithoutSubscribersInput {
+  where: JobWhereUniqueInput!
+  update: JobUpdateWithoutSubscribersDataInput!
+  create: JobCreateWithoutSubscribersInput!
+}
+
+input JobUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: JobWhereUniqueInput!
+  update: JobUpdateWithoutWorkspaceDataInput!
+  create: JobCreateWithoutWorkspaceInput!
+}
+
+input JobWhereInput {
+  """Logical AND on all given filters."""
+  AND: [JobWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [JobWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [JobWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  status: JobType
+
+  """All values that are not equal to given value."""
+  status_not: JobType
+
+  """All values that are contained in given list."""
+  status_in: [JobType!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [JobType!]
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  department: String
+
+  """All values that are not equal to given value."""
+  department_not: String
+
+  """All values that are contained in given list."""
+  department_in: [String!]
+
+  """All values that are not contained in given list."""
+  department_not_in: [String!]
+
+  """All values less than the given value."""
+  department_lt: String
+
+  """All values less than or equal the given value."""
+  department_lte: String
+
+  """All values greater than the given value."""
+  department_gt: String
+
+  """All values greater than or equal the given value."""
+  department_gte: String
+
+  """All values containing the given string."""
+  department_contains: String
+
+  """All values not containing the given string."""
+  department_not_contains: String
+
+  """All values starting with the given string."""
+  department_starts_with: String
+
+  """All values not starting with the given string."""
+  department_not_starts_with: String
+
+  """All values ending with the given string."""
+  department_ends_with: String
+
+  """All values not ending with the given string."""
+  department_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  requirements: String
+
+  """All values that are not equal to given value."""
+  requirements_not: String
+
+  """All values that are contained in given list."""
+  requirements_in: [String!]
+
+  """All values that are not contained in given list."""
+  requirements_not_in: [String!]
+
+  """All values less than the given value."""
+  requirements_lt: String
+
+  """All values less than or equal the given value."""
+  requirements_lte: String
+
+  """All values greater than the given value."""
+  requirements_gt: String
+
+  """All values greater than or equal the given value."""
+  requirements_gte: String
+
+  """All values containing the given string."""
+  requirements_contains: String
+
+  """All values not containing the given string."""
+  requirements_not_contains: String
+
+  """All values starting with the given string."""
+  requirements_starts_with: String
+
+  """All values not starting with the given string."""
+  requirements_not_starts_with: String
+
+  """All values ending with the given string."""
+  requirements_ends_with: String
+
+  """All values not ending with the given string."""
+  requirements_not_ends_with: String
+  workspace: WorkspaceWhereInput
+  subscribers_every: UserWhereInput
+  subscribers_some: UserWhereInput
+  subscribers_none: UserWhereInput
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+  stages_every: StageWhereInput
+  stages_some: StageWhereInput
+  stages_none: StageWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  location: LocationWhereInput
+}
+
+input JobWhereUniqueInput {
+  id: ID
+}
+
+type Location implements Node {
+  id: ID!
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+"""A connection to a list of items."""
+type LocationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LocationEdge]!
+  aggregate: AggregateLocation!
+}
+
+input LocationCreateInput {
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+input LocationCreateOneInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type LocationEdge {
+  """The item at the end of the edge."""
+  node: Location!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LocationOrderByInput {
+  id_ASC
+  id_DESC
+  country_ASC
+  country_DESC
+  region_ASC
+  region_DESC
+  city_ASC
+  city_DESC
+  zip_ASC
+  zip_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LocationPreviousValues {
+  id: ID!
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+type LocationSubscriptionPayload {
+  mutation: MutationType!
+  node: Location
+  updatedFields: [String!]
+  previousValues: LocationPreviousValues
+}
+
+input LocationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LocationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LocationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LocationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LocationWhereInput
+}
+
+input LocationUpdateDataInput {
+  country: String
+  region: String
+  city: String
+  zip: String
+}
+
+input LocationUpdateInput {
+  country: String
+  region: String
+  city: String
+  zip: String
+}
+
+input LocationUpdateOneInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: LocationUpdateDataInput
+  upsert: LocationUpsertNestedInput
+}
+
+input LocationUpsertNestedInput {
+  update: LocationUpdateDataInput!
+  create: LocationCreateInput!
+}
+
+input LocationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LocationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LocationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LocationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  country: String
+
+  """All values that are not equal to given value."""
+  country_not: String
+
+  """All values that are contained in given list."""
+  country_in: [String!]
+
+  """All values that are not contained in given list."""
+  country_not_in: [String!]
+
+  """All values less than the given value."""
+  country_lt: String
+
+  """All values less than or equal the given value."""
+  country_lte: String
+
+  """All values greater than the given value."""
+  country_gt: String
+
+  """All values greater than or equal the given value."""
+  country_gte: String
+
+  """All values containing the given string."""
+  country_contains: String
+
+  """All values not containing the given string."""
+  country_not_contains: String
+
+  """All values starting with the given string."""
+  country_starts_with: String
+
+  """All values not starting with the given string."""
+  country_not_starts_with: String
+
+  """All values ending with the given string."""
+  country_ends_with: String
+
+  """All values not ending with the given string."""
+  country_not_ends_with: String
+  region: String
+
+  """All values that are not equal to given value."""
+  region_not: String
+
+  """All values that are contained in given list."""
+  region_in: [String!]
+
+  """All values that are not contained in given list."""
+  region_not_in: [String!]
+
+  """All values less than the given value."""
+  region_lt: String
+
+  """All values less than or equal the given value."""
+  region_lte: String
+
+  """All values greater than the given value."""
+  region_gt: String
+
+  """All values greater than or equal the given value."""
+  region_gte: String
+
+  """All values containing the given string."""
+  region_contains: String
+
+  """All values not containing the given string."""
+  region_not_contains: String
+
+  """All values starting with the given string."""
+  region_starts_with: String
+
+  """All values not starting with the given string."""
+  region_not_starts_with: String
+
+  """All values ending with the given string."""
+  region_ends_with: String
+
+  """All values not ending with the given string."""
+  region_not_ends_with: String
+  city: String
+
+  """All values that are not equal to given value."""
+  city_not: String
+
+  """All values that are contained in given list."""
+  city_in: [String!]
+
+  """All values that are not contained in given list."""
+  city_not_in: [String!]
+
+  """All values less than the given value."""
+  city_lt: String
+
+  """All values less than or equal the given value."""
+  city_lte: String
+
+  """All values greater than the given value."""
+  city_gt: String
+
+  """All values greater than or equal the given value."""
+  city_gte: String
+
+  """All values containing the given string."""
+  city_contains: String
+
+  """All values not containing the given string."""
+  city_not_contains: String
+
+  """All values starting with the given string."""
+  city_starts_with: String
+
+  """All values not starting with the given string."""
+  city_not_starts_with: String
+
+  """All values ending with the given string."""
+  city_ends_with: String
+
+  """All values not ending with the given string."""
+  city_not_ends_with: String
+  zip: String
+
+  """All values that are not equal to given value."""
+  zip_not: String
+
+  """All values that are contained in given list."""
+  zip_in: [String!]
+
+  """All values that are not contained in given list."""
+  zip_not_in: [String!]
+
+  """All values less than the given value."""
+  zip_lt: String
+
+  """All values less than or equal the given value."""
+  zip_lte: String
+
+  """All values greater than the given value."""
+  zip_gt: String
+
+  """All values greater than or equal the given value."""
+  zip_gte: String
+
+  """All values containing the given string."""
+  zip_contains: String
+
+  """All values not containing the given string."""
+  zip_not_contains: String
+
+  """All values starting with the given string."""
+  zip_starts_with: String
+
+  """All values not starting with the given string."""
+  zip_not_starts_with: String
+
+  """All values ending with the given string."""
+  zip_ends_with: String
+
+  """All values not ending with the given string."""
+  zip_not_ends_with: String
+}
+
+input LocationWhereUniqueInput {
+  id: ID
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createApplication(data: ApplicationCreateInput!): Application!
+  createInvite(data: InviteCreateInput!): Invite!
+  createNotification(data: NotificationCreateInput!): Notification!
+  createLocation(data: LocationCreateInput!): Location!
+  createCandidate(data: CandidateCreateInput!): Candidate!
+  createUser(data: UserCreateInput!): User!
+  createEvent(data: EventCreateInput!): Event!
+  createStage(data: StageCreateInput!): Stage!
+  createWorkspace(data: WorkspaceCreateInput!): Workspace!
+  createJob(data: JobCreateInput!): Job!
+  createTask(data: TaskCreateInput!): Task!
+  createTag(data: TagCreateInput!): Tag!
+  createField(data: FieldCreateInput!): Field!
+  createComment(data: CommentCreateInput!): Comment!
+  updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
+  updateInvite(data: InviteUpdateInput!, where: InviteWhereUniqueInput!): Invite
+  updateNotification(data: NotificationUpdateInput!, where: NotificationWhereUniqueInput!): Notification
+  updateLocation(data: LocationUpdateInput!, where: LocationWhereUniqueInput!): Location
+  updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
+  updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
+  updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace
+  updateJob(data: JobUpdateInput!, where: JobWhereUniqueInput!): Job
+  updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+  updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
+  deleteApplication(where: ApplicationWhereUniqueInput!): Application
+  deleteInvite(where: InviteWhereUniqueInput!): Invite
+  deleteNotification(where: NotificationWhereUniqueInput!): Notification
+  deleteLocation(where: LocationWhereUniqueInput!): Location
+  deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteEvent(where: EventWhereUniqueInput!): Event
+  deleteStage(where: StageWhereUniqueInput!): Stage
+  deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace
+  deleteJob(where: JobWhereUniqueInput!): Job
+  deleteTask(where: TaskWhereUniqueInput!): Task
+  deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteField(where: FieldWhereUniqueInput!): Field
+  deleteComment(where: CommentWhereUniqueInput!): Comment
+  upsertApplication(where: ApplicationWhereUniqueInput!, create: ApplicationCreateInput!, update: ApplicationUpdateInput!): Application!
+  upsertInvite(where: InviteWhereUniqueInput!, create: InviteCreateInput!, update: InviteUpdateInput!): Invite!
+  upsertNotification(where: NotificationWhereUniqueInput!, create: NotificationCreateInput!, update: NotificationUpdateInput!): Notification!
+  upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
+  upsertCandidate(where: CandidateWhereUniqueInput!, create: CandidateCreateInput!, update: CandidateUpdateInput!): Candidate!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
+  upsertStage(where: StageWhereUniqueInput!, create: StageCreateInput!, update: StageUpdateInput!): Stage!
+  upsertWorkspace(where: WorkspaceWhereUniqueInput!, create: WorkspaceCreateInput!, update: WorkspaceUpdateInput!): Workspace!
+  upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
+  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
+  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
+  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
+  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
+  updateManyApplications(data: ApplicationUpdateInput!, where: ApplicationWhereInput): BatchPayload!
+  updateManyInvites(data: InviteUpdateInput!, where: InviteWhereInput): BatchPayload!
+  updateManyNotifications(data: NotificationUpdateInput!, where: NotificationWhereInput): BatchPayload!
+  updateManyLocations(data: LocationUpdateInput!, where: LocationWhereInput): BatchPayload!
+  updateManyCandidates(data: CandidateUpdateInput!, where: CandidateWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyEvents(data: EventUpdateInput!, where: EventWhereInput): BatchPayload!
+  updateManyStages(data: StageUpdateInput!, where: StageWhereInput): BatchPayload!
+  updateManyWorkspaces(data: WorkspaceUpdateInput!, where: WorkspaceWhereInput): BatchPayload!
+  updateManyJobs(data: JobUpdateInput!, where: JobWhereInput): BatchPayload!
+  updateManyTasks(data: TaskUpdateInput!, where: TaskWhereInput): BatchPayload!
+  updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
+  updateManyFields(data: FieldUpdateInput!, where: FieldWhereInput): BatchPayload!
+  updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
+  deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
+  deleteManyInvites(where: InviteWhereInput): BatchPayload!
+  deleteManyNotifications(where: NotificationWhereInput): BatchPayload!
+  deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  deleteManyCandidates(where: CandidateWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyEvents(where: EventWhereInput): BatchPayload!
+  deleteManyStages(where: StageWhereInput): BatchPayload!
+  deleteManyWorkspaces(where: WorkspaceWhereInput): BatchPayload!
+  deleteManyJobs(where: JobWhereInput): BatchPayload!
+  deleteManyTasks(where: TaskWhereInput): BatchPayload!
+  deleteManyTags(where: TagWhereInput): BatchPayload!
+  deleteManyFields(where: FieldWhereInput): BatchPayload!
+  deleteManyComments(where: CommentWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type Notification implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  status: NotificationStatusEnum!
+  user(where: UserWhereInput): User!
+  event(where: EventWhereInput): Event!
+}
+
+"""A connection to a list of items."""
+type NotificationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [NotificationEdge]!
+  aggregate: AggregateNotification!
+}
+
+input NotificationCreateInput {
+  status: NotificationStatusEnum!
+  user: UserCreateOneWithoutNotificationsInput!
+  event: EventCreateOneInput!
+}
+
+input NotificationCreateManyWithoutUserInput {
+  create: [NotificationCreateWithoutUserInput!]
+  connect: [NotificationWhereUniqueInput!]
+}
+
+input NotificationCreateWithoutUserInput {
+  status: NotificationStatusEnum!
+  event: EventCreateOneInput!
+}
+
+"""An edge in a connection."""
+type NotificationEdge {
+  """The item at the end of the edge."""
+  node: Notification!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum NotificationOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  status_ASC
+  status_DESC
+}
+
+type NotificationPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  status: NotificationStatusEnum!
+}
+
+enum NotificationStatusEnum {
+  NEW
+  UNREAD
+  READ
+}
+
+type NotificationSubscriptionPayload {
+  mutation: MutationType!
+  node: Notification
+  updatedFields: [String!]
+  previousValues: NotificationPreviousValues
+}
+
+input NotificationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [NotificationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [NotificationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [NotificationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: NotificationWhereInput
+}
+
+input NotificationUpdateInput {
+  status: NotificationStatusEnum
+  user: UserUpdateOneWithoutNotificationsInput
+  event: EventUpdateOneInput
+}
+
+input NotificationUpdateManyWithoutUserInput {
+  create: [NotificationCreateWithoutUserInput!]
+  connect: [NotificationWhereUniqueInput!]
+  disconnect: [NotificationWhereUniqueInput!]
+  delete: [NotificationWhereUniqueInput!]
+  update: [NotificationUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [NotificationUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input NotificationUpdateWithoutUserDataInput {
+  status: NotificationStatusEnum
+  event: EventUpdateOneInput
+}
+
+input NotificationUpdateWithWhereUniqueWithoutUserInput {
+  where: NotificationWhereUniqueInput!
+  data: NotificationUpdateWithoutUserDataInput!
+}
+
+input NotificationUpsertWithWhereUniqueWithoutUserInput {
+  where: NotificationWhereUniqueInput!
+  update: NotificationUpdateWithoutUserDataInput!
+  create: NotificationCreateWithoutUserInput!
+}
+
+input NotificationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [NotificationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [NotificationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [NotificationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  status: NotificationStatusEnum
+
+  """All values that are not equal to given value."""
+  status_not: NotificationStatusEnum
+
+  """All values that are contained in given list."""
+  status_in: [NotificationStatusEnum!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [NotificationStatusEnum!]
+  user: UserWhereInput
+  event: EventWhereInput
+}
+
+input NotificationWhereUniqueInput {
+  id: ID
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite]!
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
+  candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
+  workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
+  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  application(where: ApplicationWhereUniqueInput!): Application
+  invite(where: InviteWhereUniqueInput!): Invite
+  notification(where: NotificationWhereUniqueInput!): Notification
+  location(where: LocationWhereUniqueInput!): Location
+  candidate(where: CandidateWhereUniqueInput!): Candidate
+  user(where: UserWhereUniqueInput!): User
+  event(where: EventWhereUniqueInput!): Event
+  stage(where: StageWhereUniqueInput!): Stage
+  workspace(where: WorkspaceWhereUniqueInput!): Workspace
+  job(where: JobWhereUniqueInput!): Job
+  task(where: TaskWhereUniqueInput!): Task
+  tag(where: TagWhereUniqueInput!): Tag
+  field(where: FieldWhereUniqueInput!): Field
+  comment(where: CommentWhereUniqueInput!): Comment
+  applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
+  invitesConnection(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InviteConnection!
+  notificationsConnection(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NotificationConnection!
+  locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
+  stagesConnection(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StageConnection!
+  workspacesConnection(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkspaceConnection!
+  jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  fieldsConnection(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldConnection!
+  commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Stage implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  position: Int!
+  type: StageTypeEnum!
+}
+
+"""A connection to a list of items."""
+type StageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StageEdge]!
+  aggregate: AggregateStage!
+}
+
+input StageCreateInput {
+  name: String!
+  description: String
+  position: Int!
+  type: StageTypeEnum!
+}
+
+input StageCreateManyInput {
+  create: [StageCreateInput!]
+  connect: [StageWhereUniqueInput!]
+}
+
+input StageCreateOneInput {
+  create: StageCreateInput
+  connect: StageWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type StageEdge {
+  """The item at the end of the edge."""
+  node: Stage!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum StageOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  position_ASC
+  position_DESC
+  type_ASC
+  type_DESC
+}
+
+type StagePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  position: Int!
+  type: StageTypeEnum!
+}
+
+type StageSubscriptionPayload {
+  mutation: MutationType!
+  node: Stage
+  updatedFields: [String!]
+  previousValues: StagePreviousValues
+}
+
+input StageSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StageSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StageSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StageSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: StageWhereInput
+}
+
+enum StageTypeEnum {
+  NEW
+  QUALIFIED
+  DISQUALIFIED
+}
+
+input StageUpdateDataInput {
+  name: String
+  description: String
+  position: Int
+  type: StageTypeEnum
+}
+
+input StageUpdateInput {
+  name: String
+  description: String
+  position: Int
+  type: StageTypeEnum
+}
+
+input StageUpdateManyInput {
+  create: [StageCreateInput!]
+  connect: [StageWhereUniqueInput!]
+  disconnect: [StageWhereUniqueInput!]
+  delete: [StageWhereUniqueInput!]
+  update: [StageUpdateWithWhereUniqueNestedInput!]
+  upsert: [StageUpsertWithWhereUniqueNestedInput!]
+}
+
+input StageUpdateOneInput {
+  create: StageCreateInput
+  connect: StageWhereUniqueInput
+  delete: Boolean
+  update: StageUpdateDataInput
+  upsert: StageUpsertNestedInput
+}
+
+input StageUpdateWithWhereUniqueNestedInput {
+  where: StageWhereUniqueInput!
+  data: StageUpdateDataInput!
+}
+
+input StageUpsertNestedInput {
+  update: StageUpdateDataInput!
+  create: StageCreateInput!
+}
+
+input StageUpsertWithWhereUniqueNestedInput {
+  where: StageWhereUniqueInput!
+  update: StageUpdateDataInput!
+  create: StageCreateInput!
+}
+
+input StageWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StageWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StageWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StageWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  position: Int
+
+  """All values that are not equal to given value."""
+  position_not: Int
+
+  """All values that are contained in given list."""
+  position_in: [Int!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [Int!]
+
+  """All values less than the given value."""
+  position_lt: Int
+
+  """All values less than or equal the given value."""
+  position_lte: Int
+
+  """All values greater than the given value."""
+  position_gt: Int
+
+  """All values greater than or equal the given value."""
+  position_gte: Int
+  type: StageTypeEnum
+
+  """All values that are not equal to given value."""
+  type_not: StageTypeEnum
+
+  """All values that are contained in given list."""
+  type_in: [StageTypeEnum!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [StageTypeEnum!]
+}
+
+input StageWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  application(where: ApplicationSubscriptionWhereInput): ApplicationSubscriptionPayload
+  invite(where: InviteSubscriptionWhereInput): InviteSubscriptionPayload
+  notification(where: NotificationSubscriptionWhereInput): NotificationSubscriptionPayload
+  location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  candidate(where: CandidateSubscriptionWhereInput): CandidateSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
+  stage(where: StageSubscriptionWhereInput): StageSubscriptionPayload
+  workspace(where: WorkspaceSubscriptionWhereInput): WorkspaceSubscriptionPayload
+  job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
+  task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
+  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  field(where: FieldSubscriptionWhereInput): FieldSubscriptionPayload
+  comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+}
+
+type Tag implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+}
+
+"""A connection to a list of items."""
+type TagConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TagEdge]!
+  aggregate: AggregateTag!
+}
+
+input TagCreateInput {
+  label: String!
+}
+
+input TagCreateManyInput {
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type TagEdge {
+  """The item at the end of the edge."""
+  node: Tag!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TagOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  label_ASC
+  label_DESC
+}
+
+type TagPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+}
+
+type TagSubscriptionPayload {
+  mutation: MutationType!
+  node: Tag
+  updatedFields: [String!]
+  previousValues: TagPreviousValues
+}
+
+input TagSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TagSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TagSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TagSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TagWhereInput
+}
+
+input TagUpdateDataInput {
+  label: String
+}
+
+input TagUpdateInput {
+  label: String
+}
+
+input TagUpdateManyInput {
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
+  disconnect: [TagWhereUniqueInput!]
+  delete: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueNestedInput!]
+}
+
+input TagUpdateWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput!
+  data: TagUpdateDataInput!
+}
+
+input TagUpsertWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput!
+  update: TagUpdateDataInput!
+  create: TagCreateInput!
+}
+
+input TagWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TagWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TagWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TagWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  label: String
+
+  """All values that are not equal to given value."""
+  label_not: String
+
+  """All values that are contained in given list."""
+  label_in: [String!]
+
+  """All values that are not contained in given list."""
+  label_not_in: [String!]
+
+  """All values less than the given value."""
+  label_lt: String
+
+  """All values less than or equal the given value."""
+  label_lte: String
+
+  """All values greater than the given value."""
+  label_gt: String
+
+  """All values greater than or equal the given value."""
+  label_gte: String
+
+  """All values containing the given string."""
+  label_contains: String
+
+  """All values not containing the given string."""
+  label_not_contains: String
+
+  """All values starting with the given string."""
+  label_starts_with: String
+
+  """All values not starting with the given string."""
+  label_not_starts_with: String
+
+  """All values ending with the given string."""
+  label_ends_with: String
+
+  """All values not ending with the given string."""
+  label_not_ends_with: String
+}
+
+input TagWhereUniqueInput {
+  id: ID
+}
+
+type Task implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  targetType: TaskTargetEnum
+  job(where: JobWhereInput): Job
+  candidate(where: CandidateWhereInput): Candidate
+  title: String
+  description: String
+  dueAt: DateTime
+}
+
+"""A connection to a list of items."""
+type TaskConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TaskEdge]!
+  aggregate: AggregateTask!
+}
+
+input TaskCreateInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceCreateOneInput!
+  subscribers: UserCreateManyWithoutSubscriptionTasksInput
+  owners: UserCreateManyWithoutTasksInput
+  job: JobCreateOneInput
+  candidate: CandidateCreateOneWithoutTasksInput
+}
+
+input TaskCreateManyWithoutCandidateInput {
+  create: [TaskCreateWithoutCandidateInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateManyWithoutOwnersInput {
+  create: [TaskCreateWithoutOwnersInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateManyWithoutSubscribersInput {
+  create: [TaskCreateWithoutSubscribersInput!]
+  connect: [TaskWhereUniqueInput!]
+}
+
+input TaskCreateOneInput {
+  create: TaskCreateInput
+  connect: TaskWhereUniqueInput
+}
+
+input TaskCreateWithoutCandidateInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceCreateOneInput!
+  subscribers: UserCreateManyWithoutSubscriptionTasksInput
+  owners: UserCreateManyWithoutTasksInput
+  job: JobCreateOneInput
+}
+
+input TaskCreateWithoutOwnersInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceCreateOneInput!
+  subscribers: UserCreateManyWithoutSubscriptionTasksInput
+  job: JobCreateOneInput
+  candidate: CandidateCreateOneWithoutTasksInput
+}
+
+input TaskCreateWithoutSubscribersInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceCreateOneInput!
+  owners: UserCreateManyWithoutTasksInput
+  job: JobCreateOneInput
+  candidate: CandidateCreateOneWithoutTasksInput
+}
+
+"""An edge in a connection."""
+type TaskEdge {
+  """The item at the end of the edge."""
+  node: Task!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TaskOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  targetType_ASC
+  targetType_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  dueAt_ASC
+  dueAt_DESC
+}
+
+type TaskPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+}
+
+type TaskSubscriptionPayload {
+  mutation: MutationType!
+  node: Task
+  updatedFields: [String!]
+  previousValues: TaskPreviousValues
+}
+
+input TaskSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TaskWhereInput
+}
+
+enum TaskTargetEnum {
+  NULL
+  JOB
+  CANIDATE
+}
+
+input TaskUpdateDataInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
+  owners: UserUpdateManyWithoutTasksInput
+  job: JobUpdateOneInput
+  candidate: CandidateUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
+  owners: UserUpdateManyWithoutTasksInput
+  job: JobUpdateOneInput
+  candidate: CandidateUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateManyWithoutCandidateInput {
+  create: [TaskCreateWithoutCandidateInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutCandidateInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutCandidateInput!]
+}
+
+input TaskUpdateManyWithoutOwnersInput {
+  create: [TaskCreateWithoutOwnersInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutOwnersInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutOwnersInput!]
+}
+
+input TaskUpdateManyWithoutSubscribersInput {
+  create: [TaskCreateWithoutSubscribersInput!]
+  connect: [TaskWhereUniqueInput!]
+  disconnect: [TaskWhereUniqueInput!]
+  delete: [TaskWhereUniqueInput!]
+  update: [TaskUpdateWithWhereUniqueWithoutSubscribersInput!]
+  upsert: [TaskUpsertWithWhereUniqueWithoutSubscribersInput!]
+}
+
+input TaskUpdateOneInput {
+  create: TaskCreateInput
+  connect: TaskWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: TaskUpdateDataInput
+  upsert: TaskUpsertNestedInput
+}
+
+input TaskUpdateWithoutCandidateDataInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
+  owners: UserUpdateManyWithoutTasksInput
+  job: JobUpdateOneInput
+}
+
+input TaskUpdateWithoutOwnersDataInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
+  job: JobUpdateOneInput
+  candidate: CandidateUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateWithoutSubscribersDataInput {
+  targetType: TaskTargetEnum
+  title: String
+  description: String
+  dueAt: DateTime
+  workspace: WorkspaceUpdateOneInput
+  owners: UserUpdateManyWithoutTasksInput
+  job: JobUpdateOneInput
+  candidate: CandidateUpdateOneWithoutTasksInput
+}
+
+input TaskUpdateWithWhereUniqueWithoutCandidateInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutCandidateDataInput!
+}
+
+input TaskUpdateWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutOwnersDataInput!
+}
+
+input TaskUpdateWithWhereUniqueWithoutSubscribersInput {
+  where: TaskWhereUniqueInput!
+  data: TaskUpdateWithoutSubscribersDataInput!
+}
+
+input TaskUpsertNestedInput {
+  update: TaskUpdateDataInput!
+  create: TaskCreateInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutCandidateInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutCandidateDataInput!
+  create: TaskCreateWithoutCandidateInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutOwnersInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutOwnersDataInput!
+  create: TaskCreateWithoutOwnersInput!
+}
+
+input TaskUpsertWithWhereUniqueWithoutSubscribersInput {
+  where: TaskWhereUniqueInput!
+  update: TaskUpdateWithoutSubscribersDataInput!
+  create: TaskCreateWithoutSubscribersInput!
+}
+
+input TaskWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TaskWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TaskWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TaskWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  targetType: TaskTargetEnum
+
+  """All values that are not equal to given value."""
+  targetType_not: TaskTargetEnum
+
+  """All values that are contained in given list."""
+  targetType_in: [TaskTargetEnum!]
+
+  """All values that are not contained in given list."""
+  targetType_not_in: [TaskTargetEnum!]
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  dueAt: DateTime
+
+  """All values that are not equal to given value."""
+  dueAt_not: DateTime
+
+  """All values that are contained in given list."""
+  dueAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  dueAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  dueAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  dueAt_lte: DateTime
+
+  """All values greater than the given value."""
+  dueAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  dueAt_gte: DateTime
+  workspace: WorkspaceWhereInput
+  subscribers_every: UserWhereInput
+  subscribers_some: UserWhereInput
+  subscribers_none: UserWhereInput
+  owners_every: UserWhereInput
+  owners_some: UserWhereInput
+  owners_none: UserWhereInput
+  job: JobWhereInput
+  candidate: CandidateWhereInput
+}
+
+input TaskWhereUniqueInput {
+  id: ID
+}
+
+type User implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  events(where: EventWhereInput): Event
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  subscriptionJobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
+  subscriptionCandidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
+  subscriptionTasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+}
+
+input UserCreateManyWithoutSubscriptionCandidatesInput {
+  create: [UserCreateWithoutSubscriptionCandidatesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutSubscriptionJobsInput {
+  create: [UserCreateWithoutSubscriptionJobsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutSubscriptionTasksInput {
+  create: [UserCreateWithoutSubscriptionTasksInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutTasksInput {
+  create: [UserCreateWithoutTasksInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutWorkspaceInput {
+  create: [UserCreateWithoutWorkspaceInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutEventsInput {
+  create: UserCreateWithoutEventsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutNotificationsInput {
+  create: UserCreateWithoutNotificationsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutEventsInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+}
+
+input UserCreateWithoutNotificationsInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+}
+
+input UserCreateWithoutSubscriptionCandidatesInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+}
+
+input UserCreateWithoutSubscriptionJobsInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+}
+
+input UserCreateWithoutSubscriptionTasksInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+}
+
+input UserCreateWithoutTasksInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+}
+
+input UserCreateWithoutWorkspaceInput {
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  events: EventCreateOneWithoutActorUserInput
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+  email_ASC
+  email_DESC
+  username_ASC
+  username_DESC
+  password_ASC
+  password_DESC
+  lastLogin_ASC
+  lastLogin_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  firstName: String
+  lastName: String
+  email: String!
+  username: String!
+  password: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  events: EventUpdateOneWithoutActorUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  events: EventUpdateOneWithoutActorUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateManyWithoutSubscriptionCandidatesInput {
+  create: [UserCreateWithoutSubscriptionCandidatesInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput!]
+}
+
+input UserUpdateManyWithoutSubscriptionJobsInput {
+  create: [UserCreateWithoutSubscriptionJobsInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput!]
+}
+
+input UserUpdateManyWithoutSubscriptionTasksInput {
+  create: [UserCreateWithoutSubscriptionTasksInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput!]
+}
+
+input UserUpdateManyWithoutTasksInput {
+  create: [UserCreateWithoutTasksInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutTasksInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutTasksInput!]
+}
+
+input UserUpdateManyWithoutWorkspaceInput {
+  create: [UserCreateWithoutWorkspaceInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneWithoutEventsInput {
+  create: UserCreateWithoutEventsInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutEventsDataInput
+  upsert: UserUpsertWithoutEventsInput
+}
+
+input UserUpdateOneWithoutNotificationsInput {
+  create: UserCreateWithoutNotificationsInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutNotificationsDataInput
+  upsert: UserUpsertWithoutNotificationsInput
+}
+
+input UserUpdateWithoutEventsDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateWithoutNotificationsDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  events: EventUpdateOneWithoutActorUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateWithoutSubscriptionCandidatesDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  events: EventUpdateOneWithoutActorUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateWithoutSubscriptionJobsDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  events: EventUpdateOneWithoutActorUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateWithoutSubscriptionTasksDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  events: EventUpdateOneWithoutActorUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateWithoutTasksDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  workspace: WorkspaceUpdateOneWithoutUsersInput
+  events: EventUpdateOneWithoutActorUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+}
+
+input UserUpdateWithoutWorkspaceDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  username: String
+  password: String
+  lastLogin: DateTime
+  deletedAt: DateTime
+  events: EventUpdateOneWithoutActorUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
+  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
+  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
+  tasks: TaskUpdateManyWithoutOwnersInput
+}
+
+input UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutSubscriptionCandidatesDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutSubscriptionJobsDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutSubscriptionTasksDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutTasksInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutTasksDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutWorkspaceDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutEventsInput {
+  update: UserUpdateWithoutEventsDataInput!
+  create: UserCreateWithoutEventsInput!
+}
+
+input UserUpsertWithoutNotificationsInput {
+  update: UserUpdateWithoutNotificationsDataInput!
+  create: UserCreateWithoutNotificationsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutSubscriptionCandidatesDataInput!
+  create: UserCreateWithoutSubscriptionCandidatesInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutSubscriptionJobsDataInput!
+  create: UserCreateWithoutSubscriptionJobsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutSubscriptionTasksDataInput!
+  create: UserCreateWithoutSubscriptionTasksInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutTasksInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutTasksDataInput!
+  create: UserCreateWithoutTasksInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutWorkspaceInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutWorkspaceDataInput!
+  create: UserCreateWithoutWorkspaceInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  lastName: String
+
+  """All values that are not equal to given value."""
+  lastName_not: String
+
+  """All values that are contained in given list."""
+  lastName_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastName_not_in: [String!]
+
+  """All values less than the given value."""
+  lastName_lt: String
+
+  """All values less than or equal the given value."""
+  lastName_lte: String
+
+  """All values greater than the given value."""
+  lastName_gt: String
+
+  """All values greater than or equal the given value."""
+  lastName_gte: String
+
+  """All values containing the given string."""
+  lastName_contains: String
+
+  """All values not containing the given string."""
+  lastName_not_contains: String
+
+  """All values starting with the given string."""
+  lastName_starts_with: String
+
+  """All values not starting with the given string."""
+  lastName_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastName_ends_with: String
+
+  """All values not ending with the given string."""
+  lastName_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  username: String
+
+  """All values that are not equal to given value."""
+  username_not: String
+
+  """All values that are contained in given list."""
+  username_in: [String!]
+
+  """All values that are not contained in given list."""
+  username_not_in: [String!]
+
+  """All values less than the given value."""
+  username_lt: String
+
+  """All values less than or equal the given value."""
+  username_lte: String
+
+  """All values greater than the given value."""
+  username_gt: String
+
+  """All values greater than or equal the given value."""
+  username_gte: String
+
+  """All values containing the given string."""
+  username_contains: String
+
+  """All values not containing the given string."""
+  username_not_contains: String
+
+  """All values starting with the given string."""
+  username_starts_with: String
+
+  """All values not starting with the given string."""
+  username_not_starts_with: String
+
+  """All values ending with the given string."""
+  username_ends_with: String
+
+  """All values not ending with the given string."""
+  username_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  lastLogin: DateTime
+
+  """All values that are not equal to given value."""
+  lastLogin_not: DateTime
+
+  """All values that are contained in given list."""
+  lastLogin_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  lastLogin_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  lastLogin_lt: DateTime
+
+  """All values less than or equal the given value."""
+  lastLogin_lte: DateTime
+
+  """All values greater than the given value."""
+  lastLogin_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  lastLogin_gte: DateTime
+  deletedAt: DateTime
+
+  """All values that are not equal to given value."""
+  deletedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  deletedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  deletedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  deletedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  deletedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  deletedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  deletedAt_gte: DateTime
+  workspace: WorkspaceWhereInput
+  events: EventWhereInput
+  notifications_every: NotificationWhereInput
+  notifications_some: NotificationWhereInput
+  notifications_none: NotificationWhereInput
+  subscriptionJobs_every: JobWhereInput
+  subscriptionJobs_some: JobWhereInput
+  subscriptionJobs_none: JobWhereInput
+  subscriptionCandidates_every: CandidateWhereInput
+  subscriptionCandidates_some: CandidateWhereInput
+  subscriptionCandidates_none: CandidateWhereInput
+  subscriptionTasks_every: TaskWhereInput
+  subscriptionTasks_some: TaskWhereInput
+  subscriptionTasks_none: TaskWhereInput
+  tasks_every: TaskWhereInput
+  tasks_some: TaskWhereInput
+  tasks_none: TaskWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
+
+type Workspace implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  name: String!
+}
+
+"""A connection to a list of items."""
+type WorkspaceConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [WorkspaceEdge]!
+  aggregate: AggregateWorkspace!
+}
+
+input WorkspaceCreateInput {
+  name: String!
+  events: EventCreateManyWithoutTargetWorkspaceInput
+  users: UserCreateManyWithoutWorkspaceInput
+  jobs: JobCreateManyWithoutWorkspaceInput
+  applications: ApplicationCreateManyWithoutWorkspaceInput
+  candidates: CandidateCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyWithoutWorkspaceInput
+  tags: TagCreateManyInput
+}
+
+input WorkspaceCreateOneInput {
+  create: WorkspaceCreateInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input WorkspaceCreateOneWithoutApplicationsInput {
+  create: WorkspaceCreateWithoutApplicationsInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input WorkspaceCreateOneWithoutCandidatesInput {
+  create: WorkspaceCreateWithoutCandidatesInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input WorkspaceCreateOneWithoutEventsInput {
+  create: WorkspaceCreateWithoutEventsInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input WorkspaceCreateOneWithoutInvitesInput {
+  create: WorkspaceCreateWithoutInvitesInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input WorkspaceCreateOneWithoutJobsInput {
+  create: WorkspaceCreateWithoutJobsInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input WorkspaceCreateOneWithoutUsersInput {
+  create: WorkspaceCreateWithoutUsersInput
+  connect: WorkspaceWhereUniqueInput
+}
+
+input WorkspaceCreateWithoutApplicationsInput {
+  name: String!
+  events: EventCreateManyWithoutTargetWorkspaceInput
+  users: UserCreateManyWithoutWorkspaceInput
+  jobs: JobCreateManyWithoutWorkspaceInput
+  candidates: CandidateCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyWithoutWorkspaceInput
+  tags: TagCreateManyInput
+}
+
+input WorkspaceCreateWithoutCandidatesInput {
+  name: String!
+  events: EventCreateManyWithoutTargetWorkspaceInput
+  users: UserCreateManyWithoutWorkspaceInput
+  jobs: JobCreateManyWithoutWorkspaceInput
+  applications: ApplicationCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyWithoutWorkspaceInput
+  tags: TagCreateManyInput
+}
+
+input WorkspaceCreateWithoutEventsInput {
+  name: String!
+  users: UserCreateManyWithoutWorkspaceInput
+  jobs: JobCreateManyWithoutWorkspaceInput
+  applications: ApplicationCreateManyWithoutWorkspaceInput
+  candidates: CandidateCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyWithoutWorkspaceInput
+  tags: TagCreateManyInput
+}
+
+input WorkspaceCreateWithoutInvitesInput {
+  name: String!
+  events: EventCreateManyWithoutTargetWorkspaceInput
+  users: UserCreateManyWithoutWorkspaceInput
+  jobs: JobCreateManyWithoutWorkspaceInput
+  applications: ApplicationCreateManyWithoutWorkspaceInput
+  candidates: CandidateCreateManyWithoutWorkspaceInput
+  tags: TagCreateManyInput
+}
+
+input WorkspaceCreateWithoutJobsInput {
+  name: String!
+  events: EventCreateManyWithoutTargetWorkspaceInput
+  users: UserCreateManyWithoutWorkspaceInput
+  applications: ApplicationCreateManyWithoutWorkspaceInput
+  candidates: CandidateCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyWithoutWorkspaceInput
+  tags: TagCreateManyInput
+}
+
+input WorkspaceCreateWithoutUsersInput {
+  name: String!
+  events: EventCreateManyWithoutTargetWorkspaceInput
+  jobs: JobCreateManyWithoutWorkspaceInput
+  applications: ApplicationCreateManyWithoutWorkspaceInput
+  candidates: CandidateCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyWithoutWorkspaceInput
+  tags: TagCreateManyInput
+}
+
+"""An edge in a connection."""
+type WorkspaceEdge {
+  """The item at the end of the edge."""
+  node: Workspace!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum WorkspaceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type WorkspacePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+type WorkspaceSubscriptionPayload {
+  mutation: MutationType!
+  node: Workspace
+  updatedFields: [String!]
+  previousValues: WorkspacePreviousValues
+}
+
+input WorkspaceSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WorkspaceSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WorkspaceSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WorkspaceSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: WorkspaceWhereInput
+}
+
+input WorkspaceUpdateDataInput {
+  name: String
+  events: EventUpdateManyWithoutTargetWorkspaceInput
+  users: UserUpdateManyWithoutWorkspaceInput
+  jobs: JobUpdateManyWithoutWorkspaceInput
+  applications: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpdateInput {
+  name: String
+  events: EventUpdateManyWithoutTargetWorkspaceInput
+  users: UserUpdateManyWithoutWorkspaceInput
+  jobs: JobUpdateManyWithoutWorkspaceInput
+  applications: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpdateOneInput {
+  create: WorkspaceCreateInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateDataInput
+  upsert: WorkspaceUpsertNestedInput
+}
+
+input WorkspaceUpdateOneWithoutApplicationsInput {
+  create: WorkspaceCreateWithoutApplicationsInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateWithoutApplicationsDataInput
+  upsert: WorkspaceUpsertWithoutApplicationsInput
+}
+
+input WorkspaceUpdateOneWithoutCandidatesInput {
+  create: WorkspaceCreateWithoutCandidatesInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateWithoutCandidatesDataInput
+  upsert: WorkspaceUpsertWithoutCandidatesInput
+}
+
+input WorkspaceUpdateOneWithoutEventsInput {
+  create: WorkspaceCreateWithoutEventsInput
+  connect: WorkspaceWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: WorkspaceUpdateWithoutEventsDataInput
+  upsert: WorkspaceUpsertWithoutEventsInput
+}
+
+input WorkspaceUpdateOneWithoutInvitesInput {
+  create: WorkspaceCreateWithoutInvitesInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateWithoutInvitesDataInput
+  upsert: WorkspaceUpsertWithoutInvitesInput
+}
+
+input WorkspaceUpdateOneWithoutJobsInput {
+  create: WorkspaceCreateWithoutJobsInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateWithoutJobsDataInput
+  upsert: WorkspaceUpsertWithoutJobsInput
+}
+
+input WorkspaceUpdateOneWithoutUsersInput {
+  create: WorkspaceCreateWithoutUsersInput
+  connect: WorkspaceWhereUniqueInput
+  delete: Boolean
+  update: WorkspaceUpdateWithoutUsersDataInput
+  upsert: WorkspaceUpsertWithoutUsersInput
+}
+
+input WorkspaceUpdateWithoutApplicationsDataInput {
+  name: String
+  events: EventUpdateManyWithoutTargetWorkspaceInput
+  users: UserUpdateManyWithoutWorkspaceInput
+  jobs: JobUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpdateWithoutCandidatesDataInput {
+  name: String
+  events: EventUpdateManyWithoutTargetWorkspaceInput
+  users: UserUpdateManyWithoutWorkspaceInput
+  jobs: JobUpdateManyWithoutWorkspaceInput
+  applications: ApplicationUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpdateWithoutEventsDataInput {
+  name: String
+  users: UserUpdateManyWithoutWorkspaceInput
+  jobs: JobUpdateManyWithoutWorkspaceInput
+  applications: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpdateWithoutInvitesDataInput {
+  name: String
+  events: EventUpdateManyWithoutTargetWorkspaceInput
+  users: UserUpdateManyWithoutWorkspaceInput
+  jobs: JobUpdateManyWithoutWorkspaceInput
+  applications: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpdateWithoutJobsDataInput {
+  name: String
+  events: EventUpdateManyWithoutTargetWorkspaceInput
+  users: UserUpdateManyWithoutWorkspaceInput
+  applications: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpdateWithoutUsersDataInput {
+  name: String
+  events: EventUpdateManyWithoutTargetWorkspaceInput
+  jobs: JobUpdateManyWithoutWorkspaceInput
+  applications: ApplicationUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  invites: InviteUpdateManyWithoutWorkspaceInput
+  tags: TagUpdateManyInput
+}
+
+input WorkspaceUpsertNestedInput {
+  update: WorkspaceUpdateDataInput!
+  create: WorkspaceCreateInput!
+}
+
+input WorkspaceUpsertWithoutApplicationsInput {
+  update: WorkspaceUpdateWithoutApplicationsDataInput!
+  create: WorkspaceCreateWithoutApplicationsInput!
+}
+
+input WorkspaceUpsertWithoutCandidatesInput {
+  update: WorkspaceUpdateWithoutCandidatesDataInput!
+  create: WorkspaceCreateWithoutCandidatesInput!
+}
+
+input WorkspaceUpsertWithoutEventsInput {
+  update: WorkspaceUpdateWithoutEventsDataInput!
+  create: WorkspaceCreateWithoutEventsInput!
+}
+
+input WorkspaceUpsertWithoutInvitesInput {
+  update: WorkspaceUpdateWithoutInvitesDataInput!
+  create: WorkspaceCreateWithoutInvitesInput!
+}
+
+input WorkspaceUpsertWithoutJobsInput {
+  update: WorkspaceUpdateWithoutJobsDataInput!
+  create: WorkspaceCreateWithoutJobsInput!
+}
+
+input WorkspaceUpsertWithoutUsersInput {
+  update: WorkspaceUpdateWithoutUsersDataInput!
+  create: WorkspaceCreateWithoutUsersInput!
+}
+
+input WorkspaceWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WorkspaceWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WorkspaceWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WorkspaceWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  jobs_every: JobWhereInput
+  jobs_some: JobWhereInput
+  jobs_none: JobWhereInput
+  applications_every: ApplicationWhereInput
+  applications_some: ApplicationWhereInput
+  applications_none: ApplicationWhereInput
+  candidates_every: CandidateWhereInput
+  candidates_some: CandidateWhereInput
+  candidates_none: CandidateWhereInput
+  invites_every: InviteWhereInput
+  invites_some: InviteWhereInput
+  invites_none: InviteWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+}
+
+input WorkspaceWhereUniqueInput {
+  id: ID
+}

@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "description": "GraphQL endpoint for ATS",
+  "author": "Jakub Wadas <vadistic@gmail.com>",
+  "license": "No license",
+  "private": true,
+  "scripts": {
+    "start": "dotenv -e .env ts-node src/index.ts",
+    "build": "tsc",
+    "playground": "graphql playground"
+  },
+  "dependencies": {
+    "apollo-server": "^2.0.7",
+    "bcryptjs": "^2.4.3",
+    "dayjs": "^1.7.5",
+    "graphql": "^14.0.2",
+    "graphql-import": "^0.6.0",
+    "graphql-middleware": "^1.7.2",
+    "graphql-shield": "^3.2.1",
+    "human-readable-ids": "^1.0.4",
+    "jsonwebtoken": "^8.3.0",
+    "prisma-binding": "^2.1.5",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.1",
+    "@types/jsonwebtoken": "^7.2.8",
+    "@types/ramda": "^0.25.37"
+  }
+}

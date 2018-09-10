@@ -1,0 +1,12 @@
+{
+  "name": "db-resc",
+  "version": "0.1.0",
+  "description": "Rescource database prisma datamodel",
+  "author": "Jakub Wadas <vadistic@gmail.com>",
+  "license": "No license",
+  "private": true,
+  "scripts": {
+    "deploy": "prisma deploy"
+  },
+  "devDependencies": {}
+}
