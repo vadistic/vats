@@ -107,8 +107,6 @@ input JobUpdateInput {
 # USER
 type User {
   # system
-  workspace: Workspace! @replace
-
   password: String @remove
 }
 

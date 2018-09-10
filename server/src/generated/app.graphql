@@ -1,4 +1,5 @@
 type Query {
+  persons: [Person]!
   me: User!
   application(where: WhereUniqueInput!): Application
   candidate(where: WhereUniqueInput!): Candidate
@@ -85,11 +86,23 @@ type Mutation {
   deleteTag(where: WhereUniqueInput!): Tag
 }
 
+type Person {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+scalar DateTime
+
 type User implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
+  workspace(where: WorkspaceWhereInput): Workspace!
   events(where: EventWhereInput): Event
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   subscriptionJobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
@@ -4204,8 +4217,6 @@ interface Node {
   """
   id: ID!
 }
-
-scalar DateTime
 
 enum JobType {
   DRAFT

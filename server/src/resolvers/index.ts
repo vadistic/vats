@@ -8,8 +8,10 @@ const me = async (parent, args, ctx, info) =>
   ctx.db.query.user({ where: { id: ctx.auth.userId } }, info)
 
 export const Query: IQuery = {
+  // AUTH SERVER
+  persons: forwardTo('authDb'),
   // CUSTOM
-  me: forwardTo('db'),
+  me,
 
   // SINGLE
   application: forwardTo('db'),

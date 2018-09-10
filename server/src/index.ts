@@ -4,14 +4,21 @@ import { makeExecutableSchema } from 'graphql-tools'
 import * as jwt from 'jsonwebtoken'
 import { Prisma } from 'prisma-binding'
 
-import {filters, permissions} from './middleware'
+import { filters, permissions } from './middleware'
 import * as resolvers from './resolvers'
 import { typeDefs } from './schema/schema'
-import { IJWTPayload } from './utils';
+import { IJWTPayload } from './utils'
 
-const prisma = new Prisma({
+const authPrisma = new Prisma({
+  typeDefs: '../auth-server/prisma.graphql',
+  endpoint: process.env.AUTH_PRISMA_ENDPOINT, // the endpoint of the Prisma API
+  debug: true, // log all GraphQL queries & mutations sent to the Prisma API
+  secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
+})
+
+const rescPrisma = new Prisma({
   typeDefs: 'src/generated/prisma.graphql',
-  endpoint: process.env.PRISMA_ENDPOINT, // the endpoint of the Prisma API
+  endpoint: process.env.RESC_PRISMA_ENDPOINT, // the endpoint of the Prisma API
   debug: true, // log all GraphQL queries & mutations sent to the Prisma API
   secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
 })
@@ -28,13 +35,15 @@ const context = ({ req }) => {
 
     return {
       ...req,
-      db: prisma,
+      db: rescPrisma,
+      authDb: authPrisma,
       auth,
     }
   } else {
     return {
       ...req,
-      db: prisma,
+      db: rescPrisma,
+      authDb: authPrisma,
     }
   }
 }
@@ -45,7 +54,7 @@ const executableSchema = makeExecutableSchema({
   resolverValidationOptions: { requireResolversForResolveType: false },
 })
 
-const schema = applyMiddleware(executableSchema, filters, permissions)
+const schema = applyMiddleware(executableSchema, filters) // ,permissions)
 
 const server = new ApolloServer({
   schema,

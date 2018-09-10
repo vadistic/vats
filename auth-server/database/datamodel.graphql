@@ -1,0 +1,86 @@
+type Company {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  country: String!
+  url: String! @unique
+
+  users: [User!]! @relation(name: "CompanyUser")
+  invitations: [Invitation!]!
+}
+
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  status: UserStatus!
+
+  email: String @unique
+  apiTokens: [ApiToken!]!
+  instanceId: ID!
+
+  # edges
+  company: Company! @relation(name: "CompanyUser")
+  person: Person! @relation(name: "PersonUsers")
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+type Person {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  firstName: String!
+  lastName: String!
+
+  email: String! @unique
+  password: String!
+
+  refreshTokens: [RefreshToken!]!
+
+  users: [User!]! @relation(name: "PersonUsers")
+  activeUser: User! @relation(name: "ActiveUser")
+}
+
+type Invitation {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  token: String!
+  email: String!
+  expireAt: DateTime!
+  createdBy: User!
+}
+
+type RefreshToken {
+  id: ID! @unique
+  createdAt: DateTime!
+
+  ip: String!
+  company: Company!
+  expireAt: DateTime!
+}
+
+type ApiToken {
+  id: ID! @unique
+  createdAt: DateTime!
+
+  permissions: [ApiPermisionEnum!]!
+  name: String!
+  createdBy: User!
+}
+
+enum ApiPermisionEnum {
+  READ
+  ADD
+  MODIFY
+  ADMIN
+}

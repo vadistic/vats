@@ -5,7 +5,22 @@
 # import * from "definitions/auth.graphql"
 # import * from "definitions/connections.graphql"
 
+type Person {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  firstName: String!
+  lastName: String!
+
+  email: String!
+  password: String!
+}
+
 type Query {
+  # AUTH PRISMA
+  persons: [Person]!
+
   # CUSTOM
   me: User!
 

@@ -1,13 +1,13 @@
 # The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-endpoint: ${env:RESC_PRISMA_ENDPOINT}
+endpoint: ${env:PRISMA_ENDPOINT}
 
 # The file containing the definition of your data model.
 datamodel:
   - datamodel.graphql
 
 # Seed your service with initial data based on `seed.graphql`.
-seed:
-  import: seed.graphql
+# seed:
+#   import: seed.graphql
 
 # Download the GraphQL schema of the Prisma API into
 # `src/generated/prisma.graphql` (as specfied in `.graphqlconfig.yml`).
@@ -16,10 +16,8 @@ seed:
 # with `graphql codegen` .
 hooks:
   post-deploy:
-    - graphql get-schema --project database
-    - graphql-override
+    - graphql get-schema
     - graphql codegen
-    - node scripts.js
 
 # If specified, the `secret` must be used to generate a JWT which is attached
 # to the `Authorization` header of HTTP requests made against the Prisma API.
