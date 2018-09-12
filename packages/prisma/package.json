@@ -4,5 +4,9 @@
   "description": "Prisma service deployment toolkit",
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
-  "private": true
+  "private": true,
+  "scripts": {
+    "down": "dcoker-compose down",
+    "up": "dcoker-compose up -d --force-recreate"
+  }
 }

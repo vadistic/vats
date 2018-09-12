@@ -17,30 +17,6 @@ import {
 */
 
 export const filters: IMiddlewareTypeMap = {
-  Query: {
-    workspace: whereFixToWorkspace,
-
-    // MULTI
-    applications: composeFilters([whereWorkspaceF]),
-    candidates: composeFilters([whereWorkspaceF]),
-    jobs: composeFilters([whereWorkspaceF]),
-    tasks: composeFilters([whereWorkspaceF]),
-
-    invites: composeFilters([whereWorkspaceF]),
-    notifications: composeFilters([whereUserF]),
-  },
-  Mutation: {
-    // CREATE
-    createApplication: composeFilters([dataWorkspaceConnectF]),
-    createCandidate: composeFilters([dataWorkspaceConnectF]),
-    createJob: composeFilters([dataWorkspaceConnectF]),
-    createTask: composeFilters([dataWorkspaceConnectF]),
-
-    // UPDATE
-    // updateApplication
-    updateWorkspace: whereFixToWorkspace,
-
-    // DELETE
-    deleteWorkspace: whereFixToWorkspace,
-  },
+  Query: {},
+  Mutation: {},
 }

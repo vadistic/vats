@@ -5,7 +5,7 @@
   "license": "No license",
   "private": true,
   "scripts": {
-    "develop": "parcel ./src/index.html",
+    "dev": "parcel ./src/index.html",
     "build": "parcel build ./src/index.html --public-url '/'",
     "lint": "echo 'TO DO!'",
     "format": "prettier --write './src/**/*.{ts,tsx}'",
@@ -13,10 +13,21 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^2.0.26",
+    "apollo-cache-inmemory": "^1.2.10",
+    "apollo-client": "^2.4.2",
+    "apollo-link": "^1.2.2",
+    "apollo-link-error": "^1.1.0",
+    "apollo-link-http": "^1.5.4",
+    "emotion": "^9.2.8",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.9.2",
+    "js-cookie": "^2.2.0",
     "office-ui-fabric-react": "^6.50.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-emotion": "^9.2.6",
+    "react": "^16.5.0",
+    "react-apollo": "^2.1.11",
+    "react-dom": "^16.5.0",
+    "react-emotion": "^9.2.8",
     "react-helmet": "^5.2.0",
     "react-router-dom": "^4.3.1"
   },
@@ -25,7 +36,6 @@
     "@types/react-dom": "^16.0.7",
     "@types/react-router-dom": "^4.3.0",
     "parcel-bundler": "^1.9.7",
-    "prisma": "^0.1.0",
     "tslint-react": "^3.6.0"
   }
 }

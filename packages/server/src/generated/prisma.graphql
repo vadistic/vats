@@ -1,5 +1,5 @@
-# source: http://ec2-54-229-125-69.eu-west-1.compute.amazonaws.com:4466
-# timestamp: Wed Sep 12 2018 18:22:21 GMT+0200 (Central European Summer Time)
+# source: http://ec2-54-229-125-69.eu-west-1.compute.amazonaws.com:4466/test-company/dev
+# timestamp: Wed Sep 12 2018 18:26:29 GMT+0200 (Central European Summer Time)
 
 type AggregateApplication {
   count: Int!

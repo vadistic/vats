@@ -2,22 +2,22 @@ import { GraphQLResolveInfo } from 'graphql'
 import { IMiddlewareFunction } from 'graphql-middleware/dist/types'
 import { ShieldRule } from 'graphql-shield/dist/types'
 
-import { Mutation as ApiMutation, Query as ApiQuery } from './generated/app'
-import { Prisma } from './generated/prisma'
-
-export interface IJWTPayload {
-  userId: string
-  workspaceId: string
-}
+import { Prisma as } from './generated/prisma'
+import { ID_Output, Mutation as ApiMutation, Query as ApiQuery } from './generated/server'
 
 export interface IStringIndexSignature {
   [index: string]: any
 }
 
+export interface IAccessTokenPayload {
+  userId: string
+  endpoint: string
+  scope: string // TODO: Enum!
+}
+
 export interface IContext {
   db: Prisma
-  auth: IJWTPayload
-  request: any
+  token: IAccessTokenPayload
 }
 
 // https://github.com/prisma/prisma-binding/issues/202
@@ -51,8 +51,8 @@ export type MiddlewareFieldMap<T extends IStringIndexSignature> = {
 
 // TODO: Add subscriptions and custom types
 export interface IMiddlewareTypeMap extends IStringIndexSignature {
-  Query: MiddlewareFieldMap<ApiQuery>
-  Mutation: MiddlewareFieldMap<ApiMutation>
+  Query?: MiddlewareFieldMap<ApiQuery>
+  Mutation?: MiddlewareFieldMap<ApiMutation>
 }
 
 export type RuleRemapped<T> = { [P in keyof T]?: ShieldRule }

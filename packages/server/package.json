@@ -6,19 +6,18 @@
   "license": "No license",
   "private": true,
   "scripts": {
-    "start": "dotenv -e .env ts-node src/index.ts",
+    "dev": "env-cmd -e ../../.env ts-node src/index.ts",
+    "deploy": "env-cmd ../../.env prisma deploy",
     "build": "tsc",
     "playground": "graphql playground"
   },
   "dependencies": {
     "apollo-server": "^2.0.7",
-    "bcryptjs": "^2.4.3",
     "dayjs": "^1.7.5",
     "graphql": "^14.0.2",
     "graphql-import": "^0.6.0",
     "graphql-middleware": "^1.7.2",
     "graphql-shield": "^3.2.1",
-    "human-readable-ids": "^1.0.4",
     "jsonwebtoken": "^8.3.0",
     "prisma-binding": "^2.1.5",
     "ramda": "^0.25.0"
@@ -26,6 +25,10 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.1",
     "@types/jsonwebtoken": "^7.2.8",
-    "@types/ramda": "^0.25.37"
+    "@types/ramda": "^0.25.37",
+    "env-cmd": "^8.0.2",
+    "prisma": "^1.16.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
   }
 }
