@@ -1,4 +1,5 @@
 {
   "name": "vats-server",
+  "alias": "vats-server",
   "public": true
 }

@@ -10,7 +10,7 @@
     "graphql": "env-cmd ../../.env prisma deploy",
     "playground": "graphql playground",
     "dev": "env-cmd ../../.env ts-node src/index.ts",
-    "deploy": "now -E ../../.env",
+    "deploy": "now -E ../../.env && now alias",
     "clean": "shx rm -rf dist",
     "copy:graphql": "shx cp -f src/generated/prisma.graphql dist/generated/prisma.graphql && shx cp -f src/generated/server.graphql dist/generated/server.graphql",
     "build": "yarn clean && tsc && yarn copy:graphql",

@@ -9,6 +9,8 @@ import * as resolvers from './resolvers'
 import { prismaTypeDefs, typeDefs } from './schema/schema'
 import { IAccessTokenPayload } from './utils'
 
+// tslint:disable: no-console
+
 const prismaRouter = (endpoint: string) =>
   new Prisma({
     typeDefs: prismaTypeDefs,
@@ -29,12 +31,11 @@ const prisma = new Prisma({
 const context = ({ req }) => {
   // check for valid acess token
   const authorization = req.headers.authorization
-  let token
 
-  if (authorization) {
-    const accesToken = authorization.replace('Bearer ', '')
-    token = jwt.verify(accesToken, process.env.SERVER_CLIENT_ID) as IAccessTokenPayload
-  }
+  console.log(req.headers)
+
+  const token = undefined
+
   return {
     ...req,
     db: prisma,

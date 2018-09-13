@@ -1,6 +1,6 @@
-import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
+import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
 import * as React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 
 import { CandidateView, DashboardView, LoginView } from './views'
 
@@ -9,6 +9,7 @@ class App extends React.Component<{}> {
     return (
       <div className='App'>
         <Fabric>
+          <Link to='/login'>Login</Link>
           <Switch>
             <Route exact={true} path='/' component={DashboardView} />
             <Route exact={true} path='/candidate' component={CandidateView} />

@@ -1,3 +1,8 @@
 {
-  "extends": ["../../tslint.json", "tslint-react"]
+  "extends": ["../../tslint.json", "tslint-react"],
+  "rules": {
+    "no-shadowed-variable": false,
+    "no-console": false,
+    "jsx-no-multiline-js": false
+  }
 }
