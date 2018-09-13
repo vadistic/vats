@@ -4,47 +4,41 @@ import { makeExecutableSchema } from 'graphql-tools'
 import * as jwt from 'jsonwebtoken'
 import { Prisma } from 'prisma-binding'
 
-import { authentication, filters, permissions } from './middleware'
+import { filters, permissions } from './middleware'
 import * as resolvers from './resolvers'
 import { typeDefs } from './schema/schema'
 import { IAccessTokenPayload } from './utils'
 
-const rescPrismaRouter = (endpoint: string) =>
+const prismaRouter = (endpoint: string) =>
   new Prisma({
-    typeDefs: '../generated/rescPrisma.graphql',
+    typeDefs: 'src/generated/prisma.graphql',
     endpoint, // the endpoint of the Prisma API
     debug: true, // log all GraphQL queries & mutations sent to the Prisma API
     secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
   })
 
+const prisma = new Prisma({
+  typeDefs: 'src/generated/prisma.graphql',
+  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
+    process.env.PRISMA_STAGE
+  }`, // the endpoint of the Prisma API
+  debug: true, // log all GraphQL queries & mutations sent to the Prisma API
+  secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
+})
+
 const context = ({ req }) => {
   // check for valid acess token
   const authorization = req.headers.authorization
+  let token
 
   if (authorization) {
     const accesToken = authorization.replace('Bearer ', '')
-    const { userId, endpoint, scope } = jwt.verify(
-      accesToken,
-      process.env.APP_SECRET
-    ) as IAccessTokenPayload
-
-    if (userId && endpoint) {
-      return {
-        ...req,
-        resc: rescPrismaRouter(endpoint),
-        token: {
-          userId,
-          scope,
-          endpoint,
-        },
-      }
-    } else {
-      throw new Error('Invalid authentication')
-    }
-  } else {
-    return {
-      ...req,
-    }
+    token = jwt.verify(accesToken, process.env.APP_SECRET) as IAccessTokenPayload
+  }
+  return {
+    ...req,
+    db: prisma,
+    ...(token !== 'undefined' ? { token } : {}),
   }
 }
 
@@ -54,7 +48,7 @@ const executableSchema = makeExecutableSchema({
   resolverValidationOptions: { requireResolversForResolveType: false },
 })
 
-const schema = applyMiddleware(executableSchema, authentication) // ,filters ,permissions)
+const schema = applyMiddleware(executableSchema) // ,filters ,permissions)
 
 const server = new ApolloServer({
   schema,

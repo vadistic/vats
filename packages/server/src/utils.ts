@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql'
 import { IMiddlewareFunction } from 'graphql-middleware/dist/types'
 import { ShieldRule } from 'graphql-shield/dist/types'
 
-import { Prisma as } from './generated/prisma'
+import { Prisma } from './generated/prisma'
 import { ID_Output, Mutation as ApiMutation, Query as ApiQuery } from './generated/server'
 
 export interface IStringIndexSignature {
@@ -10,9 +10,17 @@ export interface IStringIndexSignature {
 }
 
 export interface IAccessTokenPayload {
-  userId: string
+  user: {
+    id: string
+    scope: string
+    status: string
+  }
+  tenant: {
+    id: string
+    scope: string
+    status: string
+  }
   endpoint: string
-  scope: string // TODO: Enum!
 }
 
 export interface IContext {

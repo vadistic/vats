@@ -52,21 +52,21 @@ export const composeFilters: ComposeFilters = filterArr => async (
 
 export const whereWorkspaceF: Filter = async (parent, args, ctx, info) => ({
   parent,
-  args: { where: { workspace: { id: ctx.auth.workspaceId } } },
+  args: { where: { workspace: { id: ctx.token. } } },
   ctx,
   info,
 })
 
 export const whereUserF: Filter = async (parent, args, ctx, info) => ({
   parent,
-  args: { where: { user: { id: ctx.auth.userId } } },
+  args: { where: { user: { id: ctx.token.user.id } } },
   ctx,
   info,
 })
 
 export const dataWorkspaceConnectF: Filter = async (parent, args, ctx, info) => ({
   parent,
-  args: { data: { workspace: { connect: { id: ctx.auth.userId } } } },
+  args: { data: { workspace: { connect: { id: ctx.token.user.id} } } },
   ctx,
   info,
 })
@@ -85,7 +85,7 @@ export const whereFixToUser: IMiddlewareFunction<any, IContext, any> = async (
   args,
   ctx,
   info
-) => resolve(parent, { where: { user: { id: ctx.auth.userId } } }, ctx, info)
+) => resolve(parent, { where: { user: { id: ctx.token.user.id } } }, ctx, info)
 
 export const whereFixToWorkspace: IMiddlewareFunction<any, IContext, any> = async (
   resolve,
@@ -93,4 +93,4 @@ export const whereFixToWorkspace: IMiddlewareFunction<any, IContext, any> = asyn
   args,
   ctx,
   info
-) => resolve(parent, { where: { workspace: { id: ctx.auth.workspaceId } } }, ctx, info)
+) => resolve(parent, { where: { workspace: { id: ctx.token.tenant.id } } }, ctx, info)

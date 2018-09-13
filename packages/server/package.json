@@ -5,9 +5,11 @@
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "env-cmd -e ../../.env ts-node src/index.ts",
+    "dev": "env-cmd ../../.env ts-node src/index.ts",
     "deploy": "env-cmd ../../.env prisma deploy",
+    "start": "dist/index.js",
     "build": "tsc",
     "playground": "graphql playground"
   },

@@ -6,11 +6,11 @@ type Query {
 }
 
 type Mutation {
-  # singup / login
-  createWorkspace(data: WorkspaceCreateInput!): AuthPayload!
-  signup(data: SignupInput): AuthPayload!
-  login(data: LoginInput): AuthPayload!
-  refresh(data: RefreshInput): AccessPayload!
+  # create
+  createApplication(data: ApplicationCreateInput!): Application!
+  createCandidate(data: CandidateCreateInput!): Candidate!
+  createJob(data: JobCreateInput!): Job!
+  createTask(data: TaskCreateInput!): Task!
 }
 
 input WorkspaceCreateInput {
