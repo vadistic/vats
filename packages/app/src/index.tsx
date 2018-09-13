@@ -25,7 +25,7 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 export const httpLink = new HttpLink({
-  uri: 'http://ec2-54-229-125-69.eu-west-1.compute.amazonaws.com:4466/test-company/dev',
+  uri: 'https://vats-server.now.sh/',
   fetch: awsGraphqlFetch,
 })
 

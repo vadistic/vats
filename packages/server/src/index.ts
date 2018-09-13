@@ -6,19 +6,19 @@ import { Prisma } from 'prisma-binding'
 
 import { filters, permissions } from './middleware'
 import * as resolvers from './resolvers'
-import { typeDefs } from './schema/schema'
+import { prismaTypeDefs, typeDefs } from './schema/schema'
 import { IAccessTokenPayload } from './utils'
 
 const prismaRouter = (endpoint: string) =>
   new Prisma({
-    typeDefs: 'src/generated/prisma.graphql',
+    typeDefs: prismaTypeDefs,
     endpoint, // the endpoint of the Prisma API
     debug: true, // log all GraphQL queries & mutations sent to the Prisma API
     secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
   })
 
 const prisma = new Prisma({
-  typeDefs: 'src/generated/prisma.graphql',
+  typeDefs: prismaTypeDefs,
   endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
     process.env.PRISMA_STAGE
   }`, // the endpoint of the Prisma API

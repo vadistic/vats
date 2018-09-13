@@ -7,6 +7,8 @@ import * as path from 'path'
 
 export const typeDefs = importSchema(path.join(__dirname, '../generated/server.graphql'))
 
+export const prismaTypeDefs = importSchema(path.join(__dirname, '../generated/prisma.graphql'))
+
 const schema = makeExecutableSchema({
   typeDefs,
   resolverValidationOptions: {
