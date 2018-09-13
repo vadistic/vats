@@ -12,5 +12,6 @@ hooks:
     - graphql get-schema --project database
     - graphql-override
     - graphql codegen
+    - node scripts/fixTypings.js
 
 secret: ${env:PRISMA_SECRET}

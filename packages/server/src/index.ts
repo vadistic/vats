@@ -33,7 +33,7 @@ const context = ({ req }) => {
 
   if (authorization) {
     const accesToken = authorization.replace('Bearer ', '')
-    token = jwt.verify(accesToken, process.env.APP_SECRET) as IAccessTokenPayload
+    token = jwt.verify(accesToken, process.env.SERVER_CLIENT_ID) as IAccessTokenPayload
   }
   return {
     ...req,

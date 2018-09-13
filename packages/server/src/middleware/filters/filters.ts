@@ -52,7 +52,7 @@ export const composeFilters: ComposeFilters = filterArr => async (
 
 export const whereWorkspaceF: Filter = async (parent, args, ctx, info) => ({
   parent,
-  args: { where: { workspace: { id: ctx.token. } } },
+  args: { where: { workspace: { id: ctx.token.tenant.id } } },
   ctx,
   info,
 })
@@ -66,7 +66,7 @@ export const whereUserF: Filter = async (parent, args, ctx, info) => ({
 
 export const dataWorkspaceConnectF: Filter = async (parent, args, ctx, info) => ({
   parent,
-  args: { data: { workspace: { connect: { id: ctx.token.user.id} } } },
+  args: { data: { workspace: { connect: { id: ctx.token.user.id } } } },
   ctx,
   info,
 })

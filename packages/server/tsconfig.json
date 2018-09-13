@@ -4,8 +4,11 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "sourceMap": true,
+    "baseUrl": ".",
     "rootDir": "src",
     "outDir": "dist",
     "lib": ["esnext", "dom"]
-  }
+  },
+  "include": ["src/**/*", "scripts/fixTypings.js", "fixTypings.js"],
+  "exclude": ["node_modules"]
 }

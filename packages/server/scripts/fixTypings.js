@@ -1,7 +1,7 @@
 const fs = require('fs')
 const R = require('ramda')
 
-const dir = './src/generated/app.ts'
+const dir = './src/generated/server.ts'
 
 // fixing windows/unix path generation issue in codemod
 const data = R.pipe(

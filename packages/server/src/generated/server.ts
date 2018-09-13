@@ -1,7 +1,7 @@
 import { makeBindingClass, Options } from 'graphql-binding'
 import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
 import { IResolvers } from 'graphql-tools/dist/Interfaces'
-import schema from  '..\schema\schema'
+import schema from  '../schema/schema'
 
 export interface Query {
     users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 

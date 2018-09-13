@@ -33,7 +33,7 @@ export const whereSameUser = (target: string) =>
     const result: boolean = await ctx.db.exists[target]({
       AND: {
         id: args.where.id,
-        user: { id: ctx.auth.userId },
+        user: { id: ctx.token.user.id },
       },
     })
     return result
@@ -49,7 +49,7 @@ export const whereSameWorkspace = (target: string) =>
     const result: boolean = await ctx.db.exists[target]({
       AND: {
         id: args.where.id,
-        workspace: { id: ctx.auth.workspaceId },
+        workspace: { id: ctx.token.tenant.id },
       },
     })
     return result
@@ -66,7 +66,7 @@ export const connectToOneByWorkspace = (target: string) => (field: string) =>
     const result: boolean = await ctx.db.exists[target]({
       AND: {
         id: args.data[field].connect.id,
-        workspace: { id: ctx.auth.workspaceId },
+        workspace: { id: ctx.token.tenant.id },
       },
     })
 
@@ -86,7 +86,7 @@ export const connectToManyByWorkspace = (target: string) => (field: string) =>
       return ctx.db.exists[target]({
         AND: {
           id: connect.id,
-          workspace: { id: ctx.auth.workspaceId },
+          workspace: { id:  ctx.token.tenant.id  },
         },
       }).then(res => (res === true ? Promise.resolve(true) : Promise.reject('Not Authorized')))
     })

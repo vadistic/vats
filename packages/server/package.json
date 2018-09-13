@@ -7,11 +7,16 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
+    "graphql": "env-cmd ../../.env prisma deploy",
+    "playground": "graphql playground",
     "dev": "env-cmd ../../.env ts-node src/index.ts",
-    "deploy": "env-cmd ../../.env prisma deploy",
-    "start": "dist/index.js",
-    "build": "tsc",
-    "playground": "graphql playground"
+    "deploy": "now -E ../../.env",
+    "clean": "shx rm -rf dist",
+    "copy:graphql": "shx cp -f src/generated/prisma.graphql dist/generated/prisma.graphql && shx cp -f src/generated/server.graphql dist/generated/server.graphql",
+    "build": "yarn clean && tsc && yarn copy:graphql",
+    "start": "node dist/index.js",
+    "watch": "tsc -w",
+    "test": "jest"
   },
   "dependencies": {
     "apollo-server": "^2.0.7",
@@ -30,6 +35,8 @@
     "@types/ramda": "^0.25.37",
     "env-cmd": "^8.0.2",
     "prisma": "^1.16.0",
+    "shelljs": "^0.8.2",
+    "shx": "^0.3.2",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
   }
