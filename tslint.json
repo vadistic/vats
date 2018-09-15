@@ -6,7 +6,7 @@
     "no-empty-interface": false,
     "only-arrow-functions": true,
     "ordered-imports": true,
-    "quotemark": [true, "single"],
+    "quotemark": [true, "single", "jsx-double"],
     "trailing-comma": true,
     "object-literal-sort-keys": false,
     "variable-name": [
@@ -16,5 +16,8 @@
       "allow-pascal-case",
       "allow-leading-underscore"
     ]
+  },
+  "linterOptions": {
+    "exclude": ["**/*.js"]
   }
 }

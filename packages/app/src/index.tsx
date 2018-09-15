@@ -1,8 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
 
-import { AuthClass, CookieStorage } from '@aws-amplify/auth'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
@@ -13,35 +11,35 @@ import { withClientState } from 'apollo-link-state'
 import { ApolloProvider } from 'react-apollo'
 
 import App from './App'
-
-export const auth = new AuthClass({
-  userPoolId: 'eu-west-1_QB5d6ZO7S',
-  userPoolWebClientId: '7paip3rlrdmhktcoem3kmtn8ev',
-  authenticationFlowType: 'USER_SRP_AUTH',
-  // https://github.com/aws-amplify/amplify-js/issues/740
-  identityPoolId: 'bug',
-  region: 'eu-west-1',
-  mandatorySignIn: false,
-  storage: new CookieStorage({
-    domain: '.lvh.me',
-    expires: 7,
-    path: '/',
-    secure: true,
-  }),
-})
+import { auth, tempAuth } from './auth'
 
 // tslint:disable: no-console
 
 const cache = new InMemoryCache()
 
-const authLink = setContext((_, { headers }) =>
-  auth.currentSession().then(session => ({
+const authLink = setContext((_, { headers }) => {
+  const tempToken = tempAuth
+    .currentSession()
+    .then(session => session.idToken.jwtToken)
+    .catch(err => {
+      /* noop */
+    })
+
+  const token = auth
+    .currentSession()
+    .then(session => session.idToken.jwtToken)
+    .catch(err => {
+      /* noop */
+    })
+
+  // TODO: clear auth header for not-authenticated
+  return Promise.all([tempToken, token]).then(([tempToken, token]) => ({
     headers: {
       ...headers,
-      authorization: `Bearer ${session.idToken.jwtToken}`,
+      authorization: tempToken`Bearer ${tempToken || token}`,
     },
   }))
-)
+})
 
 const stateLink = withClientState({
   cache,
@@ -97,11 +95,8 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  // TODO: find out why typings mismatch
   <ApolloProvider client={client}>
-    <Router>
-      <App />
-    </Router>
+    <App />
   </ApolloProvider>,
   document.getElementById('root')
 )

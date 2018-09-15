@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "amazon-cognito-identity-js": "^2.0.26",
+    "aws-sdk": "^2.315.0",
+    "cross-fetch": "^2.2.2"
+  },
   "devDependencies": {
     "@types/aws-lambda": "8.10.1",
     "@types/node": "^8.0.57",

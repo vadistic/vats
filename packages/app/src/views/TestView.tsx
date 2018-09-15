@@ -2,11 +2,10 @@ import * as React from 'react'
 
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
 
-export interface IDashboardViewProps {}
+export interface ITestViewProps {}
 
-export const DashboardView: React.SFC<IDashboardViewProps> = () => (
+export const TestView: React.SFC<ITestViewProps> = () => (
   <>
-    <p>Dashboard View</p>
     <DefaultButton primary={true}>I am a button.</DefaultButton>
   </>
 )
