@@ -1,10 +1,12 @@
-const BUNDLE_NAME = 'app'
-const IS_PRODUCTION = process.argv.indexOf('--production') > -1
-
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const webpack = require('webpack')
+
+const BUNDLE_NAME = 'app'
+const IS_PRODUCTION = process.argv.indexOf('--production') > -1
+const OUT_DIR = 'dist'
 
 module.exports = {
   context: __dirname, // to automatically find tsconfig.json
@@ -13,8 +15,9 @@ module.exports = {
     main: './src/index.tsx',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, OUT_DIR),
     filename: '[name].bundle.js',
+    publicPath: '/',
   },
   mode: 'development',
   optimization: {
@@ -61,16 +64,21 @@ module.exports = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
-    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html') }),
-    // new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin([OUT_DIR]),
+    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html') }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
+    watchContentBase: true,
     hot: true,
+    open: false,
     overlay: true,
+    stats: 'minimal',
     progress: true,
+    compress: true,
     publicPath: '/',
     historyApiFallback: true,
-    port: 9000,
+    port: 1234,
   },
 }

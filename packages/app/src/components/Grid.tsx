@@ -31,7 +31,7 @@ export type TGridContainerProps =
   | AlignItemsProps
   | JustifyContentProps
 
-export const Container = eStyled('div')<TBaseStyleProps>(
+export const Container = eStyled('div')<TGridContainerProps>(
   css`
     display: grid;
     width: 100%;
@@ -70,9 +70,9 @@ const Item = eStyled('div')<TGridItemProps>(
   justifyContent
 )
 
-export type TGridSection = TBaseStyleProps
+export type TGridSectionProps = TBaseStyleProps
 
-const Section = eStyled('section')<TGridSection>(
+const Section = eStyled('section')<TGridSectionProps>(
   css`
     position: relative;
     display: flex;
