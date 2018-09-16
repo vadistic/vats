@@ -1,24 +1,30 @@
 import { css } from 'emotion'
 import { Location as ILocation } from 'history'
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
+import { DefaultButton, IButtonProps } from 'office-ui-fabric-react/lib/Button'
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react/lib/TextField'
+import queryString from 'query-string'
 import * as React from 'react'
 import { Form, Toggle } from 'react-powerplug'
-import { Box, LinkButton, Tile } from '.'
+import { Box, ILinkButtonProps, LinkButton, Tile } from '.'
 import { auth, IMatch, tempAuth } from '../utils'
-
 // auto-import guard
 interface IFormBaseProps {
   title: string
+  desc?: any
   forms: ITextFieldProps[]
-  cta?: any
+  misc?: any
+  cta: IButtonProps
+  error?: any
+  link: ILinkButtonProps
 }
 
 const tileStyles = {
   root: css`
     display: flex;
     flex-direction: column;
+    height: 100%;
+    min-height: 100%;
     justify-content: space-between;
   `,
 }
@@ -30,22 +36,43 @@ const boxStyles = {
   `,
 }
 
-export const AuthTemplate: React.SFC<IFormBaseProps> = ({ title, forms, cta, children }) => (
+const ctaStyles = {
+  root: css`
+    display: flex;
+    flex-direction: column;
+  `,
+}
+
+const linkStyles = {
+  root: css`
+    margin-top: 8px;
+    align-self: flex-end;
+  `,
+}
+
+export const AuthTemplate: React.SFC<IFormBaseProps> = props => (
   <Tile styles={tileStyles}>
-    <h1>{title}</h1>
-    <form
-      onSubmit={e => {
-        e.preventDefault()
-      }}
-    >
+    <Box>
+      <h1>{props.title}</h1>
       <Box styles={boxStyles}>
-        {forms.map((form, i) => (
-          <TextField underlined={true} deferredValidationTime={2000} key={i} {...form} />
-        ))}
+        <p>{props.desc}</p>
+        <p>{props.error}</p>
       </Box>
-      <Box styles={boxStyles}>{children}</Box>
-    </form>
-    {cta}
+    </Box>
+
+    <Box>
+      {props.forms.map((form, i) => (
+        <TextField underlined={true} validateOnFocusOut={true} key={i} {...form} />
+      ))}
+      <Box styles={boxStyles}>
+        {((props.misc || props.children) && props.misc) || props.children}
+      </Box>
+    </Box>
+
+    <Box styles={ctaStyles}>
+      <DefaultButton type="submit" primary={true} {...props.cta} />
+      <LinkButton styles={linkStyles} {...props.link} />
+    </Box>
   </Tile>
 )
 
@@ -68,48 +95,46 @@ const SignIn: React.SFC<IFormProps> = ({ match, location }) => {
     const _auth = cookies ? auth : tempAuth
   }
 
-  const email = location.state.email || ''
+  const email =
+    (location.state && location.state.email) || queryString.parse(location.search).email || ''
+
   return (
     <Form initial={{ email, password: '' }}>
       {({ input, values }) => (
         <Toggle initial={false}>
           {({ on, toggle }) => (
             <AuthTemplate
-              title="Sign In"
-              forms={[
-                {
-                  placeholder: 'Email',
-                  type: 'email',
-                  onGetErrorMessage: onGetErrorEmail,
-                  autoComplete: 'on',
-                  ...input('email').bind,
+              {...{
+                title: 'Sign In',
+                forms: [
+                  {
+                    placeholder: 'Email',
+                    type: 'email',
+                    onGetErrorMessage: onGetErrorEmail,
+                    autoComplete: 'on',
+                    ...input('email').bind,
+                  },
+                  {
+                    placeholder: 'Password',
+                    type: 'password',
+                    onGetErrorMessage: onGetErrorPassword,
+                    autoComplete: 'on',
+                    ...input('password').bind,
+                  },
+                ],
+                cta: {
+                  children: 'Sign In',
                 },
-                {
-                  placeholder: 'Password',
-                  type: 'password',
-                  onGetErrorMessage: onGetErrorPassword,
-                  autoComplete: 'on',
-                  ...input('password').bind,
+                link: {
+                  children: 'Forgot password?',
+                  to: {
+                    pathname: `${match.url}/forgot`,
+                    state: { email: values.email },
+                  },
                 },
-              ]}
-              cta={
-                <DefaultButton
-                  primary={true}
-                  onClick={e => {
-                    log(values)
-                  }}
-                >
-                  Sign in
-                </DefaultButton>
-              }
-            >
-              <Box styles={{ root: { display: 'flex', justifyContent: 'space-between' } }}>
-                <Checkbox label={'Stay signed in'} checked={on} onChange={toggle} />
-                <LinkButton to={{ pathname: `${match.path}/reset`, state: { email: values.email } }}>
-                  I forgot my Password
-                </LinkButton>
-              </Box>
-            </AuthTemplate>
+              }}
+              misc={<Checkbox label={'Stay signed in'} checked={on} onChange={toggle} />}
+            />
           )}
         </Toggle>
       )}
@@ -117,37 +142,99 @@ const SignIn: React.SFC<IFormProps> = ({ match, location }) => {
   )
 }
 
-const log = (val: any) => console.log(val)
+const Forgot: React.SFC<IFormProps> = ({ match, location }) => {
+  const email =
+    (location.state && location.state.email) || queryString.parse(location.search).email || ''
 
-const Reset: React.SFC<IFormProps> = ({ match, location }) => {
-  const email = location.state.email || ''
+  console.log(match)
+
   return (
     <Form initial={{ email }}>
       {({ input, values }) => (
         <AuthTemplate
-          title="Reset password"
-          forms={[
-            {
-              placeholder: 'Email',
-              type: 'email',
-              onGetErrorMessage: onGetErrorEmail,
-              ...input('email').bind,
+          {...{
+            title: 'Reset password',
+            desc:
+              'Please enter your email addres below and the password reset code will be sent to you.',
+            forms: [
+              {
+                placeholder: 'Email',
+                type: 'email',
+                onGetErrorMessage: onGetErrorEmail,
+                ...input('email').bind,
+              },
+            ],
+            cta: {
+              children: 'Reset',
             },
-          ]}
-          cta={<DefaultButton primary={true}>Reset</DefaultButton>}
-        >
-          <Box styles={{ root: { display: 'flex', justifyContent: 'flex-end' } }}>
-            <LinkButton to={{ pathname: `${match.path}`, state: { email: values.email } }}>
-              Sign In instead
-            </LinkButton>
-          </Box>
-        </AuthTemplate>
+            link: {
+              children: 'Sign In instead',
+              to: {
+                pathname: `${match.url}`,
+                state: { email: values.email },
+              },
+            },
+          }}
+        />
+      )}
+    </Form>
+  )
+}
+
+const Reset: React.SFC<IFormProps> = ({ match, location }) => {
+  const email =
+    (location.state && location.state.email) || queryString.parse(location.search).email || ''
+
+  const code = ''
+  return (
+    <Form initial={{ email, code, password: '' }}>
+      {({ input, values }) => (
+        <AuthTemplate
+          {...{
+            title: 'Reset password',
+            desc:
+              'Please enter your email addres below and the password reset code will be sent to you.',
+            forms: [
+              {
+                placeholder: 'Email',
+                type: 'email',
+                disabled: true,
+                onGetErrorMessage: onGetErrorEmail,
+                ...input('email').bind,
+              },
+              {
+                placeholder: 'Code',
+                type: 'text',
+                onGetErrorMessage: onGetErrorEmail,
+                ...input('code').bind,
+              },
+              {
+                placeholder: 'Email',
+                type: 'email',
+                disabled: true,
+                onGetErrorMessage: onGetErrorEmail,
+                ...input('password').bind,
+              },
+            ],
+            cta: {
+              children: 'Reset',
+            },
+            link: {
+              children: 'Sign In instead',
+              to: {
+                pathname: `${match.url}`,
+                state: { email: values.email },
+              },
+            },
+          }}
+        />
       )}
     </Form>
   )
 }
 
 export const Auth = {
-  Reset,
+  Forgot,
   SignIn,
+  Reset,
 }

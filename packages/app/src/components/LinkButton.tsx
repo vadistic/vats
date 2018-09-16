@@ -30,7 +30,6 @@ const LinkButtonBase: React.SFC<ILinkButtonBaseProps> = ({
           pathname: to,
         }
       }
-
       if (replace) {
         history.replace(to)
       } else {
