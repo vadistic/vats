@@ -23,9 +23,7 @@ export class TileBase extends BaseComponent<ITileProps, ITileState> {
   public render(): JSX.Element {
     const { className, styles, theme, children, ...rest } = this.props
 
-    const { background } = this.props
-
-    const classNames = getClassNames(styles, { theme: theme!, className, background })
+    const classNames = getClassNames(styles, { theme: theme!, className })
 
     return (
       <div className={classNames.root} {...rest}>

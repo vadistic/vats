@@ -1,5 +1,5 @@
 export { CandidateView } from './CandidateView'
 export { DashboardView } from './DashboardView'
-export { LoginView } from './LoginView'
+export { AuthView } from './LoginView'
 
 export { TestView } from './TestView'

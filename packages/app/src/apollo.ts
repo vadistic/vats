@@ -1,12 +1,11 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import ApolloClient from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
-import { onError } from 'apollo-link-error';
-import { HttpLink } from 'apollo-link-http';
-import { withClientState } from 'apollo-link-state';
-
-import { auth, tempAuth } from './auth';
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import ApolloClient from 'apollo-client'
+import { ApolloLink } from 'apollo-link'
+import { setContext } from 'apollo-link-context'
+import { onError } from 'apollo-link-error'
+import { HttpLink } from 'apollo-link-http'
+import { withClientState } from 'apollo-link-state'
+import { auth, tempAuth } from './utils/auth'
 
 export const cache = new InMemoryCache()
 
