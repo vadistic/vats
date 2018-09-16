@@ -1,10 +1,10 @@
+import { Router } from '@reach/router'
 import { injectGlobal } from 'emotion'
 import { ThemeProvider } from 'emotion-theming'
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
 import { getTheme, normalize } from 'office-ui-fabric-react/lib/Styling'
 import * as React from 'react'
 import { ApolloProvider } from 'react-apollo'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { client } from './apollo'
 import { AuthView, CandidateView, DashboardView } from './views'
 
@@ -27,13 +27,13 @@ class App extends React.Component<{}> {
     return (
       <ApolloProvider client={client}>
         <ThemeProvider theme={getTheme()}>
-          <Router>
-            <Fabric className="app">
-              <Route exact={true} path="/" component={DashboardView} />
-              <Route path="/candidate" component={CandidateView} />
-              <Route path="/login" component={AuthView} />
-            </Fabric>
-          </Router>
+          <Fabric className="app">
+            <Router>
+              <DashboardView path="/" />
+              <CandidateView path="candidate" />
+              <AuthView path="login/*" />
+            </Router>
+          </Fabric>
         </ThemeProvider>
       </ApolloProvider>
     )

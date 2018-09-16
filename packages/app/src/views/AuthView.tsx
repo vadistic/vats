@@ -1,13 +1,11 @@
+import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { Route, Switch } from 'react-router-dom'
-import { Auth, Grid, IFormProps } from '../components'
-import { IMatch } from '../utils'
+import { Auth, Grid } from '../components'
+import { Router } from '../utils'
 
 // tslint:disable: max-classes-per-file
 
-export interface IAuthViewProps {
-  match: IMatch<any>
-}
+export interface IAuthViewProps extends RouteComponentProps {}
 
 export class AuthView extends React.Component<IAuthViewProps, any> {
   public render() {
@@ -16,19 +14,11 @@ export class AuthView extends React.Component<IAuthViewProps, any> {
         <Grid.Section background={'purpleDark'}>
           <Grid.Container height={'100vh'} gridTemplateRows={'1fr 1fr 1fr'}>
             <Grid.Item gridRow={'2 / span 1'} gridColumn={'5 / span 4'}>
-              <Switch>
-                {([[Auth.SignIn, '/'], [Auth.Forgot, '/forgot'], [Auth.Reset, '/reset']] as Array<
-                  [React.SFC<IFormProps>, string]
-                >).map(([Component, pathname], i) => (
-                  <Route
-                    path={this.props.match.path + pathname}
-                    exact={true}
-                    render={({ location }) => (
-                      <Component match={this.props.match} location={location} />
-                    )}
-                  />
-                ))}
-              </Switch>
+              <Router basepath="/login">
+                <Auth.SignIn path="/" />
+                <Auth.Forgot path="forgot" />
+                <Auth.Reset path="reset" />
+              </Router>
             </Grid.Item>
           </Grid.Container>
         </Grid.Section>

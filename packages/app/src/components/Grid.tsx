@@ -1,5 +1,4 @@
 import { css } from 'react-emotion'
-
 import {
   alignItems,
   AlignItemsProps,
@@ -20,8 +19,7 @@ import {
   justifySelf,
   JustifySelfProps,
 } from 'styled-system'
-
-import { baseStyle, eStyled, TBaseStyleProps } from '../styles'
+import { baseStyle, styled, TBaseStyleProps } from '../styles'
 
 export type TGridContainerProps =
   | TBaseStyleProps
@@ -31,7 +29,7 @@ export type TGridContainerProps =
   | AlignItemsProps
   | JustifyContentProps
 
-export const Container = eStyled('div')<TGridContainerProps>(
+export const Container = styled('div')<TGridContainerProps>(
   css`
     display: grid;
     width: 100%;
@@ -56,10 +54,10 @@ export type TGridItemProps =
   | AlignItemsProps
   | JustifyContentProps
 
-const Item = eStyled('div')<TGridItemProps>(
+const Item = styled('div')<TGridItemProps>(
   css`
-    display: flex;
-    flex-flow: row wrap;
+    /* display: flex;
+    flex-flow: row wrap; */
   `,
   ...baseStyle,
   gridColumn,
@@ -72,7 +70,7 @@ const Item = eStyled('div')<TGridItemProps>(
 
 export type TGridSectionProps = TBaseStyleProps
 
-const Section = eStyled('section')<TGridSectionProps>(
+const Section = styled('section')<TGridSectionProps>(
   css`
     position: relative;
     display: flex;

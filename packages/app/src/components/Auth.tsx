@@ -1,13 +1,15 @@
+import { RouteComponentProps } from '@reach/router'
 import { css } from 'emotion'
-import { Location as ILocation } from 'history'
 import { DefaultButton, IButtonProps } from 'office-ui-fabric-react/lib/Button'
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react/lib/TextField'
-import queryString from 'query-string'
+import * as R from 'ramda'
 import * as React from 'react'
 import { Form, Toggle } from 'react-powerplug'
-import { Box, ILinkButtonProps, LinkButton, Tile } from '.'
-import { auth, IMatch, tempAuth } from '../utils'
+import { Box, Tile } from '.'
+import { auth, qParse, qStringify, tempAuth } from '../utils'
+import { LinkButton } from './LinkButton'
+
 // auto-import guard
 interface IFormBaseProps {
   title: string
@@ -16,7 +18,7 @@ interface IFormBaseProps {
   misc?: any
   cta: IButtonProps
   error?: any
-  link: ILinkButtonProps
+  link: any
 }
 
 const tileStyles = {
@@ -60,44 +62,40 @@ export const AuthTemplate: React.SFC<IFormBaseProps> = props => (
       </Box>
     </Box>
 
-    <Box>
+    <form>
       {props.forms.map((form, i) => (
         <TextField underlined={true} validateOnFocusOut={true} key={i} {...form} />
       ))}
       <Box styles={boxStyles}>
         {((props.misc || props.children) && props.misc) || props.children}
       </Box>
-    </Box>
+    </form>
 
     <Box styles={ctaStyles}>
       <DefaultButton type="submit" primary={true} {...props.cta} />
-      <LinkButton styles={linkStyles} {...props.link} />
+      <LinkButton {...props.link} />
     </Box>
   </Tile>
 )
 
-export interface IFormProps {
-  location: ILocation<any>
-  match: IMatch<any>
-}
+export interface IFormProps extends RouteComponentProps {}
 
 const emailRegExp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
 const onGetErrorEmail = (value: string): string => {
-  return value && !emailRegExp.test(value) ? `Please enter correct email address.` : ''
+  return value && !emailRegExp.test(value) ? `Please enter valid email address.` : ''
 }
 
 const onGetErrorPassword = (value: string): string => {
   return value && value.length < 10 ? `The password is too short.` : ''
 }
 
-const SignIn: React.SFC<IFormProps> = ({ match, location }) => {
+const SignIn: React.SFC<IFormProps> = ({ location }) => {
   const onSignIn = ({ email, password, cookies }) => {
     const _auth = cookies ? auth : tempAuth
   }
 
-  const email =
-    (location.state && location.state.email) || queryString.parse(location.search).email || ''
-
+  const { email = '' } = R.merge(location!.state, qParse(location!.search))
+  console.log(email)
   return (
     <Form initial={{ email, password: '' }}>
       {({ input, values }) => (
@@ -127,10 +125,7 @@ const SignIn: React.SFC<IFormProps> = ({ match, location }) => {
                 },
                 link: {
                   children: 'Forgot password?',
-                  to: {
-                    pathname: `${match.url}/forgot`,
-                    state: { email: values.email },
-                  },
+                  to: 'forgot' + qStringify({ email: values.email }),
                 },
               }}
               misc={<Checkbox label={'Stay signed in'} checked={on} onChange={toggle} />}
@@ -142,18 +137,16 @@ const SignIn: React.SFC<IFormProps> = ({ match, location }) => {
   )
 }
 
-const Forgot: React.SFC<IFormProps> = ({ match, location }) => {
-  const email =
-    (location.state && location.state.email) || queryString.parse(location.search).email || ''
-
-  console.log(match)
+const Forgot: React.SFC<IFormProps> = ({ location }) => {
+  const { email = '' } = R.merge(location!.state, qParse(location!.search))
+  console.log(email)
 
   return (
     <Form initial={{ email }}>
       {({ input, values }) => (
         <AuthTemplate
           {...{
-            title: 'Reset password',
+            title: 'Get password reset code',
             desc:
               'Please enter your email addres below and the password reset code will be sent to you.',
             forms: [
@@ -169,10 +162,7 @@ const Forgot: React.SFC<IFormProps> = ({ match, location }) => {
             },
             link: {
               children: 'Sign In instead',
-              to: {
-                pathname: `${match.url}`,
-                state: { email: values.email },
-              },
+              to: '../' + qStringify({ email: values.email }),
             },
           }}
         />
@@ -181,17 +171,15 @@ const Forgot: React.SFC<IFormProps> = ({ match, location }) => {
   )
 }
 
-const Reset: React.SFC<IFormProps> = ({ match, location }) => {
-  const email =
-    (location.state && location.state.email) || queryString.parse(location.search).email || ''
-
+const Reset: React.SFC<IFormProps> = () => {
+  const email = ''
   const code = ''
   return (
     <Form initial={{ email, code, password: '' }}>
       {({ input, values }) => (
         <AuthTemplate
           {...{
-            title: 'Reset password',
+            title: 'Set the new password',
             desc:
               'Please enter your email addres below and the password reset code will be sent to you.',
             forms: [
@@ -221,10 +209,7 @@ const Reset: React.SFC<IFormProps> = ({ match, location }) => {
             },
             link: {
               children: 'Sign In instead',
-              to: {
-                pathname: `${match.url}`,
-                state: { email: values.email },
-              },
+              to: '../' + qStringify({ email: values.email }),
             },
           }}
         />

@@ -1,8 +1,8 @@
+import { RouteComponentProps } from '@reach/router'
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
 import * as React from 'react'
 
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
-
-interface ICandidateViewProps {}
+interface ICandidateViewProps extends RouteComponentProps {}
 
 export const CandidateView: React.SFC<ICandidateViewProps> = () => (
   <>
