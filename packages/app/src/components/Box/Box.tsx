@@ -19,15 +19,11 @@ export class BoxBase extends BaseComponent<IBoxProps, IBoxState> {
   }
 
   public render(): JSX.Element {
-    const { className, styles, theme, children, ...rest } = this.props
+    const { as: component, className, styles, theme, children, ...rest } = this.props
 
     const classNames = getClassNames(styles, { theme: theme!, className })
 
-    return (
-      <div className={classNames.root} {...rest}>
-        {this.props.children}
-      </div>
-    )
+    return React.createElement(component || 'div', { className, children, ...rest })
   }
 }
 

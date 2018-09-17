@@ -1,21 +1,34 @@
 import { RouteComponentProps } from '@reach/router'
 import { css } from 'emotion'
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
 import { DefaultButton, IButtonProps } from 'office-ui-fabric-react/lib/Button'
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react/lib/TextField'
 import * as R from 'ramda'
 import * as React from 'react'
-import { Form, Toggle } from 'react-powerplug'
 import { Box, Tile } from '.'
 import { auth, qParse, qStringify, tempAuth } from '../utils'
 import { LinkButton } from './LinkButton'
 
 // auto-import guard
-interface IFormBaseProps {
+
+interface IFormTemplateConfigProps {
+  initial: string | boolean
+  validate?: (value: any) => string | Promise<void> | undefined
+}
+
+interface IFormTemplateProps {
   title: string
   desc?: any
-  forms: ITextFieldProps[]
-  misc?: any
+  form: Array<{
+    config: IFormTemplateConfigProps
+    props: { name: string } & ITextFieldProps
+  }>
+  misc?: Array<{
+    config: IFormTemplateConfigProps
+    props: { name: string }
+    render: (fieldProps: FieldProps) => JSX.Element
+  }>
   cta: IButtonProps
   error?: any
   link: any
@@ -23,13 +36,20 @@ interface IFormBaseProps {
 
 const tileStyles = {
   root: css`
-    display: flex;
-    flex-direction: column;
     height: 100%;
-    min-height: 100%;
-    justify-content: space-between;
   `,
 }
+
+const formStyles = css`
+  height: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  div:not(:first-child):not(:last-child) {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+`
 
 const boxStyles = {
   root: css`
@@ -52,37 +72,103 @@ const linkStyles = {
   `,
 }
 
-export const AuthTemplate: React.SFC<IFormBaseProps> = props => (
+export const AuthTemplate: React.SFC<IFormTemplateProps> = props => (
   <Tile styles={tileStyles}>
-    <Box>
+    <Box as="legend">
       <h1>{props.title}</h1>
-      <Box styles={boxStyles}>
-        <p>{props.desc}</p>
-        <p>{props.error}</p>
-      </Box>
+      <p>{props.desc}</p>
+      <p>{props.error}</p>
     </Box>
+    <Formik
+      initialValues={[...props.form, ...(props.misc ? props.misc : [])].reduce(
+        (acc, field) => R.assoc(field.props.name, field.config.initial, acc),
+        {}
+      )}
+      validateOnChange={false}
+      validateOnBlur={true}
+      validate={values =>
+        [...props.form, ...(props.misc ? props.misc : [])].reduce(
+          (acc, field) =>
+            R.assoc(
+              name,
+              field.config.validate && field.config.validate(values[field.props.name]),
+              acc
+            ),
+          {}
+        )
+      }
+      onSubmit={(values, actions) => {
+        console.log('Values on submit', values, actions)
+      }}
+      render={({
+        errors,
+        initialValues,
+        isSubmitting,
+        isValidating,
+        isValid,
+        values,
+      }: FormikProps<object>) => (
+        <Form noValidate={true} className={formStyles}>
+          <Box styles={boxStyles}>
+            {props.form.map(({ props: { name, type, ...rest } }, i) => (
+              <Field
+                key={i}
+                name={name}
+                render={({ field }: FieldProps) =>
+                  React.createElement(TextField, {
+                    underlined: true,
+                    name,
+                    type,
+                    errorMessage: errors[name],
+                    ...rest,
+                    ...field,
+                  })}
+              />
+            ))}
+          </Box>
 
-    <form>
-      {props.forms.map((form, i) => (
-        <TextField underlined={true} validateOnFocusOut={true} key={i} {...form} />
-      ))}
-      <Box styles={boxStyles}>
-        {((props.misc || props.children) && props.misc) || props.children}
-      </Box>
-    </form>
+          <Box styles={boxStyles}>
+            {props.misc
+              ? props.misc.map(({ render, props: { name } }, i) => (
+                  <Field
+                    key={i}
+                    name={name}
+                    render={(fieldProps: FieldProps) => render(fieldProps)}
+                  />
+                ))
+              : undefined}
+          </Box>
 
-    <Box styles={ctaStyles}>
-      <DefaultButton type="submit" primary={true} {...props.cta} />
-      <LinkButton {...props.link} />
-    </Box>
+          {console.log('errors', errors)}
+          {console.log('initialValues', initialValues)}
+          {console.log('isSubmitting', isSubmitting)}
+          {console.log('isValidating', isValidating)}
+          {console.log('isValid', isValid)}
+          {console.log('values', values)}
+
+          <Box styles={ctaStyles}>
+            <DefaultButton type="submit" primary={true} {...props.cta} />
+            <LinkButton
+              styles={linkStyles}
+              to={props.link.to + qStringify(R.pick(['email', 'code'], values))}
+              children={props.link.children}
+            />
+          </Box>
+        </Form>
+      )}
+    />
   </Tile>
 )
 
 export interface IFormProps extends RouteComponentProps {}
 
-const emailRegExp = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
 const onGetErrorEmail = (value: string): string => {
-  return value && !emailRegExp.test(value) ? `Please enter valid email address.` : ''
+  let errorMessage
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    errorMessage = 'Invalid email address'
+  }
+  console.log('validation happened', errorMessage)
+  return errorMessage
 }
 
 const onGetErrorPassword = (value: string): string => {
@@ -94,128 +180,149 @@ const SignIn: React.SFC<IFormProps> = ({ location }) => {
     const _auth = cookies ? auth : tempAuth
   }
 
-  const { email = '' } = R.merge(location!.state, qParse(location!.search))
-  console.log(email)
-  return (
-    <Form initial={{ email, password: '' }}>
-      {({ input, values }) => (
-        <Toggle initial={false}>
-          {({ on, toggle }) => (
-            <AuthTemplate
-              {...{
-                title: 'Sign In',
-                forms: [
-                  {
-                    placeholder: 'Email',
-                    type: 'email',
-                    onGetErrorMessage: onGetErrorEmail,
-                    autoComplete: 'on',
-                    ...input('email').bind,
-                  },
-                  {
-                    placeholder: 'Password',
-                    type: 'password',
-                    onGetErrorMessage: onGetErrorPassword,
-                    autoComplete: 'on',
-                    ...input('password').bind,
-                  },
-                ],
-                cta: {
-                  children: 'Sign In',
-                },
-                link: {
-                  children: 'Forgot password?',
-                  to: 'forgot' + qStringify({ email: values.email }),
-                },
-              }}
-              misc={<Checkbox label={'Stay signed in'} checked={on} onChange={toggle} />}
-            />
-          )}
-        </Toggle>
-      )}
-    </Form>
-  )
+  return AuthTemplate({
+    title: 'Sign In',
+    form: [
+      {
+        config: {
+          initial: qParse(location!.search).email || '',
+          validate: onGetErrorEmail,
+        },
+        props: {
+          name: 'email',
+          placeholder: 'Email',
+          type: 'email',
+          autoComplete: 'on',
+        },
+      },
+      {
+        config: {
+          initial: '',
+          validate: onGetErrorPassword,
+        },
+        props: {
+          name: 'password',
+          placeholder: 'Password',
+          type: 'password',
+          autoComplete: 'on',
+        },
+      },
+    ],
+    misc: [
+      {
+        config: {
+          initial: 'no',
+        },
+        props: {
+          name: 'staySignedIn',
+        },
+        render: (field: FieldProps) => (
+          <Checkbox
+            label="my label"
+            name="staySignedIn"
+            onChange={(e, checked) =>
+              field.form.setFieldValue('staySignedIn', checked ? 'yes' : 'no')
+            }
+            checked={field.field.value === 'yes' ? true : false}
+          />
+        ),
+      },
+    ],
+    cta: {
+      children: 'Sign In',
+    },
+    link: {
+      children: 'Forgot password?',
+      to: 'forgot',
+    },
+  })
 }
 
 const Forgot: React.SFC<IFormProps> = ({ location }) => {
-  const { email = '' } = R.merge(location!.state, qParse(location!.search))
-  console.log(email)
+  const { email = '' } = qParse(location!.search)
 
-  return (
-    <Form initial={{ email }}>
-      {({ input, values }) => (
-        <AuthTemplate
-          {...{
-            title: 'Get password reset code',
-            desc:
-              'Please enter your email addres below and the password reset code will be sent to you.',
-            forms: [
-              {
-                placeholder: 'Email',
-                type: 'email',
-                onGetErrorMessage: onGetErrorEmail,
-                ...input('email').bind,
-              },
-            ],
-            cta: {
-              children: 'Reset',
-            },
-            link: {
-              children: 'Sign In instead',
-              to: '../' + qStringify({ email: values.email }),
-            },
-          }}
-        />
-      )}
-    </Form>
-  )
+  return AuthTemplate({
+    title: 'Get password reset code',
+    desc: 'Please enter your email addres below and the password reset code will be sent to you.',
+    form: [
+      {
+        config: {
+          initial: qParse(location!.search).email || '',
+        },
+        props: {
+          name: 'email',
+          placeholder: 'Email',
+          type: 'email',
+        },
+      },
+    ],
+    cta: {
+      children: 'Reset',
+    },
+    link: {
+      children: 'Sign In instead',
+      to: '../' + qStringify({ email: '' }),
+    },
+  })
 }
 
 const Reset: React.SFC<IFormProps> = () => {
   const email = ''
   const code = ''
-  return (
-    <Form initial={{ email, code, password: '' }}>
-      {({ input, values }) => (
-        <AuthTemplate
-          {...{
-            title: 'Set the new password',
-            desc:
-              'Please enter your email addres below and the password reset code will be sent to you.',
-            forms: [
-              {
-                placeholder: 'Email',
-                type: 'email',
-                disabled: true,
-                onGetErrorMessage: onGetErrorEmail,
-                ...input('email').bind,
-              },
-              {
-                placeholder: 'Code',
-                type: 'text',
-                onGetErrorMessage: onGetErrorEmail,
-                ...input('code').bind,
-              },
-              {
-                placeholder: 'Email',
-                type: 'email',
-                disabled: true,
-                onGetErrorMessage: onGetErrorEmail,
-                ...input('password').bind,
-              },
-            ],
-            cta: {
-              children: 'Reset',
-            },
-            link: {
-              children: 'Sign In instead',
-              to: '../' + qStringify({ email: values.email }),
-            },
-          }}
-        />
-      )}
-    </Form>
-  )
+  return AuthTemplate({
+    title: 'Set the new password',
+    desc: 'Please enter your email addres below and the password reset code will be sent to you.',
+    form: [
+      {
+        config: {
+          initial: qParse(location!.search).email || '',
+        },
+        props: {
+          name: 'email',
+          placeholder: 'Email',
+          type: 'email',
+          disabled: true,
+        },
+      },
+      {
+        config: {
+          initial: '',
+        },
+        props: {
+          name: 'code',
+          placeholder: 'Code',
+          type: 'text',
+        },
+      },
+      {
+        config: {
+          initial: '',
+        },
+        props: {
+          name: 'newPassword',
+          placeholder: 'New password',
+          type: 'password',
+        },
+      },
+      {
+        config: {
+          initial: '',
+        },
+        props: {
+          name: 'confirmNewPassword',
+          placeholder: 'Confirm new password',
+          type: 'password',
+        },
+      },
+    ],
+    cta: {
+      children: 'Reset',
+    },
+    link: {
+      children: 'Sign In instead',
+      to: '../' + qStringify({ email: '' }),
+    },
+  })
 }
 
 export const Auth = {

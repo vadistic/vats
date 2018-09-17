@@ -5,6 +5,7 @@ import * as React from 'react'
 export interface IBox {}
 
 export interface IBoxProps extends React.Props<HTMLDivElement> {
+  as?: keyof React.ReactHTML | React.ComponentType<any>
   /* REQUIRED */
   className?: string
   componentRef?: IRefObject<HTMLDivElement>
