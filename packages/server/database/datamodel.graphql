@@ -11,6 +11,9 @@ type Workspace {
   applications: [Application!]!
   candidates: [Candidate!]!
 
+  workflows: [Workflow!]! @relation(name: "WorkspaceWorkflows")
+  workflowDefault: Workflow @relation(name: "WorkspaceDefaultWorkflow")
+
   # other?
   invites: [Invite!]!
   tags: [Tag!]!
@@ -38,13 +41,16 @@ type User {
   tasks: [Task!]! @relation(name: "TaskOwner")
 
   #info
-  firstName: String
-  lastName: String
+  firstName: String!
+  lastName: String!
   email: String! @unique
   username: String!
-  password: String!
   lastLogin: DateTime
   deletedAt: DateTime
+
+  # additional info
+  position: String
+  avatar: String
 }
 
 type Job {
@@ -60,15 +66,15 @@ type Job {
   # connections
   applications: [Application!]!
 
-  # dependencies
-  stages: [Stage!]!
+  # nodes
+  workflow: Workflow!
   comments: [Comment!]!
 
   # info
   status: JobType!
-  title: String!
   department: String
-  location: Location
+  locations: [Location!]!
+  name: String!
   description: String
   requirements: String
 }
@@ -91,7 +97,7 @@ type Application {
   # connections
   job: Job!
   candidate: Candidate!
-  stage: Stage!
+  stage: Stage
 }
 
 type Candidate {
@@ -109,6 +115,7 @@ type Candidate {
   emails: [String!]
   phones: [String!]
   links: [String!]
+  avatar: String
 
   resume: [String!]
   coverLetter: [String!]
@@ -135,21 +142,12 @@ type Task {
   # connections
   owners: [User!]! @relation(name: "TaskOwner")
 
-  # target interface
-  targetType: TaskTargetEnum
-  job: Job
   candidate: Candidate
 
   # info
   title: String
   description: String
   dueAt: DateTime
-}
-
-enum TaskTargetEnum {
-  NULL
-  JOB
-  CANIDATE
 }
 
 # DDEPENDENCIES
@@ -162,6 +160,16 @@ type Invite {
   email: String!
   expireAt: DateTime!
   invitedBy: User!
+}
+
+type Workflow {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  description: String
+  stages: [Stage!]!
 }
 
 type Stage {
@@ -178,6 +186,7 @@ type Stage {
 enum StageTypeEnum {
   NEW
   QUALIFIED
+  HIRED
   DISQUALIFIED
 }
 

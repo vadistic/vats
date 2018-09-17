@@ -5,10 +5,10 @@
     "module": "commonjs",
     "sourceMap": true,
     "baseUrl": ".",
-    "rootDir": "src",
+    "rootDirs": ["src", "database"],
     "outDir": "dist",
     "lib": ["esnext", "dom"]
   },
-  "include": ["src/**/*", "scripts/fixTypings.js", "fixTypings.js"],
+  "include": ["src/**/*", "database/**/*", "scripts/fixTypings.js"],
   "exclude": ["node_modules"]
 }

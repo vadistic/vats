@@ -7,6 +7,7 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
+    "env": "env-cmd ../../.env",
     "graphql": "env-cmd ../../.env prisma deploy",
     "playground": "graphql playground",
     "dev": "env-cmd ../../.env ts-node src/index.ts",
@@ -35,10 +36,12 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.1",
+    "@types/faker": "^4.1.4",
     "@types/jsonwebtoken": "^7.2.8",
     "@types/ramda": "^0.25.37",
     "@types/request": "^2.47.1",
     "env-cmd": "^8.0.2",
+    "faker": "^4.1.0",
     "prisma": "^1.16.0",
     "shelljs": "^0.8.2",
     "shx": "^0.3.2",
