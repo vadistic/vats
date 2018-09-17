@@ -18,18 +18,18 @@ import { validateToken } from './validateToken'
 const prismaRouter = (endpoint: string) =>
   new Prisma({
     typeDefs: prismaTypeDefs,
-    endpoint, // the endpoint of the Prisma API
-    debug: true, // log all GraphQL queries & mutations sent to the Prisma API
-    secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
+    endpoint,
+    debug: true,
+    secret: process.env.PRISMA_SECRET,
   })
 
 const prisma = new Prisma({
   typeDefs: prismaTypeDefs,
   endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
     process.env.PRISMA_STAGE
-  }`, // the endpoint of the Prisma API
-  debug: true, // log all GraphQL queries & mutations sent to the Prisma API
-  secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
+  }`,
+  debug: true,
+  secret: process.env.PRISMA_SECRET,
 })
 
 // main context

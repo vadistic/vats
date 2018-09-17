@@ -3,8 +3,8 @@ endpoint: ${env:PRISMA_ENDPOINT}/${env:PRISMA_SERVICE}/${env:PRISMA_STAGE}
 datamodel:
   - datamodel.graphql
 
-# seed:
-#   import: seed.graphql
+seed:
+  run: yarn ts-node ./database/seed/seed.ts
 
 hooks:
   post-deploy:
