@@ -15,9 +15,9 @@ export class AuthView extends React.Component<IAuthViewProps, any> {
           <Grid.Container height={'100vh'} gridTemplateRows={'1fr 1fr 1fr'}>
             <Grid.Item gridRow={'2 / span 1'} gridColumn={'5 / span 4'}>
               <Router basepath="/login">
-                <Auth.SignIn path="/" />
-                <Auth.Forgot path="forgot" />
-                <Auth.Reset path="reset" />
+                <Auth.Forms.SignIn path="/" />
+                <Auth.Forms.Forgot path="forgot" />
+                <Auth.Forms.Reset path="reset" />
               </Router>
             </Grid.Item>
           </Grid.Container>

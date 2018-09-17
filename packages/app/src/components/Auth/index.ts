@@ -1,3 +1,3 @@
-import * as Auth from './Forms'
+import * as Forms from './Forms'
 
-export { Auth }
+export const Auth = { Forms }
