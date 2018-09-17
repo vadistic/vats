@@ -3,21 +3,70 @@ import { css } from 'emotion'
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
 import { DefaultButton, IButtonProps } from 'office-ui-fabric-react/lib/Button'
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
+import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
+import { ITheme } from 'office-ui-fabric-react/lib/Styling'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react/lib/TextField'
 import * as R from 'ramda'
 import * as React from 'react'
-import { Box, Tile } from '.'
-import { auth, qParse, qStringify, tempAuth } from '../utils'
+import { State, Value } from 'react-powerplug'
+import { Box } from '.'
+import { qParse, qStringify } from '../utils'
 import { LinkButton } from './LinkButton'
 
-// auto-import guard
+// ashdsajhsad
+const authTemplateStyles = ({ theme: t }: { theme: ITheme }) => ({
+  root: css`
+    height: 100%;
+    padding: 24px;
+    background: ${t.palette.white};
+
+    & > form {
+      height: 100%;
+    }
+
+    .auth-wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .auth-legend {
+    }
+
+    .auth-form {
+      & > div:not(:first-child):not(:last-child) {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    }
+
+    .auth-field {
+      /* height of textfield + alert */
+      min-height: 54px;
+    }
+
+    .auth-misc {
+    }
+
+    .auth-cta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-link {
+      margin-top: 8px;
+      align-self: flex-end;
+    }
+  `,
+})
 
 interface IFormTemplateConfigProps {
   initial: string | boolean
   validate?: (value: any) => string | Promise<void> | undefined
 }
 
-interface IFormTemplateProps {
+interface IAuthTemplateProps {
   title: string
   desc?: any
   form: Array<{
@@ -34,150 +83,117 @@ interface IFormTemplateProps {
   link: any
 }
 
-const tileStyles = {
-  root: css`
-    height: 100%;
-  `,
-}
-
-const formStyles = css`
-  height: 100%;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column;
-  div:not(:first-child):not(:last-child) {
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-`
-
-const boxStyles = {
-  root: css`
-    margin-top: 16px;
-    margin-bottom: 16px;
-  `,
-}
-
-const ctaStyles = {
-  root: css`
-    display: flex;
-    flex-direction: column;
-  `,
-}
-
-const linkStyles = {
-  root: css`
-    margin-top: 8px;
-    align-self: flex-end;
-  `,
-}
-
-export const AuthTemplate: React.SFC<IFormTemplateProps> = props => (
-  <Tile styles={tileStyles}>
-    <Box as="legend">
-      <h1>{props.title}</h1>
-      <p>{props.desc}</p>
-      <p>{props.error}</p>
-    </Box>
-    <Formik
-      initialValues={[...props.form, ...(props.misc ? props.misc : [])].reduce(
-        (acc, field) => R.assoc(field.props.name, field.config.initial, acc),
-        {}
-      )}
-      validateOnChange={false}
-      validateOnBlur={true}
-      validate={values =>
-        [...props.form, ...(props.misc ? props.misc : [])].reduce(
-          (acc, field) =>
-            R.assoc(
-              name,
-              field.config.validate && field.config.validate(values[field.props.name]),
-              acc
-            ),
+export const AuthTemplate: React.SFC<IAuthTemplateProps> = props => (
+      <Formik
+        initialValues={[...props.form, ...(props.misc ? props.misc : [])].reduce(
+          (acc, field) => R.assoc(field.props.name, field.config.initial, acc),
           {}
-        )
-      }
-      onSubmit={(values, actions) => {
-        console.log('Values on submit', values, actions)
-      }}
-      render={({
-        errors,
-        initialValues,
-        isSubmitting,
-        isValidating,
-        isValid,
-        values,
-      }: FormikProps<object>) => (
-        <Form noValidate={true} className={formStyles}>
-          <Box styles={boxStyles}>
-            {props.form.map(({ props: { name, type, ...rest } }, i) => (
-              <Field
-                key={i}
-                name={name}
-                render={({ field }: FieldProps) =>
-                  React.createElement(TextField, {
-                    underlined: true,
-                    name,
-                    type,
-                    errorMessage: errors[name],
-                    ...rest,
-                    ...field,
-                  })}
-              />
-            ))}
-          </Box>
+        )}
+        validateOnChange={true}
+        validateOnBlur={true}
+        validate={values => {
+          const errors = props.form.reduce((acc, { config: { validate }, props: { name } }) => {
+            const res = validate && validate(values[name])
+            return res ? R.assoc(name, res, acc) : acc
+          }, {})
+          return R.keys(errors).length ? errors : undefined
+        }}
+        onSubmit={(values, actions: FormikProps<any>) => {
+          console.log(values, actions)
 
-          <Box styles={boxStyles}>
-            {props.misc
-              ? props.misc.map(({ render, props: { name } }, i) => (
-                  <Field
-                    key={i}
-                    name={name}
-                    render={(fieldProps: FieldProps) => render(fieldProps)}
+          setTimeout(() => {
+            if (values.email !== 'test@test.com') {
+              actions.setError('email is not test@test.com')
+              actions.setFieldValue('password', '')
+            }
+          }, 1000)
+        }}
+        render={(formik: FormikProps<object>) => (
+          <Box as="main" styles={authTemplateStyles}>
+            <Form noValidate={true}>
+              <Box className="auth-wrapper">
+                <Box as="legend" className="auth-legend">
+                  <h1>{props.title}</h1>
+
+                  <p>{formik.isValid}</p>
+                  <p>{formik.isValidating}</p>
+                  <p>{props.desc}</p>
+                  <p>{props.error}</p>
+
+                  {formik.error && (
+                    <MessageBar
+                      messageBarType={MessageBarType.error}
+                      isMultiline={false}
+                      onDismiss={() => formik.setError(undefined)}
+                      dismissButtonAriaLabel="Close"
+                      children={formik.error}
+                    />
+                  )}
+                </Box>
+                <Box className="auth-form">
+                  {props.form.map(({ props: { name, type, ...rest } }, i) => (
+                    <Box key={i} className="auth-field">
+                      <Field
+                        name={name}
+                        render={({ field }: FieldProps) =>
+                          React.createElement(TextField, {
+                            underlined: true,
+                            name,
+                            type,
+                            errorMessage: formik.touched[name] && formik.errors[name],
+                            ...rest,
+                            ...field,
+                          })}
+                      />
+                    </Box>
+                  ))}
+                  {props.misc
+                    ? props.misc.map(({ render, props: { name } }, i) => (
+                        <Box key={i} className="auth-misc">
+                          <Field
+                            name={name}
+                            render={(fieldProps: FieldProps) => render(fieldProps)}
+                          />
+                        </Box>
+                      ))
+                    : undefined}
+                </Box>
+                <Box className="auth-cta">
+                  <DefaultButton
+                    type="submit"
+                    primary={true}
+                    disabled={!formik.isValid}
+                    {...props.cta}
                   />
-                ))
-              : undefined}
+                  <LinkButton
+                    className="auth-link"
+                    to={props.link.to + qStringify(R.pick(['email', 'code'], formik.values))}
+                    children={props.link.children}
+                  />
+                </Box>
+              </Box>
+            </Form>
           </Box>
-
-          {console.log('errors', errors)}
-          {console.log('initialValues', initialValues)}
-          {console.log('isSubmitting', isSubmitting)}
-          {console.log('isValidating', isValidating)}
-          {console.log('isValid', isValid)}
-          {console.log('values', values)}
-
-          <Box styles={ctaStyles}>
-            <DefaultButton type="submit" primary={true} {...props.cta} />
-            <LinkButton
-              styles={linkStyles}
-              to={props.link.to + qStringify(R.pick(['email', 'code'], values))}
-              children={props.link.children}
-            />
-          </Box>
-        </Form>
-      )}
-    />
-  </Tile>
+        )}
+      /
 )
 
-export interface IFormProps extends RouteComponentProps {}
+export interface ICommonAuthProps extends RouteComponentProps {}
 
-const onGetErrorEmail = (value: string): string => {
-  let errorMessage
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    errorMessage = 'Invalid email address'
-  }
-  console.log('validation happened', errorMessage)
-  return errorMessage
+const emailValidator = (value: string): string | undefined =>
+  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email addres' : undefined
+
+const passwordValidator = (value: string): string | undefined =>
+  value.length < 10 ? `The password is too short.` : undefined
+
+interface ISignInValues {
+  email: string
+  password: string
 }
 
-const onGetErrorPassword = (value: string): string => {
-  return value && value.length < 10 ? `The password is too short.` : ''
-}
-
-const SignIn: React.SFC<IFormProps> = ({ location }) => {
-  const onSignIn = ({ email, password, cookies }) => {
-    const _auth = cookies ? auth : tempAuth
+const SignIn: React.SFC<ICommonAuthProps> = ({ location }) => {
+  const onSubmit = (formikProps: FormikProps<ISignInValues>) => {
+    return 'wooha'
   }
 
   return AuthTemplate({
@@ -186,7 +202,7 @@ const SignIn: React.SFC<IFormProps> = ({ location }) => {
       {
         config: {
           initial: qParse(location!.search).email || '',
-          validate: onGetErrorEmail,
+          validate: emailValidator,
         },
         props: {
           name: 'email',
@@ -198,7 +214,7 @@ const SignIn: React.SFC<IFormProps> = ({ location }) => {
       {
         config: {
           initial: '',
-          validate: onGetErrorPassword,
+          validate: passwordValidator,
         },
         props: {
           name: 'password',
@@ -212,13 +228,14 @@ const SignIn: React.SFC<IFormProps> = ({ location }) => {
       {
         config: {
           initial: 'no',
+          validate: () => undefined,
         },
         props: {
           name: 'staySignedIn',
         },
         render: (field: FieldProps) => (
           <Checkbox
-            label="my label"
+            label="Stay signed in"
             name="staySignedIn"
             onChange={(e, checked) =>
               field.form.setFieldValue('staySignedIn', checked ? 'yes' : 'no')
@@ -238,9 +255,7 @@ const SignIn: React.SFC<IFormProps> = ({ location }) => {
   })
 }
 
-const Forgot: React.SFC<IFormProps> = ({ location }) => {
-  const { email = '' } = qParse(location!.search)
-
+const Forgot: React.SFC<ICommonAuthProps> = ({ location }) => {
   return AuthTemplate({
     title: 'Get password reset code',
     desc: 'Please enter your email addres below and the password reset code will be sent to you.',
@@ -266,9 +281,7 @@ const Forgot: React.SFC<IFormProps> = ({ location }) => {
   })
 }
 
-const Reset: React.SFC<IFormProps> = () => {
-  const email = ''
-  const code = ''
+const Reset: React.SFC<ICommonAuthProps> = () => {
   return AuthTemplate({
     title: 'Set the new password',
     desc: 'Please enter your email addres below and the password reset code will be sent to you.',
@@ -320,7 +333,7 @@ const Reset: React.SFC<IFormProps> = () => {
     },
     link: {
       children: 'Sign In instead',
-      to: '../' + qStringify({ email: '' }),
+      to: '../',
     },
   })
 }

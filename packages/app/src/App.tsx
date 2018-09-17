@@ -20,6 +20,9 @@ injectGlobal({
     color: 'inherit',
     textDecoration: 'inherit',
   },
+  fieldset: {
+    border: 'none',
+  },
 })
 
 class App extends React.Component<{}> {

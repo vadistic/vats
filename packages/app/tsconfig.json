@@ -15,7 +15,7 @@
     "noImplicitAny": false, // for now
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false, // for dev
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "preserveConstEnums": true,

@@ -1,7 +1,7 @@
 import { IBoxStyleProps, IBoxStyles } from './Box.types'
 
 export const getStyles = (props: IBoxStyleProps): IBoxStyles => {
-  const { className, theme } = props
+  const { className } = props
 
   return {
     root: [
