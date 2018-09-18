@@ -1,0 +1,9 @@
+app:
+  schemaPath: src/generated/app.graphql
+  projectName: app
+  extensions:
+    endpoints:
+      dev:
+        url: ${env:PRISMA_ENDPOINT}
+        headers:
+          Authorization: Bearer ${env:AUTH_TOKEN_ENV}

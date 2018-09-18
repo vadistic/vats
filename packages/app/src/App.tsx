@@ -5,7 +5,7 @@ import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
 import { getTheme, normalize } from 'office-ui-fabric-react/lib/Styling'
 import * as React from 'react'
 import { ApolloProvider } from 'react-apollo'
-import { client } from './apollo'
+import { client } from './client'
 import { AuthView, CandidateView, DashboardView } from './views'
 
 // tslint:disable-next-line:no-unused-expression

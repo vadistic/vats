@@ -1,0 +1,15 @@
+type Query {
+  networkStatus: NetworkStatus!
+}
+
+type Mutation {
+  updateNetwrokStatus(data: NetworkStatusUpdateInput): NetworkStatus!
+}
+
+type NetworkStatus {
+  isConnected: boolean!
+}
+
+input NetworkStatusUpdateInput {
+  isConnected: boolean!
+}

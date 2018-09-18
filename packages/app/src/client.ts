@@ -7,9 +7,9 @@ import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
 import { auth, tempAuth } from './utils/auth'
 
-export const cache = new InMemoryCache()
+const cache = new InMemoryCache()
 
-export const authLink = setContext((_, { headers }) => {
+const authLink = setContext((_, { headers }) => {
   const tempToken = tempAuth
     .currentSession()
     .then(session => session.idToken.jwtToken)
@@ -33,21 +33,11 @@ export const authLink = setContext((_, { headers }) => {
   }))
 })
 
-export const stateLink = withClientState({
+const stateLink = withClientState({
   cache,
   resolvers: {
     Mutation: {
       updateNetworkStatus: (_, { isConnected }, { cache }) => {
-        const data = {
-          networkStatus: {
-            __typename: 'NetworkStatus',
-            isConnected,
-          },
-        }
-        cache.writeData({ data })
-        return null
-      },
-      login: (_, { isConnected }, { cache }) => {
         const data = {
           networkStatus: {
             __typename: 'NetworkStatus',
@@ -67,9 +57,9 @@ export const stateLink = withClientState({
   },
 })
 
-export const httpLink = new HttpLink({ uri: 'http://localhost:4000' })
+const httpLink = new HttpLink({ uri: 'http://localhost:4000' })
 
-export const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message, locations, path }) =>
       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)

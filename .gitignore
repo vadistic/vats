@@ -1,6 +1,7 @@
 # Workspace
 *.env
 .vscode
+temp.env.bat
 
 # Project dependencies
 node_modules
