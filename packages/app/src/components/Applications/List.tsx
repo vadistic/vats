@@ -7,15 +7,10 @@ import { Query } from 'react-apollo'
 interface IApplicationsListProps extends RouteComponentProps {}
 
 const GET_APPLICATIONS = gql`
-  query SimpleQuery {
+  query Applications {
     applications {
       id
-      
     }
-
-    # networkStatus @client {
-    #   isConnected
-    # }
   }
 `
 
