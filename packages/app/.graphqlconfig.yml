@@ -1,9 +1,8 @@
-app:
-  schemaPath: src/generated/app.graphql
-  projectName: app
-  extensions:
-    endpoints:
-      dev:
-        url: ${env:PRISMA_ENDPOINT}
-        headers:
-          Authorization: Bearer ${env:AUTH_TOKEN_ENV}
+schemaPath: src/generated/app.graphql
+projectName: app
+extensions:
+  endpoints:
+    default:
+      url: http://ec2-54-229-125-69.eu-west-1.compute.amazonaws.com:4466/vadistic-ats/dev
+      headers:
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJ2YWRpc3RpYy1hdHNAZGV2Iiwicm9sZXMiOlsiYWRtaW4iXX0sImlhdCI6MTUzNzIzODEzOCwiZXhwIjoxNTM3ODQyOTM4fQ.WgG-zkydZYWmMizSWElUJtNc-UWeq3e-o9IXiDCzPKY

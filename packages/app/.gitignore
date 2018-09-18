@@ -10,3 +10,6 @@ yarn-error.log
 dist
 /public
 .DS_Store
+
+# Custom
+.graphqlconfig

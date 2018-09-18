@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "env": "env-cmd ../../.env",
-    "perma-env": "shx cp ../../.env .env && cd scripts && env.bat && temp.env.bat && shx rm temp.env.bat",
+    "env-pull": "shx cp ../../.env .env",
+    "env-push": "shx cp .env ../../.env",
+    "env-temp": "yarn env node scripts/env-gql",
     "dev:p": "parcel ./src/index.html",
     "dev": "webpack-dev-server",
     "build:p": "parcel build ./src/index.html --public-url '/'",
