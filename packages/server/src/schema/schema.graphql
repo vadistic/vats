@@ -13,6 +13,10 @@ type Mutation {
   createTask(data: TaskCreateInput!): Task!
 }
 
+interface Node {
+  id: ID!
+}
+
 input WorkspaceCreateInput {
   name: String!
   firstName: String

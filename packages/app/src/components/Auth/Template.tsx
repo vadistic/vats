@@ -112,7 +112,8 @@ export const AuthTemplate: React.SFC<IAuthTemplateProps> = props => {
 
   const _addValuesToQueryString = (formik: FormikProps<object>, link?: IAuthTemplateLink) =>
     link &&
-    link.props.to + `${link.config && qStringify(R.pick(link.config.forwardInQuery, formik.values))}`
+    link.props.to +
+      `${link.config && qStringify(R.pick(link.config.forwardInQuery, formik.values))}`
 
   return (
     <Formik
@@ -203,6 +204,3 @@ export const AuthTemplate: React.SFC<IAuthTemplateProps> = props => {
     />
   )
 }
-
-
-

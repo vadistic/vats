@@ -10,4 +10,3 @@ export const updateNetworkStatus = (_, { isConnected }, { cache }) => {
   cache.writeData({ data })
   return null
 }
-

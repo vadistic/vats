@@ -64,7 +64,6 @@ module.exports = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
-    new CleanWebpackPlugin([OUT_DIR]),
     new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html') }),
     new webpack.HotModuleReplacementPlugin(),
   ],

@@ -6,33 +6,5 @@
   "repository": "https://github.com/vadistic/vats",
   "author": "vadistic <vadistic@gmail.com>",
   "license": "No license",
-  "private": true,
-  "scripts": {
-    "bootstrap": "lerna bootstrap ",
-    "docker:up": "env-cmd .env yarn workspace prisma up"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "nohoist": [
-    "**"
-  ],
-  "devDependencies": {
-    "concurrently": "^4.0.1",
-    "cross-env": "^5.2.0",
-    "env-cmd": "^8.0.2",
-    "graphql": "^14.0.2",
-    "graphql-cli": "^2.16.7",
-    "graphql-override": "^0.1.0",
-    "jest": "^23.6.0",
-    "lerna": "^3.3.0",
-    "prettier": "^1.14.2",
-    "prisma": "^1.16.0",
-    "prisma-binding": "^2.1.5",
-    "ts-jest": "^23.1.4",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.15.0",
-    "typescript": "^3.0.3"
-  }
+  "private": true
 }

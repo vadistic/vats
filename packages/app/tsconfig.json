@@ -22,6 +22,6 @@
     "removeComments": true,
     "skipLibCheck": true
   },
-  "include": ["./src/**/**/*"],
+  "include": ["./src/**/**/*", "scripts/make-schema.js", ".apollo.config.js", "scripts/apollo.config.js", "scripts/.apollo.config.js", "hidden.apollo.config.js"],
   "exclude": ["node_modules", "dist"]
 }
