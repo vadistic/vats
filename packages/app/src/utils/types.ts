@@ -1,7 +1,3 @@
-import { match as IMatch } from 'react-router-dom'
+export type NonNullArray<T extends any[]> = T extends Array<infer U> ? Array<NonNullable<U>> : never
 
-export { IMatch }
-
-export interface IMatchProps {
-  match: IMatch<any>
-}
+export type ElementType<T> = T extends (infer ElementType)[] ? ElementType : never

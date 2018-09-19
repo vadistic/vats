@@ -6,7 +6,7 @@ import { getTheme, normalize } from 'office-ui-fabric-react/lib/Styling'
 import * as React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { client } from './client'
-import { AuthView, CandidateView, DashboardView } from './views'
+import { AuthView, CandidateView, DashboardView , ApplicationsView} from './views'
 
 // tslint:disable-next-line:no-unused-expression
 injectGlobal({
@@ -33,7 +33,7 @@ class App extends React.Component<{}> {
           <Fabric className="app">
             <Router>
               <DashboardView path="/" />
-              <CandidateView path="candidate" />
+              <ApplicationsView path="applications/*" />
               <AuthView path="login/*" />
             </Router>
           </Fabric>

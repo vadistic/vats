@@ -1,7 +1,11 @@
-type NetworkStatus {
-  isConnected: Boolean!
-}
-
 extend type Query {
   networkStatus: NetworkStatus!
+}
+
+extend type Mutation {
+  updateNetworkStatus(isConnected: Boolean): NetworkStatus!
+}
+
+type NetworkStatus {
+  isConnected: Boolean!
 }

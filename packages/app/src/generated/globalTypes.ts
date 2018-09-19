@@ -5,6 +5,19 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum JobType {
+  ARCHIVED = "ARCHIVED",
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+}
+
+export enum StageTypeEnum {
+  DISQUALIFIED = "DISQUALIFIED",
+  HIRED = "HIRED",
+  NEW = "NEW",
+  QUALIFIED = "QUALIFIED",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

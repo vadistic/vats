@@ -1,5 +1,1 @@
-import * as List from './List'
-
-export const Applications = {
-  ...List,
-}
+export * from './ApplicationsList'

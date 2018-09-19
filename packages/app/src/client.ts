@@ -7,19 +7,24 @@ import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
 import { auth, tempAuth } from './utils/auth'
 
+const TEMP_TOKEN = process.env.AUTH_TOKEN
+const TEMP_URI = `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
+  process.env.PRISMA_STAGE
+}`
+
 const cache = new InMemoryCache()
 
 const authLink = setContext((_, { headers }) => {
   const tempToken = tempAuth
     .currentSession()
-    .then(session => session.idToken.jwtToken)
+    .then(session => session.getIdToken().getJwtToken())
     .catch(err => {
       /* noop */
     })
 
   const token = auth
     .currentSession()
-    .then(session => session.idToken.jwtToken)
+    .then(session => session.getIdToken().getJwtToken())
     .catch(err => {
       /* noop */
     })
@@ -28,9 +33,18 @@ const authLink = setContext((_, { headers }) => {
   return Promise.all([tempToken, token]).then(([tempToken, token]) => ({
     headers: {
       ...headers,
-      authorization: tempToken`Bearer ${tempToken || token}`,
+      authorization: `Bearer ${tempToken || token}`,
     },
   }))
+})
+
+const tempAuthLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      Authorization: `Bearer ${TEMP_TOKEN}`,
+    },
+  }
 })
 
 const stateLink = withClientState({
@@ -57,7 +71,7 @@ const stateLink = withClientState({
   },
 })
 
-const httpLink = new HttpLink({ uri: 'http://localhost:4000' })
+const httpLink = new HttpLink({ uri: TEMP_URI })
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -72,6 +86,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 export const client = new ApolloClient({
   connectToDevTools: true,
-  link: ApolloLink.from([stateLink, authLink, httpLink, errorLink]),
+  link: ApolloLink.from([stateLink, tempAuthLink, httpLink, errorLink]),
   cache,
 })

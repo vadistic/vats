@@ -1,5 +1,6 @@
 schemaPath: src/generated/app.graphql
 projectName: app
+includes: ['sec/schema/**/*.graphql']
 extensions:
   endpoints:
     default:
