@@ -10,8 +10,10 @@ import {
   QueryResult,
   OperationVariables,
 } from 'react-apollo'
-import { ApplicationsQuery } from './generated/ApplicationsQuery'
+import { ApplicationsQuery, ApplicationsQueryVariables } from './generated/ApplicationsQuery'
 import { MarqueeSelection, Selection } from 'office-ui-fabric-react/lib/MarqueeSelection'
+import { ShimmeredDetailsList } from 'office-ui-fabric-react/lib/ShimmeredDetailsList'
+
 import {
   DetailsList,
   SelectionMode,
@@ -20,8 +22,8 @@ import {
 } from 'office-ui-fabric-react/lib/DetailsList'
 import { NonNullArray, ElementType } from '../../utils'
 const GET_APPLICATIONS = gql`
-  query ApplicationsQuery {
-    applications {
+  query ApplicationsQuery($first: Int!, $after: String) {
+    applications(first: $first, after: $after) {
       id
       updatedAt
       job {
@@ -50,17 +52,16 @@ const GET_APPLICATIONS = gql`
 
 export type TApplicationItem = NonNullable<ElementType<ApplicationsQuery['applications']>>
 
-interface IApplicationsBaseProps {
-  data: ApplicationsQuery
+interface IApplicationsListBaseProps {
+  query: QueryResult<ApplicationsQuery, ApplicationsQueryVariables>
 }
 
-export class ApplicationsListBase extends React.Component<IApplicationsBaseProps, {}> {
-  private _getItems = (): TApplicationItem[] => {
-    const { applications } = this.props.data
+interface IApplicationsListBaseState {}
 
-    return applications.filter(val => val !== null) as NonNullArray<typeof applications>
-  }
-
+export class ApplicationsListBase extends React.Component<
+  IApplicationsListBaseProps,
+  IApplicationsListBaseState
+> {
   private _getColumns = (): IColumn[] => {
     return [
       {
@@ -121,20 +122,59 @@ export class ApplicationsListBase extends React.Component<IApplicationsBaseProps
     console.log('Previev invoked', e)
   }
 
+  public onRowDidMount = async (item: TApplicationItem, index: number) => {
+    const rowsToVirtualize = 10
+
+    const lastItemIndex = this.state.items.length
+
+    if (index >= lastItemIndex - rowsToVirtualize) {
+      console.log('fetching more after row', index)
+
+      this.props.query.fetchMore({
+        variables: { after: this.state.items[lastItemIndex] },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          return {
+            ...previousResult,
+            applications: [
+              ...previousResult.applications,
+              ...(fetchMoreResult ? fetchMoreResult.applications : []),
+            ],
+          }
+        },
+      })
+    }
+  }
+
   state = {
+    data: this.props.query.data,
     selection: new Selection(),
-    items: this._getItems(),
+    items: [],
     columns: this._getColumns(),
     selectionDetails: '',
     isModalSelection: false,
     isCompactMode: false,
   }
 
+  static getDerivedStateFromProps(nextProps: IApplicationsListBaseProps, prevState) {
+    // set items
+    if (!nextProps.query.loading && nextProps.query.data && prevState.items.length === 0) {
+      const items = nextProps.query.data.applications.filter(val => val !== null) as NonNullArray<
+        ApplicationsQuery['applications']
+      >
+      return {
+        items,
+      }
+    } else {
+      return null
+    }
+  }
+
   public render() {
     const { selection, items, isModalSelection, isCompactMode, columns } = this.state
+
     return (
       <MarqueeSelection selection={selection}>
-        <DetailsList
+        <ShimmeredDetailsList
           items={items}
           compact={isCompactMode}
           columns={columns}
@@ -146,6 +186,8 @@ export class ApplicationsListBase extends React.Component<IApplicationsBaseProps
           selectionPreservedOnEmptyClick={true}
           onItemInvoked={this.openPreview}
           enterModalSelectionOnTouch={true}
+          enableShimmer={this.props.query.loading}
+          onRowDidMount={this.onRowDidMount}
         />
       </MarqueeSelection>
     )
@@ -155,29 +197,26 @@ export class ApplicationsListBase extends React.Component<IApplicationsBaseProps
 export interface IApplicationsListProps extends RouteComponentProps {}
 
 export const ApplicationsList: React.SFC<IApplicationsListProps> = props => (
-  <Query<ApplicationsQuery> query={GET_APPLICATIONS} fetchPolicy={'cache-first'}>
-    {({ data, error, loading }) => {
-      if (error) {
+  <Query<ApplicationsQuery, ApplicationsQueryVariables>
+    query={GET_APPLICATIONS}
+    fetchPolicy={'cache-first'}
+    variables={{ first: 20 }}
+  >
+    {query => {
+      if (query.error) {
         return (
           <MessageBar messageBarType={MessageBarType.error} isMultiline={true}>
             <h3>Error</h3>
-            <p>{error.message}</p>
+            <p>{query.error.message}</p>
           </MessageBar>
         )
       }
 
-      if (loading) {
-        return <p>Loading...</p>
-      }
-
-      if (data) {
-        return (
-          <div>
-            <ApplicationsListBase data={data} />
-          </div>
-        )
-      }
-      return <p>Super Error</p>
+      return (
+        <div>
+          <ApplicationsListBase query={query} />
+        </div>
+      )
     }}
   </Query>
 )

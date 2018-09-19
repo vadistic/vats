@@ -43,3 +43,8 @@ export interface ApplicationsQuery_applications {
 export interface ApplicationsQuery {
   applications: (ApplicationsQuery_applications | null)[];
 }
+
+export interface ApplicationsQueryVariables {
+  first: number;
+  after?: string | null;
+}
