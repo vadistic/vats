@@ -23,44 +23,44 @@ const requestIdleCallbackPolyfill: IModernWindow['requestIdleCallback'] = (callb
     { passive: true }
   )
 
-export interface ScrollBottomSensorProps {
+export interface ScrollSensorProps {
   onTrigger: () => any
   rate?: number
-  triggerOffsetPercent?: number
-  triggerOffsetPx?: number
+  edge: 'top' | 'bottom'
+  offsetFraction?: number
+  offsetPx?: number
 }
 
-export class ScrollBottomSensor extends React.Component<ScrollBottomSensorProps> {
+export class ScrollSensor extends React.Component<ScrollSensorProps> {
   private _scrollListener
   private _timer
 
-  componentDidMount() {
-    this._scrollListener = window.addEventListener('scroll', this.throttle, { passive: true })
+  public componentDidMount() {
+    this._scrollListener = window.addEventListener('scroll', this.throttle(this.handleScroll), {
+      passive: true,
+    })
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     window.removeEventListener('scroll', this._scrollListener)
   }
 
-  throttle = () => {
-    console.log('event.listened', 'timer:', this._timer)
+  public throttle = (fn: () => any) => () => {
     const requestIdleCallback =
       (window as IModernWindow).requestIdleCallback || requestIdleCallbackPolyfill
 
     if (!this._timer) {
-      console.log('set timeout')
       this._timer = requestIdleCallback(
         () => {
-          this.handler()
           this._timer = null
-          console.log('clear timeout')
+          return fn()
         },
         { timeout: this.props.rate || 250 }
       )
     }
   }
 
-  handler = () => {
+  public handleScroll = () => {
     const pageHeight = document.documentElement.offsetHeight
     const windowHeight = window.innerHeight
 
@@ -70,18 +70,20 @@ export class ScrollBottomSensor extends React.Component<ScrollBottomSensorProps>
       document.body.scrollTop +
         ((document.documentElement && document.documentElement.scrollTop) || 0)
 
-    const predicatePx =
-      windowHeight + scrollPosition >= pageHeight - (this.props.triggerOffsetPx || 0)
-    const predicatePercent =
-      windowHeight + scrollPosition >= pageHeight * (1 - (this.props.triggerOffsetPercent || 0))
-    console.log('predicate px', predicatePx)
-
-    if (
-      (this.props.triggerOffsetPx && predicatePx) ||
-      (this.props.triggerOffsetPercent && predicatePercent)
-    ) {
-      console.log('fire')
-      this.props.onTrigger()
+    if (this.props.edge === 'top' && !this.props.offsetFraction) {
+      const predicateTopPx = scrollPosition >= (this.props.offsetPx || 0)
+      predicateTopPx && this.props.onTrigger()
+    } else if (this.props.edge === 'top') {
+      const predicateTopFraction = scrollPosition >= pageHeight * (this.props.offsetPx || 0)
+      predicateTopFraction && this.props.onTrigger()
+    } else if (this.props.edge === 'bottom' && !this.props.offsetFraction) {
+      const predicateBottomPx =
+        windowHeight + scrollPosition >= pageHeight - (this.props.offsetPx || 0)
+      predicateBottomPx && this.props.onTrigger()
+    } else if (this.props.edge === 'bottom') {
+      const predicateBottomFraction =
+        windowHeight + scrollPosition >= pageHeight * (1 - (this.props.offsetFraction || 0))
+      predicateBottomFraction && this.props.onTrigger()
     }
   }
 

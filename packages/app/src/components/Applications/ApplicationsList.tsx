@@ -24,7 +24,7 @@ import { NonNullArray, ElementType } from '../../utils'
 import * as R from 'ramda'
 import { NetworkStatus } from 'apollo-client'
 import { Button } from 'office-ui-fabric-react/lib/Button'
-import { ScrollBottomSensor } from '..'
+import { ScrollSensor } from '..'
 
 const GET_APPLICATIONS = gql`
   query ApplicationsQuery($first: Int!, $after: String) {
@@ -220,7 +220,7 @@ export class ApplicationsListBase extends React.Component<
           enableShimmer={this.props.query.loading}
         />
         <Button onClick={this.loadMore}>Fetch more</Button>
-        <ScrollBottomSensor onTrigger={this.loadMore} triggerOffsetPx={100} rate={2000} />
+        <ScrollSensor onTrigger={this.loadMore} edge="bottom" offsetPx={250} rate={1000} />
       </MarqueeSelection>
     )
   }
