@@ -40,8 +40,17 @@ export interface ApplicationsQuery_applications {
   stage: ApplicationsQuery_applications_stage | null;
 }
 
+export interface ApplicationsQuery_applicationsConnection_aggregate {
+  count: number;
+}
+
+export interface ApplicationsQuery_applicationsConnection {
+  aggregate: ApplicationsQuery_applicationsConnection_aggregate;
+}
+
 export interface ApplicationsQuery {
   applications: (ApplicationsQuery_applications | null)[];
+  applicationsConnection: ApplicationsQuery_applicationsConnection;
 }
 
 export interface ApplicationsQueryVariables {

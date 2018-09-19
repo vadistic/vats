@@ -1,5 +1,5 @@
 {
-  "extends": ["../../tslint.json", "tslint-react"],
+  "extends": ["tslint-recommended", "tslint-config-react", "tslint-react"],
   "rules": {
     "no-shadowed-variable": false,
     "no-console": false,

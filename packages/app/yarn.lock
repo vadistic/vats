@@ -787,6 +787,10 @@
   dependencies:
     "@types/react" "*"
 
+"@types/ramda@^0.25.38":
+  version "0.25.38"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.38.tgz#6c945fcc91a5fa470cc3c5a4cd4a62d7f8d03576"
+
 "@types/reach__router@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/reach__router/-/reach__router-1.0.1.tgz#f927a0c6ae198e032b5990196c2b7606a9fb14a1"
@@ -4018,6 +4022,10 @@ iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
+
+idx@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/idx/-/idx-2.4.0.tgz#e89e6650c889a44bf889f79d47f40fe09b4eeaa3"
 
 ieee754@1.1.8:
   version "1.1.8"
