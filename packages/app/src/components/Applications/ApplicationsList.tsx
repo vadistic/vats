@@ -24,6 +24,7 @@ import { NonNullArray, ElementType } from '../../utils'
 import * as R from 'ramda'
 import { NetworkStatus } from 'apollo-client'
 import { Button } from 'office-ui-fabric-react/lib/Button'
+import { ScrollBottomSensor } from '..'
 
 const GET_APPLICATIONS = gql`
   query ApplicationsQuery($first: Int!, $after: String) {
@@ -58,29 +59,6 @@ const GET_APPLICATIONS = gql`
     }
   }
 `
-
-export interface BottomSensorProps {
-  onBottom: () => any
-}
-
-export const BottomSensor: React.SFC<BottomSensorProps> = props => {
-  window.onscroll = () => {
-    const pageHeight = document.documentElement.offsetHeight
-    const windowHeight = window.innerHeight
-
-    const scrollPosition =
-      window.scrollY ||
-      window.pageYOffset ||
-      document.body.scrollTop +
-        ((document.documentElement && document.documentElement.scrollTop) || 0)
-
-    if (pageHeight <= windowHeight + scrollPosition) {
-      props.onBottom()
-    }
-  }
-
-  return null
-}
 
 export type TApplicationItem = NonNullable<ElementType<ApplicationsQuery['applications']>>
 
@@ -194,7 +172,9 @@ export class ApplicationsListBase extends React.Component<
 
     if (
       this.props.query.data &&
-      this.state.items.length < this.props.query.data.applicationsConnection.aggregate.count
+      this.props.query.data.applicationsConnection &&
+      this.state.items.length < this.props.query.data.applicationsConnection.aggregate.count &&
+      this.props.query.networkStatus !== NetworkStatus.fetchMore
     ) {
       this.props.query.fetchMore({
         // TODO: fix typings & define some utils typeguards
@@ -240,7 +220,7 @@ export class ApplicationsListBase extends React.Component<
           enableShimmer={this.props.query.loading}
         />
         <Button onClick={this.loadMore}>Fetch more</Button>
-        <BottomSensor onBottom={this.loadMore} />
+        <ScrollBottomSensor onTrigger={this.loadMore} triggerOffsetPx={100} rate={2000} />
       </MarqueeSelection>
     )
   }
