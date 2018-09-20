@@ -6,6 +6,7 @@ import { onError } from 'apollo-link-error'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
 import { auth, tempAuth } from './utils/auth'
+import { createUploadLink } from 'apollo-upload-client'
 
 const TEMP_TOKEN = process.env.AUTH_TOKEN
 const TEMP_URI = `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
@@ -73,6 +74,8 @@ const stateLink = withClientState({
 
 const httpLink = new HttpLink({ uri: TEMP_URI })
 
+const uploadLink = createUploadLink({ uri: TEMP_URI })
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message, locations, path }) =>
@@ -86,6 +89,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 export const client = new ApolloClient({
   connectToDevTools: true,
-  link: ApolloLink.from([stateLink, tempAuthLink, httpLink, errorLink]),
+  link: ApolloLink.from([stateLink, tempAuthLink, httpLink, uploadLink, errorLink]),
   cache,
 })

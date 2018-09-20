@@ -50,7 +50,7 @@ type User {
 
   # additional info
   position: String
-  avatar: String
+  avatar: File
 }
 
 type Job {
@@ -92,7 +92,7 @@ type Application {
   workspace: Workspace!
 
   # ats
-  disqualifyReason: String
+  disqualifyReason: DisqualifyReason
 
   # connections
   job: Job!
@@ -112,17 +112,19 @@ type Candidate {
   # info
   firstName: String!
   lastName: String!
-  emails: [String!]
-  phones: [String!]
-  links: [String!]
-  avatar: String
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  avatar: File @relation(name: "CandidateAvatarFile")
 
-  resume: [String!]
-  coverLetter: [String!]
+  resumesString: [String!]!
+  resumesFile: [File!]! @relation(name: "CandidateResumeFiles")
+  coverLettersString: [String!]!
+  coverLettersFile: [File!]! @relation(name: "CandidateCoverLetterFiles")
 
   tags: [Tag!]!
-  source: [String!]
-  fields: [Field!]!
+  source: [String!]!
+  fields: [FieldLink!]!
 
   # conections
   tasks: [Task!]!
@@ -170,6 +172,16 @@ type Workflow {
   name: String!
   description: String
   stages: [Stage!]!
+  disqualifyReasons: [DisqualifyReason!]!
+}
+
+type DisqualifyReason {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  description: String
 }
 
 type Stage {
@@ -179,11 +191,10 @@ type Stage {
 
   name: String!
   description: String
-  position: Int!
-  type: StageTypeEnum!
+  type: StageType!
 }
 
-enum StageTypeEnum {
+enum StageType {
   NEW
   QUALIFIED
   HIRED
@@ -210,22 +221,22 @@ type Event {
   updatedAt: DateTime!
   workspace: Workspace! @relation(name: "WorkspaceEvent")
 
-  type: EventTypeEnum!
+  type: EventType!
 
   # actor interface
-  actorType: EventActorTypeEnum!
+  actorType: EventActorType!
   actorUser: User @relation(name: "UserEventActor")
   actorCandidate: Candidate @relation(name: "CandidateEventActor")
 
   # target interface
-  targetType: EventTargetTypeEnum!
+  targetType: EventTargetType!
   targetCandidate: Candidate @relation(name: "CandidateEventTarget")
   targetJob: Job @relation(name: "JobEventTarget")
   targetTask: Task @relation(name: "TaskEventTarget")
   targetWorkspace: Workspace @relation(name: "WorkspaceEventTarget")
 }
 
-enum EventTypeEnum {
+enum EventType {
   DEFAULT
   MESSAGE
   COMMENT_CREATE
@@ -233,13 +244,13 @@ enum EventTypeEnum {
   COMMENT_DELETE
 }
 
-enum EventActorTypeEnum {
+enum EventActorType {
   SYSTEM
   USER
   CANDIDATE
 }
 
-enum EventTargetTypeEnum {
+enum EventTargetType {
   CANDIDATE
   JOB
   TASK
@@ -251,12 +262,12 @@ type Notification {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  status: NotificationStatusEnum!
+  type: NotificationType!
   user: User!
   event: Event!
 }
 
-enum NotificationStatusEnum {
+enum NotificationType {
   NEW
   UNREAD
   READ
@@ -273,13 +284,14 @@ type Location {
 
 type Field {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
 
-  type: FieldTypeEnum!
+  type: FieldType!
   label: String!
-  value: String!
 }
 
-enum FieldTypeEnum {
+enum FieldType {
   INT
   FLOAT
   STRING
@@ -288,10 +300,28 @@ enum FieldTypeEnum {
   DATE_TIME
 }
 
+type FieldLink {
+  id: ID! @unique
+
+  candidate: Candidate!
+  value: String
+}
+
 type Tag {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
   label: String!
+}
+
+type File {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  size: Int!
+  type: String!
+  name: String!
+  url: String! @unique
 }

@@ -89,43 +89,40 @@ export class ApplicationsListBase extends React.Component<
     return [
       {
         key: 'column1',
-        name: 'File Type',
-        headerClassName: 'DetailsListExample-header--FileIcon',
-        className: 'DetailsListExample-cell--FileIcon',
-        iconClassName: 'DetailsListExample-Header-FileTypeIcon',
-        ariaLabel: 'Column operations for File type',
-        iconName: 'Page',
+        name: 'No',
+        ariaLabel: 'Index Column',
+        iconName: 'Pin',
         isIconOnly: true,
         fieldName: 'name',
-        minWidth: 150,
-        maxWidth: 200,
+        minWidth: 16,
+        maxWidth: 16,
         onColumnClick: this.onColumnClick,
         onRender: (item: TApplicationItem, index: number) => {
-          return (
-            <span>
-              {index} + ' '{item.job.name}
-            </span>
-          )
+          return <span>{index}</span>
         },
       },
       {
         key: 'column2',
         name: 'Name',
-        fieldName: 'name',
-        minWidth: 210,
-        maxWidth: 350,
+        minWidth: 150,
+        maxWidth: 250,
         isRowHeader: true,
         isResizable: true,
-        isSorted: true,
+        isSorted: false,
         isSortedDescending: false,
+        isFiltered: false,
         sortAscendingAriaLabel: 'Sorted A to Z',
         sortDescendingAriaLabel: 'Sorted Z to A',
         onColumnClick: this.onColumnClick,
-        data: 'string',
+        onRender: ({ candidate }: TApplicationItem, index: number) => (
+          <span>
+            {candidate.firstName} {candidate.lastName}
+          </span>
+        ),
         isPadded: true,
       },
       {
-        key: 'column3',
+        key: 'column4',
         name: 'Date Modified',
         fieldName: 'dateModifiedValue',
         minWidth: 70,

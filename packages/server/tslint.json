@@ -1,5 +1,9 @@
 {
-  "extends": ["../../tslint.json"],
+  "extends": ["tslint-recommended", "tslint-config-react"],
+  "rules": {
+    "no-shadowed-variable": false,
+    "no-console": false
+  },
   "linterOptions": {
     "exclude": ["src/generated/*"]
   }

@@ -6,7 +6,14 @@
   "license": "No license",
   "private": true,
   "scripts": {
-    "down": "dcoker-compose down",
-    "up": "dcoker-compose up -d --force-recreate"
+    "down": "docker-compose down",
+    "up": "docker-compose up -d --force-recreate",
+    "env:cmd": "env-cmd ../../.env",
+    "env:pull": "shx cp ../../.env .env",
+    "env:push": "shx cp .env ../../.env"
+  },
+  "devDependencies": {
+    "env-cmd": "^8.0.2",
+    "shx": "^0.3.2"
   }
 }

@@ -1,11 +1,11 @@
-.env*
-dist
-node_modules
+# Workspace
+*.env.*
 .vscode
-*.log
 
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
-.ebextensions
+# Project dependencies
+node_modules
+yarn-error.log
+
+# Build directory
+dist
+/public

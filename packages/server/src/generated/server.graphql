@@ -9,6 +9,10 @@ type Mutation {
   createTask(data: TaskCreateInput!): Task!
 }
 
+interface Node {
+  id: ID!
+}
+
 input WorkspaceCreateInput {
   name: String!
   firstName: String
@@ -64,7 +68,7 @@ type User implements Node {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
+  avatar(where: FileWhereInput): File
 }
 
 input UserWhereInput {
@@ -97,8 +101,6 @@ enum UserOrderByInput {
   deletedAt_DESC
   position_ASC
   position_DESC
-  avatar_ASC
-  avatar_DESC
 }
 
 type Application implements Node {
@@ -106,15 +108,15 @@ type Application implements Node {
   id: ID!
   updatedAt: DateTime!
   workspace(where: WorkspaceWhereInput): Workspace!
-  disqualifyReason: String
+  disqualifyReason(where: DisqualifyReasonWhereInput): DisqualifyReason
   job(where: JobWhereInput): Job!
   candidate(where: CandidateWhereInput): Candidate!
   stage(where: StageWhereInput): Stage
 }
 
 input ApplicationCreateInput {
-  disqualifyReason: String
   workspace: WorkspaceCreateOneWithoutApplicationsInput!
+  disqualifyReason: DisqualifyReasonCreateOneInput
   job: JobCreateOneWithoutApplicationsInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
   stage: StageCreateOneInput
@@ -132,12 +134,14 @@ type Candidate implements Node {
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
-  avatar: String
-  resume: [String!]!
-  coverLetter: [String!]!
+  avatar(where: FileWhereInput): File
+  resumesString: [String!]!
+  resumesFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
+  coverLettersString: [String!]!
+  coverLettersFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   source: [String!]!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
+  fields(where: FieldLinkWhereInput, orderBy: FieldLinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldLink!]
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -146,18 +150,20 @@ type Candidate implements Node {
 input CandidateCreateInput {
   firstName: String!
   lastName: String!
-  avatar: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  resume: CandidateCreateresumeInput
-  coverLetter: CandidateCreatecoverLetterInput
+  resumesString: CandidateCreateresumesStringInput
+  coverLettersString: CandidateCreatecoverLettersStringInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
   events: EventCreateManyWithoutTargetCandidateInput
   subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  avatar: FileCreateOneInput
+  resumesFile: FileCreateManyInput
+  coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldCreateManyInput
+  fields: FieldLinkCreateManyWithoutCandidateInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -219,17 +225,115 @@ input TaskCreateInput {
   candidate: CandidateCreateOneWithoutTasksInput
 }
 
-"""
-An object with an ID
-"""
-interface Node {
-  """
-  The id of the object.
-  """
+type Comment implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy(where: UserWhereInput): User!
+  parent(where: CommentWhereInput): Comment
+  content: String!
 }
 
-scalar DateTime
+type DisqualifyReason implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+}
+
+type Event implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  type: EventType!
+  actorType: EventActorType!
+  actorUser(where: UserWhereInput): User
+  actorCandidate(where: CandidateWhereInput): Candidate
+  targetType: EventTargetType!
+  targetCandidate(where: CandidateWhereInput): Candidate
+  targetJob(where: JobWhereInput): Job
+  targetTask(where: TaskWhereInput): Task
+  targetWorkspace(where: WorkspaceWhereInput): Workspace
+}
+
+type Field implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  type: FieldType!
+  label: String!
+}
+
+type FieldLink implements Node {
+  id: ID!
+  candidate(where: CandidateWhereInput): Candidate!
+  value: String
+}
+
+type File implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  size: Int!
+  type: String!
+  name: String!
+  url: String!
+}
+
+type Invite implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace(where: WorkspaceWhereInput): Workspace!
+  email: String!
+  expireAt: DateTime!
+  invitedBy(where: UserWhereInput): User!
+}
+
+type Location implements Node {
+  id: ID!
+  country: String!
+  region: String!
+  city: String!
+  zip: String!
+}
+
+type Notification implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  type: NotificationType!
+  user(where: UserWhereInput): User!
+  event(where: EventWhereInput): Event!
+}
+
+type Stage implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  type: StageType!
+}
+
+type Tag implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+}
+
+type Workflow implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
+  disqualifyReasons(where: DisqualifyReasonWhereInput, orderBy: DisqualifyReasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DisqualifyReason!]
+}
 
 type Workspace implements Node {
   id: ID!
@@ -246,6 +350,8 @@ type Workspace implements Node {
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   name: String!
 }
+
+scalar DateTime
 
 input WorkspaceWhereInput {
   """
@@ -451,22 +557,6 @@ input WorkspaceWhereInput {
   tags_none: TagWhereInput
 }
 
-type Event implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
-  type: EventTypeEnum!
-  actorType: EventActorTypeEnum!
-  actorUser(where: UserWhereInput): User
-  actorCandidate(where: CandidateWhereInput): Candidate
-  targetType: EventTargetTypeEnum!
-  targetCandidate(where: CandidateWhereInput): Candidate
-  targetJob(where: JobWhereInput): Job
-  targetTask(where: TaskWhereInput): Task
-  targetWorkspace(where: WorkspaceWhereInput): Workspace
-}
-
 input EventWhereInput {
   """
   Logical AND on all given filters.
@@ -591,45 +681,45 @@ input EventWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  type: EventTypeEnum
+  type: EventType
   """
   All values that are not equal to given value.
   """
-  type_not: EventTypeEnum
+  type_not: EventType
   """
   All values that are contained in given list.
   """
-  type_in: [EventTypeEnum!]
+  type_in: [EventType!]
   """
   All values that are not contained in given list.
   """
-  type_not_in: [EventTypeEnum!]
-  actorType: EventActorTypeEnum
+  type_not_in: [EventType!]
+  actorType: EventActorType
   """
   All values that are not equal to given value.
   """
-  actorType_not: EventActorTypeEnum
+  actorType_not: EventActorType
   """
   All values that are contained in given list.
   """
-  actorType_in: [EventActorTypeEnum!]
+  actorType_in: [EventActorType!]
   """
   All values that are not contained in given list.
   """
-  actorType_not_in: [EventActorTypeEnum!]
-  targetType: EventTargetTypeEnum
+  actorType_not_in: [EventActorType!]
+  targetType: EventTargetType
   """
   All values that are not equal to given value.
   """
-  targetType_not: EventTargetTypeEnum
+  targetType_not: EventTargetType
   """
   All values that are contained in given list.
   """
-  targetType_in: [EventTargetTypeEnum!]
+  targetType_in: [EventTargetType!]
   """
   All values that are not contained in given list.
   """
-  targetType_not_in: [EventTargetTypeEnum!]
+  targetType_not_in: [EventTargetType!]
   workspace: WorkspaceWhereInput
   actorUser: UserWhereInput
   actorCandidate: CandidateWhereInput
@@ -637,15 +727,6 @@ input EventWhereInput {
   targetJob: JobWhereInput
   targetTask: TaskWhereInput
   targetWorkspace: WorkspaceWhereInput
-}
-
-type Notification implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  status: NotificationStatusEnum!
-  user(where: UserWhereInput): User!
-  event(where: EventWhereInput): Event!
 }
 
 input NotificationWhereInput {
@@ -772,19 +853,19 @@ input NotificationWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  status: NotificationStatusEnum
+  type: NotificationType
   """
   All values that are not equal to given value.
   """
-  status_not: NotificationStatusEnum
+  type_not: NotificationType
   """
   All values that are contained in given list.
   """
-  status_in: [NotificationStatusEnum!]
+  type_in: [NotificationType!]
   """
   All values that are not contained in given list.
   """
-  status_not_in: [NotificationStatusEnum!]
+  type_not_in: [NotificationType!]
   user: UserWhereInput
   event: EventWhereInput
 }
@@ -796,8 +877,8 @@ enum NotificationOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  status_ASC
-  status_DESC
+  type_ASC
+  type_DESC
 }
 
 input JobWhereInput {
@@ -1417,59 +1498,6 @@ input CandidateWhereInput {
   All values not ending with the given string.
   """
   lastName_not_ends_with: String
-  avatar: String
-  """
-  All values that are not equal to given value.
-  """
-  avatar_not: String
-  """
-  All values that are contained in given list.
-  """
-  avatar_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  avatar_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  avatar_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  avatar_lte: String
-  """
-  All values greater than the given value.
-  """
-  avatar_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  avatar_gte: String
-  """
-  All values containing the given string.
-  """
-  avatar_contains: String
-  """
-  All values not containing the given string.
-  """
-  avatar_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  avatar_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  avatar_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  avatar_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  avatar_not_ends_with: String
   workspace: WorkspaceWhereInput
   events_every: EventWhereInput
   events_some: EventWhereInput
@@ -1477,12 +1505,19 @@ input CandidateWhereInput {
   subscribers_every: UserWhereInput
   subscribers_some: UserWhereInput
   subscribers_none: UserWhereInput
+  avatar: FileWhereInput
+  resumesFile_every: FileWhereInput
+  resumesFile_some: FileWhereInput
+  resumesFile_none: FileWhereInput
+  coverLettersFile_every: FileWhereInput
+  coverLettersFile_some: FileWhereInput
+  coverLettersFile_none: FileWhereInput
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
-  fields_every: FieldWhereInput
-  fields_some: FieldWhereInput
-  fields_none: FieldWhereInput
+  fields_every: FieldLinkWhereInput
+  fields_some: FieldLinkWhereInput
+  fields_none: FieldLinkWhereInput
   tasks_every: TaskWhereInput
   tasks_some: TaskWhereInput
   tasks_none: TaskWhereInput
@@ -1505,8 +1540,6 @@ enum CandidateOrderByInput {
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  avatar_ASC
-  avatar_DESC
 }
 
 input TaskWhereInput {
@@ -1793,14 +1826,550 @@ enum TaskOrderByInput {
   dueAt_DESC
 }
 
-type Stage implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  name: String!
+input FileWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [FileWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [FileWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [FileWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  size: Int
+  """
+  All values that are not equal to given value.
+  """
+  size_not: Int
+  """
+  All values that are contained in given list.
+  """
+  size_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  size_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  size_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  size_lte: Int
+  """
+  All values greater than the given value.
+  """
+  size_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  size_gte: Int
+  type: String
+  """
+  All values that are not equal to given value.
+  """
+  type_not: String
+  """
+  All values that are contained in given list.
+  """
+  type_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  type_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  type_lte: String
+  """
+  All values greater than the given value.
+  """
+  type_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  type_gte: String
+  """
+  All values containing the given string.
+  """
+  type_contains: String
+  """
+  All values not containing the given string.
+  """
+  type_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  type_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  type_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  type_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  type_not_ends_with: String
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  url: String
+  """
+  All values that are not equal to given value.
+  """
+  url_not: String
+  """
+  All values that are contained in given list.
+  """
+  url_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  url_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  url_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  url_lte: String
+  """
+  All values greater than the given value.
+  """
+  url_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  url_gte: String
+  """
+  All values containing the given string.
+  """
+  url_contains: String
+  """
+  All values not containing the given string.
+  """
+  url_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  url_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  url_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  url_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  url_not_ends_with: String
+}
+
+input DisqualifyReasonWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DisqualifyReasonWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DisqualifyReasonWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [DisqualifyReasonWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
   description: String
-  position: Int!
-  type: StageTypeEnum!
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  description_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  description_lte: String
+  """
+  All values greater than the given value.
+  """
+  description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  description_gte: String
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  description_not_ends_with: String
 }
 
 input StageWhereInput {
@@ -2033,53 +2602,29 @@ input StageWhereInput {
   All values not ending with the given string.
   """
   description_not_ends_with: String
-  position: Int
+  type: StageType
   """
   All values that are not equal to given value.
   """
-  position_not: Int
+  type_not: StageType
   """
   All values that are contained in given list.
   """
-  position_in: [Int!]
+  type_in: [StageType!]
   """
   All values that are not contained in given list.
   """
-  position_not_in: [Int!]
-  """
-  All values less than the given value.
-  """
-  position_lt: Int
-  """
-  All values less than or equal the given value.
-  """
-  position_lte: Int
-  """
-  All values greater than the given value.
-  """
-  position_gt: Int
-  """
-  All values greater than or equal the given value.
-  """
-  position_gte: Int
-  type: StageTypeEnum
-  """
-  All values that are not equal to given value.
-  """
-  type_not: StageTypeEnum
-  """
-  All values that are contained in given list.
-  """
-  type_in: [StageTypeEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  type_not_in: [StageTypeEnum!]
+  type_not_in: [StageType!]
 }
 
 input WorkspaceCreateOneWithoutApplicationsInput {
   create: WorkspaceCreateWithoutApplicationsInput
   connect: WorkspaceWhereUniqueInput
+}
+
+input DisqualifyReasonCreateOneInput {
+  create: DisqualifyReasonCreateInput
+  connect: DisqualifyReasonWhereUniqueInput
 }
 
 input JobCreateOneWithoutApplicationsInput {
@@ -2112,11 +2657,21 @@ enum EventOrderByInput {
   targetType_DESC
 }
 
-type Tag implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  label: String!
+enum FileOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  size_ASC
+  size_DESC
+  type_ASC
+  type_DESC
+  name_ASC
+  name_DESC
+  url_ASC
+  url_DESC
 }
 
 input TagWhereInput {
@@ -2309,26 +2864,19 @@ enum TagOrderByInput {
   label_DESC
 }
 
-type Field implements Node {
-  id: ID!
-  type: FieldTypeEnum!
-  label: String!
-  value: String!
-}
-
-input FieldWhereInput {
+input FieldLinkWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [FieldWhereInput!]
+  AND: [FieldLinkWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [FieldWhereInput!]
+  OR: [FieldLinkWhereInput!]
   """
   Logical NOT on all given filters combined by AND.
   """
-  NOT: [FieldWhereInput!]
+  NOT: [FieldLinkWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -2382,72 +2930,6 @@ input FieldWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
-  type: FieldTypeEnum
-  """
-  All values that are not equal to given value.
-  """
-  type_not: FieldTypeEnum
-  """
-  All values that are contained in given list.
-  """
-  type_in: [FieldTypeEnum!]
-  """
-  All values that are not contained in given list.
-  """
-  type_not_in: [FieldTypeEnum!]
-  label: String
-  """
-  All values that are not equal to given value.
-  """
-  label_not: String
-  """
-  All values that are contained in given list.
-  """
-  label_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  label_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  label_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  label_lte: String
-  """
-  All values greater than the given value.
-  """
-  label_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  label_gte: String
-  """
-  All values containing the given string.
-  """
-  label_contains: String
-  """
-  All values not containing the given string.
-  """
-  label_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  label_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  label_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  label_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  label_not_ends_with: String
   value: String
   """
   All values that are not equal to given value.
@@ -2501,15 +2983,12 @@ input FieldWhereInput {
   All values not ending with the given string.
   """
   value_not_ends_with: String
+  candidate: CandidateWhereInput
 }
 
-enum FieldOrderByInput {
+enum FieldLinkOrderByInput {
   id_ASC
   id_DESC
-  type_ASC
-  type_DESC
-  label_ASC
-  label_DESC
   value_ASC
   value_DESC
   updatedAt_ASC
@@ -2642,60 +3121,8 @@ input ApplicationWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  disqualifyReason: String
-  """
-  All values that are not equal to given value.
-  """
-  disqualifyReason_not: String
-  """
-  All values that are contained in given list.
-  """
-  disqualifyReason_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  disqualifyReason_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  disqualifyReason_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  disqualifyReason_lte: String
-  """
-  All values greater than the given value.
-  """
-  disqualifyReason_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  disqualifyReason_gte: String
-  """
-  All values containing the given string.
-  """
-  disqualifyReason_contains: String
-  """
-  All values not containing the given string.
-  """
-  disqualifyReason_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  disqualifyReason_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  disqualifyReason_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  disqualifyReason_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  disqualifyReason_not_ends_with: String
   workspace: WorkspaceWhereInput
+  disqualifyReason: DisqualifyReasonWhereInput
   job: JobWhereInput
   candidate: CandidateWhereInput
   stage: StageWhereInput
@@ -2708,17 +3135,6 @@ enum ApplicationOrderByInput {
   id_DESC
   updatedAt_ASC
   updatedAt_DESC
-  disqualifyReason_ASC
-  disqualifyReason_DESC
-}
-
-type Comment implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  createdBy(where: UserWhereInput): User!
-  parent(where: CommentWhereInput): Comment
-  content: String!
 }
 
 input CommentWhereInput {
@@ -2925,11 +3341,11 @@ input CandidateCreatelinksInput {
   set: [String!]
 }
 
-input CandidateCreateresumeInput {
+input CandidateCreateresumesStringInput {
   set: [String!]
 }
 
-input CandidateCreatecoverLetterInput {
+input CandidateCreatecoverLettersStringInput {
   set: [String!]
 }
 
@@ -2952,14 +3368,24 @@ input UserCreateManyWithoutSubscriptionCandidatesInput {
   connect: [UserWhereUniqueInput!]
 }
 
+input FileCreateOneInput {
+  create: FileCreateInput
+  connect: FileWhereUniqueInput
+}
+
+input FileCreateManyInput {
+  create: [FileCreateInput!]
+  connect: [FileWhereUniqueInput!]
+}
+
 input TagCreateManyInput {
   create: [TagCreateInput!]
   connect: [TagWhereUniqueInput!]
 }
 
-input FieldCreateManyInput {
-  create: [FieldCreateInput!]
-  connect: [FieldWhereUniqueInput!]
+input FieldLinkCreateManyWithoutCandidateInput {
+  create: [FieldLinkCreateWithoutCandidateInput!]
+  connect: [FieldLinkWhereUniqueInput!]
 }
 
 input TaskCreateManyWithoutCandidateInput {
@@ -2975,15 +3401,6 @@ input ApplicationCreateManyWithoutCandidateInput {
 input CommentCreateManyInput {
   create: [CommentCreateInput!]
   connect: [CommentWhereUniqueInput!]
-}
-
-type Workflow implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  name: String!
-  description: String
-  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
 }
 
 input WorkflowWhereInput {
@@ -3219,20 +3636,15 @@ input WorkflowWhereInput {
   stages_every: StageWhereInput
   stages_some: StageWhereInput
   stages_none: StageWhereInput
+  disqualifyReasons_every: DisqualifyReasonWhereInput
+  disqualifyReasons_some: DisqualifyReasonWhereInput
+  disqualifyReasons_none: DisqualifyReasonWhereInput
 }
 
 enum JobType {
   DRAFT
   PUBLISHED
   ARCHIVED
-}
-
-type Location implements Node {
-  id: ID!
-  country: String!
-  region: String!
-  city: String!
-  zip: String!
 }
 
 input LocationWhereInput {
@@ -3582,14 +3994,75 @@ input CandidateCreateOneWithoutTasksInput {
   connect: CandidateWhereUniqueInput
 }
 
-type Invite implements Node {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
-  email: String!
-  expireAt: DateTime!
-  invitedBy(where: UserWhereInput): User!
+enum EventType {
+  DEFAULT
+  MESSAGE
+  COMMENT_CREATE
+  COMMENT_EDIT
+  COMMENT_DELETE
+}
+
+enum EventActorType {
+  SYSTEM
+  USER
+  CANDIDATE
+}
+
+enum EventTargetType {
+  CANDIDATE
+  JOB
+  TASK
+  WORKSPACE
+}
+
+enum FieldType {
+  INT
+  FLOAT
+  STRING
+  TEXT
+  BOOLEAN
+  DATE_TIME
+}
+
+enum NotificationType {
+  NEW
+  UNREAD
+  READ
+}
+
+enum StageType {
+  NEW
+  QUALIFIED
+  HIRED
+  DISQUALIFIED
+}
+
+enum StageOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  type_ASC
+  type_DESC
+}
+
+enum DisqualifyReasonOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
 }
 
 enum WorkflowOrderByInput {
@@ -3828,40 +4301,6 @@ enum InviteOrderByInput {
   expireAt_DESC
 }
 
-enum EventTypeEnum {
-  DEFAULT
-  MESSAGE
-  COMMENT_CREATE
-  COMMENT_EDIT
-  COMMENT_DELETE
-}
-
-enum EventActorTypeEnum {
-  SYSTEM
-  USER
-  CANDIDATE
-}
-
-enum EventTargetTypeEnum {
-  CANDIDATE
-  JOB
-  TASK
-  WORKSPACE
-}
-
-enum NotificationStatusEnum {
-  NEW
-  UNREAD
-  READ
-}
-
-enum StageTypeEnum {
-  NEW
-  QUALIFIED
-  HIRED
-  DISQUALIFIED
-}
-
 input WorkspaceCreateWithoutApplicationsInput {
   name: String!
   events: EventCreateManyWithoutTargetWorkspaceInput
@@ -3875,6 +4314,15 @@ input WorkspaceCreateWithoutApplicationsInput {
 }
 
 input WorkspaceWhereUniqueInput {
+  id: ID
+}
+
+input DisqualifyReasonCreateInput {
+  name: String!
+  description: String
+}
+
+input DisqualifyReasonWhereUniqueInput {
   id: ID
 }
 
@@ -3899,18 +4347,20 @@ input JobWhereUniqueInput {
 input CandidateCreateWithoutApplicationsInput {
   firstName: String!
   lastName: String!
-  avatar: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  resume: CandidateCreateresumeInput
-  coverLetter: CandidateCreatecoverLetterInput
+  resumesString: CandidateCreateresumesStringInput
+  coverLettersString: CandidateCreatecoverLettersStringInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
   events: EventCreateManyWithoutTargetCandidateInput
   subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  avatar: FileCreateOneInput
+  resumesFile: FileCreateManyInput
+  coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldCreateManyInput
+  fields: FieldLinkCreateManyWithoutCandidateInput
   tasks: TaskCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
@@ -3922,21 +4372,11 @@ input CandidateWhereUniqueInput {
 input StageCreateInput {
   name: String!
   description: String
-  position: Int!
-  type: StageTypeEnum!
+  type: StageType!
 }
 
 input StageWhereUniqueInput {
   id: ID
-}
-
-enum FieldTypeEnum {
-  INT
-  FLOAT
-  STRING
-  TEXT
-  BOOLEAN
-  DATE_TIME
 }
 
 input WorkspaceCreateWithoutCandidatesInput {
@@ -3952,9 +4392,9 @@ input WorkspaceCreateWithoutCandidatesInput {
 }
 
 input EventCreateWithoutTargetCandidateInput {
-  type: EventTypeEnum!
-  actorType: EventActorTypeEnum!
-  targetType: EventTargetTypeEnum!
+  type: EventType!
+  actorType: EventActorType!
+  targetType: EventTargetType!
   workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput
@@ -3975,18 +4415,30 @@ input UserCreateWithoutSubscriptionCandidatesInput {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
   workspace: WorkspaceCreateOneWithoutUsersInput!
   events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
   subscriptionJobs: JobCreateManyWithoutSubscribersInput
   subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
+  avatar: FileCreateOneInput
 }
 
 input UserWhereUniqueInput {
   id: ID
   email: String
+}
+
+input FileCreateInput {
+  size: Int!
+  type: String!
+  name: String!
+  url: String!
+}
+
+input FileWhereUniqueInput {
+  id: ID
+  url: String
 }
 
 input TagCreateInput {
@@ -3997,13 +4449,11 @@ input TagWhereUniqueInput {
   id: ID
 }
 
-input FieldCreateInput {
-  type: FieldTypeEnum!
-  label: String!
-  value: String!
+input FieldLinkCreateWithoutCandidateInput {
+  value: String
 }
 
-input FieldWhereUniqueInput {
+input FieldLinkWhereUniqueInput {
   id: ID
 }
 
@@ -4021,8 +4471,8 @@ input TaskWhereUniqueInput {
 }
 
 input ApplicationCreateWithoutCandidateInput {
-  disqualifyReason: String
   workspace: WorkspaceCreateOneWithoutApplicationsInput!
+  disqualifyReason: DisqualifyReasonCreateOneInput
   job: JobCreateOneWithoutApplicationsInput!
   stage: StageCreateOneInput
 }
@@ -4039,23 +4489,6 @@ input CommentCreateInput {
 
 input CommentWhereUniqueInput {
   id: ID
-}
-
-enum StageOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  position_ASC
-  position_DESC
-  type_ASC
-  type_DESC
 }
 
 input WorkspaceCreateWithoutJobsInput {
@@ -4078,19 +4511,19 @@ input UserCreateWithoutSubscriptionJobsInput {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
   workspace: WorkspaceCreateOneWithoutUsersInput!
   events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
   subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
   subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
+  avatar: FileCreateOneInput
 }
 
 input EventCreateWithoutTargetJobInput {
-  type: EventTypeEnum!
-  actorType: EventActorTypeEnum!
-  targetType: EventTargetTypeEnum!
+  type: EventType!
+  actorType: EventActorType!
+  targetType: EventTargetType!
   workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput
@@ -4100,8 +4533,8 @@ input EventCreateWithoutTargetJobInput {
 }
 
 input ApplicationCreateWithoutJobInput {
-  disqualifyReason: String
   workspace: WorkspaceCreateOneWithoutApplicationsInput!
+  disqualifyReason: DisqualifyReasonCreateOneInput
   candidate: CandidateCreateOneWithoutApplicationsInput!
   stage: StageCreateOneInput
 }
@@ -4110,6 +4543,7 @@ input WorkflowCreateInput {
   name: String!
   description: String
   stages: StageCreateManyInput
+  disqualifyReasons: DisqualifyReasonCreateManyInput
 }
 
 input WorkflowWhereUniqueInput {
@@ -4135,13 +4569,13 @@ input UserCreateWithoutSubscriptionTasksInput {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
   workspace: WorkspaceCreateOneWithoutUsersInput!
   events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
   subscriptionJobs: JobCreateManyWithoutSubscribersInput
   subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
+  avatar: FileCreateOneInput
 }
 
 input UserCreateWithoutTasksInput {
@@ -4152,30 +4586,32 @@ input UserCreateWithoutTasksInput {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
   workspace: WorkspaceCreateOneWithoutUsersInput!
   events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
   subscriptionJobs: JobCreateManyWithoutSubscribersInput
   subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
   subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  avatar: FileCreateOneInput
 }
 
 input CandidateCreateWithoutTasksInput {
   firstName: String!
   lastName: String!
-  avatar: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  resume: CandidateCreateresumeInput
-  coverLetter: CandidateCreatecoverLetterInput
+  resumesString: CandidateCreateresumesStringInput
+  coverLettersString: CandidateCreatecoverLettersStringInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
   events: EventCreateManyWithoutTargetCandidateInput
   subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  avatar: FileCreateOneInput
+  resumesFile: FileCreateManyInput
+  coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldCreateManyInput
+  fields: FieldLinkCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
@@ -4295,10 +4731,15 @@ input StageCreateManyInput {
   connect: [StageWhereUniqueInput!]
 }
 
+input DisqualifyReasonCreateManyInput {
+  create: [DisqualifyReasonCreateInput!]
+  connect: [DisqualifyReasonWhereUniqueInput!]
+}
+
 input EventCreateWithoutTargetWorkspaceInput {
-  type: EventTypeEnum!
-  actorType: EventActorTypeEnum!
-  targetType: EventTargetTypeEnum!
+  type: EventType!
+  actorType: EventActorType!
+  targetType: EventTargetType!
   workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput
@@ -4315,13 +4756,13 @@ input UserCreateWithoutWorkspaceInput {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
   events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
   subscriptionJobs: JobCreateManyWithoutSubscribersInput
   subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
   subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
+  avatar: FileCreateOneInput
 }
 
 input JobCreateWithoutWorkspaceInput {
@@ -4341,17 +4782,19 @@ input JobCreateWithoutWorkspaceInput {
 input CandidateCreateWithoutWorkspaceInput {
   firstName: String!
   lastName: String!
-  avatar: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  resume: CandidateCreateresumeInput
-  coverLetter: CandidateCreatecoverLetterInput
+  resumesString: CandidateCreateresumesStringInput
+  coverLettersString: CandidateCreatecoverLettersStringInput
   source: CandidateCreatesourceInput
   events: EventCreateManyWithoutTargetCandidateInput
   subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  avatar: FileCreateOneInput
+  resumesFile: FileCreateManyInput
+  coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldCreateManyInput
+  fields: FieldLinkCreateManyWithoutCandidateInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -4368,7 +4811,7 @@ input InviteWhereUniqueInput {
 }
 
 input ApplicationCreateWithoutWorkspaceInput {
-  disqualifyReason: String
+  disqualifyReason: DisqualifyReasonCreateOneInput
   job: JobCreateOneWithoutApplicationsInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
   stage: StageCreateOneInput
@@ -4382,13 +4825,13 @@ input UserCreateWithoutEventsInput {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
   workspace: WorkspaceCreateOneWithoutUsersInput!
   notifications: NotificationCreateManyWithoutUserInput
   subscriptionJobs: JobCreateManyWithoutSubscribersInput
   subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
   subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
+  avatar: FileCreateOneInput
 }
 
 input JobCreateWithoutEventsInput {
@@ -4430,9 +4873,9 @@ input WorkspaceCreateWithoutUsersInput {
 }
 
 input EventCreateWithoutActorUserInput {
-  type: EventTypeEnum!
-  actorType: EventActorTypeEnum!
-  targetType: EventTargetTypeEnum!
+  type: EventType!
+  actorType: EventActorType!
+  targetType: EventTargetType!
   workspace: WorkspaceCreateOneInput!
   actorCandidate: CandidateCreateOneInput
   targetCandidate: CandidateCreateOneWithoutEventsInput
@@ -4442,7 +4885,7 @@ input EventCreateWithoutActorUserInput {
 }
 
 input NotificationCreateWithoutUserInput {
-  status: NotificationStatusEnum!
+  type: NotificationType!
   event: EventCreateOneInput!
 }
 
@@ -4490,7 +4933,6 @@ input UserCreateInput {
   lastLogin: DateTime
   deletedAt: DateTime
   position: String
-  avatar: String
   workspace: WorkspaceCreateOneWithoutUsersInput!
   events: EventCreateOneWithoutActorUserInput
   notifications: NotificationCreateManyWithoutUserInput
@@ -4498,22 +4940,25 @@ input UserCreateInput {
   subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
   subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
+  avatar: FileCreateOneInput
 }
 
 input CandidateCreateWithoutSubscribersInput {
   firstName: String!
   lastName: String!
-  avatar: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  resume: CandidateCreateresumeInput
-  coverLetter: CandidateCreatecoverLetterInput
+  resumesString: CandidateCreateresumesStringInput
+  coverLettersString: CandidateCreatecoverLettersStringInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
   events: EventCreateManyWithoutTargetCandidateInput
+  avatar: FileCreateOneInput
+  resumesFile: FileCreateManyInput
+  coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldCreateManyInput
+  fields: FieldLinkCreateManyWithoutCandidateInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -4522,17 +4967,19 @@ input CandidateCreateWithoutSubscribersInput {
 input CandidateCreateWithoutEventsInput {
   firstName: String!
   lastName: String!
-  avatar: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
-  resume: CandidateCreateresumeInput
-  coverLetter: CandidateCreatecoverLetterInput
+  resumesString: CandidateCreateresumesStringInput
+  coverLettersString: CandidateCreatecoverLettersStringInput
   source: CandidateCreatesourceInput
   workspace: WorkspaceCreateOneWithoutCandidatesInput!
   subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
+  avatar: FileCreateOneInput
+  resumesFile: FileCreateManyInput
+  coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldCreateManyInput
+  fields: FieldLinkCreateManyWithoutCandidateInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -4544,9 +4991,9 @@ input EventCreateOneInput {
 }
 
 input EventCreateInput {
-  type: EventTypeEnum!
-  actorType: EventActorTypeEnum!
-  targetType: EventTargetTypeEnum!
+  type: EventType!
+  actorType: EventActorType!
+  targetType: EventTargetType!
   workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput

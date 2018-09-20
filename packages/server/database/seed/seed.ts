@@ -14,7 +14,7 @@ import {
   Workflow,
 } from '../../src/generated/prisma'
 import { prismaTypeDefs } from '../../src/schema/schema'
-import { Task } from '../generated/server'
+import { Task, FileCreateOneInput, FileCreateInput } from '../generated/server'
 import { stageCreateMany } from './stages'
 import { fakeEmoji, fakeSocialLink, List, randomConnectMany, randomFn } from './utils'
 
@@ -43,7 +43,7 @@ const config = {
   TASKS_NUMBER: 50,
 }
 
-const TIMEOUT = 50
+const TIMEOUT = 300
 
 const setup = async () => {
   // seed workspace
@@ -66,7 +66,14 @@ const setup = async () => {
     const firstName = f.name.firstName(gender)
     const lastName = f.name.lastName(gender)
     const username = f.internet.userName(firstName, lastName)
-    const email = f.internet.email(firstName, lastName, 'vadistic-recrtuiment.com')
+    const email = f.internet.email(firstName, lastName, 'vadistic-recruitment.com')
+
+    const avatarFile: FileCreateInput = {
+      name: `${firstName}-${lastName}-profile-96x96`,
+      size: 27500,
+      type: 'image/png',
+      url: `https://api.adorable.io/avatars/96/${email}.png`,
+    }
 
     users.arr[i] = await db.mutation.createUser({
       data: {
@@ -75,8 +82,8 @@ const setup = async () => {
         lastName,
         email,
         username,
-        // aditional info
-        avatar: f.random.boolean && f.internet.avatar(),
+        // half of guys would have avatars
+        avatar: f.random.boolean ? { create: avatarFile } : undefined,
         position: f.name.jobDescriptor + f.name.jobTitle(),
         // edges
         workspace: { connect: { id: workspace.id } },
@@ -155,6 +162,8 @@ const setup = async () => {
     jobs.arr[i] = await db.mutation.createJob({
       data: {
         name: f.name.jobDescriptor() + ' ' + f.name.jobTitle(),
+        description: f.lorem.paragraphs(f.random.number(4)),
+        requirements: f.lorem.paragraphs(f.random.number(4)),
         department: f.name.jobArea(),
         status: f.random.arrayElement(['DRAFT', 'PUBLISHED', 'ARCHIVED'] as JobType[]),
         locations: { connect: randomConnectMany(locations, 3) },
@@ -195,6 +204,13 @@ const setup = async () => {
     const links = R.times(() => fakeSocialLink(), f.random.number(4))
     const phones = R.times(() => f.phone.phoneNumber(), f.random.number(2))
 
+    const avatarFile: FileCreateInput = {
+      name: `${firstName}-${lastName}-profile-96x96`,
+      size: 27500,
+      type: 'image/png',
+      url: `https://api.adorable.io/avatars/96/${emails[0] || firstName + '@' + lastName}.png`,
+    }
+
     candidates.arr[i] = await db.mutation.createCandidate({
       data: {
         workspace: { connect: { id: workspace.id } },
@@ -205,7 +221,7 @@ const setup = async () => {
         firstName,
         lastName,
         links: { set: links },
-        avatar: f.random.boolean && f.internet.avatar(),
+        avatar: f.random.boolean ? { create: avatarFile } : undefined,
       },
     })
   }
@@ -275,16 +291,12 @@ const setup = async () => {
 
     const stage = f.random.arrayElement(job.workflow.stages)
 
-    const disqualifyReason =
-      stage.type === 'DISQUALIFIED' ? f.lorem.sentence(f.random.number(3)) : undefined
-
     applications.arr[i] = await db.mutation.createApplication({
       data: {
         candidate: { connect: { id: candidates.random().id } },
         job: { connect: { id: job.id } },
         stage: { connect: { id: stage.id } },
         workspace: { connect: { id: workspace.id } },
-        disqualifyReason,
       },
     })
   }
