@@ -1,4 +1,8 @@
 declare module '*.graphql' {
-  const value: any
-  export default value
+  import { DocumentNode } from 'graphql'
+
+  const value: {
+    [key: string]: DocumentNode
+  }
+  export = value
 }

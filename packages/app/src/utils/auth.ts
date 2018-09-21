@@ -23,7 +23,7 @@ export const cookieAuth = new AuthClass({
 // amphoteric Auth - without cookies
 export const sessionAuth = new AuthClass({
   userPoolId: 'eu-west-1_QB5d6ZO7S',
-  userPoolWebClientId: '7paip3rlrdmhktcoem3kmtn8ev',
+  userPoolWebClientId: process.env.APP_CLIENT_ID as string,
   authenticationFlowType: 'USER_SRP_AUTH',
   // https://github.com/aws-amplify/amplify-js/issues/740
   identityPoolId: 'bug',

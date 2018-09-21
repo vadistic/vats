@@ -19,7 +19,7 @@ import {
   HoverCardCandidateQueryVariables,
 } from './generated/HoverCardCandidateQuery'
 
-import * as candidateHoverCardQuery from './Candidate.fragment.graphql'
+import { HoverCardCandidateQuery as hoverCardCandidateQuery } from './HoverCard.graphql'
 
 export interface ICandidateHoverCardProps extends IHoverCardProps {
   candidate: PersonaCandidateFragment
@@ -81,7 +81,7 @@ export const CandidateHoverCard: React.SFC<ICandidateHoverCardProps> = ({ candid
         HoverCardCandidateQuery,
         HoverCardCandidateQueryVariables
       >({
-        query: candidateHoverCardQuery,
+        query: hoverCardCandidateQuery,
         variables: { id: candidate.id },
       })
 

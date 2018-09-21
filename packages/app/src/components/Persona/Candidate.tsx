@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react/lib/Persona'
 
-import { PersonaCandidateFragment } from './generated/CandidatePersonaFragment'
+import { PersonaCandidateFragment } from './generated/PersonaCandidateFragment'
 
 export interface IPersonaCandidateProps extends IPersonaSharedProps {
   candidate: PersonaCandidateFragment

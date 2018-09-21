@@ -15,7 +15,7 @@ import {
   ApplicationsListQueryVariables,
 } from './generated/ApplicationsListQuery'
 
-const ApplicationsListQuery = gql`
+const applicationsListQuery = gql`
   query ApplicationsListQuery($jobIds: [ID!]!, $stageIds: [ID!]!) {
     applications(where: { AND: { job: { id_in: $jobIds }, stage: { id_in: $stageIds } } }) {
       id
@@ -105,7 +105,7 @@ const TEMP_APPLICATIONS_LIST_QUERY_VARIABLES = {
 
 export const ApplicationsList: React.SFC<IApplicationsListProps> = props => (
   <Query<ApplicationsListQuery, ApplicationsListQueryVariables>
-    query={ApplicationsListQuery}
+    query={applicationsListQuery}
     fetchPolicy={'cache-first'}
     variables={TEMP_APPLICATIONS_LIST_QUERY_VARIABLES}
   >

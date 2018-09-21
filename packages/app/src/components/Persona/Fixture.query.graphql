@@ -1,8 +1,0 @@
-# import './Candidate.fragment.graphql'
-
-query PersonaFixtureQuery {
-  candidates(first: 10) {
-    id
-    ...PersonaCandidateFragment
-  }
-}

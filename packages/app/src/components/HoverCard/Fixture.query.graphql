@@ -1,8 +1,0 @@
-# import '../Persona/Candidate.fragment.graphql'
-
-query HoverCardFixtureQuery {
-  candidates(first: 10) {
-    id
-    ...PersonaCandidateFragment
-  }
-}

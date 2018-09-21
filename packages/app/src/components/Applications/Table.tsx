@@ -22,7 +22,7 @@ import {
   ApplicationsTableQueryVariables,
 } from './generated/ApplicationsTableQuery'
 
-const ApplicationsTableQuery = gql`
+const applicationsTableQuery = gql`
   query ApplicationsTableQuery($first: Int!, $after: String) {
     applications(first: $first, after: $after) {
       id
@@ -217,7 +217,7 @@ export interface IApplicationsTableProps extends RouteComponentProps {}
 
 export const ApplicationsTable: React.SFC<IApplicationsTableProps> = props => (
   <Query<ApplicationsTableQuery, ApplicationsTableQueryVariables>
-    query={ApplicationsTableQuery}
+    query={applicationsTableQuery}
     fetchPolicy={'cache-first'}
     variables={{ first: 50 }}
   >

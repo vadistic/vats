@@ -1,0 +1,42 @@
+#import "../Persona/Persona.graphql"
+
+query HoverCardCandidateQuery($id: ID!) {
+  candidate(where: { id: $id }) {
+    id
+    id
+    firstName
+    lastName
+    metaCompany
+    metaHeadline
+    emails
+    phones
+    links
+    avatar {
+      url
+      name
+    }
+  }
+}
+
+query HoverCardUserQuery($id: ID!) {
+  user(where: { id: $id }) {
+    id
+    firstName
+    lastName
+    position
+    email
+    username
+    lastLogin
+    avatar {
+      url
+      name
+    }
+  }
+}
+
+query HoverCardFixtureQuery {
+  candidates(first: 10) {
+    id
+    ...PersonaCandidateFragment
+  }
+}

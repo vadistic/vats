@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react/lib/Persona'
 
-import { PersonaUserFragment } from './generated/UserPersonaFragment'
+import { PersonaUserFragment } from './generated/PersonaUserFragment'
 
 export interface IPersonaUserProps extends IPersonaSharedProps {
   user: PersonaUserFragment

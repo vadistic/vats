@@ -1,16 +1,15 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack')
 
 const BUNDLE_NAME = 'app'
-const IS_PRODUCTION = process.argv.indexOf('--production') > -1
 const OUT_DIR = 'dist'
 
 module.exports = {
   context: __dirname, // to automatically find tsconfig.json
-  devtool: 'inline-source-map',
+  devtool: 'none',
   entry: {
     main: './src/index.tsx',
   },
@@ -28,6 +27,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
+      },
+      {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: [
@@ -42,6 +46,7 @@ module.exports = {
                 '@babel/preset-react',
               ],
               plugins: [
+                '@babel/plugin-transform-runtime',
                 ['@babel/plugin-proposal-decorators', { legacy: true }],
                 ['@babel/plugin-proposal-class-properties', { loose: true }],
                 'react-hot-loader/babel',
@@ -60,12 +65,19 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.mjs', '.js'],
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin(),
+    // new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html') }),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      DEBUG: true,
+    }),
+    new Dotenv({
+      safe: true,
+    }),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),

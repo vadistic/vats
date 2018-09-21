@@ -12,7 +12,7 @@ import {
   ApplicationsBoardQueryVariables,
 } from './generated/ApplicationsBoardQuery'
 
-const ApplicationsBoardQuery = gql`
+const applicationsBoardQuery = gql`
   query ApplicationsBoardQuery($first: Int!, $after: String) {
     applications(first: $first, after: $after) {
       id
@@ -76,7 +76,7 @@ export interface IApplicationsBoardProps extends RouteComponentProps {}
 
 export const ApplicationsBoard: React.SFC<IApplicationsBoardProps> = props => (
   <Query<ApplicationsBoardQuery, ApplicationsBoardQueryVariables>
-    query={ApplicationsBoardQuery}
+    query={applicationsBoardQuery}
     fetchPolicy={'cache-first'}
     variables={{ first: 50 }}
   >

@@ -7,7 +7,7 @@ import { PersonaSize } from 'office-ui-fabric-react/lib/Persona'
 import { PersonaCandidate } from './Candidate'
 import { PersonaFixtureQuery } from './generated/PersonaFixtureQuery'
 
-import * as personaFixtureQuery from './Fixture.query.graphql'
+import { PersonaFixtureQuery as personaFixtureQuery } from './Persona.graphql'
 
 export const PersonaFixture: React.SFC<any> = props => (
   <Query<PersonaFixtureQuery> query={personaFixtureQuery}>
