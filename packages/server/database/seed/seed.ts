@@ -12,10 +12,11 @@ import {
   Tag,
   User,
   Workflow,
+  ApplicationType,
 } from '../../src/generated/prisma'
 import { prismaTypeDefs } from '../../src/schema/schema'
 import { Task, FileCreateOneInput, FileCreateInput } from '../generated/server'
-import { stageCreateMany } from './stages'
+import { workflowsData } from './workflows'
 import { fakeEmoji, fakeSocialLink, List, randomConnectMany, randomFn } from './utils'
 
 // tslint:disable: no-console
@@ -131,23 +132,11 @@ const setup = async () => {
   console.log('Seeding workflows start')
   const workflows = new List<Workflow>()
   workflows.arr[0] = await db.mutation.createWorkflow({
-    data: {
-      name: 'Default workflow',
-      description: f.lorem.sentence(),
-      stages: {
-        create: stageCreateMany.default,
-      },
-    },
+    data: workflowsData.default,
   })
 
   workflows.arr[1] = await db.mutation.createWorkflow({
-    data: {
-      name: `Quick workflow`,
-      description: f.lorem.sentence(),
-      stages: {
-        create: stageCreateMany.custom,
-      },
-    },
+    data: workflowsData.custom,
   })
   console.log('Seeding workflows end')
 
@@ -165,7 +154,7 @@ const setup = async () => {
         description: f.lorem.paragraphs(f.random.number(4)),
         requirements: f.lorem.paragraphs(f.random.number(4)),
         department: f.name.jobArea(),
-        status: f.random.arrayElement(['DRAFT', 'PUBLISHED', 'ARCHIVED'] as JobType[]),
+        type: f.random.arrayElement(['Draft', 'Published', 'Archived'] as JobType[]),
         locations: { connect: randomConnectMany(locations, 3) },
         workspace: { connect: { id: workspace.id } },
         workflow: { connect: { id: workflows.random().id } },
@@ -269,7 +258,6 @@ const setup = async () => {
         title,
         description,
         owners: { connect: randomConnectMany(users, 3) },
-        workspace: { connect: { id: workspace.id } },
         dueAt: f.random.boolean && f.date.future(0),
       },
     })
@@ -286,17 +274,28 @@ const setup = async () => {
 
     const job = await db.query.job(
       { where: { id: jobs.random().id } },
-      `{ id, workflow { stages { id, type }}}`
+      `{ id, workflow { stages { id, type }, diqualifications { id }}}`
     )
 
     const stage = f.random.arrayElement(job.workflow.stages)
+
+    const type = f.random.arrayElement(['Qualified', 'Disqualified'] as ApplicationType[])
+
+    const disqualificationLink = {
+      disqualification: {
+        connect: { id: f.random.arrayElement(job.workflow.disqualifications).id },
+      },
+      createdBy: { connect: { id: users.random().id } },
+    }
 
     applications.arr[i] = await db.mutation.createApplication({
       data: {
         candidate: { connect: { id: candidates.random().id } },
         job: { connect: { id: job.id } },
         stage: { connect: { id: stage.id } },
-        workspace: { connect: { id: workspace.id } },
+        type,
+        disqualificationLink:
+          type === 'Disqualified' ? { create: disqualificationLink } : undefined,
       },
     })
   }

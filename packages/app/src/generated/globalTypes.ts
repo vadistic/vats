@@ -11,7 +11,7 @@ export enum JobType {
   PUBLISHED = "PUBLISHED",
 }
 
-export enum StageTypeEnum {
+export enum StageType {
   DISQUALIFIED = "DISQUALIFIED",
   HIRED = "HIRED",
   NEW = "NEW",

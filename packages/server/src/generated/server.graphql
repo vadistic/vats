@@ -107,19 +107,19 @@ type Application implements Node {
   createdAt: DateTime!
   id: ID!
   updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
-  disqualifyReason(where: DisqualifyReasonWhereInput): DisqualifyReason
+  type: ApplicationType!
+  disqualificationLink(where: DisqualificationLinkWhereInput): DisqualificationLink
+  stage(where: StageWhereInput): Stage!
   job(where: JobWhereInput): Job!
   candidate(where: CandidateWhereInput): Candidate!
-  stage(where: StageWhereInput): Stage
 }
 
 input ApplicationCreateInput {
-  workspace: WorkspaceCreateOneWithoutApplicationsInput!
-  disqualifyReason: DisqualifyReasonCreateOneInput
+  type: ApplicationType!
+  disqualificationLink: DisqualificationLinkCreateOneInput
+  stage: StageCreateOneInput!
   job: JobCreateOneWithoutApplicationsInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
-  stage: StageCreateOneInput
 }
 
 type Candidate implements Node {
@@ -163,7 +163,7 @@ input CandidateCreateInput {
   resumesFile: FileCreateManyInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldLinkCreateManyWithoutCandidateInput
+  fields: FieldLinkCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -179,7 +179,7 @@ type Job implements Node {
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   workflow(where: WorkflowWhereInput): Workflow!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  status: JobType!
+  type: JobType!
   department: String
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location!]
   name: String!
@@ -188,7 +188,7 @@ type Job implements Node {
 }
 
 input JobCreateInput {
-  status: JobType!
+  type: JobType!
   department: String
   name: String!
   description: String
@@ -206,7 +206,6 @@ type Task implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
   subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   candidate(where: CandidateWhereInput): Candidate
@@ -219,7 +218,6 @@ input TaskCreateInput {
   title: String
   description: String
   dueAt: DateTime
-  workspace: WorkspaceCreateOneInput!
   subscribers: UserCreateManyWithoutSubscriptionTasksInput
   owners: UserCreateManyWithoutTasksInput
   candidate: CandidateCreateOneWithoutTasksInput
@@ -234,7 +232,7 @@ type Comment implements Node {
   content: String!
 }
 
-type DisqualifyReason implements Node {
+type Disqualification implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -242,11 +240,19 @@ type DisqualifyReason implements Node {
   description: String
 }
 
+type DisqualificationLink implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  disqualification(where: DisqualificationWhereInput): Disqualification!
+  createdBy(where: UserWhereInput): User!
+  justification: String
+}
+
 type Event implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
   type: EventType!
   actorType: EventActorType!
   actorUser(where: UserWhereInput): User
@@ -268,7 +274,9 @@ type Field implements Node {
 
 type FieldLink implements Node {
   id: ID!
-  candidate(where: CandidateWhereInput): Candidate!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  field(where: FieldWhereInput): Field!
   value: String
 }
 
@@ -286,7 +294,6 @@ type Invite implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace(where: WorkspaceWhereInput): Workspace!
   email: String!
   expireAt: DateTime!
   invitedBy(where: UserWhereInput): User!
@@ -332,7 +339,8 @@ type Workflow implements Node {
   name: String!
   description: String
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
-  disqualifyReasons(where: DisqualifyReasonWhereInput, orderBy: DisqualifyReasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DisqualifyReason!]
+  disqualifications(where: DisqualificationWhereInput, orderBy: DisqualificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Disqualification!]
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
 }
 
 type Workspace implements Node {
@@ -342,7 +350,6 @@ type Workspace implements Node {
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
-  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
   workflows(where: WorkflowWhereInput, orderBy: WorkflowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workflow!]
   workflowDefault(where: WorkflowWhereInput): Workflow
@@ -539,9 +546,6 @@ input WorkspaceWhereInput {
   jobs_every: JobWhereInput
   jobs_some: JobWhereInput
   jobs_none: JobWhereInput
-  applications_every: ApplicationWhereInput
-  applications_some: ApplicationWhereInput
-  applications_none: ApplicationWhereInput
   candidates_every: CandidateWhereInput
   candidates_some: CandidateWhereInput
   candidates_none: CandidateWhereInput
@@ -720,7 +724,6 @@ input EventWhereInput {
   All values that are not contained in given list.
   """
   targetType_not_in: [EventTargetType!]
-  workspace: WorkspaceWhereInput
   actorUser: UserWhereInput
   actorCandidate: CandidateWhereInput
   targetCandidate: CandidateWhereInput
@@ -1005,19 +1008,19 @@ input JobWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  status: JobType
+  type: JobType
   """
   All values that are not equal to given value.
   """
-  status_not: JobType
+  type_not: JobType
   """
   All values that are contained in given list.
   """
-  status_in: [JobType!]
+  type_in: [JobType!]
   """
   All values that are not contained in given list.
   """
-  status_not_in: [JobType!]
+  type_not_in: [JobType!]
   department: String
   """
   All values that are not equal to given value.
@@ -1256,8 +1259,8 @@ enum JobOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  status_ASC
-  status_DESC
+  type_ASC
+  type_DESC
   department_ASC
   department_DESC
   name_ASC
@@ -1801,7 +1804,6 @@ input TaskWhereInput {
   All values greater than or equal the given value.
   """
   dueAt_gte: DateTime
-  workspace: WorkspaceWhereInput
   subscribers_every: UserWhereInput
   subscribers_some: UserWhereInput
   subscribers_none: UserWhereInput
@@ -2140,19 +2142,24 @@ input FileWhereInput {
   url_not_ends_with: String
 }
 
-input DisqualifyReasonWhereInput {
+enum ApplicationType {
+  Qualified
+  Disqualified
+}
+
+input DisqualificationLinkWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [DisqualifyReasonWhereInput!]
+  AND: [DisqualificationLinkWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [DisqualifyReasonWhereInput!]
+  OR: [DisqualificationLinkWhereInput!]
   """
   Logical NOT on all given filters combined by AND.
   """
-  NOT: [DisqualifyReasonWhereInput!]
+  NOT: [DisqualificationLinkWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -2264,112 +2271,61 @@ input DisqualifyReasonWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  name: String
+  justification: String
   """
   All values that are not equal to given value.
   """
-  name_not: String
+  justification_not: String
   """
   All values that are contained in given list.
   """
-  name_in: [String!]
+  justification_in: [String!]
   """
   All values that are not contained in given list.
   """
-  name_not_in: [String!]
+  justification_not_in: [String!]
   """
   All values less than the given value.
   """
-  name_lt: String
+  justification_lt: String
   """
   All values less than or equal the given value.
   """
-  name_lte: String
+  justification_lte: String
   """
   All values greater than the given value.
   """
-  name_gt: String
+  justification_gt: String
   """
   All values greater than or equal the given value.
   """
-  name_gte: String
+  justification_gte: String
   """
   All values containing the given string.
   """
-  name_contains: String
+  justification_contains: String
   """
   All values not containing the given string.
   """
-  name_not_contains: String
+  justification_not_contains: String
   """
   All values starting with the given string.
   """
-  name_starts_with: String
+  justification_starts_with: String
   """
   All values not starting with the given string.
   """
-  name_not_starts_with: String
+  justification_not_starts_with: String
   """
   All values ending with the given string.
   """
-  name_ends_with: String
+  justification_ends_with: String
   """
   All values not ending with the given string.
   """
-  name_not_ends_with: String
-  description: String
-  """
-  All values that are not equal to given value.
-  """
-  description_not: String
-  """
-  All values that are contained in given list.
-  """
-  description_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
-  description_not_in: [String!]
-  """
-  All values less than the given value.
-  """
-  description_lt: String
-  """
-  All values less than or equal the given value.
-  """
-  description_lte: String
-  """
-  All values greater than the given value.
-  """
-  description_gt: String
-  """
-  All values greater than or equal the given value.
-  """
-  description_gte: String
-  """
-  All values containing the given string.
-  """
-  description_contains: String
-  """
-  All values not containing the given string.
-  """
-  description_not_contains: String
-  """
-  All values starting with the given string.
-  """
-  description_starts_with: String
-  """
-  All values not starting with the given string.
-  """
-  description_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
-  description_ends_with: String
-  """
-  All values not ending with the given string.
-  """
-  description_not_ends_with: String
+  justification_not_ends_with: String
+  disqualification: DisqualificationWhereInput
+  createdBy: UserWhereInput
 }
 
 input StageWhereInput {
@@ -2617,14 +2573,14 @@ input StageWhereInput {
   type_not_in: [StageType!]
 }
 
-input WorkspaceCreateOneWithoutApplicationsInput {
-  create: WorkspaceCreateWithoutApplicationsInput
-  connect: WorkspaceWhereUniqueInput
+input DisqualificationLinkCreateOneInput {
+  create: DisqualificationLinkCreateInput
+  connect: DisqualificationLinkWhereUniqueInput
 }
 
-input DisqualifyReasonCreateOneInput {
-  create: DisqualifyReasonCreateInput
-  connect: DisqualifyReasonWhereUniqueInput
+input StageCreateOneInput {
+  create: StageCreateInput
+  connect: StageWhereUniqueInput
 }
 
 input JobCreateOneWithoutApplicationsInput {
@@ -2635,11 +2591,6 @@ input JobCreateOneWithoutApplicationsInput {
 input CandidateCreateOneWithoutApplicationsInput {
   create: CandidateCreateWithoutApplicationsInput
   connect: CandidateWhereUniqueInput
-}
-
-input StageCreateOneInput {
-  create: StageCreateInput
-  connect: StageWhereUniqueInput
 }
 
 enum EventOrderByInput {
@@ -2930,6 +2881,64 @@ input FieldLinkWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
   value: String
   """
   All values that are not equal to given value.
@@ -2983,18 +2992,18 @@ input FieldLinkWhereInput {
   All values not ending with the given string.
   """
   value_not_ends_with: String
-  candidate: CandidateWhereInput
+  field: FieldWhereInput
 }
 
 enum FieldLinkOrderByInput {
   id_ASC
   id_DESC
-  value_ASC
-  value_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  value_ASC
+  value_DESC
 }
 
 input ApplicationWhereInput {
@@ -3121,11 +3130,23 @@ input ApplicationWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  workspace: WorkspaceWhereInput
-  disqualifyReason: DisqualifyReasonWhereInput
+  type: ApplicationType
+  """
+  All values that are not equal to given value.
+  """
+  type_not: ApplicationType
+  """
+  All values that are contained in given list.
+  """
+  type_in: [ApplicationType!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [ApplicationType!]
+  disqualificationLink: DisqualificationLinkWhereInput
+  stage: StageWhereInput
   job: JobWhereInput
   candidate: CandidateWhereInput
-  stage: StageWhereInput
 }
 
 enum ApplicationOrderByInput {
@@ -3135,6 +3156,8 @@ enum ApplicationOrderByInput {
   id_DESC
   updatedAt_ASC
   updatedAt_DESC
+  type_ASC
+  type_DESC
 }
 
 input CommentWhereInput {
@@ -3383,8 +3406,8 @@ input TagCreateManyInput {
   connect: [TagWhereUniqueInput!]
 }
 
-input FieldLinkCreateManyWithoutCandidateInput {
-  create: [FieldLinkCreateWithoutCandidateInput!]
+input FieldLinkCreateManyInput {
+  create: [FieldLinkCreateInput!]
   connect: [FieldLinkWhereUniqueInput!]
 }
 
@@ -3636,15 +3659,18 @@ input WorkflowWhereInput {
   stages_every: StageWhereInput
   stages_some: StageWhereInput
   stages_none: StageWhereInput
-  disqualifyReasons_every: DisqualifyReasonWhereInput
-  disqualifyReasons_some: DisqualifyReasonWhereInput
-  disqualifyReasons_none: DisqualifyReasonWhereInput
+  disqualifications_every: DisqualificationWhereInput
+  disqualifications_some: DisqualificationWhereInput
+  disqualifications_none: DisqualificationWhereInput
+  fields_every: FieldWhereInput
+  fields_some: FieldWhereInput
+  fields_none: FieldWhereInput
 }
 
 enum JobType {
-  DRAFT
-  PUBLISHED
-  ARCHIVED
+  Draft
+  Published
+  Archived
 }
 
 input LocationWhereInput {
@@ -3974,11 +4000,6 @@ input LocationCreateManyInput {
   connect: [LocationWhereUniqueInput!]
 }
 
-input WorkspaceCreateOneInput {
-  create: WorkspaceCreateInput
-  connect: WorkspaceWhereUniqueInput
-}
-
 input UserCreateManyWithoutSubscriptionTasksInput {
   create: [UserCreateWithoutSubscriptionTasksInput!]
   connect: [UserWhereUniqueInput!]
@@ -3994,47 +4015,469 @@ input CandidateCreateOneWithoutTasksInput {
   connect: CandidateWhereUniqueInput
 }
 
+input DisqualificationWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DisqualificationWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DisqualificationWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [DisqualificationWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  description_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  description_lte: String
+  """
+  All values greater than the given value.
+  """
+  description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  description_gte: String
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  description_not_ends_with: String
+}
+
 enum EventType {
-  DEFAULT
-  MESSAGE
-  COMMENT_CREATE
-  COMMENT_EDIT
-  COMMENT_DELETE
+  Default
+  Message
+  CommentCreate
+  CommentEdit
+  CommentDelete
 }
 
 enum EventActorType {
-  SYSTEM
-  USER
-  CANDIDATE
+  System
+  User
+  Candidate
 }
 
 enum EventTargetType {
-  CANDIDATE
-  JOB
-  TASK
-  WORKSPACE
+  Candidate
+  Job
+  Task
+  Workspace
 }
 
 enum FieldType {
-  INT
-  FLOAT
-  STRING
-  TEXT
-  BOOLEAN
-  DATE_TIME
+  Int
+  Float
+  String
+  Text
+  Boolean
+  DateTime
+}
+
+input FieldWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [FieldWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [FieldWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [FieldWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  type: FieldType
+  """
+  All values that are not equal to given value.
+  """
+  type_not: FieldType
+  """
+  All values that are contained in given list.
+  """
+  type_in: [FieldType!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [FieldType!]
+  label: String
+  """
+  All values that are not equal to given value.
+  """
+  label_not: String
+  """
+  All values that are contained in given list.
+  """
+  label_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  label_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  label_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  label_lte: String
+  """
+  All values greater than the given value.
+  """
+  label_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  label_gte: String
+  """
+  All values containing the given string.
+  """
+  label_contains: String
+  """
+  All values not containing the given string.
+  """
+  label_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  label_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  label_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  label_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  label_not_ends_with: String
 }
 
 enum NotificationType {
-  NEW
-  UNREAD
-  READ
+  Unread
+  Read
 }
 
 enum StageType {
-  NEW
-  QUALIFIED
-  HIRED
-  DISQUALIFIED
+  New
+  Pipeline
+  Final
 }
 
 enum StageOrderByInput {
@@ -4052,7 +4495,7 @@ enum StageOrderByInput {
   type_DESC
 }
 
-enum DisqualifyReasonOrderByInput {
+enum DisqualificationOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -4063,6 +4506,19 @@ enum DisqualifyReasonOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+}
+
+enum FieldOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  type_ASC
+  type_DESC
+  label_ASC
+  label_DESC
 }
 
 enum WorkflowOrderByInput {
@@ -4284,7 +4740,6 @@ input InviteWhereInput {
   All values greater than or equal the given value.
   """
   expireAt_gte: DateTime
-  workspace: WorkspaceWhereInput
   invitedBy: UserWhereInput
 }
 
@@ -4301,33 +4756,28 @@ enum InviteOrderByInput {
   expireAt_DESC
 }
 
-input WorkspaceCreateWithoutApplicationsInput {
-  name: String!
-  events: EventCreateManyWithoutTargetWorkspaceInput
-  users: UserCreateManyWithoutWorkspaceInput
-  jobs: JobCreateManyWithoutWorkspaceInput
-  candidates: CandidateCreateManyWithoutWorkspaceInput
-  workflows: WorkflowCreateManyInput
-  workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyWithoutWorkspaceInput
-  tags: TagCreateManyInput
+input DisqualificationLinkCreateInput {
+  justification: String
+  disqualification: DisqualificationCreateOneInput!
+  createdBy: UserCreateOneInput!
 }
 
-input WorkspaceWhereUniqueInput {
+input DisqualificationLinkWhereUniqueInput {
   id: ID
 }
 
-input DisqualifyReasonCreateInput {
+input StageCreateInput {
   name: String!
   description: String
+  type: StageType!
 }
 
-input DisqualifyReasonWhereUniqueInput {
+input StageWhereUniqueInput {
   id: ID
 }
 
 input JobCreateWithoutApplicationsInput {
-  status: JobType!
+  type: JobType!
   department: String
   name: String!
   description: String
@@ -4360,7 +4810,7 @@ input CandidateCreateWithoutApplicationsInput {
   resumesFile: FileCreateManyInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldLinkCreateManyWithoutCandidateInput
+  fields: FieldLinkCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
@@ -4369,33 +4819,25 @@ input CandidateWhereUniqueInput {
   id: ID
 }
 
-input StageCreateInput {
-  name: String!
-  description: String
-  type: StageType!
-}
-
-input StageWhereUniqueInput {
-  id: ID
-}
-
 input WorkspaceCreateWithoutCandidatesInput {
   name: String!
   events: EventCreateManyWithoutTargetWorkspaceInput
   users: UserCreateManyWithoutWorkspaceInput
   jobs: JobCreateManyWithoutWorkspaceInput
-  applications: ApplicationCreateManyWithoutWorkspaceInput
   workflows: WorkflowCreateManyInput
   workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyInput
   tags: TagCreateManyInput
+}
+
+input WorkspaceWhereUniqueInput {
+  id: ID
 }
 
 input EventCreateWithoutTargetCandidateInput {
   type: EventType!
   actorType: EventActorType!
   targetType: EventTargetType!
-  workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput
   targetJob: JobCreateOneWithoutEventsInput
@@ -4449,8 +4891,9 @@ input TagWhereUniqueInput {
   id: ID
 }
 
-input FieldLinkCreateWithoutCandidateInput {
+input FieldLinkCreateInput {
   value: String
+  field: FieldCreateOneInput!
 }
 
 input FieldLinkWhereUniqueInput {
@@ -4461,7 +4904,6 @@ input TaskCreateWithoutCandidateInput {
   title: String
   description: String
   dueAt: DateTime
-  workspace: WorkspaceCreateOneInput!
   subscribers: UserCreateManyWithoutSubscriptionTasksInput
   owners: UserCreateManyWithoutTasksInput
 }
@@ -4471,10 +4913,10 @@ input TaskWhereUniqueInput {
 }
 
 input ApplicationCreateWithoutCandidateInput {
-  workspace: WorkspaceCreateOneWithoutApplicationsInput!
-  disqualifyReason: DisqualifyReasonCreateOneInput
+  type: ApplicationType!
+  disqualificationLink: DisqualificationLinkCreateOneInput
+  stage: StageCreateOneInput!
   job: JobCreateOneWithoutApplicationsInput!
-  stage: StageCreateOneInput
 }
 
 input ApplicationWhereUniqueInput {
@@ -4495,11 +4937,10 @@ input WorkspaceCreateWithoutJobsInput {
   name: String!
   events: EventCreateManyWithoutTargetWorkspaceInput
   users: UserCreateManyWithoutWorkspaceInput
-  applications: ApplicationCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyWithoutWorkspaceInput
   workflows: WorkflowCreateManyInput
   workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyInput
   tags: TagCreateManyInput
 }
 
@@ -4524,7 +4965,6 @@ input EventCreateWithoutTargetJobInput {
   type: EventType!
   actorType: EventActorType!
   targetType: EventTargetType!
-  workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput
   targetCandidate: CandidateCreateOneWithoutEventsInput
@@ -4533,17 +4973,18 @@ input EventCreateWithoutTargetJobInput {
 }
 
 input ApplicationCreateWithoutJobInput {
-  workspace: WorkspaceCreateOneWithoutApplicationsInput!
-  disqualifyReason: DisqualifyReasonCreateOneInput
+  type: ApplicationType!
+  disqualificationLink: DisqualificationLinkCreateOneInput
+  stage: StageCreateOneInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
-  stage: StageCreateOneInput
 }
 
 input WorkflowCreateInput {
   name: String!
   description: String
   stages: StageCreateManyInput
-  disqualifyReasons: DisqualifyReasonCreateManyInput
+  disqualifications: DisqualificationCreateManyInput
+  fields: FieldCreateManyInput
 }
 
 input WorkflowWhereUniqueInput {
@@ -4611,9 +5052,19 @@ input CandidateCreateWithoutTasksInput {
   resumesFile: FileCreateManyInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldLinkCreateManyWithoutCandidateInput
+  fields: FieldLinkCreateManyInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
+}
+
+input DisqualificationCreateOneInput {
+  create: DisqualificationCreateInput
+  connect: DisqualificationWhereUniqueInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input EventCreateManyWithoutTargetWorkspaceInput {
@@ -4631,24 +5082,14 @@ input JobCreateManyWithoutWorkspaceInput {
   connect: [JobWhereUniqueInput!]
 }
 
-input CandidateCreateManyWithoutWorkspaceInput {
-  create: [CandidateCreateWithoutWorkspaceInput!]
-  connect: [CandidateWhereUniqueInput!]
-}
-
 input WorkflowCreateManyInput {
   create: [WorkflowCreateInput!]
   connect: [WorkflowWhereUniqueInput!]
 }
 
-input InviteCreateManyWithoutWorkspaceInput {
-  create: [InviteCreateWithoutWorkspaceInput!]
+input InviteCreateManyInput {
+  create: [InviteCreateInput!]
   connect: [InviteWhereUniqueInput!]
-}
-
-input ApplicationCreateManyWithoutWorkspaceInput {
-  create: [ApplicationCreateWithoutWorkspaceInput!]
-  connect: [ApplicationWhereUniqueInput!]
 }
 
 input UserCreateOneWithoutEventsInput {
@@ -4706,14 +5147,19 @@ input TaskCreateManyWithoutOwnersInput {
   connect: [TaskWhereUniqueInput!]
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
+input FieldCreateOneInput {
+  create: FieldCreateInput
+  connect: FieldWhereUniqueInput
 }
 
 input CommentCreateOneInput {
   create: CommentCreateInput
   connect: CommentWhereUniqueInput
+}
+
+input CandidateCreateManyWithoutWorkspaceInput {
+  create: [CandidateCreateWithoutWorkspaceInput!]
+  connect: [CandidateWhereUniqueInput!]
 }
 
 input CandidateCreateManyWithoutSubscribersInput {
@@ -4731,16 +5177,47 @@ input StageCreateManyInput {
   connect: [StageWhereUniqueInput!]
 }
 
-input DisqualifyReasonCreateManyInput {
-  create: [DisqualifyReasonCreateInput!]
-  connect: [DisqualifyReasonWhereUniqueInput!]
+input DisqualificationCreateManyInput {
+  create: [DisqualificationCreateInput!]
+  connect: [DisqualificationWhereUniqueInput!]
+}
+
+input FieldCreateManyInput {
+  create: [FieldCreateInput!]
+  connect: [FieldWhereUniqueInput!]
+}
+
+input DisqualificationCreateInput {
+  name: String!
+  description: String
+}
+
+input DisqualificationWhereUniqueInput {
+  id: ID
+}
+
+input UserCreateInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+  position: String
+  workspace: WorkspaceCreateOneWithoutUsersInput!
+  events: EventCreateOneWithoutActorUserInput
+  notifications: NotificationCreateManyWithoutUserInput
+  subscriptionJobs: JobCreateManyWithoutSubscribersInput
+  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
+  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
+  tasks: TaskCreateManyWithoutOwnersInput
+  avatar: FileCreateOneInput
 }
 
 input EventCreateWithoutTargetWorkspaceInput {
   type: EventType!
   actorType: EventActorType!
   targetType: EventTargetType!
-  workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput
   targetCandidate: CandidateCreateOneWithoutEventsInput
@@ -4766,7 +5243,7 @@ input UserCreateWithoutWorkspaceInput {
 }
 
 input JobCreateWithoutWorkspaceInput {
-  status: JobType!
+  type: JobType!
   department: String
   name: String!
   description: String
@@ -4779,42 +5256,8 @@ input JobCreateWithoutWorkspaceInput {
   locations: LocationCreateManyInput
 }
 
-input CandidateCreateWithoutWorkspaceInput {
-  firstName: String!
-  lastName: String!
-  emails: CandidateCreateemailsInput
-  phones: CandidateCreatephonesInput
-  links: CandidateCreatelinksInput
-  resumesString: CandidateCreateresumesStringInput
-  coverLettersString: CandidateCreatecoverLettersStringInput
-  source: CandidateCreatesourceInput
-  events: EventCreateManyWithoutTargetCandidateInput
-  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
-  avatar: FileCreateOneInput
-  resumesFile: FileCreateManyInput
-  coverLettersFile: FileCreateManyInput
-  tags: TagCreateManyInput
-  fields: FieldLinkCreateManyWithoutCandidateInput
-  tasks: TaskCreateManyWithoutCandidateInput
-  applications: ApplicationCreateManyWithoutCandidateInput
-  comments: CommentCreateManyInput
-}
-
-input InviteCreateWithoutWorkspaceInput {
-  email: String!
-  expireAt: DateTime!
-  invitedBy: UserCreateOneInput!
-}
-
 input InviteWhereUniqueInput {
   id: ID
-}
-
-input ApplicationCreateWithoutWorkspaceInput {
-  disqualifyReason: DisqualifyReasonCreateOneInput
-  job: JobCreateOneWithoutApplicationsInput!
-  candidate: CandidateCreateOneWithoutApplicationsInput!
-  stage: StageCreateOneInput
 }
 
 input UserCreateWithoutEventsInput {
@@ -4835,7 +5278,7 @@ input UserCreateWithoutEventsInput {
 }
 
 input JobCreateWithoutEventsInput {
-  status: JobType!
+  type: JobType!
   department: String
   name: String!
   description: String
@@ -4852,11 +5295,10 @@ input WorkspaceCreateWithoutEventsInput {
   name: String!
   users: UserCreateManyWithoutWorkspaceInput
   jobs: JobCreateManyWithoutWorkspaceInput
-  applications: ApplicationCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyWithoutWorkspaceInput
   workflows: WorkflowCreateManyInput
   workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyInput
   tags: TagCreateManyInput
 }
 
@@ -4864,11 +5306,10 @@ input WorkspaceCreateWithoutUsersInput {
   name: String!
   events: EventCreateManyWithoutTargetWorkspaceInput
   jobs: JobCreateManyWithoutWorkspaceInput
-  applications: ApplicationCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyWithoutWorkspaceInput
   workflows: WorkflowCreateManyInput
   workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyWithoutWorkspaceInput
+  invites: InviteCreateManyInput
   tags: TagCreateManyInput
 }
 
@@ -4876,7 +5317,6 @@ input EventCreateWithoutActorUserInput {
   type: EventType!
   actorType: EventActorType!
   targetType: EventTargetType!
-  workspace: WorkspaceCreateOneInput!
   actorCandidate: CandidateCreateOneInput
   targetCandidate: CandidateCreateOneWithoutEventsInput
   targetJob: JobCreateOneWithoutEventsInput
@@ -4894,7 +5334,7 @@ input NotificationWhereUniqueInput {
 }
 
 input JobCreateWithoutSubscribersInput {
-  status: JobType!
+  type: JobType!
   department: String
   name: String!
   description: String
@@ -4911,7 +5351,6 @@ input TaskCreateWithoutSubscribersInput {
   title: String
   description: String
   dueAt: DateTime
-  workspace: WorkspaceCreateOneInput!
   owners: UserCreateManyWithoutTasksInput
   candidate: CandidateCreateOneWithoutTasksInput
 }
@@ -4920,27 +5359,38 @@ input TaskCreateWithoutOwnersInput {
   title: String
   description: String
   dueAt: DateTime
-  workspace: WorkspaceCreateOneInput!
   subscribers: UserCreateManyWithoutSubscriptionTasksInput
   candidate: CandidateCreateOneWithoutTasksInput
 }
 
-input UserCreateInput {
+input FieldCreateInput {
+  type: FieldType!
+  label: String!
+}
+
+input FieldWhereUniqueInput {
+  id: ID
+}
+
+input CandidateCreateWithoutWorkspaceInput {
   firstName: String!
   lastName: String!
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActorUserInput
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
+  emails: CandidateCreateemailsInput
+  phones: CandidateCreatephonesInput
+  links: CandidateCreatelinksInput
+  resumesString: CandidateCreateresumesStringInput
+  coverLettersString: CandidateCreatecoverLettersStringInput
+  source: CandidateCreatesourceInput
+  events: EventCreateManyWithoutTargetCandidateInput
+  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   avatar: FileCreateOneInput
+  resumesFile: FileCreateManyInput
+  coverLettersFile: FileCreateManyInput
+  tags: TagCreateManyInput
+  fields: FieldLinkCreateManyInput
+  tasks: TaskCreateManyWithoutCandidateInput
+  applications: ApplicationCreateManyWithoutCandidateInput
+  comments: CommentCreateManyInput
 }
 
 input CandidateCreateWithoutSubscribersInput {
@@ -4958,7 +5408,7 @@ input CandidateCreateWithoutSubscribersInput {
   resumesFile: FileCreateManyInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldLinkCreateManyWithoutCandidateInput
+  fields: FieldLinkCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -4979,7 +5429,7 @@ input CandidateCreateWithoutEventsInput {
   resumesFile: FileCreateManyInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  fields: FieldLinkCreateManyWithoutCandidateInput
+  fields: FieldLinkCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -4994,7 +5444,6 @@ input EventCreateInput {
   type: EventType!
   actorType: EventActorType!
   targetType: EventTargetType!
-  workspace: WorkspaceCreateOneInput!
   actorUser: UserCreateOneWithoutEventsInput
   actorCandidate: CandidateCreateOneInput
   targetCandidate: CandidateCreateOneWithoutEventsInput

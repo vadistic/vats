@@ -1,13 +1,14 @@
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
-import { JobType, StageTypeEnum } from "./..\\..\\..\\generated\\globalTypes";
+import { JobType, StageType } from "./..\\..\\..\\generated\\globalTypes";
 
 // ====================================================
 // GraphQL query operation: ApplicationsQuery
 // ====================================================
 
 export interface ApplicationsQuery_applications_job {
+  __typename: "Job";
   id: string;
   name: string;
   department: string | null;
@@ -15,11 +16,13 @@ export interface ApplicationsQuery_applications_job {
 }
 
 export interface ApplicationsQuery_applications_candidate_tags {
+  __typename: "Tag";
   id: string;
   label: string;
 }
 
 export interface ApplicationsQuery_applications_candidate {
+  __typename: "Candidate";
   id: string;
   firstName: string;
   lastName: string;
@@ -27,12 +30,14 @@ export interface ApplicationsQuery_applications_candidate {
 }
 
 export interface ApplicationsQuery_applications_stage {
+  __typename: "Stage";
   id: string;
   name: string;
-  type: StageTypeEnum;
+  type: StageType;
 }
 
 export interface ApplicationsQuery_applications {
+  __typename: "Application";
   id: string;
   updatedAt: any;
   job: ApplicationsQuery_applications_job;
@@ -41,10 +46,12 @@ export interface ApplicationsQuery_applications {
 }
 
 export interface ApplicationsQuery_applicationsConnection_aggregate {
+  __typename: "AggregateApplication";
   count: number;
 }
 
 export interface ApplicationsQuery_applicationsConnection {
+  __typename: "ApplicationConnection";
   aggregate: ApplicationsQuery_applicationsConnection_aggregate;
 }
 

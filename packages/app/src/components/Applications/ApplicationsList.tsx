@@ -26,7 +26,7 @@ import { NetworkStatus } from 'apollo-client'
 import { Button } from 'office-ui-fabric-react/lib/Button'
 import { ScrollSensor } from '..'
 
-const GET_APPLICATIONS = gql`
+const ApplicationsQuery = gql`
   query ApplicationsQuery($first: Int!, $after: String) {
     applications(first: $first, after: $after) {
       id
@@ -227,7 +227,7 @@ export interface IApplicationsListProps extends RouteComponentProps {}
 
 export const ApplicationsList: React.SFC<IApplicationsListProps> = props => (
   <Query<ApplicationsQuery, ApplicationsQueryVariables>
-    query={GET_APPLICATIONS}
+    query={ApplicationsQuery}
     fetchPolicy={'cache-first'}
     variables={{ first: 50 }}
   >

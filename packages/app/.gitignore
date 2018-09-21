@@ -12,4 +12,4 @@ dist
 .DS_Store
 
 # Custom
-.graphqlconfig
+.graphqlconfig.yml

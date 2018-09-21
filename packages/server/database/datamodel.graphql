@@ -8,11 +8,11 @@ type Workspace {
   events: [Event!]! @relation(name: "WorkspaceEventTarget")
   users: [User!]!
   jobs: [Job!]!
-  applications: [Application!]!
   candidates: [Candidate!]!
 
   workflows: [Workflow!]! @relation(name: "WorkspaceWorkflows")
-  workflowDefault: Workflow @relation(name: "WorkspaceDefaultWorkflow")
+  # make required?
+  workflowDefault: Workflow @relation(name: "WorkspaceWorkflowDefault")
 
   # other?
   invites: [Invite!]!
@@ -40,7 +40,7 @@ type User {
   # connections
   tasks: [Task!]! @relation(name: "TaskOwner")
 
-  #info
+  # info
   firstName: String!
   lastName: String!
   email: String! @unique
@@ -71,33 +71,41 @@ type Job {
   comments: [Comment!]!
 
   # info
-  status: JobType!
+  type: JobType!
   department: String
   locations: [Location!]!
   name: String!
   description: String
   requirements: String
+
+  # TODO: Add type for common company description
+  # TODO: Add type for specific client in agency setting
 }
 
 enum JobType {
-  DRAFT
-  PUBLISHED
-  ARCHIVED
+  Draft
+  Published
+  Archived
 }
 
 type Application {
   createdAt: DateTime!
   id: ID! @unique
   updatedAt: DateTime!
-  workspace: Workspace!
 
   # ats
-  disqualifyReason: DisqualifyReason
+  type: ApplicationType!
+  disqualificationLink: DisqualificationLink
+  stage: Stage!
 
   # connections
   job: Job!
   candidate: Candidate!
-  stage: Stage
+}
+
+enum ApplicationType {
+  Qualified
+  Disqualified
 }
 
 type Candidate {
@@ -123,6 +131,7 @@ type Candidate {
   coverLettersFile: [File!]! @relation(name: "CandidateCoverLetterFiles")
 
   tags: [Tag!]!
+  # TODO: Create type for sources (maybe with pivot)
   source: [String!]!
   fields: [FieldLink!]!
 
@@ -136,7 +145,6 @@ type Task {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
 
   # event system
   subscribers: [User!]! @relation(name: "TaskSubscriber")
@@ -157,7 +165,6 @@ type Invite {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
 
   email: String!
   expireAt: DateTime!
@@ -172,16 +179,27 @@ type Workflow {
   name: String!
   description: String
   stages: [Stage!]!
-  disqualifyReasons: [DisqualifyReason!]!
+  disqualifications: [Disqualification!]!
+  fields: [Field!]!
 }
 
-type DisqualifyReason {
+type Disqualification {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
   name: String!
   description: String
+}
+
+type DisqualificationLink {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  disqualification: Disqualification!
+  createdBy: User!
+  justification: String
 }
 
 type Stage {
@@ -195,10 +213,9 @@ type Stage {
 }
 
 enum StageType {
-  NEW
-  QUALIFIED
-  HIRED
-  DISQUALIFIED
+  New
+  Pipeline
+  Final
 }
 
 type Comment {
@@ -219,7 +236,6 @@ type Event {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace! @relation(name: "WorkspaceEvent")
 
   type: EventType!
 
@@ -237,24 +253,24 @@ type Event {
 }
 
 enum EventType {
-  DEFAULT
-  MESSAGE
-  COMMENT_CREATE
-  COMMENT_EDIT
-  COMMENT_DELETE
+  Default
+  Message
+  CommentCreate
+  CommentEdit
+  CommentDelete
 }
 
 enum EventActorType {
-  SYSTEM
-  USER
-  CANDIDATE
+  System
+  User
+  Candidate
 }
 
 enum EventTargetType {
-  CANDIDATE
-  JOB
-  TASK
-  WORKSPACE
+  Candidate
+  Job
+  Task
+  Workspace
 }
 
 type Notification {
@@ -268,9 +284,8 @@ type Notification {
 }
 
 enum NotificationType {
-  NEW
-  UNREAD
-  READ
+  Unread
+  Read
 }
 
 # SYSTEM TYPES
@@ -292,18 +307,20 @@ type Field {
 }
 
 enum FieldType {
-  INT
-  FLOAT
-  STRING
-  TEXT
-  BOOLEAN
-  DATE_TIME
+  Int
+  Float
+  String
+  Text
+  Boolean
+  DateTime
 }
 
 type FieldLink {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
 
-  candidate: Candidate!
+  field: Field!
   value: String
 }
 
