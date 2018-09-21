@@ -211,7 +211,7 @@ const setup = async () => {
       console.log(i)
     }, TIMEOUT)
 
-    const firstName = f.name.findName()
+    const firstName = f.name.firstName()
     const lastName = f.name.lastName()
     const emails = R.times(() => f.internet.email(firstName, lastName), f.random.number(2))
     const links = R.times(() => fakeSocialLink(), f.random.number(4))
