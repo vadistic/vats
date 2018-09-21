@@ -16,8 +16,8 @@ import {
 } from './generated/ApplicationsListQuery'
 
 const ApplicationsListQuery = gql`
-  query ApplicationsListQuery(where: {}) {
-    applications(first: $first, after: $after) {
+  query ApplicationsListQuery($jobIds: [ID!]!, $stageIds: [ID!]!) {
+    applications(where: { AND: { job: { id_in: $jobIds }, stage: { id_in: $stageIds } } }) {
       id
       updatedAt
       job {
@@ -40,10 +40,23 @@ const ApplicationsListQuery = gql`
         name
         type
       }
-    }
-    applicationsConnection {
-      aggregate {
-        count
+      disqualificationLink {
+        id
+        updatedAt
+        disqualification {
+          id
+          name
+        }
+        justification
+        createdBy {
+          firstName
+          lastName
+          position
+          avatar {
+            url
+            name
+          }
+        }
       }
     }
   }
@@ -85,11 +98,16 @@ export class ApplicationsListBase extends React.Component<
 
 export interface IApplicationsListProps extends RouteComponentProps {}
 
+const TEMP_APPLICATIONS_LIST_QUERY_VARIABLES = {
+  jobIds: ['cjmbn87un12ot0843kr233jv9', 'cjmbn88ri12qz0843qv1xmjl1'],
+  stageIds: ['cjmbn87uq12oy0843bi0w6zjx', 'cjmbn87ur12p0084332ls7zhd'],
+}
+
 export const ApplicationsList: React.SFC<IApplicationsListProps> = props => (
   <Query<ApplicationsListQuery, ApplicationsListQueryVariables>
     query={ApplicationsListQuery}
     fetchPolicy={'cache-first'}
-    variables={{ first: 50 }}
+    variables={TEMP_APPLICATIONS_LIST_QUERY_VARIABLES}
   >
     {query => {
       if (query.error) {

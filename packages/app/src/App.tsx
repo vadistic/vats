@@ -46,6 +46,4 @@ class App extends React.Component<{}> {
   }
 }
 
-// HML switch
-// export default hot(module)(App)
 export default App

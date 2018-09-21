@@ -3,37 +3,13 @@ import * as React from 'react'
 
 import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react/lib/Persona'
 
-import { CandidateAvatarFragment } from './generated/CandidateAvatarFragment'
+import { PersonaCandidateFragment } from './generated/CandidatePersonaFragment'
 
-export const candidateAvatarFragment = gql`
-  fragment CandidateAvatarFragment on Candidate {
-    id
-    firstName
-    lastName
-    avatar {
-      url
-      name
-    }
-  }
-`
-
-export const userAvatarFragment = gql`
-  fragment UserAvatarFragment on User {
-    id
-    firstName
-    lastName
-    avatar {
-      url
-      name
-    }
-  }
-`
-
-export interface IAvatarProps extends IPersonaSharedProps {
-  candidate: CandidateAvatarFragment
+export interface IPersonaCandidateProps extends IPersonaSharedProps {
+  candidate: PersonaCandidateFragment
 }
 
-export const Avatar: React.SFC<IAvatarProps> = ({
+export const PersonaCandidate: React.SFC<IPersonaCandidateProps> = ({
   candidate: { avatar, firstName, lastName },
   ...rest
 }) => {
@@ -47,7 +23,6 @@ export const Avatar: React.SFC<IAvatarProps> = ({
       secondaryText={'Secondary text'}
       tertiaryText={'Tetriary text'}
       optionalText={'optional text'}
-      
       {...rest}
     />
   )

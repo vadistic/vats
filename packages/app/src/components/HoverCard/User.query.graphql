@@ -1,0 +1,15 @@
+query HoverCardUserQuery($id: ID!) {
+  user(where: { id: $id }) {
+    id
+    firstName
+    lastName
+    position
+    email
+    username
+    lastLogin
+    avatar {
+      url
+      name
+    }
+  }
+}

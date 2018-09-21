@@ -1,0 +1,11 @@
+fragment PersonaCandidateFragment on Candidate {
+  id
+  firstName
+  lastName
+  metaCompany
+  metaHeadline
+  avatar {
+    url
+    name
+  }
+}

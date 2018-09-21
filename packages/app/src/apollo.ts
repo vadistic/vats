@@ -14,7 +14,9 @@ const TEMP_URI = `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/$
   process.env.PRISMA_STAGE
 }`
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache({
+  dataIdFromObject: obj => obj.id,
+})
 
 const authLink = setContext((_, { headers }) => {
   const sessionToken = sessionAuth
@@ -90,6 +92,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 export const client = new ApolloClient({
   connectToDevTools: true,
+
   link: ApolloLink.from([stateLink, tempAuthLink, httpLink, uploadLink, errorLink]),
   cache,
 })

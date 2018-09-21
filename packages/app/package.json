@@ -10,14 +10,15 @@
     "env:push": "shx cp .env ../../.env",
     "env:graphql": "yarn env:cmd node scripts/env-gql",
     "dev": "webpack-dev-server",
-    "p:dev": "yarn env:cmd parcel serve ./src/index.html --no-source-maps",
+    "p:dev": "yarn env:cmd parcel serve ./src/index.html",
     "p:build": "parcel build ./src/index.html --public-url '/'",
     "now:build": "parcel build ./src/index.html --no-source-maps",
     "now:deploy": "now ./dist -A ../now.json && now alias",
     "now:": "yarn now:build && yarn now:deploy",
-    "apollo:clear": "shx rm -rf src/**/generated/*.ts",
+    "apollo:clear": "shx rm -rf src/**/generated/*.ts && shx rm src/generated/schema.json",
     "apollo:schema": " shx cp scripts/apollo.config.js apollo.config.js && yarn env:cmd apollo schema:download src/generated/schema.json && shx rm apollo.config.js",
     "apollo:codegen": "apollo codegen:generate generated  --queries src/**/*.tsx --schema src/generated/schema.json --clientSchema src/state/schema.graphql --globalTypesFile src/generated/globalTypes.ts --target typescript --addTypename && shx rm -rf generated",
+    "apollo:test": "apollo codegen:generate generated  --queries src/**/*.graphql --schema src/generated/schema.json --clientSchema src/state/schema.graphql --globalTypesFile src/generated/globalTypes.ts --target typescript --addTypename && shx rm -rf generated",
     "apollo:": "yarn apollo:clear && yarn apollo:schema && yarn apollo:codegen",
     "lint": "tslint --project .",
     "format": "prettier --write src/**/*.{ts,tsx}"
@@ -65,6 +66,7 @@
     "@types/react-dom": "^16.0.7",
     "@types/react-router-dom": "^4.3.0",
     "@types/styled-system": "^3.0.4",
+    "apollo": "^1.9.2",
     "babel-loader": "^8.0.2",
     "env-cmd": "^8.0.2",
     "fork-ts-checker-webpack-plugin": "^0.4.9",
@@ -86,5 +88,8 @@
     "webpack-bundle-analyzer": "^3.0.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"
+  },
+  "resolutions": {
+    "graphql": "^14.0.2"
   }
 }

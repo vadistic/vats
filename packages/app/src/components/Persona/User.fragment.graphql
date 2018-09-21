@@ -1,0 +1,10 @@
+fragment PersonaUserFragment on User {
+  id
+  firstName
+  lastName
+  position
+  avatar {
+    url
+    name
+  }
+}

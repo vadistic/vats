@@ -14,3 +14,6 @@ loadTheme(defaultThemeNeutral)
 initializeIcons()
 
 ReactDOM.render(<App />, document.getElementById('root'))
+
+// @ts-ignore
+module.hot.accept()
