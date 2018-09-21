@@ -1,5 +1,6 @@
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
+
 import { Auth, Grid } from '../components'
 import { Router } from '../utils'
 

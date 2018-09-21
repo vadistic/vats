@@ -19,7 +19,9 @@
     "build": "yarn clean && tsc && yarn graphql:copy",
     "start": "node dist/index.js",
     "watch": "tsc -w",
-    "test": "jest"
+    "test": "jest",
+    "lint": "tslint --project .",
+    "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
     "apollo-server": "^2.1.0",

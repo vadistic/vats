@@ -1,4 +1,3 @@
-import { ITheme } from 'office-ui-fabric-react'
 import {
   fontSize,
   FontSizeProps,
@@ -14,6 +13,8 @@ import {
   width,
   WidthProps,
 } from 'styled-system'
+
+import { ITheme } from 'office-ui-fabric-react/lib/Styling'
 
 export interface IColorProps {
   background?: keyof ITheme['palette']

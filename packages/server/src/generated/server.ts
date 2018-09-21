@@ -1,18 +1,46 @@
 import { makeBindingClass, Options } from 'graphql-binding'
 import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
 import { IResolvers } from 'graphql-tools/dist/Interfaces'
-import schema from  '../schema/schema'
+import schema from '../schema/schema'
 
 export interface Query {
-    users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
-  }
+  users: <T = User[]>(
+    args: {
+      where?: UserWhereInput
+      orderBy?: UserOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+}
 
 export interface Mutation {
-    createApplication: <T = Application>(args: { data: ApplicationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createCandidate: <T = Candidate>(args: { data: CandidateCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createJob: <T = Job>(args: { data: JobCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createTask: <T = Task>(args: { data: TaskCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
-  }
+  createApplication: <T = Application>(
+    args: { data: ApplicationCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createCandidate: <T = Candidate>(
+    args: { data: CandidateCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createJob: <T = Job>(
+    args: { data: JobCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createTask: <T = Task>(
+    args: { data: TaskCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+}
 
 export interface Subscription {}
 
@@ -20,268 +48,276 @@ export interface Binding {
   query: Query
   mutation: Mutation
   subscription: Subscription
-  request: <T = any>(query: string, variables?: {[key: string]: any}) => Promise<T>
-  delegate(operation: 'query' | 'mutation', fieldName: string, args: {
-      [key: string]: any;
-  }, infoOrQuery?: GraphQLResolveInfo | string, options?: Options): Promise<any>;
-  delegateSubscription(fieldName: string, args?: {
-      [key: string]: any;
-  }, infoOrQuery?: GraphQLResolveInfo | string, options?: Options): Promise<AsyncIterator<any>>;
-  getAbstractResolvers(filterSchema?: GraphQLSchema | string): IResolvers;
+  request: <T = any>(query: string, variables?: { [key: string]: any }) => Promise<T>
+  delegate(
+    operation: 'query' | 'mutation',
+    fieldName: string,
+    args: {
+      [key: string]: any
+    },
+    infoOrQuery?: GraphQLResolveInfo | string,
+    options?: Options
+  ): Promise<any>
+  delegateSubscription(
+    fieldName: string,
+    args?: {
+      [key: string]: any
+    },
+    infoOrQuery?: GraphQLResolveInfo | string,
+    options?: Options
+  ): Promise<AsyncIterator<any>>
+  getAbstractResolvers(filterSchema?: GraphQLSchema | string): IResolvers
 }
 
 export interface BindingConstructor<T> {
-  new(...args): T
+  new (...args): T
 }
 
 export const Binding = makeBindingClass<BindingConstructor<Binding>>({ schema })
 
 /**
  * Types
-*/
+ */
 
-export type FieldOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'label_ASC' |
-  'label_DESC'
+export type FieldOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'label_ASC'
+  | 'label_DESC'
 
-export type JobType =   'Draft' |
-  'Published' |
-  'Archived'
+export type JobType = 'Draft' | 'Published' | 'Archived'
 
-export type DisqualificationOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC'
+export type DisqualificationOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
 
-export type NotificationOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC'
+export type NotificationOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
 
-export type StageOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'type_ASC' |
-  'type_DESC'
+export type StageOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
 
-export type InviteOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'expireAt_ASC' |
-  'expireAt_DESC'
+export type InviteOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'email_ASC'
+  | 'email_DESC'
+  | 'expireAt_ASC'
+  | 'expireAt_DESC'
 
-export type ApplicationOrderByInput =   'createdAt_ASC' |
-  'createdAt_DESC' |
-  'id_ASC' |
-  'id_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC'
+export type ApplicationOrderByInput =
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
 
-export type CandidateOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'firstName_ASC' |
-  'firstName_DESC' |
-  'lastName_ASC' |
-  'lastName_DESC'
+export type CandidateOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'firstName_ASC'
+  | 'firstName_DESC'
+  | 'lastName_ASC'
+  | 'lastName_DESC'
 
-export type FieldType =   'Int' |
-  'Float' |
-  'String' |
-  'Text' |
-  'Boolean' |
-  'DateTime'
+export type FieldType = 'Int' | 'Float' | 'String' | 'Text' | 'Boolean' | 'DateTime'
 
-export type LocationOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'country_ASC' |
-  'country_DESC' |
-  'region_ASC' |
-  'region_DESC' |
-  'city_ASC' |
-  'city_DESC' |
-  'zip_ASC' |
-  'zip_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
+export type LocationOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'country_ASC'
+  | 'country_DESC'
+  | 'region_ASC'
+  | 'region_DESC'
+  | 'city_ASC'
+  | 'city_DESC'
+  | 'zip_ASC'
+  | 'zip_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
 
-export type TaskOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'title_ASC' |
-  'title_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'dueAt_ASC' |
-  'dueAt_DESC'
+export type TaskOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'title_ASC'
+  | 'title_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'dueAt_ASC'
+  | 'dueAt_DESC'
 
-export type EventActorType =   'System' |
-  'User' |
-  'Candidate'
+export type EventActorType = 'System' | 'User' | 'Candidate'
 
-export type FieldLinkOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'value_ASC' |
-  'value_DESC'
+export type FieldLinkOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'value_ASC'
+  | 'value_DESC'
 
-export type CommentOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'content_ASC' |
-  'content_DESC'
+export type CommentOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'content_ASC'
+  | 'content_DESC'
 
-export type ApplicationType =   'Qualified' |
-  'Disqualified'
+export type ApplicationType = 'Qualified' | 'Disqualified'
 
-export type NotificationType =   'Unread' |
-  'Read'
+export type NotificationType = 'Unread' | 'Read'
 
-export type StageType =   'New' |
-  'Pipeline' |
-  'Final'
+export type StageType = 'New' | 'Pipeline' | 'Final'
 
-export type EventOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'actorType_ASC' |
-  'actorType_DESC' |
-  'targetType_ASC' |
-  'targetType_DESC'
+export type EventOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'actorType_ASC'
+  | 'actorType_DESC'
+  | 'targetType_ASC'
+  | 'targetType_DESC'
 
-export type FileOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'size_ASC' |
-  'size_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'url_ASC' |
-  'url_DESC'
+export type FileOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'size_ASC'
+  | 'size_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'url_ASC'
+  | 'url_DESC'
 
-export type TagOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'label_ASC' |
-  'label_DESC'
+export type TagOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'label_ASC'
+  | 'label_DESC'
 
-export type WorkflowOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC'
+export type WorkflowOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
 
-export type UserOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'firstName_ASC' |
-  'firstName_DESC' |
-  'lastName_ASC' |
-  'lastName_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'username_ASC' |
-  'username_DESC' |
-  'lastLogin_ASC' |
-  'lastLogin_DESC' |
-  'deletedAt_ASC' |
-  'deletedAt_DESC' |
-  'position_ASC' |
-  'position_DESC'
+export type UserOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'firstName_ASC'
+  | 'firstName_DESC'
+  | 'lastName_ASC'
+  | 'lastName_DESC'
+  | 'email_ASC'
+  | 'email_DESC'
+  | 'username_ASC'
+  | 'username_DESC'
+  | 'lastLogin_ASC'
+  | 'lastLogin_DESC'
+  | 'deletedAt_ASC'
+  | 'deletedAt_DESC'
+  | 'position_ASC'
+  | 'position_DESC'
 
-export type EventTargetType =   'Candidate' |
-  'Job' |
-  'Task' |
-  'Workspace'
+export type EventTargetType = 'Candidate' | 'Job' | 'Task' | 'Workspace'
 
-export type EventType =   'Default' |
-  'Message' |
-  'CommentCreate' |
-  'CommentEdit' |
-  'CommentDelete'
+export type EventType = 'Default' | 'Message' | 'CommentCreate' | 'CommentEdit' | 'CommentDelete'
 
-export type JobOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'department_ASC' |
-  'department_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'requirements_ASC' |
-  'requirements_DESC'
+export type JobOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'department_ASC'
+  | 'department_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'requirements_ASC'
+  | 'requirements_DESC'
 
 export interface EventCreateOneWithoutActorUserInput {
   create?: EventCreateWithoutActorUserInput
@@ -1452,7 +1488,9 @@ export interface TaskCreateWithoutOwnersInput {
 }
 
 export interface UserCreateManyWithoutSubscriptionCandidatesInput {
-  create?: UserCreateWithoutSubscriptionCandidatesInput[] | UserCreateWithoutSubscriptionCandidatesInput
+  create?:
+    | UserCreateWithoutSubscriptionCandidatesInput[]
+    | UserCreateWithoutSubscriptionCandidatesInput
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
 }
 

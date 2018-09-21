@@ -1,18 +1,20 @@
 import * as React from 'react'
 
 type RequestIdleCallbackHandle = any
-type RequestIdleCallbackOptions = {
+
+interface IRequestIdleCallbackOptions {
   timeout: number
 }
-type RequestIdleCallbackDeadline = {
+
+interface IRequestIdleCallbackDeadline {
   readonly didTimeout: boolean
   timeRemaining: (() => number)
 }
 
 interface IModernWindow extends Window {
   requestIdleCallback: ((
-    callback: ((deadline: RequestIdleCallbackDeadline) => void),
-    opts?: RequestIdleCallbackOptions
+    callback: ((deadline: IRequestIdleCallbackDeadline) => void),
+    opts?: IRequestIdleCallbackOptions
   ) => RequestIdleCallbackHandle)
 }
 
@@ -23,7 +25,7 @@ const requestIdleCallbackPolyfill: IModernWindow['requestIdleCallback'] = (callb
     { passive: true }
   )
 
-export interface ScrollSensorProps {
+export interface IScrollSensorProps {
   onTrigger: () => any
   rate?: number
   edge: 'top' | 'bottom'
@@ -31,7 +33,7 @@ export interface ScrollSensorProps {
   offsetPx?: number
 }
 
-export class ScrollSensor extends React.Component<ScrollSensorProps> {
+export class ScrollSensor extends React.Component<IScrollSensorProps> {
   private _scrollListener
   private _timer
 
@@ -70,24 +72,31 @@ export class ScrollSensor extends React.Component<ScrollSensorProps> {
       document.body.scrollTop +
         ((document.documentElement && document.documentElement.scrollTop) || 0)
 
+    // Case 'top' && offset in px
     if (this.props.edge === 'top' && !this.props.offsetFraction) {
       const predicateTopPx = scrollPosition >= (this.props.offsetPx || 0)
       predicateTopPx && this.props.onTrigger()
-    } else if (this.props.edge === 'top') {
+    }
+    // Case 'top' && offset as fracion or none
+    else if (this.props.edge === 'top') {
       const predicateTopFraction = scrollPosition >= pageHeight * (this.props.offsetPx || 0)
       predicateTopFraction && this.props.onTrigger()
-    } else if (this.props.edge === 'bottom' && !this.props.offsetFraction) {
+    }
+    // Case 'bottom' && offset in px
+    else if (this.props.edge === 'bottom' && !this.props.offsetFraction) {
       const predicateBottomPx =
         windowHeight + scrollPosition >= pageHeight - (this.props.offsetPx || 0)
       predicateBottomPx && this.props.onTrigger()
-    } else if (this.props.edge === 'bottom') {
+    }
+    // Case 'bottom' && offset as fracion or none
+    else if (this.props.edge === 'bottom') {
       const predicateBottomFraction =
         windowHeight + scrollPosition >= pageHeight * (1 - (this.props.offsetFraction || 0))
       predicateBottomFraction && this.props.onTrigger()
     }
   }
 
-  render() {
+  public render() {
     return null
   }
 }

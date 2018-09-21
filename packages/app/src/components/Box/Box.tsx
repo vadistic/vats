@@ -1,10 +1,12 @@
+import * as React from 'react'
+
 import {
   BaseComponent,
   classNamesFunction,
   customizable,
   styled,
 } from 'office-ui-fabric-react/lib/Utilities'
-import * as React from 'react'
+
 import { getStyles } from './Box.styles'
 import { IBoxProps, IBoxStyleProps, IBoxStyles } from './Box.types'
 

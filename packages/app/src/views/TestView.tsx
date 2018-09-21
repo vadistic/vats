@@ -1,7 +1,9 @@
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
 import { RouteComponentProps, Router } from '@reach/router'
-import { AvatarFixture } from '../components'
 import * as React from 'react'
+
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
+
+import { AvatarFixture } from '../components'
 
 export interface ITestViewProps extends RouteComponentProps {}
 

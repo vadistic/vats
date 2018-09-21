@@ -19,6 +19,7 @@ import {
   justifySelf,
   JustifySelfProps,
 } from 'styled-system'
+
 import { baseStyle, styled, TBaseStyleProps } from '../styles'
 
 export type TGridContainerProps =

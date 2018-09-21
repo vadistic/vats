@@ -1,8 +1,17 @@
 {
-  "extends": ["tslint-recommended", "tslint-config-react"],
+  "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
-    "no-shadowed-variable": false,
-    "no-console": false
+    "no-shadowed-variable": true,
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    "no-empty-interface": false,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ]
   },
   "linterOptions": {
     "exclude": ["src/generated/*"]

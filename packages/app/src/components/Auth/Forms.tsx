@@ -1,7 +1,9 @@
 import { RouteComponentProps } from '@reach/router'
 import { FieldProps, FormikProps } from 'formik'
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
 import React from 'react'
+
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
+
 import { qParse } from '../../utils'
 import { AuthTemplate } from './Template'
 import { emailValidator, passwordValidator } from './validators'

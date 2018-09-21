@@ -1,6 +1,7 @@
 import { Router as _Router } from '@reach/router'
 import queryString from 'query-string'
 import * as R from 'ramda'
+
 import { styled } from '../styles'
 
 export const Router = styled(_Router)`

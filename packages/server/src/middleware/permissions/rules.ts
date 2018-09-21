@@ -86,7 +86,7 @@ export const connectToManyByWorkspace = (target: string) => (field: string) =>
       return ctx.db.exists[target]({
         AND: {
           id: connect.id,
-          workspace: { id:  ctx.token.tenant.id  },
+          workspace: { id: ctx.token.tenant.id },
         },
       }).then(res => (res === true ? Promise.resolve(true) : Promise.reject('Not Authorized')))
     })

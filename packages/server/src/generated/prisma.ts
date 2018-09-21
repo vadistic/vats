@@ -4,204 +4,1312 @@ import { Options } from 'graphql-binding'
 import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
 export interface Query {
-    workspaces: <T = Workspace[]>(args: { where?: WorkspaceWhereInput, orderBy?: WorkspaceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    jobs: <T = Job[]>(args: { where?: JobWhereInput, orderBy?: JobOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    applications: <T = Application[]>(args: { where?: ApplicationWhereInput, orderBy?: ApplicationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    notifications: <T = Notification[]>(args: { where?: NotificationWhereInput, orderBy?: NotificationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    disqualificationLinks: <T = DisqualificationLink[]>(args: { where?: DisqualificationLinkWhereInput, orderBy?: DisqualificationLinkOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    locations: <T = Location[]>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    candidates: <T = Candidate[]>(args: { where?: CandidateWhereInput, orderBy?: CandidateOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    invites: <T = Invite[]>(args: { where?: InviteWhereInput, orderBy?: InviteOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    files: <T = File[]>(args: { where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    fieldLinks: <T = FieldLink[]>(args: { where?: FieldLinkWhereInput, orderBy?: FieldLinkOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    events: <T = Event[]>(args: { where?: EventWhereInput, orderBy?: EventOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    disqualifications: <T = Disqualification[]>(args: { where?: DisqualificationWhereInput, orderBy?: DisqualificationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    stages: <T = Stage[]>(args: { where?: StageWhereInput, orderBy?: StageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tasks: <T = Task[]>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tags: <T = Tag[]>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    fields: <T = Field[]>(args: { where?: FieldWhereInput, orderBy?: FieldOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workflows: <T = Workflow[]>(args: { where?: WorkflowWhereInput, orderBy?: WorkflowOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    comments: <T = Comment[]>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workspace: <T = Workspace | null>(args: { where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    job: <T = Job | null>(args: { where: JobWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    application: <T = Application | null>(args: { where: ApplicationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    notification: <T = Notification | null>(args: { where: NotificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    disqualificationLink: <T = DisqualificationLink | null>(args: { where: DisqualificationLinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    location: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    candidate: <T = Candidate | null>(args: { where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    invite: <T = Invite | null>(args: { where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    file: <T = File | null>(args: { where: FileWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    fieldLink: <T = FieldLink | null>(args: { where: FieldLinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    event: <T = Event | null>(args: { where: EventWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    disqualification: <T = Disqualification | null>(args: { where: DisqualificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    stage: <T = Stage | null>(args: { where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    task: <T = Task | null>(args: { where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    field: <T = Field | null>(args: { where: FieldWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workflow: <T = Workflow | null>(args: { where: WorkflowWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    comment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workspacesConnection: <T = WorkspaceConnection>(args: { where?: WorkspaceWhereInput, orderBy?: WorkspaceOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    jobsConnection: <T = JobConnection>(args: { where?: JobWhereInput, orderBy?: JobOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    applicationsConnection: <T = ApplicationConnection>(args: { where?: ApplicationWhereInput, orderBy?: ApplicationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    notificationsConnection: <T = NotificationConnection>(args: { where?: NotificationWhereInput, orderBy?: NotificationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    disqualificationLinksConnection: <T = DisqualificationLinkConnection>(args: { where?: DisqualificationLinkWhereInput, orderBy?: DisqualificationLinkOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    locationsConnection: <T = LocationConnection>(args: { where?: LocationWhereInput, orderBy?: LocationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    candidatesConnection: <T = CandidateConnection>(args: { where?: CandidateWhereInput, orderBy?: CandidateOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    invitesConnection: <T = InviteConnection>(args: { where?: InviteWhereInput, orderBy?: InviteOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    filesConnection: <T = FileConnection>(args: { where?: FileWhereInput, orderBy?: FileOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    fieldLinksConnection: <T = FieldLinkConnection>(args: { where?: FieldLinkWhereInput, orderBy?: FieldLinkOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    eventsConnection: <T = EventConnection>(args: { where?: EventWhereInput, orderBy?: EventOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    disqualificationsConnection: <T = DisqualificationConnection>(args: { where?: DisqualificationWhereInput, orderBy?: DisqualificationOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    stagesConnection: <T = StageConnection>(args: { where?: StageWhereInput, orderBy?: StageOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tasksConnection: <T = TaskConnection>(args: { where?: TaskWhereInput, orderBy?: TaskOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    tagsConnection: <T = TagConnection>(args: { where?: TagWhereInput, orderBy?: TagOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    fieldsConnection: <T = FieldConnection>(args: { where?: FieldWhereInput, orderBy?: FieldOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    workflowsConnection: <T = WorkflowConnection>(args: { where?: WorkflowWhereInput, orderBy?: WorkflowOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    commentsConnection: <T = CommentConnection>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
-  }
+  workspaces: <T = Workspace[]>(
+    args: {
+      where?: WorkspaceWhereInput
+      orderBy?: WorkspaceOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  jobs: <T = Job[]>(
+    args: {
+      where?: JobWhereInput
+      orderBy?: JobOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  applications: <T = Application[]>(
+    args: {
+      where?: ApplicationWhereInput
+      orderBy?: ApplicationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  notifications: <T = Notification[]>(
+    args: {
+      where?: NotificationWhereInput
+      orderBy?: NotificationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  disqualificationLinks: <T = DisqualificationLink[]>(
+    args: {
+      where?: DisqualificationLinkWhereInput
+      orderBy?: DisqualificationLinkOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  locations: <T = Location[]>(
+    args: {
+      where?: LocationWhereInput
+      orderBy?: LocationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  candidates: <T = Candidate[]>(
+    args: {
+      where?: CandidateWhereInput
+      orderBy?: CandidateOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  invites: <T = Invite[]>(
+    args: {
+      where?: InviteWhereInput
+      orderBy?: InviteOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  files: <T = File[]>(
+    args: {
+      where?: FileWhereInput
+      orderBy?: FileOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  fieldLinks: <T = FieldLink[]>(
+    args: {
+      where?: FieldLinkWhereInput
+      orderBy?: FieldLinkOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  events: <T = Event[]>(
+    args: {
+      where?: EventWhereInput
+      orderBy?: EventOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  disqualifications: <T = Disqualification[]>(
+    args: {
+      where?: DisqualificationWhereInput
+      orderBy?: DisqualificationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  users: <T = User[]>(
+    args: {
+      where?: UserWhereInput
+      orderBy?: UserOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  stages: <T = Stage[]>(
+    args: {
+      where?: StageWhereInput
+      orderBy?: StageOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  tasks: <T = Task[]>(
+    args: {
+      where?: TaskWhereInput
+      orderBy?: TaskOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  tags: <T = Tag[]>(
+    args: {
+      where?: TagWhereInput
+      orderBy?: TagOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  fields: <T = Field[]>(
+    args: {
+      where?: FieldWhereInput
+      orderBy?: FieldOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  workflows: <T = Workflow[]>(
+    args: {
+      where?: WorkflowWhereInput
+      orderBy?: WorkflowOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  comments: <T = Comment[]>(
+    args: {
+      where?: CommentWhereInput
+      orderBy?: CommentOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  workspace: <T = Workspace | null>(
+    args: { where: WorkspaceWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  job: <T = Job | null>(
+    args: { where: JobWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  application: <T = Application | null>(
+    args: { where: ApplicationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  notification: <T = Notification | null>(
+    args: { where: NotificationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  disqualificationLink: <T = DisqualificationLink | null>(
+    args: { where: DisqualificationLinkWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  location: <T = Location | null>(
+    args: { where: LocationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  candidate: <T = Candidate | null>(
+    args: { where: CandidateWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  invite: <T = Invite | null>(
+    args: { where: InviteWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  file: <T = File | null>(
+    args: { where: FileWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  fieldLink: <T = FieldLink | null>(
+    args: { where: FieldLinkWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  event: <T = Event | null>(
+    args: { where: EventWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  disqualification: <T = Disqualification | null>(
+    args: { where: DisqualificationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  user: <T = User | null>(
+    args: { where: UserWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  stage: <T = Stage | null>(
+    args: { where: StageWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  task: <T = Task | null>(
+    args: { where: TaskWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  tag: <T = Tag | null>(
+    args: { where: TagWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  field: <T = Field | null>(
+    args: { where: FieldWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  workflow: <T = Workflow | null>(
+    args: { where: WorkflowWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  comment: <T = Comment | null>(
+    args: { where: CommentWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  workspacesConnection: <T = WorkspaceConnection>(
+    args: {
+      where?: WorkspaceWhereInput
+      orderBy?: WorkspaceOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  jobsConnection: <T = JobConnection>(
+    args: {
+      where?: JobWhereInput
+      orderBy?: JobOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  applicationsConnection: <T = ApplicationConnection>(
+    args: {
+      where?: ApplicationWhereInput
+      orderBy?: ApplicationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  notificationsConnection: <T = NotificationConnection>(
+    args: {
+      where?: NotificationWhereInput
+      orderBy?: NotificationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  disqualificationLinksConnection: <T = DisqualificationLinkConnection>(
+    args: {
+      where?: DisqualificationLinkWhereInput
+      orderBy?: DisqualificationLinkOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  locationsConnection: <T = LocationConnection>(
+    args: {
+      where?: LocationWhereInput
+      orderBy?: LocationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  candidatesConnection: <T = CandidateConnection>(
+    args: {
+      where?: CandidateWhereInput
+      orderBy?: CandidateOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  invitesConnection: <T = InviteConnection>(
+    args: {
+      where?: InviteWhereInput
+      orderBy?: InviteOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  filesConnection: <T = FileConnection>(
+    args: {
+      where?: FileWhereInput
+      orderBy?: FileOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  fieldLinksConnection: <T = FieldLinkConnection>(
+    args: {
+      where?: FieldLinkWhereInput
+      orderBy?: FieldLinkOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  eventsConnection: <T = EventConnection>(
+    args: {
+      where?: EventWhereInput
+      orderBy?: EventOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  disqualificationsConnection: <T = DisqualificationConnection>(
+    args: {
+      where?: DisqualificationWhereInput
+      orderBy?: DisqualificationOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  usersConnection: <T = UserConnection>(
+    args: {
+      where?: UserWhereInput
+      orderBy?: UserOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  stagesConnection: <T = StageConnection>(
+    args: {
+      where?: StageWhereInput
+      orderBy?: StageOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  tasksConnection: <T = TaskConnection>(
+    args: {
+      where?: TaskWhereInput
+      orderBy?: TaskOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  tagsConnection: <T = TagConnection>(
+    args: {
+      where?: TagWhereInput
+      orderBy?: TagOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  fieldsConnection: <T = FieldConnection>(
+    args: {
+      where?: FieldWhereInput
+      orderBy?: FieldOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  workflowsConnection: <T = WorkflowConnection>(
+    args: {
+      where?: WorkflowWhereInput
+      orderBy?: WorkflowOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  commentsConnection: <T = CommentConnection>(
+    args: {
+      where?: CommentWhereInput
+      orderBy?: CommentOrderByInput
+      skip?: Int
+      after?: String
+      before?: String
+      first?: Int
+      last?: Int
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  node: <T = Node | null>(
+    args: { id: ID_Output },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+}
 
 export interface Mutation {
-    createWorkspace: <T = Workspace>(args: { data: WorkspaceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createJob: <T = Job>(args: { data: JobCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createApplication: <T = Application>(args: { data: ApplicationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createNotification: <T = Notification>(args: { data: NotificationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createDisqualificationLink: <T = DisqualificationLink>(args: { data: DisqualificationLinkCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createLocation: <T = Location>(args: { data: LocationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createCandidate: <T = Candidate>(args: { data: CandidateCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createInvite: <T = Invite>(args: { data: InviteCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createFile: <T = File>(args: { data: FileCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createFieldLink: <T = FieldLink>(args: { data: FieldLinkCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createEvent: <T = Event>(args: { data: EventCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createDisqualification: <T = Disqualification>(args: { data: DisqualificationCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createStage: <T = Stage>(args: { data: StageCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createTask: <T = Task>(args: { data: TaskCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createTag: <T = Tag>(args: { data: TagCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createField: <T = Field>(args: { data: FieldCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createWorkflow: <T = Workflow>(args: { data: WorkflowCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createComment: <T = Comment>(args: { data: CommentCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateWorkspace: <T = Workspace | null>(args: { data: WorkspaceUpdateInput, where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateJob: <T = Job | null>(args: { data: JobUpdateInput, where: JobWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateApplication: <T = Application | null>(args: { data: ApplicationUpdateInput, where: ApplicationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateNotification: <T = Notification | null>(args: { data: NotificationUpdateInput, where: NotificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateDisqualificationLink: <T = DisqualificationLink | null>(args: { data: DisqualificationLinkUpdateInput, where: DisqualificationLinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateLocation: <T = Location | null>(args: { data: LocationUpdateInput, where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateCandidate: <T = Candidate | null>(args: { data: CandidateUpdateInput, where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateInvite: <T = Invite | null>(args: { data: InviteUpdateInput, where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateFile: <T = File | null>(args: { data: FileUpdateInput, where: FileWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateFieldLink: <T = FieldLink | null>(args: { data: FieldLinkUpdateInput, where: FieldLinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateEvent: <T = Event | null>(args: { data: EventUpdateInput, where: EventWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateDisqualification: <T = Disqualification | null>(args: { data: DisqualificationUpdateInput, where: DisqualificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateStage: <T = Stage | null>(args: { data: StageUpdateInput, where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateTask: <T = Task | null>(args: { data: TaskUpdateInput, where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateTag: <T = Tag | null>(args: { data: TagUpdateInput, where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateField: <T = Field | null>(args: { data: FieldUpdateInput, where: FieldWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateWorkflow: <T = Workflow | null>(args: { data: WorkflowUpdateInput, where: WorkflowWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateComment: <T = Comment | null>(args: { data: CommentUpdateInput, where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteWorkspace: <T = Workspace | null>(args: { where: WorkspaceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteJob: <T = Job | null>(args: { where: JobWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteApplication: <T = Application | null>(args: { where: ApplicationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteNotification: <T = Notification | null>(args: { where: NotificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteDisqualificationLink: <T = DisqualificationLink | null>(args: { where: DisqualificationLinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteLocation: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteCandidate: <T = Candidate | null>(args: { where: CandidateWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteInvite: <T = Invite | null>(args: { where: InviteWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteFile: <T = File | null>(args: { where: FileWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteFieldLink: <T = FieldLink | null>(args: { where: FieldLinkWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteEvent: <T = Event | null>(args: { where: EventWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteDisqualification: <T = Disqualification | null>(args: { where: DisqualificationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteStage: <T = Stage | null>(args: { where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteTask: <T = Task | null>(args: { where: TaskWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteTag: <T = Tag | null>(args: { where: TagWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteField: <T = Field | null>(args: { where: FieldWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteWorkflow: <T = Workflow | null>(args: { where: WorkflowWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteComment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertWorkspace: <T = Workspace>(args: { where: WorkspaceWhereUniqueInput, create: WorkspaceCreateInput, update: WorkspaceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertJob: <T = Job>(args: { where: JobWhereUniqueInput, create: JobCreateInput, update: JobUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertApplication: <T = Application>(args: { where: ApplicationWhereUniqueInput, create: ApplicationCreateInput, update: ApplicationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertNotification: <T = Notification>(args: { where: NotificationWhereUniqueInput, create: NotificationCreateInput, update: NotificationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertDisqualificationLink: <T = DisqualificationLink>(args: { where: DisqualificationLinkWhereUniqueInput, create: DisqualificationLinkCreateInput, update: DisqualificationLinkUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertLocation: <T = Location>(args: { where: LocationWhereUniqueInput, create: LocationCreateInput, update: LocationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertCandidate: <T = Candidate>(args: { where: CandidateWhereUniqueInput, create: CandidateCreateInput, update: CandidateUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertInvite: <T = Invite>(args: { where: InviteWhereUniqueInput, create: InviteCreateInput, update: InviteUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertFile: <T = File>(args: { where: FileWhereUniqueInput, create: FileCreateInput, update: FileUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertFieldLink: <T = FieldLink>(args: { where: FieldLinkWhereUniqueInput, create: FieldLinkCreateInput, update: FieldLinkUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertEvent: <T = Event>(args: { where: EventWhereUniqueInput, create: EventCreateInput, update: EventUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertDisqualification: <T = Disqualification>(args: { where: DisqualificationWhereUniqueInput, create: DisqualificationCreateInput, update: DisqualificationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertStage: <T = Stage>(args: { where: StageWhereUniqueInput, create: StageCreateInput, update: StageUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertTask: <T = Task>(args: { where: TaskWhereUniqueInput, create: TaskCreateInput, update: TaskUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertTag: <T = Tag>(args: { where: TagWhereUniqueInput, create: TagCreateInput, update: TagUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertField: <T = Field>(args: { where: FieldWhereUniqueInput, create: FieldCreateInput, update: FieldUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertWorkflow: <T = Workflow>(args: { where: WorkflowWhereUniqueInput, create: WorkflowCreateInput, update: WorkflowUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertComment: <T = Comment>(args: { where: CommentWhereUniqueInput, create: CommentCreateInput, update: CommentUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyWorkspaces: <T = BatchPayload>(args: { data: WorkspaceUpdateInput, where?: WorkspaceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyJobs: <T = BatchPayload>(args: { data: JobUpdateInput, where?: JobWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyApplications: <T = BatchPayload>(args: { data: ApplicationUpdateInput, where?: ApplicationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyNotifications: <T = BatchPayload>(args: { data: NotificationUpdateInput, where?: NotificationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyDisqualificationLinks: <T = BatchPayload>(args: { data: DisqualificationLinkUpdateInput, where?: DisqualificationLinkWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyLocations: <T = BatchPayload>(args: { data: LocationUpdateInput, where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyCandidates: <T = BatchPayload>(args: { data: CandidateUpdateInput, where?: CandidateWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyInvites: <T = BatchPayload>(args: { data: InviteUpdateInput, where?: InviteWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyFiles: <T = BatchPayload>(args: { data: FileUpdateInput, where?: FileWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyFieldLinks: <T = BatchPayload>(args: { data: FieldLinkUpdateInput, where?: FieldLinkWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyEvents: <T = BatchPayload>(args: { data: EventUpdateInput, where?: EventWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyDisqualifications: <T = BatchPayload>(args: { data: DisqualificationUpdateInput, where?: DisqualificationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyStages: <T = BatchPayload>(args: { data: StageUpdateInput, where?: StageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyTasks: <T = BatchPayload>(args: { data: TaskUpdateInput, where?: TaskWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyTags: <T = BatchPayload>(args: { data: TagUpdateInput, where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyFields: <T = BatchPayload>(args: { data: FieldUpdateInput, where?: FieldWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyWorkflows: <T = BatchPayload>(args: { data: WorkflowUpdateInput, where?: WorkflowWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyComments: <T = BatchPayload>(args: { data: CommentUpdateInput, where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyWorkspaces: <T = BatchPayload>(args: { where?: WorkspaceWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyJobs: <T = BatchPayload>(args: { where?: JobWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyApplications: <T = BatchPayload>(args: { where?: ApplicationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyNotifications: <T = BatchPayload>(args: { where?: NotificationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyDisqualificationLinks: <T = BatchPayload>(args: { where?: DisqualificationLinkWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyLocations: <T = BatchPayload>(args: { where?: LocationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyCandidates: <T = BatchPayload>(args: { where?: CandidateWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyInvites: <T = BatchPayload>(args: { where?: InviteWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyFiles: <T = BatchPayload>(args: { where?: FileWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyFieldLinks: <T = BatchPayload>(args: { where?: FieldLinkWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyEvents: <T = BatchPayload>(args: { where?: EventWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyDisqualifications: <T = BatchPayload>(args: { where?: DisqualificationWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyStages: <T = BatchPayload>(args: { where?: StageWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyTasks: <T = BatchPayload>(args: { where?: TaskWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyTags: <T = BatchPayload>(args: { where?: TagWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyFields: <T = BatchPayload>(args: { where?: FieldWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyWorkflows: <T = BatchPayload>(args: { where?: WorkflowWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyComments: <T = BatchPayload>(args: { where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
-  }
+  createWorkspace: <T = Workspace>(
+    args: { data: WorkspaceCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createJob: <T = Job>(
+    args: { data: JobCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createApplication: <T = Application>(
+    args: { data: ApplicationCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createNotification: <T = Notification>(
+    args: { data: NotificationCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createDisqualificationLink: <T = DisqualificationLink>(
+    args: { data: DisqualificationLinkCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createLocation: <T = Location>(
+    args: { data: LocationCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createCandidate: <T = Candidate>(
+    args: { data: CandidateCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createInvite: <T = Invite>(
+    args: { data: InviteCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createFile: <T = File>(
+    args: { data: FileCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createFieldLink: <T = FieldLink>(
+    args: { data: FieldLinkCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createEvent: <T = Event>(
+    args: { data: EventCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createDisqualification: <T = Disqualification>(
+    args: { data: DisqualificationCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createUser: <T = User>(
+    args: { data: UserCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createStage: <T = Stage>(
+    args: { data: StageCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createTask: <T = Task>(
+    args: { data: TaskCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createTag: <T = Tag>(
+    args: { data: TagCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createField: <T = Field>(
+    args: { data: FieldCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createWorkflow: <T = Workflow>(
+    args: { data: WorkflowCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  createComment: <T = Comment>(
+    args: { data: CommentCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateWorkspace: <T = Workspace | null>(
+    args: { data: WorkspaceUpdateInput; where: WorkspaceWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateJob: <T = Job | null>(
+    args: { data: JobUpdateInput; where: JobWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateApplication: <T = Application | null>(
+    args: { data: ApplicationUpdateInput; where: ApplicationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateNotification: <T = Notification | null>(
+    args: { data: NotificationUpdateInput; where: NotificationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateDisqualificationLink: <T = DisqualificationLink | null>(
+    args: { data: DisqualificationLinkUpdateInput; where: DisqualificationLinkWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateLocation: <T = Location | null>(
+    args: { data: LocationUpdateInput; where: LocationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateCandidate: <T = Candidate | null>(
+    args: { data: CandidateUpdateInput; where: CandidateWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateInvite: <T = Invite | null>(
+    args: { data: InviteUpdateInput; where: InviteWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateFile: <T = File | null>(
+    args: { data: FileUpdateInput; where: FileWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateFieldLink: <T = FieldLink | null>(
+    args: { data: FieldLinkUpdateInput; where: FieldLinkWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateEvent: <T = Event | null>(
+    args: { data: EventUpdateInput; where: EventWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateDisqualification: <T = Disqualification | null>(
+    args: { data: DisqualificationUpdateInput; where: DisqualificationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateUser: <T = User | null>(
+    args: { data: UserUpdateInput; where: UserWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateStage: <T = Stage | null>(
+    args: { data: StageUpdateInput; where: StageWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateTask: <T = Task | null>(
+    args: { data: TaskUpdateInput; where: TaskWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateTag: <T = Tag | null>(
+    args: { data: TagUpdateInput; where: TagWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateField: <T = Field | null>(
+    args: { data: FieldUpdateInput; where: FieldWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateWorkflow: <T = Workflow | null>(
+    args: { data: WorkflowUpdateInput; where: WorkflowWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateComment: <T = Comment | null>(
+    args: { data: CommentUpdateInput; where: CommentWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteWorkspace: <T = Workspace | null>(
+    args: { where: WorkspaceWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteJob: <T = Job | null>(
+    args: { where: JobWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteApplication: <T = Application | null>(
+    args: { where: ApplicationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteNotification: <T = Notification | null>(
+    args: { where: NotificationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteDisqualificationLink: <T = DisqualificationLink | null>(
+    args: { where: DisqualificationLinkWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteLocation: <T = Location | null>(
+    args: { where: LocationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteCandidate: <T = Candidate | null>(
+    args: { where: CandidateWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteInvite: <T = Invite | null>(
+    args: { where: InviteWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteFile: <T = File | null>(
+    args: { where: FileWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteFieldLink: <T = FieldLink | null>(
+    args: { where: FieldLinkWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteEvent: <T = Event | null>(
+    args: { where: EventWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteDisqualification: <T = Disqualification | null>(
+    args: { where: DisqualificationWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteUser: <T = User | null>(
+    args: { where: UserWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteStage: <T = Stage | null>(
+    args: { where: StageWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteTask: <T = Task | null>(
+    args: { where: TaskWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteTag: <T = Tag | null>(
+    args: { where: TagWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteField: <T = Field | null>(
+    args: { where: FieldWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteWorkflow: <T = Workflow | null>(
+    args: { where: WorkflowWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteComment: <T = Comment | null>(
+    args: { where: CommentWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertWorkspace: <T = Workspace>(
+    args: {
+      where: WorkspaceWhereUniqueInput
+      create: WorkspaceCreateInput
+      update: WorkspaceUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertJob: <T = Job>(
+    args: { where: JobWhereUniqueInput; create: JobCreateInput; update: JobUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertApplication: <T = Application>(
+    args: {
+      where: ApplicationWhereUniqueInput
+      create: ApplicationCreateInput
+      update: ApplicationUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertNotification: <T = Notification>(
+    args: {
+      where: NotificationWhereUniqueInput
+      create: NotificationCreateInput
+      update: NotificationUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertDisqualificationLink: <T = DisqualificationLink>(
+    args: {
+      where: DisqualificationLinkWhereUniqueInput
+      create: DisqualificationLinkCreateInput
+      update: DisqualificationLinkUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertLocation: <T = Location>(
+    args: {
+      where: LocationWhereUniqueInput
+      create: LocationCreateInput
+      update: LocationUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertCandidate: <T = Candidate>(
+    args: {
+      where: CandidateWhereUniqueInput
+      create: CandidateCreateInput
+      update: CandidateUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertInvite: <T = Invite>(
+    args: { where: InviteWhereUniqueInput; create: InviteCreateInput; update: InviteUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertFile: <T = File>(
+    args: { where: FileWhereUniqueInput; create: FileCreateInput; update: FileUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertFieldLink: <T = FieldLink>(
+    args: {
+      where: FieldLinkWhereUniqueInput
+      create: FieldLinkCreateInput
+      update: FieldLinkUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertEvent: <T = Event>(
+    args: { where: EventWhereUniqueInput; create: EventCreateInput; update: EventUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertDisqualification: <T = Disqualification>(
+    args: {
+      where: DisqualificationWhereUniqueInput
+      create: DisqualificationCreateInput
+      update: DisqualificationUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertUser: <T = User>(
+    args: { where: UserWhereUniqueInput; create: UserCreateInput; update: UserUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertStage: <T = Stage>(
+    args: { where: StageWhereUniqueInput; create: StageCreateInput; update: StageUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertTask: <T = Task>(
+    args: { where: TaskWhereUniqueInput; create: TaskCreateInput; update: TaskUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertTag: <T = Tag>(
+    args: { where: TagWhereUniqueInput; create: TagCreateInput; update: TagUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertField: <T = Field>(
+    args: { where: FieldWhereUniqueInput; create: FieldCreateInput; update: FieldUpdateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertWorkflow: <T = Workflow>(
+    args: {
+      where: WorkflowWhereUniqueInput
+      create: WorkflowCreateInput
+      update: WorkflowUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  upsertComment: <T = Comment>(
+    args: {
+      where: CommentWhereUniqueInput
+      create: CommentCreateInput
+      update: CommentUpdateInput
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyWorkspaces: <T = BatchPayload>(
+    args: { data: WorkspaceUpdateInput; where?: WorkspaceWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyJobs: <T = BatchPayload>(
+    args: { data: JobUpdateInput; where?: JobWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyApplications: <T = BatchPayload>(
+    args: { data: ApplicationUpdateInput; where?: ApplicationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyNotifications: <T = BatchPayload>(
+    args: { data: NotificationUpdateInput; where?: NotificationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyDisqualificationLinks: <T = BatchPayload>(
+    args: { data: DisqualificationLinkUpdateInput; where?: DisqualificationLinkWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyLocations: <T = BatchPayload>(
+    args: { data: LocationUpdateInput; where?: LocationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyCandidates: <T = BatchPayload>(
+    args: { data: CandidateUpdateInput; where?: CandidateWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyInvites: <T = BatchPayload>(
+    args: { data: InviteUpdateInput; where?: InviteWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyFiles: <T = BatchPayload>(
+    args: { data: FileUpdateInput; where?: FileWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyFieldLinks: <T = BatchPayload>(
+    args: { data: FieldLinkUpdateInput; where?: FieldLinkWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyEvents: <T = BatchPayload>(
+    args: { data: EventUpdateInput; where?: EventWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyDisqualifications: <T = BatchPayload>(
+    args: { data: DisqualificationUpdateInput; where?: DisqualificationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyUsers: <T = BatchPayload>(
+    args: { data: UserUpdateInput; where?: UserWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyStages: <T = BatchPayload>(
+    args: { data: StageUpdateInput; where?: StageWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyTasks: <T = BatchPayload>(
+    args: { data: TaskUpdateInput; where?: TaskWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyTags: <T = BatchPayload>(
+    args: { data: TagUpdateInput; where?: TagWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyFields: <T = BatchPayload>(
+    args: { data: FieldUpdateInput; where?: FieldWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyWorkflows: <T = BatchPayload>(
+    args: { data: WorkflowUpdateInput; where?: WorkflowWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  updateManyComments: <T = BatchPayload>(
+    args: { data: CommentUpdateInput; where?: CommentWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyWorkspaces: <T = BatchPayload>(
+    args: { where?: WorkspaceWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyJobs: <T = BatchPayload>(
+    args: { where?: JobWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyApplications: <T = BatchPayload>(
+    args: { where?: ApplicationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyNotifications: <T = BatchPayload>(
+    args: { where?: NotificationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyDisqualificationLinks: <T = BatchPayload>(
+    args: { where?: DisqualificationLinkWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyLocations: <T = BatchPayload>(
+    args: { where?: LocationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyCandidates: <T = BatchPayload>(
+    args: { where?: CandidateWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyInvites: <T = BatchPayload>(
+    args: { where?: InviteWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyFiles: <T = BatchPayload>(
+    args: { where?: FileWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyFieldLinks: <T = BatchPayload>(
+    args: { where?: FieldLinkWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyEvents: <T = BatchPayload>(
+    args: { where?: EventWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyDisqualifications: <T = BatchPayload>(
+    args: { where?: DisqualificationWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyUsers: <T = BatchPayload>(
+    args: { where?: UserWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyStages: <T = BatchPayload>(
+    args: { where?: StageWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyTasks: <T = BatchPayload>(
+    args: { where?: TaskWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyTags: <T = BatchPayload>(
+    args: { where?: TagWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyFields: <T = BatchPayload>(
+    args: { where?: FieldWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyWorkflows: <T = BatchPayload>(
+    args: { where?: WorkflowWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+  deleteManyComments: <T = BatchPayload>(
+    args: { where?: CommentWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>
+}
 
 export interface Subscription {
-    workspace: <T = WorkspaceSubscriptionPayload | null>(args: { where?: WorkspaceSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    job: <T = JobSubscriptionPayload | null>(args: { where?: JobSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    application: <T = ApplicationSubscriptionPayload | null>(args: { where?: ApplicationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    notification: <T = NotificationSubscriptionPayload | null>(args: { where?: NotificationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    disqualificationLink: <T = DisqualificationLinkSubscriptionPayload | null>(args: { where?: DisqualificationLinkSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    location: <T = LocationSubscriptionPayload | null>(args: { where?: LocationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    candidate: <T = CandidateSubscriptionPayload | null>(args: { where?: CandidateSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    invite: <T = InviteSubscriptionPayload | null>(args: { where?: InviteSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    file: <T = FileSubscriptionPayload | null>(args: { where?: FileSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    fieldLink: <T = FieldLinkSubscriptionPayload | null>(args: { where?: FieldLinkSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    event: <T = EventSubscriptionPayload | null>(args: { where?: EventSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    disqualification: <T = DisqualificationSubscriptionPayload | null>(args: { where?: DisqualificationSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    user: <T = UserSubscriptionPayload | null>(args: { where?: UserSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    stage: <T = StageSubscriptionPayload | null>(args: { where?: StageSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    task: <T = TaskSubscriptionPayload | null>(args: { where?: TaskSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    tag: <T = TagSubscriptionPayload | null>(args: { where?: TagSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    field: <T = FieldSubscriptionPayload | null>(args: { where?: FieldSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    workflow: <T = WorkflowSubscriptionPayload | null>(args: { where?: WorkflowSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    comment: <T = CommentSubscriptionPayload | null>(args: { where?: CommentSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
-  }
+  workspace: <T = WorkspaceSubscriptionPayload | null>(
+    args: { where?: WorkspaceSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  job: <T = JobSubscriptionPayload | null>(
+    args: { where?: JobSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  application: <T = ApplicationSubscriptionPayload | null>(
+    args: { where?: ApplicationSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  notification: <T = NotificationSubscriptionPayload | null>(
+    args: { where?: NotificationSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  disqualificationLink: <T = DisqualificationLinkSubscriptionPayload | null>(
+    args: { where?: DisqualificationLinkSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  location: <T = LocationSubscriptionPayload | null>(
+    args: { where?: LocationSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  candidate: <T = CandidateSubscriptionPayload | null>(
+    args: { where?: CandidateSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  invite: <T = InviteSubscriptionPayload | null>(
+    args: { where?: InviteSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  file: <T = FileSubscriptionPayload | null>(
+    args: { where?: FileSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  fieldLink: <T = FieldLinkSubscriptionPayload | null>(
+    args: { where?: FieldLinkSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  event: <T = EventSubscriptionPayload | null>(
+    args: { where?: EventSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  disqualification: <T = DisqualificationSubscriptionPayload | null>(
+    args: { where?: DisqualificationSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  user: <T = UserSubscriptionPayload | null>(
+    args: { where?: UserSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  stage: <T = StageSubscriptionPayload | null>(
+    args: { where?: StageSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  task: <T = TaskSubscriptionPayload | null>(
+    args: { where?: TaskSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  tag: <T = TagSubscriptionPayload | null>(
+    args: { where?: TagSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  field: <T = FieldSubscriptionPayload | null>(
+    args: { where?: FieldSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  workflow: <T = WorkflowSubscriptionPayload | null>(
+    args: { where?: WorkflowSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+  comment: <T = CommentSubscriptionPayload | null>(
+    args: { where?: CommentSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>
+}
 
 export interface Exists {
   Workspace: (where?: WorkspaceWhereInput) => Promise<boolean>
@@ -230,22 +1338,33 @@ export interface Prisma {
   mutation: Mutation
   subscription: Subscription
   exists: Exists
-  request: <T = any>(query: string, variables?: {[key: string]: any}) => Promise<T>
-  delegate(operation: 'query' | 'mutation', fieldName: string, args: {
-    [key: string]: any;
-}, infoOrQuery?: GraphQLResolveInfo | string, options?: Options): Promise<any>;
-delegateSubscription(fieldName: string, args?: {
-    [key: string]: any;
-}, infoOrQuery?: GraphQLResolveInfo | string, options?: Options): Promise<AsyncIterator<any>>;
-getAbstractResolvers(filterSchema?: GraphQLSchema | string): IResolvers;
+  request: <T = any>(query: string, variables?: { [key: string]: any }) => Promise<T>
+  delegate(
+    operation: 'query' | 'mutation',
+    fieldName: string,
+    args: {
+      [key: string]: any
+    },
+    infoOrQuery?: GraphQLResolveInfo | string,
+    options?: Options
+  ): Promise<any>
+  delegateSubscription(
+    fieldName: string,
+    args?: {
+      [key: string]: any
+    },
+    infoOrQuery?: GraphQLResolveInfo | string,
+    options?: Options
+  ): Promise<AsyncIterator<any>>
+  getAbstractResolvers(filterSchema?: GraphQLSchema | string): IResolvers
 }
 
 export interface BindingConstructor<T> {
-  new(options: BasePrismaOptions): T
+  new (options: BasePrismaOptions): T
 }
 /**
  * Type Defs
-*/
+ */
 
 const typeDefs = `type AggregateApplication {
   count: Int!
@@ -8293,276 +9412,273 @@ input WorkspaceWhereUniqueInput {
 }
 `
 
-export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDefs})
+export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({ typeDefs })
 
 /**
  * Types
-*/
+ */
 
-export type DisqualificationOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC'
+export type DisqualificationOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
 
-export type WorkspaceOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'name_ASC' |
-  'name_DESC'
+export type WorkspaceOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
 
-export type StageOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'type_ASC' |
-  'type_DESC'
+export type StageOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
 
-export type DisqualificationLinkOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'justification_ASC' |
-  'justification_DESC'
+export type DisqualificationLinkOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'justification_ASC'
+  | 'justification_DESC'
 
-export type CommentOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'content_ASC' |
-  'content_DESC'
+export type CommentOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'content_ASC'
+  | 'content_DESC'
 
-export type EventType =   'Default' |
-  'Message' |
-  'CommentCreate' |
-  'CommentEdit' |
-  'CommentDelete'
+export type EventType = 'Default' | 'Message' | 'CommentCreate' | 'CommentEdit' | 'CommentDelete'
 
-export type StageType =   'New' |
-  'Pipeline' |
-  'Final'
+export type StageType = 'New' | 'Pipeline' | 'Final'
 
-export type EventTargetType =   'Candidate' |
-  'Job' |
-  'Task' |
-  'Workspace'
+export type EventTargetType = 'Candidate' | 'Job' | 'Task' | 'Workspace'
 
-export type TaskOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'title_ASC' |
-  'title_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'dueAt_ASC' |
-  'dueAt_DESC'
+export type TaskOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'title_ASC'
+  | 'title_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'dueAt_ASC'
+  | 'dueAt_DESC'
 
-export type CandidateOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'firstName_ASC' |
-  'firstName_DESC' |
-  'lastName_ASC' |
-  'lastName_DESC'
+export type CandidateOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'firstName_ASC'
+  | 'firstName_DESC'
+  | 'lastName_ASC'
+  | 'lastName_DESC'
 
-export type FieldLinkOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'value_ASC' |
-  'value_DESC'
+export type FieldLinkOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'value_ASC'
+  | 'value_DESC'
 
-export type LocationOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'country_ASC' |
-  'country_DESC' |
-  'region_ASC' |
-  'region_DESC' |
-  'city_ASC' |
-  'city_DESC' |
-  'zip_ASC' |
-  'zip_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
+export type LocationOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'country_ASC'
+  | 'country_DESC'
+  | 'region_ASC'
+  | 'region_DESC'
+  | 'city_ASC'
+  | 'city_DESC'
+  | 'zip_ASC'
+  | 'zip_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
 
-export type TagOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'label_ASC' |
-  'label_DESC'
+export type TagOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'label_ASC'
+  | 'label_DESC'
 
-export type FieldOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'label_ASC' |
-  'label_DESC'
+export type FieldOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'label_ASC'
+  | 'label_DESC'
 
-export type FileOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'size_ASC' |
-  'size_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'url_ASC' |
-  'url_DESC'
+export type FileOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'size_ASC'
+  | 'size_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'url_ASC'
+  | 'url_DESC'
 
-export type MutationType =   'CREATED' |
-  'UPDATED' |
-  'DELETED'
+export type MutationType = 'CREATED' | 'UPDATED' | 'DELETED'
 
-export type ApplicationOrderByInput =   'createdAt_ASC' |
-  'createdAt_DESC' |
-  'id_ASC' |
-  'id_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC'
+export type ApplicationOrderByInput =
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
 
-export type EventActorType =   'System' |
-  'User' |
-  'Candidate'
+export type EventActorType = 'System' | 'User' | 'Candidate'
 
-export type UserOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'firstName_ASC' |
-  'firstName_DESC' |
-  'lastName_ASC' |
-  'lastName_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'username_ASC' |
-  'username_DESC' |
-  'lastLogin_ASC' |
-  'lastLogin_DESC' |
-  'deletedAt_ASC' |
-  'deletedAt_DESC' |
-  'position_ASC' |
-  'position_DESC'
+export type UserOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'firstName_ASC'
+  | 'firstName_DESC'
+  | 'lastName_ASC'
+  | 'lastName_DESC'
+  | 'email_ASC'
+  | 'email_DESC'
+  | 'username_ASC'
+  | 'username_DESC'
+  | 'lastLogin_ASC'
+  | 'lastLogin_DESC'
+  | 'deletedAt_ASC'
+  | 'deletedAt_DESC'
+  | 'position_ASC'
+  | 'position_DESC'
 
-export type NotificationType =   'Unread' |
-  'Read'
+export type NotificationType = 'Unread' | 'Read'
 
-export type EventOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'actorType_ASC' |
-  'actorType_DESC' |
-  'targetType_ASC' |
-  'targetType_DESC'
+export type EventOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'actorType_ASC'
+  | 'actorType_DESC'
+  | 'targetType_ASC'
+  | 'targetType_DESC'
 
-export type NotificationOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC'
+export type NotificationOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
 
-export type JobOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'type_ASC' |
-  'type_DESC' |
-  'department_ASC' |
-  'department_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC' |
-  'requirements_ASC' |
-  'requirements_DESC'
+export type JobOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'type_ASC'
+  | 'type_DESC'
+  | 'department_ASC'
+  | 'department_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'requirements_ASC'
+  | 'requirements_DESC'
 
-export type FieldType =   'Int' |
-  'Float' |
-  'String' |
-  'Text' |
-  'Boolean' |
-  'DateTime'
+export type FieldType = 'Int' | 'Float' | 'String' | 'Text' | 'Boolean' | 'DateTime'
 
-export type JobType =   'Draft' |
-  'Published' |
-  'Archived'
+export type JobType = 'Draft' | 'Published' | 'Archived'
 
-export type WorkflowOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'description_ASC' |
-  'description_DESC'
+export type WorkflowOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
 
-export type InviteOrderByInput =   'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'email_ASC' |
-  'email_DESC' |
-  'expireAt_ASC' |
-  'expireAt_DESC'
+export type InviteOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'email_ASC'
+  | 'email_DESC'
+  | 'expireAt_ASC'
+  | 'expireAt_DESC'
 
-export type ApplicationType =   'Qualified' |
-  'Disqualified'
+export type ApplicationType = 'Qualified' | 'Disqualified'
 
 export interface EventUpdateWithoutTargetWorkspaceDataInput {
   type?: EventType
@@ -9922,8 +11038,12 @@ export interface EventUpdateManyWithoutTargetWorkspaceInput {
   connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
   disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
   delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  update?: EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput[] | EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput
-  upsert?: EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput[] | EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput
+  update?:
+    | EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput[]
+    | EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput
+  upsert?:
+    | EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput[]
+    | EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput
 }
 
 export interface CandidateUpsertNestedInput {
@@ -10024,8 +11144,12 @@ export interface JobUpdateManyWithoutWorkspaceInput {
   connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
   disconnect?: JobWhereUniqueInput[] | JobWhereUniqueInput
   delete?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  update?: JobUpdateWithWhereUniqueWithoutWorkspaceInput[] | JobUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: JobUpsertWithWhereUniqueWithoutWorkspaceInput[] | JobUpsertWithWhereUniqueWithoutWorkspaceInput
+  update?:
+    | JobUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    | JobUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?:
+    | JobUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    | JobUpsertWithWhereUniqueWithoutWorkspaceInput
 }
 
 export interface CandidateUpdateWithoutApplicationsDataInput {
@@ -10084,8 +11208,12 @@ export interface UserUpdateManyWithoutSubscriptionJobsInput {
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput[] | UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput
-  upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput
+  update?:
+    | UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput[]
+    | UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput[]
+    | UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput
 }
 
 export interface UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput {
@@ -10362,8 +11490,12 @@ export interface UserUpdateManyWithoutWorkspaceInput {
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutWorkspaceInput[] | UserUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: UserUpsertWithWhereUniqueWithoutWorkspaceInput[] | UserUpsertWithWhereUniqueWithoutWorkspaceInput
+  update?:
+    | UserUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    | UserUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    | UserUpsertWithWhereUniqueWithoutWorkspaceInput
 }
 
 export interface CandidateCreatecoverLettersStringInput {
@@ -10407,8 +11539,12 @@ export interface NotificationUpdateManyWithoutUserInput {
   connect?: NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
   disconnect?: NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
   delete?: NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
-  update?: NotificationUpdateWithWhereUniqueWithoutUserInput[] | NotificationUpdateWithWhereUniqueWithoutUserInput
-  upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput[] | NotificationUpsertWithWhereUniqueWithoutUserInput
+  update?:
+    | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    | NotificationUpdateWithWhereUniqueWithoutUserInput
+  upsert?:
+    | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    | NotificationUpsertWithWhereUniqueWithoutUserInput
 }
 
 export interface NotificationCreateManyWithoutUserInput {
@@ -10444,7 +11580,9 @@ export interface EventUpdateOneRequiredInput {
 }
 
 export interface UserCreateManyWithoutSubscriptionCandidatesInput {
-  create?: UserCreateWithoutSubscriptionCandidatesInput[] | UserCreateWithoutSubscriptionCandidatesInput
+  create?:
+    | UserCreateWithoutSubscriptionCandidatesInput[]
+    | UserCreateWithoutSubscriptionCandidatesInput
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
 }
 
@@ -10506,12 +11644,18 @@ export interface CandidateCreateManyWithoutWorkspaceInput {
 }
 
 export interface UserUpdateManyWithoutSubscriptionCandidatesInput {
-  create?: UserCreateWithoutSubscriptionCandidatesInput[] | UserCreateWithoutSubscriptionCandidatesInput
+  create?:
+    | UserCreateWithoutSubscriptionCandidatesInput[]
+    | UserCreateWithoutSubscriptionCandidatesInput
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput[] | UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput
-  upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput
+  update?:
+    | UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput[]
+    | UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput[]
+    | UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput
 }
 
 export interface EventCreateManyWithoutTargetCandidateInput {
@@ -10556,8 +11700,12 @@ export interface JobUpdateManyWithoutSubscribersInput {
   connect?: JobWhereUniqueInput[] | JobWhereUniqueInput
   disconnect?: JobWhereUniqueInput[] | JobWhereUniqueInput
   delete?: JobWhereUniqueInput[] | JobWhereUniqueInput
-  update?: JobUpdateWithWhereUniqueWithoutSubscribersInput[] | JobUpdateWithWhereUniqueWithoutSubscribersInput
-  upsert?: JobUpsertWithWhereUniqueWithoutSubscribersInput[] | JobUpsertWithWhereUniqueWithoutSubscribersInput
+  update?:
+    | JobUpdateWithWhereUniqueWithoutSubscribersInput[]
+    | JobUpdateWithWhereUniqueWithoutSubscribersInput
+  upsert?:
+    | JobUpsertWithWhereUniqueWithoutSubscribersInput[]
+    | JobUpsertWithWhereUniqueWithoutSubscribersInput
 }
 
 export interface DisqualificationLinkCreateOneInput {
@@ -10627,8 +11775,12 @@ export interface CandidateUpdateManyWithoutWorkspaceInput {
   connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
   disconnect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
   delete?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  update?: CandidateUpdateWithWhereUniqueWithoutWorkspaceInput[] | CandidateUpdateWithWhereUniqueWithoutWorkspaceInput
-  upsert?: CandidateUpsertWithWhereUniqueWithoutWorkspaceInput[] | CandidateUpsertWithWhereUniqueWithoutWorkspaceInput
+  update?:
+    | CandidateUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    | CandidateUpdateWithWhereUniqueWithoutWorkspaceInput
+  upsert?:
+    | CandidateUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    | CandidateUpsertWithWhereUniqueWithoutWorkspaceInput
 }
 
 export interface FileCreateManyInput {
@@ -10676,8 +11828,12 @@ export interface EventUpdateManyWithoutTargetCandidateInput {
   connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
   disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
   delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  update?: EventUpdateWithWhereUniqueWithoutTargetCandidateInput[] | EventUpdateWithWhereUniqueWithoutTargetCandidateInput
-  upsert?: EventUpsertWithWhereUniqueWithoutTargetCandidateInput[] | EventUpsertWithWhereUniqueWithoutTargetCandidateInput
+  update?:
+    | EventUpdateWithWhereUniqueWithoutTargetCandidateInput[]
+    | EventUpdateWithWhereUniqueWithoutTargetCandidateInput
+  upsert?:
+    | EventUpsertWithWhereUniqueWithoutTargetCandidateInput[]
+    | EventUpsertWithWhereUniqueWithoutTargetCandidateInput
 }
 
 export interface FieldCreateInput {
@@ -10872,8 +12028,12 @@ export interface ApplicationUpdateManyWithoutJobInput {
   connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
   disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
   delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  update?: ApplicationUpdateWithWhereUniqueWithoutJobInput[] | ApplicationUpdateWithWhereUniqueWithoutJobInput
-  upsert?: ApplicationUpsertWithWhereUniqueWithoutJobInput[] | ApplicationUpsertWithWhereUniqueWithoutJobInput
+  update?:
+    | ApplicationUpdateWithWhereUniqueWithoutJobInput[]
+    | ApplicationUpdateWithWhereUniqueWithoutJobInput
+  upsert?:
+    | ApplicationUpsertWithWhereUniqueWithoutJobInput[]
+    | ApplicationUpsertWithWhereUniqueWithoutJobInput
 }
 
 export interface DisqualificationSubscriptionWhereInput {
@@ -11196,8 +12356,12 @@ export interface CandidateUpdateManyWithoutSubscribersInput {
   connect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
   disconnect?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
   delete?: CandidateWhereUniqueInput[] | CandidateWhereUniqueInput
-  update?: CandidateUpdateWithWhereUniqueWithoutSubscribersInput[] | CandidateUpdateWithWhereUniqueWithoutSubscribersInput
-  upsert?: CandidateUpsertWithWhereUniqueWithoutSubscribersInput[] | CandidateUpsertWithWhereUniqueWithoutSubscribersInput
+  update?:
+    | CandidateUpdateWithWhereUniqueWithoutSubscribersInput[]
+    | CandidateUpdateWithWhereUniqueWithoutSubscribersInput
+  upsert?:
+    | CandidateUpsertWithWhereUniqueWithoutSubscribersInput[]
+    | CandidateUpsertWithWhereUniqueWithoutSubscribersInput
 }
 
 export interface FieldWhereUniqueInput {
@@ -11505,8 +12669,12 @@ export interface TaskUpdateManyWithoutCandidateInput {
   connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
   disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
   delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  update?: TaskUpdateWithWhereUniqueWithoutCandidateInput[] | TaskUpdateWithWhereUniqueWithoutCandidateInput
-  upsert?: TaskUpsertWithWhereUniqueWithoutCandidateInput[] | TaskUpsertWithWhereUniqueWithoutCandidateInput
+  update?:
+    | TaskUpdateWithWhereUniqueWithoutCandidateInput[]
+    | TaskUpdateWithWhereUniqueWithoutCandidateInput
+  upsert?:
+    | TaskUpsertWithWhereUniqueWithoutCandidateInput[]
+    | TaskUpsertWithWhereUniqueWithoutCandidateInput
 }
 
 export interface CandidateCreateresumesStringInput {
@@ -11547,8 +12715,12 @@ export interface UserUpdateManyWithoutSubscriptionTasksInput {
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
   delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput[] | UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput
-  upsert?: UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput[] | UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput
+  update?:
+    | UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput[]
+    | UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput[]
+    | UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput
 }
 
 export interface CandidateCreateWithoutEventsInput {
@@ -11634,8 +12806,12 @@ export interface TaskUpdateManyWithoutOwnersInput {
   connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
   disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
   delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  update?: TaskUpdateWithWhereUniqueWithoutOwnersInput[] | TaskUpdateWithWhereUniqueWithoutOwnersInput
-  upsert?: TaskUpsertWithWhereUniqueWithoutOwnersInput[] | TaskUpsertWithWhereUniqueWithoutOwnersInput
+  update?:
+    | TaskUpdateWithWhereUniqueWithoutOwnersInput[]
+    | TaskUpdateWithWhereUniqueWithoutOwnersInput
+  upsert?:
+    | TaskUpsertWithWhereUniqueWithoutOwnersInput[]
+    | TaskUpsertWithWhereUniqueWithoutOwnersInput
 }
 
 export interface JobCreateWithoutEventsInput {
@@ -11736,8 +12912,12 @@ export interface ApplicationUpdateManyWithoutCandidateInput {
   connect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
   disconnect?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
   delete?: ApplicationWhereUniqueInput[] | ApplicationWhereUniqueInput
-  update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput[] | ApplicationUpdateWithWhereUniqueWithoutCandidateInput
-  upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput[] | ApplicationUpsertWithWhereUniqueWithoutCandidateInput
+  update?:
+    | ApplicationUpdateWithWhereUniqueWithoutCandidateInput[]
+    | ApplicationUpdateWithWhereUniqueWithoutCandidateInput
+  upsert?:
+    | ApplicationUpsertWithWhereUniqueWithoutCandidateInput[]
+    | ApplicationUpsertWithWhereUniqueWithoutCandidateInput
 }
 
 export interface TaskCreateManyWithoutCandidateInput {
@@ -11992,8 +13172,12 @@ export interface EventUpdateManyWithoutTargetJobInput {
   connect?: EventWhereUniqueInput[] | EventWhereUniqueInput
   disconnect?: EventWhereUniqueInput[] | EventWhereUniqueInput
   delete?: EventWhereUniqueInput[] | EventWhereUniqueInput
-  update?: EventUpdateWithWhereUniqueWithoutTargetJobInput[] | EventUpdateWithWhereUniqueWithoutTargetJobInput
-  upsert?: EventUpsertWithWhereUniqueWithoutTargetJobInput[] | EventUpsertWithWhereUniqueWithoutTargetJobInput
+  update?:
+    | EventUpdateWithWhereUniqueWithoutTargetJobInput[]
+    | EventUpdateWithWhereUniqueWithoutTargetJobInput
+  upsert?:
+    | EventUpsertWithWhereUniqueWithoutTargetJobInput[]
+    | EventUpsertWithWhereUniqueWithoutTargetJobInput
 }
 
 export interface TaskUpdateInput {
@@ -12146,8 +13330,12 @@ export interface TaskUpdateManyWithoutSubscribersInput {
   connect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
   disconnect?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
   delete?: TaskWhereUniqueInput[] | TaskWhereUniqueInput
-  update?: TaskUpdateWithWhereUniqueWithoutSubscribersInput[] | TaskUpdateWithWhereUniqueWithoutSubscribersInput
-  upsert?: TaskUpsertWithWhereUniqueWithoutSubscribersInput[] | TaskUpsertWithWhereUniqueWithoutSubscribersInput
+  update?:
+    | TaskUpdateWithWhereUniqueWithoutSubscribersInput[]
+    | TaskUpdateWithWhereUniqueWithoutSubscribersInput
+  upsert?:
+    | TaskUpsertWithWhereUniqueWithoutSubscribersInput[]
+    | TaskUpsertWithWhereUniqueWithoutSubscribersInput
 }
 
 export interface JobCreateWithoutWorkspaceInput {
@@ -12374,8 +13562,12 @@ export interface DisqualificationUpdateManyInput {
   connect?: DisqualificationWhereUniqueInput[] | DisqualificationWhereUniqueInput
   disconnect?: DisqualificationWhereUniqueInput[] | DisqualificationWhereUniqueInput
   delete?: DisqualificationWhereUniqueInput[] | DisqualificationWhereUniqueInput
-  update?: DisqualificationUpdateWithWhereUniqueNestedInput[] | DisqualificationUpdateWithWhereUniqueNestedInput
-  upsert?: DisqualificationUpsertWithWhereUniqueNestedInput[] | DisqualificationUpsertWithWhereUniqueNestedInput
+  update?:
+    | DisqualificationUpdateWithWhereUniqueNestedInput[]
+    | DisqualificationUpdateWithWhereUniqueNestedInput
+  upsert?:
+    | DisqualificationUpsertWithWhereUniqueNestedInput[]
+    | DisqualificationUpsertWithWhereUniqueNestedInput
 }
 
 export interface CommentUpsertWithWhereUniqueNestedInput {

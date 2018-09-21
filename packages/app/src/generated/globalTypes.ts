@@ -6,16 +6,16 @@
 //==============================================================
 
 export enum JobType {
-  ARCHIVED = "ARCHIVED",
-  DRAFT = "DRAFT",
-  PUBLISHED = "PUBLISHED",
+  ARCHIVED = 'ARCHIVED',
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
 }
 
 export enum StageType {
-  DISQUALIFIED = "DISQUALIFIED",
-  HIRED = "HIRED",
-  NEW = "NEW",
-  QUALIFIED = "QUALIFIED",
+  DISQUALIFIED = 'DISQUALIFIED',
+  HIRED = 'HIRED',
+  NEW = 'NEW',
+  QUALIFIED = 'QUALIFIED',
 }
 
 //==============================================================

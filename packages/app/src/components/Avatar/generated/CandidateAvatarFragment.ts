@@ -6,15 +6,15 @@
 // ====================================================
 
 export interface CandidateAvatarFragment_avatar {
-  __typename: "File";
-  url: string;
-  name: string;
+  __typename: 'File'
+  url: string
+  name: string
 }
 
 export interface CandidateAvatarFragment {
-  __typename: "Candidate";
-  id: string;
-  firstName: string;
-  lastName: string;
-  avatar: CandidateAvatarFragment_avatar | null;
+  __typename: 'Candidate'
+  id: string
+  firstName: string
+  lastName: string
+  avatar: CandidateAvatarFragment_avatar | null
 }

@@ -1,5 +1,6 @@
 import { GraphQLResolveInfo } from 'graphql'
-import { IMiddlewareFunction } from 'graphql-middleware/dist/types'
+import { IMiddlewareFunction } from 'graphql-middleware'
+// tslint:disable-next-line:no-submodule-imports
 import { ShieldRule } from 'graphql-shield/dist/types'
 
 import { Prisma } from './generated/prisma'

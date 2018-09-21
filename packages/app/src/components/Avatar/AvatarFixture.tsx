@@ -1,9 +1,11 @@
 import gql from 'graphql-tag'
 import * as React from 'react'
 import { Query } from 'react-apollo'
+
+import { PersonaSize } from 'office-ui-fabric-react/lib/Persona'
+
 import { Avatar, candidateAvatarFragment } from './Avatar'
 import { AvatarFixtureQuery } from './generated/AvatarFixtureQuery'
-import { PersonaSize } from 'office-ui-fabric-react/lib/Persona'
 
 export const avatarFixtureQuery = gql`
   query AvatarFixtureQuery {

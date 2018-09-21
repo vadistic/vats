@@ -1,5 +1,7 @@
+// tslint:disable-next-line:no-implicit-dependencies
 import * as f from 'faker'
 import * as R from 'ramda'
+
 import { EMOJI } from './emoji'
 
 export const randomConnectMany = (to: List<any>, max: number = 1) =>

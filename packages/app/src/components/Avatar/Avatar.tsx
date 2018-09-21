@@ -1,11 +1,13 @@
+import gql from 'graphql-tag'
 import * as React from 'react'
+
 import {
   IPersonaProps,
+  IPersonaSharedProps,
   Persona,
   PersonaPresence,
-  IPersonaSharedProps,
 } from 'office-ui-fabric-react/lib/Persona'
-import gql from 'graphql-tag'
+
 import { CandidateAvatarFragment } from './generated/CandidateAvatarFragment'
 
 export const candidateAvatarFragment = gql`
@@ -34,15 +36,6 @@ export const userAvatarFragment = gql`
 
 export interface IAvatarProps extends IPersonaSharedProps {
   candidate: CandidateAvatarFragment
-}
-
-const examplePersona: IPersonaSharedProps = {
-  imageUrl: 'TestImages.personaFemale',
-  imageInitials: 'AL',
-  text: 'Annie Lindqvist',
-  secondaryText: 'Software Engineer',
-  tertiaryText: 'In a meeting',
-  optionalText: 'Available at 4:00pm',
 }
 
 export const Avatar: React.SFC<IAvatarProps> = ({

@@ -1,8 +1,11 @@
+// tslint:disable-next-line:no-implicit-dependencies
 import * as f from 'faker'
 import { Prisma } from 'prisma-binding'
 import * as R from 'ramda'
+
 import {
   Application,
+  ApplicationType,
   Candidate,
   Comment,
   Job,
@@ -12,12 +15,11 @@ import {
   Tag,
   User,
   Workflow,
-  ApplicationType,
 } from '../../src/generated/prisma'
 import { prismaTypeDefs } from '../../src/schema/schema'
-import { Task, FileCreateOneInput, FileCreateInput } from '../generated/server'
-import { workflowsData } from './workflows'
+import { FileCreateInput, FileCreateOneInput, Task } from '../generated/server'
 import { fakeEmoji, fakeSocialLink, List, randomConnectMany, randomFn } from './utils'
+import { workflowsData } from './workflows'
 
 // tslint:disable: no-console
 

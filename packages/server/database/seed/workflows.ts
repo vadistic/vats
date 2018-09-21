@@ -1,5 +1,7 @@
-import { StageCreateInput, WorkflowCreateInput } from '../generated/prisma'
+// tslint:disable-next-line:no-implicit-dependencies
 import * as f from 'faker'
+
+import { WorkflowCreateInput } from '../generated/prisma'
 
 export interface IWorkflows {
   [index: string]: WorkflowCreateInput

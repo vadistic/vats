@@ -6,19 +6,19 @@
 // ====================================================
 
 export interface AvatarFixtureQuery_candidates_avatar {
-  __typename: "File";
-  url: string;
-  name: string;
+  __typename: 'File'
+  url: string
+  name: string
 }
 
 export interface AvatarFixtureQuery_candidates {
-  __typename: "Candidate";
-  id: string;
-  firstName: string;
-  lastName: string;
-  avatar: AvatarFixtureQuery_candidates_avatar | null;
+  __typename: 'Candidate'
+  id: string
+  firstName: string
+  lastName: string
+  avatar: AvatarFixtureQuery_candidates_avatar | null
 }
 
 export interface AvatarFixtureQuery {
-  candidates: (AvatarFixtureQuery_candidates | null)[];
+  candidates: (AvatarFixtureQuery_candidates | null)[]
 }

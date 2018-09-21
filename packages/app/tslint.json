@@ -1,9 +1,21 @@
 {
-  "extends": ["tslint-recommended", "tslint-config-react", "tslint-react"],
+  "extends": ["tslint:latest", "tslint-config-prettier", "tslint-react"],
   "rules": {
-    "no-shadowed-variable": false,
+    "no-shadowed-variable": true,
     "no-console": false,
     "jsx-no-multiline-js": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "object-literal-sort-keys": false,
+    "no-empty-interface": false,
+    "no-submodule-imports": false,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ],
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "member-ordering": false
   }
 }

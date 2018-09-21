@@ -1,12 +1,14 @@
 import { Router } from '@reach/router'
 import { injectGlobal } from 'emotion'
 import { ThemeProvider } from 'emotion-theming'
-import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
-import { getTheme, normalize } from 'office-ui-fabric-react/lib/Styling'
 import * as React from 'react'
 import { ApolloProvider } from 'react-apollo'
+
+import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
+import { getTheme, normalize } from 'office-ui-fabric-react/lib/Styling'
+
 import { client } from './apollo'
-import { AuthView, CandidateView, TestView, DashboardView, ApplicationsView } from './views'
+import { ApplicationsView, AuthView, CandidateView, DashboardView, TestView } from './views'
 
 // tslint:disable-next-line:no-unused-expression
 injectGlobal({

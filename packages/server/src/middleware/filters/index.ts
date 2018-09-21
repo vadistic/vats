@@ -7,7 +7,6 @@ import {
   whereWorkspaceF,
 } from './filters'
 
-
 export const filters: IMiddlewareTypeMap = {
   Query: {},
   Mutation: {},

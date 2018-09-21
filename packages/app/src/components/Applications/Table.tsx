@@ -1,33 +1,29 @@
 import { RouteComponentProps } from '@reach/router'
+import { NetworkStatus } from 'apollo-client'
 import gql from 'graphql-tag'
-import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
+import * as R from 'ramda'
 import * as React from 'react'
-import {
-  Query,
-  withApollo,
-  WithApolloClient,
-  graphql,
-  QueryResult,
-  OperationVariables,
-} from 'react-apollo'
-import { ApplicationsQuery, ApplicationsQueryVariables } from './generated/ApplicationsQuery'
-import { MarqueeSelection, Selection } from 'office-ui-fabric-react/lib/MarqueeSelection'
-import { ShimmeredDetailsList } from 'office-ui-fabric-react/lib/ShimmeredDetailsList'
+import { Query, QueryResult } from 'react-apollo'
 
+import { Button } from 'office-ui-fabric-react/lib/Button'
 import {
-  DetailsList,
-  SelectionMode,
   DetailsListLayoutMode,
   IColumn,
+  SelectionMode,
 } from 'office-ui-fabric-react/lib/DetailsList'
-import { NonNullArray, ElementType } from '../../utils'
-import * as R from 'ramda'
-import { NetworkStatus } from 'apollo-client'
-import { Button } from 'office-ui-fabric-react/lib/Button'
-import { ScrollSensor } from '..'
+import { MarqueeSelection, Selection } from 'office-ui-fabric-react/lib/MarqueeSelection'
+import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
+import { ShimmeredDetailsList } from 'office-ui-fabric-react/lib/ShimmeredDetailsList'
 
-const ApplicationsQuery = gql`
-  query ApplicationsQuery($first: Int!, $after: String) {
+import { ScrollSensor } from '..'
+import { ElementType, NonNullArray } from '../../utils'
+import {
+  ApplicationsTableQuery,
+  ApplicationsTableQueryVariables,
+} from './generated/ApplicationsTableQuery'
+
+const ApplicationsTableQuery = gql`
+  query ApplicationsTableQuery($first: Int!, $after: String) {
     applications(first: $first, after: $after) {
       id
       updatedAt
@@ -60,14 +56,14 @@ const ApplicationsQuery = gql`
   }
 `
 
-export type TApplicationItem = NonNullable<ElementType<ApplicationsQuery['applications']>>
+export type TApplicationTableItem = NonNullable<ElementType<ApplicationsTableQuery['applications']>>
 
-interface IApplicationsListBaseProps {
-  query: QueryResult<ApplicationsQuery, ApplicationsQueryVariables>
+interface IApplicationsTableBaseProps {
+  query: QueryResult<ApplicationsTableQuery, ApplicationsTableQueryVariables>
 }
 
-interface IApplicationsListBaseState {
-  items: TApplicationItem[]
+interface IApplicationsTableBaseState {
+  items: TApplicationTableItem[]
   columns: IColumn[]
   selectionDetails: string
   isModalSelection: boolean
@@ -75,17 +71,26 @@ interface IApplicationsListBaseState {
   hasFetchedAll: boolean
 }
 
-export class ApplicationsListBase extends React.Component<
-  IApplicationsListBaseProps,
-  IApplicationsListBaseState
+export class ApplicationsTableBase extends React.Component<
+  IApplicationsTableBaseProps,
+  IApplicationsTableBaseState
 > {
-  public getItems = props => {
-    return props.query.data.applications.filter(val => val !== null) as NonNullArray<
-      ApplicationsQuery['applications']
-    >
+  public static getDerivedStateFromProps(nextProps: IApplicationsTableBaseProps, prevState) {
+    if (
+      R.pathOr([], ['query', 'data', 'applications'], nextProps).length > prevState.items.length
+    ) {
+      const items = nextProps!.query!.data!.applications.filter(
+        val => val !== null
+      ) as NonNullArray<ApplicationsTableQuery['applications']>
+      return {
+        items,
+      }
+    } else {
+      return null
+    }
   }
 
-  public getColumns = (props): IColumn[] => {
+  private _getColumns = (props): IColumn[] => {
     return [
       {
         key: 'column1',
@@ -97,7 +102,7 @@ export class ApplicationsListBase extends React.Component<
         minWidth: 16,
         maxWidth: 16,
         onColumnClick: this.onColumnClick,
-        onRender: (item: TApplicationItem, index: number) => {
+        onRender: (item: TApplicationTableItem, index: number) => {
           return <span>{index}</span>
         },
       },
@@ -114,7 +119,7 @@ export class ApplicationsListBase extends React.Component<
         sortAscendingAriaLabel: 'Sorted A to Z',
         sortDescendingAriaLabel: 'Sorted Z to A',
         onColumnClick: this.onColumnClick,
-        onRender: ({ candidate }: TApplicationItem, index: number) => (
+        onRender: ({ candidate }: TApplicationTableItem, index: number) => (
           <span>
             {candidate.firstName} {candidate.lastName}
           </span>
@@ -130,7 +135,7 @@ export class ApplicationsListBase extends React.Component<
         isResizable: true,
         onColumnClick: this.onColumnClick,
         data: 'number',
-        onRender: (item: TApplicationItem) => {
+        onRender: (item: TApplicationTableItem) => {
           return <span>{item.updatedAt}</span>
         },
         isPadded: true,
@@ -140,7 +145,7 @@ export class ApplicationsListBase extends React.Component<
 
   public state = {
     items: [],
-    columns: this.getColumns(this.props),
+    columns: this._getColumns(this.props),
     selectionDetails: '',
     isModalSelection: false,
     isCompactMode: false,
@@ -148,21 +153,6 @@ export class ApplicationsListBase extends React.Component<
   }
 
   private _selection: Selection
-
-  public static getDerivedStateFromProps(nextProps: IApplicationsListBaseProps, prevState) {
-    if (
-      R.pathOr([], ['query', 'data', 'applications'], nextProps).length > prevState.items.length
-    ) {
-      const items = nextProps!.query!.data!.applications.filter(
-        val => val !== null
-      ) as NonNullArray<ApplicationsQuery['applications']>
-      return {
-        items,
-      }
-    } else {
-      return null
-    }
-  }
 
   public loadMore = () => {
     const lastIndex = this.state.items.length - 1
@@ -175,7 +165,7 @@ export class ApplicationsListBase extends React.Component<
     ) {
       this.props.query.fetchMore({
         // TODO: fix typings & define some utils typeguards
-        variables: { first: 25, after: (this.state.items[lastIndex] as TApplicationItem).id },
+        variables: { first: 25, after: (this.state.items[lastIndex] as TApplicationTableItem).id },
         updateQuery: (previousResult, { fetchMoreResult }) => {
           if (!fetchMoreResult) {
             return previousResult
@@ -223,11 +213,11 @@ export class ApplicationsListBase extends React.Component<
   }
 }
 
-export interface IApplicationsListProps extends RouteComponentProps {}
+export interface IApplicationsTableProps extends RouteComponentProps {}
 
-export const ApplicationsList: React.SFC<IApplicationsListProps> = props => (
-  <Query<ApplicationsQuery, ApplicationsQueryVariables>
-    query={ApplicationsQuery}
+export const ApplicationsTable: React.SFC<IApplicationsTableProps> = props => (
+  <Query<ApplicationsTableQuery, ApplicationsTableQueryVariables>
+    query={ApplicationsTableQuery}
     fetchPolicy={'cache-first'}
     variables={{ first: 50 }}
   >
@@ -243,7 +233,7 @@ export const ApplicationsList: React.SFC<IApplicationsListProps> = props => (
 
       return (
         <div>
-          <ApplicationsListBase query={query} />
+          <ApplicationsTableBase query={query} />
         </div>
       )
     }}

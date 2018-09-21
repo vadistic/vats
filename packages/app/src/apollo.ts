@@ -5,8 +5,9 @@ import { setContext } from 'apollo-link-context'
 import { onError } from 'apollo-link-error'
 import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
-import { auth, tempAuth } from './utils/auth'
 import { createUploadLink } from 'apollo-upload-client'
+
+import { auth, tempAuth } from './utils/auth'
 
 const TEMP_TOKEN = process.env.AUTH_TOKEN
 const TEMP_URI = `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${

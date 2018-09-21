@@ -1,6 +1,7 @@
 import { RouteComponentProps } from '@reach/router'
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
 import * as React from 'react'
+
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button'
 
 export interface IDashboardViewProps extends RouteComponentProps {}
 
