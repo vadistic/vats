@@ -640,6 +640,8 @@ type Candidate implements Node {
   phones: [String!]!
   links: [String!]!
   avatar(where: FileWhereInput): File
+  metaCompany: String
+  metaHeadline: String
   resumesString: [String!]!
   resumesFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   coverLettersString: [String!]!
@@ -673,6 +675,8 @@ input CandidateCreateemailsInput {
 input CandidateCreateInput {
   firstName: String!
   lastName: String!
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -741,6 +745,8 @@ input CandidateCreatesourceInput {
 input CandidateCreateWithoutApplicationsInput {
   firstName: String!
   lastName: String!
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -762,6 +768,8 @@ input CandidateCreateWithoutApplicationsInput {
 input CandidateCreateWithoutEventsInput {
   firstName: String!
   lastName: String!
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -783,6 +791,8 @@ input CandidateCreateWithoutEventsInput {
 input CandidateCreateWithoutSubscribersInput {
   firstName: String!
   lastName: String!
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -804,6 +814,8 @@ input CandidateCreateWithoutSubscribersInput {
 input CandidateCreateWithoutTasksInput {
   firstName: String!
   lastName: String!
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -825,6 +837,8 @@ input CandidateCreateWithoutTasksInput {
 input CandidateCreateWithoutWorkspaceInput {
   firstName: String!
   lastName: String!
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -863,6 +877,10 @@ enum CandidateOrderByInput {
   firstName_DESC
   lastName_ASC
   lastName_DESC
+  metaCompany_ASC
+  metaCompany_DESC
+  metaHeadline_ASC
+  metaHeadline_DESC
 }
 
 type CandidatePreviousValues {
@@ -874,6 +892,8 @@ type CandidatePreviousValues {
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
+  metaCompany: String
+  metaHeadline: String
   resumesString: [String!]!
   coverLettersString: [String!]!
   source: [String!]!
@@ -925,6 +945,8 @@ input CandidateUpdatecoverLettersStringInput {
 input CandidateUpdateDataInput {
   firstName: String
   lastName: String
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -951,6 +973,8 @@ input CandidateUpdateemailsInput {
 input CandidateUpdateInput {
   firstName: String
   lastName: String
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -1041,6 +1065,8 @@ input CandidateUpdatesourceInput {
 input CandidateUpdateWithoutApplicationsDataInput {
   firstName: String
   lastName: String
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -1062,6 +1088,8 @@ input CandidateUpdateWithoutApplicationsDataInput {
 input CandidateUpdateWithoutEventsDataInput {
   firstName: String
   lastName: String
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -1083,6 +1111,8 @@ input CandidateUpdateWithoutEventsDataInput {
 input CandidateUpdateWithoutSubscribersDataInput {
   firstName: String
   lastName: String
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -1104,6 +1134,8 @@ input CandidateUpdateWithoutSubscribersDataInput {
 input CandidateUpdateWithoutTasksDataInput {
   firstName: String
   lastName: String
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -1125,6 +1157,8 @@ input CandidateUpdateWithoutTasksDataInput {
 input CandidateUpdateWithoutWorkspaceDataInput {
   firstName: String
   lastName: String
+  metaCompany: String
+  metaHeadline: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -1358,6 +1392,86 @@ input CandidateWhereInput {
 
   """All values not ending with the given string."""
   lastName_not_ends_with: String
+  metaCompany: String
+
+  """All values that are not equal to given value."""
+  metaCompany_not: String
+
+  """All values that are contained in given list."""
+  metaCompany_in: [String!]
+
+  """All values that are not contained in given list."""
+  metaCompany_not_in: [String!]
+
+  """All values less than the given value."""
+  metaCompany_lt: String
+
+  """All values less than or equal the given value."""
+  metaCompany_lte: String
+
+  """All values greater than the given value."""
+  metaCompany_gt: String
+
+  """All values greater than or equal the given value."""
+  metaCompany_gte: String
+
+  """All values containing the given string."""
+  metaCompany_contains: String
+
+  """All values not containing the given string."""
+  metaCompany_not_contains: String
+
+  """All values starting with the given string."""
+  metaCompany_starts_with: String
+
+  """All values not starting with the given string."""
+  metaCompany_not_starts_with: String
+
+  """All values ending with the given string."""
+  metaCompany_ends_with: String
+
+  """All values not ending with the given string."""
+  metaCompany_not_ends_with: String
+  metaHeadline: String
+
+  """All values that are not equal to given value."""
+  metaHeadline_not: String
+
+  """All values that are contained in given list."""
+  metaHeadline_in: [String!]
+
+  """All values that are not contained in given list."""
+  metaHeadline_not_in: [String!]
+
+  """All values less than the given value."""
+  metaHeadline_lt: String
+
+  """All values less than or equal the given value."""
+  metaHeadline_lte: String
+
+  """All values greater than the given value."""
+  metaHeadline_gt: String
+
+  """All values greater than or equal the given value."""
+  metaHeadline_gte: String
+
+  """All values containing the given string."""
+  metaHeadline_contains: String
+
+  """All values not containing the given string."""
+  metaHeadline_not_contains: String
+
+  """All values starting with the given string."""
+  metaHeadline_starts_with: String
+
+  """All values not starting with the given string."""
+  metaHeadline_not_starts_with: String
+
+  """All values ending with the given string."""
+  metaHeadline_ends_with: String
+
+  """All values not ending with the given string."""
+  metaHeadline_not_ends_with: String
   workspace: WorkspaceWhereInput
   events_every: EventWhereInput
   events_some: EventWhereInput
@@ -8387,7 +8501,11 @@ export type CandidateOrderByInput =   'id_ASC' |
   'firstName_ASC' |
   'firstName_DESC' |
   'lastName_ASC' |
-  'lastName_DESC'
+  'lastName_DESC' |
+  'metaCompany_ASC' |
+  'metaCompany_DESC' |
+  'metaHeadline_ASC' |
+  'metaHeadline_DESC'
 
 export type FieldLinkOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -8824,6 +8942,8 @@ export interface CommentWhereInput {
 export interface CandidateCreateWithoutTasksInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -9200,6 +9320,34 @@ export interface CandidateWhereInput {
   lastName_not_starts_with?: String
   lastName_ends_with?: String
   lastName_not_ends_with?: String
+  metaCompany?: String
+  metaCompany_not?: String
+  metaCompany_in?: String[] | String
+  metaCompany_not_in?: String[] | String
+  metaCompany_lt?: String
+  metaCompany_lte?: String
+  metaCompany_gt?: String
+  metaCompany_gte?: String
+  metaCompany_contains?: String
+  metaCompany_not_contains?: String
+  metaCompany_starts_with?: String
+  metaCompany_not_starts_with?: String
+  metaCompany_ends_with?: String
+  metaCompany_not_ends_with?: String
+  metaHeadline?: String
+  metaHeadline_not?: String
+  metaHeadline_in?: String[] | String
+  metaHeadline_not_in?: String[] | String
+  metaHeadline_lt?: String
+  metaHeadline_lte?: String
+  metaHeadline_gt?: String
+  metaHeadline_gte?: String
+  metaHeadline_contains?: String
+  metaHeadline_not_contains?: String
+  metaHeadline_starts_with?: String
+  metaHeadline_not_starts_with?: String
+  metaHeadline_ends_with?: String
+  metaHeadline_not_ends_with?: String
   workspace?: WorkspaceWhereInput
   events_every?: EventWhereInput
   events_some?: EventWhereInput
@@ -9792,6 +9940,8 @@ export interface InviteUpdateInput {
 export interface CandidateCreateWithoutApplicationsInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -10031,6 +10181,8 @@ export interface JobUpdateManyWithoutWorkspaceInput {
 export interface CandidateUpdateWithoutApplicationsDataInput {
   firstName?: String
   lastName?: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateUpdateemailsInput
   phones?: CandidateUpdatephonesInput
   links?: CandidateUpdatelinksInput
@@ -10179,6 +10331,8 @@ export interface CommentUpsertNestedInput {
 export interface CandidateUpdateDataInput {
   firstName?: String
   lastName?: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateUpdateemailsInput
   phones?: CandidateUpdatephonesInput
   links?: CandidateUpdatelinksInput
@@ -10482,6 +10636,8 @@ export interface WorkspaceCreateOneWithoutJobsInput {
 export interface CandidateUpdateWithoutEventsDataInput {
   firstName?: String
   lastName?: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateUpdateemailsInput
   phones?: CandidateUpdatephonesInput
   links?: CandidateUpdatelinksInput
@@ -10648,6 +10804,8 @@ export interface TagCreateInput {
 export interface CandidateUpdateWithoutWorkspaceDataInput {
   firstName?: String
   lastName?: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateUpdateemailsInput
   phones?: CandidateUpdatephonesInput
   links?: CandidateUpdatelinksInput
@@ -11217,6 +11375,8 @@ export interface FieldUpdateInput {
 export interface CandidateUpdateWithoutSubscribersDataInput {
   firstName?: String
   lastName?: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateUpdateemailsInput
   phones?: CandidateUpdatephonesInput
   links?: CandidateUpdatelinksInput
@@ -11481,6 +11641,8 @@ export interface FieldLinkUpsertWithWhereUniqueNestedInput {
 export interface CandidateCreateInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -11554,6 +11716,8 @@ export interface UserUpdateManyWithoutSubscriptionTasksInput {
 export interface CandidateCreateWithoutEventsInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -11611,6 +11775,8 @@ export interface UserUpdateWithoutSubscriptionTasksDataInput {
 export interface CandidateCreateWithoutWorkspaceInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -11708,6 +11874,8 @@ export interface FileCreateInput {
 export interface CandidateUpdateWithoutTasksDataInput {
   firstName?: String
   lastName?: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateUpdateemailsInput
   phones?: CandidateUpdatephonesInput
   links?: CandidateUpdatelinksInput
@@ -12013,6 +12181,8 @@ export interface EventUpdateWithWhereUniqueWithoutTargetJobInput {
 export interface CandidateUpdateInput {
   firstName?: String
   lastName?: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateUpdateemailsInput
   phones?: CandidateUpdatephonesInput
   links?: CandidateUpdatelinksInput
@@ -12603,6 +12773,8 @@ export interface ApplicationWhereUniqueInput {
 export interface CandidateCreateWithoutSubscribersInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -13082,6 +13254,8 @@ export interface CandidatePreviousValues {
   emails: String[]
   phones: String[]
   links: String[]
+  metaCompany?: String
+  metaHeadline?: String
   resumesString: String[]
   coverLettersString: String[]
   source: String[]
@@ -13246,6 +13420,8 @@ export interface Candidate extends Node {
   phones: String[]
   links: String[]
   avatar?: File
+  metaCompany?: String
+  metaHeadline?: String
   resumesString: String[]
   resumesFile?: File[]
   coverLettersString: String[]

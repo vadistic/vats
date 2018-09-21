@@ -125,6 +125,10 @@ type Candidate {
   links: [String!]!
   avatar: File @relation(name: "CandidateAvatarFile")
 
+  # meta info
+  metaCompany: String
+  metaHeadline: String
+
   resumesString: [String!]!
   resumesFile: [File!]! @relation(name: "CandidateResumeFiles")
   coverLettersString: [String!]!

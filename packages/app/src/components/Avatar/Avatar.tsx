@@ -47,6 +47,7 @@ export const Avatar: React.SFC<IAvatarProps> = ({
       secondaryText={'Secondary text'}
       tertiaryText={'Tetriary text'}
       optionalText={'optional text'}
+      
       {...rest}
     />
   )

@@ -224,6 +224,20 @@ const setup = async () => {
       url: `https://api.adorable.io/avatars/96/${emails[0] || firstName + '@' + lastName}.png`,
     }
 
+    const resumeFile: FileCreateInput = {
+      name: `${firstName}-${lastName}-resume-${f.date.past(0)}`,
+      size: f.random.number({ min: 200000, max: 7000000 }),
+      type: 'application/pdf',
+      // TODO: My template
+      url:
+        'https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=' +
+        f.random.uuid(),
+    }
+
+    const hasResume = f.random.boolean
+
+    const coverLetter = f.lorem.paragraphs(f.random.number({ min: 1, max: 8 }))
+
     candidates.arr[i] = await attempt(db.mutation.createCandidate, {
       data: {
         workspace: { connect: { id: workspace.id } },
@@ -235,6 +249,10 @@ const setup = async () => {
         lastName,
         links: { set: links },
         avatar: f.random.boolean ? { create: avatarFile } : undefined,
+        metaCompany: f.random.boolean ? f.company.companyName() : undefined,
+        metaHeadline: f.random.boolean ? f.name.jobDescriptor() : undefined,
+        resumesFile: hasResume ? { create: resumeFile } : undefined,
+        coverLettersString: hasResume ? { set: coverLetter } : undefined,
       },
     })
   }
@@ -324,9 +342,7 @@ const setup = async () => {
       },
     })
   }
-  console.log('Seeding applications end')
-
-  console.log('SUCCESS?!')
+  console.log('Script confirms that seeding was a success 👍')
 }
 
 setup()

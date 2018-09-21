@@ -117,7 +117,11 @@ export type CandidateOrderByInput =   'id_ASC' |
   'firstName_ASC' |
   'firstName_DESC' |
   'lastName_ASC' |
-  'lastName_DESC'
+  'lastName_DESC' |
+  'metaCompany_ASC' |
+  'metaCompany_DESC' |
+  'metaHeadline_ASC' |
+  'metaHeadline_DESC'
 
 export type FieldType =   'Int' |
   'Float' |
@@ -817,6 +821,8 @@ export interface WorkspaceCreateInput {
 export interface CandidateCreateWithoutWorkspaceInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -1189,6 +1195,8 @@ export interface WorkflowCreateManyInput {
 export interface CandidateCreateWithoutSubscribersInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -1468,6 +1476,8 @@ export interface RefreshInput {
 export interface CandidateCreateWithoutTasksInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -1652,6 +1662,34 @@ export interface CandidateWhereInput {
   lastName_not_starts_with?: String
   lastName_ends_with?: String
   lastName_not_ends_with?: String
+  metaCompany?: String
+  metaCompany_not?: String
+  metaCompany_in?: String[] | String
+  metaCompany_not_in?: String[] | String
+  metaCompany_lt?: String
+  metaCompany_lte?: String
+  metaCompany_gt?: String
+  metaCompany_gte?: String
+  metaCompany_contains?: String
+  metaCompany_not_contains?: String
+  metaCompany_starts_with?: String
+  metaCompany_not_starts_with?: String
+  metaCompany_ends_with?: String
+  metaCompany_not_ends_with?: String
+  metaHeadline?: String
+  metaHeadline_not?: String
+  metaHeadline_in?: String[] | String
+  metaHeadline_not_in?: String[] | String
+  metaHeadline_lt?: String
+  metaHeadline_lte?: String
+  metaHeadline_gt?: String
+  metaHeadline_gte?: String
+  metaHeadline_contains?: String
+  metaHeadline_not_contains?: String
+  metaHeadline_starts_with?: String
+  metaHeadline_not_starts_with?: String
+  metaHeadline_ends_with?: String
+  metaHeadline_not_ends_with?: String
   workspace?: WorkspaceWhereInput
   events_every?: EventWhereInput
   events_some?: EventWhereInput
@@ -1864,6 +1902,8 @@ export interface TaskCreateInput {
 export interface CandidateCreateInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -2207,6 +2247,8 @@ export interface ApplicationCreateWithoutJobInput {
 export interface CandidateCreateWithoutEventsInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -2237,6 +2279,8 @@ export interface EventWhereUniqueInput {
 export interface CandidateCreateWithoutApplicationsInput {
   firstName: String
   lastName: String
+  metaCompany?: String
+  metaHeadline?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -2423,6 +2467,8 @@ export interface Candidate extends Node {
   phones: String[]
   links: String[]
   avatar?: File
+  metaCompany?: String
+  metaHeadline?: String
   resumesString: String[]
   resumesFile?: File[]
   coverLettersString: String[]
