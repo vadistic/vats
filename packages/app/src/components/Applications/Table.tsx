@@ -31,7 +31,7 @@ const ApplicationsTableQuery = gql`
         id
         name
         department
-        status
+        type
       }
       candidate {
         id

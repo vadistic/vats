@@ -7,7 +7,7 @@ import { HttpLink } from 'apollo-link-http'
 import { withClientState } from 'apollo-link-state'
 import { createUploadLink } from 'apollo-upload-client'
 
-import { auth, tempAuth } from './utils/auth'
+import { cookieAuth, sessionAuth } from './utils/auth'
 
 const TEMP_TOKEN = process.env.AUTH_TOKEN
 const TEMP_URI = `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
@@ -17,14 +17,14 @@ const TEMP_URI = `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/$
 const cache = new InMemoryCache()
 
 const authLink = setContext((_, { headers }) => {
-  const tempToken = tempAuth
+  const sessionToken = sessionAuth
     .currentSession()
     .then(session => session.getIdToken().getJwtToken())
     .catch(err => {
       /* noop */
     })
 
-  const token = auth
+  const cookieToken = cookieAuth
     .currentSession()
     .then(session => session.getIdToken().getJwtToken())
     .catch(err => {
@@ -32,10 +32,10 @@ const authLink = setContext((_, { headers }) => {
     })
 
   // TODO: clear auth header for not-authenticated
-  return Promise.all([tempToken, token]).then(([tempToken, token]) => ({
+  return Promise.all([sessionToken, cookieToken]).then(([_sessiontoken, _cookietoken]) => ({
     headers: {
       ...headers,
-      authorization: `Bearer ${tempToken || token}`,
+      authorization: `Bearer ${_sessiontoken || _cookietoken}`,
     },
   }))
 })
@@ -53,14 +53,14 @@ const stateLink = withClientState({
   cache,
   resolvers: {
     Mutation: {
-      updateNetworkStatus: (_, { isConnected }, { cache }) => {
+      updateNetworkStatus: (_, { isConnected }, { _cache }) => {
         const data = {
           networkStatus: {
             __typename: 'NetworkStatus',
             isConnected,
           },
         }
-        cache.writeData({ data })
+        _cache.writeData({ data })
         return null
       },
     },

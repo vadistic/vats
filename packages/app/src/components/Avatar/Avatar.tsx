@@ -1,12 +1,7 @@
 import gql from 'graphql-tag'
 import * as React from 'react'
 
-import {
-  IPersonaProps,
-  IPersonaSharedProps,
-  Persona,
-  PersonaPresence,
-} from 'office-ui-fabric-react/lib/Persona'
+import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react/lib/Persona'
 
 import { CandidateAvatarFragment } from './generated/CandidateAvatarFragment'
 

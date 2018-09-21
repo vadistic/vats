@@ -4,6 +4,8 @@ import * as R from 'ramda'
 import * as React from 'react'
 import { Query, QueryResult } from 'react-apollo'
 
+import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone'
+import { List } from 'office-ui-fabric-react/lib/List'
 import { MarqueeSelection, Selection } from 'office-ui-fabric-react/lib/MarqueeSelection'
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
 
@@ -14,7 +16,7 @@ import {
 } from './generated/ApplicationsListQuery'
 
 const ApplicationsListQuery = gql`
-  query ApplicationsListQuery($first: Int!, $after: String) {
+  query ApplicationsListQuery(where: {}) {
     applications(first: $first, after: $after) {
       id
       updatedAt
@@ -22,7 +24,7 @@ const ApplicationsListQuery = gql`
         id
         name
         department
-        status
+        type
       }
       candidate {
         id
@@ -65,11 +67,18 @@ export class ApplicationsListBase extends React.Component<
 > {
   private _selection: Selection
 
+  public state = {
+    selectionDetails: '',
+    items: [],
+  }
+
   public render() {
     return (
-      <MarqueeSelection selection={this._selection}>
-        <p>A</p>
-      </MarqueeSelection>
+      <FocusZone>
+        <MarqueeSelection selection={this._selection}>
+          <List items={this.state.items} />
+        </MarqueeSelection>
+      </FocusZone>
     )
   }
 }

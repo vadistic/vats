@@ -4,7 +4,7 @@ type TNonNullableStorage = Storage & {
   getItem: (key: string) => string
 }
 
-export const auth = new AuthClass({
+export const cookieAuth = new AuthClass({
   userPoolId: 'eu-west-1_QB5d6ZO7S',
   userPoolWebClientId: process.env.APP_CLIENT_ID as string,
   authenticationFlowType: 'USER_SRP_AUTH',
@@ -21,7 +21,7 @@ export const auth = new AuthClass({
 })
 
 // amphoteric Auth - without cookies
-export const tempAuth = new AuthClass({
+export const sessionAuth = new AuthClass({
   userPoolId: 'eu-west-1_QB5d6ZO7S',
   userPoolWebClientId: '7paip3rlrdmhktcoem3kmtn8ev',
   authenticationFlowType: 'USER_SRP_AUTH',

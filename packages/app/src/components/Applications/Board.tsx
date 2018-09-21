@@ -21,7 +21,7 @@ const ApplicationsBoardQuery = gql`
         id
         name
         department
-        status
+        type
       }
       candidate {
         id

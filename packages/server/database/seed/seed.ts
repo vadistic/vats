@@ -3,6 +3,8 @@ import * as f from 'faker'
 import { Prisma } from 'prisma-binding'
 import * as R from 'ramda'
 
+// tslint:disable-next-line:no-implicit-dependencies
+import { Options } from 'graphql-binding'
 import {
   Application,
   ApplicationType,
@@ -18,6 +20,7 @@ import {
 } from '../../src/generated/prisma'
 import { prismaTypeDefs } from '../../src/schema/schema'
 import { FileCreateInput, FileCreateOneInput, Task } from '../generated/server'
+import { FirstArgument } from '../utils'
 import { fakeEmoji, fakeSocialLink, List, randomConnectMany, randomFn } from './utils'
 import { workflowsData } from './workflows'
 
@@ -33,6 +36,7 @@ const prisma: any = new Prisma({
 })
 
 // Because generated bindings are not nominally compatible with original class
+
 const db: PrismaBinding = prisma
 
 const config = {
@@ -46,7 +50,25 @@ const config = {
   TASKS_NUMBER: 50,
 }
 
-const TIMEOUT = 300
+const TIMEOUT = 50
+const RETRY = 10
+
+const attempt = async <T extends (args: any, info?: string, options?: Options) => ReturnType<T>>(
+  fn: T,
+  args: FirstArgument<T>,
+  info?: string,
+  options?: Options
+) => {
+  for (let i = 0; i < RETRY; i++) {
+    try {
+      const res = await fn(args, info, options)
+      return res
+    } catch (err) {
+      console.log('Error! Attempting again...', i + 1, err)
+    }
+  }
+  throw new Error(`Query failed after ${RETRY} attempts`)
+}
 
 const setup = async () => {
   // seed workspace
@@ -78,7 +100,7 @@ const setup = async () => {
       url: `https://api.adorable.io/avatars/96/${email}.png`,
     }
 
-    users.arr[i] = await db.mutation.createUser({
+    users.arr[i] = await attempt(db.mutation.createUser, {
       data: {
         // info
         firstName,
@@ -98,7 +120,7 @@ const setup = async () => {
   // seed myself
   console.log('Seeding myself?')
   users.arr.push(
-    await db.mutation.createUser({
+    await attempt(db.mutation.createUser, {
       data: {
         firstName: 'Jakub',
         lastName: 'Wadas',
@@ -119,7 +141,7 @@ const setup = async () => {
       console.log(i)
     }, TIMEOUT)
 
-    locations.arr[i] = await db.mutation.createLocation({
+    locations.arr[i] = await attempt(db.mutation.createLocation, {
       data: {
         city: f.address.city(),
         country: f.address.country(),
@@ -150,7 +172,7 @@ const setup = async () => {
       console.log(i)
     }, TIMEOUT)
 
-    jobs.arr[i] = await db.mutation.createJob({
+    jobs.arr[i] = await attempt(db.mutation.createJob, {
       data: {
         name: f.name.jobDescriptor() + ' ' + f.name.jobTitle(),
         description: f.lorem.paragraphs(f.random.number(4)),
@@ -173,7 +195,7 @@ const setup = async () => {
       console.log(i)
     }, TIMEOUT)
 
-    tags.arr[i] = await db.mutation.createTag({
+    tags.arr[i] = await attempt(db.mutation.createTag, {
       data: {
         label: f.random.word().toLocaleLowerCase(),
       },
@@ -202,7 +224,7 @@ const setup = async () => {
       url: `https://api.adorable.io/avatars/96/${emails[0] || firstName + '@' + lastName}.png`,
     }
 
-    candidates.arr[i] = await db.mutation.createCandidate({
+    candidates.arr[i] = await attempt(db.mutation.createCandidate, {
       data: {
         workspace: { connect: { id: workspace.id } },
         subscribers: { connect: randomConnectMany(users, 3) },
@@ -231,7 +253,7 @@ const setup = async () => {
       f.random.number({ min: 1, max: 8 })
     ).join(' ')
 
-    comments.arr[i] = await db.mutation.createComment({
+    comments.arr[i] = await attempt(db.mutation.createComment, {
       data: {
         content,
         createdBy: { connect: { id: users.random().id } },
@@ -254,7 +276,7 @@ const setup = async () => {
       ? R.times(() => randomFn(fakeEmoji, f.lorem.sentence)(), f.random.number(4)).join(' ')
       : undefined
 
-    tasks.arr[i] = await db.mutation.createTask({
+    tasks.arr[i] = await attempt(db.mutation.createTask, {
       data: {
         candidate: { connect: { id: candidates.random().id } },
         title,
@@ -274,9 +296,10 @@ const setup = async () => {
       console.log(i)
     }, TIMEOUT)
 
-    const job = await db.query.job(
+    const job = await attempt(
+      db.query.job,
       { where: { id: jobs.random().id } },
-      `{ id, workflow { stages { id, type }, diqualifications { id }}}`
+      `{ id, workflow { stages { id, type }, disqualifications { id }}}`
     )
 
     const stage = f.random.arrayElement(job.workflow.stages)
@@ -290,7 +313,7 @@ const setup = async () => {
       createdBy: { connect: { id: users.random().id } },
     }
 
-    applications.arr[i] = await db.mutation.createApplication({
+    applications.arr[i] = await attempt(db.mutation.createApplication, {
       data: {
         candidate: { connect: { id: candidates.random().id } },
         job: { connect: { id: job.id } },
