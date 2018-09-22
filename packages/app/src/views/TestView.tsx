@@ -7,7 +7,7 @@ export interface ITestViewProps extends RouteComponentProps {}
 
 export const TestView: React.SFC<ITestViewProps> = () => (
   <>
-    <h1>Test view</h1>
+    <h3>Test view</h3>
     <ul>
       <li>
         <LinkButton to="persona">Persona</LinkButton>

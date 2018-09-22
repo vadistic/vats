@@ -21,12 +21,21 @@ export interface ApplicationsListQuery_applications_candidate_tags {
   label: string;
 }
 
+export interface ApplicationsListQuery_applications_candidate_avatar {
+  __typename: "File";
+  url: string;
+  name: string;
+}
+
 export interface ApplicationsListQuery_applications_candidate {
   __typename: "Candidate";
   id: string;
   firstName: string;
   lastName: string;
   tags: ApplicationsListQuery_applications_candidate_tags[] | null;
+  metaCompany: string | null;
+  metaPosition: string | null;
+  avatar: ApplicationsListQuery_applications_candidate_avatar | null;
 }
 
 export interface ApplicationsListQuery_applications_stage {

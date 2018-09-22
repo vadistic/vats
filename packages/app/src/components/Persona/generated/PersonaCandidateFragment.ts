@@ -17,6 +17,6 @@ export interface PersonaCandidateFragment {
   firstName: string;
   lastName: string;
   metaCompany: string | null;
-  metaHeadline: string | null;
+  metaPosition: string | null;
   avatar: PersonaCandidateFragment_avatar | null;
 }

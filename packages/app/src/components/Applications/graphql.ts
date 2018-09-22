@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-
+import { personaCandidateFragment } from '../Persona'
 export const applicationsBoardQuery = gql`
   query ApplicationsBoardQuery($first: Int!, $after: String) {
     applications(first: $first, after: $after) {
@@ -53,6 +53,7 @@ export const applicationsListQuery = gql`
           id
           label
         }
+        ...PersonaCandidateFragment
       }
       stage {
         id
@@ -79,6 +80,7 @@ export const applicationsListQuery = gql`
       }
     }
   }
+  ${personaCandidateFragment}
 `
 
 export const applicationsTableQuery = gql`

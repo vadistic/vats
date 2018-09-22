@@ -17,7 +17,7 @@ export interface HoverCardFixtureQuery_candidates {
   firstName: string;
   lastName: string;
   metaCompany: string | null;
-  metaHeadline: string | null;
+  metaPosition: string | null;
   avatar: HoverCardFixtureQuery_candidates_avatar | null;
 }
 

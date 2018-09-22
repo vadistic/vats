@@ -128,6 +128,7 @@ type Candidate {
   # meta info
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
 
   resumesString: [String!]!
   resumesFile: [File!]! @relation(name: "CandidateResumeFiles")

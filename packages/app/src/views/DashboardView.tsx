@@ -7,7 +7,7 @@ export interface IDashboardViewProps extends RouteComponentProps {}
 
 export const DashboardView: React.SFC<IDashboardViewProps> = () => (
   <>
-    <p>Dashboard View</p>
+    <h3>Dashboard View</h3>
     <DefaultButton primary={true}>I am a button.</DefaultButton>
   </>
 )

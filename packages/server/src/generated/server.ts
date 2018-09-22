@@ -121,7 +121,9 @@ export type CandidateOrderByInput =   'id_ASC' |
   'metaCompany_ASC' |
   'metaCompany_DESC' |
   'metaHeadline_ASC' |
-  'metaHeadline_DESC'
+  'metaHeadline_DESC' |
+  'metaPosition_ASC' |
+  'metaPosition_DESC'
 
 export type FieldType =   'Int' |
   'Float' |
@@ -823,6 +825,7 @@ export interface CandidateCreateWithoutWorkspaceInput {
   lastName: String
   metaCompany?: String
   metaHeadline?: String
+  metaPosition?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -1197,6 +1200,7 @@ export interface CandidateCreateWithoutSubscribersInput {
   lastName: String
   metaCompany?: String
   metaHeadline?: String
+  metaPosition?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -1478,6 +1482,7 @@ export interface CandidateCreateWithoutTasksInput {
   lastName: String
   metaCompany?: String
   metaHeadline?: String
+  metaPosition?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -1690,6 +1695,20 @@ export interface CandidateWhereInput {
   metaHeadline_not_starts_with?: String
   metaHeadline_ends_with?: String
   metaHeadline_not_ends_with?: String
+  metaPosition?: String
+  metaPosition_not?: String
+  metaPosition_in?: String[] | String
+  metaPosition_not_in?: String[] | String
+  metaPosition_lt?: String
+  metaPosition_lte?: String
+  metaPosition_gt?: String
+  metaPosition_gte?: String
+  metaPosition_contains?: String
+  metaPosition_not_contains?: String
+  metaPosition_starts_with?: String
+  metaPosition_not_starts_with?: String
+  metaPosition_ends_with?: String
+  metaPosition_not_ends_with?: String
   workspace?: WorkspaceWhereInput
   events_every?: EventWhereInput
   events_some?: EventWhereInput
@@ -1904,6 +1923,7 @@ export interface CandidateCreateInput {
   lastName: String
   metaCompany?: String
   metaHeadline?: String
+  metaPosition?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -2249,6 +2269,7 @@ export interface CandidateCreateWithoutEventsInput {
   lastName: String
   metaCompany?: String
   metaHeadline?: String
+  metaPosition?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -2281,6 +2302,7 @@ export interface CandidateCreateWithoutApplicationsInput {
   lastName: String
   metaCompany?: String
   metaHeadline?: String
+  metaPosition?: String
   emails?: CandidateCreateemailsInput
   phones?: CandidateCreatephonesInput
   links?: CandidateCreatelinksInput
@@ -2469,6 +2491,7 @@ export interface Candidate extends Node {
   avatar?: File
   metaCompany?: String
   metaHeadline?: String
+  metaPosition?: String
   resumesString: String[]
   resumesFile?: File[]
   coverLettersString: String[]

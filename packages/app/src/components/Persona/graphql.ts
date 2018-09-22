@@ -6,7 +6,7 @@ export const personaCandidateFragment = gql`
     firstName
     lastName
     metaCompany
-    metaHeadline
+    metaPosition
     avatar {
       url
       name
@@ -29,10 +29,15 @@ export const personaUserFragment = gql`
 
 export const personaFixtureQuery = gql`
   query PersonaFixtureQuery {
-    candidates(first: 10) {
+    candidates(first: 3) {
       id
       ...PersonaCandidateFragment
     }
+    users(first: 3) {
+      id
+      ...PersonaUserFragment
+    }
   }
   ${personaCandidateFragment}
+  ${personaUserFragment}
 `

@@ -9,7 +9,7 @@ const OUT_DIR = 'dist'
 
 module.exports = {
   context: __dirname, // to automatically find tsconfig.json
-  devtool: 'none',
+  devtool: 'cheap-module-source-map',
   entry: {
     main: './src/index.tsx',
   },

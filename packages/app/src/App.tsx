@@ -8,6 +8,7 @@ import { Fabric } from 'office-ui-fabric-react/lib/Fabric'
 import { getTheme, normalize } from 'office-ui-fabric-react/lib/Styling'
 
 import { client } from './apollo'
+import { LinkButton } from './components'
 import { ApplicationsView, AuthView, CandidateView, DashboardView, TestView } from './views'
 
 // tslint:disable-next-line:no-unused-expression
@@ -33,9 +34,22 @@ class App extends React.Component<{}> {
       <ApolloProvider client={client}>
         <ThemeProvider theme={getTheme()}>
           <Fabric className="app">
+            <h1>Main nav</h1>
+            <ul>
+              <li>
+                <LinkButton to="applications">Applications View</LinkButton>
+              </li>
+              <li>
+                <LinkButton to="test">Test View</LinkButton>
+              </li>
+              <li>
+                <LinkButton to="login">Auth View</LinkButton>
+              </li>
+            </ul>
             <Router>
               <DashboardView path="/" />
               <ApplicationsView path="applications/*" />
+              <CandidateView path="candidate/*" />
               <AuthView path="login/*" />
               <TestView path="test/*" />
             </Router>

@@ -16,6 +16,7 @@
       "allow-leading-underscore"
     ],
     "no-unused-expression": [true, "allow-fast-null-checks"],
-    "member-ordering": false
+    "member-ordering": false,
+    "max-classes-per-file": false // 4 dev?
   }
 }

@@ -1,4 +1,4 @@
-import { RouteComponentProps } from '@reach/router'
+import { LocationProps, RouteComponentProps, WindowLocation } from '@reach/router'
 import { FieldProps, FormikProps } from 'formik'
 import React from 'react'
 
@@ -116,7 +116,7 @@ export const Forgot: React.SFC<IAuthCommonProps> = ({ location }) => {
   })
 }
 
-export const Reset: React.SFC<IAuthCommonProps> = () => {
+export const Reset: React.SFC<IAuthCommonProps> = ({ location }) => {
   return AuthTemplate({
     title: 'Set the new password',
     desc: 'Please enter your email addres below and the password reset code will be sent to you.',

@@ -5,6 +5,8 @@ import { Query } from 'react-apollo'
 import { PersonaSize } from 'office-ui-fabric-react/lib/Persona'
 
 import { PersonaCandidate } from './Candidate'
+import { PersonaUser } from './User'
+
 import { PersonaFixtureQuery } from './generated/PersonaFixtureQuery'
 
 import { personaFixtureQuery } from './graphql'
@@ -31,6 +33,18 @@ export const PersonaFixture: React.SFC<any> = props => (
                     <PersonaCandidate candidate={candidate} size={PersonaSize.size48} />
                     <PersonaCandidate candidate={candidate} size={PersonaSize.size72} />
                     <PersonaCandidate candidate={candidate} size={PersonaSize.size100} />
+                  </div>
+                )
+            )}
+            {data.users.map(
+              user =>
+                user && (
+                  <div key={user.id}>
+                    <PersonaUser user={user} size={PersonaSize.size24} />
+                    <PersonaUser user={user} size={PersonaSize.size32} />
+                    <PersonaUser user={user} size={PersonaSize.size48} />
+                    <PersonaUser user={user} size={PersonaSize.size72} />
+                    <PersonaUser user={user} size={PersonaSize.size100} />
                   </div>
                 )
             )}

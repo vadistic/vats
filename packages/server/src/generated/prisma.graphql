@@ -1,5 +1,5 @@
 # source: http://ec2-54-229-125-69.eu-west-1.compute.amazonaws.com:4466/vadistic-ats/dev
-# timestamp: Fri Sep 21 2018 08:01:41 GMT+0200 (Central European Summer Time)
+# timestamp: Sat Sep 22 2018 06:30:32 GMT+0200 (Central European Summer Time)
 
 type AggregateApplication {
   count: Int!
@@ -396,6 +396,7 @@ type Candidate implements Node {
   avatar(where: FileWhereInput): File
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   resumesString: [String!]!
   resumesFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   coverLettersString: [String!]!
@@ -431,6 +432,7 @@ input CandidateCreateInput {
   lastName: String!
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -501,6 +503,7 @@ input CandidateCreateWithoutApplicationsInput {
   lastName: String!
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -524,6 +527,7 @@ input CandidateCreateWithoutEventsInput {
   lastName: String!
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -547,6 +551,7 @@ input CandidateCreateWithoutSubscribersInput {
   lastName: String!
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -570,6 +575,7 @@ input CandidateCreateWithoutTasksInput {
   lastName: String!
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -593,6 +599,7 @@ input CandidateCreateWithoutWorkspaceInput {
   lastName: String!
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -635,6 +642,8 @@ enum CandidateOrderByInput {
   metaCompany_DESC
   metaHeadline_ASC
   metaHeadline_DESC
+  metaPosition_ASC
+  metaPosition_DESC
 }
 
 type CandidatePreviousValues {
@@ -648,6 +657,7 @@ type CandidatePreviousValues {
   links: [String!]!
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   resumesString: [String!]!
   coverLettersString: [String!]!
   source: [String!]!
@@ -701,6 +711,7 @@ input CandidateUpdateDataInput {
   lastName: String
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -729,6 +740,7 @@ input CandidateUpdateInput {
   lastName: String
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -821,6 +833,7 @@ input CandidateUpdateWithoutApplicationsDataInput {
   lastName: String
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -844,6 +857,7 @@ input CandidateUpdateWithoutEventsDataInput {
   lastName: String
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -867,6 +881,7 @@ input CandidateUpdateWithoutSubscribersDataInput {
   lastName: String
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -890,6 +905,7 @@ input CandidateUpdateWithoutTasksDataInput {
   lastName: String
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -913,6 +929,7 @@ input CandidateUpdateWithoutWorkspaceDataInput {
   lastName: String
   metaCompany: String
   metaHeadline: String
+  metaPosition: String
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
@@ -1226,6 +1243,46 @@ input CandidateWhereInput {
 
   """All values not ending with the given string."""
   metaHeadline_not_ends_with: String
+  metaPosition: String
+
+  """All values that are not equal to given value."""
+  metaPosition_not: String
+
+  """All values that are contained in given list."""
+  metaPosition_in: [String!]
+
+  """All values that are not contained in given list."""
+  metaPosition_not_in: [String!]
+
+  """All values less than the given value."""
+  metaPosition_lt: String
+
+  """All values less than or equal the given value."""
+  metaPosition_lte: String
+
+  """All values greater than the given value."""
+  metaPosition_gt: String
+
+  """All values greater than or equal the given value."""
+  metaPosition_gte: String
+
+  """All values containing the given string."""
+  metaPosition_contains: String
+
+  """All values not containing the given string."""
+  metaPosition_not_contains: String
+
+  """All values starting with the given string."""
+  metaPosition_starts_with: String
+
+  """All values not starting with the given string."""
+  metaPosition_not_starts_with: String
+
+  """All values ending with the given string."""
+  metaPosition_ends_with: String
+
+  """All values not ending with the given string."""
+  metaPosition_not_ends_with: String
   workspace: WorkspaceWhereInput
   events_every: EventWhereInput
   events_some: EventWhereInput

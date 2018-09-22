@@ -11,6 +11,7 @@ export const hoverCardCandidateQuery = gql`
       lastName
       metaCompany
       metaHeadline
+      metaHeadline
       emails
       phones
       links

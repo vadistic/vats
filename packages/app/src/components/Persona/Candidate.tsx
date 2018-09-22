@@ -10,7 +10,7 @@ export interface IPersonaCandidateProps extends IPersonaSharedProps {
 }
 
 export const PersonaCandidate: React.SFC<IPersonaCandidateProps> = ({
-  candidate: { avatar, firstName, lastName },
+  candidate: { avatar, firstName, lastName, metaCompany, metaHeadline, metaPosition },
   ...rest
 }) => {
   return (
@@ -20,9 +20,8 @@ export const PersonaCandidate: React.SFC<IPersonaCandidateProps> = ({
       imageShouldFadeIn={true}
       imageUrl={avatar ? avatar.url : undefined}
       text={`${firstName} ${lastName}`}
-      secondaryText={'Secondary text'}
-      tertiaryText={'Tetriary text'}
-      optionalText={'optional text'}
+      secondaryText={metaPosition || undefined}
+      tertiaryText={metaCompany || undefined}
       {...rest}
     />
   )
