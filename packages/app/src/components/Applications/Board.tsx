@@ -12,39 +12,7 @@ import {
   ApplicationsBoardQueryVariables,
 } from './generated/ApplicationsBoardQuery'
 
-const applicationsBoardQuery = gql`
-  query ApplicationsBoardQuery($first: Int!, $after: String) {
-    applications(first: $first, after: $after) {
-      id
-      updatedAt
-      job {
-        id
-        name
-        department
-        type
-      }
-      candidate {
-        id
-        firstName
-        lastName
-        tags {
-          id
-          label
-        }
-      }
-      stage {
-        id
-        name
-        type
-      }
-    }
-    applicationsConnection {
-      aggregate {
-        count
-      }
-    }
-  }
-`
+import { applicationsBoardQuery } from './graphql'
 
 export type TApplicationBoardItem = NonNullable<ElementType<ApplicationsBoardQuery['applications']>>
 

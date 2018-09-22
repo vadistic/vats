@@ -27,11 +27,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(graphql|gql)$/,
-        exclude: /node_modules/,
-        loader: 'graphql-tag/loader',
-      },
-      {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: [
@@ -72,7 +67,7 @@ module.exports = {
     new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html') }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      NODE_ENV: 'development',
       DEBUG: true,
     }),
     new Dotenv({

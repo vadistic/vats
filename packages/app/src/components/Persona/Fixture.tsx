@@ -7,12 +7,13 @@ import { PersonaSize } from 'office-ui-fabric-react/lib/Persona'
 import { PersonaCandidate } from './Candidate'
 import { PersonaFixtureQuery } from './generated/PersonaFixtureQuery'
 
-import { PersonaFixtureQuery as personaFixtureQuery } from './Persona.graphql'
+import { personaFixtureQuery } from './graphql'
 
 export const PersonaFixture: React.SFC<any> = props => (
   <Query<PersonaFixtureQuery> query={personaFixtureQuery}>
     {({ loading, error, data }) => {
       if (error) {
+        console.log(personaFixtureQuery)
         return <p>{error.message}</p>
       }
       if (loading) {
@@ -24,33 +25,13 @@ export const PersonaFixture: React.SFC<any> = props => (
             {data.candidates.map(
               candidate =>
                 candidate && (
-                  <>
-                    <PersonaCandidate
-                      key={candidate.id}
-                      candidate={candidate}
-                      size={PersonaSize.size24}
-                    />
-                    <PersonaCandidate
-                      key={candidate.id}
-                      candidate={candidate}
-                      size={PersonaSize.size32}
-                    />
-                    <PersonaCandidate
-                      key={candidate.id}
-                      candidate={candidate}
-                      size={PersonaSize.size48}
-                    />
-                    <PersonaCandidate
-                      key={candidate.id}
-                      candidate={candidate}
-                      size={PersonaSize.size72}
-                    />
-                    <PersonaCandidate
-                      key={candidate.id}
-                      candidate={candidate}
-                      size={PersonaSize.size100}
-                    />
-                  </>
+                  <div key={candidate.id}>
+                    <PersonaCandidate candidate={candidate} size={PersonaSize.size24} />
+                    <PersonaCandidate candidate={candidate} size={PersonaSize.size32} />
+                    <PersonaCandidate candidate={candidate} size={PersonaSize.size48} />
+                    <PersonaCandidate candidate={candidate} size={PersonaSize.size72} />
+                    <PersonaCandidate candidate={candidate} size={PersonaSize.size100} />
+                  </div>
                 )
             )}
           </>

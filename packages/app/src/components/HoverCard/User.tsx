@@ -16,7 +16,7 @@ import { AppError, FirstArgument } from '../../utils'
 import { PersonaUserFragment } from '../Persona/generated/PersonaUserFragment'
 import { HoverCardUserQuery, HoverCardUserQueryVariables } from './generated/HoverCardUserQuery'
 
-import { HoverCardUserQuery as hoverCardUserQuery } from './HoverCard.graphql'
+import { hoverCardUserQuery } from './graphql'
 
 export interface IUserHoverCardProps extends IHoverCardProps {
   user: PersonaUserFragment

@@ -5,7 +5,7 @@ import { Query } from 'react-apollo'
 import { CandidateHoverCard } from './Candidate'
 import { HoverCardFixtureQuery } from './generated/HoverCardFixtureQuery'
 
-import { HoverCardFixtureQuery as hoverCardFixtureQuery } from './HoverCard.graphql'
+import { hoverCardFixtureQuery } from './graphql'
 
 export const HoverCardFixture: React.SFC<any> = props => (
   <Query<HoverCardFixtureQuery> query={hoverCardFixtureQuery}>

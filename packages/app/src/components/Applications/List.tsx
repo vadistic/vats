@@ -15,52 +15,7 @@ import {
   ApplicationsListQueryVariables,
 } from './generated/ApplicationsListQuery'
 
-const applicationsListQuery = gql`
-  query ApplicationsListQuery($jobIds: [ID!]!, $stageIds: [ID!]!) {
-    applications(where: { AND: { job: { id_in: $jobIds }, stage: { id_in: $stageIds } } }) {
-      id
-      updatedAt
-      job {
-        id
-        name
-        department
-        type
-      }
-      candidate {
-        id
-        firstName
-        lastName
-        tags {
-          id
-          label
-        }
-      }
-      stage {
-        id
-        name
-        type
-      }
-      disqualificationLink {
-        id
-        updatedAt
-        disqualification {
-          id
-          name
-        }
-        justification
-        createdBy {
-          firstName
-          lastName
-          position
-          avatar {
-            url
-            name
-          }
-        }
-      }
-    }
-  }
-`
+import { applicationsListQuery} from './graphql'
 
 export type TApplicationListItem = NonNullable<ElementType<ApplicationsListQuery['applications']>>
 

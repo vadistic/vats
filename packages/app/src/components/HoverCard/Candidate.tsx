@@ -19,7 +19,7 @@ import {
   HoverCardCandidateQueryVariables,
 } from './generated/HoverCardCandidateQuery'
 
-import { HoverCardCandidateQuery as hoverCardCandidateQuery } from './HoverCard.graphql'
+import { hoverCardCandidateQuery } from './graphql'
 
 export interface ICandidateHoverCardProps extends IHoverCardProps {
   candidate: PersonaCandidateFragment

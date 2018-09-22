@@ -22,39 +22,7 @@ import {
   ApplicationsTableQueryVariables,
 } from './generated/ApplicationsTableQuery'
 
-const applicationsTableQuery = gql`
-  query ApplicationsTableQuery($first: Int!, $after: String) {
-    applications(first: $first, after: $after) {
-      id
-      updatedAt
-      job {
-        id
-        name
-        department
-        type
-      }
-      candidate {
-        id
-        firstName
-        lastName
-        tags {
-          id
-          label
-        }
-      }
-      stage {
-        id
-        name
-        type
-      }
-    }
-    applicationsConnection {
-      aggregate {
-        count
-      }
-    }
-  }
-`
+import { applicationsTableQuery } from './graphql'
 
 export type TApplicationTableItem = NonNullable<ElementType<ApplicationsTableQuery['applications']>>
 
