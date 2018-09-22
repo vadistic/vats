@@ -25,7 +25,7 @@ const authTemplateStyles = ({ theme: t }: { theme: ITheme }) => ({
 })
 
 export const Card: React.SFC<ICardProps> = ({ candidate }) => {
-  const updatedAt = dayjs(candidate.applications.updatedAt)
+  const updatedAt = dayjs()
   return (
     <Box styles={authTemplateStyles}>
       <PersonaCandidate candidate={candidate} size={PersonaSize.size72} />
