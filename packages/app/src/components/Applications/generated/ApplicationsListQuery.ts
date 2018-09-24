@@ -1,18 +1,17 @@
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
-import { JobType, StageType } from "./..\\..\\..\\generated\\globalTypes";
+import { StageType, JobType } from "./..\\..\\..\\generated\\globalTypes";
 
 // ====================================================
 // GraphQL query operation: ApplicationsListQuery
 // ====================================================
 
-export interface ApplicationsListQuery_applications_job {
-  __typename: "Job";
-  id: string;
+export interface ApplicationsListQuery_applications_stage {
+  __typename: "Stage";
   name: string;
-  department: string | null;
-  type: JobType;
+  type: StageType;
+  id: string;
 }
 
 export interface ApplicationsListQuery_applications_candidate_applications {
@@ -40,22 +39,23 @@ export interface ApplicationsListQuery_applications_candidate_avatar {
 export interface ApplicationsListQuery_applications_candidate {
   __typename: "Candidate";
   id: string;
-  firstName: string;
-  lastName: string;
-  metaCompany: string | null;
-  metaPosition: string | null;
   links: string[];
   applications: ApplicationsListQuery_applications_candidate_applications[] | null;
   comments: ApplicationsListQuery_applications_candidate_comments[] | null;
   tags: ApplicationsListQuery_applications_candidate_tags[] | null;
+  firstName: string;
+  lastName: string;
+  metaCompany: string | null;
+  metaPosition: string | null;
   avatar: ApplicationsListQuery_applications_candidate_avatar | null;
 }
 
-export interface ApplicationsListQuery_applications_stage {
-  __typename: "Stage";
+export interface ApplicationsListQuery_applications_job {
+  __typename: "Job";
   id: string;
   name: string;
-  type: StageType;
+  department: string | null;
+  type: JobType;
 }
 
 export interface ApplicationsListQuery_applications_disqualificationLink_disqualification {
@@ -91,9 +91,9 @@ export interface ApplicationsListQuery_applications {
   __typename: "Application";
   id: string;
   updatedAt: any;
-  job: ApplicationsListQuery_applications_job;
-  candidate: ApplicationsListQuery_applications_candidate;
   stage: ApplicationsListQuery_applications_stage;
+  candidate: ApplicationsListQuery_applications_candidate;
+  job: ApplicationsListQuery_applications_job;
   disqualificationLink: ApplicationsListQuery_applications_disqualificationLink | null;
 }
 

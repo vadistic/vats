@@ -38,14 +38,14 @@ export interface CardFragment_candidate_avatar {
 export interface CardFragment_candidate {
   __typename: "Candidate";
   id: string;
-  firstName: string;
-  lastName: string;
-  metaCompany: string | null;
-  metaPosition: string | null;
   links: string[];
   applications: CardFragment_candidate_applications[] | null;
   comments: CardFragment_candidate_comments[] | null;
   tags: CardFragment_candidate_tags[] | null;
+  firstName: string;
+  lastName: string;
+  metaCompany: string | null;
+  metaPosition: string | null;
   avatar: CardFragment_candidate_avatar | null;
 }
 

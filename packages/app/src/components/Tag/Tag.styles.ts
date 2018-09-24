@@ -26,7 +26,9 @@ export const getStyles = (props: ITagStyleProps): ITagStyles => {
             color: semanticColors.buttonTextPressed,
             backgroundColor: semanticColors.buttonBackgroundPressed,
           },
-          '&:focus': {},
+          '&:focus': {
+            color: 'inherit',
+          },
         },
       },
       className,

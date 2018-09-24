@@ -38,14 +38,14 @@ export interface CardFixtureQuery_applications_candidate_avatar {
 export interface CardFixtureQuery_applications_candidate {
   __typename: "Candidate";
   id: string;
-  firstName: string;
-  lastName: string;
-  metaCompany: string | null;
-  metaPosition: string | null;
   links: string[];
   applications: CardFixtureQuery_applications_candidate_applications[] | null;
   comments: CardFixtureQuery_applications_candidate_comments[] | null;
   tags: CardFixtureQuery_applications_candidate_tags[] | null;
+  firstName: string;
+  lastName: string;
+  metaCompany: string | null;
+  metaPosition: string | null;
   avatar: CardFixtureQuery_applications_candidate_avatar | null;
 }
 
