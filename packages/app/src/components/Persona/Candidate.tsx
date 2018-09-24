@@ -13,15 +13,20 @@ export const PersonaCandidate: React.SFC<IPersonaCandidateProps> = ({
   candidate: { avatar, firstName, lastName, metaCompany, metaPosition },
   ...rest
 }) => {
+  const secondaryText =
+    metaPosition && metaCompany
+      ? `${metaPosition} @ ${metaCompany}`
+      : metaPosition || metaCompany || undefined
+
   return (
     <Persona
       hidePersonaDetails={false}
       imageAlt={'first name last name profile photo'}
       imageShouldFadeIn={true}
       imageUrl={avatar ? avatar.url : undefined}
+      imageInitials={firstName[0] + lastName[0]}
       text={`${firstName} ${lastName}`}
-      secondaryText={metaPosition || undefined}
-      tertiaryText={metaCompany || undefined}
+      secondaryText={secondaryText}
       {...rest}
     />
   )

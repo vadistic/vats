@@ -7,44 +7,52 @@ import { StageType } from "./..\\..\\..\\generated\\globalTypes";
 // GraphQL fragment: CardFragment
 // ====================================================
 
-export interface CardFragment_tags {
-  __typename: "Tag";
-  label: string;
-}
-
-export interface CardFragment_applications_stage {
+export interface CardFragment_stage {
   __typename: "Stage";
-  id: string;
   name: string;
   type: StageType;
 }
 
-export interface CardFragment_applications {
+export interface CardFragment_candidate_applications {
   __typename: "Application";
   id: string;
-  updatedAt: any;
-  stage: CardFragment_applications_stage;
 }
 
-export interface CardFragment_avatar {
+export interface CardFragment_candidate_comments {
+  __typename: "Comment";
+  id: string;
+}
+
+export interface CardFragment_candidate_tags {
+  __typename: "Tag";
+  id: string;
+  label: string;
+}
+
+export interface CardFragment_candidate_avatar {
   __typename: "File";
   url: string;
   name: string;
 }
 
-export interface CardFragment {
+export interface CardFragment_candidate {
   __typename: "Candidate";
   id: string;
-  links: string[];
-  emails: string[];
-  phones: string[];
-  source: string[];
-  metaCompany: string | null;
-  metaPosition: string | null;
-  metaHeadline: string | null;
-  tags: CardFragment_tags[] | null;
-  applications: CardFragment_applications[] | null;
   firstName: string;
   lastName: string;
-  avatar: CardFragment_avatar | null;
+  metaCompany: string | null;
+  metaPosition: string | null;
+  links: string[];
+  applications: CardFragment_candidate_applications[] | null;
+  comments: CardFragment_candidate_comments[] | null;
+  tags: CardFragment_candidate_tags[] | null;
+  avatar: CardFragment_candidate_avatar | null;
+}
+
+export interface CardFragment {
+  __typename: "Application";
+  id: string;
+  updatedAt: any;
+  stage: CardFragment_stage;
+  candidate: CardFragment_candidate;
 }

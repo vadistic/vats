@@ -1,5 +1,4 @@
 import { ApolloClient } from 'apollo-client'
-import gql from 'graphql-tag'
 import * as React from 'react'
 import { ApolloConsumer } from 'react-apollo'
 import { State, StateRender } from 'react-powerplug'

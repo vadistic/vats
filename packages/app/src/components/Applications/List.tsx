@@ -40,7 +40,7 @@ export class ApplicationsListBase extends React.Component<
 
   private _onRenderCell = (item: TApplicationListItem) => (
     <Link to="" state={{ candidateId: item.candidate.id }}>
-      <Card candidate={item.candidate} />
+      <Card application={item} />
     </Link>
   )
 
@@ -113,9 +113,6 @@ export class ApplicationsList extends React.Component<
         variables={this._getQueryVariables()}
       >
         {query => {
-          console.log('query data', query.data)
-          console.log('state', this.state)
-
           if (query.error) {
             return (
               <MessageBar messageBarType={MessageBarType.error} isMultiline={true}>

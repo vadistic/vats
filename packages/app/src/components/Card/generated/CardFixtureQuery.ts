@@ -7,48 +7,56 @@ import { StageType } from "./..\\..\\..\\generated\\globalTypes";
 // GraphQL query operation: CardFixtureQuery
 // ====================================================
 
-export interface CardFixtureQuery_candidates_tags {
-  __typename: "Tag";
-  label: string;
-}
-
-export interface CardFixtureQuery_candidates_applications_stage {
+export interface CardFixtureQuery_applications_stage {
   __typename: "Stage";
-  id: string;
   name: string;
   type: StageType;
 }
 
-export interface CardFixtureQuery_candidates_applications {
+export interface CardFixtureQuery_applications_candidate_applications {
   __typename: "Application";
   id: string;
-  updatedAt: any;
-  stage: CardFixtureQuery_candidates_applications_stage;
 }
 
-export interface CardFixtureQuery_candidates_avatar {
+export interface CardFixtureQuery_applications_candidate_comments {
+  __typename: "Comment";
+  id: string;
+}
+
+export interface CardFixtureQuery_applications_candidate_tags {
+  __typename: "Tag";
+  id: string;
+  label: string;
+}
+
+export interface CardFixtureQuery_applications_candidate_avatar {
   __typename: "File";
   url: string;
   name: string;
 }
 
-export interface CardFixtureQuery_candidates {
+export interface CardFixtureQuery_applications_candidate {
   __typename: "Candidate";
   id: string;
-  links: string[];
-  emails: string[];
-  phones: string[];
-  source: string[];
-  metaCompany: string | null;
-  metaPosition: string | null;
-  metaHeadline: string | null;
-  tags: CardFixtureQuery_candidates_tags[] | null;
-  applications: CardFixtureQuery_candidates_applications[] | null;
   firstName: string;
   lastName: string;
-  avatar: CardFixtureQuery_candidates_avatar | null;
+  metaCompany: string | null;
+  metaPosition: string | null;
+  links: string[];
+  applications: CardFixtureQuery_applications_candidate_applications[] | null;
+  comments: CardFixtureQuery_applications_candidate_comments[] | null;
+  tags: CardFixtureQuery_applications_candidate_tags[] | null;
+  avatar: CardFixtureQuery_applications_candidate_avatar | null;
+}
+
+export interface CardFixtureQuery_applications {
+  __typename: "Application";
+  id: string;
+  updatedAt: any;
+  stage: CardFixtureQuery_applications_stage;
+  candidate: CardFixtureQuery_applications_candidate;
 }
 
 export interface CardFixtureQuery {
-  candidates: (CardFixtureQuery_candidates | null)[];
+  applications: (CardFixtureQuery_applications | null)[];
 }

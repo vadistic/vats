@@ -1,15 +1,14 @@
-import { NavigateFn, Router as _Router, WindowLocation } from '@reach/router'
+import { LinkGetProps, Router as _Router } from '@reach/router'
 import queryString from 'query-string'
 import * as R from 'ramda'
 
 import { styled } from '../styles'
 
-export type InjectedRouteComponentProps<TParams = {}> = Partial<TParams> & {
-  path: string
-  default: boolean
-  location: WindowLocation
-  navigate: NavigateFn
-  uri: string
+export interface ILinkSelfProps<TState> {
+  to?: string
+  replace?: boolean
+  getProps?: (props: LinkGetProps) => {}
+  state?: TState
 }
 
 export const Router = styled(_Router)`

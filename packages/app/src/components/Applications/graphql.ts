@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { personaCandidateFragment } from '../Persona'
+import { cardFragment } from '../Card'
 export const applicationsBoardQuery = gql`
   query ApplicationsBoardQuery($first: Int!, $after: String) {
     applications(first: $first, after: $after) {
@@ -37,6 +37,7 @@ export const applicationsBoardQuery = gql`
 export const applicationsListQuery = gql`
   query ApplicationsListQuery($jobIds: [ID!]!, $stageIds: [ID!]!) {
     applications(where: { AND: { job: { id_in: $jobIds }, stage: { id_in: $stageIds } } }) {
+      ...CardFragment
       id
       updatedAt
       job {
@@ -47,13 +48,6 @@ export const applicationsListQuery = gql`
       }
       candidate {
         id
-        firstName
-        lastName
-        tags {
-          id
-          label
-        }
-        ...PersonaCandidateFragment
       }
       stage {
         id
@@ -80,7 +74,7 @@ export const applicationsListQuery = gql`
       }
     }
   }
-  ${personaCandidateFragment}
+  ${cardFragment}
 `
 
 export const applicationsTableQuery = gql`

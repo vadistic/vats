@@ -1,36 +1,37 @@
 import gql from 'graphql-tag'
 
-import { personaCandidateFragment } from '..'
+import { personaCandidateFragment } from '../Persona'
 
 export const cardFragment = gql`
-  fragment CardFragment on Candidate {
+  fragment CardFragment on Application {
     id
-    links
-    emails
-    phones
-    source
-    metaCompany
-    metaPosition
-    metaHeadline
-    tags {
-      label
+    updatedAt
+    stage {
+      name
+      type
     }
-    applications {
+    candidate {
       id
-      updatedAt
-      stage {
+      links
+      applications {
         id
-        name
-        type
       }
+      comments {
+        id
+      }
+      tags {
+        id
+        label
+      }
+      ...PersonaCandidateFragment
     }
-    ...PersonaCandidateFragment
   }
   ${personaCandidateFragment}
 `
+
 export const cardFixtureQuery = gql`
   query CardFixtureQuery {
-    candidates(first: 3) {
+    applications(first: 3) {
       id
       ...CardFragment
     }

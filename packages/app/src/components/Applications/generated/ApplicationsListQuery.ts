@@ -15,6 +15,16 @@ export interface ApplicationsListQuery_applications_job {
   type: JobType;
 }
 
+export interface ApplicationsListQuery_applications_candidate_applications {
+  __typename: "Application";
+  id: string;
+}
+
+export interface ApplicationsListQuery_applications_candidate_comments {
+  __typename: "Comment";
+  id: string;
+}
+
 export interface ApplicationsListQuery_applications_candidate_tags {
   __typename: "Tag";
   id: string;
@@ -32,9 +42,12 @@ export interface ApplicationsListQuery_applications_candidate {
   id: string;
   firstName: string;
   lastName: string;
-  tags: ApplicationsListQuery_applications_candidate_tags[] | null;
   metaCompany: string | null;
   metaPosition: string | null;
+  links: string[];
+  applications: ApplicationsListQuery_applications_candidate_applications[] | null;
+  comments: ApplicationsListQuery_applications_candidate_comments[] | null;
+  tags: ApplicationsListQuery_applications_candidate_tags[] | null;
   avatar: ApplicationsListQuery_applications_candidate_avatar | null;
 }
 

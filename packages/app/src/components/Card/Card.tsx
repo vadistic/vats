@@ -1,3 +1,4 @@
+import { Link, LinkProps } from '@reach/router'
 import * as dayjs from 'dayjs'
 import { css } from 'emotion'
 import * as React from 'react'
@@ -6,11 +7,14 @@ import { PersonaSize } from 'office-ui-fabric-react/lib/Persona'
 import { ITheme } from 'office-ui-fabric-react/lib/Styling'
 
 import { Box, PersonaCandidate } from '..'
+import { IPersonaCandidateProps } from '../Persona'
+import { TagGroup } from '../Tag'
 import { CardFragment } from './generated/CardFragment'
 
 // TODO: refactor to application-based
-export interface ICardProps {
-  candidate: CardFragment
+export interface ICardProps<TLinkState = {}> {
+  application: CardFragment
+  personaProps?: IPersonaCandidateProps
 }
 
 const authTemplateStyles = ({ theme: t }: { theme: ITheme }) => ({
@@ -24,11 +28,16 @@ const authTemplateStyles = ({ theme: t }: { theme: ITheme }) => ({
   `,
 })
 
-export const Card: React.SFC<ICardProps> = ({ candidate }) => {
+export const Card: React.SFC<ICardProps> = ({ application, personaProps }) => {
   const updatedAt = dayjs()
   return (
     <Box styles={authTemplateStyles}>
-      <PersonaCandidate candidate={candidate} size={PersonaSize.size72} />
+      <PersonaCandidate
+        candidate={application.candidate}
+        size={PersonaSize.size48}
+        {...personaProps}
+      />
+      <TagGroup tags={application.candidate.tags || []} />
     </Box>
   )
 }
