@@ -2,10 +2,10 @@ import { RouteComponentProps, Router } from '@reach/router'
 import * as React from 'react'
 
 import {
+  DraggableSingleFixture,
   HoverCardFixture,
   LinkButton,
   PersonaFixture,
-  SelectionDraggableListFixture,
   SelectionListFixture,
   TileFixture,
 } from '../components'
@@ -26,7 +26,7 @@ export const TestView: React.SFC<ITestViewProps> = () => (
         <LinkButton to="tile">Tile</LinkButton>
       </li>
       <li>
-        <LinkButton to="selection-draggable-list">Selection Draggable List</LinkButton>
+        <LinkButton to="draggable">Draggable Multi Lists</LinkButton>
       </li>
       <li>
         <LinkButton to="selection-list">Selection List</LinkButton>
@@ -37,7 +37,7 @@ export const TestView: React.SFC<ITestViewProps> = () => (
       <HoverCardFixture path="hover" />
       <TileFixture path="tile" />
       <SelectionListFixture path="selection-list" />
-      <SelectionDraggableListFixture path="selection-draggable-list" />
+      <DraggableSingleFixture path="draggable" />
     </Router>
   </>
 )

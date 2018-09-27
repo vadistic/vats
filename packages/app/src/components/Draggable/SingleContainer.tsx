@@ -1,8 +1,7 @@
-import { css } from 'emotion'
-import * as R from 'ramda'
 import * as React from 'react'
 import {
   DragDropContext,
+  DragDropContextProps,
   DragUpdate,
   Droppable,
   DropResult,
@@ -10,7 +9,7 @@ import {
 } from 'react-beautiful-dnd'
 
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone'
-import { List } from 'office-ui-fabric-react/lib/List'
+import { GroupedList } from 'office-ui-fabric-react/lib/GroupedList'
 import {
   IObjectWithKey,
   ISelection,
@@ -18,31 +17,31 @@ import {
   SelectionMode,
   SelectionZone,
 } from 'office-ui-fabric-react/lib/Selection'
-import { BaseComponent, IBaseProps, IDisposable } from 'office-ui-fabric-react/lib/Utilities'
+import { css as cx } from 'office-ui-fabric-react/lib/Utilities'
 
-import { DraggableItem } from './Item'
 import { DraggableList } from './List'
-import { TObjectWithId } from './types'
+import { TItems, TObjectWithId } from './types'
 
 export interface IDraggableContainerRenderProps {
   list: React.ReactElement<any>
   selection?: ISelection
 }
 
-export interface IDragabbleContainerProps<T = any> {
+export interface IDragabbleSingleContainerProps<T = any> extends DragDropContextProps {
   children: (props: IDraggableContainerRenderProps) => React.ReactElement<any>
-  items: Array<TObjectWithId<T>>
+  className?: string
+  items: TItems<T>
   focusInitialIndex?: number
   onRenderCell: (item?: TObjectWithId<T>, index?: number) => React.ReactElement<any>
   onItemInvoked?: (item?: IObjectWithKey, index?: number, ev?: Event) => void
   onItemContextMenu?: (item?: any, index?: number, ev?: Event) => void | boolean
 }
 
-export interface IDraggableContainerState {}
+export interface IDraggableSingleContainerState {}
 
-export class DraggableContainer<T extends TObjectWithId<any>> extends React.Component<
-  IDragabbleContainerProps<T>,
-  IDraggableContainerState
+export class DraggableSingleContainer<T extends TObjectWithId<any>> extends React.Component<
+  IDragabbleSingleContainerProps<T>,
+  IDraggableSingleContainerState
 > {
   constructor(props) {
     super(props)
@@ -74,7 +73,7 @@ export class DraggableContainer<T extends TObjectWithId<any>> extends React.Comp
     console.log('DraggableList updated')
   }
 
-  public list = (
+  public List = (
     <Droppable droppableId={'0'}>
       {(provided, snapshot) => (
         <DraggableList
@@ -89,23 +88,32 @@ export class DraggableContainer<T extends TObjectWithId<any>> extends React.Comp
   )
 
   public render() {
-    const { items, onRenderCell, onItemInvoked, onItemContextMenu, children } = this.props
+    const {
+      onItemInvoked,
+      onItemContextMenu,
+      children,
+      onDragEnd,
+      onDragStart,
+      onDragUpdate,
+      className,
+    } = this.props
 
     return (
       <SelectionZone
         selection={this.selection}
         selectionMode={this.selection.mode}
+        // TODO: Allow invoking somehow
         onItemInvoked={onItemInvoked}
         selectionPreservedOnEmptyClick={false}
         isSelectedOnFocus={false}
       >
-        <FocusZone>
+        <FocusZone className={cx('DraggableContainer', className)}>
           <DragDropContext
-            onDragStart={this._onDragStart}
-            onDragUpdate={this._onDragUpdate}
-            onDragEnd={this._onDragEnd}
+            onDragStart={onDragStart}
+            onDragUpdate={onDragUpdate}
+            onDragEnd={onDragEnd}
           >
-            {children({ list: this.list, selection: this.selection })}
+            {children({ list: this.List, selection: this.selection })}
           </DragDropContext>
         </FocusZone>
       </SelectionZone>
@@ -117,15 +125,5 @@ export class DraggableContainer<T extends TObjectWithId<any>> extends React.Comp
       this.selection.setModal && this.selection.setModal(this.selection.count > 1)
       this._listRef.current && this._listRef.current.forceUpdate()
     }
-  }
-
-  private _onDragStart = (initial: DragUpdate, provided: HookProvided): void => {
-    console.log('_onDragStart', initial, provided)
-  }
-  private _onDragUpdate = (initial: DragUpdate, provided: HookProvided): void => {
-    console.log('_onDragUpdate', initial, provided)
-  }
-  private _onDragEnd = (result: DropResult, provided: HookProvided): void => {
-    console.log('_onDragEnd', result, provided)
   }
 }

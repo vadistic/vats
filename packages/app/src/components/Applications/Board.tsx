@@ -6,7 +6,15 @@ import { Query } from 'react-apollo'
 
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
 
-import { ElementType, filterNull, nonNullable, NonNullArray, qParse, qStringify } from '../../utils'
+import {
+  ElementType,
+  filterNull,
+  isNotEmpty,
+  nonNull,
+  NonNullArray,
+  qParse,
+  qStringify,
+} from '../../utils'
 import { Card } from '../Card'
 import { ApplicationsBoardTemplate } from './BoardTemplate'
 import {
@@ -16,7 +24,7 @@ import {
   ApplicationsBoardQueryVariables,
 } from './generated/ApplicationsBoardQuery'
 
-import { DraggableContainer } from '../Draggable'
+import { DraggableSingleContainer } from '../Draggable'
 import { applicationsBoardQuery } from './graphql'
 
 export type TApplicationBoardItem = ApplicationsBoardQuery_applications
@@ -60,10 +68,18 @@ export class ApplicationsBoardBase extends React.Component<
     <Card application={item} />
   )
 
+  private _onDragEnd = (result, provided) => {
+    console.log('drag end')
+  }
+
   public lists = Object.entries(this.state.lists).map(([stageId, items], i) => (
-    <DraggableContainer items={items} onRenderCell={this._onRenderCard}>
+    <DraggableSingleContainer
+      items={items}
+      onRenderCell={this._onRenderCard}
+      onDragEnd={this._onDragEnd}
+    >
       {({ list }) => list}
-    </DraggableContainer>
+    </DraggableSingleContainer>
   ))
 
   // DIAGNOSTIC TODO: DELETE
@@ -76,7 +92,7 @@ export class ApplicationsBoardBase extends React.Component<
   }
 
   public render() {
-    return this.props.children(this.lists)
+    return <>{this.lists.map(list => list)}</>
   }
 }
 
@@ -122,7 +138,7 @@ export class ApplicationsBoard extends React.Component<IApplicationsBoardProps> 
             return <h3>Loading shimmer and stuff</h3>
           }
 
-          if (data !== undefined) {
+          if (isNotEmpty(data)) {
             return (
               <div>
                 <ApplicationsBoardBase data={data}>

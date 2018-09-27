@@ -12,16 +12,17 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": false, // for now
+    "noImplicitAny": false, // for dev
+    "noUnusedLocals": false, // for dev
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": false, // for dev
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "preserveConstEnums": true,
     "removeComments": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "alwaysStrict": true
   },
-  "include": ["./src/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

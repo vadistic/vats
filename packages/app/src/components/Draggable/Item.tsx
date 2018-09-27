@@ -1,5 +1,4 @@
 import { css } from 'emotion'
-import * as R from 'ramda'
 import * as React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 
@@ -31,11 +30,9 @@ export const draggableItemStyles = ({ theme }: { theme: ITheme }) => ({
 
 export class DraggableItem extends React.Component<IDraggableItemProps, {}> {
   private _wasSelected = false
-  private _wasSelectedTick = false
 
   public componentDidUpdate(prevProps) {
-    this._wasSelected = this._wasSelectedTick
-    this._wasSelectedTick = this.props.isSelected
+    this._wasSelected = prevProps.isSelected
 
     // TODO: DELETE
     console.log('Item updated', this.props.selectionIndex)
@@ -46,16 +43,20 @@ export class DraggableItem extends React.Component<IDraggableItemProps, {}> {
 
   public shouldComponentUpdate(nextProps: IDraggableItemProps) {
     const { children: nextChildren, ...next } = nextProps
-    const { children: currentChildren, ...current } = this.props
+    const { children: currentChildren, ...prev } = this.props
 
-    return !R.equals(next, current)
+    return !(
+      prev.isModal === next.isModal &&
+      prev.isSelected === next.isSelected &&
+      prev.selectionIndex === next.selectionIndex
+    )
   }
 
   public render() {
     const { children, selectionKey, selectionIndex, isSelected, isModal } = this.props
 
     return (
-      <Draggable draggableId={selectionKey} key={selectionKey} index={selectionIndex}>
+      <Draggable draggableId={selectionKey} key={selectionKey} index={selectionIndex} >
         {(provided, snapshot) => {
           return (
             <Box
@@ -64,8 +65,8 @@ export class DraggableItem extends React.Component<IDraggableItemProps, {}> {
               {...provided.dragHandleProps}
               styles={draggableItemStyles}
               data-selection-index={selectionIndex}
-              data-selection-invoke={isSelected && this._wasSelected}
-              data-selection-toggle={false}
+              data-selection-invoke={isSelected}
+              data-selection-toggle={isModal}
               data-is-focusable={true}
             >
               {isSelected && (
