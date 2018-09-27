@@ -38,6 +38,10 @@ const statusCommonStyles = css`
   span {
     white-space: nowrap;
   }
+
+  i {
+    margin-right: 1px;
+  }
 `
 
 interface IStatusCommonProps {

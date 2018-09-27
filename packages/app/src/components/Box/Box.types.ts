@@ -5,8 +5,9 @@ import { IRefObject, IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/U
 
 export interface IBox {}
 
-export interface IBoxProps extends React.Props<HTMLDivElement> {
+export interface IBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: keyof React.ReactHTML | React.ComponentType<any>
+  innerRef?: React.Ref<HTMLDivElement>
   /* REQUIRED */
   className?: string
   componentRef?: IRefObject<HTMLDivElement>

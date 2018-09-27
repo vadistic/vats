@@ -9,7 +9,7 @@ import { MarqueeSelection, Selection } from 'office-ui-fabric-react/lib/MarqueeS
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
 
 import { Card, Grid, PersonaCandidate } from '..'
-import { ElementType, NonNullArray, qParse, qStringify } from '../../utils'
+import { ElementType, filterNull, NonNullArray, qParse, qStringify } from '../../utils'
 import {
   ApplicationsListQuery,
   ApplicationsListQueryVariables,
@@ -19,7 +19,7 @@ import { applicationsListQuery } from './graphql'
 export type TApplicationListItem = NonNullable<ElementType<ApplicationsListQuery['applications']>>
 
 export interface IApplicationsListBaseProps {
-  query: QueryResult<ApplicationsListQuery, ApplicationsListQueryVariables>
+  data: ApplicationsListQuery
 }
 
 export interface IApplicationsListBaseState {
@@ -35,7 +35,7 @@ export class ApplicationsListBase extends React.Component<
 
   public state = {
     selectionDetails: '',
-    items: this.props.query!.data!.applications as NonNullArray<TApplicationListItem[]>,
+    items: filterNull(this.props.data.applications),
   }
 
   private _onRenderCell = (item: TApplicationListItem) => (
@@ -112,26 +112,30 @@ export class ApplicationsList extends React.Component<
         fetchPolicy={'cache-first'}
         variables={this._getQueryVariables()}
       >
-        {query => {
-          if (query.error) {
+        {({ error, loading, data }) => {
+          if (error) {
             return (
               <MessageBar messageBarType={MessageBarType.error} isMultiline={true}>
                 <h3>Error</h3>
-                <p>{query.error.message}</p>
+                <p>{error.message}</p>
               </MessageBar>
             )
           }
 
-          if (query.loading) {
+          if (loading) {
             return <h3>Loading shimmer and stuff</h3>
           }
 
-          return (
-            <ApplicationsListTemplate
-              list={<ApplicationsListBase query={query} />}
-              candidate={<h3>{this._getLocation().candidateId}</h3>}
-            />
-          )
+          if (data) {
+            return (
+              <ApplicationsListTemplate
+                list={<ApplicationsListBase data={data} />}
+                candidate={<h3>{this._getLocation().candidateId}</h3>}
+              />
+            )
+          }
+
+          return null
         }}
       </Query>
     )

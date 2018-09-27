@@ -1,13 +1,19 @@
-import gql from 'graphql-tag'
+import { css } from 'emotion'
 import * as React from 'react'
 
-import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react/lib/Persona'
+import { IPersonaProps, Persona } from 'office-ui-fabric-react/lib/Persona'
 
 import { PersonaCandidateFragment } from './generated/PersonaCandidateFragment'
 
-export interface IPersonaCandidateProps extends IPersonaSharedProps {
+export interface IPersonaCandidateProps extends IPersonaProps {
   candidate: PersonaCandidateFragment
 }
+
+export const personaCandidateStyles = () => ({
+  root: css`
+    width: 100%;
+  `,
+})
 
 export const PersonaCandidate: React.SFC<IPersonaCandidateProps> = ({
   candidate: { avatar, firstName, lastName, metaCompany, metaPosition },
@@ -20,6 +26,7 @@ export const PersonaCandidate: React.SFC<IPersonaCandidateProps> = ({
 
   return (
     <Persona
+      styles={personaCandidateStyles}
       hidePersonaDetails={false}
       imageAlt={'first name last name profile photo'}
       imageShouldFadeIn={true}

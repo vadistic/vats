@@ -14,19 +14,19 @@ const getClassNames = classNamesFunction<IBoxStyleProps, IBoxStyles>()
 
 export interface IBoxState {}
 
-@customizable('Box', ['theme'])
 export class BoxBase extends BaseComponent<IBoxProps, IBoxState> {
   constructor(props: IBoxProps) {
     super(props)
   }
 
   public render(): JSX.Element {
-    const { as: component, className, styles, theme, children, ...rest } = this.props
+    const { as: component, className, styles, theme, children, innerRef, ...rest } = this.props
 
     const classNames = getClassNames(styles, { theme: theme!, className })
 
     return React.createElement(component || 'div', {
       className: classNames.root,
+      ref: innerRef,
       children,
       ...rest,
     })

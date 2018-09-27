@@ -26,7 +26,7 @@ export class TagBase extends BaseComponent<ITagProps, ITagState> {
     const classNames = getClassNames(styles, { theme: theme!, className })
 
     return (
-      <Link className={classNames.root} {...rest}>
+      <Link className={classNames.root} {...rest} tabIndex={-1} data-is-focusable={false}>
         {hasHashtag ? `#${label}` : label}
       </Link>
     )

@@ -10,7 +10,7 @@ import { TagGroup } from '../Tag'
 import { CardFragment } from './generated/CardFragment'
 import { Status } from './Status'
 
-const cardStyles = ({ theme }: { theme: ITheme }) => ({
+const fastCardStyles = ({ theme }: { theme: ITheme }) => ({
   root: css`
     user-select: none;
 
@@ -47,26 +47,15 @@ const cardStyles = ({ theme }: { theme: ITheme }) => ({
   `,
 })
 
-export interface ICardProps {
+export interface IFastCardProps {
   application: CardFragment
   personaProps?: IPersonaCandidateProps
 }
 
-export const Card: React.SFC<ICardProps> = ({ application, personaProps }) => {
+export const FastCard: React.SFC<IFastCardProps> = ({ application, personaProps }) => {
   return (
-    <Box styles={cardStyles}>
-      <PersonaCandidate
-        candidate={application.candidate}
-        size={PersonaSize.size72}
-        onRenderTertiaryText={() => (
-          <>
-            <Status.Update application={application} />
-            <Status.Rating ratings={[]} />
-            <Status.Comment comments={application.candidate.comments} />
-          </>
-        )}
-        {...personaProps}
-      />
+    <Box styles={fastCardStyles}>
+      {application && application.candidate.firstName + ' ' + application.candidate.lastName}
       <TagGroup className="tag-group" wrap={true} tags={application.candidate.tags || []} />
     </Box>
   )

@@ -24,7 +24,9 @@ export const ApplicationsView: React.SFC<IApplicationsViewProps> = () => (
         <LinkButton to="table">Applications Table</LinkButton>
       </li>
       <li>
-        <LinkButton to="board">Applications Board</LinkButton>
+        <LinkButton to="board" state={TEMP_APPLICATIONS_LIST_QUERY_VARIABLES}>
+          Applications Board
+        </LinkButton>
       </li>
     </ul>
     <Router basepath="/applications">

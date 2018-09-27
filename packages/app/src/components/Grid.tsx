@@ -55,7 +55,7 @@ export type TGridItemProps =
   | AlignItemsProps
   | JustifyContentProps
 
-const Item = styled('div')<TGridItemProps>(
+export const Item = styled('div')<TGridItemProps>(
   css`
     /* display: flex;
     flex-flow: row wrap; */

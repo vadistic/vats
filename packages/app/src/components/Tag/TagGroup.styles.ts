@@ -15,21 +15,17 @@ export const getStyles = (props: ITagGroupStyleProps): ITagGroupStyles => {
       css`
         width: 100%;
         overflow-y: hidden;
-        overflow-x: hidden;
+        overflow-x: scroll;
       `,
       wrap &&
         css`
           white-space: nowrap;
 
           /* cross-browser hide scrollbars */
-          overflow: '-moz-scrollbars-none';
+          overflow: -moz-scrollbars-none;
           -ms-overflow-style: none;
           &::-webkit-scrollbar {
             display: none;
-          }
-
-          &:hover {
-            overflow-x: scroll;
           }
         `,
       className,

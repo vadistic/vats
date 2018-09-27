@@ -23,15 +23,13 @@ export class TagGroupBase extends BaseComponent<ITagGroupProps, ITagGroupState> 
 
   private _onDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
     this.setState({ dragging: true })
-
-    console.log('dragstart: clientX', e.clientX)
-
     document.addEventListener('mousemove', this._onDrag)
     document.addEventListener('mouseup', this._onDragEnd)
   }
 
   private _onDrag = (e: MouseEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     if (this.state.dragging) {
       const domNode = this._rootRef.current
       if (domNode) {
