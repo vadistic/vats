@@ -1,6 +1,7 @@
 # Workspace
 *.env.*
 .vscode
+.cache
 
 # Project dependencies
 node_modules
@@ -8,7 +9,6 @@ yarn-error.log
 
 # Build directory
 dist
-/public
 .DS_Store
 
 # Custom
