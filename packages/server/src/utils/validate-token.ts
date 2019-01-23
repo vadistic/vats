@@ -1,13 +1,14 @@
-// based on this: https://aws.amazon.com/blogs/mobile/integrating-amazon-cognito-user-pools-with-api-gateway/
-// this: https://auth0.com/docs/quickstart/backend/nodejs#validate-access-tokens
-// and this: https://github.com/auth0/node-jwks-rsa
+// based on:
+// https://aws.amazon.com/blogs/mobile/integrating-amazon-cognito-user-pools-with-api-gateway/
+// https://auth0.com/docs/quickstart/backend/nodejs#validate-access-tokens
+// https://github.com/auth0/node-jwks-rsa
 
 // tslint:disable: no-console
 import * as jwt from 'jsonwebtoken'
-import * as JwksRsa from 'jwks-rsa'
+import JwksRsa from 'jwks-rsa'
+import { IAccessTokenPayload } from '../utils'
 
-const iss =
-  `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/` + process.env.COGNITO_POOL_ID
+const iss = `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/` + process.env.COGNITO_POOL_ID
 
 const client = JwksRsa({
   cache: true,
@@ -18,6 +19,7 @@ const client = JwksRsa({
 })
 
 export const validateToken = (token: string) => {
+  let result: IAccessTokenPayload | undefined
   const decodedJwt = jwt.decode(token, { complete: true })
 
   // Fail if the token is not jwt
@@ -64,9 +66,22 @@ export const validateToken = (token: string) => {
         throw new Error('Unauthorized')
       } else {
         // Valid token!
-        console.log(payload)
-        return payload
+        result = payload as IAccessTokenPayload
       }
     })
   })
+
+  return result
+}
+
+export const decodeToken = (token: string) => {
+  const decodedJwt = jwt.decode(token, { complete: true })
+
+  // Fail if the token is not jwt
+  if (!decodedJwt) {
+    console.log('Not a valid JWT token')
+    throw new Error('Unauthorized')
+  }
+
+  return decodedJwt
 }

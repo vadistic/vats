@@ -1,17 +1,18 @@
 endpoint: ${env:PRISMA_ENDPOINT}/${env:PRISMA_SERVICE}/${env:PRISMA_STAGE}
-
-datamodel:
-  - datamodel.graphql
+datamodel: datamodel.graphql
 
 seed:
   run: yarn ts-node ./database/seed/seed.ts
 
 hooks:
   post-deploy:
-    - echo "Deployment finished"
-    - graphql get-schema --project database
-    - graphql-override
     - graphql codegen
-    - node scripts/fixTypings.js
+    - echo "Deployment finished"
 
 secret: ${env:PRISMA_SECRET}
+
+generate:
+  - generator: typescript-client
+    output: ../src/prisma-client
+  - generator: graphql-schema
+    output: ../src/generated/

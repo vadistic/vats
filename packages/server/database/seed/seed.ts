@@ -10,27 +10,23 @@ import {
   ApplicationType,
   Candidate,
   Comment,
+  FileCreateInput,
   Job,
   JobType,
   Location,
   Prisma as PrismaBinding,
   Tag,
+  Task,
   User,
   Workflow,
-} from '../../src/generated/prisma'
-import { prismaTypeDefs } from '../../src/schema/schema'
-import { FileCreateInput, FileCreateOneInput, Task } from '../generated/server'
-import { FirstArgument } from '../utils'
+} from '../../src/generated/prisma-binding'
+import { FirstArgument } from '../../src/utils'
 import { fakeEmoji, fakeSocialLink, List, randomConnectMany, randomFn } from './utils'
 import { workflowsData } from './workflows'
 
-// tslint:disable: no-console
-
 const prisma: any = new Prisma({
-  typeDefs: prismaTypeDefs,
-  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
-    process.env.PRISMA_STAGE
-  }`,
+  typeDefs: 'src/generated/prisma.graphql',
+  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`,
   debug: true,
   secret: process.env.PRISMA_SECRET,
 })
@@ -57,7 +53,7 @@ const attempt = async <T extends (args: any, info?: string, options?: Options) =
   fn: T,
   args: FirstArgument<T>,
   info?: string,
-  options?: Options
+  options?: Options,
 ) => {
   for (let i = 0; i < RETRY; i++) {
     try {
@@ -129,7 +125,7 @@ const setup = async () => {
         position: f.name.jobTitle(),
         workspace: { connect: { id: workspace.id } },
       },
-    })
+    }),
   )
   console.log('Succesfuly ended')
 
@@ -229,9 +225,7 @@ const setup = async () => {
       size: f.random.number({ min: 200000, max: 7000000 }),
       type: 'application/pdf',
       // TODO: My template
-      url:
-        'https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=' +
-        f.random.uuid(),
+      url: 'https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=' + f.random.uuid(),
     }
 
     const hasResume = f.random.boolean
@@ -266,10 +260,9 @@ const setup = async () => {
       console.log(i)
     }, TIMEOUT)
 
-    const content = R.times(
-      () => randomFn(fakeEmoji, f.lorem.sentence)(),
-      f.random.number({ min: 1, max: 8 })
-    ).join(' ')
+    const content = R.times(() => randomFn(fakeEmoji, f.lorem.sentence)(), f.random.number({ min: 1, max: 8 })).join(
+      ' ',
+    )
 
     comments.arr[i] = await attempt(db.mutation.createComment, {
       data: {
@@ -317,16 +310,20 @@ const setup = async () => {
     const job = await attempt(
       db.query.job,
       { where: { id: jobs.random().id } },
-      `{ id, workflow { stages { id, type }, disqualifications { id }}}`
+      `{ id, workflow { stages { id, type }, disqualifications { id }}}`,
     )
 
-    const stage = f.random.arrayElement(job.workflow.stages)
+    if (!job) {
+      throw Error('Could not query jobs')
+    }
+
+    const stage = f.random.arrayElement(job.workflow.stages || [])
 
     const type = f.random.arrayElement(['Qualified', 'Disqualified'] as ApplicationType[])
 
     const disqualificationLink = {
       disqualification: {
-        connect: { id: f.random.arrayElement(job.workflow.disqualifications).id },
+        connect: { id: f.random.arrayElement(job.workflow.disqualifications || []).id },
       },
       createdBy: { connect: { id: users.random().id } },
     }
@@ -337,8 +334,7 @@ const setup = async () => {
         job: { connect: { id: job.id } },
         stage: { connect: { id: stage.id } },
         type,
-        disqualificationLink:
-          type === 'Disqualified' ? { create: disqualificationLink } : undefined,
+        disqualificationLink: type === 'Disqualified' ? { create: disqualificationLink } : undefined,
       },
     })
   }

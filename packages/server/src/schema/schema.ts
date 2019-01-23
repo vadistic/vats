@@ -1,19 +1,78 @@
 // Exposes exectutable schema for graphql-binding type deficition
 // https://github.com/prisma/prisma-binding/issues/202
 
+import { gql as graphql } from 'apollo-server'
 import { importSchema } from 'graphql-import'
-import { makeExecutableSchema } from 'graphql-tools'
-import * as path from 'path'
 
-export const typeDefs = importSchema(path.join(__dirname, '../generated/server.graphql'))
+import { gql, gqlImport } from '../utils'
 
-export const prismaTypeDefs = importSchema(path.join(__dirname, '../generated/prisma.graphql'))
+const Types = gql`
+  interface Node {
+    id: ID!
+  }
 
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolverValidationOptions: {
-    requireResolversForResolveType: false,
-  },
-})
+  input WorkspaceCreateInput {
+    name: String!
+    firstName: String
+    lastName: String
+    email: String!
+    username: String!
+    password: String!
+  }
 
-export default schema
+  input SignupInput {
+    password: String!
+    username: String!
+    inviteId: ID!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
+  input RefreshInput {
+    token: String!
+  }
+
+  type AuthPayload {
+    token: String!
+    refresh: String!
+  }
+
+  type AccessPayload {
+    token: String!
+  }
+
+  input InviteCreateInput {
+    email: String!
+  }
+`
+
+const Query = gql`
+  type Query {
+    users: User!
+    ${gqlImport.require(`Query.user`).fields}
+  }
+`
+
+const Mutation = gql`
+  type Mutation {
+    createApplication(data: ApplicationCreateInput!): Application!
+    createCandidate(data: CandidateCreateInput!): Candidate!
+    createJob(data: JobCreateInput!): Job!
+    createTask(data: TaskCreateInput!): Task!
+  }
+`
+
+const fullSchemaString = importSchema(gql`
+  # import * from 'src/generated/prisma.graphql'
+
+  ${Query}
+  ${Mutation}
+  ${Types}
+`)
+
+export const typeDefs = graphql`
+  ${fullSchemaString}
+`

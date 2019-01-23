@@ -1,19 +1,16 @@
 {
+  "defaultSeverity": "error",
   "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
-    "no-shadowed-variable": true,
     "no-console": false,
     "object-literal-sort-keys": false,
     "no-empty-interface": false,
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-pascal-case",
-      "allow-leading-underscore"
-    ]
+    "ordered-imports": true,
+    "member-access": [true, "no-public"],
+    "file-name-casing": [true, "kebab-case"],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"]
   },
   "linterOptions": {
-    "exclude": ["src/generated/*"]
+    "exclude": ["src/generated/*", "node_modules"]
   }
 }

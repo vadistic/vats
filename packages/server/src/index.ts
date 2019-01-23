@@ -1,46 +1,38 @@
-import { ApolloServer } from 'apollo-server'
-import { applyMiddleware } from 'graphql-middleware'
-import { makeExecutableSchema } from 'graphql-tools'
+import { ApolloServer, makeExecutableSchema } from 'apollo-server'
+import * as path from 'path'
 import { Prisma } from 'prisma-binding'
 
-import * as resolvers from './resolvers'
-import { prismaTypeDefs, typeDefs } from './schema/schema'
-import { validateToken } from './validateToken'
+import { IncomingMessage } from 'http'
+import { resolvers } from './resolvers'
+import { typeDefs } from './schema/schema'
+import { decodeToken } from './utils/validate-token'
 
-// tslint:disable: no-console
-
-export const prismaRouter = (endpoint: string) =>
-  new Prisma({
-    typeDefs: prismaTypeDefs,
-    endpoint,
-    debug: true,
-    secret: process.env.PRISMA_SECRET,
-  })
-
-export const prisma = new Prisma({
-  typeDefs: prismaTypeDefs,
-  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
-    process.env.PRISMA_STAGE
-  }`,
-  debug: true,
+export const prismaBinding = new Prisma({
+  typeDefs: path.resolve(__dirname, `./generated/prisma.graphql`),
+  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`,
   secret: process.env.PRISMA_SECRET,
+  debug: true,
 })
 
 // main context
-const context = ({ req }) => {
+interface IContextProps {
+  req: IncomingMessage
+}
+
+const context = ({ req }: IContextProps) => {
   const authorization = req.headers.authorization
   let rawToken
 
   if (authorization) {
     rawToken = authorization.split(' ')[1]
 
-    const token = validateToken(rawToken)
+    // const token = validateToken(rawToken)
+    const token = decodeToken(rawToken)
 
-    console.log(token)
     if (token) {
       return {
         ...req,
-        db: prisma,
+        db: prismaBinding,
         token,
       }
     }
@@ -48,20 +40,22 @@ const context = ({ req }) => {
 
   return {
     ...req,
-    db: prisma,
+    db: prismaBinding,
   }
 }
 
 const executableSchema = makeExecutableSchema({
   typeDefs,
   resolvers,
+  // TODO: implement node resolver
+  // https://github.com/prisma/prisma/issues/2225
   resolverValidationOptions: { requireResolversForResolveType: false },
 })
 
-const schema = applyMiddleware(executableSchema) // ,filters ,permissions)
+// const schema = applyMiddleware(executableSchema, permissions) // ,filters)
 
 const server = new ApolloServer({
-  schema,
+  schema: executableSchema,
   context,
 })
 
@@ -69,5 +63,5 @@ const port = process.env.PORT || 4000
 
 server.listen({ port }, () =>
   // tslint:disable-next-line:no-console
-  console.log(`Server is running on http:// localhost:${port}`)
+  console.log(`Server is running on http:// localhost:${port}`),
 )

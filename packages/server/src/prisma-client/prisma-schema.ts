@@ -1,4 +1,4 @@
-type AggregateApplication {
+export const typeDefs = /* GraphQL */ `type AggregateApplication {
   count: Int!
 }
 
@@ -6996,3 +6996,4 @@ input WorkspaceWhereInput {
 input WorkspaceWhereUniqueInput {
   id: ID
 }
+`

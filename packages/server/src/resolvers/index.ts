@@ -1,9 +1,7 @@
 import { forwardTo } from 'prisma-binding'
 
+import { QueryResolvers } from '../generated/server'
 import { IMutation, IQuery } from '../utils'
-
-const me = async (parent, args, ctx, info) =>
-  ctx.db.query.user({ where: { id: ctx.auth.userId } }, info)
 
 export const Query: IQuery = {
   users: forwardTo('db'),
@@ -15,3 +13,10 @@ export const Mutation: IMutation = {
   createJob: forwardTo('db'),
   createTask: forwardTo('db'),
 }
+
+export const resolvers = {
+  Query,
+  Mutation,
+}
+
+const tyest = resolvers.Query

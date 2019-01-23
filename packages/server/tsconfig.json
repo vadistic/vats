@@ -5,10 +5,22 @@
     "module": "commonjs",
     "sourceMap": true,
     "baseUrl": ".",
-    "rootDirs": ["src", "database"],
     "outDir": "dist",
-    "lib": ["esnext", "dom"]
+    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    // modules
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    // strict
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    // less strict
+    "noUnusedLocals": false, // dev
+    "noUnusedParameters": false,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*", "database/**/*", "scripts/fixTypings.js"],
-  "exclude": ["node_modules"]
+  "include": ["src", "database"],
+  "exclude": ["node_modules", "dist"]
 }

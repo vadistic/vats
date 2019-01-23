@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "sourceMap": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    // modules
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    // strict
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    // less strict
+    "noUnusedLocals": false, // dev
+    "noUnusedParameters": false,
+    "skipLibCheck": true
+  },
+  "include": ["src", "database", "types"],
+  "exclude": ["node_modules", "dist"]
+}
