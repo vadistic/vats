@@ -3,11 +3,13 @@ import { importSchema } from 'graphql-import'
 
 import { gql, gqlImport } from '../utils'
 
-const Types = gql`
-  interface Node {
-    id: ID!
+const User = gql`
+  type User {
+    ${gqlImport.require('User').exclude('password').fields}
   }
+`
 
+const CustomTypes = gql`
   input WorkspaceCreateInput {
     name: String!
     firstName: String
@@ -46,9 +48,15 @@ const Types = gql`
   }
 `
 
+const Types = gql`
+  ${User}
+  ${CustomTypes}
+`
+
 const Query = gql`
   type Query {
-    ${gqlImport.require('Query').pick(['user', 'users']).fields}
+    random: String!
+    ${gqlImport.require('Query').pick(['user', 'users', 'candidate', 'candidates', 'job', 'jobs']).fields}
   }
 `
 
@@ -61,7 +69,7 @@ const Mutation = gql`
   }
 `
 
-const fullSchemaString = importSchema(gql`
+const stringifiedSchema = importSchema(gql`
   # import * from 'src/generated/prisma.graphql'
 
   ${Query}
@@ -70,5 +78,5 @@ const fullSchemaString = importSchema(gql`
 `)
 
 export const typeDefs = graphql`
-  ${fullSchemaString}
+  ${stringifiedSchema}
 `

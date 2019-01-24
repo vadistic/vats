@@ -1,3 +1,4 @@
+import { IContext } from '..'
 import { MutationResolvers, QueryResolvers } from '../generated/server'
 
 // Utils
@@ -12,9 +13,9 @@ export type DeepIndexed<T> = { [K in keyof T]: T[K] extends object ? DeepIndexed
 export type FirstArgument<T> = T extends (arg1: infer U, ...args: any[]) => any ? U : any
 
 // Resolvers
-export type IQuery = Indexed<QueryResolvers.Resolvers>
+export type IQuery = Indexed<QueryResolvers.Resolvers<IContext>>
 
-export type IMutation = Indexed<MutationResolvers.Resolvers>
+export type IMutation = Indexed<MutationResolvers.Resolvers<IContext>>
 
 // context
 export interface IAccessTokenPayload {

@@ -134,7 +134,7 @@ export class GqlImport {
   }
 
   private getSelectionRegex(selection: GqlImportSelection) {
-    const getFieldbyNameRegex = (name: string) => new RegExp(`((${name})(\([^\)]+\))?: .+)`, 'g')
+    const getFieldbyNameRegex = (name: string) => new RegExp(`(${name})(\\([A-z\\s:,!]+\\):|:) [A-z!]+`, 'g')
 
     if (Array.isArray(selection)) {
       return getFieldbyNameRegex(selection.join('|'))
