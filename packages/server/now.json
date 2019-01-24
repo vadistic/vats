@@ -1,5 +1,7 @@
 {
   "name": "vats-server",
   "alias": "vats-server",
-  "public": true
+  "public": true,
+  "version": 1,
+  "dotenv": true
 }

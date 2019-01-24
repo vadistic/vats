@@ -5,14 +5,11 @@ type Workspace {
   updatedAt: DateTime!
 
   # connections
-  events: [Event!]! @relation(name: "WorkspaceEventTarget")
   users: [User!]!
   jobs: [Job!]!
   candidates: [Candidate!]!
 
-  workflows: [Workflow!]! @relation(name: "WorkspaceWorkflows")
-  # make required?
-  workflowDefault: Workflow @relation(name: "WorkspaceWorkflowDefault")
+  workflows: [Workflow!]!
 
   # other?
   invites: [Invite!]!
@@ -26,16 +23,6 @@ type User {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
-
-  #notifications
-  events: Event @relation(name: "UserEventActor")
-  notifications: [Notification!]!
-
-  # subscribtion interface
-  subscriptionJobs: [Job!]!
-  subscriptionCandidates: [Candidate!]!
-  subscriptionTasks: [Task!]! @relation(name: "TaskSubscriber")
 
   # connections
   tasks: [Task!]! @relation(name: "TaskOwner")
@@ -58,10 +45,6 @@ type Job {
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
-
-  # events
-  subscribers: [User!]!
-  events: [Event!]! @relation(name: "JobEventTarget")
 
   # connections
   applications: [Application!]!
@@ -95,7 +78,7 @@ type Application {
 
   # ats
   type: ApplicationType!
-  disqualificationLink: DisqualificationLink
+  disqualification: DisqualificationInstance
   stage: Stage!
 
   # connections
@@ -112,10 +95,6 @@ type Candidate {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
-
-  events: [Event!]! @relation(name: "CandidateEventTarget")
-  subscribers: [User!]!
 
   # info
   firstName: String!
@@ -138,7 +117,7 @@ type Candidate {
   tags: [Tag!]!
   # TODO: Create type for sources (maybe with pivot)
   source: [String!]!
-  fields: [FieldLink!]!
+  fields: [FieldInstance!]!
 
   # conections
   tasks: [Task!]!
@@ -151,12 +130,8 @@ type Task {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  # event system
-  subscribers: [User!]! @relation(name: "TaskSubscriber")
-
   # connections
   owners: [User!]! @relation(name: "TaskOwner")
-
   candidate: Candidate
 
   # info
@@ -197,14 +172,14 @@ type Disqualification {
   description: String
 }
 
-type DisqualificationLink {
+type DisqualificationInstance {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
   disqualification: Disqualification!
   createdBy: User!
-  justification: String
+  content: String
 }
 
 type Stage {
@@ -236,63 +211,6 @@ type Comment {
   content: String!
 }
 
-# NOTIFICATIONS
-type Event {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-
-  type: EventType!
-
-  # actor interface
-  actorType: EventActorType!
-  actorUser: User @relation(name: "UserEventActor")
-  actorCandidate: Candidate @relation(name: "CandidateEventActor")
-
-  # target interface
-  targetType: EventTargetType!
-  targetCandidate: Candidate @relation(name: "CandidateEventTarget")
-  targetJob: Job @relation(name: "JobEventTarget")
-  targetTask: Task @relation(name: "TaskEventTarget")
-  targetWorkspace: Workspace @relation(name: "WorkspaceEventTarget")
-}
-
-enum EventType {
-  Default
-  Message
-  CommentCreate
-  CommentEdit
-  CommentDelete
-}
-
-enum EventActorType {
-  System
-  User
-  Candidate
-}
-
-enum EventTargetType {
-  Candidate
-  Job
-  Task
-  Workspace
-}
-
-type Notification {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-
-  type: NotificationType!
-  user: User!
-  event: Event!
-}
-
-enum NotificationType {
-  Unread
-  Read
-}
-
 # SYSTEM TYPES
 type Location {
   id: ID! @unique
@@ -316,11 +234,12 @@ enum FieldType {
   Float
   String
   Text
+  Paragraph
   Boolean
   DateTime
 }
 
-type FieldLink {
+type FieldInstance {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!

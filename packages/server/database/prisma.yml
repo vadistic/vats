@@ -4,11 +4,6 @@ datamodel: datamodel.graphql
 seed:
   run: yarn ts-node ./database/seed/seed.ts
 
-hooks:
-  post-deploy:
-    - graphql codegen
-    - echo "Deployment finished"
-
 secret: ${env:PRISMA_SECRET}
 
 generate:

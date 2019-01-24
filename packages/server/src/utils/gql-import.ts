@@ -70,7 +70,10 @@ export class GqlImport {
       }
     }
 
-    const bodyRegex = new RegExp(`(type|input) ${normalisedName} (implements [A-z, ]+ )?{\n(.+\n)+}`, 'g')
+    const bodyRegex = new RegExp(
+      `(type|input) ${normalisedName} (implements [A-z, ]+ )?{\n(.+\n)+}`,
+      'g',
+    )
 
     const bodyMatch = rawBody.match(bodyRegex)
 
@@ -134,7 +137,8 @@ export class GqlImport {
   }
 
   private getSelectionRegex(selection: GqlImportSelection) {
-    const getFieldbyNameRegex = (name: string) => new RegExp(`(${name})(\\([A-z\\s:,!]+\\):|:) [A-z!]+`, 'g')
+    const getFieldbyNameRegex = (name: string) =>
+      new RegExp(`(${name})(\\([A-z\\s:,!]+\\):|:) [A-z!]+`, 'g')
 
     if (Array.isArray(selection)) {
       return getFieldbyNameRegex(selection.join('|'))

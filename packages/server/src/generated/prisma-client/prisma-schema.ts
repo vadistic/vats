@@ -14,11 +14,7 @@ type AggregateDisqualification {
   count: Int!
 }
 
-type AggregateDisqualificationLink {
-  count: Int!
-}
-
-type AggregateEvent {
+type AggregateDisqualificationInstance {
   count: Int!
 }
 
@@ -26,7 +22,7 @@ type AggregateField {
   count: Int!
 }
 
-type AggregateFieldLink {
+type AggregateFieldInstance {
   count: Int!
 }
 
@@ -43,10 +39,6 @@ type AggregateJob {
 }
 
 type AggregateLocation {
-  count: Int!
-}
-
-type AggregateNotification {
   count: Int!
 }
 
@@ -79,7 +71,7 @@ type Application {
   id: ID!
   updatedAt: DateTime!
   type: ApplicationType!
-  disqualificationLink: DisqualificationLink
+  disqualification: DisqualificationInstance
   stage: Stage!
   job: Job!
   candidate: Candidate!
@@ -93,7 +85,7 @@ type ApplicationConnection {
 
 input ApplicationCreateInput {
   type: ApplicationType!
-  disqualificationLink: DisqualificationLinkCreateOneInput
+  disqualification: DisqualificationInstanceCreateOneInput
   stage: StageCreateOneInput!
   job: JobCreateOneWithoutApplicationsInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
@@ -111,14 +103,14 @@ input ApplicationCreateManyWithoutJobInput {
 
 input ApplicationCreateWithoutCandidateInput {
   type: ApplicationType!
-  disqualificationLink: DisqualificationLinkCreateOneInput
+  disqualification: DisqualificationInstanceCreateOneInput
   stage: StageCreateOneInput!
   job: JobCreateOneWithoutApplicationsInput!
 }
 
 input ApplicationCreateWithoutJobInput {
   type: ApplicationType!
-  disqualificationLink: DisqualificationLinkCreateOneInput
+  disqualification: DisqualificationInstanceCreateOneInput
   stage: StageCreateOneInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
 }
@@ -211,7 +203,7 @@ enum ApplicationType {
 
 input ApplicationUpdateInput {
   type: ApplicationType
-  disqualificationLink: DisqualificationLinkUpdateOneInput
+  disqualification: DisqualificationInstanceUpdateOneInput
   stage: StageUpdateOneRequiredInput
   job: JobUpdateOneRequiredWithoutApplicationsInput
   candidate: CandidateUpdateOneRequiredWithoutApplicationsInput
@@ -254,14 +246,14 @@ input ApplicationUpdateManyWithWhereNestedInput {
 
 input ApplicationUpdateWithoutCandidateDataInput {
   type: ApplicationType
-  disqualificationLink: DisqualificationLinkUpdateOneInput
+  disqualification: DisqualificationInstanceUpdateOneInput
   stage: StageUpdateOneRequiredInput
   job: JobUpdateOneRequiredWithoutApplicationsInput
 }
 
 input ApplicationUpdateWithoutJobDataInput {
   type: ApplicationType
-  disqualificationLink: DisqualificationLinkUpdateOneInput
+  disqualification: DisqualificationInstanceUpdateOneInput
   stage: StageUpdateOneRequiredInput
   candidate: CandidateUpdateOneRequiredWithoutApplicationsInput
 }
@@ -323,7 +315,7 @@ input ApplicationWhereInput {
   type_not: ApplicationType
   type_in: [ApplicationType!]
   type_not_in: [ApplicationType!]
-  disqualificationLink: DisqualificationLinkWhereInput
+  disqualification: DisqualificationInstanceWhereInput
   stage: StageWhereInput
   job: JobWhereInput
   candidate: CandidateWhereInput
@@ -344,9 +336,6 @@ type Candidate {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
-  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   firstName: String!
   lastName: String!
   emails: [String!]!
@@ -362,7 +351,7 @@ type Candidate {
   coverLettersFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   source: [String!]!
-  fields(where: FieldLinkWhereInput, orderBy: FieldLinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldLink!]
+  fields(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldInstance!]
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -383,9 +372,6 @@ input CandidateCreateemailsInput {
 }
 
 input CandidateCreateInput {
-  workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTargetCandidateInput
-  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   firstName: String!
   lastName: String!
   emails: CandidateCreateemailsInput
@@ -401,7 +387,7 @@ input CandidateCreateInput {
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
   source: CandidateCreatesourceInput
-  fields: FieldLinkCreateManyInput
+  fields: FieldInstanceCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -411,28 +397,13 @@ input CandidateCreatelinksInput {
   set: [String!]
 }
 
-input CandidateCreateManyWithoutSubscribersInput {
-  create: [CandidateCreateWithoutSubscribersInput!]
+input CandidateCreateManyInput {
+  create: [CandidateCreateInput!]
   connect: [CandidateWhereUniqueInput!]
-}
-
-input CandidateCreateManyWithoutWorkspaceInput {
-  create: [CandidateCreateWithoutWorkspaceInput!]
-  connect: [CandidateWhereUniqueInput!]
-}
-
-input CandidateCreateOneInput {
-  create: CandidateCreateInput
-  connect: CandidateWhereUniqueInput
 }
 
 input CandidateCreateOneWithoutApplicationsInput {
   create: CandidateCreateWithoutApplicationsInput
-  connect: CandidateWhereUniqueInput
-}
-
-input CandidateCreateOneWithoutEventsInput {
-  create: CandidateCreateWithoutEventsInput
   connect: CandidateWhereUniqueInput
 }
 
@@ -454,9 +425,6 @@ input CandidateCreatesourceInput {
 }
 
 input CandidateCreateWithoutApplicationsInput {
-  workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTargetCandidateInput
-  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   firstName: String!
   lastName: String!
   emails: CandidateCreateemailsInput
@@ -472,63 +440,12 @@ input CandidateCreateWithoutApplicationsInput {
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
   source: CandidateCreatesourceInput
-  fields: FieldLinkCreateManyInput
+  fields: FieldInstanceCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
-  comments: CommentCreateManyInput
-}
-
-input CandidateCreateWithoutEventsInput {
-  workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
-  firstName: String!
-  lastName: String!
-  emails: CandidateCreateemailsInput
-  phones: CandidateCreatephonesInput
-  links: CandidateCreatelinksInput
-  avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
-  resumesString: CandidateCreateresumesStringInput
-  resumesFile: FileCreateManyInput
-  coverLettersString: CandidateCreatecoverLettersStringInput
-  coverLettersFile: FileCreateManyInput
-  tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
-  fields: FieldLinkCreateManyInput
-  tasks: TaskCreateManyWithoutCandidateInput
-  applications: ApplicationCreateManyWithoutCandidateInput
-  comments: CommentCreateManyInput
-}
-
-input CandidateCreateWithoutSubscribersInput {
-  workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTargetCandidateInput
-  firstName: String!
-  lastName: String!
-  emails: CandidateCreateemailsInput
-  phones: CandidateCreatephonesInput
-  links: CandidateCreatelinksInput
-  avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
-  resumesString: CandidateCreateresumesStringInput
-  resumesFile: FileCreateManyInput
-  coverLettersString: CandidateCreatecoverLettersStringInput
-  coverLettersFile: FileCreateManyInput
-  tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
-  fields: FieldLinkCreateManyInput
-  tasks: TaskCreateManyWithoutCandidateInput
-  applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
 
 input CandidateCreateWithoutTasksInput {
-  workspace: WorkspaceCreateOneWithoutCandidatesInput!
-  events: EventCreateManyWithoutTargetCandidateInput
-  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
   firstName: String!
   lastName: String!
   emails: CandidateCreateemailsInput
@@ -544,31 +461,7 @@ input CandidateCreateWithoutTasksInput {
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
   source: CandidateCreatesourceInput
-  fields: FieldLinkCreateManyInput
-  applications: ApplicationCreateManyWithoutCandidateInput
-  comments: CommentCreateManyInput
-}
-
-input CandidateCreateWithoutWorkspaceInput {
-  events: EventCreateManyWithoutTargetCandidateInput
-  subscribers: UserCreateManyWithoutSubscriptionCandidatesInput
-  firstName: String!
-  lastName: String!
-  emails: CandidateCreateemailsInput
-  phones: CandidateCreatephonesInput
-  links: CandidateCreatelinksInput
-  avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
-  resumesString: CandidateCreateresumesStringInput
-  resumesFile: FileCreateManyInput
-  coverLettersString: CandidateCreatecoverLettersStringInput
-  coverLettersFile: FileCreateManyInput
-  tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
-  fields: FieldLinkCreateManyInput
-  tasks: TaskCreateManyWithoutCandidateInput
+  fields: FieldInstanceCreateManyInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
 }
@@ -743,9 +636,6 @@ input CandidateUpdatecoverLettersStringInput {
 }
 
 input CandidateUpdateDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutCandidatesInput
-  events: EventUpdateManyWithoutTargetCandidateInput
-  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   firstName: String
   lastName: String
   emails: CandidateUpdateemailsInput
@@ -761,7 +651,7 @@ input CandidateUpdateDataInput {
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
   source: CandidateUpdatesourceInput
-  fields: FieldLinkUpdateManyInput
+  fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
@@ -772,9 +662,6 @@ input CandidateUpdateemailsInput {
 }
 
 input CandidateUpdateInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutCandidatesInput
-  events: EventUpdateManyWithoutTargetCandidateInput
-  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   firstName: String
   lastName: String
   emails: CandidateUpdateemailsInput
@@ -790,7 +677,7 @@ input CandidateUpdateInput {
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
   source: CandidateUpdatesourceInput
-  fields: FieldLinkUpdateManyInput
+  fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
@@ -814,6 +701,17 @@ input CandidateUpdateManyDataInput {
   source: CandidateUpdatesourceInput
 }
 
+input CandidateUpdateManyInput {
+  create: [CandidateCreateInput!]
+  update: [CandidateUpdateWithWhereUniqueNestedInput!]
+  upsert: [CandidateUpsertWithWhereUniqueNestedInput!]
+  delete: [CandidateWhereUniqueInput!]
+  connect: [CandidateWhereUniqueInput!]
+  disconnect: [CandidateWhereUniqueInput!]
+  deleteMany: [CandidateScalarWhereInput!]
+  updateMany: [CandidateUpdateManyWithWhereNestedInput!]
+}
+
 input CandidateUpdateManyMutationInput {
   firstName: String
   lastName: String
@@ -828,55 +726,15 @@ input CandidateUpdateManyMutationInput {
   source: CandidateUpdatesourceInput
 }
 
-input CandidateUpdateManyWithoutSubscribersInput {
-  create: [CandidateCreateWithoutSubscribersInput!]
-  delete: [CandidateWhereUniqueInput!]
-  connect: [CandidateWhereUniqueInput!]
-  disconnect: [CandidateWhereUniqueInput!]
-  update: [CandidateUpdateWithWhereUniqueWithoutSubscribersInput!]
-  upsert: [CandidateUpsertWithWhereUniqueWithoutSubscribersInput!]
-  deleteMany: [CandidateScalarWhereInput!]
-  updateMany: [CandidateUpdateManyWithWhereNestedInput!]
-}
-
-input CandidateUpdateManyWithoutWorkspaceInput {
-  create: [CandidateCreateWithoutWorkspaceInput!]
-  delete: [CandidateWhereUniqueInput!]
-  connect: [CandidateWhereUniqueInput!]
-  disconnect: [CandidateWhereUniqueInput!]
-  update: [CandidateUpdateWithWhereUniqueWithoutWorkspaceInput!]
-  upsert: [CandidateUpsertWithWhereUniqueWithoutWorkspaceInput!]
-  deleteMany: [CandidateScalarWhereInput!]
-  updateMany: [CandidateUpdateManyWithWhereNestedInput!]
-}
-
 input CandidateUpdateManyWithWhereNestedInput {
   where: CandidateScalarWhereInput!
   data: CandidateUpdateManyDataInput!
-}
-
-input CandidateUpdateOneInput {
-  create: CandidateCreateInput
-  update: CandidateUpdateDataInput
-  upsert: CandidateUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: CandidateWhereUniqueInput
 }
 
 input CandidateUpdateOneRequiredWithoutApplicationsInput {
   create: CandidateCreateWithoutApplicationsInput
   update: CandidateUpdateWithoutApplicationsDataInput
   upsert: CandidateUpsertWithoutApplicationsInput
-  connect: CandidateWhereUniqueInput
-}
-
-input CandidateUpdateOneWithoutEventsInput {
-  create: CandidateCreateWithoutEventsInput
-  update: CandidateUpdateWithoutEventsDataInput
-  upsert: CandidateUpsertWithoutEventsInput
-  delete: Boolean
-  disconnect: Boolean
   connect: CandidateWhereUniqueInput
 }
 
@@ -902,9 +760,6 @@ input CandidateUpdatesourceInput {
 }
 
 input CandidateUpdateWithoutApplicationsDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutCandidatesInput
-  events: EventUpdateManyWithoutTargetCandidateInput
-  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   firstName: String
   lastName: String
   emails: CandidateUpdateemailsInput
@@ -920,63 +775,12 @@ input CandidateUpdateWithoutApplicationsDataInput {
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
   source: CandidateUpdatesourceInput
-  fields: FieldLinkUpdateManyInput
+  fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
-  comments: CommentUpdateManyInput
-}
-
-input CandidateUpdateWithoutEventsDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutCandidatesInput
-  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
-  firstName: String
-  lastName: String
-  emails: CandidateUpdateemailsInput
-  phones: CandidateUpdatephonesInput
-  links: CandidateUpdatelinksInput
-  avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
-  resumesString: CandidateUpdateresumesStringInput
-  resumesFile: FileUpdateManyInput
-  coverLettersString: CandidateUpdatecoverLettersStringInput
-  coverLettersFile: FileUpdateManyInput
-  tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
-  fields: FieldLinkUpdateManyInput
-  tasks: TaskUpdateManyWithoutCandidateInput
-  applications: ApplicationUpdateManyWithoutCandidateInput
-  comments: CommentUpdateManyInput
-}
-
-input CandidateUpdateWithoutSubscribersDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutCandidatesInput
-  events: EventUpdateManyWithoutTargetCandidateInput
-  firstName: String
-  lastName: String
-  emails: CandidateUpdateemailsInput
-  phones: CandidateUpdatephonesInput
-  links: CandidateUpdatelinksInput
-  avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
-  resumesString: CandidateUpdateresumesStringInput
-  resumesFile: FileUpdateManyInput
-  coverLettersString: CandidateUpdatecoverLettersStringInput
-  coverLettersFile: FileUpdateManyInput
-  tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
-  fields: FieldLinkUpdateManyInput
-  tasks: TaskUpdateManyWithoutCandidateInput
-  applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
 }
 
 input CandidateUpdateWithoutTasksDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutCandidatesInput
-  events: EventUpdateManyWithoutTargetCandidateInput
-  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
   firstName: String
   lastName: String
   emails: CandidateUpdateemailsInput
@@ -992,48 +796,14 @@ input CandidateUpdateWithoutTasksDataInput {
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
   source: CandidateUpdatesourceInput
-  fields: FieldLinkUpdateManyInput
+  fields: FieldInstanceUpdateManyInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
 }
 
-input CandidateUpdateWithoutWorkspaceDataInput {
-  events: EventUpdateManyWithoutTargetCandidateInput
-  subscribers: UserUpdateManyWithoutSubscriptionCandidatesInput
-  firstName: String
-  lastName: String
-  emails: CandidateUpdateemailsInput
-  phones: CandidateUpdatephonesInput
-  links: CandidateUpdatelinksInput
-  avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
-  resumesString: CandidateUpdateresumesStringInput
-  resumesFile: FileUpdateManyInput
-  coverLettersString: CandidateUpdatecoverLettersStringInput
-  coverLettersFile: FileUpdateManyInput
-  tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
-  fields: FieldLinkUpdateManyInput
-  tasks: TaskUpdateManyWithoutCandidateInput
-  applications: ApplicationUpdateManyWithoutCandidateInput
-  comments: CommentUpdateManyInput
-}
-
-input CandidateUpdateWithWhereUniqueWithoutSubscribersInput {
+input CandidateUpdateWithWhereUniqueNestedInput {
   where: CandidateWhereUniqueInput!
-  data: CandidateUpdateWithoutSubscribersDataInput!
-}
-
-input CandidateUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: CandidateWhereUniqueInput!
-  data: CandidateUpdateWithoutWorkspaceDataInput!
-}
-
-input CandidateUpsertNestedInput {
-  update: CandidateUpdateDataInput!
-  create: CandidateCreateInput!
+  data: CandidateUpdateDataInput!
 }
 
 input CandidateUpsertWithoutApplicationsInput {
@@ -1041,26 +811,15 @@ input CandidateUpsertWithoutApplicationsInput {
   create: CandidateCreateWithoutApplicationsInput!
 }
 
-input CandidateUpsertWithoutEventsInput {
-  update: CandidateUpdateWithoutEventsDataInput!
-  create: CandidateCreateWithoutEventsInput!
-}
-
 input CandidateUpsertWithoutTasksInput {
   update: CandidateUpdateWithoutTasksDataInput!
   create: CandidateCreateWithoutTasksInput!
 }
 
-input CandidateUpsertWithWhereUniqueWithoutSubscribersInput {
+input CandidateUpsertWithWhereUniqueNestedInput {
   where: CandidateWhereUniqueInput!
-  update: CandidateUpdateWithoutSubscribersDataInput!
-  create: CandidateCreateWithoutSubscribersInput!
-}
-
-input CandidateUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: CandidateWhereUniqueInput!
-  update: CandidateUpdateWithoutWorkspaceDataInput!
-  create: CandidateCreateWithoutWorkspaceInput!
+  update: CandidateUpdateDataInput!
+  create: CandidateCreateInput!
 }
 
 input CandidateWhereInput {
@@ -1094,13 +853,6 @@ input CandidateWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  workspace: WorkspaceWhereInput
-  events_every: EventWhereInput
-  events_some: EventWhereInput
-  events_none: EventWhereInput
-  subscribers_every: UserWhereInput
-  subscribers_some: UserWhereInput
-  subscribers_none: UserWhereInput
   firstName: String
   firstName_not: String
   firstName_in: [String!]
@@ -1181,9 +933,9 @@ input CandidateWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
-  fields_every: FieldLinkWhereInput
-  fields_some: FieldLinkWhereInput
-  fields_none: FieldLinkWhereInput
+  fields_every: FieldInstanceWhereInput
+  fields_some: FieldInstanceWhereInput
+  fields_none: FieldInstanceWhereInput
   tasks_every: TaskWhereInput
   tasks_some: TaskWhereInput
   tasks_none: TaskWhereInput
@@ -1477,104 +1229,104 @@ type DisqualificationEdge {
   cursor: String!
 }
 
-type DisqualificationLink {
+type DisqualificationInstance {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   disqualification: Disqualification!
   createdBy: User!
-  justification: String
+  content: String
 }
 
-type DisqualificationLinkConnection {
+type DisqualificationInstanceConnection {
   pageInfo: PageInfo!
-  edges: [DisqualificationLinkEdge]!
-  aggregate: AggregateDisqualificationLink!
+  edges: [DisqualificationInstanceEdge]!
+  aggregate: AggregateDisqualificationInstance!
 }
 
-input DisqualificationLinkCreateInput {
+input DisqualificationInstanceCreateInput {
   disqualification: DisqualificationCreateOneInput!
   createdBy: UserCreateOneInput!
-  justification: String
+  content: String
 }
 
-input DisqualificationLinkCreateOneInput {
-  create: DisqualificationLinkCreateInput
-  connect: DisqualificationLinkWhereUniqueInput
+input DisqualificationInstanceCreateOneInput {
+  create: DisqualificationInstanceCreateInput
+  connect: DisqualificationInstanceWhereUniqueInput
 }
 
-type DisqualificationLinkEdge {
-  node: DisqualificationLink!
+type DisqualificationInstanceEdge {
+  node: DisqualificationInstance!
   cursor: String!
 }
 
-enum DisqualificationLinkOrderByInput {
+enum DisqualificationInstanceOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  justification_ASC
-  justification_DESC
+  content_ASC
+  content_DESC
 }
 
-type DisqualificationLinkPreviousValues {
+type DisqualificationInstancePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  justification: String
+  content: String
 }
 
-type DisqualificationLinkSubscriptionPayload {
+type DisqualificationInstanceSubscriptionPayload {
   mutation: MutationType!
-  node: DisqualificationLink
+  node: DisqualificationInstance
   updatedFields: [String!]
-  previousValues: DisqualificationLinkPreviousValues
+  previousValues: DisqualificationInstancePreviousValues
 }
 
-input DisqualificationLinkSubscriptionWhereInput {
+input DisqualificationInstanceSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: DisqualificationLinkWhereInput
-  AND: [DisqualificationLinkSubscriptionWhereInput!]
-  OR: [DisqualificationLinkSubscriptionWhereInput!]
-  NOT: [DisqualificationLinkSubscriptionWhereInput!]
+  node: DisqualificationInstanceWhereInput
+  AND: [DisqualificationInstanceSubscriptionWhereInput!]
+  OR: [DisqualificationInstanceSubscriptionWhereInput!]
+  NOT: [DisqualificationInstanceSubscriptionWhereInput!]
 }
 
-input DisqualificationLinkUpdateDataInput {
+input DisqualificationInstanceUpdateDataInput {
   disqualification: DisqualificationUpdateOneRequiredInput
   createdBy: UserUpdateOneRequiredInput
-  justification: String
+  content: String
 }
 
-input DisqualificationLinkUpdateInput {
+input DisqualificationInstanceUpdateInput {
   disqualification: DisqualificationUpdateOneRequiredInput
   createdBy: UserUpdateOneRequiredInput
-  justification: String
+  content: String
 }
 
-input DisqualificationLinkUpdateManyMutationInput {
-  justification: String
+input DisqualificationInstanceUpdateManyMutationInput {
+  content: String
 }
 
-input DisqualificationLinkUpdateOneInput {
-  create: DisqualificationLinkCreateInput
-  update: DisqualificationLinkUpdateDataInput
-  upsert: DisqualificationLinkUpsertNestedInput
+input DisqualificationInstanceUpdateOneInput {
+  create: DisqualificationInstanceCreateInput
+  update: DisqualificationInstanceUpdateDataInput
+  upsert: DisqualificationInstanceUpsertNestedInput
   delete: Boolean
   disconnect: Boolean
-  connect: DisqualificationLinkWhereUniqueInput
+  connect: DisqualificationInstanceWhereUniqueInput
 }
 
-input DisqualificationLinkUpsertNestedInput {
-  update: DisqualificationLinkUpdateDataInput!
-  create: DisqualificationLinkCreateInput!
+input DisqualificationInstanceUpsertNestedInput {
+  update: DisqualificationInstanceUpdateDataInput!
+  create: DisqualificationInstanceCreateInput!
 }
 
-input DisqualificationLinkWhereInput {
+input DisqualificationInstanceWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -1607,26 +1359,26 @@ input DisqualificationLinkWhereInput {
   updatedAt_gte: DateTime
   disqualification: DisqualificationWhereInput
   createdBy: UserWhereInput
-  justification: String
-  justification_not: String
-  justification_in: [String!]
-  justification_not_in: [String!]
-  justification_lt: String
-  justification_lte: String
-  justification_gt: String
-  justification_gte: String
-  justification_contains: String
-  justification_not_contains: String
-  justification_starts_with: String
-  justification_not_starts_with: String
-  justification_ends_with: String
-  justification_not_ends_with: String
-  AND: [DisqualificationLinkWhereInput!]
-  OR: [DisqualificationLinkWhereInput!]
-  NOT: [DisqualificationLinkWhereInput!]
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  AND: [DisqualificationInstanceWhereInput!]
+  OR: [DisqualificationInstanceWhereInput!]
+  NOT: [DisqualificationInstanceWhereInput!]
 }
 
-input DisqualificationLinkWhereUniqueInput {
+input DisqualificationInstanceWhereUniqueInput {
   id: ID
 }
 
@@ -1860,459 +1612,6 @@ input DisqualificationWhereUniqueInput {
   id: ID
 }
 
-type Event {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  type: EventType!
-  actorType: EventActorType!
-  actorUser: User
-  actorCandidate: Candidate
-  targetType: EventTargetType!
-  targetCandidate: Candidate
-  targetJob: Job
-  targetTask: Task
-  targetWorkspace: Workspace
-}
-
-enum EventActorType {
-  System
-  User
-  Candidate
-}
-
-type EventConnection {
-  pageInfo: PageInfo!
-  edges: [EventEdge]!
-  aggregate: AggregateEvent!
-}
-
-input EventCreateInput {
-  type: EventType!
-  actorType: EventActorType!
-  actorUser: UserCreateOneWithoutEventsInput
-  actorCandidate: CandidateCreateOneInput
-  targetType: EventTargetType!
-  targetCandidate: CandidateCreateOneWithoutEventsInput
-  targetJob: JobCreateOneWithoutEventsInput
-  targetTask: TaskCreateOneInput
-  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
-}
-
-input EventCreateManyWithoutTargetCandidateInput {
-  create: [EventCreateWithoutTargetCandidateInput!]
-  connect: [EventWhereUniqueInput!]
-}
-
-input EventCreateManyWithoutTargetJobInput {
-  create: [EventCreateWithoutTargetJobInput!]
-  connect: [EventWhereUniqueInput!]
-}
-
-input EventCreateManyWithoutTargetWorkspaceInput {
-  create: [EventCreateWithoutTargetWorkspaceInput!]
-  connect: [EventWhereUniqueInput!]
-}
-
-input EventCreateOneInput {
-  create: EventCreateInput
-  connect: EventWhereUniqueInput
-}
-
-input EventCreateOneWithoutActorUserInput {
-  create: EventCreateWithoutActorUserInput
-  connect: EventWhereUniqueInput
-}
-
-input EventCreateWithoutActorUserInput {
-  type: EventType!
-  actorType: EventActorType!
-  actorCandidate: CandidateCreateOneInput
-  targetType: EventTargetType!
-  targetCandidate: CandidateCreateOneWithoutEventsInput
-  targetJob: JobCreateOneWithoutEventsInput
-  targetTask: TaskCreateOneInput
-  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
-}
-
-input EventCreateWithoutTargetCandidateInput {
-  type: EventType!
-  actorType: EventActorType!
-  actorUser: UserCreateOneWithoutEventsInput
-  actorCandidate: CandidateCreateOneInput
-  targetType: EventTargetType!
-  targetJob: JobCreateOneWithoutEventsInput
-  targetTask: TaskCreateOneInput
-  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
-}
-
-input EventCreateWithoutTargetJobInput {
-  type: EventType!
-  actorType: EventActorType!
-  actorUser: UserCreateOneWithoutEventsInput
-  actorCandidate: CandidateCreateOneInput
-  targetType: EventTargetType!
-  targetCandidate: CandidateCreateOneWithoutEventsInput
-  targetTask: TaskCreateOneInput
-  targetWorkspace: WorkspaceCreateOneWithoutEventsInput
-}
-
-input EventCreateWithoutTargetWorkspaceInput {
-  type: EventType!
-  actorType: EventActorType!
-  actorUser: UserCreateOneWithoutEventsInput
-  actorCandidate: CandidateCreateOneInput
-  targetType: EventTargetType!
-  targetCandidate: CandidateCreateOneWithoutEventsInput
-  targetJob: JobCreateOneWithoutEventsInput
-  targetTask: TaskCreateOneInput
-}
-
-type EventEdge {
-  node: Event!
-  cursor: String!
-}
-
-enum EventOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  type_ASC
-  type_DESC
-  actorType_ASC
-  actorType_DESC
-  targetType_ASC
-  targetType_DESC
-}
-
-type EventPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  type: EventType!
-  actorType: EventActorType!
-  targetType: EventTargetType!
-}
-
-input EventScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  type: EventType
-  type_not: EventType
-  type_in: [EventType!]
-  type_not_in: [EventType!]
-  actorType: EventActorType
-  actorType_not: EventActorType
-  actorType_in: [EventActorType!]
-  actorType_not_in: [EventActorType!]
-  targetType: EventTargetType
-  targetType_not: EventTargetType
-  targetType_in: [EventTargetType!]
-  targetType_not_in: [EventTargetType!]
-  AND: [EventScalarWhereInput!]
-  OR: [EventScalarWhereInput!]
-  NOT: [EventScalarWhereInput!]
-}
-
-type EventSubscriptionPayload {
-  mutation: MutationType!
-  node: Event
-  updatedFields: [String!]
-  previousValues: EventPreviousValues
-}
-
-input EventSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: EventWhereInput
-  AND: [EventSubscriptionWhereInput!]
-  OR: [EventSubscriptionWhereInput!]
-  NOT: [EventSubscriptionWhereInput!]
-}
-
-enum EventTargetType {
-  Candidate
-  Job
-  Task
-  Workspace
-}
-
-enum EventType {
-  Default
-  Message
-  CommentCreate
-  CommentEdit
-  CommentDelete
-}
-
-input EventUpdateDataInput {
-  type: EventType
-  actorType: EventActorType
-  actorUser: UserUpdateOneWithoutEventsInput
-  actorCandidate: CandidateUpdateOneInput
-  targetType: EventTargetType
-  targetCandidate: CandidateUpdateOneWithoutEventsInput
-  targetJob: JobUpdateOneWithoutEventsInput
-  targetTask: TaskUpdateOneInput
-  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
-}
-
-input EventUpdateInput {
-  type: EventType
-  actorType: EventActorType
-  actorUser: UserUpdateOneWithoutEventsInput
-  actorCandidate: CandidateUpdateOneInput
-  targetType: EventTargetType
-  targetCandidate: CandidateUpdateOneWithoutEventsInput
-  targetJob: JobUpdateOneWithoutEventsInput
-  targetTask: TaskUpdateOneInput
-  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
-}
-
-input EventUpdateManyDataInput {
-  type: EventType
-  actorType: EventActorType
-  targetType: EventTargetType
-}
-
-input EventUpdateManyMutationInput {
-  type: EventType
-  actorType: EventActorType
-  targetType: EventTargetType
-}
-
-input EventUpdateManyWithoutTargetCandidateInput {
-  create: [EventCreateWithoutTargetCandidateInput!]
-  delete: [EventWhereUniqueInput!]
-  connect: [EventWhereUniqueInput!]
-  disconnect: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutTargetCandidateInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutTargetCandidateInput!]
-  deleteMany: [EventScalarWhereInput!]
-  updateMany: [EventUpdateManyWithWhereNestedInput!]
-}
-
-input EventUpdateManyWithoutTargetJobInput {
-  create: [EventCreateWithoutTargetJobInput!]
-  delete: [EventWhereUniqueInput!]
-  connect: [EventWhereUniqueInput!]
-  disconnect: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutTargetJobInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutTargetJobInput!]
-  deleteMany: [EventScalarWhereInput!]
-  updateMany: [EventUpdateManyWithWhereNestedInput!]
-}
-
-input EventUpdateManyWithoutTargetWorkspaceInput {
-  create: [EventCreateWithoutTargetWorkspaceInput!]
-  delete: [EventWhereUniqueInput!]
-  connect: [EventWhereUniqueInput!]
-  disconnect: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput!]
-  deleteMany: [EventScalarWhereInput!]
-  updateMany: [EventUpdateManyWithWhereNestedInput!]
-}
-
-input EventUpdateManyWithWhereNestedInput {
-  where: EventScalarWhereInput!
-  data: EventUpdateManyDataInput!
-}
-
-input EventUpdateOneRequiredInput {
-  create: EventCreateInput
-  update: EventUpdateDataInput
-  upsert: EventUpsertNestedInput
-  connect: EventWhereUniqueInput
-}
-
-input EventUpdateOneWithoutActorUserInput {
-  create: EventCreateWithoutActorUserInput
-  update: EventUpdateWithoutActorUserDataInput
-  upsert: EventUpsertWithoutActorUserInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: EventWhereUniqueInput
-}
-
-input EventUpdateWithoutActorUserDataInput {
-  type: EventType
-  actorType: EventActorType
-  actorCandidate: CandidateUpdateOneInput
-  targetType: EventTargetType
-  targetCandidate: CandidateUpdateOneWithoutEventsInput
-  targetJob: JobUpdateOneWithoutEventsInput
-  targetTask: TaskUpdateOneInput
-  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
-}
-
-input EventUpdateWithoutTargetCandidateDataInput {
-  type: EventType
-  actorType: EventActorType
-  actorUser: UserUpdateOneWithoutEventsInput
-  actorCandidate: CandidateUpdateOneInput
-  targetType: EventTargetType
-  targetJob: JobUpdateOneWithoutEventsInput
-  targetTask: TaskUpdateOneInput
-  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
-}
-
-input EventUpdateWithoutTargetJobDataInput {
-  type: EventType
-  actorType: EventActorType
-  actorUser: UserUpdateOneWithoutEventsInput
-  actorCandidate: CandidateUpdateOneInput
-  targetType: EventTargetType
-  targetCandidate: CandidateUpdateOneWithoutEventsInput
-  targetTask: TaskUpdateOneInput
-  targetWorkspace: WorkspaceUpdateOneWithoutEventsInput
-}
-
-input EventUpdateWithoutTargetWorkspaceDataInput {
-  type: EventType
-  actorType: EventActorType
-  actorUser: UserUpdateOneWithoutEventsInput
-  actorCandidate: CandidateUpdateOneInput
-  targetType: EventTargetType
-  targetCandidate: CandidateUpdateOneWithoutEventsInput
-  targetJob: JobUpdateOneWithoutEventsInput
-  targetTask: TaskUpdateOneInput
-}
-
-input EventUpdateWithWhereUniqueWithoutTargetCandidateInput {
-  where: EventWhereUniqueInput!
-  data: EventUpdateWithoutTargetCandidateDataInput!
-}
-
-input EventUpdateWithWhereUniqueWithoutTargetJobInput {
-  where: EventWhereUniqueInput!
-  data: EventUpdateWithoutTargetJobDataInput!
-}
-
-input EventUpdateWithWhereUniqueWithoutTargetWorkspaceInput {
-  where: EventWhereUniqueInput!
-  data: EventUpdateWithoutTargetWorkspaceDataInput!
-}
-
-input EventUpsertNestedInput {
-  update: EventUpdateDataInput!
-  create: EventCreateInput!
-}
-
-input EventUpsertWithoutActorUserInput {
-  update: EventUpdateWithoutActorUserDataInput!
-  create: EventCreateWithoutActorUserInput!
-}
-
-input EventUpsertWithWhereUniqueWithoutTargetCandidateInput {
-  where: EventWhereUniqueInput!
-  update: EventUpdateWithoutTargetCandidateDataInput!
-  create: EventCreateWithoutTargetCandidateInput!
-}
-
-input EventUpsertWithWhereUniqueWithoutTargetJobInput {
-  where: EventWhereUniqueInput!
-  update: EventUpdateWithoutTargetJobDataInput!
-  create: EventCreateWithoutTargetJobInput!
-}
-
-input EventUpsertWithWhereUniqueWithoutTargetWorkspaceInput {
-  where: EventWhereUniqueInput!
-  update: EventUpdateWithoutTargetWorkspaceDataInput!
-  create: EventCreateWithoutTargetWorkspaceInput!
-}
-
-input EventWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  type: EventType
-  type_not: EventType
-  type_in: [EventType!]
-  type_not_in: [EventType!]
-  actorType: EventActorType
-  actorType_not: EventActorType
-  actorType_in: [EventActorType!]
-  actorType_not_in: [EventActorType!]
-  actorUser: UserWhereInput
-  actorCandidate: CandidateWhereInput
-  targetType: EventTargetType
-  targetType_not: EventTargetType
-  targetType_in: [EventTargetType!]
-  targetType_not_in: [EventTargetType!]
-  targetCandidate: CandidateWhereInput
-  targetJob: JobWhereInput
-  targetTask: TaskWhereInput
-  targetWorkspace: WorkspaceWhereInput
-  AND: [EventWhereInput!]
-  OR: [EventWhereInput!]
-  NOT: [EventWhereInput!]
-}
-
-input EventWhereUniqueInput {
-  id: ID
-}
-
 type Field {
   id: ID!
   createdAt: DateTime!
@@ -2347,7 +1646,7 @@ type FieldEdge {
   cursor: String!
 }
 
-type FieldLink {
+type FieldInstance {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -2355,28 +1654,28 @@ type FieldLink {
   value: String
 }
 
-type FieldLinkConnection {
+type FieldInstanceConnection {
   pageInfo: PageInfo!
-  edges: [FieldLinkEdge]!
-  aggregate: AggregateFieldLink!
+  edges: [FieldInstanceEdge]!
+  aggregate: AggregateFieldInstance!
 }
 
-input FieldLinkCreateInput {
+input FieldInstanceCreateInput {
   field: FieldCreateOneInput!
   value: String
 }
 
-input FieldLinkCreateManyInput {
-  create: [FieldLinkCreateInput!]
-  connect: [FieldLinkWhereUniqueInput!]
+input FieldInstanceCreateManyInput {
+  create: [FieldInstanceCreateInput!]
+  connect: [FieldInstanceWhereUniqueInput!]
 }
 
-type FieldLinkEdge {
-  node: FieldLink!
+type FieldInstanceEdge {
+  node: FieldInstance!
   cursor: String!
 }
 
-enum FieldLinkOrderByInput {
+enum FieldInstanceOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -2387,14 +1686,14 @@ enum FieldLinkOrderByInput {
   value_DESC
 }
 
-type FieldLinkPreviousValues {
+type FieldInstancePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   value: String
 }
 
-input FieldLinkScalarWhereInput {
+input FieldInstanceScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -2439,75 +1738,75 @@ input FieldLinkScalarWhereInput {
   value_not_starts_with: String
   value_ends_with: String
   value_not_ends_with: String
-  AND: [FieldLinkScalarWhereInput!]
-  OR: [FieldLinkScalarWhereInput!]
-  NOT: [FieldLinkScalarWhereInput!]
+  AND: [FieldInstanceScalarWhereInput!]
+  OR: [FieldInstanceScalarWhereInput!]
+  NOT: [FieldInstanceScalarWhereInput!]
 }
 
-type FieldLinkSubscriptionPayload {
+type FieldInstanceSubscriptionPayload {
   mutation: MutationType!
-  node: FieldLink
+  node: FieldInstance
   updatedFields: [String!]
-  previousValues: FieldLinkPreviousValues
+  previousValues: FieldInstancePreviousValues
 }
 
-input FieldLinkSubscriptionWhereInput {
+input FieldInstanceSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: FieldLinkWhereInput
-  AND: [FieldLinkSubscriptionWhereInput!]
-  OR: [FieldLinkSubscriptionWhereInput!]
-  NOT: [FieldLinkSubscriptionWhereInput!]
+  node: FieldInstanceWhereInput
+  AND: [FieldInstanceSubscriptionWhereInput!]
+  OR: [FieldInstanceSubscriptionWhereInput!]
+  NOT: [FieldInstanceSubscriptionWhereInput!]
 }
 
-input FieldLinkUpdateDataInput {
+input FieldInstanceUpdateDataInput {
   field: FieldUpdateOneRequiredInput
   value: String
 }
 
-input FieldLinkUpdateInput {
+input FieldInstanceUpdateInput {
   field: FieldUpdateOneRequiredInput
   value: String
 }
 
-input FieldLinkUpdateManyDataInput {
+input FieldInstanceUpdateManyDataInput {
   value: String
 }
 
-input FieldLinkUpdateManyInput {
-  create: [FieldLinkCreateInput!]
-  update: [FieldLinkUpdateWithWhereUniqueNestedInput!]
-  upsert: [FieldLinkUpsertWithWhereUniqueNestedInput!]
-  delete: [FieldLinkWhereUniqueInput!]
-  connect: [FieldLinkWhereUniqueInput!]
-  disconnect: [FieldLinkWhereUniqueInput!]
-  deleteMany: [FieldLinkScalarWhereInput!]
-  updateMany: [FieldLinkUpdateManyWithWhereNestedInput!]
+input FieldInstanceUpdateManyInput {
+  create: [FieldInstanceCreateInput!]
+  update: [FieldInstanceUpdateWithWhereUniqueNestedInput!]
+  upsert: [FieldInstanceUpsertWithWhereUniqueNestedInput!]
+  delete: [FieldInstanceWhereUniqueInput!]
+  connect: [FieldInstanceWhereUniqueInput!]
+  disconnect: [FieldInstanceWhereUniqueInput!]
+  deleteMany: [FieldInstanceScalarWhereInput!]
+  updateMany: [FieldInstanceUpdateManyWithWhereNestedInput!]
 }
 
-input FieldLinkUpdateManyMutationInput {
+input FieldInstanceUpdateManyMutationInput {
   value: String
 }
 
-input FieldLinkUpdateManyWithWhereNestedInput {
-  where: FieldLinkScalarWhereInput!
-  data: FieldLinkUpdateManyDataInput!
+input FieldInstanceUpdateManyWithWhereNestedInput {
+  where: FieldInstanceScalarWhereInput!
+  data: FieldInstanceUpdateManyDataInput!
 }
 
-input FieldLinkUpdateWithWhereUniqueNestedInput {
-  where: FieldLinkWhereUniqueInput!
-  data: FieldLinkUpdateDataInput!
+input FieldInstanceUpdateWithWhereUniqueNestedInput {
+  where: FieldInstanceWhereUniqueInput!
+  data: FieldInstanceUpdateDataInput!
 }
 
-input FieldLinkUpsertWithWhereUniqueNestedInput {
-  where: FieldLinkWhereUniqueInput!
-  update: FieldLinkUpdateDataInput!
-  create: FieldLinkCreateInput!
+input FieldInstanceUpsertWithWhereUniqueNestedInput {
+  where: FieldInstanceWhereUniqueInput!
+  update: FieldInstanceUpdateDataInput!
+  create: FieldInstanceCreateInput!
 }
 
-input FieldLinkWhereInput {
+input FieldInstanceWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -2553,12 +1852,12 @@ input FieldLinkWhereInput {
   value_not_starts_with: String
   value_ends_with: String
   value_not_ends_with: String
-  AND: [FieldLinkWhereInput!]
-  OR: [FieldLinkWhereInput!]
-  NOT: [FieldLinkWhereInput!]
+  AND: [FieldInstanceWhereInput!]
+  OR: [FieldInstanceWhereInput!]
+  NOT: [FieldInstanceWhereInput!]
 }
 
-input FieldLinkWhereUniqueInput {
+input FieldInstanceWhereUniqueInput {
   id: ID
 }
 
@@ -2660,6 +1959,7 @@ enum FieldType {
   Float
   String
   Text
+  Paragraph
   Boolean
   DateTime
 }
@@ -3355,8 +2655,6 @@ type Job {
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
-  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   workflow: Workflow!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
@@ -3376,8 +2674,6 @@ type JobConnection {
 
 input JobCreateInput {
   workspace: WorkspaceCreateOneWithoutJobsInput!
-  subscribers: UserCreateManyWithoutSubscriptionJobsInput
-  events: EventCreateManyWithoutTargetJobInput
   applications: ApplicationCreateManyWithoutJobInput
   workflow: WorkflowCreateOneInput!
   comments: CommentCreateManyInput
@@ -3387,11 +2683,6 @@ input JobCreateInput {
   name: String!
   description: String
   requirements: String
-}
-
-input JobCreateManyWithoutSubscribersInput {
-  create: [JobCreateWithoutSubscribersInput!]
-  connect: [JobWhereUniqueInput!]
 }
 
 input JobCreateManyWithoutWorkspaceInput {
@@ -3404,43 +2695,8 @@ input JobCreateOneWithoutApplicationsInput {
   connect: JobWhereUniqueInput
 }
 
-input JobCreateOneWithoutEventsInput {
-  create: JobCreateWithoutEventsInput
-  connect: JobWhereUniqueInput
-}
-
 input JobCreateWithoutApplicationsInput {
   workspace: WorkspaceCreateOneWithoutJobsInput!
-  subscribers: UserCreateManyWithoutSubscriptionJobsInput
-  events: EventCreateManyWithoutTargetJobInput
-  workflow: WorkflowCreateOneInput!
-  comments: CommentCreateManyInput
-  type: JobType!
-  department: String
-  locations: LocationCreateManyInput
-  name: String!
-  description: String
-  requirements: String
-}
-
-input JobCreateWithoutEventsInput {
-  workspace: WorkspaceCreateOneWithoutJobsInput!
-  subscribers: UserCreateManyWithoutSubscriptionJobsInput
-  applications: ApplicationCreateManyWithoutJobInput
-  workflow: WorkflowCreateOneInput!
-  comments: CommentCreateManyInput
-  type: JobType!
-  department: String
-  locations: LocationCreateManyInput
-  name: String!
-  description: String
-  requirements: String
-}
-
-input JobCreateWithoutSubscribersInput {
-  workspace: WorkspaceCreateOneWithoutJobsInput!
-  events: EventCreateManyWithoutTargetJobInput
-  applications: ApplicationCreateManyWithoutJobInput
   workflow: WorkflowCreateOneInput!
   comments: CommentCreateManyInput
   type: JobType!
@@ -3452,8 +2708,6 @@ input JobCreateWithoutSubscribersInput {
 }
 
 input JobCreateWithoutWorkspaceInput {
-  subscribers: UserCreateManyWithoutSubscriptionJobsInput
-  events: EventCreateManyWithoutTargetJobInput
   applications: ApplicationCreateManyWithoutJobInput
   workflow: WorkflowCreateOneInput!
   comments: CommentCreateManyInput
@@ -3622,8 +2876,6 @@ enum JobType {
 
 input JobUpdateInput {
   workspace: WorkspaceUpdateOneRequiredWithoutJobsInput
-  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
-  events: EventUpdateManyWithoutTargetJobInput
   applications: ApplicationUpdateManyWithoutJobInput
   workflow: WorkflowUpdateOneRequiredInput
   comments: CommentUpdateManyInput
@@ -3651,17 +2903,6 @@ input JobUpdateManyMutationInput {
   requirements: String
 }
 
-input JobUpdateManyWithoutSubscribersInput {
-  create: [JobCreateWithoutSubscribersInput!]
-  delete: [JobWhereUniqueInput!]
-  connect: [JobWhereUniqueInput!]
-  disconnect: [JobWhereUniqueInput!]
-  update: [JobUpdateWithWhereUniqueWithoutSubscribersInput!]
-  upsert: [JobUpsertWithWhereUniqueWithoutSubscribersInput!]
-  deleteMany: [JobScalarWhereInput!]
-  updateMany: [JobUpdateManyWithWhereNestedInput!]
-}
-
 input JobUpdateManyWithoutWorkspaceInput {
   create: [JobCreateWithoutWorkspaceInput!]
   delete: [JobWhereUniqueInput!]
@@ -3685,47 +2926,8 @@ input JobUpdateOneRequiredWithoutApplicationsInput {
   connect: JobWhereUniqueInput
 }
 
-input JobUpdateOneWithoutEventsInput {
-  create: JobCreateWithoutEventsInput
-  update: JobUpdateWithoutEventsDataInput
-  upsert: JobUpsertWithoutEventsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: JobWhereUniqueInput
-}
-
 input JobUpdateWithoutApplicationsDataInput {
   workspace: WorkspaceUpdateOneRequiredWithoutJobsInput
-  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
-  events: EventUpdateManyWithoutTargetJobInput
-  workflow: WorkflowUpdateOneRequiredInput
-  comments: CommentUpdateManyInput
-  type: JobType
-  department: String
-  locations: LocationUpdateManyInput
-  name: String
-  description: String
-  requirements: String
-}
-
-input JobUpdateWithoutEventsDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutJobsInput
-  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
-  applications: ApplicationUpdateManyWithoutJobInput
-  workflow: WorkflowUpdateOneRequiredInput
-  comments: CommentUpdateManyInput
-  type: JobType
-  department: String
-  locations: LocationUpdateManyInput
-  name: String
-  description: String
-  requirements: String
-}
-
-input JobUpdateWithoutSubscribersDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutJobsInput
-  events: EventUpdateManyWithoutTargetJobInput
-  applications: ApplicationUpdateManyWithoutJobInput
   workflow: WorkflowUpdateOneRequiredInput
   comments: CommentUpdateManyInput
   type: JobType
@@ -3737,8 +2939,6 @@ input JobUpdateWithoutSubscribersDataInput {
 }
 
 input JobUpdateWithoutWorkspaceDataInput {
-  subscribers: UserUpdateManyWithoutSubscriptionJobsInput
-  events: EventUpdateManyWithoutTargetJobInput
   applications: ApplicationUpdateManyWithoutJobInput
   workflow: WorkflowUpdateOneRequiredInput
   comments: CommentUpdateManyInput
@@ -3750,11 +2950,6 @@ input JobUpdateWithoutWorkspaceDataInput {
   requirements: String
 }
 
-input JobUpdateWithWhereUniqueWithoutSubscribersInput {
-  where: JobWhereUniqueInput!
-  data: JobUpdateWithoutSubscribersDataInput!
-}
-
 input JobUpdateWithWhereUniqueWithoutWorkspaceInput {
   where: JobWhereUniqueInput!
   data: JobUpdateWithoutWorkspaceDataInput!
@@ -3763,17 +2958,6 @@ input JobUpdateWithWhereUniqueWithoutWorkspaceInput {
 input JobUpsertWithoutApplicationsInput {
   update: JobUpdateWithoutApplicationsDataInput!
   create: JobCreateWithoutApplicationsInput!
-}
-
-input JobUpsertWithoutEventsInput {
-  update: JobUpdateWithoutEventsDataInput!
-  create: JobCreateWithoutEventsInput!
-}
-
-input JobUpsertWithWhereUniqueWithoutSubscribersInput {
-  where: JobWhereUniqueInput!
-  update: JobUpdateWithoutSubscribersDataInput!
-  create: JobCreateWithoutSubscribersInput!
 }
 
 input JobUpsertWithWhereUniqueWithoutWorkspaceInput {
@@ -3814,12 +2998,6 @@ input JobWhereInput {
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
   workspace: WorkspaceWhereInput
-  subscribers_every: UserWhereInput
-  subscribers_some: UserWhereInput
-  subscribers_none: UserWhereInput
-  events_every: EventWhereInput
-  events_some: EventWhereInput
-  events_none: EventWhereInput
   applications_every: ApplicationWhereInput
   applications_some: ApplicationWhereInput
   applications_none: ApplicationWhereInput
@@ -4211,30 +3389,24 @@ type Mutation {
   upsertDisqualification(where: DisqualificationWhereUniqueInput!, create: DisqualificationCreateInput!, update: DisqualificationUpdateInput!): Disqualification!
   deleteDisqualification(where: DisqualificationWhereUniqueInput!): Disqualification
   deleteManyDisqualifications(where: DisqualificationWhereInput): BatchPayload!
-  createDisqualificationLink(data: DisqualificationLinkCreateInput!): DisqualificationLink!
-  updateDisqualificationLink(data: DisqualificationLinkUpdateInput!, where: DisqualificationLinkWhereUniqueInput!): DisqualificationLink
-  updateManyDisqualificationLinks(data: DisqualificationLinkUpdateManyMutationInput!, where: DisqualificationLinkWhereInput): BatchPayload!
-  upsertDisqualificationLink(where: DisqualificationLinkWhereUniqueInput!, create: DisqualificationLinkCreateInput!, update: DisqualificationLinkUpdateInput!): DisqualificationLink!
-  deleteDisqualificationLink(where: DisqualificationLinkWhereUniqueInput!): DisqualificationLink
-  deleteManyDisqualificationLinks(where: DisqualificationLinkWhereInput): BatchPayload!
-  createEvent(data: EventCreateInput!): Event!
-  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
-  updateManyEvents(data: EventUpdateManyMutationInput!, where: EventWhereInput): BatchPayload!
-  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
-  deleteEvent(where: EventWhereUniqueInput!): Event
-  deleteManyEvents(where: EventWhereInput): BatchPayload!
+  createDisqualificationInstance(data: DisqualificationInstanceCreateInput!): DisqualificationInstance!
+  updateDisqualificationInstance(data: DisqualificationInstanceUpdateInput!, where: DisqualificationInstanceWhereUniqueInput!): DisqualificationInstance
+  updateManyDisqualificationInstances(data: DisqualificationInstanceUpdateManyMutationInput!, where: DisqualificationInstanceWhereInput): BatchPayload!
+  upsertDisqualificationInstance(where: DisqualificationInstanceWhereUniqueInput!, create: DisqualificationInstanceCreateInput!, update: DisqualificationInstanceUpdateInput!): DisqualificationInstance!
+  deleteDisqualificationInstance(where: DisqualificationInstanceWhereUniqueInput!): DisqualificationInstance
+  deleteManyDisqualificationInstances(where: DisqualificationInstanceWhereInput): BatchPayload!
   createField(data: FieldCreateInput!): Field!
   updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
   updateManyFields(data: FieldUpdateManyMutationInput!, where: FieldWhereInput): BatchPayload!
   upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
   deleteField(where: FieldWhereUniqueInput!): Field
   deleteManyFields(where: FieldWhereInput): BatchPayload!
-  createFieldLink(data: FieldLinkCreateInput!): FieldLink!
-  updateFieldLink(data: FieldLinkUpdateInput!, where: FieldLinkWhereUniqueInput!): FieldLink
-  updateManyFieldLinks(data: FieldLinkUpdateManyMutationInput!, where: FieldLinkWhereInput): BatchPayload!
-  upsertFieldLink(where: FieldLinkWhereUniqueInput!, create: FieldLinkCreateInput!, update: FieldLinkUpdateInput!): FieldLink!
-  deleteFieldLink(where: FieldLinkWhereUniqueInput!): FieldLink
-  deleteManyFieldLinks(where: FieldLinkWhereInput): BatchPayload!
+  createFieldInstance(data: FieldInstanceCreateInput!): FieldInstance!
+  updateFieldInstance(data: FieldInstanceUpdateInput!, where: FieldInstanceWhereUniqueInput!): FieldInstance
+  updateManyFieldInstances(data: FieldInstanceUpdateManyMutationInput!, where: FieldInstanceWhereInput): BatchPayload!
+  upsertFieldInstance(where: FieldInstanceWhereUniqueInput!, create: FieldInstanceCreateInput!, update: FieldInstanceUpdateInput!): FieldInstance!
+  deleteFieldInstance(where: FieldInstanceWhereUniqueInput!): FieldInstance
+  deleteManyFieldInstances(where: FieldInstanceWhereInput): BatchPayload!
   createFile(data: FileCreateInput!): File!
   updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
   updateManyFiles(data: FileUpdateManyMutationInput!, where: FileWhereInput): BatchPayload!
@@ -4259,12 +3431,6 @@ type Mutation {
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
-  createNotification(data: NotificationCreateInput!): Notification!
-  updateNotification(data: NotificationUpdateInput!, where: NotificationWhereUniqueInput!): Notification
-  updateManyNotifications(data: NotificationUpdateManyMutationInput!, where: NotificationWhereInput): BatchPayload!
-  upsertNotification(where: NotificationWhereUniqueInput!, create: NotificationCreateInput!, update: NotificationUpdateInput!): Notification!
-  deleteNotification(where: NotificationWhereUniqueInput!): Notification
-  deleteManyNotifications(where: NotificationWhereInput): BatchPayload!
   createStage(data: StageCreateInput!): Stage!
   updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
   updateManyStages(data: StageUpdateManyMutationInput!, where: StageWhereInput): BatchPayload!
@@ -4313,215 +3479,6 @@ interface Node {
   id: ID!
 }
 
-type Notification {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  type: NotificationType!
-  user: User!
-  event: Event!
-}
-
-type NotificationConnection {
-  pageInfo: PageInfo!
-  edges: [NotificationEdge]!
-  aggregate: AggregateNotification!
-}
-
-input NotificationCreateInput {
-  type: NotificationType!
-  user: UserCreateOneWithoutNotificationsInput!
-  event: EventCreateOneInput!
-}
-
-input NotificationCreateManyWithoutUserInput {
-  create: [NotificationCreateWithoutUserInput!]
-  connect: [NotificationWhereUniqueInput!]
-}
-
-input NotificationCreateWithoutUserInput {
-  type: NotificationType!
-  event: EventCreateOneInput!
-}
-
-type NotificationEdge {
-  node: Notification!
-  cursor: String!
-}
-
-enum NotificationOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  type_ASC
-  type_DESC
-}
-
-type NotificationPreviousValues {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  type: NotificationType!
-}
-
-input NotificationScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  type: NotificationType
-  type_not: NotificationType
-  type_in: [NotificationType!]
-  type_not_in: [NotificationType!]
-  AND: [NotificationScalarWhereInput!]
-  OR: [NotificationScalarWhereInput!]
-  NOT: [NotificationScalarWhereInput!]
-}
-
-type NotificationSubscriptionPayload {
-  mutation: MutationType!
-  node: Notification
-  updatedFields: [String!]
-  previousValues: NotificationPreviousValues
-}
-
-input NotificationSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: NotificationWhereInput
-  AND: [NotificationSubscriptionWhereInput!]
-  OR: [NotificationSubscriptionWhereInput!]
-  NOT: [NotificationSubscriptionWhereInput!]
-}
-
-enum NotificationType {
-  Unread
-  Read
-}
-
-input NotificationUpdateInput {
-  type: NotificationType
-  user: UserUpdateOneRequiredWithoutNotificationsInput
-  event: EventUpdateOneRequiredInput
-}
-
-input NotificationUpdateManyDataInput {
-  type: NotificationType
-}
-
-input NotificationUpdateManyMutationInput {
-  type: NotificationType
-}
-
-input NotificationUpdateManyWithoutUserInput {
-  create: [NotificationCreateWithoutUserInput!]
-  delete: [NotificationWhereUniqueInput!]
-  connect: [NotificationWhereUniqueInput!]
-  disconnect: [NotificationWhereUniqueInput!]
-  update: [NotificationUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [NotificationUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [NotificationScalarWhereInput!]
-  updateMany: [NotificationUpdateManyWithWhereNestedInput!]
-}
-
-input NotificationUpdateManyWithWhereNestedInput {
-  where: NotificationScalarWhereInput!
-  data: NotificationUpdateManyDataInput!
-}
-
-input NotificationUpdateWithoutUserDataInput {
-  type: NotificationType
-  event: EventUpdateOneRequiredInput
-}
-
-input NotificationUpdateWithWhereUniqueWithoutUserInput {
-  where: NotificationWhereUniqueInput!
-  data: NotificationUpdateWithoutUserDataInput!
-}
-
-input NotificationUpsertWithWhereUniqueWithoutUserInput {
-  where: NotificationWhereUniqueInput!
-  update: NotificationUpdateWithoutUserDataInput!
-  create: NotificationCreateWithoutUserInput!
-}
-
-input NotificationWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  type: NotificationType
-  type_not: NotificationType
-  type_in: [NotificationType!]
-  type_not_in: [NotificationType!]
-  user: UserWhereInput
-  event: EventWhereInput
-  AND: [NotificationWhereInput!]
-  OR: [NotificationWhereInput!]
-  NOT: [NotificationWhereInput!]
-}
-
-input NotificationWhereUniqueInput {
-  id: ID
-}
-
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -4542,18 +3499,15 @@ type Query {
   disqualification(where: DisqualificationWhereUniqueInput!): Disqualification
   disqualifications(where: DisqualificationWhereInput, orderBy: DisqualificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Disqualification]!
   disqualificationsConnection(where: DisqualificationWhereInput, orderBy: DisqualificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DisqualificationConnection!
-  disqualificationLink(where: DisqualificationLinkWhereUniqueInput!): DisqualificationLink
-  disqualificationLinks(where: DisqualificationLinkWhereInput, orderBy: DisqualificationLinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DisqualificationLink]!
-  disqualificationLinksConnection(where: DisqualificationLinkWhereInput, orderBy: DisqualificationLinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DisqualificationLinkConnection!
-  event(where: EventWhereUniqueInput!): Event
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
-  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
+  disqualificationInstance(where: DisqualificationInstanceWhereUniqueInput!): DisqualificationInstance
+  disqualificationInstances(where: DisqualificationInstanceWhereInput, orderBy: DisqualificationInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DisqualificationInstance]!
+  disqualificationInstancesConnection(where: DisqualificationInstanceWhereInput, orderBy: DisqualificationInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DisqualificationInstanceConnection!
   field(where: FieldWhereUniqueInput!): Field
   fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
   fieldsConnection(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldConnection!
-  fieldLink(where: FieldLinkWhereUniqueInput!): FieldLink
-  fieldLinks(where: FieldLinkWhereInput, orderBy: FieldLinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldLink]!
-  fieldLinksConnection(where: FieldLinkWhereInput, orderBy: FieldLinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldLinkConnection!
+  fieldInstance(where: FieldInstanceWhereUniqueInput!): FieldInstance
+  fieldInstances(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldInstance]!
+  fieldInstancesConnection(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldInstanceConnection!
   file(where: FileWhereUniqueInput!): File
   files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
   filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
@@ -4566,9 +3520,6 @@ type Query {
   location(where: LocationWhereUniqueInput!): Location
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
-  notification(where: NotificationWhereUniqueInput!): Notification
-  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
-  notificationsConnection(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NotificationConnection!
   stage(where: StageWhereUniqueInput!): Stage
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
   stagesConnection(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StageConnection!
@@ -4882,15 +3833,13 @@ type Subscription {
   candidate(where: CandidateSubscriptionWhereInput): CandidateSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   disqualification(where: DisqualificationSubscriptionWhereInput): DisqualificationSubscriptionPayload
-  disqualificationLink(where: DisqualificationLinkSubscriptionWhereInput): DisqualificationLinkSubscriptionPayload
-  event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
+  disqualificationInstance(where: DisqualificationInstanceSubscriptionWhereInput): DisqualificationInstanceSubscriptionPayload
   field(where: FieldSubscriptionWhereInput): FieldSubscriptionPayload
-  fieldLink(where: FieldLinkSubscriptionWhereInput): FieldLinkSubscriptionPayload
+  fieldInstance(where: FieldInstanceSubscriptionWhereInput): FieldInstanceSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   invite(where: InviteSubscriptionWhereInput): InviteSubscriptionPayload
   job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
-  notification(where: NotificationSubscriptionWhereInput): NotificationSubscriptionPayload
   stage(where: StageSubscriptionWhereInput): StageSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
@@ -5113,7 +4062,6 @@ type Task {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  subscribers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   candidate: Candidate
   title: String
@@ -5128,7 +4076,6 @@ type TaskConnection {
 }
 
 input TaskCreateInput {
-  subscribers: UserCreateManyWithoutSubscriptionTasksInput
   owners: UserCreateManyWithoutTasksInput
   candidate: CandidateCreateOneWithoutTasksInput
   title: String
@@ -5146,18 +4093,7 @@ input TaskCreateManyWithoutOwnersInput {
   connect: [TaskWhereUniqueInput!]
 }
 
-input TaskCreateManyWithoutSubscribersInput {
-  create: [TaskCreateWithoutSubscribersInput!]
-  connect: [TaskWhereUniqueInput!]
-}
-
-input TaskCreateOneInput {
-  create: TaskCreateInput
-  connect: TaskWhereUniqueInput
-}
-
 input TaskCreateWithoutCandidateInput {
-  subscribers: UserCreateManyWithoutSubscriptionTasksInput
   owners: UserCreateManyWithoutTasksInput
   title: String
   description: String
@@ -5165,15 +4101,6 @@ input TaskCreateWithoutCandidateInput {
 }
 
 input TaskCreateWithoutOwnersInput {
-  subscribers: UserCreateManyWithoutSubscriptionTasksInput
-  candidate: CandidateCreateOneWithoutTasksInput
-  title: String
-  description: String
-  dueAt: DateTime
-}
-
-input TaskCreateWithoutSubscribersInput {
-  owners: UserCreateManyWithoutTasksInput
   candidate: CandidateCreateOneWithoutTasksInput
   title: String
   description: String
@@ -5299,17 +4226,7 @@ input TaskSubscriptionWhereInput {
   NOT: [TaskSubscriptionWhereInput!]
 }
 
-input TaskUpdateDataInput {
-  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
-  owners: UserUpdateManyWithoutTasksInput
-  candidate: CandidateUpdateOneWithoutTasksInput
-  title: String
-  description: String
-  dueAt: DateTime
-}
-
 input TaskUpdateInput {
-  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
   owners: UserUpdateManyWithoutTasksInput
   candidate: CandidateUpdateOneWithoutTasksInput
   title: String
@@ -5351,33 +4268,12 @@ input TaskUpdateManyWithoutOwnersInput {
   updateMany: [TaskUpdateManyWithWhereNestedInput!]
 }
 
-input TaskUpdateManyWithoutSubscribersInput {
-  create: [TaskCreateWithoutSubscribersInput!]
-  delete: [TaskWhereUniqueInput!]
-  connect: [TaskWhereUniqueInput!]
-  disconnect: [TaskWhereUniqueInput!]
-  update: [TaskUpdateWithWhereUniqueWithoutSubscribersInput!]
-  upsert: [TaskUpsertWithWhereUniqueWithoutSubscribersInput!]
-  deleteMany: [TaskScalarWhereInput!]
-  updateMany: [TaskUpdateManyWithWhereNestedInput!]
-}
-
 input TaskUpdateManyWithWhereNestedInput {
   where: TaskScalarWhereInput!
   data: TaskUpdateManyDataInput!
 }
 
-input TaskUpdateOneInput {
-  create: TaskCreateInput
-  update: TaskUpdateDataInput
-  upsert: TaskUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TaskWhereUniqueInput
-}
-
 input TaskUpdateWithoutCandidateDataInput {
-  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
   owners: UserUpdateManyWithoutTasksInput
   title: String
   description: String
@@ -5385,15 +4281,6 @@ input TaskUpdateWithoutCandidateDataInput {
 }
 
 input TaskUpdateWithoutOwnersDataInput {
-  subscribers: UserUpdateManyWithoutSubscriptionTasksInput
-  candidate: CandidateUpdateOneWithoutTasksInput
-  title: String
-  description: String
-  dueAt: DateTime
-}
-
-input TaskUpdateWithoutSubscribersDataInput {
-  owners: UserUpdateManyWithoutTasksInput
   candidate: CandidateUpdateOneWithoutTasksInput
   title: String
   description: String
@@ -5410,16 +4297,6 @@ input TaskUpdateWithWhereUniqueWithoutOwnersInput {
   data: TaskUpdateWithoutOwnersDataInput!
 }
 
-input TaskUpdateWithWhereUniqueWithoutSubscribersInput {
-  where: TaskWhereUniqueInput!
-  data: TaskUpdateWithoutSubscribersDataInput!
-}
-
-input TaskUpsertNestedInput {
-  update: TaskUpdateDataInput!
-  create: TaskCreateInput!
-}
-
 input TaskUpsertWithWhereUniqueWithoutCandidateInput {
   where: TaskWhereUniqueInput!
   update: TaskUpdateWithoutCandidateDataInput!
@@ -5430,12 +4307,6 @@ input TaskUpsertWithWhereUniqueWithoutOwnersInput {
   where: TaskWhereUniqueInput!
   update: TaskUpdateWithoutOwnersDataInput!
   create: TaskCreateWithoutOwnersInput!
-}
-
-input TaskUpsertWithWhereUniqueWithoutSubscribersInput {
-  where: TaskWhereUniqueInput!
-  update: TaskUpdateWithoutSubscribersDataInput!
-  create: TaskCreateWithoutSubscribersInput!
 }
 
 input TaskWhereInput {
@@ -5469,9 +4340,6 @@ input TaskWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  subscribers_every: UserWhereInput
-  subscribers_some: UserWhereInput
-  subscribers_none: UserWhereInput
   owners_every: UserWhereInput
   owners_some: UserWhereInput
   owners_none: UserWhereInput
@@ -5525,12 +4393,6 @@ type User {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  workspace: Workspace!
-  events: Event
-  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
-  subscriptionJobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
-  subscriptionCandidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
-  subscriptionTasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   firstName: String!
   lastName: String!
@@ -5549,12 +4411,6 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActorUserInput
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
   tasks: TaskCreateManyWithoutOwnersInput
   firstName: String!
   lastName: String!
@@ -5566,18 +4422,8 @@ input UserCreateInput {
   avatar: FileCreateOneInput
 }
 
-input UserCreateManyWithoutSubscriptionCandidatesInput {
-  create: [UserCreateWithoutSubscriptionCandidatesInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateManyWithoutSubscriptionJobsInput {
-  create: [UserCreateWithoutSubscriptionJobsInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateManyWithoutSubscriptionTasksInput {
-  create: [UserCreateWithoutSubscriptionTasksInput!]
+input UserCreateManyInput {
+  create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -5586,135 +4432,12 @@ input UserCreateManyWithoutTasksInput {
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutWorkspaceInput {
-  create: [UserCreateWithoutWorkspaceInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutEventsInput {
-  create: UserCreateWithoutEventsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutNotificationsInput {
-  create: UserCreateWithoutNotificationsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutEventsInput {
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
-  firstName: String!
-  lastName: String!
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileCreateOneInput
-}
-
-input UserCreateWithoutNotificationsInput {
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActorUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
-  firstName: String!
-  lastName: String!
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileCreateOneInput
-}
-
-input UserCreateWithoutSubscriptionCandidatesInput {
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActorUserInput
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
-  firstName: String!
-  lastName: String!
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileCreateOneInput
-}
-
-input UserCreateWithoutSubscriptionJobsInput {
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActorUserInput
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
-  firstName: String!
-  lastName: String!
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileCreateOneInput
-}
-
-input UserCreateWithoutSubscriptionTasksInput {
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActorUserInput
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
-  firstName: String!
-  lastName: String!
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileCreateOneInput
-}
-
 input UserCreateWithoutTasksInput {
-  workspace: WorkspaceCreateOneWithoutUsersInput!
-  events: EventCreateOneWithoutActorUserInput
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
-  firstName: String!
-  lastName: String!
-  email: String!
-  username: String!
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileCreateOneInput
-}
-
-input UserCreateWithoutWorkspaceInput {
-  events: EventCreateOneWithoutActorUserInput
-  notifications: NotificationCreateManyWithoutUserInput
-  subscriptionJobs: JobCreateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateCreateManyWithoutSubscribersInput
-  subscriptionTasks: TaskCreateManyWithoutSubscribersInput
-  tasks: TaskCreateManyWithoutOwnersInput
   firstName: String!
   lastName: String!
   email: String!
@@ -5907,12 +4630,6 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  events: EventUpdateOneWithoutActorUserInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
   firstName: String
   lastName: String
@@ -5925,12 +4642,6 @@ input UserUpdateDataInput {
 }
 
 input UserUpdateInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  events: EventUpdateOneWithoutActorUserInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   tasks: TaskUpdateManyWithoutOwnersInput
   firstName: String
   lastName: String
@@ -5952,6 +4663,17 @@ input UserUpdateManyDataInput {
   position: String
 }
 
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
 input UserUpdateManyMutationInput {
   firstName: String
   lastName: String
@@ -5962,39 +4684,6 @@ input UserUpdateManyMutationInput {
   position: String
 }
 
-input UserUpdateManyWithoutSubscriptionCandidatesInput {
-  create: [UserCreateWithoutSubscriptionCandidatesInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
-input UserUpdateManyWithoutSubscriptionJobsInput {
-  create: [UserCreateWithoutSubscriptionJobsInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
-input UserUpdateManyWithoutSubscriptionTasksInput {
-  create: [UserCreateWithoutSubscriptionTasksInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyWithoutTasksInput {
   create: [UserCreateWithoutTasksInput!]
   delete: [UserWhereUniqueInput!]
@@ -6002,17 +4691,6 @@ input UserUpdateManyWithoutTasksInput {
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutTasksInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutTasksInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
-input UserUpdateManyWithoutWorkspaceInput {
-  create: [UserCreateWithoutWorkspaceInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutWorkspaceInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutWorkspaceInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
@@ -6029,114 +4707,7 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutNotificationsInput {
-  create: UserCreateWithoutNotificationsInput
-  update: UserUpdateWithoutNotificationsDataInput
-  upsert: UserUpsertWithoutNotificationsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateOneWithoutEventsInput {
-  create: UserCreateWithoutEventsInput
-  update: UserUpdateWithoutEventsDataInput
-  upsert: UserUpsertWithoutEventsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateWithoutEventsDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
-  tasks: TaskUpdateManyWithoutOwnersInput
-  firstName: String
-  lastName: String
-  email: String
-  username: String
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileUpdateOneInput
-}
-
-input UserUpdateWithoutNotificationsDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  events: EventUpdateOneWithoutActorUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
-  tasks: TaskUpdateManyWithoutOwnersInput
-  firstName: String
-  lastName: String
-  email: String
-  username: String
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileUpdateOneInput
-}
-
-input UserUpdateWithoutSubscriptionCandidatesDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  events: EventUpdateOneWithoutActorUserInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
-  tasks: TaskUpdateManyWithoutOwnersInput
-  firstName: String
-  lastName: String
-  email: String
-  username: String
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileUpdateOneInput
-}
-
-input UserUpdateWithoutSubscriptionJobsDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  events: EventUpdateOneWithoutActorUserInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
-  tasks: TaskUpdateManyWithoutOwnersInput
-  firstName: String
-  lastName: String
-  email: String
-  username: String
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileUpdateOneInput
-}
-
-input UserUpdateWithoutSubscriptionTasksDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  events: EventUpdateOneWithoutActorUserInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  tasks: TaskUpdateManyWithoutOwnersInput
-  firstName: String
-  lastName: String
-  email: String
-  username: String
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileUpdateOneInput
-}
-
 input UserUpdateWithoutTasksDataInput {
-  workspace: WorkspaceUpdateOneRequiredWithoutUsersInput
-  events: EventUpdateOneWithoutActorUserInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
   firstName: String
   lastName: String
   email: String
@@ -6147,36 +4718,9 @@ input UserUpdateWithoutTasksDataInput {
   avatar: FileUpdateOneInput
 }
 
-input UserUpdateWithoutWorkspaceDataInput {
-  events: EventUpdateOneWithoutActorUserInput
-  notifications: NotificationUpdateManyWithoutUserInput
-  subscriptionJobs: JobUpdateManyWithoutSubscribersInput
-  subscriptionCandidates: CandidateUpdateManyWithoutSubscribersInput
-  subscriptionTasks: TaskUpdateManyWithoutSubscribersInput
-  tasks: TaskUpdateManyWithoutOwnersInput
-  firstName: String
-  lastName: String
-  email: String
-  username: String
-  lastLogin: DateTime
-  deletedAt: DateTime
-  position: String
-  avatar: FileUpdateOneInput
-}
-
-input UserUpdateWithWhereUniqueWithoutSubscriptionCandidatesInput {
+input UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubscriptionCandidatesDataInput!
-}
-
-input UserUpdateWithWhereUniqueWithoutSubscriptionJobsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubscriptionJobsDataInput!
-}
-
-input UserUpdateWithWhereUniqueWithoutSubscriptionTasksInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutSubscriptionTasksDataInput!
+  data: UserUpdateDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutTasksInput {
@@ -6184,54 +4728,21 @@ input UserUpdateWithWhereUniqueWithoutTasksInput {
   data: UserUpdateWithoutTasksDataInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutWorkspaceInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutWorkspaceDataInput!
-}
-
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
 }
 
-input UserUpsertWithoutEventsInput {
-  update: UserUpdateWithoutEventsDataInput!
-  create: UserCreateWithoutEventsInput!
-}
-
-input UserUpsertWithoutNotificationsInput {
-  update: UserUpdateWithoutNotificationsDataInput!
-  create: UserCreateWithoutNotificationsInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutSubscriptionCandidatesInput {
+input UserUpsertWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubscriptionCandidatesDataInput!
-  create: UserCreateWithoutSubscriptionCandidatesInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutSubscriptionJobsInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubscriptionJobsDataInput!
-  create: UserCreateWithoutSubscriptionJobsInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutSubscriptionTasksInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutSubscriptionTasksDataInput!
-  create: UserCreateWithoutSubscriptionTasksInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutTasksInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutTasksDataInput!
   create: UserCreateWithoutTasksInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutWorkspaceInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutWorkspaceDataInput!
-  create: UserCreateWithoutWorkspaceInput!
 }
 
 input UserWhereInput {
@@ -6265,20 +4776,6 @@ input UserWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  workspace: WorkspaceWhereInput
-  events: EventWhereInput
-  notifications_every: NotificationWhereInput
-  notifications_some: NotificationWhereInput
-  notifications_none: NotificationWhereInput
-  subscriptionJobs_every: JobWhereInput
-  subscriptionJobs_some: JobWhereInput
-  subscriptionJobs_none: JobWhereInput
-  subscriptionCandidates_every: CandidateWhereInput
-  subscriptionCandidates_some: CandidateWhereInput
-  subscriptionCandidates_none: CandidateWhereInput
-  subscriptionTasks_every: TaskWhereInput
-  subscriptionTasks_some: TaskWhereInput
-  subscriptionTasks_none: TaskWhereInput
   tasks_every: TaskWhereInput
   tasks_some: TaskWhereInput
   tasks_none: TaskWhereInput
@@ -6564,15 +5061,6 @@ input WorkflowUpdateManyWithWhereNestedInput {
   data: WorkflowUpdateManyDataInput!
 }
 
-input WorkflowUpdateOneInput {
-  create: WorkflowCreateInput
-  update: WorkflowUpdateDataInput
-  upsert: WorkflowUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: WorkflowWhereUniqueInput
-}
-
 input WorkflowUpdateOneRequiredInput {
   create: WorkflowCreateInput
   update: WorkflowUpdateDataInput
@@ -6677,12 +5165,10 @@ type Workspace {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
   workflows(where: WorkflowWhereInput, orderBy: WorkflowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workflow!]
-  workflowDefault: Workflow
   invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   name: String!
@@ -6695,25 +5181,13 @@ type WorkspaceConnection {
 }
 
 input WorkspaceCreateInput {
-  events: EventCreateManyWithoutTargetWorkspaceInput
-  users: UserCreateManyWithoutWorkspaceInput
+  users: UserCreateManyInput
   jobs: JobCreateManyWithoutWorkspaceInput
-  candidates: CandidateCreateManyWithoutWorkspaceInput
+  candidates: CandidateCreateManyInput
   workflows: WorkflowCreateManyInput
-  workflowDefault: WorkflowCreateOneInput
   invites: InviteCreateManyInput
   tags: TagCreateManyInput
   name: String!
-}
-
-input WorkspaceCreateOneWithoutCandidatesInput {
-  create: WorkspaceCreateWithoutCandidatesInput
-  connect: WorkspaceWhereUniqueInput
-}
-
-input WorkspaceCreateOneWithoutEventsInput {
-  create: WorkspaceCreateWithoutEventsInput
-  connect: WorkspaceWhereUniqueInput
 }
 
 input WorkspaceCreateOneWithoutJobsInput {
@@ -6721,50 +5195,10 @@ input WorkspaceCreateOneWithoutJobsInput {
   connect: WorkspaceWhereUniqueInput
 }
 
-input WorkspaceCreateOneWithoutUsersInput {
-  create: WorkspaceCreateWithoutUsersInput
-  connect: WorkspaceWhereUniqueInput
-}
-
-input WorkspaceCreateWithoutCandidatesInput {
-  events: EventCreateManyWithoutTargetWorkspaceInput
-  users: UserCreateManyWithoutWorkspaceInput
-  jobs: JobCreateManyWithoutWorkspaceInput
-  workflows: WorkflowCreateManyInput
-  workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyInput
-  tags: TagCreateManyInput
-  name: String!
-}
-
-input WorkspaceCreateWithoutEventsInput {
-  users: UserCreateManyWithoutWorkspaceInput
-  jobs: JobCreateManyWithoutWorkspaceInput
-  candidates: CandidateCreateManyWithoutWorkspaceInput
-  workflows: WorkflowCreateManyInput
-  workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyInput
-  tags: TagCreateManyInput
-  name: String!
-}
-
 input WorkspaceCreateWithoutJobsInput {
-  events: EventCreateManyWithoutTargetWorkspaceInput
-  users: UserCreateManyWithoutWorkspaceInput
-  candidates: CandidateCreateManyWithoutWorkspaceInput
+  users: UserCreateManyInput
+  candidates: CandidateCreateManyInput
   workflows: WorkflowCreateManyInput
-  workflowDefault: WorkflowCreateOneInput
-  invites: InviteCreateManyInput
-  tags: TagCreateManyInput
-  name: String!
-}
-
-input WorkspaceCreateWithoutUsersInput {
-  events: EventCreateManyWithoutTargetWorkspaceInput
-  jobs: JobCreateManyWithoutWorkspaceInput
-  candidates: CandidateCreateManyWithoutWorkspaceInput
-  workflows: WorkflowCreateManyInput
-  workflowDefault: WorkflowCreateOneInput
   invites: InviteCreateManyInput
   tags: TagCreateManyInput
   name: String!
@@ -6812,12 +5246,10 @@ input WorkspaceSubscriptionWhereInput {
 }
 
 input WorkspaceUpdateInput {
-  events: EventUpdateManyWithoutTargetWorkspaceInput
-  users: UserUpdateManyWithoutWorkspaceInput
+  users: UserUpdateManyInput
   jobs: JobUpdateManyWithoutWorkspaceInput
-  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  candidates: CandidateUpdateManyInput
   workflows: WorkflowUpdateManyInput
-  workflowDefault: WorkflowUpdateOneInput
   invites: InviteUpdateManyInput
   tags: TagUpdateManyInput
   name: String
@@ -6827,13 +5259,6 @@ input WorkspaceUpdateManyMutationInput {
   name: String
 }
 
-input WorkspaceUpdateOneRequiredWithoutCandidatesInput {
-  create: WorkspaceCreateWithoutCandidatesInput
-  update: WorkspaceUpdateWithoutCandidatesDataInput
-  upsert: WorkspaceUpsertWithoutCandidatesInput
-  connect: WorkspaceWhereUniqueInput
-}
-
 input WorkspaceUpdateOneRequiredWithoutJobsInput {
   create: WorkspaceCreateWithoutJobsInput
   update: WorkspaceUpdateWithoutJobsDataInput
@@ -6841,84 +5266,18 @@ input WorkspaceUpdateOneRequiredWithoutJobsInput {
   connect: WorkspaceWhereUniqueInput
 }
 
-input WorkspaceUpdateOneRequiredWithoutUsersInput {
-  create: WorkspaceCreateWithoutUsersInput
-  update: WorkspaceUpdateWithoutUsersDataInput
-  upsert: WorkspaceUpsertWithoutUsersInput
-  connect: WorkspaceWhereUniqueInput
-}
-
-input WorkspaceUpdateOneWithoutEventsInput {
-  create: WorkspaceCreateWithoutEventsInput
-  update: WorkspaceUpdateWithoutEventsDataInput
-  upsert: WorkspaceUpsertWithoutEventsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: WorkspaceWhereUniqueInput
-}
-
-input WorkspaceUpdateWithoutCandidatesDataInput {
-  events: EventUpdateManyWithoutTargetWorkspaceInput
-  users: UserUpdateManyWithoutWorkspaceInput
-  jobs: JobUpdateManyWithoutWorkspaceInput
-  workflows: WorkflowUpdateManyInput
-  workflowDefault: WorkflowUpdateOneInput
-  invites: InviteUpdateManyInput
-  tags: TagUpdateManyInput
-  name: String
-}
-
-input WorkspaceUpdateWithoutEventsDataInput {
-  users: UserUpdateManyWithoutWorkspaceInput
-  jobs: JobUpdateManyWithoutWorkspaceInput
-  candidates: CandidateUpdateManyWithoutWorkspaceInput
-  workflows: WorkflowUpdateManyInput
-  workflowDefault: WorkflowUpdateOneInput
-  invites: InviteUpdateManyInput
-  tags: TagUpdateManyInput
-  name: String
-}
-
 input WorkspaceUpdateWithoutJobsDataInput {
-  events: EventUpdateManyWithoutTargetWorkspaceInput
-  users: UserUpdateManyWithoutWorkspaceInput
-  candidates: CandidateUpdateManyWithoutWorkspaceInput
+  users: UserUpdateManyInput
+  candidates: CandidateUpdateManyInput
   workflows: WorkflowUpdateManyInput
-  workflowDefault: WorkflowUpdateOneInput
   invites: InviteUpdateManyInput
   tags: TagUpdateManyInput
   name: String
-}
-
-input WorkspaceUpdateWithoutUsersDataInput {
-  events: EventUpdateManyWithoutTargetWorkspaceInput
-  jobs: JobUpdateManyWithoutWorkspaceInput
-  candidates: CandidateUpdateManyWithoutWorkspaceInput
-  workflows: WorkflowUpdateManyInput
-  workflowDefault: WorkflowUpdateOneInput
-  invites: InviteUpdateManyInput
-  tags: TagUpdateManyInput
-  name: String
-}
-
-input WorkspaceUpsertWithoutCandidatesInput {
-  update: WorkspaceUpdateWithoutCandidatesDataInput!
-  create: WorkspaceCreateWithoutCandidatesInput!
-}
-
-input WorkspaceUpsertWithoutEventsInput {
-  update: WorkspaceUpdateWithoutEventsDataInput!
-  create: WorkspaceCreateWithoutEventsInput!
 }
 
 input WorkspaceUpsertWithoutJobsInput {
   update: WorkspaceUpdateWithoutJobsDataInput!
   create: WorkspaceCreateWithoutJobsInput!
-}
-
-input WorkspaceUpsertWithoutUsersInput {
-  update: WorkspaceUpdateWithoutUsersDataInput!
-  create: WorkspaceCreateWithoutUsersInput!
 }
 
 input WorkspaceWhereInput {
@@ -6952,9 +5311,6 @@ input WorkspaceWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  events_every: EventWhereInput
-  events_some: EventWhereInput
-  events_none: EventWhereInput
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
@@ -6967,7 +5323,6 @@ input WorkspaceWhereInput {
   workflows_every: WorkflowWhereInput
   workflows_some: WorkflowWhereInput
   workflows_none: WorkflowWhereInput
-  workflowDefault: WorkflowWhereInput
   invites_every: InviteWhereInput
   invites_some: InviteWhereInput
   invites_none: InviteWhereInput

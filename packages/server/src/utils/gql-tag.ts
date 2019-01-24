@@ -6,5 +6,5 @@ export const gql = (literals: TemplateStringsArray, ...values: any[]) => {
   }
 
   output += literals[index]
-  return output
+  return output.trim()
 }

@@ -6,18 +6,22 @@ import { Prisma as PrismaBinding } from 'prisma-binding'
 import { Prisma as PrismaClient } from './generated/prisma-client'
 
 import { resolvers } from './resolvers'
-import { typeDefs } from './schema/schema'
+import { typeDefs } from './schema'
 import { decodeToken, IAccessTokenPayload } from './utils'
 
 export const prismaBinding = new PrismaBinding({
   typeDefs: path.resolve(__dirname, './generated/prisma.graphql'),
-  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`,
+  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
+    process.env.PRISMA_STAGE
+  }`,
   secret: process.env.PRISMA_SECRET,
   debug: true,
 })
 
 const prismaClient = new PrismaClient({
-  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`,
+  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
+    process.env.PRISMA_STAGE
+  }`,
   secret: process.env.PRISMA_SECRET,
   debug: true,
 })
@@ -78,5 +82,5 @@ const port = process.env.PORT || 4000
 
 server.listen({ port }, () =>
   // tslint:disable-next-line:no-console
-  console.log(`Server is running on http:// localhost:${port}`),
+  console.log(`Server is running on http://localhost:${port}`),
 )
