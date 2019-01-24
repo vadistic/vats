@@ -1,6 +1,3 @@
-// Exposes exectutable schema for graphql-binding type deficition
-// https://github.com/prisma/prisma-binding/issues/202
-
 import { gql as graphql } from 'apollo-server'
 import { importSchema } from 'graphql-import'
 
@@ -51,8 +48,7 @@ const Types = gql`
 
 const Query = gql`
   type Query {
-    users: User!
-    ${gqlImport.require(`Query.user`).fields}
+    ${gqlImport.require('Query').pick(['user', 'users']).fields}
   }
 `
 

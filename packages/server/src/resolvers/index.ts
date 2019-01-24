@@ -1,13 +1,13 @@
 import { forwardTo } from 'prisma-binding'
 
-import { QueryResolvers } from '../generated/server'
 import { IMutation, IQuery } from '../utils'
 
-export const Query: IQuery = {
+export const Query: Required<IQuery> = {
+  user: forwardTo('db'),
   users: forwardTo('db'),
 }
 
-export const Mutation: IMutation = {
+export const Mutation: Required<IMutation> = {
   createApplication: forwardTo('db'),
   createCandidate: forwardTo('db'),
   createJob: forwardTo('db'),

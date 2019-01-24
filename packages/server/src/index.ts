@@ -1,25 +1,38 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server'
-import * as path from 'path'
-import { Prisma } from 'prisma-binding'
-
 import { IncomingMessage } from 'http'
+import * as path from 'path'
+import { Prisma as PrismaBinding } from 'prisma-binding'
+
+import { Prisma as PrismaClient } from './generated/prisma-client'
+
 import { resolvers } from './resolvers'
 import { typeDefs } from './schema/schema'
-import { decodeToken } from './utils/validate-token'
+import { decodeToken, IAccessTokenPayload } from './utils'
 
-export const prismaBinding = new Prisma({
-  typeDefs: path.resolve(__dirname, `./generated/prisma.graphql`),
+export const prismaBinding = new PrismaBinding({
+  typeDefs: path.resolve(__dirname, './generated/prisma.graphql'),
   endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`,
   secret: process.env.PRISMA_SECRET,
   debug: true,
 })
 
-// main context
+const prismaClient = new PrismaClient({
+  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`,
+  secret: process.env.PRISMA_SECRET,
+  debug: true,
+})
+
 interface IContextProps {
   req: IncomingMessage
 }
 
-const context = ({ req }: IContextProps) => {
+export interface IContext {
+  db: PrismaBinding
+  token?: IAccessTokenPayload
+  client: PrismaClient
+}
+
+const context = ({ req }: IContextProps): IContext => {
   const authorization = req.headers.authorization
   let rawToken
 
@@ -27,12 +40,13 @@ const context = ({ req }: IContextProps) => {
     rawToken = authorization.split(' ')[1]
 
     // const token = validateToken(rawToken)
-    const token = decodeToken(rawToken)
+    const token = decodeToken(rawToken) as IAccessTokenPayload
 
     if (token) {
       return {
         ...req,
         db: prismaBinding,
+        client: prismaClient,
         token,
       }
     }
@@ -41,6 +55,7 @@ const context = ({ req }: IContextProps) => {
   return {
     ...req,
     db: prismaBinding,
+    client: prismaClient,
   }
 }
 

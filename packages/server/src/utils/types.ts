@@ -1,10 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql'
-import { IMiddlewareFunction } from 'graphql-middleware'
-// tslint:disable-next-line:no-submodule-imports
-import { ShieldRule } from 'graphql-shield/dist/types'
-
-import { Prisma as PrismaBinding } from '../generated/prisma-binding'
-
 import { MutationResolvers, QueryResolvers } from '../generated/server'
 
 // Utils
@@ -36,11 +29,6 @@ export interface IAccessTokenPayload {
     status: string
   }
   endpoint: string
-}
-
-export interface IContext {
-  db: PrismaBinding
-  token: IAccessTokenPayload
 }
 
 export type SecondArgument<T> = T extends (arg1: any, arg2: infer U, ...args: any[]) => any ? U : never

@@ -134,13 +134,15 @@ export class GqlImport {
   }
 
   private getSelectionRegex(selection: GqlImportSelection) {
+    const getFieldbyNameRegex = (name: string) => new RegExp(`((${name})(\([^\)]+\))?: .+)`, 'g')
+
     if (Array.isArray(selection)) {
-      return new RegExp(`((${selection.join('|')}): .+)`, 'g')
+      return getFieldbyNameRegex(selection.join('|'))
     } else if (selection instanceof RegExp) {
       return selection
     } else {
       // simple string or regex-in-string expression for field name
-      return new RegExp(`(${selection}(\(.+\)): .+)`, 'g')
+      return getFieldbyNameRegex(selection)
     }
   }
 
@@ -150,7 +152,7 @@ export class GqlImport {
     // match any number of (one line) directives and then typdef header
     const typeHeadingRegex = /(((@.+\n)+)?.+{)/g
     // match all fields
-    const allFieldsRegex = /([^\n ]+: .+)/g
+    const allFieldsRegex = /([A-z]+(\([^\)]+\))?: .+)/g
 
     const heading = this.body.match(typeHeadingRegex)
     const fields = this.body.match(allFieldsRegex)

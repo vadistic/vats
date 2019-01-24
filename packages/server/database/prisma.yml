@@ -13,6 +13,6 @@ secret: ${env:PRISMA_SECRET}
 
 generate:
   - generator: typescript-client
-    output: ../src/prisma-client
+    output: ../src/generated/prisma-client
   - generator: graphql-schema
     output: ../src/generated/

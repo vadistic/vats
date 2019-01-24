@@ -105,7 +105,7 @@ const setup = async () => {
         username,
         // half of guys would have avatars
         avatar: f.random.boolean ? { create: avatarFile } : undefined,
-        position: f.name.jobDescriptor + f.name.jobTitle(),
+        position: f.name.jobDescriptor() + f.name.jobTitle(),
         // edges
         workspace: { connect: { id: workspace.id } },
       },
