@@ -2443,6 +2443,13 @@ export interface TaskWhereUniqueInput {
   id?: Maybe<string>;
 }
 
+export interface UserWhereUniqueInput {
+  
+  id?: Maybe<string>;
+  
+  email?: Maybe<string>;
+}
+
 export interface ApplicationCreateInput {
   
   type: ApplicationType;
@@ -2789,13 +2796,6 @@ export interface UserCreateManyInput {
   create?: Maybe<UserCreateInput[]>;
   
   connect?: Maybe<UserWhereUniqueInput[]>;
-}
-
-export interface UserWhereUniqueInput {
-  
-  id?: Maybe<string>;
-  
-  email?: Maybe<string>;
 }
 
 export interface CandidateCreateManyInput {
@@ -6515,27 +6515,6 @@ export interface TaskUpdateInput {
   dueAt?: Maybe<DateTime>;
 }
 
-export interface UserUpdateInput {
-  
-  tasks?: Maybe<TaskUpdateManyWithoutOwnersInput>;
-  
-  firstName?: Maybe<string>;
-  
-  lastName?: Maybe<string>;
-  
-  email?: Maybe<string>;
-  
-  username?: Maybe<string>;
-  
-  lastLogin?: Maybe<DateTime>;
-  
-  deletedAt?: Maybe<DateTime>;
-  
-  position?: Maybe<string>;
-  
-  avatar?: Maybe<FileUpdateOneInput>;
-}
-
 export interface Connect {
   
   connect?: Maybe<WhereUniqueInput>;
@@ -6872,8 +6851,6 @@ export type DateTime = any;
 
 export interface Query {
   
-  random: string;
-  
   application?: Maybe<Application>;
   
   applications: (Maybe<Application>)[];
@@ -6893,6 +6870,10 @@ export interface Query {
   task?: Maybe<Task>;
   
   tasks: (Maybe<Task>)[];
+  
+  user?: Maybe<User>;
+  
+  users: (Maybe<User>)[];
 }
 
 
@@ -7277,8 +7258,6 @@ export interface Mutation {
   upsertTask: Task;
   
   deleteTask?: Maybe<Task>;
-  
-  updateUser?: Maybe<User>;
 }
 
 
@@ -7390,6 +7369,26 @@ export interface TasksQueryArgs {
   where?: Maybe<TaskWhereInput>;
   
   orderBy?: Maybe<TaskOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface UserQueryArgs {
+  
+  where: UserWhereUniqueInput;
+}
+export interface UsersQueryArgs {
+  
+  where?: Maybe<UserWhereInput>;
+  
+  orderBy?: Maybe<UserOrderByInput>;
   
   skip?: Maybe<number>;
   
@@ -7847,12 +7846,6 @@ export interface DeleteTaskMutationArgs {
   
   where: TaskWhereUniqueInput;
 }
-export interface UpdateUserMutationArgs {
-  
-  data: UserUpdateInput;
-  
-  where: UserWhereUniqueInput;
-}
 
 
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
@@ -7907,8 +7900,6 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 export namespace QueryResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
     
-    random?: RandomResolver<string, TypeParent, Context>;
-    
     application?: ApplicationResolver<Maybe<Application>, TypeParent, Context>;
     
     applications?: ApplicationsResolver<(Maybe<Application>)[], TypeParent, Context>;
@@ -7928,10 +7919,13 @@ export namespace QueryResolvers {
     task?: TaskResolver<Maybe<Task>, TypeParent, Context>;
     
     tasks?: TasksResolver<(Maybe<Task>)[], TypeParent, Context>;
+    
+    user?: UserResolver<Maybe<User>, TypeParent, Context>;
+    
+    users?: UsersResolver<(Maybe<User>)[], TypeParent, Context>;
   }
 
 
-  export type RandomResolver<R = string, Parent = {}, Context = {}> = Resolver<R, Parent, Context>;
   export type ApplicationResolver<R = Maybe<Application>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, ApplicationArgs>;
   export interface ApplicationArgs {
     
@@ -8049,6 +8043,32 @@ export namespace QueryResolvers {
     where?: Maybe<TaskWhereInput>;
     
     orderBy?: Maybe<TaskOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
+  export type UserResolver<R = Maybe<User>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UserArgs>;
+  export interface UserArgs {
+    
+    where: UserWhereUniqueInput;
+  }
+
+
+  export type UsersResolver<R = (Maybe<User>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, UsersArgs>;
+  export interface UsersArgs {
+    
+    where?: Maybe<UserWhereInput>;
+    
+    orderBy?: Maybe<UserOrderByInput>;
     
     skip?: Maybe<number>;
     
@@ -9011,8 +9031,6 @@ export namespace MutationResolvers {
     upsertTask?: UpsertTaskResolver<Task, TypeParent, Context>;
     
     deleteTask?: DeleteTaskResolver<Maybe<Task>, TypeParent, Context>;
-    
-    updateUser?: UpdateUserResolver<Maybe<User>, TypeParent, Context>;
   }
 
 
@@ -9183,15 +9201,6 @@ export namespace MutationResolvers {
   export interface DeleteTaskArgs {
     
     where: TaskWhereUniqueInput;
-  }
-
-
-  export type UpdateUserResolver<R = Maybe<User>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpdateUserArgs>;
-  export interface UpdateUserArgs {
-    
-    data: UserUpdateInput;
-    
-    where: UserWhereUniqueInput;
   }
 
   
