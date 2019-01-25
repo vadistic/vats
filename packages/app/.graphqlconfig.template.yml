@@ -1,9 +1,0 @@
-schemaPath: src/generated/app.graphql
-projectName: app
-includes: ['sec/schema/**/*.graphql']
-extensions:
-  endpoints:
-    default:
-      url: ${env:PRISMA_ENDPOINT}/${env:PRISMA_SERVICE}/${env:PRISMA_STAGE}
-      headers:
-        Authorization: Bearer ${env:AUTH_TOKEN}

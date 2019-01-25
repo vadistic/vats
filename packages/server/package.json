@@ -10,7 +10,7 @@
     "env:cmd": "env-cmd .env",
     "env:pull": "cp ../../.env .env",
     "env:push": "cp .env ../../.env",
-    "apollo:push": "apollo service:push",
+    "apollo:push": "yarn env:cmd apollo service:push",
     "now:deploy": "yarn env:cmd now && now alias",
     "prisma:deploy": "yarn env:cmd prisma deploy",
     "gen:prisma:binding": "yarn env:cmd graphql codegen",
