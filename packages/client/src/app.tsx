@@ -7,6 +7,7 @@ import { ApolloProvider } from 'react-apollo'
 import { Router } from '@reach/router'
 import { client } from './apollo'
 import { Layout } from './components'
+import { routes } from './routes'
 import { TestView } from './views'
 
 export class App extends React.Component {
@@ -17,9 +18,8 @@ export class App extends React.Component {
           <ThemeProvider theme={getTheme()}>
             <Fabric className="app">
               <Layout>
-                Content
                 <Router>
-                  <TestView path="test/*" />
+                  <TestView path={routes.test.path} />
                 </Router>
               </Layout>
             </Fabric>

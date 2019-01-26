@@ -4,9 +4,10 @@ import * as React from 'react'
 import { Navigation } from '..'
 import { globalStyles } from '../../styles'
 
-export const Layout: React.FC = () => (
+export const Layout: React.FC = ({ children }) => (
   <div>
     <Global styles={globalStyles} />
     <Navigation />
+    {children}
   </div>
 )

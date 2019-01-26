@@ -4,15 +4,16 @@ import React from 'react'
 
 import { Query } from 'react-apollo'
 import { UserPersona } from '../components'
+import { routes } from '../routes'
 
 const USER_ID = 'cjr9cxucf426j0a742nwut6vd'
 const PersonaFixture: React.FC<any> = () => (
   <div>
-    <Query<any> query={userQuery}>
+    <Query<any> query={userQuery} variables={{ id: USER_ID }}>
       {({ data, error }) => (
         <>
-          {data && <UserPersona user={data.user} />}
-          {error && JSON.stringify(error)}
+          {data && data.user && <UserPersona user={data.user} />}
+          <pre>{error && JSON.stringify(error)}</pre>
         </>
       )}
     </Query>
@@ -20,14 +21,11 @@ const PersonaFixture: React.FC<any> = () => (
 )
 
 const userQuery = gql`
-  query UserQuery {
-    user(where: { id: "cjr9cxucf426j0a742nwut6vd" }) {
+  query UserQuery($id: ID!) {
+    user(where: { id: $id }) {
       id
       firstName
       lastName
-      email
-      username
-      position
       avatar {
         id
         url
@@ -41,8 +39,8 @@ export interface ITestViewProps extends RouteComponentProps {}
 export const TestView: React.FC<ITestViewProps> = () => (
   <>
     <h1>Test</h1>
-    <Router basepath="test">
-      <PersonaFixture path="persona" />
+    <Router basepath={routes.test.basepath}>
+      <PersonaFixture path={routes.test.children.persona.path} />
     </Router>
   </>
 )
