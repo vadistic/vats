@@ -1,0 +1,9 @@
+projects:
+  app:
+    schemaPath: src/generated/server.graphql
+    extensions:
+      endpoints:
+        default: 'https://vats-server.now.sh/graphql'
+      generate-fragments:
+        output: src/generated/fragments.ts
+        generator: js

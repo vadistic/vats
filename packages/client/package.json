@@ -45,6 +45,8 @@
     "@types/react-dom": "^16.0.11",
     "@types/webpack-env": "^1.13.6",
     "apollo": "^2.3.1",
+    "graphql-cli": "^3.0.6",
+    "graphql-cli-generate-fragments": "^1.4.1",
     "prettier": "^1.16.1",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.17.0",
