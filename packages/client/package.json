@@ -28,7 +28,10 @@
   "scripts": {
     "dev": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "gen:schema": "graphql get-schema",
+    "gen:fragments": "graphql generate-fragments",
+    "serve": "serve build -s"
   },
   "browserslist": [
     ">0.2%",
@@ -48,6 +51,7 @@
     "graphql-cli": "^3.0.6",
     "graphql-cli-generate-fragments": "^1.4.1",
     "prettier": "^1.16.1",
+    "serve": "^10.1.1",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.17.0",
     "tslint-react": "^3.6.0",

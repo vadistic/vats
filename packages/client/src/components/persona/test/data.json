@@ -1,0 +1,92 @@
+{
+  "data": {
+    "user": {
+      "id": "cjr9cxucf426j0a742nwut6vd",
+      "createdAt": "2019-01-23T15:42:50.847Z",
+      "updatedAt": "2019-01-23T15:42:50.847Z",
+      "tasks": [
+        {
+          "id": "cjr9d3blj461l0a74cmq4av04",
+          "createdAt": "2019-01-23T15:47:06.487Z",
+          "updatedAt": "2019-01-23T15:47:06.487Z",
+          "title": " 😓",
+          "description": null,
+          "dueAt": "2020-01-12T15:55:06.419Z",
+          "__typename": "Task"
+        },
+        {
+          "id": "cjr9d3dn235mg0a68rcpxx2nz",
+          "createdAt": "2019-01-23T15:47:09.133Z",
+          "updatedAt": "2019-01-23T15:47:09.133Z",
+          "title": " 🏀",
+          "description": null,
+          "dueAt": "2019-05-16T02:37:32.265Z",
+          "__typename": "Task"
+        },
+        {
+          "id": "cjr9d3dwm462p0a74zl55zztz",
+          "createdAt": "2019-01-23T15:47:09.478Z",
+          "updatedAt": "2019-01-23T15:47:09.478Z",
+          "title": " 🔑",
+          "description": null,
+          "dueAt": "2019-10-04T10:50:15.367Z",
+          "__typename": "Task"
+        },
+        {
+          "id": "cjr9d3mnf35qz0a68bp4pgysr",
+          "createdAt": "2019-01-23T15:47:20.811Z",
+          "updatedAt": "2019-01-23T15:47:20.811Z",
+          "title": " 🎶",
+          "description": "💀 Est sequi enim eaque sunt voluptas harum accusamus vel. Et nihil ad et exercitationem aut nesciunt in quis sed.",
+          "dueAt": "2019-06-05T23:48:14.803Z",
+          "__typename": "Task"
+        },
+        {
+          "id": "cjr9d3opr468w0a74q0wr620d",
+          "createdAt": "2019-01-23T15:47:23.487Z",
+          "updatedAt": "2019-01-23T15:47:23.487Z",
+          "title": " 🎀",
+          "description": null,
+          "dueAt": "2019-03-24T00:58:05.480Z",
+          "__typename": "Task"
+        },
+        {
+          "id": "cjr9d3q9b469t0a748zjewf8h",
+          "createdAt": "2019-01-23T15:47:25.487Z",
+          "updatedAt": "2019-01-23T15:47:25.487Z",
+          "title": " 🔫",
+          "description": null,
+          "dueAt": "2019-03-21T14:54:10.390Z",
+          "__typename": "Task"
+        },
+        {
+          "id": "cjr9d3qif35st0a68952t4wbn",
+          "createdAt": "2019-01-23T15:47:25.815Z",
+          "updatedAt": "2019-01-23T15:47:25.815Z",
+          "title": " 🐮",
+          "description": "Aliquid quod quis. Modi omnis hic. 🐶",
+          "dueAt": "2019-12-11T09:19:23.976Z",
+          "__typename": "Task"
+        }
+      ],
+      "firstName": "Christop",
+      "lastName": "Romaguera",
+      "email": "Christop_Romaguera@vadistic-recruitment.com",
+      "username": "Christop_Romaguera79",
+      "lastLogin": null,
+      "deletedAt": null,
+      "position": "function () { [native code] }District Accounts Strategist",
+      "avatar": {
+        "id": "cjr9cxuck426k0a74qpjzw28f",
+        "createdAt": "2019-01-23T15:42:50.847Z",
+        "updatedAt": "2019-01-23T15:42:50.847Z",
+        "size": 27500,
+        "type": "image/png",
+        "name": "Christop-Romaguera-profile-96x96",
+        "url": "https://api.adorable.io/avatars/96/Christop_Romaguera@vadistic-recruitment.com.png",
+        "__typename": "File"
+      },
+      "__typename": "User"
+    }
+  }
+}
