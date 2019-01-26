@@ -31,7 +31,7 @@ const defaultFieldConfig: IObjSchemaFieldConfig = {
   query: {
     single: true,
     multi: true,
-    connections: true,
+    connection: true,
   },
   mutation: {
     create: true,

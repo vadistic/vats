@@ -4,7 +4,7 @@ import { IMutation, IQuery } from './types'
 export interface ISchemaQueryFieldConfig {
   single?: boolean
   multi?: boolean
-  connections?: boolean
+  connection?: boolean
 }
 
 export interface ISchemaMutationFieldConfig {
@@ -47,7 +47,7 @@ export const buildSchemaConfig = (
       query: {
         single: false,
         multi: false,
-        connections: false,
+        connection: false,
       },
       mutation: {
         create: false,
@@ -104,8 +104,7 @@ export const buildSchemaConfig = (
       // tslint:disable:no-unused-expression
       conf.query.single && queryList.push(name)
       conf.query.multi && queryList.push(name + 's')
-      "aws-sdk": "^2.393.0",
-      "aws-sdk": "^2.393.0",
+      conf.query.connection && queryList.push(name + 's' + 'Connection')
 
       conf.mutation.create && mutationList.push(`create${uppercaseName}`)
       conf.mutation.upsert && mutationList.push(`upsert${uppercaseName}`)

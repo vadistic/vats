@@ -1,16 +1,22 @@
 type Query {
   application(where: ApplicationWhereUniqueInput!): Application
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
+  applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
   candidate(where: CandidateWhereUniqueInput!): Candidate
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
+  candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
   job(where: JobWhereUniqueInput!): Job
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
+  jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   task(where: TaskWhereUniqueInput!): Task
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 }
 
 type Mutation {
@@ -163,6 +169,12 @@ enum ApplicationOrderByInput {
   updatedAt_DESC
   type_ASC
   type_DESC
+}
+
+type ApplicationConnection {
+  pageInfo: PageInfo!
+  edges: [ApplicationEdge]!
+  aggregate: AggregateApplication!
 }
 
 type Candidate {
@@ -341,6 +353,12 @@ enum CandidateOrderByInput {
   metaPosition_DESC
 }
 
+type CandidateConnection {
+  pageInfo: PageInfo!
+  edges: [CandidateEdge]!
+  aggregate: AggregateCandidate!
+}
+
 type Job {
   id: ID!
   createdAt: DateTime!
@@ -487,6 +505,12 @@ enum JobOrderByInput {
   requirements_DESC
 }
 
+type JobConnection {
+  pageInfo: PageInfo!
+  edges: [JobEdge]!
+  aggregate: AggregateJob!
+}
+
 type Tag {
   id: ID!
   createdAt: DateTime!
@@ -557,6 +581,12 @@ enum TagOrderByInput {
   updatedAt_DESC
   label_ASC
   label_DESC
+}
+
+type TagConnection {
+  pageInfo: PageInfo!
+  edges: [TagEdge]!
+  aggregate: AggregateTag!
 }
 
 type Task {
@@ -663,6 +693,12 @@ enum TaskOrderByInput {
   description_DESC
   dueAt_ASC
   dueAt_DESC
+}
+
+type TaskConnection {
+  pageInfo: PageInfo!
+  edges: [TaskEdge]!
+  aggregate: AggregateTask!
 }
 
 type User {
@@ -832,6 +868,12 @@ enum UserOrderByInput {
   deletedAt_DESC
   position_ASC
   position_DESC
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
 }
 
 input ApplicationCreateInput {
@@ -1089,6 +1131,22 @@ input StageWhereInput {
   NOT: [StageWhereInput!]
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type ApplicationEdge {
+  node: Application!
+  cursor: String!
+}
+
+type AggregateApplication {
+  count: Int!
+}
+
 type File {
   id: ID!
   createdAt: DateTime!
@@ -1342,6 +1400,15 @@ enum CommentOrderByInput {
   updatedAt_DESC
   content_ASC
   content_DESC
+}
+
+type CandidateEdge {
+  node: Candidate!
+  cursor: String!
+}
+
+type AggregateCandidate {
+  count: Int!
 }
 
 type Workspace {
@@ -1614,6 +1681,42 @@ input WorkflowWhereInput {
   AND: [WorkflowWhereInput!]
   OR: [WorkflowWhereInput!]
   NOT: [WorkflowWhereInput!]
+}
+
+type JobEdge {
+  node: Job!
+  cursor: String!
+}
+
+type AggregateJob {
+  count: Int!
+}
+
+type TagEdge {
+  node: Tag!
+  cursor: String!
+}
+
+type AggregateTag {
+  count: Int!
+}
+
+type TaskEdge {
+  node: Task!
+  cursor: String!
+}
+
+type AggregateTask {
+  count: Int!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+type AggregateUser {
+  count: Int!
 }
 
 input DisqualificationInstanceCreateOneInput {

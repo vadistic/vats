@@ -6855,25 +6855,37 @@ export interface Query {
   
   applications: (Maybe<Application>)[];
   
+  applicationsConnection: ApplicationConnection;
+  
   candidate?: Maybe<Candidate>;
   
   candidates: (Maybe<Candidate>)[];
+  
+  candidatesConnection: CandidateConnection;
   
   job?: Maybe<Job>;
   
   jobs: (Maybe<Job>)[];
   
+  jobsConnection: JobConnection;
+  
   tag?: Maybe<Tag>;
   
   tags: (Maybe<Tag>)[];
+  
+  tagsConnection: TagConnection;
   
   task?: Maybe<Task>;
   
   tasks: (Maybe<Task>)[];
   
+  tasksConnection: TaskConnection;
+  
   user?: Maybe<User>;
   
   users: (Maybe<User>)[];
+  
+  usersConnection: UserConnection;
 }
 
 
@@ -7217,6 +7229,162 @@ export interface Location {
 }
 
 
+export interface ApplicationConnection {
+  
+  pageInfo: PageInfo;
+  
+  edges: (Maybe<ApplicationEdge>)[];
+  
+  aggregate: AggregateApplication;
+}
+
+
+export interface PageInfo {
+  
+  hasNextPage: boolean;
+  
+  hasPreviousPage: boolean;
+  
+  startCursor?: Maybe<string>;
+  
+  endCursor?: Maybe<string>;
+}
+
+
+export interface ApplicationEdge {
+  
+  node: Application;
+  
+  cursor: string;
+}
+
+
+export interface AggregateApplication {
+  
+  count: number;
+}
+
+
+export interface CandidateConnection {
+  
+  pageInfo: PageInfo;
+  
+  edges: (Maybe<CandidateEdge>)[];
+  
+  aggregate: AggregateCandidate;
+}
+
+
+export interface CandidateEdge {
+  
+  node: Candidate;
+  
+  cursor: string;
+}
+
+
+export interface AggregateCandidate {
+  
+  count: number;
+}
+
+
+export interface JobConnection {
+  
+  pageInfo: PageInfo;
+  
+  edges: (Maybe<JobEdge>)[];
+  
+  aggregate: AggregateJob;
+}
+
+
+export interface JobEdge {
+  
+  node: Job;
+  
+  cursor: string;
+}
+
+
+export interface AggregateJob {
+  
+  count: number;
+}
+
+
+export interface TagConnection {
+  
+  pageInfo: PageInfo;
+  
+  edges: (Maybe<TagEdge>)[];
+  
+  aggregate: AggregateTag;
+}
+
+
+export interface TagEdge {
+  
+  node: Tag;
+  
+  cursor: string;
+}
+
+
+export interface AggregateTag {
+  
+  count: number;
+}
+
+
+export interface TaskConnection {
+  
+  pageInfo: PageInfo;
+  
+  edges: (Maybe<TaskEdge>)[];
+  
+  aggregate: AggregateTask;
+}
+
+
+export interface TaskEdge {
+  
+  node: Task;
+  
+  cursor: string;
+}
+
+
+export interface AggregateTask {
+  
+  count: number;
+}
+
+
+export interface UserConnection {
+  
+  pageInfo: PageInfo;
+  
+  edges: (Maybe<UserEdge>)[];
+  
+  aggregate: AggregateUser;
+}
+
+
+export interface UserEdge {
+  
+  node: User;
+  
+  cursor: string;
+}
+
+
+export interface AggregateUser {
+  
+  count: number;
+}
+
+
 export interface Mutation {
   
   createApplication: Application;
@@ -7300,11 +7468,43 @@ export interface ApplicationsQueryArgs {
   
   last?: Maybe<number>;
 }
+export interface ApplicationsConnectionQueryArgs {
+  
+  where?: Maybe<ApplicationWhereInput>;
+  
+  orderBy?: Maybe<ApplicationOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
 export interface CandidateQueryArgs {
   
   where: CandidateWhereUniqueInput;
 }
 export interface CandidatesQueryArgs {
+  
+  where?: Maybe<CandidateWhereInput>;
+  
+  orderBy?: Maybe<CandidateOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface CandidatesConnectionQueryArgs {
   
   where?: Maybe<CandidateWhereInput>;
   
@@ -7340,11 +7540,43 @@ export interface JobsQueryArgs {
   
   last?: Maybe<number>;
 }
+export interface JobsConnectionQueryArgs {
+  
+  where?: Maybe<JobWhereInput>;
+  
+  orderBy?: Maybe<JobOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
 export interface TagQueryArgs {
   
   where: TagWhereUniqueInput;
 }
 export interface TagsQueryArgs {
+  
+  where?: Maybe<TagWhereInput>;
+  
+  orderBy?: Maybe<TagOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface TagsConnectionQueryArgs {
   
   where?: Maybe<TagWhereInput>;
   
@@ -7380,11 +7612,43 @@ export interface TasksQueryArgs {
   
   last?: Maybe<number>;
 }
+export interface TasksConnectionQueryArgs {
+  
+  where?: Maybe<TaskWhereInput>;
+  
+  orderBy?: Maybe<TaskOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
 export interface UserQueryArgs {
   
   where: UserWhereUniqueInput;
 }
 export interface UsersQueryArgs {
+  
+  where?: Maybe<UserWhereInput>;
+  
+  orderBy?: Maybe<UserOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface UsersConnectionQueryArgs {
   
   where?: Maybe<UserWhereInput>;
   
@@ -7904,25 +8168,37 @@ export namespace QueryResolvers {
     
     applications?: ApplicationsResolver<(Maybe<Application>)[], TypeParent, Context>;
     
+    applicationsConnection?: ApplicationsConnectionResolver<ApplicationConnection, TypeParent, Context>;
+    
     candidate?: CandidateResolver<Maybe<Candidate>, TypeParent, Context>;
     
     candidates?: CandidatesResolver<(Maybe<Candidate>)[], TypeParent, Context>;
+    
+    candidatesConnection?: CandidatesConnectionResolver<CandidateConnection, TypeParent, Context>;
     
     job?: JobResolver<Maybe<Job>, TypeParent, Context>;
     
     jobs?: JobsResolver<(Maybe<Job>)[], TypeParent, Context>;
     
+    jobsConnection?: JobsConnectionResolver<JobConnection, TypeParent, Context>;
+    
     tag?: TagResolver<Maybe<Tag>, TypeParent, Context>;
     
     tags?: TagsResolver<(Maybe<Tag>)[], TypeParent, Context>;
+    
+    tagsConnection?: TagsConnectionResolver<TagConnection, TypeParent, Context>;
     
     task?: TaskResolver<Maybe<Task>, TypeParent, Context>;
     
     tasks?: TasksResolver<(Maybe<Task>)[], TypeParent, Context>;
     
+    tasksConnection?: TasksConnectionResolver<TaskConnection, TypeParent, Context>;
+    
     user?: UserResolver<Maybe<User>, TypeParent, Context>;
     
     users?: UsersResolver<(Maybe<User>)[], TypeParent, Context>;
+    
+    usersConnection?: UsersConnectionResolver<UserConnection, TypeParent, Context>;
   }
 
 
@@ -7935,6 +8211,25 @@ export namespace QueryResolvers {
 
   export type ApplicationsResolver<R = (Maybe<Application>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, ApplicationsArgs>;
   export interface ApplicationsArgs {
+    
+    where?: Maybe<ApplicationWhereInput>;
+    
+    orderBy?: Maybe<ApplicationOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
+  export type ApplicationsConnectionResolver<R = ApplicationConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, ApplicationsConnectionArgs>;
+  export interface ApplicationsConnectionArgs {
     
     where?: Maybe<ApplicationWhereInput>;
     
@@ -7978,6 +8273,25 @@ export namespace QueryResolvers {
   }
 
 
+  export type CandidatesConnectionResolver<R = CandidateConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CandidatesConnectionArgs>;
+  export interface CandidatesConnectionArgs {
+    
+    where?: Maybe<CandidateWhereInput>;
+    
+    orderBy?: Maybe<CandidateOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
   export type JobResolver<R = Maybe<Job>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, JobArgs>;
   export interface JobArgs {
     
@@ -7987,6 +8301,25 @@ export namespace QueryResolvers {
 
   export type JobsResolver<R = (Maybe<Job>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, JobsArgs>;
   export interface JobsArgs {
+    
+    where?: Maybe<JobWhereInput>;
+    
+    orderBy?: Maybe<JobOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
+  export type JobsConnectionResolver<R = JobConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, JobsConnectionArgs>;
+  export interface JobsConnectionArgs {
     
     where?: Maybe<JobWhereInput>;
     
@@ -8030,6 +8363,25 @@ export namespace QueryResolvers {
   }
 
 
+  export type TagsConnectionResolver<R = TagConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, TagsConnectionArgs>;
+  export interface TagsConnectionArgs {
+    
+    where?: Maybe<TagWhereInput>;
+    
+    orderBy?: Maybe<TagOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
   export type TaskResolver<R = Maybe<Task>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, TaskArgs>;
   export interface TaskArgs {
     
@@ -8056,6 +8408,25 @@ export namespace QueryResolvers {
   }
 
 
+  export type TasksConnectionResolver<R = TaskConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, TasksConnectionArgs>;
+  export interface TasksConnectionArgs {
+    
+    where?: Maybe<TaskWhereInput>;
+    
+    orderBy?: Maybe<TaskOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
   export type UserResolver<R = Maybe<User>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UserArgs>;
   export interface UserArgs {
     
@@ -8065,6 +8436,25 @@ export namespace QueryResolvers {
 
   export type UsersResolver<R = (Maybe<User>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, UsersArgs>;
   export interface UsersArgs {
+    
+    where?: Maybe<UserWhereInput>;
+    
+    orderBy?: Maybe<UserOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
+  export type UsersConnectionResolver<R = UserConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UsersConnectionArgs>;
+  export interface UsersConnectionArgs {
     
     where?: Maybe<UserWhereInput>;
     
@@ -8989,6 +9379,259 @@ export namespace LocationResolvers {
   export type ZipResolver<R = string, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;  
 }
 
+export namespace ApplicationConnectionResolvers {
+  export interface Resolvers<Context = {}, TypeParent = ApplicationConnection> {
+    
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    
+    edges?: EdgesResolver<(Maybe<ApplicationEdge>)[], TypeParent, Context>;
+    
+    aggregate?: AggregateResolver<AggregateApplication, TypeParent, Context>;
+  }
+
+
+  export type PageInfoResolver<R = PageInfo, Parent = ApplicationConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type EdgesResolver<R = (Maybe<ApplicationEdge>)[], Parent = ApplicationConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type AggregateResolver<R = AggregateApplication, Parent = ApplicationConnection, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace PageInfoResolvers {
+  export interface Resolvers<Context = {}, TypeParent = PageInfo> {
+    
+    hasNextPage?: HasNextPageResolver<boolean, TypeParent, Context>;
+    
+    hasPreviousPage?: HasPreviousPageResolver<boolean, TypeParent, Context>;
+    
+    startCursor?: StartCursorResolver<Maybe<string>, TypeParent, Context>;
+    
+    endCursor?: EndCursorResolver<Maybe<string>, TypeParent, Context>;
+  }
+
+
+  export type HasNextPageResolver<R = boolean, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;
+  export type HasPreviousPageResolver<R = boolean, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;
+  export type StartCursorResolver<R = Maybe<string>, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;
+  export type EndCursorResolver<R = Maybe<string>, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace ApplicationEdgeResolvers {
+  export interface Resolvers<Context = {}, TypeParent = ApplicationEdge> {
+    
+    node?: NodeResolver<Application, TypeParent, Context>;
+    
+    cursor?: CursorResolver<string, TypeParent, Context>;
+  }
+
+
+  export type NodeResolver<R = Application, Parent = ApplicationEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type CursorResolver<R = string, Parent = ApplicationEdge, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace AggregateApplicationResolvers {
+  export interface Resolvers<Context = {}, TypeParent = AggregateApplication> {
+    
+    count?: CountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type CountResolver<R = number, Parent = AggregateApplication, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace CandidateConnectionResolvers {
+  export interface Resolvers<Context = {}, TypeParent = CandidateConnection> {
+    
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    
+    edges?: EdgesResolver<(Maybe<CandidateEdge>)[], TypeParent, Context>;
+    
+    aggregate?: AggregateResolver<AggregateCandidate, TypeParent, Context>;
+  }
+
+
+  export type PageInfoResolver<R = PageInfo, Parent = CandidateConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type EdgesResolver<R = (Maybe<CandidateEdge>)[], Parent = CandidateConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type AggregateResolver<R = AggregateCandidate, Parent = CandidateConnection, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace CandidateEdgeResolvers {
+  export interface Resolvers<Context = {}, TypeParent = CandidateEdge> {
+    
+    node?: NodeResolver<Candidate, TypeParent, Context>;
+    
+    cursor?: CursorResolver<string, TypeParent, Context>;
+  }
+
+
+  export type NodeResolver<R = Candidate, Parent = CandidateEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type CursorResolver<R = string, Parent = CandidateEdge, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace AggregateCandidateResolvers {
+  export interface Resolvers<Context = {}, TypeParent = AggregateCandidate> {
+    
+    count?: CountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type CountResolver<R = number, Parent = AggregateCandidate, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace JobConnectionResolvers {
+  export interface Resolvers<Context = {}, TypeParent = JobConnection> {
+    
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    
+    edges?: EdgesResolver<(Maybe<JobEdge>)[], TypeParent, Context>;
+    
+    aggregate?: AggregateResolver<AggregateJob, TypeParent, Context>;
+  }
+
+
+  export type PageInfoResolver<R = PageInfo, Parent = JobConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type EdgesResolver<R = (Maybe<JobEdge>)[], Parent = JobConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type AggregateResolver<R = AggregateJob, Parent = JobConnection, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace JobEdgeResolvers {
+  export interface Resolvers<Context = {}, TypeParent = JobEdge> {
+    
+    node?: NodeResolver<Job, TypeParent, Context>;
+    
+    cursor?: CursorResolver<string, TypeParent, Context>;
+  }
+
+
+  export type NodeResolver<R = Job, Parent = JobEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type CursorResolver<R = string, Parent = JobEdge, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace AggregateJobResolvers {
+  export interface Resolvers<Context = {}, TypeParent = AggregateJob> {
+    
+    count?: CountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type CountResolver<R = number, Parent = AggregateJob, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace TagConnectionResolvers {
+  export interface Resolvers<Context = {}, TypeParent = TagConnection> {
+    
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    
+    edges?: EdgesResolver<(Maybe<TagEdge>)[], TypeParent, Context>;
+    
+    aggregate?: AggregateResolver<AggregateTag, TypeParent, Context>;
+  }
+
+
+  export type PageInfoResolver<R = PageInfo, Parent = TagConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type EdgesResolver<R = (Maybe<TagEdge>)[], Parent = TagConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type AggregateResolver<R = AggregateTag, Parent = TagConnection, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace TagEdgeResolvers {
+  export interface Resolvers<Context = {}, TypeParent = TagEdge> {
+    
+    node?: NodeResolver<Tag, TypeParent, Context>;
+    
+    cursor?: CursorResolver<string, TypeParent, Context>;
+  }
+
+
+  export type NodeResolver<R = Tag, Parent = TagEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type CursorResolver<R = string, Parent = TagEdge, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace AggregateTagResolvers {
+  export interface Resolvers<Context = {}, TypeParent = AggregateTag> {
+    
+    count?: CountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type CountResolver<R = number, Parent = AggregateTag, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace TaskConnectionResolvers {
+  export interface Resolvers<Context = {}, TypeParent = TaskConnection> {
+    
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    
+    edges?: EdgesResolver<(Maybe<TaskEdge>)[], TypeParent, Context>;
+    
+    aggregate?: AggregateResolver<AggregateTask, TypeParent, Context>;
+  }
+
+
+  export type PageInfoResolver<R = PageInfo, Parent = TaskConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type EdgesResolver<R = (Maybe<TaskEdge>)[], Parent = TaskConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type AggregateResolver<R = AggregateTask, Parent = TaskConnection, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace TaskEdgeResolvers {
+  export interface Resolvers<Context = {}, TypeParent = TaskEdge> {
+    
+    node?: NodeResolver<Task, TypeParent, Context>;
+    
+    cursor?: CursorResolver<string, TypeParent, Context>;
+  }
+
+
+  export type NodeResolver<R = Task, Parent = TaskEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type CursorResolver<R = string, Parent = TaskEdge, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace AggregateTaskResolvers {
+  export interface Resolvers<Context = {}, TypeParent = AggregateTask> {
+    
+    count?: CountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type CountResolver<R = number, Parent = AggregateTask, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace UserConnectionResolvers {
+  export interface Resolvers<Context = {}, TypeParent = UserConnection> {
+    
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    
+    edges?: EdgesResolver<(Maybe<UserEdge>)[], TypeParent, Context>;
+    
+    aggregate?: AggregateResolver<AggregateUser, TypeParent, Context>;
+  }
+
+
+  export type PageInfoResolver<R = PageInfo, Parent = UserConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type EdgesResolver<R = (Maybe<UserEdge>)[], Parent = UserConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type AggregateResolver<R = AggregateUser, Parent = UserConnection, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace UserEdgeResolvers {
+  export interface Resolvers<Context = {}, TypeParent = UserEdge> {
+    
+    node?: NodeResolver<User, TypeParent, Context>;
+    
+    cursor?: CursorResolver<string, TypeParent, Context>;
+  }
+
+
+  export type NodeResolver<R = User, Parent = UserEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type CursorResolver<R = string, Parent = UserEdge, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
+export namespace AggregateUserResolvers {
+  export interface Resolvers<Context = {}, TypeParent = AggregateUser> {
+    
+    count?: CountResolver<number, TypeParent, Context>;
+  }
+
+
+  export type CountResolver<R = number, Parent = AggregateUser, Context = {}> = Resolver<R, Parent, Context>;  
+}
+
 export namespace MutationResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
     
@@ -9276,6 +9919,25 @@ export interface IResolvers<Context = {}> {
     Workflow?: WorkflowResolvers.Resolvers<Context>;
     Invite?: InviteResolvers.Resolvers<Context>;
     Location?: LocationResolvers.Resolvers<Context>;
+    ApplicationConnection?: ApplicationConnectionResolvers.Resolvers<Context>;
+    PageInfo?: PageInfoResolvers.Resolvers<Context>;
+    ApplicationEdge?: ApplicationEdgeResolvers.Resolvers<Context>;
+    AggregateApplication?: AggregateApplicationResolvers.Resolvers<Context>;
+    CandidateConnection?: CandidateConnectionResolvers.Resolvers<Context>;
+    CandidateEdge?: CandidateEdgeResolvers.Resolvers<Context>;
+    AggregateCandidate?: AggregateCandidateResolvers.Resolvers<Context>;
+    JobConnection?: JobConnectionResolvers.Resolvers<Context>;
+    JobEdge?: JobEdgeResolvers.Resolvers<Context>;
+    AggregateJob?: AggregateJobResolvers.Resolvers<Context>;
+    TagConnection?: TagConnectionResolvers.Resolvers<Context>;
+    TagEdge?: TagEdgeResolvers.Resolvers<Context>;
+    AggregateTag?: AggregateTagResolvers.Resolvers<Context>;
+    TaskConnection?: TaskConnectionResolvers.Resolvers<Context>;
+    TaskEdge?: TaskEdgeResolvers.Resolvers<Context>;
+    AggregateTask?: AggregateTaskResolvers.Resolvers<Context>;
+    UserConnection?: UserConnectionResolvers.Resolvers<Context>;
+    UserEdge?: UserEdgeResolvers.Resolvers<Context>;
+    AggregateUser?: AggregateUserResolvers.Resolvers<Context>;
     Mutation?: MutationResolvers.Resolvers<Context>;
     AccessPayload?: AccessPayloadResolvers.Resolvers<Context>;
     AuthPayload?: AuthPayloadResolvers.Resolvers<Context>;
