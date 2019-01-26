@@ -15,21 +15,18 @@ const USER_ID = 'cjr9cxucf426j0a742nwut6vd'
 
 export const PersonaFixture: React.FC<any> = () => (
   <>
+    <h3>Persona Fixture</h3>
     <UserPersona user={mock.data.user} />
   </>
 )
 
 export const PersonaLiveFixture: React.FC<any> = () => (
   <>
+    <h3>Persona Live Fixture</h3>
     <Query<any> query={personaFixtureQuery} variables={{ id: USER_ID }}>
-      {({ data }) => {
-        console.log('data: ', data)
-        if (data && data.user) {
-          return <UserPersona user={data.user} />
-        } else {
-          return null
-        }
-      }}
+      {({ data }) =>
+        (data && data.user && <UserPersona user={data.user} />) || null
+      }
     </Query>
   </>
 )

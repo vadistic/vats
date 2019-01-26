@@ -1,7 +1,10 @@
 import { getRoutes } from './utils'
 
 // first level children are views
-export const routerConfig = {
+export const routesConfig = {
+  home: {
+    path: ''
+  },
   test: {
     path: 'test',
     children: {
@@ -12,4 +15,4 @@ export const routerConfig = {
   }
 }
 
-export const routes = getRoutes(routerConfig)
+export const routes = getRoutes(routesConfig)

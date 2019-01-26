@@ -5,19 +5,18 @@ export interface IUserPersonaProps extends IPersonaSharedProps {
 }
 
 export const UserPersona: React.SFC<IUserPersonaProps> = ({
-  user: { avatar, firstName, lastName },
+  user: { avatar, firstName, lastName, position },
   ...rest
 }) => {
   return (
     <Persona
       hidePersonaDetails={false}
-      imageAlt={'first name last name profile photo'}
+      imageAlt={`${firstName} ${lastName} avatar`}
       imageShouldFadeIn={true}
+      // handle user without avatar
       imageUrl={avatar ? avatar.url : undefined}
       text={`${firstName} ${lastName}`}
-      secondaryText={'Secondary text'}
-      tertiaryText={'Tetriary text'}
-      optionalText={'optional text'}
+      secondaryText={`${position}`}
       {...rest}
     />
   )
