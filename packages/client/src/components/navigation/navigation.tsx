@@ -1,36 +1,42 @@
-import { INavLinkGroup, Nav } from 'office-ui-fabric-react'
+import { INavLink, INavLinkGroup, Nav } from 'office-ui-fabric-react'
 import * as React from 'react'
+
 import { routes } from '../../routes'
 
 export interface INavigationProps {}
 
 export const Navigation: React.FC = () => {
-  const groups: INavLinkGroup[] = [
-    {
-      links: [
-        {
-          name: 'Home',
-          url: routes.home.url,
-          isExpanded: true
-        },
-        {
-          name: 'Test',
-          url: routes.test.url,
-          isExpanded: true,
-          links: [
-            {
-              name: 'Persona',
-              url: routes.test.children.persona.url
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  const main: INavLinkGroup = {
+    links: [
+      {
+        name: 'Home',
+        url: routes.home.url,
+        isExpanded: true
+      }
+    ]
+  }
+
+  const test: INavLinkGroup = {
+    links: [
+      {
+        name: 'Test',
+        url: routes.test.url,
+        isExpanded: true,
+        links: [
+          {
+            name: 'Persona',
+            url: routes.test.children.persona.url
+          }
+        ]
+      }
+    ]
+  }
 
   const onLinkClick = () => {
     console.log('click')
   }
+
+  const groups = process.env.NODE_ENV === 'development' ? [main, test] : [main]
 
   return (
     <Nav
