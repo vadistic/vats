@@ -1,10 +1,8 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import * as f from 'faker'
-import { Prisma } from 'prisma-binding'
+// tslint:disable-next-line:no-implicit-dependencies
 import * as R from 'ramda'
 
-// tslint:disable-next-line:no-implicit-dependencies
-import { Options } from 'graphql-binding'
 import {
   Application,
   ApplicationType,
@@ -14,26 +12,16 @@ import {
   Job,
   JobType,
   Location,
-  Prisma as PrismaBinding,
   Tag,
   Task,
   User,
   Workflow,
 } from '../../src/generated/prisma-binding'
-import { FirstArgument } from '../../src/utils'
-import { fakeEmoji, fakeSocialLink, List, randomConnectMany, randomFn } from './utils'
+import { db } from './setup'
+import { attempt, fakeEmoji, fakeSocialLink, List, randomConnectMany, randomFn } from './utils'
 import { workflowsData } from './workflows'
 
-const prisma: any = new Prisma({
-  typeDefs: 'src/generated/prisma.graphql',
-  endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`,
-  debug: true,
-  secret: process.env.PRISMA_SECRET,
-})
-
 // Because generated bindings are not nominally compatible with original class
-
-const db: PrismaBinding = prisma
 
 const config = {
   USERS_NUMBER: 10,
@@ -46,27 +34,7 @@ const config = {
   TASKS_NUMBER: 50,
 }
 
-const TIMEOUT = 50
-const RETRY = 10
-
-const attempt = async <T extends (args: any, info?: string, options?: Options) => ReturnType<T>>(
-  fn: T,
-  args: FirstArgument<T>,
-  info?: string,
-  options?: Options,
-) => {
-  for (let i = 0; i < RETRY; i++) {
-    try {
-      const res = await fn(args, info, options)
-      return res
-    } catch (err) {
-      console.log('Error! Attempting again...', i + 1, err)
-    }
-  }
-  throw new Error(`Query failed after ${RETRY} attempts`)
-}
-
-const setup = async () => {
+const seed = async () => {
   // seed workspace
   const workspace = await db.mutation.createWorkspace({
     data: {
@@ -79,10 +47,6 @@ const setup = async () => {
   console.log('Seeding users start')
   const users = new List<User>()
   for (let i = 0; i < config.USERS_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
-
     const gender = f.random.number(1)
     const firstName = f.name.firstName(gender)
     const lastName = f.name.lastName(gender)
@@ -105,15 +69,13 @@ const setup = async () => {
         username,
         // half of guys would have avatars
         avatar: f.random.boolean ? { create: avatarFile } : undefined,
-        position: f.name.jobDescriptor() + f.name.jobTitle(),
-        // edges
-        workspace: { connect: { id: workspace.id } },
+        position: f.name.jobTitle(),
       },
     })
   }
   console.log('Seeding users end')
 
-  // seed myself
+  // seed my account
   console.log('Seeding myself?')
   users.arr.push(
     await attempt(db.mutation.createUser, {
@@ -123,7 +85,6 @@ const setup = async () => {
         email: 'vadistic@gmail.com',
         username: 'vadistic',
         position: f.name.jobTitle(),
-        workspace: { connect: { id: workspace.id } },
       },
     }),
   )
@@ -133,10 +94,6 @@ const setup = async () => {
   console.log('Seeding locations start')
   const locations = new List<Location>()
   for (let i = 0; i < config.JOBS_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
-
     locations.arr[i] = await attempt(db.mutation.createLocation, {
       data: {
         city: f.address.city(),
@@ -164,10 +121,6 @@ const setup = async () => {
   console.log('Seeding jobs start')
   const jobs = new List<Job>()
   for (let i = 0; i < config.JOBS_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
-
     jobs.arr[i] = await attempt(db.mutation.createJob, {
       data: {
         name: f.name.jobDescriptor() + ' ' + f.name.jobTitle(),
@@ -187,10 +140,6 @@ const setup = async () => {
   console.log('Seeding tags start')
   const tags = new List<Tag>()
   for (let i = 0; i < config.TAGS_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
-
     tags.arr[i] = await attempt(db.mutation.createTag, {
       data: {
         label: f.random.word().toLocaleLowerCase(),
@@ -203,10 +152,6 @@ const setup = async () => {
   console.log('Seeding candidates start')
   const candidates = new List<Candidate>()
   for (let i = 0; i < config.CANDIDATES_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
-
     const firstName = f.name.firstName()
     const lastName = f.name.lastName()
     const emails = R.times(() => f.internet.email(firstName, lastName), f.random.number(2))
@@ -225,7 +170,9 @@ const setup = async () => {
       size: f.random.number({ min: 200000, max: 7000000 }),
       type: 'application/pdf',
       // TODO: My template
-      url: 'https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=' + f.random.uuid(),
+      url:
+        'https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=' +
+        f.random.uuid(),
     }
 
     const hasResume = f.random.boolean
@@ -234,8 +181,6 @@ const setup = async () => {
 
     candidates.arr[i] = await attempt(db.mutation.createCandidate, {
       data: {
-        workspace: { connect: { id: workspace.id } },
-        subscribers: { connect: randomConnectMany(users, 3) },
         tags: { connect: randomConnectMany(tags, 8) },
         emails: { set: emails },
         phones: { set: phones },
@@ -256,13 +201,10 @@ const setup = async () => {
   console.log('Seeding comments start')
   const comments = new List<Comment>()
   for (let i = 0; i < config.COMMENTS_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
-
-    const content = R.times(() => randomFn(fakeEmoji, f.lorem.sentence)(), f.random.number({ min: 1, max: 8 })).join(
-      ' ',
-    )
+    const content = R.times(
+      () => randomFn(fakeEmoji, f.lorem.sentence)(),
+      f.random.number({ min: 1, max: 8 }),
+    ).join(' ')
 
     comments.arr[i] = await attempt(db.mutation.createComment, {
       data: {
@@ -278,9 +220,6 @@ const setup = async () => {
   console.log('Seeding tasks start')
   const tasks = new List<Task>()
   for (let i = 0; i < config.TASKS_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
     const title = f.lorem.sentence() + f.random.boolean && ' ' + fakeEmoji()
 
     const description = f.random.boolean()
@@ -303,10 +242,6 @@ const setup = async () => {
   console.log('Seeding applications start')
   const applications = new List<Application>()
   for (let i = 0; i < config.APPLICATIONS_NUMBER; i++) {
-    setTimeout(() => {
-      console.log(i)
-    }, TIMEOUT)
-
     const job = await attempt(
       db.query.job,
       { where: { id: jobs.random().id } },
@@ -321,7 +256,7 @@ const setup = async () => {
 
     const type = f.random.arrayElement(['Qualified', 'Disqualified'] as ApplicationType[])
 
-    const disqualificationLink = {
+    const disqualificationInstance = {
       disqualification: {
         connect: { id: f.random.arrayElement(job.workflow.disqualifications || []).id },
       },
@@ -334,11 +269,12 @@ const setup = async () => {
         job: { connect: { id: job.id } },
         stage: { connect: { id: stage.id } },
         type,
-        disqualificationLink: type === 'Disqualified' ? { create: disqualificationLink } : undefined,
+        disqualification:
+          type === 'Disqualified' ? { create: disqualificationInstance } : undefined,
       },
     })
   }
   console.log('Script confirms that seeding was a success 👍')
 }
 
-setup()
+seed()

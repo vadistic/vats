@@ -1,7 +1,11 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import * as f from 'faker'
+// tslint:disable-next-line:no-implicit-dependencies
+import { Options } from 'graphql-binding'
+// tslint:disable-next-line:no-implicit-dependencies
 import * as R from 'ramda'
 
+import { FirstArgument } from '../../src/utils'
 import { EMOJI } from './emoji'
 
 export const randomConnectMany = (to: List<any>, max: number = 1) =>
@@ -21,3 +25,30 @@ const SOCIAL_MEDIA = [`github.com/`, `twitter.com/`, `linkedin.com/in/`, `facebo
 export const fakeSocialLink = () => f.random.arrayElement(SOCIAL_MEDIA) + f.internet.userName()
 
 export const fakeEmoji = () => f.random.arrayElement(EMOJI)
+
+const TIMEOUT = 50
+const RETRY = 15
+
+// function allowing to finish seeding in case of some network issues
+export const attempt = async <
+  T extends (args: any, info?: string, options?: Options) => ReturnType<T>
+>(
+  fn: T,
+  args: FirstArgument<T>,
+  info?: string,
+  options?: Options,
+) => {
+  for (let i = 0; i < RETRY; i++) {
+    try {
+      const res = await fn(args, info, options)
+      return res
+    } catch (err) {
+      setTimeout(() => {
+        console.log(i)
+      }, TIMEOUT)
+
+      console.log('Error! Attempting again...', i + 1, err)
+    }
+  }
+  throw new Error(`Query failed after ${RETRY} attempts`)
+}
