@@ -7,6 +7,9 @@ import { globalStyles, ITheme } from '../../styles'
 const layoutStyles = (theme: ITheme) => css`
   display: grid;
   grid-template-columns: 180px 1fr;
+
+  height: 100%;
+  min-height: 100vh;
 `
 
 export const Layout: React.FC = ({ children }) => (

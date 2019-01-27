@@ -1,6 +1,8 @@
-import { RouteComponentProps, Router } from '@reach/router'
+import { RouteComponentProps } from '@reach/router'
 import React from 'react'
 
+import { Router } from '../components'
+import { Fixture } from '../components/fixture'
 import { PersonaLiveFixture } from '../components/persona/test/fixture'
 import { routes } from '../routes'
 
@@ -10,7 +12,11 @@ export const TestView: React.FC<ITestViewProps> = () => (
   <>
     <h1>Test</h1>
     <Router basepath={routes.test.basepath}>
-      <PersonaLiveFixture path={routes.test.children.persona.path} />
+      <Fixture
+        path={routes.test.children.persona.path}
+        name="UserPersona"
+        component={PersonaLiveFixture}
+      />
     </Router>
   </>
 )
