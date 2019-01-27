@@ -3,12 +3,16 @@ import React from 'react'
 import { Query } from 'react-apollo'
 
 import { UserPersona } from '..'
+
 import {
   FileNoNestingFragment,
   TaskNoNestingFragment,
   UserFragment
 } from '../../../generated/fragments'
-
+import {
+  PersonaFixtureQuery,
+  PersonaFixtureQueryVariables
+} from '../../../generated/graphql'
 import mock from './data.json'
 
 const USER_ID = 'cjr9cxucf426j0a742nwut6vd'
@@ -23,7 +27,10 @@ export const PersonaFixture: React.FC<any> = () => (
 export const PersonaLiveFixture: React.FC<any> = () => (
   <>
     <h3>Persona Live Fixture</h3>
-    <Query<any> query={personaFixtureQuery} variables={{ id: USER_ID }}>
+    <Query<PersonaFixtureQuery, PersonaFixtureQueryVariables>
+      query={personaFixtureQuery}
+      variables={{ id: USER_ID }}
+    >
       {({ data }) =>
         (data && data.user && <UserPersona user={data.user} />) || null
       }
@@ -37,7 +44,6 @@ const personaFixtureQuery = gql`
       ...User
     }
   }
+
   ${UserFragment}
-  ${TaskNoNestingFragment}
-  ${FileNoNestingFragment}
 `

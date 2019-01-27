@@ -4543,7 +4543,7 @@ dotenv@^4.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
   integrity sha1-hk7xN5rO1Vzm+V3r7NzhefegzR0=
 
-dotenv@^6.1.0:
+dotenv@^6.1.0, dotenv@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
@@ -5931,10 +5931,9 @@ graphcool-yml@0.4.15:
     scuid "^1.0.2"
     yaml-ast-parser "^0.0.40"
 
-graphql-cli-generate-fragments@^1.4.1:
+graphql-cli-generate-fragments@vadistic/graphql-cli-generate-fragments#graphql-tag:
   version "1.4.1"
-  resolved "https://registry.yarnpkg.com/graphql-cli-generate-fragments/-/graphql-cli-generate-fragments-1.4.1.tgz#a58ca7643071a2dc0ba0677c911322dde7444ece"
-  integrity sha512-hC0qlhzoMl6wq8XlpFI33IuXrXcc1ZVU1hRY/vHW+70KIwupH5R9hzpCAqzHXjkGmC8ngxYwVse0hfeZpquWvQ==
+  resolved "https://codeload.github.com/vadistic/graphql-cli-generate-fragments/tar.gz/7f65a975445f2f52b34ccbde2909ee4396a222d6"
   dependencies:
     "@types/graphql" "^0.13.1"
     chalk "2.3.0"

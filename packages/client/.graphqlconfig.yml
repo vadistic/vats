@@ -3,7 +3,7 @@ projects:
     schemaPath: src/generated/server.graphql
     extensions:
       endpoints:
-        default: 'https://vats-server.now.sh/graphql'
+        default: ${env:ENDPOINT}
       generate-fragments:
         output: src/generated/fragments.ts
         generator: js

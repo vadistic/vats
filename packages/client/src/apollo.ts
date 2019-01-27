@@ -8,7 +8,9 @@ const cache = new InMemoryCache({
   dataIdFromObject: obj => obj.id
 })
 
-const httpLink = new HttpLink({ uri: process.env.REACT_APP_GRAPHQL_ENDPOINT })
+const httpLink = new HttpLink({
+  uri: process.env.REACT_APP_GRAPHQL_LIVE_ENDPOINT
+})
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {

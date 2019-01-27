@@ -1,5 +1,5 @@
 # source: https://vats-server.now.sh
-# timestamp: Sat Jan 26 2019 08:53:19 GMT+0100 (Central European Standard Time)
+# timestamp: Sun Jan 27 2019 18:20:40 GMT+0100 (Central European Standard Time)
 
 type AccessPayload {
   token: String!
