@@ -52,7 +52,6 @@ const personaFixtureIndexQuery = gql`
 
 const personaFixtureQuery = gql`
   query PersonaFixtureQuery($where: UserWhereUniqueInput!) {
-    localField @client
     user(where: $where) {
       ...User
     }

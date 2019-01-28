@@ -22,12 +22,10 @@ export const Navigation: React.FC = () => {
         name: 'Test',
         url: routes.test.url,
         isExpanded: true,
-        links: [
-          {
-            name: 'Persona',
-            url: routes.test.children.persona.url
-          }
-        ]
+        links: Object.entries(routes.test.children).map(([name, item]) => ({
+          name,
+          url: item.url
+        }))
       }
     ]
   }

@@ -4,6 +4,7 @@ import React from 'react'
 import { Router } from '../components'
 import { Fixture } from '../components/fixture'
 import { PersonaLiveFixture } from '../components/persona/test/fixture'
+import { TableLiveFixture } from '../components/table/test/fixture'
 import { routes } from '../routes'
 
 export interface ITestViewProps extends RouteComponentProps {}
@@ -16,6 +17,11 @@ export const TestView: React.FC<ITestViewProps> = () => (
         path={routes.test.children.persona.path}
         name="UserPersona"
         component={PersonaLiveFixture}
+      />
+      <Fixture
+        path={routes.test.children.table.path}
+        name="CandidatesTable"
+        component={TableLiveFixture}
       />
     </Router>
   </>

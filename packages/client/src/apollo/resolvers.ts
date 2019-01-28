@@ -10,8 +10,6 @@ const Query: IQuery = {
   localField: (parent, args, { cache }) => {
     // noop
 
-    console.log(cache)
-
     return 'resolved'
   }
 }

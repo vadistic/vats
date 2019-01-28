@@ -102,6 +102,112 @@ export interface PersonaFixtureQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TableFixtureQuery
+// ====================================================
+
+export interface TableFixtureQuery_candidates_avatar {
+  __typename: "File";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  size: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
+export interface TableFixtureQuery_candidates_resumesFile {
+  __typename: "File";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  size: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
+export interface TableFixtureQuery_candidates_coverLettersFile {
+  __typename: "File";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  size: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
+export interface TableFixtureQuery_candidates_tags {
+  __typename: "Tag";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  label: string;
+}
+
+export interface TableFixtureQuery_candidates_fields {
+  __typename: "FieldInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  value: string | null;
+}
+
+export interface TableFixtureQuery_candidates_tasks {
+  __typename: "Task";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  title: string | null;
+  description: string | null;
+  dueAt: any | null;
+}
+
+export interface TableFixtureQuery_candidates_applications {
+  __typename: "Application";
+  createdAt: any;
+  id: string;
+  updatedAt: any;
+  type: ApplicationType;
+}
+
+export interface TableFixtureQuery_candidates_comments {
+  __typename: "Comment";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  content: string;
+}
+
+export interface TableFixtureQuery_candidates {
+  __typename: "Candidate";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  firstName: string;
+  lastName: string;
+  avatar: TableFixtureQuery_candidates_avatar | null;
+  metaCompany: string | null;
+  metaHeadline: string | null;
+  metaPosition: string | null;
+  resumesFile: TableFixtureQuery_candidates_resumesFile[] | null;
+  coverLettersFile: TableFixtureQuery_candidates_coverLettersFile[] | null;
+  tags: TableFixtureQuery_candidates_tags[] | null;
+  fields: TableFixtureQuery_candidates_fields[] | null;
+  tasks: TableFixtureQuery_candidates_tasks[] | null;
+  applications: TableFixtureQuery_candidates_applications[] | null;
+  comments: TableFixtureQuery_candidates_comments[] | null;
+}
+
+export interface TableFixtureQuery {
+  candidates: (TableFixtureQuery_candidates | null)[];
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: ApplicationNoNesting
 // ====================================================
 

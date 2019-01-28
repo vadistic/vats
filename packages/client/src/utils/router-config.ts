@@ -1,6 +1,6 @@
 interface IRouteConfig {
   path: string
-  children: IRoutesChildrenConfig
+  children: IRoutesConfigMap
 }
 
 interface ISubRouteConfig {
@@ -8,7 +8,7 @@ interface ISubRouteConfig {
   children?: never
 }
 
-interface IRoutesChildrenConfig {
+interface IRoutesConfigMap {
   [name: string]: IRouteConfig | ISubRouteConfig
 }
 
@@ -19,25 +19,34 @@ interface ISubRoute {
   children: never
 }
 
-interface IRoute {
-  path: string
-  basepath: string
-  url: string
-  children: IChildrenRoutes
-}
-
-interface IChildrenRoutes {
+interface IRoutesMap {
   [name: string]: ISubRoute | IRoute
 }
 
-export type RoutesMap<T> = { [K in keyof T]: ISubRoute | IRoute }
+// hack, but only thing that allow recursive, conditional & strict transform
+interface IRouteIndicies {
+  path: unknown
+  basepath: unknown
+  url: unknown
+  children: unknown
+}
 
-export const getRoutes = <T extends IRoutesChildrenConfig>(rootConfig: T) => {
-  const recursiveRoutes = (
-    children: IRoutesChildrenConfig,
-    parentUrl: string
-  ) => {
-    const _children = (children as unknown) as IChildrenRoutes
+type WithRouteIndicies<T> = T & IRouteIndicies
+
+interface IRoute<T = IRoutesMap> {
+  path: string
+  basepath: string
+  url: string
+  children: RoutesMap<WithRouteIndicies<T>['children']>
+}
+
+export type RoutesMap<T> = {
+  [K in keyof T]: T[K] extends IRouteConfig ? IRoute<T[K]> : ISubRoute
+}
+
+export const getRoutes = <T extends IRoutesConfigMap>(rootConfig: T) => {
+  const recursiveRoutes = (children: IRoutesConfigMap, parentUrl: string) => {
+    const _children = (children as unknown) as IRoutesMap
     Object.entries(children).forEach(([key, val]) => {
       const url = `${parentUrl}/${val.path}`
       _children[key].url = url

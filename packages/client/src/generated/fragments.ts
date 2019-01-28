@@ -3,525 +3,541 @@
 
 import gql from 'graphql-tag'
 
-
-export const ApplicationNoNestingFragment = gql`fragment ApplicationNoNesting on Application {
-  createdAt
-  id
-  updatedAt
-  type
-}
-`
-
-export const DisqualificationInstanceNoNestingFragment = gql`fragment DisqualificationInstanceNoNesting on DisqualificationInstance {
-  id
-  createdAt
-  updatedAt
-  content
-}
-`
-
-export const DisqualificationNoNestingFragment = gql`fragment DisqualificationNoNesting on Disqualification {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-}
-`
-
-export const UserNoNestingFragment = gql`fragment UserNoNesting on User {
-  id
-  createdAt
-  updatedAt
-  firstName
-  lastName
-  email
-  username
-  lastLogin
-  deletedAt
-  position
-}
-`
-
-export const TaskNoNestingFragment = gql`fragment TaskNoNesting on Task {
-  id
-  createdAt
-  updatedAt
-  title
-  description
-  dueAt
-}
-`
-
-export const CandidateNoNestingFragment = gql`fragment CandidateNoNesting on Candidate {
-  id
-  createdAt
-  updatedAt
-  firstName
-  lastName
-  metaCompany
-  metaHeadline
-  metaPosition
-}
-`
-
-export const FileNoNestingFragment = gql`fragment FileNoNesting on File {
-  id
-  createdAt
-  updatedAt
-  size
-  type
-  name
-  url
-}
-`
-
-export const TagNoNestingFragment = gql`fragment TagNoNesting on Tag {
-  id
-  createdAt
-  updatedAt
-  label
-}
-`
-
-export const FieldInstanceNoNestingFragment = gql`fragment FieldInstanceNoNesting on FieldInstance {
-  id
-  createdAt
-  updatedAt
-  value
-}
-`
-
-export const FieldNoNestingFragment = gql`fragment FieldNoNesting on Field {
-  id
-  createdAt
-  updatedAt
-  type
-  label
-}
-`
-
-export const CommentNoNestingFragment = gql`fragment CommentNoNesting on Comment {
-  id
-  createdAt
-  updatedAt
-  content
-}
-`
-
-export const StageNoNestingFragment = gql`fragment StageNoNesting on Stage {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-  type
-}
-`
-
-export const JobNoNestingFragment = gql`fragment JobNoNesting on Job {
-  id
-  createdAt
-  updatedAt
-  type
-  department
-  name
-  description
-  requirements
-}
-`
-
-export const WorkspaceNoNestingFragment = gql`fragment WorkspaceNoNesting on Workspace {
-  id
-  createdAt
-  updatedAt
-  name
-}
-`
-
-export const WorkflowNoNestingFragment = gql`fragment WorkflowNoNesting on Workflow {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-}
-`
-
-export const InviteNoNestingFragment = gql`fragment InviteNoNesting on Invite {
-  id
-  createdAt
-  updatedAt
-  email
-  expireAt
-}
-`
-
-export const LocationNoNestingFragment = gql`fragment LocationNoNesting on Location {
-  id
-  country
-  region
-  city
-  zip
-}
-`
-
-export const AccessPayloadNoNestingFragment = gql`fragment AccessPayloadNoNesting on AccessPayload {
-  token
-}
-`
-
-export const AuthPayloadNoNestingFragment = gql`fragment AuthPayloadNoNesting on AuthPayload {
-  token
-  refresh
-}
-`
-
-
-export const ApplicationFragment = gql`fragment Application on Application {
-  createdAt
-  id
-  updatedAt
-  type
-  disqualification {
-    ...DisqualificationInstanceNoNesting
+export const ApplicationNoNestingFragment = gql`
+  fragment ApplicationNoNesting on Application {
+    createdAt
+    id
+    updatedAt
+    type
   }
-  stage {
-    ...StageNoNesting
-  }
-  job {
-    ...JobNoNesting
-  }
-  candidate {
-    ...CandidateNoNesting
-  }
-}
-
-${DisqualificationInstanceNoNestingFragment}
-${StageNoNestingFragment}
-${JobNoNestingFragment}
-${CandidateNoNestingFragment}
 `
 
-
-export const DisqualificationInstanceFragment = gql`fragment DisqualificationInstance on DisqualificationInstance {
-  id
-  createdAt
-  updatedAt
-  disqualification {
-    ...DisqualificationNoNesting
+export const DisqualificationInstanceNoNestingFragment = gql`
+  fragment DisqualificationInstanceNoNesting on DisqualificationInstance {
+    id
+    createdAt
+    updatedAt
+    content
   }
-  createdBy {
-    ...UserNoNesting
-  }
-  content
-}
-
-${DisqualificationNoNestingFragment}
-${UserNoNestingFragment}
 `
 
-
-export const DisqualificationFragment = gql`fragment Disqualification on Disqualification {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-}
+export const DisqualificationNoNestingFragment = gql`
+  fragment DisqualificationNoNesting on Disqualification {
+    id
+    createdAt
+    updatedAt
+    name
+    description
+  }
 `
 
-
-export const UserFragment = gql`fragment User on User {
-  id
-  createdAt
-  updatedAt
-  tasks {
-    ...TaskNoNesting
+export const UserNoNestingFragment = gql`
+  fragment UserNoNesting on User {
+    id
+    createdAt
+    updatedAt
+    firstName
+    lastName
+    email
+    username
+    lastLogin
+    deletedAt
+    position
   }
-  firstName
-  lastName
-  email
-  username
-  lastLogin
-  deletedAt
-  position
-  avatar {
-    ...FileNoNesting
-  }
-}
-
-${TaskNoNestingFragment}
-${FileNoNestingFragment}
 `
 
-
-export const TaskFragment = gql`fragment Task on Task {
-  id
-  createdAt
-  updatedAt
-  owners {
-    ...UserNoNesting
+export const TaskNoNestingFragment = gql`
+  fragment TaskNoNesting on Task {
+    id
+    createdAt
+    updatedAt
+    title
+    description
+    dueAt
   }
-  candidate {
-    ...CandidateNoNesting
-  }
-  title
-  description
-  dueAt
-}
-
-${UserNoNestingFragment}
-${CandidateNoNestingFragment}
 `
 
-
-export const CandidateFragment = gql`fragment Candidate on Candidate {
-  id
-  createdAt
-  updatedAt
-  firstName
-  lastName
-  avatar {
-    ...FileNoNesting
+export const CandidateNoNestingFragment = gql`
+  fragment CandidateNoNesting on Candidate {
+    id
+    createdAt
+    updatedAt
+    firstName
+    lastName
+    metaCompany
+    metaHeadline
+    metaPosition
   }
-  metaCompany
-  metaHeadline
-  metaPosition
-  resumesFile {
-    ...FileNoNesting
-  }
-  coverLettersFile {
-    ...FileNoNesting
-  }
-  tags {
-    ...TagNoNesting
-  }
-  fields {
-    ...FieldInstanceNoNesting
-  }
-  tasks {
-    ...TaskNoNesting
-  }
-  applications {
-    ...ApplicationNoNesting
-  }
-  comments {
-    ...CommentNoNesting
-  }
-}
-
-${FileNoNestingFragment}
-${FileNoNestingFragment}
-${FileNoNestingFragment}
-${TagNoNestingFragment}
-${FieldInstanceNoNestingFragment}
-${TaskNoNestingFragment}
-${ApplicationNoNestingFragment}
-${CommentNoNestingFragment}
 `
 
-
-export const FileFragment = gql`fragment File on File {
-  id
-  createdAt
-  updatedAt
-  size
-  type
-  name
-  url
-}
+export const FileNoNestingFragment = gql`
+  fragment FileNoNesting on File {
+    id
+    createdAt
+    updatedAt
+    size
+    type
+    name
+    url
+  }
 `
 
-
-export const TagFragment = gql`fragment Tag on Tag {
-  id
-  createdAt
-  updatedAt
-  label
-}
+export const TagNoNestingFragment = gql`
+  fragment TagNoNesting on Tag {
+    id
+    createdAt
+    updatedAt
+    label
+  }
 `
 
-
-export const FieldInstanceFragment = gql`fragment FieldInstance on FieldInstance {
-  id
-  createdAt
-  updatedAt
-  field {
-    ...FieldNoNesting
+export const FieldInstanceNoNestingFragment = gql`
+  fragment FieldInstanceNoNesting on FieldInstance {
+    id
+    createdAt
+    updatedAt
+    value
   }
-  value
-}
-
-${FieldNoNestingFragment}
 `
 
-
-export const FieldFragment = gql`fragment Field on Field {
-  id
-  createdAt
-  updatedAt
-  type
-  label
-}
+export const FieldNoNestingFragment = gql`
+  fragment FieldNoNesting on Field {
+    id
+    createdAt
+    updatedAt
+    type
+    label
+  }
 `
 
-
-export const CommentFragment = gql`fragment Comment on Comment {
-  id
-  createdAt
-  updatedAt
-  createdBy {
-    ...UserNoNesting
+export const CommentNoNestingFragment = gql`
+  fragment CommentNoNesting on Comment {
+    id
+    createdAt
+    updatedAt
+    content
   }
-  parent {
-    ...CommentNoNesting
-  }
-  content
-}
-
-${UserNoNestingFragment}
-${CommentNoNestingFragment}
 `
 
-
-export const StageFragment = gql`fragment Stage on Stage {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-  type
-}
+export const StageNoNestingFragment = gql`
+  fragment StageNoNesting on Stage {
+    id
+    createdAt
+    updatedAt
+    name
+    description
+    type
+  }
 `
 
-
-export const JobFragment = gql`fragment Job on Job {
-  id
-  createdAt
-  updatedAt
-  workspace {
-    ...WorkspaceNoNesting
+export const JobNoNestingFragment = gql`
+  fragment JobNoNesting on Job {
+    id
+    createdAt
+    updatedAt
+    type
+    department
+    name
+    description
+    requirements
   }
-  applications {
-    ...ApplicationNoNesting
-  }
-  workflow {
-    ...WorkflowNoNesting
-  }
-  comments {
-    ...CommentNoNesting
-  }
-  type
-  department
-  locations {
-    ...LocationNoNesting
-  }
-  name
-  description
-  requirements
-}
-
-${WorkspaceNoNestingFragment}
-${ApplicationNoNestingFragment}
-${WorkflowNoNestingFragment}
-${CommentNoNestingFragment}
-${LocationNoNestingFragment}
 `
 
-
-export const WorkspaceFragment = gql`fragment Workspace on Workspace {
-  id
-  createdAt
-  updatedAt
-  users {
-    ...UserNoNesting
+export const WorkspaceNoNestingFragment = gql`
+  fragment WorkspaceNoNesting on Workspace {
+    id
+    createdAt
+    updatedAt
+    name
   }
-  jobs {
-    ...JobNoNesting
-  }
-  candidates {
-    ...CandidateNoNesting
-  }
-  workflows {
-    ...WorkflowNoNesting
-  }
-  invites {
-    ...InviteNoNesting
-  }
-  tags {
-    ...TagNoNesting
-  }
-  name
-}
-
-${UserNoNestingFragment}
-${JobNoNestingFragment}
-${CandidateNoNestingFragment}
-${WorkflowNoNestingFragment}
-${InviteNoNestingFragment}
-${TagNoNestingFragment}
 `
 
-
-export const WorkflowFragment = gql`fragment Workflow on Workflow {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-  stages {
-    ...StageNoNesting
+export const WorkflowNoNestingFragment = gql`
+  fragment WorkflowNoNesting on Workflow {
+    id
+    createdAt
+    updatedAt
+    name
+    description
   }
-  disqualifications {
-    ...DisqualificationNoNesting
+`
+
+export const InviteNoNestingFragment = gql`
+  fragment InviteNoNesting on Invite {
+    id
+    createdAt
+    updatedAt
+    email
+    expireAt
   }
-  fields {
-    ...FieldNoNesting
+`
+
+export const LocationNoNestingFragment = gql`
+  fragment LocationNoNesting on Location {
+    id
+    country
+    region
+    city
+    zip
   }
-}
-
-${StageNoNestingFragment}
-${DisqualificationNoNestingFragment}
-${FieldNoNestingFragment}
 `
 
-
-export const InviteFragment = gql`fragment Invite on Invite {
-  id
-  createdAt
-  updatedAt
-  email
-  expireAt
-  invitedBy {
-    ...UserNoNesting
+export const AccessPayloadNoNestingFragment = gql`
+  fragment AccessPayloadNoNesting on AccessPayload {
+    token
   }
-}
-
-${UserNoNestingFragment}
 `
 
-
-export const LocationFragment = gql`fragment Location on Location {
-  id
-  country
-  region
-  city
-  zip
-}
+export const AuthPayloadNoNestingFragment = gql`
+  fragment AuthPayloadNoNesting on AuthPayload {
+    token
+    refresh
+  }
 `
 
+export const ApplicationFragment = gql`
+  fragment Application on Application {
+    createdAt
+    id
+    updatedAt
+    type
+    disqualification {
+      ...DisqualificationInstanceNoNesting
+    }
+    stage {
+      ...StageNoNesting
+    }
+    job {
+      ...JobNoNesting
+    }
+    candidate {
+      ...CandidateNoNesting
+    }
+  }
 
-export const AccessPayloadFragment = gql`fragment AccessPayload on AccessPayload {
-  token
-}
+  ${DisqualificationInstanceNoNestingFragment}
+  ${StageNoNestingFragment}
+  ${JobNoNestingFragment}
+  ${CandidateNoNestingFragment}
 `
 
+export const DisqualificationInstanceFragment = gql`
+  fragment DisqualificationInstance on DisqualificationInstance {
+    id
+    createdAt
+    updatedAt
+    disqualification {
+      ...DisqualificationNoNesting
+    }
+    createdBy {
+      ...UserNoNesting
+    }
+    content
+  }
 
-export const AuthPayloadFragment = gql`fragment AuthPayload on AuthPayload {
-  token
-  refresh
-}
+  ${DisqualificationNoNestingFragment}
+  ${UserNoNestingFragment}
 `
 
+export const DisqualificationFragment = gql`
+  fragment Disqualification on Disqualification {
+    id
+    createdAt
+    updatedAt
+    name
+    description
+  }
+`
 
+export const UserFragment = gql`
+  fragment User on User {
+    id
+    createdAt
+    updatedAt
+    tasks {
+      ...TaskNoNesting
+    }
+    firstName
+    lastName
+    email
+    username
+    lastLogin
+    deletedAt
+    position
+    avatar {
+      ...FileNoNesting
+    }
+  }
+
+  ${TaskNoNestingFragment}
+  ${FileNoNestingFragment}
+`
+
+export const TaskFragment = gql`
+  fragment Task on Task {
+    id
+    createdAt
+    updatedAt
+    owners {
+      ...UserNoNesting
+    }
+    candidate {
+      ...CandidateNoNesting
+    }
+    title
+    description
+    dueAt
+  }
+
+  ${UserNoNestingFragment}
+  ${CandidateNoNestingFragment}
+`
+
+export const CandidateFragment = gql`
+  fragment Candidate on Candidate {
+    id
+    createdAt
+    updatedAt
+    firstName
+    lastName
+    avatar {
+      ...FileNoNesting
+    }
+    metaCompany
+    metaHeadline
+    metaPosition
+    resumesFile {
+      ...FileNoNesting
+    }
+    coverLettersFile {
+      ...FileNoNesting
+    }
+    tags {
+      ...TagNoNesting
+    }
+    fields {
+      ...FieldInstanceNoNesting
+    }
+    tasks {
+      ...TaskNoNesting
+    }
+    applications {
+      ...ApplicationNoNesting
+    }
+    comments {
+      ...CommentNoNesting
+    }
+  }
+
+  ${FileNoNestingFragment}
+  ${FileNoNestingFragment}
+  ${FileNoNestingFragment}
+  ${TagNoNestingFragment}
+  ${FieldInstanceNoNestingFragment}
+  ${TaskNoNestingFragment}
+  ${ApplicationNoNestingFragment}
+  ${CommentNoNestingFragment}
+`
+
+export const FileFragment = gql`
+  fragment File on File {
+    id
+    createdAt
+    updatedAt
+    size
+    type
+    name
+    url
+  }
+`
+
+export const TagFragment = gql`
+  fragment Tag on Tag {
+    id
+    createdAt
+    updatedAt
+    label
+  }
+`
+
+export const FieldInstanceFragment = gql`
+  fragment FieldInstance on FieldInstance {
+    id
+    createdAt
+    updatedAt
+    field {
+      ...FieldNoNesting
+    }
+    value
+  }
+
+  ${FieldNoNestingFragment}
+`
+
+export const FieldFragment = gql`
+  fragment Field on Field {
+    id
+    createdAt
+    updatedAt
+    type
+    label
+  }
+`
+
+export const CommentFragment = gql`
+  fragment Comment on Comment {
+    id
+    createdAt
+    updatedAt
+    createdBy {
+      ...UserNoNesting
+    }
+    parent {
+      ...CommentNoNesting
+    }
+    content
+  }
+
+  ${UserNoNestingFragment}
+  ${CommentNoNestingFragment}
+`
+
+export const StageFragment = gql`
+  fragment Stage on Stage {
+    id
+    createdAt
+    updatedAt
+    name
+    description
+    type
+  }
+`
+
+export const JobFragment = gql`
+  fragment Job on Job {
+    id
+    createdAt
+    updatedAt
+    workspace {
+      ...WorkspaceNoNesting
+    }
+    applications {
+      ...ApplicationNoNesting
+    }
+    workflow {
+      ...WorkflowNoNesting
+    }
+    comments {
+      ...CommentNoNesting
+    }
+    type
+    department
+    locations {
+      ...LocationNoNesting
+    }
+    name
+    description
+    requirements
+  }
+
+  ${WorkspaceNoNestingFragment}
+  ${ApplicationNoNestingFragment}
+  ${WorkflowNoNestingFragment}
+  ${CommentNoNestingFragment}
+  ${LocationNoNestingFragment}
+`
+
+export const WorkspaceFragment = gql`
+  fragment Workspace on Workspace {
+    id
+    createdAt
+    updatedAt
+    users {
+      ...UserNoNesting
+    }
+    jobs {
+      ...JobNoNesting
+    }
+    candidates {
+      ...CandidateNoNesting
+    }
+    workflows {
+      ...WorkflowNoNesting
+    }
+    invites {
+      ...InviteNoNesting
+    }
+    tags {
+      ...TagNoNesting
+    }
+    name
+  }
+
+  ${UserNoNestingFragment}
+  ${JobNoNestingFragment}
+  ${CandidateNoNestingFragment}
+  ${WorkflowNoNestingFragment}
+  ${InviteNoNestingFragment}
+  ${TagNoNestingFragment}
+`
+
+export const WorkflowFragment = gql`
+  fragment Workflow on Workflow {
+    id
+    createdAt
+    updatedAt
+    name
+    description
+    stages {
+      ...StageNoNesting
+    }
+    disqualifications {
+      ...DisqualificationNoNesting
+    }
+    fields {
+      ...FieldNoNesting
+    }
+  }
+
+  ${StageNoNestingFragment}
+  ${DisqualificationNoNestingFragment}
+  ${FieldNoNestingFragment}
+`
+
+export const InviteFragment = gql`
+  fragment Invite on Invite {
+    id
+    createdAt
+    updatedAt
+    email
+    expireAt
+    invitedBy {
+      ...UserNoNesting
+    }
+  }
+
+  ${UserNoNestingFragment}
+`
+
+export const LocationFragment = gql`
+  fragment Location on Location {
+    id
+    country
+    region
+    city
+    zip
+  }
+`
+
+export const AccessPayloadFragment = gql`
+  fragment AccessPayload on AccessPayload {
+    token
+  }
+`
+
+export const AuthPayloadFragment = gql`
+  fragment AuthPayload on AuthPayload {
+    token
+    refresh
+  }
+`

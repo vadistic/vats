@@ -3,11 +3,9 @@ import { ApolloClient } from 'apollo-client'
 import { Query as IQueryShape } from '../generated/resolvers'
 import { NonUndefined } from '../utils'
 
-export type IStoreInitializers<T> = {
-  [K in keyof T]?: (
-    client: ApolloClient<NormalizedCacheObject>
-  ) => NonUndefined<T[K]>
-}
+export type IStoreInitializers<T> = Partial<
+  { [K in keyof T]: (client: ApolloClient<NormalizedCacheObject>) => T[K] }
+>
 
 // all local types should be added to query root field
 export const initializers: IStoreInitializers<IQueryShape> = {

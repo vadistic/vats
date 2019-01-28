@@ -10,6 +10,9 @@ export const routesConfig = {
     children: {
       persona: {
         path: 'persona'
+      },
+      table: {
+        path: 'table'
       }
     }
   }
