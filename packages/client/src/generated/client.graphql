@@ -1,0 +1,9 @@
+extend type Query {
+  localField: String!
+  localType: LocalType!
+}
+
+type LocalType {
+  id: ID!
+  name: String!
+}

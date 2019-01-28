@@ -6,7 +6,10 @@ module.exports = {
     clientOnlyDirectives: ['connection', 'type'],
     clientSchemaDirectives: ['client', 'rest'],
     includes: ['src/**/*.{ts,tsx}'],
-    excludes: ['src/generated/*.{gql,graphql}']
+    excludes: ['src/generated/server.graphql']
+  },
+  service: {
+    localSchemaFile: 'src/generated/server.graphql'
   },
   engine: {
     apiKey: process.env.ENGINE_API_KEY

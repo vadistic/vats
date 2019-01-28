@@ -1,0 +1,12 @@
+overwrite: true
+schema: 'src/generated/server.graphql'
+documents: null
+generates:
+  src/generated/resolvers.ts:
+    schema: 'src/generated/client.graphql'
+    config:
+      noNamespaces: true
+    plugins:
+      - 'typescript-common'
+      - 'typescript-server'
+      - 'typescript-resolvers'

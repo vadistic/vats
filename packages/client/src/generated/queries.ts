@@ -2,6 +2,54 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: PersonaFixtureIndexQuery
+// ====================================================
+
+export interface PersonaFixtureIndexQuery_users_tasks {
+  __typename: "Task";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  title: string | null;
+  description: string | null;
+  dueAt: any | null;
+}
+
+export interface PersonaFixtureIndexQuery_users_avatar {
+  __typename: "File";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  size: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
+export interface PersonaFixtureIndexQuery_users {
+  __typename: "User";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  tasks: PersonaFixtureIndexQuery_users_tasks[] | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  lastLogin: any | null;
+  deletedAt: any | null;
+  position: string | null;
+  avatar: PersonaFixtureIndexQuery_users_avatar | null;
+}
+
+export interface PersonaFixtureIndexQuery {
+  users: (PersonaFixtureIndexQuery_users | null)[];
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: PersonaFixtureQuery
 // ====================================================
 
@@ -47,7 +95,7 @@ export interface PersonaFixtureQuery {
 }
 
 export interface PersonaFixtureQueryVariables {
-  id: string;
+  where: UserWhereUniqueInput;
 }
 
 /* tslint:disable */
@@ -1096,6 +1144,11 @@ export enum StageType {
   Final = "Final",
   New = "New",
   Pipeline = "Pipeline",
+}
+
+export interface UserWhereUniqueInput {
+  id?: string | null;
+  email?: string | null;
 }
 
 //==============================================================

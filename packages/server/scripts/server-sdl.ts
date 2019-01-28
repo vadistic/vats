@@ -10,7 +10,7 @@ const SERVER_SCHEMA_PATH = 'src/generated/server.graphql'
 const generatedServerGraphql = async () => {
   const config = await prettier.resolveConfig('.')
   const formattedSchema = prettier.format(allSchema, { ...config, parser: 'graphql' })
-  fs.writeFileSync(path.resolve(SERVER_SCHEMA_PATH), allSchema, 'utf-8')
+  fs.writeFileSync(path.resolve(SERVER_SCHEMA_PATH), formattedSchema, 'utf-8')
   console.log('Server graphql schema generated')
 }
 

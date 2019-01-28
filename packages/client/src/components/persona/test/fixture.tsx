@@ -4,32 +4,56 @@ import { useQuery } from 'react-apollo-hooks'
 import { UserPersona } from '..'
 import { UserFragment } from '../../../generated/fragments'
 import {
+  PersonaFixtureIndexQuery,
   PersonaFixtureQuery,
   PersonaFixtureQueryVariables
-} from '../../../generated/graphql'
+} from '../../../generated/queries'
 import { IFixtureLogProps } from '../../fixture'
 import fixtureResponse from './data.json'
-
-const USER_ID = 'cjr9cxucf426j0a742nwut6vd'
 
 export const PersonaFixture: React.FC<any> = () => (
   <UserPersona user={fixtureResponse.data.user} />
 )
 
 export const PersonaLiveFixture: React.FC<IFixtureLogProps> = ({ log }) => {
-  const { data, error } = useQuery<
-    PersonaFixtureQuery,
-    PersonaFixtureQueryVariables
-  >(personaFixtureQuery, { variables: { id: USER_ID } })
+  const { data: indexData } = useQuery<PersonaFixtureIndexQuery>(
+    personaFixtureIndexQuery
+  )
+
+  if (!indexData) {
+    return null
+  }
+  const user = indexData.users[0]
+  const id = (user && user.id) || ''
+
+  const { data } = useQuery<PersonaFixtureQuery, PersonaFixtureQueryVariables>(
+    personaFixtureQuery,
+    { variables: { where: { id } } }
+  )
+
+  if (!data) {
+    return null
+  }
 
   log(data)
 
-  return data ? <UserPersona user={data.user} /> : null
+  return <UserPersona user={data.user} />
 }
 
+const personaFixtureIndexQuery = gql`
+  query PersonaFixtureIndexQuery {
+    users(first: 1) {
+      ...User
+    }
+  }
+
+  ${UserFragment}
+`
+
 const personaFixtureQuery = gql`
-  query PersonaFixtureQuery($id: ID!) {
-    user(where: { id: $id }) {
+  query PersonaFixtureQuery($where: UserWhereUniqueInput!) {
+    localField @client
+    user(where: $where) {
       ...User
     }
   }

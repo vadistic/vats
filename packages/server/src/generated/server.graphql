@@ -1,32 +1,136 @@
 type Query {
   application(where: ApplicationWhereUniqueInput!): Application
-  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
-  applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
+  applications(
+    where: ApplicationWhereInput
+    orderBy: ApplicationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Application]!
+  applicationsConnection(
+    where: ApplicationWhereInput
+    orderBy: ApplicationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ApplicationConnection!
   candidate(where: CandidateWhereUniqueInput!): Candidate
-  candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
-  candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
+  candidates(
+    where: CandidateWhereInput
+    orderBy: CandidateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Candidate]!
+  candidatesConnection(
+    where: CandidateWhereInput
+    orderBy: CandidateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): CandidateConnection!
   job(where: JobWhereUniqueInput!): Job
-  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
-  jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
+  jobs(
+    where: JobWhereInput
+    orderBy: JobOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Job]!
+  jobsConnection(
+    where: JobWhereInput
+    orderBy: JobOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): JobConnection!
   tag(where: TagWhereUniqueInput!): Tag
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
-  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  tags(
+    where: TagWhereInput
+    orderBy: TagOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Tag]!
+  tagsConnection(
+    where: TagWhereInput
+    orderBy: TagOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TagConnection!
   task(where: TaskWhereUniqueInput!): Task
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
-  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
+  tasks(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Task]!
+  tasksConnection(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): TaskConnection!
   user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User]!
+  usersConnection(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserConnection!
 }
 
 type Mutation {
   createApplication(data: ApplicationCreateInput!): Application!
   updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
-  upsertApplication(where: ApplicationWhereUniqueInput!, create: ApplicationCreateInput!, update: ApplicationUpdateInput!): Application!
+  upsertApplication(
+    where: ApplicationWhereUniqueInput!
+    create: ApplicationCreateInput!
+    update: ApplicationUpdateInput!
+  ): Application!
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   createCandidate(data: CandidateCreateInput!): Candidate!
   updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
-  upsertCandidate(where: CandidateWhereUniqueInput!, create: CandidateCreateInput!, update: CandidateUpdateInput!): Candidate!
+  upsertCandidate(
+    where: CandidateWhereUniqueInput!
+    create: CandidateCreateInput!
+    update: CandidateUpdateInput!
+  ): Candidate!
   deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
   createJob(data: JobCreateInput!): Job!
   updateJob(data: JobUpdateInput!, where: JobWhereUniqueInput!): Job
@@ -38,7 +142,11 @@ type Mutation {
   deleteTag(where: TagWhereUniqueInput!): Tag
   createTask(data: TaskCreateInput!): Task!
   updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
-  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
+  upsertTask(
+    where: TaskWhereUniqueInput!
+    create: TaskCreateInput!
+    update: TaskUpdateInput!
+  ): Task!
   deleteTask(where: TaskWhereUniqueInput!): Task
 }
 
@@ -191,15 +299,71 @@ type Candidate {
   metaHeadline: String
   metaPosition: String
   resumesString: [String!]!
-  resumesFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
+  resumesFile(
+    where: FileWhereInput
+    orderBy: FileOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [File!]
   coverLettersString: [String!]!
-  coverLettersFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  coverLettersFile(
+    where: FileWhereInput
+    orderBy: FileOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [File!]
+  tags(
+    where: TagWhereInput
+    orderBy: TagOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Tag!]
   source: [String!]!
-  fields(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldInstance!]
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
-  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
-  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  fields(
+    where: FieldInstanceWhereInput
+    orderBy: FieldInstanceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [FieldInstance!]
+  tasks(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Task!]
+  applications(
+    where: ApplicationWhereInput
+    orderBy: ApplicationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Application!]
+  comments(
+    where: CommentWhereInput
+    orderBy: CommentOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Comment!]
 }
 
 input CandidateWhereUniqueInput {
@@ -364,12 +528,36 @@ type Job {
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
-  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  applications(
+    where: ApplicationWhereInput
+    orderBy: ApplicationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Application!]
   workflow: Workflow!
-  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  comments(
+    where: CommentWhereInput
+    orderBy: CommentOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Comment!]
   type: JobType!
   department: String
-  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location!]
+  locations(
+    where: LocationWhereInput
+    orderBy: LocationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Location!]
   name: String!
   description: String
   requirements: String
@@ -593,7 +781,15 @@ type Task {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  owners(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]
   candidate: Candidate
   title: String
   description: String
@@ -705,7 +901,15 @@ type User {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  tasks(
+    where: TaskWhereInput
+    orderBy: TaskOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Task!]
   firstName: String!
   lastName: String!
   email: String!
@@ -1415,12 +1619,60 @@ type Workspace {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
-  candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
-  workflows(where: WorkflowWhereInput, orderBy: WorkflowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workflow!]
-  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [User!]
+  jobs(
+    where: JobWhereInput
+    orderBy: JobOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Job!]
+  candidates(
+    where: CandidateWhereInput
+    orderBy: CandidateOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Candidate!]
+  workflows(
+    where: WorkflowWhereInput
+    orderBy: WorkflowOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Workflow!]
+  invites(
+    where: InviteWhereInput
+    orderBy: InviteOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Invite!]
+  tags(
+    where: TagWhereInput
+    orderBy: TagOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Tag!]
   name: String!
 }
 
@@ -1430,9 +1682,33 @@ type Workflow {
   updatedAt: DateTime!
   name: String!
   description: String
-  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
-  disqualifications(where: DisqualificationWhereInput, orderBy: DisqualificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Disqualification!]
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
+  stages(
+    where: StageWhereInput
+    orderBy: StageOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Stage!]
+  disqualifications(
+    where: DisqualificationWhereInput
+    orderBy: DisqualificationOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Disqualification!]
+  fields(
+    where: FieldWhereInput
+    orderBy: FieldOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Field!]
 }
 
 enum JobType {
