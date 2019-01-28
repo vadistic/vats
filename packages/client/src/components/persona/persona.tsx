@@ -1,7 +1,8 @@
 import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react'
+import { User } from '../../generated/queries'
 
 export interface IUserPersonaProps extends IPersonaSharedProps {
-  user: any
+  user: User
 }
 
 export const UserPersona: React.SFC<IUserPersonaProps> = ({

@@ -1,10 +1,11 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { ApolloCache } from 'apollo-cache'
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
-import { ApolloClient, Initializers } from 'apollo-client'
+import { ApolloClient, Initializers, Resolvers } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { onError } from 'apollo-link-error'
 import { HttpLink } from 'apollo-link-http'
+import { StrictlyIndexed } from '../utils'
 import { initializers } from './initializers'
 import { resolvers } from './resolvers'
 import { schema as typeDefs } from './schema'
@@ -28,7 +29,7 @@ export type ICache = ApolloCache<NormalizedCacheObject>
 const cache = new InMemoryCache()
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_LIVE_ENDPOINT
+  uri: process.env.REACT_APP_GRAPHQL_LIVE_ENDPOINT,
 })
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -43,8 +44,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 export const client = new ApolloClient({
   connectToDevTools: true,
   link: ApolloLink.from([errorLink, httpLink]),
-  initializers: initializers as Initializers<NormalizedCacheObject>,
   typeDefs,
-  resolvers,
-  cache
+  // quite typesafe assertions - only adding index signatures
+  initializers: initializers as StrictlyIndexed<typeof initializers>,
+  resolvers: resolvers as StrictlyIndexed<typeof resolvers>,
+  cache,
 })

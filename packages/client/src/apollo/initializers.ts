@@ -13,6 +13,6 @@ export const initializers: IStoreInitializers<IQueryShape> = {
   localType: () => ({
     __typename: 'LocalType',
     id: `1`,
-    name: 'MyLocalType'
-  })
+    name: 'MyLocalType',
+  }),
 }

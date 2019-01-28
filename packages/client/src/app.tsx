@@ -8,26 +8,26 @@ import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from './apollo'
 import { Layout, Router } from './components'
 import { routes } from './routes'
-import { TestView } from './views'
+import { DevView } from './views'
 
 export class App extends React.Component {
   render() {
     return (
-      <div className="app">
+      <>
         <ApolloProvider client={client}>
           <ApolloHooksProvider client={client}>
             <ThemeProvider theme={getTheme()}>
-              <Fabric className="app">
+              <Fabric>
                 <Layout>
                   <Router>
-                    <TestView path={routes.test.path} />
+                    <DevView path={routes.test.path} />
                   </Router>
                 </Layout>
               </Fabric>
             </ThemeProvider>
           </ApolloHooksProvider>
         </ApolloProvider>
-      </div>
+      </>
     )
   }
 }

@@ -8,7 +8,7 @@ export interface IFixtureProps extends RouteComponentProps {
 }
 
 export interface IFixtureLogProps {
-  log: (data: any) => void
+  log?: (data: any) => void
 }
 
 const fixtureStyles = css`
@@ -23,17 +23,14 @@ const fixtureStyles = css`
   }
 `
 
-export const Fixture: React.FC<IFixtureProps> = ({
-  component: Component,
-  name
-}) => {
+export const Fixture: React.FC<IFixtureProps> = ({ component: Component, name }) => {
   const log = (data: any) => {
     console.log(`Fixture (${name}): `, data)
   }
   if (Component) {
     return (
       <div css={fixtureStyles}>
-        <h3>{name}</h3>
+        {name && <h3>{name}</h3>}
         <div>
           <Suspense fallback={<p>Loading...</p>}>
             <Component log={log} />

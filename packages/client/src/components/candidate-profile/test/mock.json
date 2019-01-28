@@ -1,0 +1,71 @@
+{
+  "candidate": {
+    "id": "cjrfar2ug7c2i0a25vr7en5t3",
+    "createdAt": "2019-01-27T19:28:13.096Z",
+    "updatedAt": "2019-01-27T19:28:13.096Z",
+    "firstName": "Fredy",
+    "lastName": "Kulas",
+    "avatar": {
+      "id": "cjrfar2uo7c2j0a25a3hccig4",
+      "createdAt": "2019-01-27T19:28:13.096Z",
+      "updatedAt": "2019-01-27T19:28:13.096Z",
+      "size": 27500,
+      "type": "image/png",
+      "name": "Fredy-Kulas-profile-96x96",
+      "url": "https://api.adorable.io/avatars/96/Fredy.Kulas@hotmail.com.png",
+      "__typename": "File"
+    },
+    "metaCompany": "Walker, Schaefer and Runte",
+    "metaHeadline": "District",
+    "metaPosition": null,
+    "resumesFile": [
+      {
+        "id": "cjrfar2us7c2l0a25gafixjkx",
+        "createdAt": "2019-01-27T19:28:13.096Z",
+        "updatedAt": "2019-01-27T19:28:13.096Z",
+        "size": 4903539,
+        "type": "application/pdf",
+        "name": "Fredy-Kulas-resume-Fri Aug 10 2018 22:49:50 GMT+0200 (Central European Summer Time)",
+        "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=93c4f815-7d84-4fac-ba77-f2521ed2db0a",
+        "__typename": "File"
+      }
+    ],
+    "coverLettersFile": [],
+    "tags": [
+      {
+        "id": "cjrfaqwa3g7ib0a92udas9vgx",
+        "createdAt": "2019-01-27T19:28:04.587Z",
+        "updatedAt": "2019-01-27T19:28:04.587Z",
+        "label": "personal loan account",
+        "__typename": "Tag"
+      },
+      {
+        "id": "cjrfar0hl7c1f0a25eergn4nu",
+        "createdAt": "2019-01-27T19:28:10.040Z",
+        "updatedAt": "2019-01-27T19:28:10.040Z",
+        "label": "implementation",
+        "__typename": "Tag"
+      },
+      {
+        "id": "cjrfar0qjg7ke0a92bvcbsxw0",
+        "createdAt": "2019-01-27T19:28:10.363Z",
+        "updatedAt": "2019-01-27T19:28:10.363Z",
+        "label": "reduced",
+        "__typename": "Tag"
+      }
+    ],
+    "fields": [],
+    "tasks": [],
+    "applications": [
+      {
+        "createdAt": "2019-01-27T19:35:22.651Z",
+        "id": "cjrfb0aajgeyd0a9208irtox6",
+        "updatedAt": "2019-01-27T19:35:22.651Z",
+        "type": "Qualified",
+        "__typename": "Application"
+      }
+    ],
+    "comments": [],
+    "__typename": "Candidate"
+  }
+}

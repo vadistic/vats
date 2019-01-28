@@ -11,9 +11,9 @@ export const Navigation: React.FC = () => {
       {
         name: 'Home',
         url: routes.home.url,
-        isExpanded: true
-      }
-    ]
+        isExpanded: true,
+      },
+    ],
   }
 
   const test: INavLinkGroup = {
@@ -24,10 +24,10 @@ export const Navigation: React.FC = () => {
         isExpanded: true,
         links: Object.entries(routes.test.children).map(([name, item]) => ({
           name,
-          url: item.url
-        }))
-      }
-    ]
+          url: item.url,
+        })),
+      },
+    ],
   }
 
   const onLinkClick = () => {

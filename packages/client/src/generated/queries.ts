@@ -2,100 +2,316 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: PersonaFixtureIndexQuery
+// GraphQL query operation: CandidateProfileFixtureQuery
 // ====================================================
 
-export interface PersonaFixtureIndexQuery_users_tasks {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
+export interface CandidateProfileFixtureQuery_candidate_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
-export interface PersonaFixtureIndexQuery_users_avatar {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+export interface CandidateProfileFixtureQuery_candidate_resumesFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
-export interface PersonaFixtureIndexQuery_users {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  tasks: PersonaFixtureIndexQuery_users_tasks[] | null;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
-  avatar: PersonaFixtureIndexQuery_users_avatar | null;
+export interface CandidateProfileFixtureQuery_candidate_coverLettersFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
-export interface PersonaFixtureIndexQuery {
-  users: (PersonaFixtureIndexQuery_users | null)[];
+export interface CandidateProfileFixtureQuery_candidate_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+}
+
+export interface CandidateProfileFixtureQuery_candidate_fields {
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
+}
+
+export interface CandidateProfileFixtureQuery_candidate_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidateProfileFixtureQuery_candidate_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface CandidateProfileFixtureQuery_candidate_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidateProfileFixtureQuery_candidate {
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: CandidateProfileFixtureQuery_candidate_avatar | null
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
+  resumesFile: CandidateProfileFixtureQuery_candidate_resumesFile[] | null
+  coverLettersFile: CandidateProfileFixtureQuery_candidate_coverLettersFile[] | null
+  tags: CandidateProfileFixtureQuery_candidate_tags[] | null
+  fields: CandidateProfileFixtureQuery_candidate_fields[] | null
+  tasks: CandidateProfileFixtureQuery_candidate_tasks[] | null
+  applications: CandidateProfileFixtureQuery_candidate_applications[] | null
+  comments: CandidateProfileFixtureQuery_candidate_comments[] | null
+}
+
+export interface CandidateProfileFixtureQuery {
+  candidate: CandidateProfileFixtureQuery_candidate | null
+}
+
+export interface CandidateProfileFixtureQueryVariables {
+  where: CandidateWhereUniqueInput
 }
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: PersonaFixtureQuery
+// GraphQL query operation: CandidateProfileFixtureIndexQuery
 // ====================================================
 
-export interface PersonaFixtureQuery_user_tasks {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
+export interface CandidateProfileFixtureIndexQuery_candidates_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
-export interface PersonaFixtureQuery_user_avatar {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+export interface CandidateProfileFixtureIndexQuery_candidates_resumesFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
-export interface PersonaFixtureQuery_user {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  tasks: PersonaFixtureQuery_user_tasks[] | null;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
-  avatar: PersonaFixtureQuery_user_avatar | null;
+export interface CandidateProfileFixtureIndexQuery_candidates_coverLettersFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
-export interface PersonaFixtureQuery {
-  user: PersonaFixtureQuery_user | null;
+export interface CandidateProfileFixtureIndexQuery_candidates_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
 }
 
-export interface PersonaFixtureQueryVariables {
-  where: UserWhereUniqueInput;
+export interface CandidateProfileFixtureIndexQuery_candidates_fields {
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
+}
+
+export interface CandidateProfileFixtureIndexQuery_candidates_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidateProfileFixtureIndexQuery_candidates_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface CandidateProfileFixtureIndexQuery_candidates_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidateProfileFixtureIndexQuery_candidates {
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: CandidateProfileFixtureIndexQuery_candidates_avatar | null
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
+  resumesFile: CandidateProfileFixtureIndexQuery_candidates_resumesFile[] | null
+  coverLettersFile: CandidateProfileFixtureIndexQuery_candidates_coverLettersFile[] | null
+  tags: CandidateProfileFixtureIndexQuery_candidates_tags[] | null
+  fields: CandidateProfileFixtureIndexQuery_candidates_fields[] | null
+  tasks: CandidateProfileFixtureIndexQuery_candidates_tasks[] | null
+  applications: CandidateProfileFixtureIndexQuery_candidates_applications[] | null
+  comments: CandidateProfileFixtureIndexQuery_candidates_comments[] | null
+}
+
+export interface CandidateProfileFixtureIndexQuery {
+  candidates: (CandidateProfileFixtureIndexQuery_candidates | null)[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: UserPersonaFixtureIndexQuery
+// ====================================================
+
+export interface UserPersonaFixtureIndexQuery_users_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface UserPersonaFixtureIndexQuery_users_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface UserPersonaFixtureIndexQuery_users {
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  tasks: UserPersonaFixtureIndexQuery_users_tasks[] | null
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
+  avatar: UserPersonaFixtureIndexQuery_users_avatar | null
+}
+
+export interface UserPersonaFixtureIndexQuery {
+  users: (UserPersonaFixtureIndexQuery_users | null)[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: UserPersonaFixtureQuery
+// ====================================================
+
+export interface UserPersonaFixtureQuery_user_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface UserPersonaFixtureQuery_user_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface UserPersonaFixtureQuery_user {
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  tasks: UserPersonaFixtureQuery_user_tasks[] | null
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
+  avatar: UserPersonaFixtureQuery_user_avatar | null
+}
+
+export interface UserPersonaFixtureQuery {
+  user: UserPersonaFixtureQuery_user | null
+}
+
+export interface UserPersonaFixtureQueryVariables {
+  where: UserWhereUniqueInput
 }
 
 /* tslint:disable */
@@ -106,102 +322,102 @@ export interface PersonaFixtureQueryVariables {
 // ====================================================
 
 export interface TableFixtureQuery_candidates_avatar {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface TableFixtureQuery_candidates_resumesFile {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface TableFixtureQuery_candidates_coverLettersFile {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface TableFixtureQuery_candidates_tags {
-  __typename: "Tag";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  label: string;
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
 }
 
 export interface TableFixtureQuery_candidates_fields {
-  __typename: "FieldInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  value: string | null;
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
 }
 
 export interface TableFixtureQuery_candidates_tasks {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
 }
 
 export interface TableFixtureQuery_candidates_applications {
-  __typename: "Application";
-  createdAt: any;
-  id: string;
-  updatedAt: any;
-  type: ApplicationType;
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
 }
 
 export interface TableFixtureQuery_candidates_comments {
-  __typename: "Comment";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string;
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
 }
 
 export interface TableFixtureQuery_candidates {
-  __typename: "Candidate";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  avatar: TableFixtureQuery_candidates_avatar | null;
-  metaCompany: string | null;
-  metaHeadline: string | null;
-  metaPosition: string | null;
-  resumesFile: TableFixtureQuery_candidates_resumesFile[] | null;
-  coverLettersFile: TableFixtureQuery_candidates_coverLettersFile[] | null;
-  tags: TableFixtureQuery_candidates_tags[] | null;
-  fields: TableFixtureQuery_candidates_fields[] | null;
-  tasks: TableFixtureQuery_candidates_tasks[] | null;
-  applications: TableFixtureQuery_candidates_applications[] | null;
-  comments: TableFixtureQuery_candidates_comments[] | null;
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: TableFixtureQuery_candidates_avatar | null
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
+  resumesFile: TableFixtureQuery_candidates_resumesFile[] | null
+  coverLettersFile: TableFixtureQuery_candidates_coverLettersFile[] | null
+  tags: TableFixtureQuery_candidates_tags[] | null
+  fields: TableFixtureQuery_candidates_fields[] | null
+  tasks: TableFixtureQuery_candidates_tasks[] | null
+  applications: TableFixtureQuery_candidates_applications[] | null
+  comments: TableFixtureQuery_candidates_comments[] | null
 }
 
 export interface TableFixtureQuery {
-  candidates: (TableFixtureQuery_candidates | null)[];
+  candidates: (TableFixtureQuery_candidates | null)[]
 }
 
 /* tslint:disable */
@@ -212,11 +428,11 @@ export interface TableFixtureQuery {
 // ====================================================
 
 export interface ApplicationNoNesting {
-  __typename: "Application";
-  createdAt: any;
-  id: string;
-  updatedAt: any;
-  type: ApplicationType;
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
 }
 
 /* tslint:disable */
@@ -227,11 +443,11 @@ export interface ApplicationNoNesting {
 // ====================================================
 
 export interface DisqualificationInstanceNoNesting {
-  __typename: "DisqualificationInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string | null;
+  __typename: 'DisqualificationInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string | null
 }
 
 /* tslint:disable */
@@ -242,12 +458,12 @@ export interface DisqualificationInstanceNoNesting {
 // ====================================================
 
 export interface DisqualificationNoNesting {
-  __typename: "Disqualification";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
+  __typename: 'Disqualification'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
 }
 
 /* tslint:disable */
@@ -258,17 +474,17 @@ export interface DisqualificationNoNesting {
 // ====================================================
 
 export interface UserNoNesting {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
 }
 
 /* tslint:disable */
@@ -279,13 +495,13 @@ export interface UserNoNesting {
 // ====================================================
 
 export interface TaskNoNesting {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
 }
 
 /* tslint:disable */
@@ -296,15 +512,15 @@ export interface TaskNoNesting {
 // ====================================================
 
 export interface CandidateNoNesting {
-  __typename: "Candidate";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  metaCompany: string | null;
-  metaHeadline: string | null;
-  metaPosition: string | null;
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
 }
 
 /* tslint:disable */
@@ -315,14 +531,14 @@ export interface CandidateNoNesting {
 // ====================================================
 
 export interface FileNoNesting {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 /* tslint:disable */
@@ -333,11 +549,11 @@ export interface FileNoNesting {
 // ====================================================
 
 export interface TagNoNesting {
-  __typename: "Tag";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  label: string;
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
 }
 
 /* tslint:disable */
@@ -348,11 +564,11 @@ export interface TagNoNesting {
 // ====================================================
 
 export interface FieldInstanceNoNesting {
-  __typename: "FieldInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  value: string | null;
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
 }
 
 /* tslint:disable */
@@ -363,12 +579,12 @@ export interface FieldInstanceNoNesting {
 // ====================================================
 
 export interface FieldNoNesting {
-  __typename: "Field";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: FieldType;
-  label: string;
+  __typename: 'Field'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: FieldType
+  label: string
 }
 
 /* tslint:disable */
@@ -379,11 +595,11 @@ export interface FieldNoNesting {
 // ====================================================
 
 export interface CommentNoNesting {
-  __typename: "Comment";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string;
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
 }
 
 /* tslint:disable */
@@ -394,13 +610,13 @@ export interface CommentNoNesting {
 // ====================================================
 
 export interface StageNoNesting {
-  __typename: "Stage";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-  type: StageType;
+  __typename: 'Stage'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+  type: StageType
 }
 
 /* tslint:disable */
@@ -411,15 +627,15 @@ export interface StageNoNesting {
 // ====================================================
 
 export interface JobNoNesting {
-  __typename: "Job";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: JobType;
-  department: string | null;
-  name: string;
-  description: string | null;
-  requirements: string | null;
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: JobType
+  department: string | null
+  name: string
+  description: string | null
+  requirements: string | null
 }
 
 /* tslint:disable */
@@ -430,11 +646,11 @@ export interface JobNoNesting {
 // ====================================================
 
 export interface WorkspaceNoNesting {
-  __typename: "Workspace";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
 }
 
 /* tslint:disable */
@@ -445,12 +661,12 @@ export interface WorkspaceNoNesting {
 // ====================================================
 
 export interface WorkflowNoNesting {
-  __typename: "Workflow";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
 }
 
 /* tslint:disable */
@@ -461,12 +677,12 @@ export interface WorkflowNoNesting {
 // ====================================================
 
 export interface InviteNoNesting {
-  __typename: "Invite";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  email: string;
-  expireAt: any;
+  __typename: 'Invite'
+  id: string
+  createdAt: any
+  updatedAt: any
+  email: string
+  expireAt: any
 }
 
 /* tslint:disable */
@@ -477,12 +693,12 @@ export interface InviteNoNesting {
 // ====================================================
 
 export interface LocationNoNesting {
-  __typename: "Location";
-  id: string;
-  country: string;
-  region: string;
-  city: string;
-  zip: string;
+  __typename: 'Location'
+  id: string
+  country: string
+  region: string
+  city: string
+  zip: string
 }
 
 /* tslint:disable */
@@ -493,8 +709,8 @@ export interface LocationNoNesting {
 // ====================================================
 
 export interface AccessPayloadNoNesting {
-  __typename: "AccessPayload";
-  token: string;
+  __typename: 'AccessPayload'
+  token: string
 }
 
 /* tslint:disable */
@@ -505,9 +721,9 @@ export interface AccessPayloadNoNesting {
 // ====================================================
 
 export interface AuthPayloadNoNesting {
-  __typename: "AuthPayload";
-  token: string;
-  refresh: string;
+  __typename: 'AuthPayload'
+  token: string
+  refresh: string
 }
 
 /* tslint:disable */
@@ -518,57 +734,57 @@ export interface AuthPayloadNoNesting {
 // ====================================================
 
 export interface Application_disqualification {
-  __typename: "DisqualificationInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string | null;
+  __typename: 'DisqualificationInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string | null
 }
 
 export interface Application_stage {
-  __typename: "Stage";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-  type: StageType;
+  __typename: 'Stage'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+  type: StageType
 }
 
 export interface Application_job {
-  __typename: "Job";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: JobType;
-  department: string | null;
-  name: string;
-  description: string | null;
-  requirements: string | null;
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: JobType
+  department: string | null
+  name: string
+  description: string | null
+  requirements: string | null
 }
 
 export interface Application_candidate {
-  __typename: "Candidate";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  metaCompany: string | null;
-  metaHeadline: string | null;
-  metaPosition: string | null;
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
 }
 
 export interface Application {
-  __typename: "Application";
-  createdAt: any;
-  id: string;
-  updatedAt: any;
-  type: ApplicationType;
-  disqualification: Application_disqualification | null;
-  stage: Application_stage;
-  job: Application_job;
-  candidate: Application_candidate;
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+  disqualification: Application_disqualification | null
+  stage: Application_stage
+  job: Application_job
+  candidate: Application_candidate
 }
 
 /* tslint:disable */
@@ -579,36 +795,36 @@ export interface Application {
 // ====================================================
 
 export interface DisqualificationInstance_disqualification {
-  __typename: "Disqualification";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
+  __typename: 'Disqualification'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
 }
 
 export interface DisqualificationInstance_createdBy {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
 }
 
 export interface DisqualificationInstance {
-  __typename: "DisqualificationInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  disqualification: DisqualificationInstance_disqualification;
-  createdBy: DisqualificationInstance_createdBy;
-  content: string | null;
+  __typename: 'DisqualificationInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  disqualification: DisqualificationInstance_disqualification
+  createdBy: DisqualificationInstance_createdBy
+  content: string | null
 }
 
 /* tslint:disable */
@@ -619,12 +835,12 @@ export interface DisqualificationInstance {
 // ====================================================
 
 export interface Disqualification {
-  __typename: "Disqualification";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
+  __typename: 'Disqualification'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
 }
 
 /* tslint:disable */
@@ -635,40 +851,40 @@ export interface Disqualification {
 // ====================================================
 
 export interface User_tasks {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
 }
 
 export interface User_avatar {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface User {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  tasks: User_tasks[] | null;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
-  avatar: User_avatar | null;
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  tasks: User_tasks[] | null
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
+  avatar: User_avatar | null
 }
 
 /* tslint:disable */
@@ -679,41 +895,41 @@ export interface User {
 // ====================================================
 
 export interface Task_owners {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
 }
 
 export interface Task_candidate {
-  __typename: "Candidate";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  metaCompany: string | null;
-  metaHeadline: string | null;
-  metaPosition: string | null;
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
 }
 
 export interface Task {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  owners: Task_owners[] | null;
-  candidate: Task_candidate | null;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  owners: Task_owners[] | null
+  candidate: Task_candidate | null
+  title: string | null
+  description: string | null
+  dueAt: any | null
 }
 
 /* tslint:disable */
@@ -724,98 +940,98 @@ export interface Task {
 // ====================================================
 
 export interface Candidate_avatar {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface Candidate_resumesFile {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface Candidate_coverLettersFile {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface Candidate_tags {
-  __typename: "Tag";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  label: string;
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
 }
 
 export interface Candidate_fields {
-  __typename: "FieldInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  value: string | null;
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
 }
 
 export interface Candidate_tasks {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
 }
 
 export interface Candidate_applications {
-  __typename: "Application";
-  createdAt: any;
-  id: string;
-  updatedAt: any;
-  type: ApplicationType;
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
 }
 
 export interface Candidate_comments {
-  __typename: "Comment";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string;
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
 }
 
 export interface Candidate {
-  __typename: "Candidate";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  avatar: Candidate_avatar | null;
-  metaCompany: string | null;
-  metaHeadline: string | null;
-  metaPosition: string | null;
-  resumesFile: Candidate_resumesFile[] | null;
-  coverLettersFile: Candidate_coverLettersFile[] | null;
-  tags: Candidate_tags[] | null;
-  fields: Candidate_fields[] | null;
-  tasks: Candidate_tasks[] | null;
-  applications: Candidate_applications[] | null;
-  comments: Candidate_comments[] | null;
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: Candidate_avatar | null
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
+  resumesFile: Candidate_resumesFile[] | null
+  coverLettersFile: Candidate_coverLettersFile[] | null
+  tags: Candidate_tags[] | null
+  fields: Candidate_fields[] | null
+  tasks: Candidate_tasks[] | null
+  applications: Candidate_applications[] | null
+  comments: Candidate_comments[] | null
 }
 
 /* tslint:disable */
@@ -826,14 +1042,14 @@ export interface Candidate {
 // ====================================================
 
 export interface File {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
 }
 
 /* tslint:disable */
@@ -844,11 +1060,11 @@ export interface File {
 // ====================================================
 
 export interface Tag {
-  __typename: "Tag";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  label: string;
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
 }
 
 /* tslint:disable */
@@ -859,21 +1075,21 @@ export interface Tag {
 // ====================================================
 
 export interface FieldInstance_field {
-  __typename: "Field";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: FieldType;
-  label: string;
+  __typename: 'Field'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: FieldType
+  label: string
 }
 
 export interface FieldInstance {
-  __typename: "FieldInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  field: FieldInstance_field;
-  value: string | null;
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  field: FieldInstance_field
+  value: string | null
 }
 
 /* tslint:disable */
@@ -884,12 +1100,12 @@ export interface FieldInstance {
 // ====================================================
 
 export interface Field {
-  __typename: "Field";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: FieldType;
-  label: string;
+  __typename: 'Field'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: FieldType
+  label: string
 }
 
 /* tslint:disable */
@@ -900,35 +1116,35 @@ export interface Field {
 // ====================================================
 
 export interface Comment_createdBy {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
 }
 
 export interface Comment_parent {
-  __typename: "Comment";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string;
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
 }
 
 export interface Comment {
-  __typename: "Comment";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  createdBy: Comment_createdBy;
-  parent: Comment_parent | null;
-  content: string;
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  createdBy: Comment_createdBy
+  parent: Comment_parent | null
+  content: string
 }
 
 /* tslint:disable */
@@ -939,13 +1155,13 @@ export interface Comment {
 // ====================================================
 
 export interface Stage {
-  __typename: "Stage";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-  type: StageType;
+  __typename: 'Stage'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+  type: StageType
 }
 
 /* tslint:disable */
@@ -956,62 +1172,62 @@ export interface Stage {
 // ====================================================
 
 export interface Job_workspace {
-  __typename: "Workspace";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
 }
 
 export interface Job_applications {
-  __typename: "Application";
-  createdAt: any;
-  id: string;
-  updatedAt: any;
-  type: ApplicationType;
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
 }
 
 export interface Job_workflow {
-  __typename: "Workflow";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
 }
 
 export interface Job_comments {
-  __typename: "Comment";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string;
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
 }
 
 export interface Job_locations {
-  __typename: "Location";
-  id: string;
-  country: string;
-  region: string;
-  city: string;
-  zip: string;
+  __typename: 'Location'
+  id: string
+  country: string
+  region: string
+  city: string
+  zip: string
 }
 
 export interface Job {
-  __typename: "Job";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  workspace: Job_workspace;
-  applications: Job_applications[] | null;
-  workflow: Job_workflow;
-  comments: Job_comments[] | null;
-  type: JobType;
-  department: string | null;
-  locations: Job_locations[] | null;
-  name: string;
-  description: string | null;
-  requirements: string | null;
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  workspace: Job_workspace
+  applications: Job_applications[] | null
+  workflow: Job_workflow
+  comments: Job_comments[] | null
+  type: JobType
+  department: string | null
+  locations: Job_locations[] | null
+  name: string
+  description: string | null
+  requirements: string | null
 }
 
 /* tslint:disable */
@@ -1022,81 +1238,81 @@ export interface Job {
 // ====================================================
 
 export interface Workspace_users {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
 }
 
 export interface Workspace_jobs {
-  __typename: "Job";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: JobType;
-  department: string | null;
-  name: string;
-  description: string | null;
-  requirements: string | null;
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: JobType
+  department: string | null
+  name: string
+  description: string | null
+  requirements: string | null
 }
 
 export interface Workspace_candidates {
-  __typename: "Candidate";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  metaCompany: string | null;
-  metaHeadline: string | null;
-  metaPosition: string | null;
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
 }
 
 export interface Workspace_workflows {
-  __typename: "Workflow";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
 }
 
 export interface Workspace_invites {
-  __typename: "Invite";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  email: string;
-  expireAt: any;
+  __typename: 'Invite'
+  id: string
+  createdAt: any
+  updatedAt: any
+  email: string
+  expireAt: any
 }
 
 export interface Workspace_tags {
-  __typename: "Tag";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  label: string;
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
 }
 
 export interface Workspace {
-  __typename: "Workspace";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  users: Workspace_users[] | null;
-  jobs: Workspace_jobs[] | null;
-  candidates: Workspace_candidates[] | null;
-  workflows: Workspace_workflows[] | null;
-  invites: Workspace_invites[] | null;
-  tags: Workspace_tags[] | null;
-  name: string;
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  users: Workspace_users[] | null
+  jobs: Workspace_jobs[] | null
+  candidates: Workspace_candidates[] | null
+  workflows: Workspace_workflows[] | null
+  invites: Workspace_invites[] | null
+  tags: Workspace_tags[] | null
+  name: string
 }
 
 /* tslint:disable */
@@ -1107,43 +1323,43 @@ export interface Workspace {
 // ====================================================
 
 export interface Workflow_stages {
-  __typename: "Stage";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-  type: StageType;
+  __typename: 'Stage'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+  type: StageType
 }
 
 export interface Workflow_disqualifications {
-  __typename: "Disqualification";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
+  __typename: 'Disqualification'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
 }
 
 export interface Workflow_fields {
-  __typename: "Field";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: FieldType;
-  label: string;
+  __typename: 'Field'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: FieldType
+  label: string
 }
 
 export interface Workflow {
-  __typename: "Workflow";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-  stages: Workflow_stages[] | null;
-  disqualifications: Workflow_disqualifications[] | null;
-  fields: Workflow_fields[] | null;
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+  stages: Workflow_stages[] | null
+  disqualifications: Workflow_disqualifications[] | null
+  fields: Workflow_fields[] | null
 }
 
 /* tslint:disable */
@@ -1154,27 +1370,27 @@ export interface Workflow {
 // ====================================================
 
 export interface Invite_invitedBy {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
 }
 
 export interface Invite {
-  __typename: "Invite";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  email: string;
-  expireAt: any;
-  invitedBy: Invite_invitedBy;
+  __typename: 'Invite'
+  id: string
+  createdAt: any
+  updatedAt: any
+  email: string
+  expireAt: any
+  invitedBy: Invite_invitedBy
 }
 
 /* tslint:disable */
@@ -1185,12 +1401,12 @@ export interface Invite {
 // ====================================================
 
 export interface Location {
-  __typename: "Location";
-  id: string;
-  country: string;
-  region: string;
-  city: string;
-  zip: string;
+  __typename: 'Location'
+  id: string
+  country: string
+  region: string
+  city: string
+  zip: string
 }
 
 /* tslint:disable */
@@ -1201,8 +1417,8 @@ export interface Location {
 // ====================================================
 
 export interface AccessPayload {
-  __typename: "AccessPayload";
-  token: string;
+  __typename: 'AccessPayload'
+  token: string
 }
 
 /* tslint:disable */
@@ -1213,9 +1429,9 @@ export interface AccessPayload {
 // ====================================================
 
 export interface AuthPayload {
-  __typename: "AuthPayload";
-  token: string;
-  refresh: string;
+  __typename: 'AuthPayload'
+  token: string
+  refresh: string
 }
 
 /* tslint:disable */
@@ -1226,35 +1442,39 @@ export interface AuthPayload {
 //==============================================================
 
 export enum ApplicationType {
-  Disqualified = "Disqualified",
-  Qualified = "Qualified",
+  Disqualified = 'Disqualified',
+  Qualified = 'Qualified',
 }
 
 export enum FieldType {
-  Boolean = "Boolean",
-  DateTime = "DateTime",
-  Float = "Float",
-  Int = "Int",
-  Paragraph = "Paragraph",
-  String = "String",
-  Text = "Text",
+  Boolean = 'Boolean',
+  DateTime = 'DateTime',
+  Float = 'Float',
+  Int = 'Int',
+  Paragraph = 'Paragraph',
+  String = 'String',
+  Text = 'Text',
 }
 
 export enum JobType {
-  Archived = "Archived",
-  Draft = "Draft",
-  Published = "Published",
+  Archived = 'Archived',
+  Draft = 'Draft',
+  Published = 'Published',
 }
 
 export enum StageType {
-  Final = "Final",
-  New = "New",
-  Pipeline = "Pipeline",
+  Final = 'Final',
+  New = 'New',
+  Pipeline = 'Pipeline',
+}
+
+export interface CandidateWhereUniqueInput {
+  id?: string | null
 }
 
 export interface UserWhereUniqueInput {
-  id?: string | null;
-  email?: string | null;
+  id?: string | null
+  email?: string | null
 }
 
 //==============================================================

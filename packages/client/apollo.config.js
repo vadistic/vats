@@ -6,9 +6,9 @@ module.exports = {
     clientOnlyDirectives: ['connection', 'type'],
     clientSchemaDirectives: ['client', 'rest'],
     includes: ['src/**/*.{ts,tsx}'],
-    excludes: ['src/generated/*.graphql']
+    excludes: ['src/generated/*.graphql'],
   },
   engine: {
-    apiKey: process.env.ENGINE_API_KEY
-  }
+    apiKey: process.env.ENGINE_API_KEY,
+  },
 }

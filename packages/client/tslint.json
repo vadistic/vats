@@ -9,7 +9,7 @@
     "ordered-imports": true,
     "member-access": [true, "no-public"],
     "file-name-casing": [true, "kebab-case"],
-    "no-implicit-dependencies": [true, ["graphql-tag"]],
+    "no-implicit-dependencies": [true, ["graphql-tag", "react-testing-library"]],
     "variable-name": [
       true,
       "ban-keywords",

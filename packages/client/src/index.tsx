@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import App from './app'
-import * as serviceWorker from './serviceWorker'
+import * as serviceWorker from './service-worker'
 import { theme } from './styles/theme'
 
 // here temporary to not reload it on each HMR edit

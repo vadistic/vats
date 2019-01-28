@@ -40,9 +40,7 @@ interface IRoute<T = IRoutesMap> {
   children: RoutesMap<WithRouteIndicies<T>['children']>
 }
 
-export type RoutesMap<T> = {
-  [K in keyof T]: T[K] extends IRouteConfig ? IRoute<T[K]> : ISubRoute
-}
+export type RoutesMap<T> = { [K in keyof T]: T[K] extends IRouteConfig ? IRoute<T[K]> : ISubRoute }
 
 export const getRoutes = <T extends IRoutesConfigMap>(rootConfig: T) => {
   const recursiveRoutes = (children: IRoutesConfigMap, parentUrl: string) => {
