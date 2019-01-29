@@ -1,8 +1,0 @@
-endpoint: ${env:PRISMA_ENDPOINT}/${env:PRISMA_SERVICE}/${env:PRISMA_STAGE}
-datamodel: datamodel.graphql
-
-generate:
-  - generator: typescript-client
-    output: ../src/generated/prisma-client
-  - generator: graphql-schema
-    output: ../src/generated/

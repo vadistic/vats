@@ -6,9 +6,10 @@
     "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "env": "env-cmd .env",
     "format": "prettier --write --no-color -l src/**/*.{ts,tsx}",
     "lint": "tslint -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "env": "env-cmd .env",
     "gen:server:sdl": "yarn env graphql get-schema",
     "gen:server:frag": "yarn env graphql generate-fragments",
     "gen:server": "yarn gen:server:sdl && yarn gen:server:frag",
@@ -30,6 +31,7 @@
     "*.{ts,tsx}": [
       "tslint --fix",
       "pretty-quick --staged",
+      "yarn typecheck",
       "git add"
     ]
   },
