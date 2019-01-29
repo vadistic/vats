@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { ApolloCache } from 'apollo-cache'
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
-import { ApolloClient, Initializers, Resolvers } from 'apollo-client'
+import { ApolloClient, ApolloClientOptions } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { onError } from 'apollo-link-error'
 import { HttpLink } from 'apollo-link-http'
@@ -41,7 +41,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 })
 
-export const client = new ApolloClient({
+export const apolloClientOptions: ApolloClientOptions<NormalizedCacheObject> = {
   connectToDevTools: true,
   link: ApolloLink.from([errorLink, httpLink]),
   typeDefs,
@@ -49,4 +49,6 @@ export const client = new ApolloClient({
   initializers: initializers as StrictlyIndexed<typeof initializers>,
   resolvers: resolvers as StrictlyIndexed<typeof resolvers>,
   cache,
-})
+}
+
+export const client = new ApolloClient(apolloClientOptions)

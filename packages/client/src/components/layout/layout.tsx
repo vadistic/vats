@@ -5,11 +5,11 @@ import { Navigation } from '..'
 import { globalStyles, ITheme } from '../../styles'
 
 const layoutStyles = (theme: ITheme) => css`
-  display: grid;
-  grid-template-columns: 180px 1fr;
-
-  height: 100%;
   min-height: 100vh;
+  max-width: 100vw;
+
+  display: grid;
+  grid-template-columns: 180px calc(100% - 180px);
 `
 
 export const Layout: React.FC = ({ children }) => (

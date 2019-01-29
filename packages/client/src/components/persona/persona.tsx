@@ -1,4 +1,5 @@
 import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react'
+import React from 'react'
 import { User } from '../../generated/queries'
 
 export interface IUserPersonaProps extends IPersonaSharedProps {

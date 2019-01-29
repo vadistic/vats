@@ -8,15 +8,8 @@ import {
   UserPersonaFixtureQuery,
   UserPersonaFixtureQueryVariables,
 } from '../../../generated/queries'
-import { StrictId } from '../../../utils'
-import { IFixtureLogProps } from '../../fixture'
-import mock from './mock.json'
 
-export const UserPersonaFixture: React.FC<any> = () => (
-  <UserPersona user={mock.data.user as StrictId<'User', typeof mock.data.user>} />
-)
-
-export const UserPersonaLiveFixture: React.FC<IFixtureLogProps> = ({ log }) => {
+export const UserPersonaLiveFixture: React.FC = () => {
   const { data: indexData } = useQuery<UserPersonaFixtureIndexQuery>(userPersonaFixtureIndexQuery)
 
   if (!indexData) {
@@ -32,10 +25,6 @@ export const UserPersonaLiveFixture: React.FC<IFixtureLogProps> = ({ log }) => {
 
   if (!data || !data.user) {
     return null
-  }
-
-  if (log) {
-    log(data)
   }
 
   return <UserPersona user={data.user} />
@@ -60,3 +49,5 @@ const userPersonaFixtureQuery = gql`
 
   ${UserFragment}
 `
+
+export default <UserPersonaLiveFixture />

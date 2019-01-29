@@ -27,6 +27,6 @@ export interface IdProp<T = string> {
   id: T
 }
 
-export type StrictId<I, T> = Exclude<T, IdProp> & {
-  id: I
+export type StrictId<IdString, T> = Exclude<T, IdProp> & {
+  id: IdString
 }

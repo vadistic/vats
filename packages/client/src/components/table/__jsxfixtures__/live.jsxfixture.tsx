@@ -3,22 +3,19 @@ import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { Table } from '..'
 import { CandidateFragment } from '../../../generated/fragments'
-import { Candidate, TableFixtureQuery, User } from '../../../generated/queries'
-import { IFixtureLogProps } from '../../fixture'
+import { Candidate, TableFixtureQuery } from '../../../generated/queries'
 
-export const TableLiveFixture: React.FC<IFixtureLogProps> = ({ log }) => {
+export const TableLiveFixture: React.FC = () => {
   const { data } = useQuery<TableFixtureQuery>(tableFixtureQuery)
 
   if (!(data && data.candidates)) {
     return null
   }
 
-  log(data)
-
   return <Table items={data.candidates as Candidate[]} />
 }
 
-export const tableFixtureQuery = gql`
+const tableFixtureQuery = gql`
   query TableFixtureQuery {
     candidates(first: 20) {
       ...Candidate
@@ -27,3 +24,5 @@ export const tableFixtureQuery = gql`
 
   ${CandidateFragment}
 `
+
+export default <TableLiveFixture />

@@ -7,17 +7,9 @@ import {
   CandidateProfileFixtureQuery,
   CandidateProfileFixtureQueryVariables,
 } from '../../../generated/queries'
-import { IFixtureLogProps } from '../../fixture'
 import { CandidateProfile } from '../candidate-profile'
 
-import { StrictId as SetId } from '../../../utils'
-import mock from './mock.json'
-
-export const CandidateProfileFixture: React.FC<IFixtureLogProps> = () => (
-  <CandidateProfile candidate={mock.candidate as SetId<'Candidate', typeof mock.candidate>} />
-)
-
-export const CandidateProfileLiveFixture: React.FC<IFixtureLogProps> = ({ log }) => {
+export const CandidateProfileLiveFixture: React.FC = () => {
   const { data: indexData } = useQuery<CandidateProfileFixtureIndexQuery>(
     candidateProfileFixtureIndexQuery,
   )
@@ -37,14 +29,10 @@ export const CandidateProfileLiveFixture: React.FC<IFixtureLogProps> = ({ log })
     return null
   }
 
-  if (log) {
-    log(data)
-  }
-
   return <CandidateProfile candidate={data.candidate} />
 }
 
-export const candidateProfileFixtureQuery = gql`
+const candidateProfileFixtureQuery = gql`
   query CandidateProfileFixtureQuery($where: CandidateWhereUniqueInput!) {
     candidate(where: $where) {
       ...Candidate
@@ -63,3 +51,5 @@ const candidateProfileFixtureIndexQuery = gql`
 
   ${CandidateFragment}
 `
+
+export default <CandidateProfileLiveFixture />

@@ -1,0 +1,1708 @@
+{
+  "data": {
+    "candidates": [
+      {
+        "id": "cjrfar2ug7c2i0a25vr7en5t3",
+        "createdAt": "2019-01-27T19:28:13.096Z",
+        "updatedAt": "2019-01-27T19:28:13.096Z",
+        "firstName": "Fredy",
+        "lastName": "Kulas",
+        "avatar": {
+          "id": "cjrfar2uo7c2j0a25a3hccig4",
+          "createdAt": "2019-01-27T19:28:13.096Z",
+          "updatedAt": "2019-01-27T19:28:13.096Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Fredy-Kulas-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Fredy.Kulas@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Walker, Schaefer and Runte",
+        "metaHeadline": "District",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar2us7c2l0a25gafixjkx",
+            "createdAt": "2019-01-27T19:28:13.096Z",
+            "updatedAt": "2019-01-27T19:28:13.096Z",
+            "size": 4903539,
+            "type": "application/pdf",
+            "name": "Fredy-Kulas-resume-Fri Aug 10 2018 22:49:50 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=93c4f815-7d84-4fac-ba77-f2521ed2db0a",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqwa3g7ib0a92udas9vgx",
+            "createdAt": "2019-01-27T19:28:04.587Z",
+            "updatedAt": "2019-01-27T19:28:04.587Z",
+            "label": "personal loan account",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar0hl7c1f0a25eergn4nu",
+            "createdAt": "2019-01-27T19:28:10.040Z",
+            "updatedAt": "2019-01-27T19:28:10.040Z",
+            "label": "implementation",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar0qjg7ke0a92bvcbsxw0",
+            "createdAt": "2019-01-27T19:28:10.363Z",
+            "updatedAt": "2019-01-27T19:28:10.363Z",
+            "label": "reduced",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:35:22.651Z",
+            "id": "cjrfb0aajgeyd0a9208irtox6",
+            "updatedAt": "2019-01-27T19:35:22.651Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar34mg7li0a92cqciid7z",
+        "createdAt": "2019-01-27T19:28:13.461Z",
+        "updatedAt": "2019-01-27T19:28:13.461Z",
+        "firstName": "Favian",
+        "lastName": "Bednar",
+        "avatar": {
+          "id": "cjrfar34wg7lj0a92j6pmkz5y",
+          "createdAt": "2019-01-27T19:28:13.461Z",
+          "updatedAt": "2019-01-27T19:28:13.461Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Favian-Bednar-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Favian.Bednar61@yahoo.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Sporer, Goodwin and Kris",
+        "metaHeadline": "Dynamic",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar34zg7ll0a92su1puszo",
+            "createdAt": "2019-01-27T19:28:13.461Z",
+            "updatedAt": "2019-01-27T19:28:13.461Z",
+            "size": 2226386,
+            "type": "application/pdf",
+            "name": "Favian-Bednar-resume-Sat Sep 01 2018 05:31:17 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=e0cdd3d2-9ed7-4578-9a3b-6d0f9e1ce0d6",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqns37bw80a25ibs2kdjf",
+            "createdAt": "2019-01-27T19:27:53.571Z",
+            "updatedAt": "2019-01-27T19:27:53.571Z",
+            "label": "borders",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqw0vg7i40a92qaeip01a",
+            "createdAt": "2019-01-27T19:28:04.255Z",
+            "updatedAt": "2019-01-27T19:28:04.255Z",
+            "label": "digital",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqwa3g7ib0a92udas9vgx",
+            "createdAt": "2019-01-27T19:28:04.587Z",
+            "updatedAt": "2019-01-27T19:28:04.587Z",
+            "label": "personal loan account",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqwlrg7ih0a92ik4hphyg",
+            "createdAt": "2019-01-27T19:28:05.007Z",
+            "updatedAt": "2019-01-27T19:28:05.007Z",
+            "label": "pixel",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:34:01.651Z",
+            "id": "cjrfayjsjgdge0a92ne3t3fjm",
+            "updatedAt": "2019-01-27T19:34:01.651Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:54.088Z",
+            "id": "cjrfazo94gehw0a92spdqduiy",
+            "updatedAt": "2019-01-27T19:34:54.088Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar3m77c3d0a257984hmjk",
+        "createdAt": "2019-01-27T19:28:14.095Z",
+        "updatedAt": "2019-01-27T19:28:14.095Z",
+        "firstName": "Rhoda",
+        "lastName": "Medhurst",
+        "avatar": {
+          "id": "cjrfar3mf7c3e0a25d86nb3jr",
+          "createdAt": "2019-01-27T19:28:14.095Z",
+          "updatedAt": "2019-01-27T19:28:14.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Rhoda-Medhurst-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Rhoda.Medhurst@yahoo.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Beahan - Gorczany",
+        "metaHeadline": "National",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar3mg7c3g0a25mi5csqxe",
+            "createdAt": "2019-01-27T19:28:14.095Z",
+            "updatedAt": "2019-01-27T19:28:14.095Z",
+            "size": 6069886,
+            "type": "application/pdf",
+            "name": "Rhoda-Medhurst-resume-Sat May 26 2018 18:24:15 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=5674e389-63e4-4739-9ea7-7d3e5ed31dae",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqns37bw80a25ibs2kdjf",
+            "createdAt": "2019-01-27T19:27:53.571Z",
+            "updatedAt": "2019-01-27T19:27:53.571Z",
+            "label": "borders",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar22n7c230a255x0zdma4",
+            "createdAt": "2019-01-27T19:28:12.095Z",
+            "updatedAt": "2019-01-27T19:28:12.095Z",
+            "label": "avon",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:32:24.096Z",
+            "id": "cjrfawgio7ftv0a2510ogliuj",
+            "updatedAt": "2019-01-27T19:32:24.096Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar3vtg7mi0a92ng0q52uu",
+        "createdAt": "2019-01-27T19:28:14.441Z",
+        "updatedAt": "2019-01-27T19:28:14.441Z",
+        "firstName": "Nicolette",
+        "lastName": "Fritsch",
+        "avatar": {
+          "id": "cjrfar3w4g7mj0a92l9oq5xqa",
+          "createdAt": "2019-01-27T19:28:14.441Z",
+          "updatedAt": "2019-01-27T19:28:14.441Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Nicolette-Fritsch-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Nicolette@Fritsch.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Upton - Corkery",
+        "metaHeadline": "Forward",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar3w8g7ml0a92mbpi07cs",
+            "createdAt": "2019-01-27T19:28:14.441Z",
+            "updatedAt": "2019-01-27T19:28:14.441Z",
+            "size": 1503612,
+            "type": "application/pdf",
+            "name": "Nicolette-Fritsch-resume-Mon Jun 25 2018 19:03:53 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=702909be-ec64-4600-b5c7-a4e637327a3a",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqmz3g7di0a92syjo8ff3",
+            "createdAt": "2019-01-27T19:27:52.527Z",
+            "updatedAt": "2019-01-27T19:27:52.527Z",
+            "label": "awesome steel sausages",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqo107bwg0a25qqvg3bms",
+            "createdAt": "2019-01-27T19:27:53.892Z",
+            "updatedAt": "2019-01-27T19:27:53.892Z",
+            "label": "calculating",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqplvg7ei0a92mc5pfxy9",
+            "createdAt": "2019-01-27T19:27:55.939Z",
+            "updatedAt": "2019-01-27T19:27:55.939Z",
+            "label": "quantifying",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqrtag7fl0a92xb7wrwv2",
+            "createdAt": "2019-01-27T19:27:58.798Z",
+            "updatedAt": "2019-01-27T19:27:58.798Z",
+            "label": "wooden",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:34:38.981Z",
+            "id": "cjrfazclh7i7c0a25x933ybna",
+            "updatedAt": "2019-01-27T19:34:38.981Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:45.600Z",
+            "id": "cjrfazhpcgeav0a92c3t8xwk6",
+            "updatedAt": "2019-01-27T19:34:45.600Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:35:02.989Z",
+            "id": "cjrfazv4d7ili0a25uvu21fos",
+            "updatedAt": "2019-01-27T19:35:02.989Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar4dz7c450a25ft7zfcyx",
+        "createdAt": "2019-01-27T19:28:15.095Z",
+        "updatedAt": "2019-01-27T19:28:15.095Z",
+        "firstName": "Leif",
+        "lastName": "White",
+        "avatar": {
+          "id": "cjrfar4e87c460a25ztg44z8p",
+          "createdAt": "2019-01-27T19:28:15.095Z",
+          "updatedAt": "2019-01-27T19:28:15.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Leif-White-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Leif.White87@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Streich, Hayes and Altenwerth",
+        "metaHeadline": "Customer",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar4ea7c480a25k3ix7ety",
+            "createdAt": "2019-01-27T19:28:15.095Z",
+            "updatedAt": "2019-01-27T19:28:15.095Z",
+            "size": 1902569,
+            "type": "application/pdf",
+            "name": "Leif-White-resume-Mon Dec 03 2018 08:05:31 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=0f0d9a16-6bd4-4f6d-90ea-ac1d1bd206f0",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqotj7bwt0a25o0v5elz8",
+            "createdAt": "2019-01-27T19:27:54.919Z",
+            "updatedAt": "2019-01-27T19:27:54.919Z",
+            "label": "borders",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqrtag7fl0a92xb7wrwv2",
+            "createdAt": "2019-01-27T19:27:58.798Z",
+            "updatedAt": "2019-01-27T19:27:58.798Z",
+            "label": "wooden",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqstb7byf0a25pxq9h25x",
+            "createdAt": "2019-01-27T19:28:00.095Z",
+            "updatedAt": "2019-01-27T19:28:00.095Z",
+            "label": "gold",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqt2kg7ge0a92jsksyvsn",
+            "createdAt": "2019-01-27T19:28:00.428Z",
+            "updatedAt": "2019-01-27T19:28:00.428Z",
+            "label": "practical",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:33:26.095Z",
+            "id": "cjrfaxscv7gzd0a25ovux6zzb",
+            "updatedAt": "2019-01-27T19:33:26.095Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:33:44.326Z",
+            "id": "cjrfay6fagd3p0a92cn0jdm00",
+            "updatedAt": "2019-01-27T19:33:44.326Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:35:12.436Z",
+            "id": "cjrfb02esgerx0a92jjyfzf9d",
+            "updatedAt": "2019-01-27T19:35:12.436Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar55h7c520a25i51x4kry",
+        "createdAt": "2019-01-27T19:28:16.085Z",
+        "updatedAt": "2019-01-27T19:28:16.085Z",
+        "firstName": "Irma",
+        "lastName": "Ondricka",
+        "avatar": {
+          "id": "cjrfar55o7c530a25s3s3pnxg",
+          "createdAt": "2019-01-27T19:28:16.085Z",
+          "updatedAt": "2019-01-27T19:28:16.085Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Irma-Ondricka-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Irma.Ondricka@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Fisher LLC",
+        "metaHeadline": "Global",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar55q7c550a254k0czysi",
+            "createdAt": "2019-01-27T19:28:16.085Z",
+            "updatedAt": "2019-01-27T19:28:16.085Z",
+            "size": 699818,
+            "type": "application/pdf",
+            "name": "Irma-Ondricka-resume-Sun Jul 08 2018 18:13:54 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=35280884-bfda-4ea9-b2b5-d0aa182b450c",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqqhp7bxn0a25t81t2qlg",
+            "createdAt": "2019-01-27T19:27:57.085Z",
+            "updatedAt": "2019-01-27T19:27:57.085Z",
+            "label": "marketing",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqrtag7fl0a92xb7wrwv2",
+            "createdAt": "2019-01-27T19:27:58.798Z",
+            "updatedAt": "2019-01-27T19:27:58.798Z",
+            "label": "wooden",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqt2kg7ge0a92jsksyvsn",
+            "createdAt": "2019-01-27T19:28:00.428Z",
+            "updatedAt": "2019-01-27T19:28:00.428Z",
+            "label": "practical",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqubig7h20a92lk38btp1",
+            "createdAt": "2019-01-27T19:28:02.046Z",
+            "updatedAt": "2019-01-27T19:28:02.046Z",
+            "label": "rubber",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqynhg7jd0a92t92ofz3s",
+            "createdAt": "2019-01-27T19:28:07.661Z",
+            "updatedAt": "2019-01-27T19:28:07.661Z",
+            "label": "industrial",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqzz07c110a2536y053kv",
+            "createdAt": "2019-01-27T19:28:09.372Z",
+            "updatedAt": "2019-01-27T19:28:09.372Z",
+            "label": "microchip",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:33:57.651Z",
+            "id": "cjrfaygpfgddg0a920qt5czn1",
+            "updatedAt": "2019-01-27T19:33:57.651Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar5x97c5x0a258s42nr7h",
+        "createdAt": "2019-01-27T19:28:17.085Z",
+        "updatedAt": "2019-01-27T19:28:17.085Z",
+        "firstName": "Luna",
+        "lastName": "Fahey",
+        "avatar": {
+          "id": "cjrfar5xe7c5y0a25ljd3ki4w",
+          "createdAt": "2019-01-27T19:28:17.085Z",
+          "updatedAt": "2019-01-27T19:28:17.085Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Luna-Fahey-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Luna91@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "VonRueden LLC",
+        "metaHeadline": "Legacy",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar5xi7c600a25fijwx30o",
+            "createdAt": "2019-01-27T19:28:17.085Z",
+            "updatedAt": "2019-01-27T19:28:17.085Z",
+            "size": 6382380,
+            "type": "application/pdf",
+            "name": "Luna-Fahey-resume-Sun May 20 2018 04:07:47 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=8dfedc9f-0183-4f5f-a6a3-79e25c5214d7",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqojf7bwn0a25v4sp5j42",
+            "createdAt": "2019-01-27T19:27:54.555Z",
+            "updatedAt": "2019-01-27T19:27:54.555Z",
+            "label": "capacitor",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqtt77byz0a25mu9l9rho",
+            "createdAt": "2019-01-27T19:28:01.387Z",
+            "updatedAt": "2019-01-27T19:28:01.387Z",
+            "label": "optical",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqwlrg7ih0a92ik4hphyg",
+            "createdAt": "2019-01-27T19:28:05.007Z",
+            "updatedAt": "2019-01-27T19:28:05.007Z",
+            "label": "pixel",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqynhg7jd0a92t92ofz3s",
+            "createdAt": "2019-01-27T19:28:07.661Z",
+            "updatedAt": "2019-01-27T19:28:07.661Z",
+            "label": "industrial",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar1cb7c1t0a25ibu82lvj",
+            "createdAt": "2019-01-27T19:28:11.147Z",
+            "updatedAt": "2019-01-27T19:28:11.147Z",
+            "label": "plains",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [
+          {
+            "id": "cjrfavwgz7fei0a25g6miw52f",
+            "createdAt": "2019-01-27T19:31:58.115Z",
+            "updatedAt": "2019-01-27T19:31:58.115Z",
+            "title": " 😝",
+            "description": "",
+            "dueAt": "2019-06-19T09:45:48.076Z",
+            "__typename": "Task"
+          },
+          {
+            "id": "cjrfaw9bu7foq0a25iu52c1kr",
+            "createdAt": "2019-01-27T19:32:14.778Z",
+            "updatedAt": "2019-01-27T19:32:14.778Z",
+            "title": " 😜",
+            "description": "Officiis aut ad dolore impedit tenetur nihil vero. 🌟 Vel aliquid voluptatem culpa enim tempore aspernatur.",
+            "dueAt": "2019-08-08T03:46:09.499Z",
+            "__typename": "Task"
+          }
+        ],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:32:26.414Z",
+            "id": "cjrfawib2gbif0a92ghg4nvts",
+            "updatedAt": "2019-01-27T19:32:26.414Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:33:59.120Z",
+            "id": "cjrfayhu87hj60a25oqrizd9l",
+            "updatedAt": "2019-01-27T19:33:59.120Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:03.651Z",
+            "id": "cjrfaylc3gdhf0a9262z518oj",
+            "updatedAt": "2019-01-27T19:34:03.651Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:11.651Z",
+            "id": "cjrfayribgdmv0a92gl4gvilo",
+            "updatedAt": "2019-01-27T19:34:11.651Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:53.370Z",
+            "id": "cjrfaznp67ifw0a25rw63qbu9",
+            "updatedAt": "2019-01-27T19:34:53.370Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar6pb7c6v0a25wuocttmi",
+        "createdAt": "2019-01-27T19:28:18.095Z",
+        "updatedAt": "2019-01-27T19:28:18.095Z",
+        "firstName": "Adam",
+        "lastName": "Lesch",
+        "avatar": {
+          "id": "cjrfar6pn7c6w0a25sexfhq3o",
+          "createdAt": "2019-01-27T19:28:18.095Z",
+          "updatedAt": "2019-01-27T19:28:18.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Adam-Lesch-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Adam4@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Gibson LLC",
+        "metaHeadline": "Customer",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar6po7c6y0a250es6wb1c",
+            "createdAt": "2019-01-27T19:28:18.095Z",
+            "updatedAt": "2019-01-27T19:28:18.095Z",
+            "size": 5343157,
+            "type": "application/pdf",
+            "name": "Adam-Lesch-resume-Thu Mar 22 2018 08:36:33 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=96ce3b26-b4b2-494c-b86b-101cc6d15108",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqns37bw80a25ibs2kdjf",
+            "createdAt": "2019-01-27T19:27:53.571Z",
+            "updatedAt": "2019-01-27T19:27:53.571Z",
+            "label": "borders",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqo107bwg0a25qqvg3bms",
+            "createdAt": "2019-01-27T19:27:53.892Z",
+            "updatedAt": "2019-01-27T19:27:53.892Z",
+            "label": "calculating",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqvi7g7hq0a92r26myl9a",
+            "createdAt": "2019-01-27T19:28:03.583Z",
+            "updatedAt": "2019-01-27T19:28:03.583Z",
+            "label": "content-based",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqwa3g7ib0a92udas9vgx",
+            "createdAt": "2019-01-27T19:28:04.587Z",
+            "updatedAt": "2019-01-27T19:28:04.587Z",
+            "label": "personal loan account",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:32:47.760Z",
+            "id": "cjrfawys0gbxq0a92qr4s6jky",
+            "updatedAt": "2019-01-27T19:32:47.760Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:33:25.095Z",
+            "id": "cjrfaxrl37gyw0a25156567xf",
+            "updatedAt": "2019-01-27T19:33:25.095Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:33:29.096Z",
+            "id": "cjrfaxuo87h1g0a25h55snuf5",
+            "updatedAt": "2019-01-27T19:33:29.096Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar7h37c7k0a25o0p67s6a",
+        "createdAt": "2019-01-27T19:28:19.095Z",
+        "updatedAt": "2019-01-27T19:28:19.095Z",
+        "firstName": "Pansy",
+        "lastName": "Bode",
+        "avatar": {
+          "id": "cjrfar7hd7c7l0a25v9g9u690",
+          "createdAt": "2019-01-27T19:28:19.095Z",
+          "updatedAt": "2019-01-27T19:28:19.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Pansy-Bode-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Pansy@Bode.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Mills - White",
+        "metaHeadline": "Human",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar7hg7c7n0a2552wg71w7",
+            "createdAt": "2019-01-27T19:28:19.095Z",
+            "updatedAt": "2019-01-27T19:28:19.095Z",
+            "size": 4328005,
+            "type": "application/pdf",
+            "name": "Pansy-Bode-resume-Sun Mar 18 2018 07:47:52 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=bbe91fbd-8c21-44e7-8206-a78d3c723be4",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqmz3g7di0a92syjo8ff3",
+            "createdAt": "2019-01-27T19:27:52.527Z",
+            "updatedAt": "2019-01-27T19:27:52.527Z",
+            "label": "awesome steel sausages",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqqr1g7f50a92f4lnzejr",
+            "createdAt": "2019-01-27T19:27:57.421Z",
+            "updatedAt": "2019-01-27T19:27:57.421Z",
+            "label": "djibouti franc",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqx3xg7ir0a92ajgridau",
+            "createdAt": "2019-01-27T19:28:05.661Z",
+            "updatedAt": "2019-01-27T19:28:05.661Z",
+            "label": "wooden",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar07z7c180a25n1xcbahq",
+            "createdAt": "2019-01-27T19:28:09.695Z",
+            "updatedAt": "2019-01-27T19:28:09.695Z",
+            "label": "right-sized",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:34:28.651Z",
+            "id": "cjrfaz4mjgdyz0a922v6lj86l",
+            "updatedAt": "2019-01-27T19:34:28.651Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:46.966Z",
+            "id": "cjrfazira7ibt0a252jjgx4rt",
+            "updatedAt": "2019-01-27T19:34:46.966Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar88l7c880a25j5ruy45z",
+        "createdAt": "2019-01-27T19:28:20.085Z",
+        "updatedAt": "2019-01-27T19:28:20.085Z",
+        "firstName": "Alysa",
+        "lastName": "Leannon",
+        "avatar": {
+          "id": "cjrfar88u7c890a25i4smt9q2",
+          "createdAt": "2019-01-27T19:28:20.085Z",
+          "updatedAt": "2019-01-27T19:28:20.085Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Alysa-Leannon-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Alysa17@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Goodwin, Haag and Turner",
+        "metaHeadline": "Investor",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar88y7c8b0a25d7if253f",
+            "createdAt": "2019-01-27T19:28:20.085Z",
+            "updatedAt": "2019-01-27T19:28:20.085Z",
+            "size": 3627779,
+            "type": "application/pdf",
+            "name": "Alysa-Leannon-resume-Thu Feb 15 2018 12:52:55 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=bb2d105c-3b59-485d-8553-101b0fa87036",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqotj7bwt0a25o0v5elz8",
+            "createdAt": "2019-01-27T19:27:54.919Z",
+            "updatedAt": "2019-01-27T19:27:54.919Z",
+            "label": "borders",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqu2bg7gv0a92byhamftg",
+            "createdAt": "2019-01-27T19:28:01.715Z",
+            "updatedAt": "2019-01-27T19:28:01.715Z",
+            "label": "games",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqw0vg7i40a92qaeip01a",
+            "createdAt": "2019-01-27T19:28:04.255Z",
+            "updatedAt": "2019-01-27T19:28:04.255Z",
+            "label": "digital",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqxcw7c000a25sqdwy98s",
+            "createdAt": "2019-01-27T19:28:05.984Z",
+            "updatedAt": "2019-01-27T19:28:05.984Z",
+            "label": "e-enable",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqzf9g7jt0a92b9db752f",
+            "createdAt": "2019-01-27T19:28:08.661Z",
+            "updatedAt": "2019-01-27T19:28:08.661Z",
+            "label": "national",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [
+          {
+            "id": "cjrfavqa77f9k0a25115m46x5",
+            "createdAt": "2019-01-27T19:31:50.095Z",
+            "updatedAt": "2019-01-27T19:31:50.095Z",
+            "title": " 😵",
+            "description": null,
+            "dueAt": "2019-01-30T16:29:34.710Z",
+            "__typename": "Task"
+          }
+        ],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:35:07.420Z",
+            "id": "cjrfazyjg7iog0a25jup27j4m",
+            "updatedAt": "2019-01-27T19:35:07.420Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:35:21.651Z",
+            "id": "cjrfb09irgexr0a92ifz0xu04",
+            "updatedAt": "2019-01-27T19:35:21.651Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar90n7c8z0a251xa42k0f",
+        "createdAt": "2019-01-27T19:28:21.095Z",
+        "updatedAt": "2019-01-27T19:28:21.095Z",
+        "firstName": "Jerrold",
+        "lastName": "Mante",
+        "avatar": {
+          "id": "cjrfar9107c900a253s4xo2y3",
+          "createdAt": "2019-01-27T19:28:21.095Z",
+          "updatedAt": "2019-01-27T19:28:21.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Jerrold-Mante-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Jerrold@Mante.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Hills - Hyatt",
+        "metaHeadline": "Chief",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar9137c920a25z92g8nw5",
+            "createdAt": "2019-01-27T19:28:21.095Z",
+            "updatedAt": "2019-01-27T19:28:21.095Z",
+            "size": 5333625,
+            "type": "application/pdf",
+            "name": "Jerrold-Mante-resume-Sun Apr 22 2018 09:02:01 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=adcd2a8a-4e72-4b67-a5a2-f76694bfc4c2",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqr9h7bxw0a258zf6l3m4",
+            "createdAt": "2019-01-27T19:27:58.085Z",
+            "updatedAt": "2019-01-27T19:27:58.085Z",
+            "label": "chicken",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqtf9g7go0a92u4g1ef3k",
+            "createdAt": "2019-01-27T19:28:00.885Z",
+            "updatedAt": "2019-01-27T19:28:00.885Z",
+            "label": "transmit",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqu2bg7gv0a92byhamftg",
+            "createdAt": "2019-01-27T19:28:01.715Z",
+            "updatedAt": "2019-01-27T19:28:01.715Z",
+            "label": "games",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqxcw7c000a25sqdwy98s",
+            "createdAt": "2019-01-27T19:28:05.984Z",
+            "updatedAt": "2019-01-27T19:28:05.984Z",
+            "label": "e-enable",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:33:22.762Z",
+            "id": "cjrfaxpsagcnu0a92zwjl1td5",
+            "updatedAt": "2019-01-27T19:33:22.762Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:24.665Z",
+            "id": "cjrfaz1jtgdw50a92kp0gqkwd",
+            "updatedAt": "2019-01-27T19:34:24.665Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:27.689Z",
+            "id": "cjrfaz3vtgdy70a92l4x8anm8",
+            "updatedAt": "2019-01-27T19:34:27.689Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:35.677Z",
+            "id": "cjrfaza1p7i4q0a25leo41240",
+            "updatedAt": "2019-01-27T19:34:35.677Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:35:09.661Z",
+            "id": "cjrfb009pgeqi0a92jknskhvl",
+            "updatedAt": "2019-01-27T19:35:09.661Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfar9sf7c9n0a25hj0kdj2a",
+        "createdAt": "2019-01-27T19:28:22.095Z",
+        "updatedAt": "2019-01-27T19:28:22.095Z",
+        "firstName": "Franz",
+        "lastName": "Mayer",
+        "avatar": {
+          "id": "cjrfar9sn7c9o0a25msev0754",
+          "createdAt": "2019-01-27T19:28:22.095Z",
+          "updatedAt": "2019-01-27T19:28:22.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Franz-Mayer-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Franz2@gmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Nicolas and Sons",
+        "metaHeadline": "Regional",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfar9sq7c9q0a25eqy3ohij",
+            "createdAt": "2019-01-27T19:28:22.095Z",
+            "updatedAt": "2019-01-27T19:28:22.095Z",
+            "size": 6059529,
+            "type": "application/pdf",
+            "name": "Franz-Mayer-resume-Tue Aug 21 2018 00:02:01 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=1356b5c2-b1ed-4c6a-8652-e062be4abe43",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:33:38.414Z",
+            "id": "cjrfay1v2gcyx0a92cowzcnx0",
+            "updatedAt": "2019-01-27T19:33:38.414Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:37.987Z",
+            "id": "cjrfazbtv7i6m0a25q4dz9meg",
+            "updatedAt": "2019-01-27T19:34:37.987Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfara1xg7pg0a92h4sotjgc",
+        "createdAt": "2019-01-27T19:28:22.437Z",
+        "updatedAt": "2019-01-27T19:28:22.437Z",
+        "firstName": "Brycen",
+        "lastName": "Jones",
+        "avatar": {
+          "id": "cjrfara27g7ph0a92zg19ms2v",
+          "createdAt": "2019-01-27T19:28:22.437Z",
+          "updatedAt": "2019-01-27T19:28:22.437Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Brycen-Jones-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Brycen43@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Schultz - Emard",
+        "metaHeadline": "Dynamic",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfara2ag7pj0a92waxzssk0",
+            "createdAt": "2019-01-27T19:28:22.437Z",
+            "updatedAt": "2019-01-27T19:28:22.437Z",
+            "size": 5365385,
+            "type": "application/pdf",
+            "name": "Brycen-Jones-resume-Mon Dec 03 2018 10:15:00 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=f5643f78-b9cd-457d-8222-ce9b1427bd93",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqojf7bwn0a25v4sp5j42",
+            "createdAt": "2019-01-27T19:27:54.555Z",
+            "updatedAt": "2019-01-27T19:27:54.555Z",
+            "label": "capacitor",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqqr1g7f50a92f4lnzejr",
+            "createdAt": "2019-01-27T19:27:57.421Z",
+            "updatedAt": "2019-01-27T19:27:57.421Z",
+            "label": "djibouti franc",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqu2bg7gv0a92byhamftg",
+            "createdAt": "2019-01-27T19:28:01.715Z",
+            "updatedAt": "2019-01-27T19:28:01.715Z",
+            "label": "games",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqubig7h20a92lk38btp1",
+            "createdAt": "2019-01-27T19:28:02.046Z",
+            "updatedAt": "2019-01-27T19:28:02.046Z",
+            "label": "rubber",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqul2g7h90a92v3fkt2fn",
+            "createdAt": "2019-01-27T19:28:02.390Z",
+            "updatedAt": "2019-01-27T19:28:02.390Z",
+            "label": "streamline",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqv8qg7hj0a92nqynk8am",
+            "createdAt": "2019-01-27T19:28:03.242Z",
+            "updatedAt": "2019-01-27T19:28:03.242Z",
+            "label": "transmitter",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqxv6g7j30a92jh5rfwua",
+            "createdAt": "2019-01-27T19:28:06.642Z",
+            "updatedAt": "2019-01-27T19:28:06.642Z",
+            "label": "markets",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqzf9g7jt0a92b9db752f",
+            "createdAt": "2019-01-27T19:28:08.661Z",
+            "updatedAt": "2019-01-27T19:28:08.661Z",
+            "label": "national",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:33:54.660Z",
+            "id": "cjrfayeecgdav0a924hftoozg",
+            "updatedAt": "2019-01-27T19:33:54.660Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfarak77ca80a25z0g8d3jq",
+        "createdAt": "2019-01-27T19:28:23.095Z",
+        "updatedAt": "2019-01-27T19:28:23.095Z",
+        "firstName": "Aiden",
+        "lastName": "Hayes",
+        "avatar": {
+          "id": "cjrfarake7ca90a25pt2wvu0h",
+          "createdAt": "2019-01-27T19:28:23.095Z",
+          "updatedAt": "2019-01-27T19:28:23.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Aiden-Hayes-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Aiden@Hayes.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Kiehn - O'Connell",
+        "metaHeadline": "Customer",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfarakh7cab0a2538u1869n",
+            "createdAt": "2019-01-27T19:28:23.095Z",
+            "updatedAt": "2019-01-27T19:28:23.095Z",
+            "size": 6688657,
+            "type": "application/pdf",
+            "name": "Aiden-Hayes-resume-Tue Jan 15 2019 04:15:38 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=3e8c2268-df48-41e8-b83e-50674fd40097",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqr9h7bxw0a258zf6l3m4",
+            "createdAt": "2019-01-27T19:27:58.085Z",
+            "updatedAt": "2019-01-27T19:27:58.085Z",
+            "label": "chicken",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqv8qg7hj0a92nqynk8am",
+            "createdAt": "2019-01-27T19:28:03.242Z",
+            "updatedAt": "2019-01-27T19:28:03.242Z",
+            "label": "transmitter",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqynhg7jd0a92t92ofz3s",
+            "createdAt": "2019-01-27T19:28:07.661Z",
+            "updatedAt": "2019-01-27T19:28:07.661Z",
+            "label": "industrial",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [
+          {
+            "id": "cjrfavv5pgaxu0a92r5pj3r38",
+            "createdAt": "2019-01-27T19:31:56.412Z",
+            "updatedAt": "2019-01-27T19:31:56.412Z",
+            "title": " 👀",
+            "description": "Mollitia autem repellat facilis sint sit dicta iusto et.",
+            "dueAt": "2019-06-20T08:05:21.419Z",
+            "__typename": "Task"
+          }
+        ],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:33:43.650Z",
+            "id": "cjrfay5wigd350a92u3hx0205",
+            "updatedAt": "2019-01-27T19:33:43.650Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfarauig7qc0a92v7zrzhvv",
+        "createdAt": "2019-01-27T19:28:23.466Z",
+        "updatedAt": "2019-01-27T19:28:23.466Z",
+        "firstName": "Rogelio",
+        "lastName": "Borer",
+        "avatar": {
+          "id": "cjrfarauvg7qd0a92jn7lpe45",
+          "createdAt": "2019-01-27T19:28:23.466Z",
+          "updatedAt": "2019-01-27T19:28:23.466Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Rogelio-Borer-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Rogelio.Borer@hotmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Bode LLC",
+        "metaHeadline": "Dynamic",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfarauzg7qi0a92gawxrtg2",
+            "createdAt": "2019-01-27T19:28:23.466Z",
+            "updatedAt": "2019-01-27T19:28:23.466Z",
+            "size": 1385746,
+            "type": "application/pdf",
+            "name": "Rogelio-Borer-resume-Sat Dec 22 2018 17:02:31 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=9056af8a-82ec-484c-988a-1b1236f842fb",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqmz3g7di0a92syjo8ff3",
+            "createdAt": "2019-01-27T19:27:52.527Z",
+            "updatedAt": "2019-01-27T19:27:52.527Z",
+            "label": "awesome steel sausages",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqubig7h20a92lk38btp1",
+            "createdAt": "2019-01-27T19:28:02.046Z",
+            "updatedAt": "2019-01-27T19:28:02.046Z",
+            "label": "rubber",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqynhg7jd0a92t92ofz3s",
+            "createdAt": "2019-01-27T19:28:07.661Z",
+            "updatedAt": "2019-01-27T19:28:07.661Z",
+            "label": "industrial",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqzf9g7jt0a92b9db752f",
+            "createdAt": "2019-01-27T19:28:08.661Z",
+            "updatedAt": "2019-01-27T19:28:08.661Z",
+            "label": "national",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfarbc07cb00a25ulzl4nax",
+        "createdAt": "2019-01-27T19:28:24.095Z",
+        "updatedAt": "2019-01-27T19:28:24.095Z",
+        "firstName": "Annalise",
+        "lastName": "Dooley",
+        "avatar": {
+          "id": "cjrfarbc67cb10a25f8tohpd8",
+          "createdAt": "2019-01-27T19:28:24.095Z",
+          "updatedAt": "2019-01-27T19:28:24.095Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Annalise-Dooley-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Annalise_Dooley18@gmail.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Kuphal, Baumbach and Parisian",
+        "metaHeadline": "Future",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfarbc77cb30a2586tez8mq",
+            "createdAt": "2019-01-27T19:28:24.096Z",
+            "updatedAt": "2019-01-27T19:28:24.096Z",
+            "size": 283898,
+            "type": "application/pdf",
+            "name": "Annalise-Dooley-resume-Sun Apr 15 2018 05:40:18 GMT+0200 (Central European Summer Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=012ef36d-883d-4bbe-a3a7-e7609026d0b1",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqmpw7bvn0a25rjrnk3uo",
+            "createdAt": "2019-01-27T19:27:52.196Z",
+            "updatedAt": "2019-01-27T19:27:52.196Z",
+            "label": "new mexico",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqv8qg7hj0a92nqynk8am",
+            "createdAt": "2019-01-27T19:28:03.242Z",
+            "updatedAt": "2019-01-27T19:28:03.242Z",
+            "label": "transmitter",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqw0vg7i40a92qaeip01a",
+            "createdAt": "2019-01-27T19:28:04.255Z",
+            "updatedAt": "2019-01-27T19:28:04.255Z",
+            "label": "digital",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar07z7c180a25n1xcbahq",
+            "createdAt": "2019-01-27T19:28:09.695Z",
+            "updatedAt": "2019-01-27T19:28:09.695Z",
+            "label": "right-sized",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:34:35.024Z",
+            "id": "cjrfaz9jkge3o0a92byk8r217",
+            "updatedAt": "2019-01-27T19:34:35.024Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfarblsg7r80a92fhcpkovw",
+        "createdAt": "2019-01-27T19:28:24.448Z",
+        "updatedAt": "2019-01-27T19:28:24.448Z",
+        "firstName": "Davion",
+        "lastName": "Lebsack",
+        "avatar": {
+          "id": "cjrfarbm2g7r90a92yeosd7ip",
+          "createdAt": "2019-01-27T19:28:24.448Z",
+          "updatedAt": "2019-01-27T19:28:24.448Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Davion-Lebsack-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Davion18@yahoo.com.png",
+          "__typename": "File"
+        },
+        "metaCompany": "D'Amore, Goldner and Grant",
+        "metaHeadline": "Senior",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfarbm6g7rb0a92q8fkij11",
+            "createdAt": "2019-01-27T19:28:24.448Z",
+            "updatedAt": "2019-01-27T19:28:24.448Z",
+            "size": 4361088,
+            "type": "application/pdf",
+            "name": "Davion-Lebsack-resume-Thu Feb 08 2018 17:24:36 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=139aa2ed-2dd6-495d-94b2-2d718d1bd569",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqmz3g7di0a92syjo8ff3",
+            "createdAt": "2019-01-27T19:27:52.527Z",
+            "updatedAt": "2019-01-27T19:27:52.527Z",
+            "label": "awesome steel sausages",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqp347bwy0a25wyzd5blw",
+            "createdAt": "2019-01-27T19:27:55.264Z",
+            "updatedAt": "2019-01-27T19:27:55.264Z",
+            "label": "tajikistan",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqqhp7bxn0a25t81t2qlg",
+            "createdAt": "2019-01-27T19:27:57.085Z",
+            "updatedAt": "2019-01-27T19:27:57.085Z",
+            "label": "marketing",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqsd5g7fz0a92p9kviv83",
+            "createdAt": "2019-01-27T19:27:59.513Z",
+            "updatedAt": "2019-01-27T19:27:59.513Z",
+            "label": "web services",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar1lvg7kr0a929wzypja3",
+            "createdAt": "2019-01-27T19:28:11.491Z",
+            "updatedAt": "2019-01-27T19:28:11.491Z",
+            "label": "tuna",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:34:19.429Z",
+            "id": "cjrfayxid7htw0a25qky0ghnn",
+            "updatedAt": "2019-01-27T19:34:19.429Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:30.627Z",
+            "id": "cjrfaz65f7i1r0a25lqhvkpia",
+            "updatedAt": "2019-01-27T19:34:30.627Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfarbw6g7rr0a92es20rynd",
+        "createdAt": "2019-01-27T19:28:24.822Z",
+        "updatedAt": "2019-01-27T19:28:24.822Z",
+        "firstName": "Waino",
+        "lastName": "Maggio",
+        "avatar": {
+          "id": "cjrfarbwfg7rs0a925vs9t55y",
+          "createdAt": "2019-01-27T19:28:24.822Z",
+          "updatedAt": "2019-01-27T19:28:24.822Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Waino-Maggio-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Waino@Maggio.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Funk LLC",
+        "metaHeadline": "Senior",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfarbwig7ru0a92jedg5eux",
+            "createdAt": "2019-01-27T19:28:24.822Z",
+            "updatedAt": "2019-01-27T19:28:24.822Z",
+            "size": 4023421,
+            "type": "application/pdf",
+            "name": "Waino-Maggio-resume-Fri Feb 16 2018 02:47:10 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=40949c60-f935-4c94-8870-02e5054b5f04",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:33:11.651Z",
+            "id": "cjrfaxh7ngcg80a92sos4vee5",
+            "updatedAt": "2019-01-27T19:33:11.651Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:35:06.651Z",
+            "id": "cjrfazxy3geox0a92hwh0mngb",
+            "updatedAt": "2019-01-27T19:35:06.651Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfarc5zg7sd0a92g72233p5",
+        "createdAt": "2019-01-27T19:28:25.175Z",
+        "updatedAt": "2019-01-27T19:28:25.175Z",
+        "firstName": "Fay",
+        "lastName": "Maggio",
+        "avatar": {
+          "id": "cjrfarc69g7se0a92fsa7smx6",
+          "createdAt": "2019-01-27T19:28:25.175Z",
+          "updatedAt": "2019-01-27T19:28:25.175Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Fay-Maggio-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Fay@Maggio.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Ryan - Gutkowski",
+        "metaHeadline": "Lead",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfarc6cg7sg0a92zta29e6w",
+            "createdAt": "2019-01-27T19:28:25.175Z",
+            "updatedAt": "2019-01-27T19:28:25.175Z",
+            "size": 6867317,
+            "type": "application/pdf",
+            "name": "Fay-Maggio-resume-Fri Nov 16 2018 09:08:34 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=d88e0bd9-156a-4ab6-a1e4-9d58eda76f26",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [
+          {
+            "id": "cjrfaqnj67bw20a25lau30owt",
+            "createdAt": "2019-01-27T19:27:53.250Z",
+            "updatedAt": "2019-01-27T19:27:53.250Z",
+            "label": "indigo",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqplvg7ei0a92mc5pfxy9",
+            "createdAt": "2019-01-27T19:27:55.939Z",
+            "updatedAt": "2019-01-27T19:27:55.939Z",
+            "label": "quantifying",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqqhp7bxn0a25t81t2qlg",
+            "createdAt": "2019-01-27T19:27:57.085Z",
+            "updatedAt": "2019-01-27T19:27:57.085Z",
+            "label": "marketing",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqr9h7bxw0a258zf6l3m4",
+            "createdAt": "2019-01-27T19:27:58.085Z",
+            "updatedAt": "2019-01-27T19:27:58.085Z",
+            "label": "chicken",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqstb7byf0a25pxq9h25x",
+            "createdAt": "2019-01-27T19:28:00.095Z",
+            "updatedAt": "2019-01-27T19:28:00.095Z",
+            "label": "gold",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqtf9g7go0a92u4g1ef3k",
+            "createdAt": "2019-01-27T19:28:00.885Z",
+            "updatedAt": "2019-01-27T19:28:00.885Z",
+            "label": "transmit",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfaqywi7c0n0a25g5r2wsjs",
+            "createdAt": "2019-01-27T19:28:07.986Z",
+            "updatedAt": "2019-01-27T19:28:07.986Z",
+            "label": "incredible frozen pants",
+            "__typename": "Tag"
+          },
+          {
+            "id": "cjrfar1cb7c1t0a25ibu82lvj",
+            "createdAt": "2019-01-27T19:28:11.147Z",
+            "updatedAt": "2019-01-27T19:28:11.147Z",
+            "label": "plains",
+            "__typename": "Tag"
+          }
+        ],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:32:27.105Z",
+            "id": "cjrfawiu97fvt0a25ity9n57r",
+            "updatedAt": "2019-01-27T19:32:27.105Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      },
+      {
+        "id": "cjrfarcfu7cbq0a25k9r4gd3l",
+        "createdAt": "2019-01-27T19:28:25.529Z",
+        "updatedAt": "2019-01-27T19:28:25.529Z",
+        "firstName": "Anibal",
+        "lastName": "Davis",
+        "avatar": {
+          "id": "cjrfarcfy7cbr0a254mwkrpkv",
+          "createdAt": "2019-01-27T19:28:25.530Z",
+          "updatedAt": "2019-01-27T19:28:25.530Z",
+          "size": 27500,
+          "type": "image/png",
+          "name": "Anibal-Davis-profile-96x96",
+          "url": "https://api.adorable.io/avatars/96/Anibal@Davis.png",
+          "__typename": "File"
+        },
+        "metaCompany": "Batz - Emmerich",
+        "metaHeadline": "District",
+        "metaPosition": null,
+        "resumesFile": [
+          {
+            "id": "cjrfarcg17cbt0a25rtjq74a1",
+            "createdAt": "2019-01-27T19:28:25.530Z",
+            "updatedAt": "2019-01-27T19:28:25.530Z",
+            "size": 860056,
+            "type": "application/pdf",
+            "name": "Anibal-Davis-resume-Mon Dec 03 2018 08:59:59 GMT+0100 (Central European Standard Time)",
+            "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=c35b8d02-4acf-405d-ac17-bd8f02d6c4cd",
+            "__typename": "File"
+          }
+        ],
+        "coverLettersFile": [],
+        "tags": [],
+        "fields": [],
+        "tasks": [],
+        "applications": [
+          {
+            "createdAt": "2019-01-27T19:32:40.027Z",
+            "id": "cjrfawst77g3v0a25ngwpa1xy",
+            "updatedAt": "2019-01-27T19:32:40.027Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:10.804Z",
+            "id": "cjrfayqusgdm70a92bmh62ljo",
+            "updatedAt": "2019-01-27T19:34:10.804Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:34.373Z",
+            "id": "cjrfaz91h7i3z0a257to3zc69",
+            "updatedAt": "2019-01-27T19:34:34.373Z",
+            "type": "Qualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:34:50.132Z",
+            "id": "cjrfazl78geel0a928wdpf4w5",
+            "updatedAt": "2019-01-27T19:34:50.132Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:35:08.170Z",
+            "id": "cjrfazz4b7ip40a250iz7cmpy",
+            "updatedAt": "2019-01-27T19:35:08.170Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          },
+          {
+            "createdAt": "2019-01-27T19:35:11.746Z",
+            "id": "cjrfb01vm7irw0a25id3drtlh",
+            "updatedAt": "2019-01-27T19:35:11.746Z",
+            "type": "Disqualified",
+            "__typename": "Application"
+          }
+        ],
+        "comments": [],
+        "__typename": "Candidate"
+      }
+    ]
+  }
+}

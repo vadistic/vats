@@ -17,6 +17,12 @@ export const routesConfig = {
       candidateProfile: {
         path: 'candidate',
       },
+      toast: {
+        path: 'toast',
+      },
+      toastGroup: {
+        path: 'toast-group',
+      },
     },
   },
 }

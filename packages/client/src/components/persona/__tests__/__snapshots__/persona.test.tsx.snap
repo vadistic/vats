@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<DocumentFragment>
+  <div
+    class="ms-Fabric root-47"
+  >
+    <div
+      class="ms-Persona ms-Persona--size48 root-48"
+      size="13"
+    >
+      <div
+        class="ms-Persona-coin ms-Persona--size48 coin-55"
+        size="13"
+      >
+        <div
+          class="ms-Persona-imageArea imageArea-57"
+        >
+          <div
+            class="ms-Image ms-Persona-image image-60"
+            style="width: 48px; height: 48px;"
+          >
+            <img
+              alt="Christop Romaguera avatar"
+              class="ms-Image-image ms-Image-image--cover ms-Image-image--portrait is-notLoaded is-fadeIn image-61"
+              src="https://api.adorable.io/avatars/96/Christop_Romaguera@vadistic-recruitment.com.png"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ms-Persona-details details-49"
+      >
+        <div
+          class="ms-Persona-primaryText primaryText-50"
+        >
+          <div
+            class="ms-TooltipHost root-64"
+          >
+            Christop Romaguera
+          </div>
+        </div>
+        <div
+          class="ms-Persona-secondaryText secondaryText-51"
+        >
+          <div
+            class="ms-TooltipHost root-64"
+          >
+            District Accounts Strategist
+          </div>
+        </div>
+        <div
+          class="ms-Persona-tertiaryText tertiaryText-52"
+        />
+        <div
+          class="ms-Persona-optionalText optionalText-53"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

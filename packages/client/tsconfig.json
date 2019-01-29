@@ -3,7 +3,6 @@
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
-    // modules
     "rootDir": "src",
     "module": "esnext",
     "moduleResolution": "node",
@@ -11,14 +10,11 @@
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    // strict
     "allowJs": false,
     "strict": true,
-    // lest strict
     "skipLibCheck": true,
-    "noUnusedLocals": false, // dev
-    "noUnusedParameters": false, //dev
-    // rest
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "jsx": "preserve",
     "forceConsistentCasingInFileNames": true
   },
