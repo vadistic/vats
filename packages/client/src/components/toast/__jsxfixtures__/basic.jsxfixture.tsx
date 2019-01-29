@@ -8,8 +8,8 @@ const data = {
 
 export const ToastBasicFixture: React.FC = () => (
   <>
-    <Toast message={data.shortMessage} />
-    <Toast message={data.longMessage} type={ToastType.warning} />
+    <Toast message={data.shortMessage} id="short" />
+    <Toast message={data.longMessage} type={ToastType.warning} id="long" />
   </>
 )
 

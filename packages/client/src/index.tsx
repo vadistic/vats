@@ -7,11 +7,15 @@ import App from './app'
 import * as serviceWorker from './service-worker'
 import { theme } from './styles/theme'
 
-// here temporary to not reload it on each HMR edit
-loadTheme(theme)
-// TODO: replace with not proprietiary icons
-// http://aka.ms/fabric-assets-license
-initializeIcons()
+const _window = window as any
+
+// hook to prevent fabric initialization every hot load update
+if (!_window.__IS_FABRIC_LOADED__) {
+  loadTheme(theme)
+  // TODO: replace with not proprietiary icons
+  initializeIcons()
+  _window.__IS_FABRIC_LOADED__ = true
+}
 
 const root = document.getElementById('root')
 

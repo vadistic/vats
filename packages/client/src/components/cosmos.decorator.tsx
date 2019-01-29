@@ -4,3 +4,5 @@ import { ComponentWrapper } from '../utils'
 export const CosmosComponentWrapper: React.FC = ({ children }) => (
   <ComponentWrapper>{children}</ComponentWrapper>
 )
+
+export default CosmosComponentWrapper

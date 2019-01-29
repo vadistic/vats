@@ -1,17 +1,18 @@
 import { css } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
-import { Fabric, getTheme } from 'office-ui-fabric-react'
+import { Fabric } from 'office-ui-fabric-react'
 import React, { Suspense } from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from '../apollo'
+import { theme } from '../styles'
 
 export const AppWrapper: React.FC = ({ children }) => {
   return (
     <>
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client}>
-          <ThemeProvider theme={getTheme()}>
+          <ThemeProvider theme={theme}>
             <Fabric>{children}</Fabric>
           </ThemeProvider>
         </ApolloHooksProvider>
@@ -27,6 +28,12 @@ const componentWrapperStyles = css`
   align-items: center;
 
   width: 100%;
+
+  & > div {
+    max-width: 100%;
+  }
+
+  /* for centering */
   min-height: 80vh;
 `
 
