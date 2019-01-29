@@ -1,3 +1,4 @@
+# override template for spinning prisma with external database
 version: '3'
 services:
   prisma:
