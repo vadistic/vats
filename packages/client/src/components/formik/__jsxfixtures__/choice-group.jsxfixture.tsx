@@ -1,6 +1,7 @@
 import { FormikProvider, useFormik } from 'formik'
 import { IChoiceGroupOption } from 'office-ui-fabric-react'
 import React from 'react'
+import { getLeafPath } from '../../../utils'
 import { FormikChoiceGroup } from '../formik'
 
 const plainOptions: IChoiceGroupOption[] = [
@@ -44,7 +45,10 @@ export const ChoiceGroupFixture: React.FC = () => {
         <form>
           <h3>ChoiceGroup</h3>
           <span>Plain</span>
-          <FormikChoiceGroup name="plain" options={plainOptions} />
+          <FormikChoiceGroup
+            name={getLeafPath(formik.initialValues, 'plain')}
+            options={plainOptions}
+          />
           {/* https://developer.microsoft.com/en-us/fabric#/components/choicegroup */}
           <span>TODO: ChoiceGroup with Dropdowns</span>
         </form>

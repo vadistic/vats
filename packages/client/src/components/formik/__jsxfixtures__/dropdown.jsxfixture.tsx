@@ -1,9 +1,10 @@
 import { css } from '@emotion/core'
 import { FormikProvider, useFormik } from 'formik'
-import { DropdownMenuItemType, IChoiceGroupOption, IDropdownOption } from 'office-ui-fabric-react'
+import { DropdownMenuItemType, IDropdownOption } from 'office-ui-fabric-react'
 import React from 'react'
 import { ITheme } from '../../../styles'
-import { FormikChoiceGroup, FormikDropdown } from '../formik'
+import { getLeafPath } from '../../../utils'
+import { FormikDropdown } from '../formik'
 
 const options: IDropdownOption[] = [
   { key: 'Header', text: 'Actions', itemType: DropdownMenuItemType.Header },
@@ -30,11 +31,13 @@ export const DropdownFixture: React.FC = () => {
     // noop
   }
 
+  const form = {
+    single: undefined,
+    multi: [],
+  }
+
   const formik = useFormik({
-    initialValues: {
-      single: undefined,
-      multi: [],
-    },
+    initialValues: form,
     onSubmit,
   })
 
@@ -46,9 +49,9 @@ export const DropdownFixture: React.FC = () => {
         <form>
           <h3>Dropdown</h3>
           <span>Single select</span>
-          <FormikDropdown name="single" options={options} dropdownWidth={200} />
+          <FormikDropdown name={getLeafPath(form, 'single')} options={options} />
           <span>Multi select</span>
-          <FormikDropdown name="multi" options={options} dropdownWidth={200} />
+          <FormikDropdown name={getLeafPath(form, 'multi')} options={options} />
         </form>
       </FormikProvider>
     </div>

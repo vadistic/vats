@@ -4,6 +4,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
     "rootDir": "src",
+    "jsx": "preserve",
+    // modules
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -11,12 +13,13 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "allowJs": false,
+    // strict
     "strict": true,
     "skipLibCheck": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "jsx": "preserve",
-    "forceConsistentCasingInFileNames": true
+    "noUnusedLocals": true,
+    // lint
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedParameters": false
   },
   "include": ["src/**/*"]
 }

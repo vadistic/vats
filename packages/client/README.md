@@ -1,1 +1,1 @@
-# vats/app
+# vats/client
