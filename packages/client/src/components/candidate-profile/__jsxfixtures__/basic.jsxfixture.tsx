@@ -1,12 +1,12 @@
 import React from 'react'
 import { CandidateProfile } from '../candidate-profile'
 
-import { StrictId as SetId } from '../../../utils'
+import { StrictId as SetID } from '../../../utils'
 import response from './response.json'
 
 export const CandidateProfileBasicFixture: React.FC = () => (
   <CandidateProfile
-    candidate={response.candidate as SetId<'Candidate', typeof response.candidate>}
+    candidate={response.data.candidate as SetID<'Candidate', typeof response.data.candidate>}
   />
 )
 

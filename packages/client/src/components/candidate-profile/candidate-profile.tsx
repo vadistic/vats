@@ -6,5 +6,5 @@ export interface ICandidateProfileProps {
 }
 
 export const CandidateProfile: React.FC<ICandidateProfileProps> = () => {
-  return <p>TODO: Candidate profile</p>
+  return <div>TODO:</div>
 }

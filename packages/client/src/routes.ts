@@ -7,23 +7,6 @@ export const routesConfig = {
   },
   test: {
     path: 'dev',
-    children: {
-      persona: {
-        path: 'persona',
-      },
-      table: {
-        path: 'table',
-      },
-      candidateProfile: {
-        path: 'candidate',
-      },
-      toast: {
-        path: 'toast',
-      },
-      toastGroup: {
-        path: 'toast-group',
-      },
-    },
   },
 }
 

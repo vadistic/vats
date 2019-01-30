@@ -1,49 +1,43 @@
-import { INavLink, INavLinkGroup, Nav } from 'office-ui-fabric-react'
-import * as React from 'react'
+import { navigate } from '@reach/router'
+import { INav, INavLink, INavLinkGroup, INavProps, Nav } from 'office-ui-fabric-react'
+import React, { useState } from 'react'
 
 import { routes } from '../../routes'
 
-export interface INavigationProps {}
+export interface INavigationProps {
+  groups?: INavLinkGroup[]
+}
 
-export const Navigation: React.FC = () => {
-  const main: INavLinkGroup = {
-    links: [
-      {
-        name: 'Home',
-        url: routes.home.url,
-        isExpanded: true,
-      },
-    ],
+export const Navigation: React.FC<INavigationProps> = ({ groups }) => {
+  const homeLink: INavLink = {
+    name: 'Home',
+    key: routes.home.url,
+    url: routes.home.url,
+    isExpanded: true,
   }
 
-  const test: INavLinkGroup = {
-    links: [
-      {
-        name: 'Test',
-        url: routes.test.url,
-        isExpanded: true,
-        links: Object.entries(routes.test.children).map(([name, item]) => ({
-          name,
-          url: item.url,
-        })),
-      },
-    ],
+  const [active, setActive] = useState(homeLink)
+
+  const mainGroup: INavLinkGroup = {
+    links: [homeLink],
   }
 
-  const onLinkClick = () => {
-    console.log('click')
+  const onLinkClick: INavProps['onLinkClick'] = (ev, item) => {
+    if (item) {
+      setActive(item)
+      navigate(item.url)
+    }
   }
-
-  const groups = process.env.NODE_ENV === 'development' ? [main, test] : [main]
 
   return (
-    <Nav
-      groups={groups}
-      onLinkClick={onLinkClick}
-      expandedStateText={'expanded'}
-      collapsedStateText={'collapsed'}
-      selectedKey={'key3'}
-      expandButtonAriaLabel={'Expand or collapse'}
-    />
+    <div>
+      <h3 style={{ margin: '20px' }}>Logo</h3>
+      <Nav
+        groups={groups || [mainGroup]}
+        onLinkClick={onLinkClick}
+        selectedKey={active.url}
+        expandButtonAriaLabel={'Expand or collapse'}
+      />
+    </div>
   )
 }

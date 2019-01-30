@@ -8,6 +8,7 @@ import { IToastProps, Toast } from './toast'
 export interface IToastGroupProps {
   items: IToastProps[]
   timeout?: number
+  max?: number
 }
 
 // TODO: make reusable animation theme variables
@@ -53,7 +54,7 @@ const toastGroupStyles = (theme: ITheme) => css`
   right: ${theme.spacing.s1};
   bottom: ${theme.spacing.s1};
 
-  width: ${theme.sizes.l2};
+  width: ${theme.sizes.ml};
 
   display: flex;
   flex-direction: column;
@@ -69,34 +70,62 @@ const toastGroupStyles = (theme: ITheme) => css`
   ${toastAnimationStyles}
 `
 
-export const ToastGroup: React.FC<IToastGroupProps> = ({ items: nextItems, timeout = 5000 }) => {
+export const ToastGroup: React.FC<IToastGroupProps> = ({
+  items: nextItems,
+  timeout = 5000,
+  max = 8,
+}) => {
   const [items, setItems] = useState(nextItems)
   // state with last props (without removed elements)
   const [prevItems, setPrevItems] = useState(nextItems)
 
+  // not in state to prevent rerender
+  let timer: number | undefined
+  let holdTimer: number | undefined
+
+  // over previtems (prevProps) -to avoid loop on item autoRemoval
+  // and items - to handle case where even older toast are still visible (or some race condition)
   const itemsDiff = nextItems.filter(
-    nextItem => !prevItems.map(prevItem => prevItem.id).includes(nextItem.id),
+    nextItem => ![...prevItems, ...items].map(prevItem => prevItem.id).includes(nextItem.id),
   )
 
-  // means component received new, unique props
+  // received new, unique toasts
   if (itemsDiff.length > 0) {
     setPrevItems(nextItems)
-    setItems([...items, ...itemsDiff])
+    // slice to max and prevent toasts to heaven
+    setItems([...items, ...itemsDiff].slice(-max))
   }
 
   useEffect(() => {
+    setDismissTimeout()
+
+    return () => {
+      window.clearTimeout(timer)
+      window.clearTimeout(holdTimer)
+    }
+  })
+
+  const holdDismissTimeout = () => {
+    // this for throttle
+    if (timer) {
+      window.clearTimeout(timer)
+      timer = undefined
+
+      holdTimer = window.setTimeout(() => {
+        setDismissTimeout()
+      }, timeout)
+    }
+  }
+
+  const setDismissTimeout = () => {
     // remove item after $timeout seconds
-    const timer = window.setTimeout(() => {
+    timer = window.setTimeout(() => {
       const [first, ...rest] = items
       if (first) {
         setItems(rest)
       }
     }, timeout)
-
-    return () => {
-      window.clearTimeout(timer)
-    }
-  })
+  }
 
   const dismissItems = () => setItems([])
 
@@ -105,7 +134,7 @@ export const ToastGroup: React.FC<IToastGroupProps> = ({ items: nextItems, timeo
   }
 
   return (
-    <div css={toastGroupStyles}>
+    <div css={toastGroupStyles} onMouseOver={holdDismissTimeout}>
       <TransitionGroup component={null}>
         {items.map(item => (
           <CSSTransition

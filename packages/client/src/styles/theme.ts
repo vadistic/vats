@@ -1,11 +1,5 @@
 import { createTheme, IPartialTheme, ISpacing, ITheme as IFabricTheme } from '@uifabric/styling'
 
-export type ITheme = IFabricTheme & ICustomTheme
-
-export interface IThemeProps {
-  theme: ITheme
-}
-
 interface IWithUnitInput {
   [inxex: string]: number
 }
@@ -29,16 +23,30 @@ const spacing: ISpacing = withUnit('px', {
   l2: spacingBase * 2,
 })
 
-const sizes: ISpacing = withUnit('px', {
-  s2: spacingBase * 2, // 32
-  s1: spacingBase * 4, // 64
-  m: spacingBase * 8, // 128
-  l1: spacingBase * 16, // 256
-  l2: spacingBase * 32, // 512
+interface ISizing {
+  s3: string
+  s2: string
+  s1: string
+  ms: string
+  m: string
+  ml: string
+  l1: string
+  l2: string
+}
+
+const sizes: ISizing = withUnit('px', {
+  s3: spacingBase * 2, // 32
+  s2: spacingBase * 4, // 64
+  s1: spacingBase * 8, // 128
+  ms: spacingBase * 12, // 192
+  m: spacingBase * 16, // 256
+  ml: spacingBase * 24, // 348
+  l1: spacingBase * 32, // 512
+  l2: spacingBase * 64, // 1024
 })
 
 interface ICustomTheme {
-  sizes: ISpacing
+  sizes: ISizing
 }
 
 const fabricTheme: IPartialTheme = {
@@ -52,4 +60,9 @@ const customTheme: ICustomTheme = {
   sizes,
 }
 
+export type ITheme = IFabricTheme & ICustomTheme
+
+export interface IThemeProps {
+  theme: ITheme
+}
 export const theme = { ...createTheme(fabricTheme), ...customTheme }

@@ -16,10 +16,7 @@ export const Layout: React.FC = ({ children }) => (
   <>
     <Global styles={globalStyles} />
     <div css={layoutStyles}>
-      <div>
-        <code>Logo</code>
-        <Navigation />
-      </div>
+      <Navigation />
       {children}
     </div>
   </>
