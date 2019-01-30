@@ -19,7 +19,7 @@
     "gen:queries": "yarn env yarn apollo client:codegen src/generated/queries.ts --outputFlat --target typescript",
     "gen": "yarn gen:server && yarn gen:client && yarn gen:queries",
     "serve": "serve build -s",
-    "cosmos": "env-cmd .env.development cosmos",
+    "cosmos": "cosmos",
     "cosmos:export": "env-cmd .env.development cosmos-export"
   },
   "husky": {
