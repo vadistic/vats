@@ -1,4 +1,3 @@
-import { getTheme } from '@uifabric/styling'
 import { ThemeProvider } from 'emotion-theming'
 import { Fabric } from 'office-ui-fabric-react'
 import React from 'react'

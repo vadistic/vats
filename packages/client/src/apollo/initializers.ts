@@ -1,7 +1,6 @@
 import { NormalizedCacheObject } from 'apollo-cache-inmemory'
 import { ApolloClient } from 'apollo-client'
 import { Query as IQueryShape } from '../generated/resolvers'
-import { NonUndefined } from '../utils'
 
 export type IStoreInitializers<T> = Partial<
   { [K in keyof T]: (client: ApolloClient<NormalizedCacheObject>) => T[K] }

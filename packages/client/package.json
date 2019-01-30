@@ -9,6 +9,7 @@
     "format": "prettier --write --no-color -l src/**/*.{ts,tsx}",
     "lint": "tslint -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "validate": "yarn typecheck && yarn lint && yarn format",
     "env": "env-cmd .env",
     "gen:server:sdl": "yarn env graphql get-schema",
     "gen:server:frag": "yarn env graphql generate-fragments",

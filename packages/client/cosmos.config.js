@@ -6,7 +6,7 @@ process.env.NODE_ENV = 'development'
 // Ensure environment variables are read.
 require('react-scripts/config/env')
 
-const verifyTypeScriptSetup = require('react-scripts/scripts/cosmosutils/verifyTypeScriptSetup')
+const verifyTypeScriptSetup = require('react-scripts/scripts/utils/verifyTypeScriptSetup')
 verifyTypeScriptSetup()
 
 const configFactory = require('react-scripts/config/webpack.config')

@@ -1,5 +1,5 @@
 import { IColumn } from 'office-ui-fabric-react'
-import { IStringIndexSignature, StrictlyIndexed } from '../../utils'
+import { StrictlyIndexed } from '../../utils'
 import { TableItem } from './table'
 
 // TODO: Just declare it in object literal. Autogen only for custom fields

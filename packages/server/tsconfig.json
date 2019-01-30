@@ -1,22 +1,18 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "moduleResolution": "node",
-    "module": "commonjs",
     "sourceMap": true,
     "rootDir": "src",
     "baseUrl": "src",
     "outDir": "dist",
-    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    "lib": ["esnext"],
     // modules
+    "moduleResolution": "node",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     // strict
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
+    "strict": true,
     "noImplicitReturns": true,
     // less strict
     "noUnusedLocals": false, // dev

@@ -1,8 +1,8 @@
 import { css, keyframes } from '@emotion/core'
 import { ActionButton } from 'office-ui-fabric-react'
 import React, { useEffect, useState } from 'react'
-import { CSSTransition, Transition, TransitionGroup } from 'react-transition-group'
-import { ITheme, IThemeProps } from '../../styles'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { ITheme } from '../../styles'
 import { IToastProps, Toast } from './toast'
 
 export interface IToastGroupProps {

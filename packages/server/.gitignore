@@ -1,23 +1,24 @@
-# build
-dist
-public
-.cache/
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# Yarn / npm
-yarn-error.log
-yarn-error.log*
-.yarn-integrity
-yarn-debug.log*
-npm-debug.log*
-.npm
+# testing
+/coverage
 
-# Logs
-logs
-*.log
+# production
+/build
+/dist
+/public
+/.cache
 
-# dotenv environment variables file
-.env
-.env.*
-
-# Mac files
+# misc
 .DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

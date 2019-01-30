@@ -1,7 +1,5 @@
-import { css } from '@emotion/core'
 import { IMessageBarProps, MessageBar, MessageBarType } from 'office-ui-fabric-react'
 import React from 'react'
-import { ITheme } from '../../styles'
 
 export interface IToastProps {
   id: string

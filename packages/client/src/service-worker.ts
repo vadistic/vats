@@ -23,7 +23,7 @@ interface IConfig {
   onUpdate?: (registration: ServiceWorkerRegistration) => void
 }
 
-export function register(config?: IConfig) {
+export const register = (config?: IConfig) => {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(
@@ -60,7 +60,7 @@ export function register(config?: IConfig) {
   }
 }
 
-function registerValidSW(swUrl: string, config?: IConfig) {
+const registerValidSW = (swUrl: string, config?: IConfig) => {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
@@ -104,7 +104,7 @@ function registerValidSW(swUrl: string, config?: IConfig) {
     })
 }
 
-function checkValidServiceWorker(swUrl: string, config?: IConfig) {
+const checkValidServiceWorker = (swUrl: string, config?: IConfig) => {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl)
     .then(response => {
@@ -130,7 +130,7 @@ function checkValidServiceWorker(swUrl: string, config?: IConfig) {
     })
 }
 
-export function unregister() {
+export const unregister = () => {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister()

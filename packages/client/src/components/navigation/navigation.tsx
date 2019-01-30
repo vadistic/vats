@@ -1,5 +1,5 @@
 import { navigate } from '@reach/router'
-import { INav, INavLink, INavLinkGroup, INavProps, Nav } from 'office-ui-fabric-react'
+import { INavLink, INavLinkGroup, INavProps, Nav } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 
 import { routes } from '../../routes'

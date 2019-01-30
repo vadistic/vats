@@ -1,5 +1,4 @@
 import { MutationResolvers, QueryResolvers } from '../generated/resolvers'
-import { StrictlyIndexed } from '../utils'
 
 import { IContext } from './client'
 
