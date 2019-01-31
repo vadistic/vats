@@ -1,13 +1,16 @@
 import React from 'react'
 import { CandidateProfile } from '../candidate-profile'
 
-import { StrictId as SetID } from '../../../utils'
+import { anyTypename } from '../../../utils'
+import { CandidateContext } from '../../../views'
 import response from './response.json'
 
 export const CandidateProfileBasicFixture: React.FC = () => (
-  <CandidateProfile
-    candidate={response.data.candidate as SetID<'Candidate', typeof response.data.candidate>}
-  />
+  <CandidateContext.Provider value={anyTypename(response.data.candidate)}>
+    <CandidateProfile />
+  </CandidateContext.Provider>
 )
 
 export default <CandidateProfileBasicFixture />
+
+const test = anyTypename(response.data.candidate)

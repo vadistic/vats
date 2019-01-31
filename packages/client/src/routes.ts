@@ -5,7 +5,19 @@ export const routesConfig = {
   home: {
     path: '',
   },
-  test: {
+  jobs: {
+    path: 'jobs',
+  },
+  candidates: {
+    path: 'candidates',
+  },
+  job: {
+    path: 'job',
+  },
+  candidate: {
+    path: 'candidate',
+  },
+  dev: {
     path: 'dev',
   },
 }

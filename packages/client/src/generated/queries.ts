@@ -485,6 +485,550 @@ export interface ToastHostQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: CandidateViewFixtureIndexQuery
+// ====================================================
+
+export interface CandidateViewFixtureIndexQuery_candidates_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_resumesFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_coverLettersFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_fields {
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates {
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: CandidateViewFixtureIndexQuery_candidates_avatar | null
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
+  resumesFile: CandidateViewFixtureIndexQuery_candidates_resumesFile[] | null
+  coverLettersFile: CandidateViewFixtureIndexQuery_candidates_coverLettersFile[] | null
+  tags: CandidateViewFixtureIndexQuery_candidates_tags[] | null
+  fields: CandidateViewFixtureIndexQuery_candidates_fields[] | null
+  tasks: CandidateViewFixtureIndexQuery_candidates_tasks[] | null
+  applications: CandidateViewFixtureIndexQuery_candidates_applications[] | null
+  comments: CandidateViewFixtureIndexQuery_candidates_comments[] | null
+}
+
+export interface CandidateViewFixtureIndexQuery {
+  candidates: (CandidateViewFixtureIndexQuery_candidates | null)[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: JobViewFixtureIndexQuery
+// ====================================================
+
+export interface JobViewFixtureIndexQuery_jobs_workspace {
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+}
+
+export interface JobViewFixtureIndexQuery_jobs_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface JobViewFixtureIndexQuery_jobs_workflow {
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+}
+
+export interface JobViewFixtureIndexQuery_jobs_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface JobViewFixtureIndexQuery_jobs_locations {
+  __typename: 'Location'
+  id: string
+  country: string
+  region: string
+  city: string
+  zip: string
+}
+
+export interface JobViewFixtureIndexQuery_jobs {
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  workspace: JobViewFixtureIndexQuery_jobs_workspace
+  applications: JobViewFixtureIndexQuery_jobs_applications[] | null
+  workflow: JobViewFixtureIndexQuery_jobs_workflow
+  comments: JobViewFixtureIndexQuery_jobs_comments[] | null
+  type: JobType
+  department: string | null
+  locations: JobViewFixtureIndexQuery_jobs_locations[] | null
+  name: string
+  description: string | null
+  requirements: string | null
+}
+
+export interface JobViewFixtureIndexQuery {
+  jobs: (JobViewFixtureIndexQuery_jobs | null)[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: CandidateQuery
+// ====================================================
+
+export interface CandidateQuery_candidate_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateQuery_candidate_resumesFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateQuery_candidate_coverLettersFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateQuery_candidate_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+}
+
+export interface CandidateQuery_candidate_fields {
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
+}
+
+export interface CandidateQuery_candidate_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidateQuery_candidate_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface CandidateQuery_candidate_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidateQuery_candidate {
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: CandidateQuery_candidate_avatar | null
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
+  resumesFile: CandidateQuery_candidate_resumesFile[] | null
+  coverLettersFile: CandidateQuery_candidate_coverLettersFile[] | null
+  tags: CandidateQuery_candidate_tags[] | null
+  fields: CandidateQuery_candidate_fields[] | null
+  tasks: CandidateQuery_candidate_tasks[] | null
+  applications: CandidateQuery_candidate_applications[] | null
+  comments: CandidateQuery_candidate_comments[] | null
+}
+
+export interface CandidateQuery {
+  candidate: CandidateQuery_candidate | null
+}
+
+export interface CandidateQueryVariables {
+  where: CandidateWhereUniqueInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: CandidatesQuery
+// ====================================================
+
+export interface CandidatesQuery_candidates_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidatesQuery_candidates_resumesFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidatesQuery_candidates_coverLettersFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidatesQuery_candidates_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+}
+
+export interface CandidatesQuery_candidates_fields {
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
+}
+
+export interface CandidatesQuery_candidates_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidatesQuery_candidates_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface CandidatesQuery_candidates_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidatesQuery_candidates {
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: CandidatesQuery_candidates_avatar | null
+  metaCompany: string | null
+  metaHeadline: string | null
+  metaPosition: string | null
+  resumesFile: CandidatesQuery_candidates_resumesFile[] | null
+  coverLettersFile: CandidatesQuery_candidates_coverLettersFile[] | null
+  tags: CandidatesQuery_candidates_tags[] | null
+  fields: CandidatesQuery_candidates_fields[] | null
+  tasks: CandidatesQuery_candidates_tasks[] | null
+  applications: CandidatesQuery_candidates_applications[] | null
+  comments: CandidatesQuery_candidates_comments[] | null
+}
+
+export interface CandidatesQuery {
+  candidates: (CandidatesQuery_candidates | null)[]
+}
+
+export interface CandidatesQueryVariables {
+  where?: CandidateWhereInput | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: JobQuery
+// ====================================================
+
+export interface JobQuery_job_workspace {
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+}
+
+export interface JobQuery_job_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface JobQuery_job_workflow {
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+}
+
+export interface JobQuery_job_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface JobQuery_job_locations {
+  __typename: 'Location'
+  id: string
+  country: string
+  region: string
+  city: string
+  zip: string
+}
+
+export interface JobQuery_job {
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  workspace: JobQuery_job_workspace
+  applications: JobQuery_job_applications[] | null
+  workflow: JobQuery_job_workflow
+  comments: JobQuery_job_comments[] | null
+  type: JobType
+  department: string | null
+  locations: JobQuery_job_locations[] | null
+  name: string
+  description: string | null
+  requirements: string | null
+}
+
+export interface JobQuery {
+  job: JobQuery_job | null
+}
+
+export interface JobQueryVariables {
+  where: JobWhereUniqueInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: JobsQuery
+// ====================================================
+
+export interface JobsQuery_jobs_workspace {
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+}
+
+export interface JobsQuery_jobs_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface JobsQuery_jobs_workflow {
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+}
+
+export interface JobsQuery_jobs_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface JobsQuery_jobs_locations {
+  __typename: 'Location'
+  id: string
+  country: string
+  region: string
+  city: string
+  zip: string
+}
+
+export interface JobsQuery_jobs {
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  workspace: JobsQuery_jobs_workspace
+  applications: JobsQuery_jobs_applications[] | null
+  workflow: JobsQuery_jobs_workflow
+  comments: JobsQuery_jobs_comments[] | null
+  type: JobType
+  department: string | null
+  locations: JobsQuery_jobs_locations[] | null
+  name: string
+  description: string | null
+  requirements: string | null
+}
+
+export interface JobsQuery {
+  jobs: (JobsQuery_jobs | null)[]
+}
+
+export interface JobsQueryVariables {
+  where?: JobWhereInput | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: ApplicationNoNesting
 // ====================================================
 
@@ -1594,8 +2138,979 @@ export enum ToastType {
   WARNING = 'WARNING',
 }
 
+export interface ApplicationWhereInput {
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  type?: ApplicationType | null
+  type_not?: ApplicationType | null
+  type_in?: ApplicationType[] | null
+  type_not_in?: ApplicationType[] | null
+  disqualification?: DisqualificationInstanceWhereInput | null
+  stage?: StageWhereInput | null
+  job?: JobWhereInput | null
+  candidate?: CandidateWhereInput | null
+  AND?: ApplicationWhereInput[] | null
+  OR?: ApplicationWhereInput[] | null
+  NOT?: ApplicationWhereInput[] | null
+}
+
+export interface CandidateWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  firstName?: string | null
+  firstName_not?: string | null
+  firstName_in?: string[] | null
+  firstName_not_in?: string[] | null
+  firstName_lt?: string | null
+  firstName_lte?: string | null
+  firstName_gt?: string | null
+  firstName_gte?: string | null
+  firstName_contains?: string | null
+  firstName_not_contains?: string | null
+  firstName_starts_with?: string | null
+  firstName_not_starts_with?: string | null
+  firstName_ends_with?: string | null
+  firstName_not_ends_with?: string | null
+  lastName?: string | null
+  lastName_not?: string | null
+  lastName_in?: string[] | null
+  lastName_not_in?: string[] | null
+  lastName_lt?: string | null
+  lastName_lte?: string | null
+  lastName_gt?: string | null
+  lastName_gte?: string | null
+  lastName_contains?: string | null
+  lastName_not_contains?: string | null
+  lastName_starts_with?: string | null
+  lastName_not_starts_with?: string | null
+  lastName_ends_with?: string | null
+  lastName_not_ends_with?: string | null
+  avatar?: FileWhereInput | null
+  metaCompany?: string | null
+  metaCompany_not?: string | null
+  metaCompany_in?: string[] | null
+  metaCompany_not_in?: string[] | null
+  metaCompany_lt?: string | null
+  metaCompany_lte?: string | null
+  metaCompany_gt?: string | null
+  metaCompany_gte?: string | null
+  metaCompany_contains?: string | null
+  metaCompany_not_contains?: string | null
+  metaCompany_starts_with?: string | null
+  metaCompany_not_starts_with?: string | null
+  metaCompany_ends_with?: string | null
+  metaCompany_not_ends_with?: string | null
+  metaHeadline?: string | null
+  metaHeadline_not?: string | null
+  metaHeadline_in?: string[] | null
+  metaHeadline_not_in?: string[] | null
+  metaHeadline_lt?: string | null
+  metaHeadline_lte?: string | null
+  metaHeadline_gt?: string | null
+  metaHeadline_gte?: string | null
+  metaHeadline_contains?: string | null
+  metaHeadline_not_contains?: string | null
+  metaHeadline_starts_with?: string | null
+  metaHeadline_not_starts_with?: string | null
+  metaHeadline_ends_with?: string | null
+  metaHeadline_not_ends_with?: string | null
+  metaPosition?: string | null
+  metaPosition_not?: string | null
+  metaPosition_in?: string[] | null
+  metaPosition_not_in?: string[] | null
+  metaPosition_lt?: string | null
+  metaPosition_lte?: string | null
+  metaPosition_gt?: string | null
+  metaPosition_gte?: string | null
+  metaPosition_contains?: string | null
+  metaPosition_not_contains?: string | null
+  metaPosition_starts_with?: string | null
+  metaPosition_not_starts_with?: string | null
+  metaPosition_ends_with?: string | null
+  metaPosition_not_ends_with?: string | null
+  resumesFile_every?: FileWhereInput | null
+  resumesFile_some?: FileWhereInput | null
+  resumesFile_none?: FileWhereInput | null
+  coverLettersFile_every?: FileWhereInput | null
+  coverLettersFile_some?: FileWhereInput | null
+  coverLettersFile_none?: FileWhereInput | null
+  tags_every?: TagWhereInput | null
+  tags_some?: TagWhereInput | null
+  tags_none?: TagWhereInput | null
+  fields_every?: FieldInstanceWhereInput | null
+  fields_some?: FieldInstanceWhereInput | null
+  fields_none?: FieldInstanceWhereInput | null
+  tasks_every?: TaskWhereInput | null
+  tasks_some?: TaskWhereInput | null
+  tasks_none?: TaskWhereInput | null
+  applications_every?: ApplicationWhereInput | null
+  applications_some?: ApplicationWhereInput | null
+  applications_none?: ApplicationWhereInput | null
+  comments_every?: CommentWhereInput | null
+  comments_some?: CommentWhereInput | null
+  comments_none?: CommentWhereInput | null
+  AND?: CandidateWhereInput[] | null
+  OR?: CandidateWhereInput[] | null
+  NOT?: CandidateWhereInput[] | null
+}
+
 export interface CandidateWhereUniqueInput {
   id?: string | null
+}
+
+export interface CommentWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  createdBy?: UserWhereInput | null
+  parent?: CommentWhereInput | null
+  content?: string | null
+  content_not?: string | null
+  content_in?: string[] | null
+  content_not_in?: string[] | null
+  content_lt?: string | null
+  content_lte?: string | null
+  content_gt?: string | null
+  content_gte?: string | null
+  content_contains?: string | null
+  content_not_contains?: string | null
+  content_starts_with?: string | null
+  content_not_starts_with?: string | null
+  content_ends_with?: string | null
+  content_not_ends_with?: string | null
+  AND?: CommentWhereInput[] | null
+  OR?: CommentWhereInput[] | null
+  NOT?: CommentWhereInput[] | null
+}
+
+export interface DisqualificationInstanceWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  disqualification?: DisqualificationWhereInput | null
+  createdBy?: UserWhereInput | null
+  content?: string | null
+  content_not?: string | null
+  content_in?: string[] | null
+  content_not_in?: string[] | null
+  content_lt?: string | null
+  content_lte?: string | null
+  content_gt?: string | null
+  content_gte?: string | null
+  content_contains?: string | null
+  content_not_contains?: string | null
+  content_starts_with?: string | null
+  content_not_starts_with?: string | null
+  content_ends_with?: string | null
+  content_not_ends_with?: string | null
+  AND?: DisqualificationInstanceWhereInput[] | null
+  OR?: DisqualificationInstanceWhereInput[] | null
+  NOT?: DisqualificationInstanceWhereInput[] | null
+}
+
+export interface DisqualificationWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
+  AND?: DisqualificationWhereInput[] | null
+  OR?: DisqualificationWhereInput[] | null
+  NOT?: DisqualificationWhereInput[] | null
+}
+
+export interface FieldInstanceWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  field?: FieldWhereInput | null
+  value?: string | null
+  value_not?: string | null
+  value_in?: string[] | null
+  value_not_in?: string[] | null
+  value_lt?: string | null
+  value_lte?: string | null
+  value_gt?: string | null
+  value_gte?: string | null
+  value_contains?: string | null
+  value_not_contains?: string | null
+  value_starts_with?: string | null
+  value_not_starts_with?: string | null
+  value_ends_with?: string | null
+  value_not_ends_with?: string | null
+  AND?: FieldInstanceWhereInput[] | null
+  OR?: FieldInstanceWhereInput[] | null
+  NOT?: FieldInstanceWhereInput[] | null
+}
+
+export interface FieldWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  type?: FieldType | null
+  type_not?: FieldType | null
+  type_in?: FieldType[] | null
+  type_not_in?: FieldType[] | null
+  label?: string | null
+  label_not?: string | null
+  label_in?: string[] | null
+  label_not_in?: string[] | null
+  label_lt?: string | null
+  label_lte?: string | null
+  label_gt?: string | null
+  label_gte?: string | null
+  label_contains?: string | null
+  label_not_contains?: string | null
+  label_starts_with?: string | null
+  label_not_starts_with?: string | null
+  label_ends_with?: string | null
+  label_not_ends_with?: string | null
+  AND?: FieldWhereInput[] | null
+  OR?: FieldWhereInput[] | null
+  NOT?: FieldWhereInput[] | null
+}
+
+export interface FileWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  size?: number | null
+  size_not?: number | null
+  size_in?: number[] | null
+  size_not_in?: number[] | null
+  size_lt?: number | null
+  size_lte?: number | null
+  size_gt?: number | null
+  size_gte?: number | null
+  type?: string | null
+  type_not?: string | null
+  type_in?: string[] | null
+  type_not_in?: string[] | null
+  type_lt?: string | null
+  type_lte?: string | null
+  type_gt?: string | null
+  type_gte?: string | null
+  type_contains?: string | null
+  type_not_contains?: string | null
+  type_starts_with?: string | null
+  type_not_starts_with?: string | null
+  type_ends_with?: string | null
+  type_not_ends_with?: string | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  url?: string | null
+  url_not?: string | null
+  url_in?: string[] | null
+  url_not_in?: string[] | null
+  url_lt?: string | null
+  url_lte?: string | null
+  url_gt?: string | null
+  url_gte?: string | null
+  url_contains?: string | null
+  url_not_contains?: string | null
+  url_starts_with?: string | null
+  url_not_starts_with?: string | null
+  url_ends_with?: string | null
+  url_not_ends_with?: string | null
+  AND?: FileWhereInput[] | null
+  OR?: FileWhereInput[] | null
+  NOT?: FileWhereInput[] | null
+}
+
+export interface InviteWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  email?: string | null
+  email_not?: string | null
+  email_in?: string[] | null
+  email_not_in?: string[] | null
+  email_lt?: string | null
+  email_lte?: string | null
+  email_gt?: string | null
+  email_gte?: string | null
+  email_contains?: string | null
+  email_not_contains?: string | null
+  email_starts_with?: string | null
+  email_not_starts_with?: string | null
+  email_ends_with?: string | null
+  email_not_ends_with?: string | null
+  expireAt?: any | null
+  expireAt_not?: any | null
+  expireAt_in?: any[] | null
+  expireAt_not_in?: any[] | null
+  expireAt_lt?: any | null
+  expireAt_lte?: any | null
+  expireAt_gt?: any | null
+  expireAt_gte?: any | null
+  invitedBy?: UserWhereInput | null
+  AND?: InviteWhereInput[] | null
+  OR?: InviteWhereInput[] | null
+  NOT?: InviteWhereInput[] | null
+}
+
+export interface JobWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  workspace?: WorkspaceWhereInput | null
+  applications_every?: ApplicationWhereInput | null
+  applications_some?: ApplicationWhereInput | null
+  applications_none?: ApplicationWhereInput | null
+  workflow?: WorkflowWhereInput | null
+  comments_every?: CommentWhereInput | null
+  comments_some?: CommentWhereInput | null
+  comments_none?: CommentWhereInput | null
+  type?: JobType | null
+  type_not?: JobType | null
+  type_in?: JobType[] | null
+  type_not_in?: JobType[] | null
+  department?: string | null
+  department_not?: string | null
+  department_in?: string[] | null
+  department_not_in?: string[] | null
+  department_lt?: string | null
+  department_lte?: string | null
+  department_gt?: string | null
+  department_gte?: string | null
+  department_contains?: string | null
+  department_not_contains?: string | null
+  department_starts_with?: string | null
+  department_not_starts_with?: string | null
+  department_ends_with?: string | null
+  department_not_ends_with?: string | null
+  locations_every?: LocationWhereInput | null
+  locations_some?: LocationWhereInput | null
+  locations_none?: LocationWhereInput | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
+  requirements?: string | null
+  requirements_not?: string | null
+  requirements_in?: string[] | null
+  requirements_not_in?: string[] | null
+  requirements_lt?: string | null
+  requirements_lte?: string | null
+  requirements_gt?: string | null
+  requirements_gte?: string | null
+  requirements_contains?: string | null
+  requirements_not_contains?: string | null
+  requirements_starts_with?: string | null
+  requirements_not_starts_with?: string | null
+  requirements_ends_with?: string | null
+  requirements_not_ends_with?: string | null
+  AND?: JobWhereInput[] | null
+  OR?: JobWhereInput[] | null
+  NOT?: JobWhereInput[] | null
+}
+
+export interface JobWhereUniqueInput {
+  id?: string | null
+}
+
+export interface LocationWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  country?: string | null
+  country_not?: string | null
+  country_in?: string[] | null
+  country_not_in?: string[] | null
+  country_lt?: string | null
+  country_lte?: string | null
+  country_gt?: string | null
+  country_gte?: string | null
+  country_contains?: string | null
+  country_not_contains?: string | null
+  country_starts_with?: string | null
+  country_not_starts_with?: string | null
+  country_ends_with?: string | null
+  country_not_ends_with?: string | null
+  region?: string | null
+  region_not?: string | null
+  region_in?: string[] | null
+  region_not_in?: string[] | null
+  region_lt?: string | null
+  region_lte?: string | null
+  region_gt?: string | null
+  region_gte?: string | null
+  region_contains?: string | null
+  region_not_contains?: string | null
+  region_starts_with?: string | null
+  region_not_starts_with?: string | null
+  region_ends_with?: string | null
+  region_not_ends_with?: string | null
+  city?: string | null
+  city_not?: string | null
+  city_in?: string[] | null
+  city_not_in?: string[] | null
+  city_lt?: string | null
+  city_lte?: string | null
+  city_gt?: string | null
+  city_gte?: string | null
+  city_contains?: string | null
+  city_not_contains?: string | null
+  city_starts_with?: string | null
+  city_not_starts_with?: string | null
+  city_ends_with?: string | null
+  city_not_ends_with?: string | null
+  zip?: string | null
+  zip_not?: string | null
+  zip_in?: string[] | null
+  zip_not_in?: string[] | null
+  zip_lt?: string | null
+  zip_lte?: string | null
+  zip_gt?: string | null
+  zip_gte?: string | null
+  zip_contains?: string | null
+  zip_not_contains?: string | null
+  zip_starts_with?: string | null
+  zip_not_starts_with?: string | null
+  zip_ends_with?: string | null
+  zip_not_ends_with?: string | null
+  AND?: LocationWhereInput[] | null
+  OR?: LocationWhereInput[] | null
+  NOT?: LocationWhereInput[] | null
+}
+
+export interface StageWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
+  type?: StageType | null
+  type_not?: StageType | null
+  type_in?: StageType[] | null
+  type_not_in?: StageType[] | null
+  AND?: StageWhereInput[] | null
+  OR?: StageWhereInput[] | null
+  NOT?: StageWhereInput[] | null
+}
+
+export interface TagWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  label?: string | null
+  label_not?: string | null
+  label_in?: string[] | null
+  label_not_in?: string[] | null
+  label_lt?: string | null
+  label_lte?: string | null
+  label_gt?: string | null
+  label_gte?: string | null
+  label_contains?: string | null
+  label_not_contains?: string | null
+  label_starts_with?: string | null
+  label_not_starts_with?: string | null
+  label_ends_with?: string | null
+  label_not_ends_with?: string | null
+  AND?: TagWhereInput[] | null
+  OR?: TagWhereInput[] | null
+  NOT?: TagWhereInput[] | null
+}
+
+export interface TaskWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  owners_every?: UserWhereInput | null
+  owners_some?: UserWhereInput | null
+  owners_none?: UserWhereInput | null
+  candidate?: CandidateWhereInput | null
+  title?: string | null
+  title_not?: string | null
+  title_in?: string[] | null
+  title_not_in?: string[] | null
+  title_lt?: string | null
+  title_lte?: string | null
+  title_gt?: string | null
+  title_gte?: string | null
+  title_contains?: string | null
+  title_not_contains?: string | null
+  title_starts_with?: string | null
+  title_not_starts_with?: string | null
+  title_ends_with?: string | null
+  title_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
+  dueAt?: any | null
+  dueAt_not?: any | null
+  dueAt_in?: any[] | null
+  dueAt_not_in?: any[] | null
+  dueAt_lt?: any | null
+  dueAt_lte?: any | null
+  dueAt_gt?: any | null
+  dueAt_gte?: any | null
+  AND?: TaskWhereInput[] | null
+  OR?: TaskWhereInput[] | null
+  NOT?: TaskWhereInput[] | null
 }
 
 export interface ToastInput {
@@ -1603,9 +3118,276 @@ export interface ToastInput {
   type: ToastType
 }
 
+export interface UserWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  tasks_every?: TaskWhereInput | null
+  tasks_some?: TaskWhereInput | null
+  tasks_none?: TaskWhereInput | null
+  firstName?: string | null
+  firstName_not?: string | null
+  firstName_in?: string[] | null
+  firstName_not_in?: string[] | null
+  firstName_lt?: string | null
+  firstName_lte?: string | null
+  firstName_gt?: string | null
+  firstName_gte?: string | null
+  firstName_contains?: string | null
+  firstName_not_contains?: string | null
+  firstName_starts_with?: string | null
+  firstName_not_starts_with?: string | null
+  firstName_ends_with?: string | null
+  firstName_not_ends_with?: string | null
+  lastName?: string | null
+  lastName_not?: string | null
+  lastName_in?: string[] | null
+  lastName_not_in?: string[] | null
+  lastName_lt?: string | null
+  lastName_lte?: string | null
+  lastName_gt?: string | null
+  lastName_gte?: string | null
+  lastName_contains?: string | null
+  lastName_not_contains?: string | null
+  lastName_starts_with?: string | null
+  lastName_not_starts_with?: string | null
+  lastName_ends_with?: string | null
+  lastName_not_ends_with?: string | null
+  email?: string | null
+  email_not?: string | null
+  email_in?: string[] | null
+  email_not_in?: string[] | null
+  email_lt?: string | null
+  email_lte?: string | null
+  email_gt?: string | null
+  email_gte?: string | null
+  email_contains?: string | null
+  email_not_contains?: string | null
+  email_starts_with?: string | null
+  email_not_starts_with?: string | null
+  email_ends_with?: string | null
+  email_not_ends_with?: string | null
+  username?: string | null
+  username_not?: string | null
+  username_in?: string[] | null
+  username_not_in?: string[] | null
+  username_lt?: string | null
+  username_lte?: string | null
+  username_gt?: string | null
+  username_gte?: string | null
+  username_contains?: string | null
+  username_not_contains?: string | null
+  username_starts_with?: string | null
+  username_not_starts_with?: string | null
+  username_ends_with?: string | null
+  username_not_ends_with?: string | null
+  lastLogin?: any | null
+  lastLogin_not?: any | null
+  lastLogin_in?: any[] | null
+  lastLogin_not_in?: any[] | null
+  lastLogin_lt?: any | null
+  lastLogin_lte?: any | null
+  lastLogin_gt?: any | null
+  lastLogin_gte?: any | null
+  deletedAt?: any | null
+  deletedAt_not?: any | null
+  deletedAt_in?: any[] | null
+  deletedAt_not_in?: any[] | null
+  deletedAt_lt?: any | null
+  deletedAt_lte?: any | null
+  deletedAt_gt?: any | null
+  deletedAt_gte?: any | null
+  position?: string | null
+  position_not?: string | null
+  position_in?: string[] | null
+  position_not_in?: string[] | null
+  position_lt?: string | null
+  position_lte?: string | null
+  position_gt?: string | null
+  position_gte?: string | null
+  position_contains?: string | null
+  position_not_contains?: string | null
+  position_starts_with?: string | null
+  position_not_starts_with?: string | null
+  position_ends_with?: string | null
+  position_not_ends_with?: string | null
+  avatar?: FileWhereInput | null
+  AND?: UserWhereInput[] | null
+  OR?: UserWhereInput[] | null
+  NOT?: UserWhereInput[] | null
+}
+
 export interface UserWhereUniqueInput {
   id?: string | null
   email?: string | null
+}
+
+export interface WorkflowWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
+  stages_every?: StageWhereInput | null
+  stages_some?: StageWhereInput | null
+  stages_none?: StageWhereInput | null
+  disqualifications_every?: DisqualificationWhereInput | null
+  disqualifications_some?: DisqualificationWhereInput | null
+  disqualifications_none?: DisqualificationWhereInput | null
+  fields_every?: FieldWhereInput | null
+  fields_some?: FieldWhereInput | null
+  fields_none?: FieldWhereInput | null
+  AND?: WorkflowWhereInput[] | null
+  OR?: WorkflowWhereInput[] | null
+  NOT?: WorkflowWhereInput[] | null
+}
+
+export interface WorkspaceWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  users_every?: UserWhereInput | null
+  users_some?: UserWhereInput | null
+  users_none?: UserWhereInput | null
+  jobs_every?: JobWhereInput | null
+  jobs_some?: JobWhereInput | null
+  jobs_none?: JobWhereInput | null
+  candidates_every?: CandidateWhereInput | null
+  candidates_some?: CandidateWhereInput | null
+  candidates_none?: CandidateWhereInput | null
+  workflows_every?: WorkflowWhereInput | null
+  workflows_some?: WorkflowWhereInput | null
+  workflows_none?: WorkflowWhereInput | null
+  invites_every?: InviteWhereInput | null
+  invites_some?: InviteWhereInput | null
+  invites_none?: InviteWhereInput | null
+  tags_every?: TagWhereInput | null
+  tags_some?: TagWhereInput | null
+  tags_none?: TagWhereInput | null
+  name?: string | null
+  name_not?: string | null
+  name_in?: string[] | null
+  name_not_in?: string[] | null
+  name_lt?: string | null
+  name_lte?: string | null
+  name_gt?: string | null
+  name_gte?: string | null
+  name_contains?: string | null
+  name_not_contains?: string | null
+  name_starts_with?: string | null
+  name_not_starts_with?: string | null
+  name_ends_with?: string | null
+  name_not_ends_with?: string | null
+  AND?: WorkspaceWhereInput[] | null
+  OR?: WorkspaceWhereInput[] | null
+  NOT?: WorkspaceWhereInput[] | null
 }
 
 //==============================================================

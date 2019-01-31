@@ -50,12 +50,14 @@ export type RejectValues<T, Condition> = {
 }
 
 /*
- * Id utils
+ * Graphql utils
  */
 export interface IIDProp<T = string> {
   id: T
 }
 
-export type StrictId<IdString, T> = Exclude<T, IIDProp> & {
-  id: IdString
+export type AnyTypename<T> = Omit<T, '__typename'> & {
+  __typename: any
 }
+
+export type DeepAnyTypename<T> = AnyTypename<T> & { [K in keyof T]: DeepAnyTypename<T[K]> }

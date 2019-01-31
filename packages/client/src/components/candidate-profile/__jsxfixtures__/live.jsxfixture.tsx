@@ -7,15 +7,18 @@ import {
   CandidateProfileFixtureQuery,
   CandidateProfileFixtureQueryVariables,
 } from '../../../generated/queries'
+import { CandidateContext } from '../../../views'
 import { CandidateProfile } from '../candidate-profile'
 
 export const CandidateProfileLiveFixture: React.FC = () => {
   const { data: indexData } = useQuery<CandidateProfileFixtureIndexQuery>(
     candidateProfileFixtureIndexQuery,
   )
+
   if (!indexData || !indexData.candidates[0]) {
     return null
   }
+
   const candidate = indexData.candidates[0]
 
   const id = (candidate && candidate.id) || ''
@@ -29,7 +32,11 @@ export const CandidateProfileLiveFixture: React.FC = () => {
     return null
   }
 
-  return <CandidateProfile candidate={data.candidate} />
+  return (
+    <CandidateContext.Provider value={data.candidate}>
+      <CandidateProfile />
+    </CandidateContext.Provider>
+  )
 }
 
 const candidateProfileFixtureQuery = gql`

@@ -5,6 +5,7 @@ import React, { Suspense } from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from '../apollo'
+import { Layout } from '../components'
 import { theme } from '../styles'
 
 export const AppWrapper: React.FC = ({ children }) => {
@@ -36,6 +37,12 @@ const componentWrapperStyles = css`
   /* for centering */
   min-height: 80vh;
 `
+
+export const ViewWrapper: React.FC = ({ children }) => (
+  <Layout>
+    <Suspense fallback={<p>Fixture index query loading...</p>}>{children}</Suspense>
+  </Layout>
+)
 
 export const ComponentWrapper: React.FC = ({ children }) => (
   <div css={componentWrapperStyles}>
