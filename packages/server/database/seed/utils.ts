@@ -14,6 +14,8 @@ export const randomConnectMany = (to: List<any>, max: number = 1) =>
 export const randomFn = <T, Y>(...fn: Array<(...args: T[]) => Y>) => (...args: T[]) =>
   fn[f.random.number(fn.length - 1)](...args)
 
+export const halfTimes = <T>(input: T): T | undefined => (f.random.boolean() ? input : undefined)
+
 export class List<T> {
   arr: T[] = []
 
@@ -26,10 +28,9 @@ export const fakeSocialLink = () => f.random.arrayElement(SOCIAL_MEDIA) + f.inte
 
 export const fakeEmoji = () => f.random.arrayElement(EMOJI)
 
+// function allowing to finish seeding in case of some network issues
 const TIMEOUT = 50
 const RETRY = 15
-
-// function allowing to finish seeding in case of some network issues
 export const attempt = async <
   T extends (args: any, info?: string, options?: Options) => ReturnType<T>
 >(

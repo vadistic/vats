@@ -42,6 +42,10 @@ type AggregateLocation {
   count: Int!
 }
 
+type AggregateSource {
+  count: Int!
+}
+
 type AggregateStage {
   count: Int!
 }
@@ -197,8 +201,8 @@ input ApplicationSubscriptionWhereInput {
 }
 
 enum ApplicationType {
-  Qualified
-  Disqualified
+  QUALIFIED
+  DISQUALIFIED
 }
 
 input ApplicationUpdateInput {
@@ -342,15 +346,15 @@ type Candidate {
   phones: [String!]!
   links: [String!]!
   avatar: File
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: [String!]!
   resumesFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   coverLettersString: [String!]!
   coverLettersFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  source: [String!]!
+  sources(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Source!]
   fields(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldInstance!]
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
@@ -378,15 +382,15 @@ input CandidateCreateInput {
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
   avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateCreateresumesStringInput
   resumesFile: FileCreateManyInput
   coverLettersString: CandidateCreatecoverLettersStringInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
+  sources: SourceCreateManyInput
   fields: FieldInstanceCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
@@ -420,10 +424,6 @@ input CandidateCreateresumesStringInput {
   set: [String!]
 }
 
-input CandidateCreatesourceInput {
-  set: [String!]
-}
-
 input CandidateCreateWithoutApplicationsInput {
   firstName: String!
   lastName: String!
@@ -431,15 +431,15 @@ input CandidateCreateWithoutApplicationsInput {
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
   avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateCreateresumesStringInput
   resumesFile: FileCreateManyInput
   coverLettersString: CandidateCreatecoverLettersStringInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
+  sources: SourceCreateManyInput
   fields: FieldInstanceCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -452,15 +452,15 @@ input CandidateCreateWithoutTasksInput {
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
   avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateCreateresumesStringInput
   resumesFile: FileCreateManyInput
   coverLettersString: CandidateCreatecoverLettersStringInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
+  sources: SourceCreateManyInput
   fields: FieldInstanceCreateManyInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -482,12 +482,12 @@ enum CandidateOrderByInput {
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  metaCompany_ASC
-  metaCompany_DESC
-  metaHeadline_ASC
-  metaHeadline_DESC
-  metaPosition_ASC
-  metaPosition_DESC
+  company_ASC
+  company_DESC
+  headline_ASC
+  headline_DESC
+  position_ASC
+  position_DESC
 }
 
 type CandidatePreviousValues {
@@ -499,12 +499,11 @@ type CandidatePreviousValues {
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: [String!]!
   coverLettersString: [String!]!
-  source: [String!]!
 }
 
 input CandidateScalarWhereInput {
@@ -566,48 +565,48 @@ input CandidateScalarWhereInput {
   lastName_not_starts_with: String
   lastName_ends_with: String
   lastName_not_ends_with: String
-  metaCompany: String
-  metaCompany_not: String
-  metaCompany_in: [String!]
-  metaCompany_not_in: [String!]
-  metaCompany_lt: String
-  metaCompany_lte: String
-  metaCompany_gt: String
-  metaCompany_gte: String
-  metaCompany_contains: String
-  metaCompany_not_contains: String
-  metaCompany_starts_with: String
-  metaCompany_not_starts_with: String
-  metaCompany_ends_with: String
-  metaCompany_not_ends_with: String
-  metaHeadline: String
-  metaHeadline_not: String
-  metaHeadline_in: [String!]
-  metaHeadline_not_in: [String!]
-  metaHeadline_lt: String
-  metaHeadline_lte: String
-  metaHeadline_gt: String
-  metaHeadline_gte: String
-  metaHeadline_contains: String
-  metaHeadline_not_contains: String
-  metaHeadline_starts_with: String
-  metaHeadline_not_starts_with: String
-  metaHeadline_ends_with: String
-  metaHeadline_not_ends_with: String
-  metaPosition: String
-  metaPosition_not: String
-  metaPosition_in: [String!]
-  metaPosition_not_in: [String!]
-  metaPosition_lt: String
-  metaPosition_lte: String
-  metaPosition_gt: String
-  metaPosition_gte: String
-  metaPosition_contains: String
-  metaPosition_not_contains: String
-  metaPosition_starts_with: String
-  metaPosition_not_starts_with: String
-  metaPosition_ends_with: String
-  metaPosition_not_ends_with: String
+  company: String
+  company_not: String
+  company_in: [String!]
+  company_not_in: [String!]
+  company_lt: String
+  company_lte: String
+  company_gt: String
+  company_gte: String
+  company_contains: String
+  company_not_contains: String
+  company_starts_with: String
+  company_not_starts_with: String
+  company_ends_with: String
+  company_not_ends_with: String
+  headline: String
+  headline_not: String
+  headline_in: [String!]
+  headline_not_in: [String!]
+  headline_lt: String
+  headline_lte: String
+  headline_gt: String
+  headline_gte: String
+  headline_contains: String
+  headline_not_contains: String
+  headline_starts_with: String
+  headline_not_starts_with: String
+  headline_ends_with: String
+  headline_not_ends_with: String
+  position: String
+  position_not: String
+  position_in: [String!]
+  position_not_in: [String!]
+  position_lt: String
+  position_lte: String
+  position_gt: String
+  position_gte: String
+  position_contains: String
+  position_not_contains: String
+  position_starts_with: String
+  position_not_starts_with: String
+  position_ends_with: String
+  position_not_ends_with: String
   AND: [CandidateScalarWhereInput!]
   OR: [CandidateScalarWhereInput!]
   NOT: [CandidateScalarWhereInput!]
@@ -642,15 +641,15 @@ input CandidateUpdateDataInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
@@ -668,15 +667,15 @@ input CandidateUpdateInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
@@ -693,12 +692,11 @@ input CandidateUpdateManyDataInput {
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
-  source: CandidateUpdatesourceInput
 }
 
 input CandidateUpdateManyInput {
@@ -718,12 +716,11 @@ input CandidateUpdateManyMutationInput {
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
-  source: CandidateUpdatesourceInput
 }
 
 input CandidateUpdateManyWithWhereNestedInput {
@@ -755,10 +752,6 @@ input CandidateUpdateresumesStringInput {
   set: [String!]
 }
 
-input CandidateUpdatesourceInput {
-  set: [String!]
-}
-
 input CandidateUpdateWithoutApplicationsDataInput {
   firstName: String
   lastName: String
@@ -766,15 +759,15 @@ input CandidateUpdateWithoutApplicationsDataInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
@@ -787,15 +780,15 @@ input CandidateUpdateWithoutTasksDataInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
@@ -882,48 +875,48 @@ input CandidateWhereInput {
   lastName_ends_with: String
   lastName_not_ends_with: String
   avatar: FileWhereInput
-  metaCompany: String
-  metaCompany_not: String
-  metaCompany_in: [String!]
-  metaCompany_not_in: [String!]
-  metaCompany_lt: String
-  metaCompany_lte: String
-  metaCompany_gt: String
-  metaCompany_gte: String
-  metaCompany_contains: String
-  metaCompany_not_contains: String
-  metaCompany_starts_with: String
-  metaCompany_not_starts_with: String
-  metaCompany_ends_with: String
-  metaCompany_not_ends_with: String
-  metaHeadline: String
-  metaHeadline_not: String
-  metaHeadline_in: [String!]
-  metaHeadline_not_in: [String!]
-  metaHeadline_lt: String
-  metaHeadline_lte: String
-  metaHeadline_gt: String
-  metaHeadline_gte: String
-  metaHeadline_contains: String
-  metaHeadline_not_contains: String
-  metaHeadline_starts_with: String
-  metaHeadline_not_starts_with: String
-  metaHeadline_ends_with: String
-  metaHeadline_not_ends_with: String
-  metaPosition: String
-  metaPosition_not: String
-  metaPosition_in: [String!]
-  metaPosition_not_in: [String!]
-  metaPosition_lt: String
-  metaPosition_lte: String
-  metaPosition_gt: String
-  metaPosition_gte: String
-  metaPosition_contains: String
-  metaPosition_not_contains: String
-  metaPosition_starts_with: String
-  metaPosition_not_starts_with: String
-  metaPosition_ends_with: String
-  metaPosition_not_ends_with: String
+  company: String
+  company_not: String
+  company_in: [String!]
+  company_not_in: [String!]
+  company_lt: String
+  company_lte: String
+  company_gt: String
+  company_gte: String
+  company_contains: String
+  company_not_contains: String
+  company_starts_with: String
+  company_not_starts_with: String
+  company_ends_with: String
+  company_not_ends_with: String
+  headline: String
+  headline_not: String
+  headline_in: [String!]
+  headline_not_in: [String!]
+  headline_lt: String
+  headline_lte: String
+  headline_gt: String
+  headline_gte: String
+  headline_contains: String
+  headline_not_contains: String
+  headline_starts_with: String
+  headline_not_starts_with: String
+  headline_ends_with: String
+  headline_not_ends_with: String
+  position: String
+  position_not: String
+  position_in: [String!]
+  position_not_in: [String!]
+  position_lt: String
+  position_lte: String
+  position_gt: String
+  position_gte: String
+  position_contains: String
+  position_not_contains: String
+  position_starts_with: String
+  position_not_starts_with: String
+  position_ends_with: String
+  position_not_ends_with: String
   resumesFile_every: FileWhereInput
   resumesFile_some: FileWhereInput
   resumesFile_none: FileWhereInput
@@ -933,6 +926,9 @@ input CandidateWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
+  sources_every: SourceWhereInput
+  sources_some: SourceWhereInput
+  sources_none: SourceWhereInput
   fields_every: FieldInstanceWhereInput
   fields_some: FieldInstanceWhereInput
   fields_none: FieldInstanceWhereInput
@@ -1618,6 +1614,7 @@ type Field {
   updatedAt: DateTime!
   type: FieldType!
   label: String!
+  description: String
 }
 
 type FieldConnection {
@@ -1629,6 +1626,7 @@ type FieldConnection {
 input FieldCreateInput {
   type: FieldType!
   label: String!
+  description: String
 }
 
 input FieldCreateManyInput {
@@ -1872,6 +1870,8 @@ enum FieldOrderByInput {
   type_DESC
   label_ASC
   label_DESC
+  description_ASC
+  description_DESC
 }
 
 type FieldPreviousValues {
@@ -1880,6 +1880,7 @@ type FieldPreviousValues {
   updatedAt: DateTime!
   type: FieldType!
   label: String!
+  description: String
 }
 
 input FieldScalarWhereInput {
@@ -1931,6 +1932,20 @@ input FieldScalarWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [FieldScalarWhereInput!]
   OR: [FieldScalarWhereInput!]
   NOT: [FieldScalarWhereInput!]
@@ -1955,28 +1970,30 @@ input FieldSubscriptionWhereInput {
 }
 
 enum FieldType {
-  Int
-  Float
-  String
-  Text
-  Paragraph
-  Boolean
-  DateTime
+  INT
+  FLOAT
+  TEXT
+  PARAGRAPH
+  BOOLEAN
+  DATETIME
 }
 
 input FieldUpdateDataInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateManyDataInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateManyInput {
@@ -1993,6 +2010,7 @@ input FieldUpdateManyInput {
 input FieldUpdateManyMutationInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateManyWithWhereNestedInput {
@@ -2072,6 +2090,20 @@ input FieldWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [FieldWhereInput!]
   OR: [FieldWhereInput!]
   NOT: [FieldWhereInput!]
@@ -2662,6 +2694,8 @@ type Job {
   department: String
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location!]
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2681,6 +2715,8 @@ input JobCreateInput {
   department: String
   locations: LocationCreateManyInput
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2703,6 +2739,8 @@ input JobCreateWithoutApplicationsInput {
   department: String
   locations: LocationCreateManyInput
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2715,6 +2753,8 @@ input JobCreateWithoutWorkspaceInput {
   department: String
   locations: LocationCreateManyInput
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2737,6 +2777,10 @@ enum JobOrderByInput {
   department_DESC
   name_ASC
   name_DESC
+  excerpt_ASC
+  excerpt_DESC
+  companyDescription_ASC
+  companyDescription_DESC
   description_ASC
   description_DESC
   requirements_ASC
@@ -2750,6 +2794,8 @@ type JobPreviousValues {
   type: JobType!
   department: String
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2817,6 +2863,34 @@ input JobScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  excerpt: String
+  excerpt_not: String
+  excerpt_in: [String!]
+  excerpt_not_in: [String!]
+  excerpt_lt: String
+  excerpt_lte: String
+  excerpt_gt: String
+  excerpt_gte: String
+  excerpt_contains: String
+  excerpt_not_contains: String
+  excerpt_starts_with: String
+  excerpt_not_starts_with: String
+  excerpt_ends_with: String
+  excerpt_not_ends_with: String
+  companyDescription: String
+  companyDescription_not: String
+  companyDescription_in: [String!]
+  companyDescription_not_in: [String!]
+  companyDescription_lt: String
+  companyDescription_lte: String
+  companyDescription_gt: String
+  companyDescription_gte: String
+  companyDescription_contains: String
+  companyDescription_not_contains: String
+  companyDescription_starts_with: String
+  companyDescription_not_starts_with: String
+  companyDescription_ends_with: String
+  companyDescription_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -2869,9 +2943,9 @@ input JobSubscriptionWhereInput {
 }
 
 enum JobType {
-  Draft
-  Published
-  Archived
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 input JobUpdateInput {
@@ -2883,6 +2957,8 @@ input JobUpdateInput {
   department: String
   locations: LocationUpdateManyInput
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2891,6 +2967,8 @@ input JobUpdateManyDataInput {
   type: JobType
   department: String
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2899,6 +2977,8 @@ input JobUpdateManyMutationInput {
   type: JobType
   department: String
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2934,6 +3014,8 @@ input JobUpdateWithoutApplicationsDataInput {
   department: String
   locations: LocationUpdateManyInput
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2946,6 +3028,8 @@ input JobUpdateWithoutWorkspaceDataInput {
   department: String
   locations: LocationUpdateManyInput
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -3040,6 +3124,34 @@ input JobWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  excerpt: String
+  excerpt_not: String
+  excerpt_in: [String!]
+  excerpt_not_in: [String!]
+  excerpt_lt: String
+  excerpt_lte: String
+  excerpt_gt: String
+  excerpt_gte: String
+  excerpt_contains: String
+  excerpt_not_contains: String
+  excerpt_starts_with: String
+  excerpt_not_starts_with: String
+  excerpt_ends_with: String
+  excerpt_not_ends_with: String
+  companyDescription: String
+  companyDescription_not: String
+  companyDescription_in: [String!]
+  companyDescription_not_in: [String!]
+  companyDescription_lt: String
+  companyDescription_lte: String
+  companyDescription_gt: String
+  companyDescription_gte: String
+  companyDescription_contains: String
+  companyDescription_not_contains: String
+  companyDescription_starts_with: String
+  companyDescription_not_starts_with: String
+  companyDescription_ends_with: String
+  companyDescription_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -3077,12 +3189,16 @@ input JobWhereUniqueInput {
   id: ID
 }
 
+scalar Json
+
 type Location {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   country: String!
-  region: String!
+  region: String
   city: String!
-  zip: String!
+  zip: String
 }
 
 type LocationConnection {
@@ -3093,9 +3209,9 @@ type LocationConnection {
 
 input LocationCreateInput {
   country: String!
-  region: String!
+  region: String
   city: String!
-  zip: String!
+  zip: String
 }
 
 input LocationCreateManyInput {
@@ -3111,6 +3227,10 @@ type LocationEdge {
 enum LocationOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   country_ASC
   country_DESC
   region_ASC
@@ -3119,18 +3239,16 @@ enum LocationOrderByInput {
   city_DESC
   zip_ASC
   zip_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type LocationPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   country: String!
-  region: String!
+  region: String
   city: String!
-  zip: String!
+  zip: String
 }
 
 input LocationScalarWhereInput {
@@ -3148,6 +3266,22 @@ input LocationScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   country: String
   country_not: String
   country_in: [String!]
@@ -3297,6 +3431,22 @@ input LocationWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   country: String
   country_not: String
   country_in: [String!]
@@ -3431,6 +3581,12 @@ type Mutation {
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  createSource(data: SourceCreateInput!): Source!
+  updateSource(data: SourceUpdateInput!, where: SourceWhereUniqueInput!): Source
+  updateManySources(data: SourceUpdateManyMutationInput!, where: SourceWhereInput): BatchPayload!
+  upsertSource(where: SourceWhereUniqueInput!, create: SourceCreateInput!, update: SourceUpdateInput!): Source!
+  deleteSource(where: SourceWhereUniqueInput!): Source
+  deleteManySources(where: SourceWhereInput): BatchPayload!
   createStage(data: StageCreateInput!): Stage!
   updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
   updateManyStages(data: StageUpdateManyMutationInput!, where: StageWhereInput): BatchPayload!
@@ -3520,6 +3676,9 @@ type Query {
   location(where: LocationWhereUniqueInput!): Location
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  source(where: SourceWhereUniqueInput!): Source
+  sources(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Source]!
+  sourcesConnection(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SourceConnection!
   stage(where: StageWhereUniqueInput!): Stage
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
   stagesConnection(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StageConnection!
@@ -3539,6 +3698,253 @@ type Query {
   workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
   workspacesConnection(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkspaceConnection!
   node(id: ID!): Node
+}
+
+type Source {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+  description: String
+}
+
+type SourceConnection {
+  pageInfo: PageInfo!
+  edges: [SourceEdge]!
+  aggregate: AggregateSource!
+}
+
+input SourceCreateInput {
+  label: String!
+  description: String
+}
+
+input SourceCreateManyInput {
+  create: [SourceCreateInput!]
+  connect: [SourceWhereUniqueInput!]
+}
+
+type SourceEdge {
+  node: Source!
+  cursor: String!
+}
+
+enum SourceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  label_ASC
+  label_DESC
+  description_ASC
+  description_DESC
+}
+
+type SourcePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+  description: String
+}
+
+input SourceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_lt: String
+  label_lte: String
+  label_gt: String
+  label_gte: String
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [SourceScalarWhereInput!]
+  OR: [SourceScalarWhereInput!]
+  NOT: [SourceScalarWhereInput!]
+}
+
+type SourceSubscriptionPayload {
+  mutation: MutationType!
+  node: Source
+  updatedFields: [String!]
+  previousValues: SourcePreviousValues
+}
+
+input SourceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SourceWhereInput
+  AND: [SourceSubscriptionWhereInput!]
+  OR: [SourceSubscriptionWhereInput!]
+  NOT: [SourceSubscriptionWhereInput!]
+}
+
+input SourceUpdateDataInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateManyDataInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateManyInput {
+  create: [SourceCreateInput!]
+  update: [SourceUpdateWithWhereUniqueNestedInput!]
+  upsert: [SourceUpsertWithWhereUniqueNestedInput!]
+  delete: [SourceWhereUniqueInput!]
+  connect: [SourceWhereUniqueInput!]
+  disconnect: [SourceWhereUniqueInput!]
+  deleteMany: [SourceScalarWhereInput!]
+  updateMany: [SourceUpdateManyWithWhereNestedInput!]
+}
+
+input SourceUpdateManyMutationInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateManyWithWhereNestedInput {
+  where: SourceScalarWhereInput!
+  data: SourceUpdateManyDataInput!
+}
+
+input SourceUpdateWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput!
+  data: SourceUpdateDataInput!
+}
+
+input SourceUpsertWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput!
+  update: SourceUpdateDataInput!
+  create: SourceCreateInput!
+}
+
+input SourceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_lt: String
+  label_lte: String
+  label_gt: String
+  label_gte: String
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [SourceWhereInput!]
+  OR: [SourceWhereInput!]
+  NOT: [SourceWhereInput!]
+}
+
+input SourceWhereUniqueInput {
+  id: ID
 }
 
 type Stage {
@@ -3688,9 +4094,9 @@ input StageSubscriptionWhereInput {
 }
 
 enum StageType {
-  New
-  Pipeline
-  Final
+  NEW
+  PIPELINE
+  FINAL
 }
 
 input StageUpdateDataInput {
@@ -3840,6 +4246,7 @@ type Subscription {
   invite(where: InviteSubscriptionWhereInput): InviteSubscriptionPayload
   job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  source(where: SourceSubscriptionWhereInput): SourceSubscriptionPayload
   stage(where: StageSubscriptionWhereInput): StageSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
@@ -3853,6 +4260,7 @@ type Tag {
   createdAt: DateTime!
   updatedAt: DateTime!
   label: String!
+  description: String
 }
 
 type TagConnection {
@@ -3863,6 +4271,7 @@ type TagConnection {
 
 input TagCreateInput {
   label: String!
+  description: String
 }
 
 input TagCreateManyInput {
@@ -3884,6 +4293,8 @@ enum TagOrderByInput {
   updatedAt_DESC
   label_ASC
   label_DESC
+  description_ASC
+  description_DESC
 }
 
 type TagPreviousValues {
@@ -3891,6 +4302,7 @@ type TagPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   label: String!
+  description: String
 }
 
 input TagScalarWhereInput {
@@ -3938,6 +4350,20 @@ input TagScalarWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [TagScalarWhereInput!]
   OR: [TagScalarWhereInput!]
   NOT: [TagScalarWhereInput!]
@@ -3963,14 +4389,17 @@ input TagSubscriptionWhereInput {
 
 input TagUpdateDataInput {
   label: String
+  description: String
 }
 
 input TagUpdateInput {
   label: String
+  description: String
 }
 
 input TagUpdateManyDataInput {
   label: String
+  description: String
 }
 
 input TagUpdateManyInput {
@@ -3986,6 +4415,7 @@ input TagUpdateManyInput {
 
 input TagUpdateManyMutationInput {
   label: String
+  description: String
 }
 
 input TagUpdateManyWithWhereNestedInput {
@@ -4049,6 +4479,20 @@ input TagWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [TagWhereInput!]
   OR: [TagWhereInput!]
   NOT: [TagWhereInput!]
@@ -4393,6 +4837,7 @@ type User {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  settings: Json
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   firstName: String!
   lastName: String!
@@ -4411,6 +4856,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  settings: Json
   tasks: TaskCreateManyWithoutOwnersInput
   firstName: String!
   lastName: String!
@@ -4438,6 +4884,7 @@ input UserCreateOneInput {
 }
 
 input UserCreateWithoutTasksInput {
+  settings: Json
   firstName: String!
   lastName: String!
   email: String!
@@ -4460,6 +4907,8 @@ enum UserOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  settings_ASC
+  settings_DESC
   firstName_ASC
   firstName_DESC
   lastName_ASC
@@ -4480,6 +4929,7 @@ type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  settings: Json
   firstName: String!
   lastName: String!
   email: String!
@@ -4630,6 +5080,7 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
+  settings: Json
   tasks: TaskUpdateManyWithoutOwnersInput
   firstName: String
   lastName: String
@@ -4642,6 +5093,7 @@ input UserUpdateDataInput {
 }
 
 input UserUpdateInput {
+  settings: Json
   tasks: TaskUpdateManyWithoutOwnersInput
   firstName: String
   lastName: String
@@ -4654,6 +5106,7 @@ input UserUpdateInput {
 }
 
 input UserUpdateManyDataInput {
+  settings: Json
   firstName: String
   lastName: String
   email: String
@@ -4675,6 +5128,7 @@ input UserUpdateManyInput {
 }
 
 input UserUpdateManyMutationInput {
+  settings: Json
   firstName: String
   lastName: String
   email: String
@@ -4708,6 +5162,7 @@ input UserUpdateOneRequiredInput {
 }
 
 input UserUpdateWithoutTasksDataInput {
+  settings: Json
   firstName: String
   lastName: String
   email: String
@@ -5168,9 +5623,9 @@ type Workspace {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
+  settings: Json
   workflows(where: WorkflowWhereInput, orderBy: WorkflowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workflow!]
   invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   name: String!
 }
 
@@ -5184,9 +5639,9 @@ input WorkspaceCreateInput {
   users: UserCreateManyInput
   jobs: JobCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyInput
+  settings: Json
   workflows: WorkflowCreateManyInput
   invites: InviteCreateManyInput
-  tags: TagCreateManyInput
   name: String!
 }
 
@@ -5198,9 +5653,9 @@ input WorkspaceCreateOneWithoutJobsInput {
 input WorkspaceCreateWithoutJobsInput {
   users: UserCreateManyInput
   candidates: CandidateCreateManyInput
+  settings: Json
   workflows: WorkflowCreateManyInput
   invites: InviteCreateManyInput
-  tags: TagCreateManyInput
   name: String!
 }
 
@@ -5216,6 +5671,8 @@ enum WorkspaceOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  settings_ASC
+  settings_DESC
   name_ASC
   name_DESC
 }
@@ -5224,6 +5681,7 @@ type WorkspacePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  settings: Json
   name: String!
 }
 
@@ -5249,13 +5707,14 @@ input WorkspaceUpdateInput {
   users: UserUpdateManyInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   candidates: CandidateUpdateManyInput
+  settings: Json
   workflows: WorkflowUpdateManyInput
   invites: InviteUpdateManyInput
-  tags: TagUpdateManyInput
   name: String
 }
 
 input WorkspaceUpdateManyMutationInput {
+  settings: Json
   name: String
 }
 
@@ -5269,9 +5728,9 @@ input WorkspaceUpdateOneRequiredWithoutJobsInput {
 input WorkspaceUpdateWithoutJobsDataInput {
   users: UserUpdateManyInput
   candidates: CandidateUpdateManyInput
+  settings: Json
   workflows: WorkflowUpdateManyInput
   invites: InviteUpdateManyInput
-  tags: TagUpdateManyInput
   name: String
 }
 
@@ -5326,9 +5785,6 @@ input WorkspaceWhereInput {
   invites_every: InviteWhereInput
   invites_some: InviteWhereInput
   invites_none: InviteWhereInput
-  tags_every: TagWhereInput
-  tags_some: TagWhereInput
-  tags_none: TagWhereInput
   name: String
   name_not: String
   name_in: [String!]

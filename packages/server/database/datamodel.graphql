@@ -1,19 +1,20 @@
-# GLOBAL TYPES
+# Core business logic types
 type Workspace {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  # connections
+  # core connections
   users: [User!]!
   jobs: [Job!]!
   candidates: [Candidate!]!
+
+  settings: Json
 
   workflows: [Workflow!]!
 
   # other?
   invites: [Invite!]!
-  tags: [Tag!]!
 
   # info
   name: String!
@@ -23,6 +24,8 @@ type User {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
+
+  settings: Json
 
   # connections
   tasks: [Task!]! @relation(name: "TaskOwner")
@@ -57,18 +60,18 @@ type Job {
   type: JobType!
   department: String
   locations: [Location!]!
+
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
-
-  # TODO: Add type for common company description
-  # TODO: Add type for specific client in agency setting
 }
 
 enum JobType {
-  Draft
-  Published
-  Archived
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 type Application {
@@ -87,8 +90,8 @@ type Application {
 }
 
 enum ApplicationType {
-  Qualified
-  Disqualified
+  QUALIFIED
+  DISQUALIFIED
 }
 
 type Candidate {
@@ -105,9 +108,9 @@ type Candidate {
   avatar: File @relation(name: "CandidateAvatarFile")
 
   # meta info
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
 
   resumesString: [String!]!
   resumesFile: [File!]! @relation(name: "CandidateResumeFiles")
@@ -115,8 +118,8 @@ type Candidate {
   coverLettersFile: [File!]! @relation(name: "CandidateCoverLetterFiles")
 
   tags: [Tag!]!
-  # TODO: Create type for sources (maybe with pivot)
-  source: [String!]!
+  sources: [Source!]!
+
   fields: [FieldInstance!]!
 
   # conections
@@ -140,7 +143,7 @@ type Task {
   dueAt: DateTime
 }
 
-# DDEPENDENCIES
+# DEPENDENCIES
 type Invite {
   id: ID! @unique
   createdAt: DateTime!
@@ -193,9 +196,9 @@ type Stage {
 }
 
 enum StageType {
-  New
-  Pipeline
-  Final
+  NEW
+  PIPELINE
+  FINAL
 }
 
 type Comment {
@@ -214,10 +217,13 @@ type Comment {
 # SYSTEM TYPES
 type Location {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
   country: String!
-  region: String!
+  region: String
   city: String!
-  zip: String!
+  zip: String
 }
 
 type Field {
@@ -227,16 +233,16 @@ type Field {
 
   type: FieldType!
   label: String!
+  description: String
 }
 
 enum FieldType {
-  Int
-  Float
-  String
-  Text
-  Paragraph
-  Boolean
-  DateTime
+  INT
+  FLOAT
+  TEXT
+  PARAGRAPH
+  BOOLEAN
+  DATETIME
 }
 
 type FieldInstance {
@@ -254,6 +260,16 @@ type Tag {
   updatedAt: DateTime!
 
   label: String!
+  description: String
+}
+
+type Source {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  label: String!
+  description: String
 }
 
 type File {

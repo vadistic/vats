@@ -37,6 +37,9 @@ export interface Query {
     location: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
     locations: <T = Array<Location | null>>(args: { where?: LocationWhereInput | null, orderBy?: LocationOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     locationsConnection: <T = LocationConnection>(args: { where?: LocationWhereInput | null, orderBy?: LocationOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    source: <T = Source | null>(args: { where: SourceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    sources: <T = Array<Source | null>>(args: { where?: SourceWhereInput | null, orderBy?: SourceOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    sourcesConnection: <T = SourceConnection>(args: { where?: SourceWhereInput | null, orderBy?: SourceOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     stage: <T = Stage | null>(args: { where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
     stages: <T = Array<Stage | null>>(args: { where?: StageWhereInput | null, orderBy?: StageOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     stagesConnection: <T = StageConnection>(args: { where?: StageWhereInput | null, orderBy?: StageOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -125,6 +128,12 @@ export interface Mutation {
     upsertLocation: <T = Location>(args: { where: LocationWhereUniqueInput, create: LocationCreateInput, update: LocationUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteLocation: <T = Location | null>(args: { where: LocationWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
     deleteManyLocations: <T = BatchPayload>(args: { where?: LocationWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createSource: <T = Source>(args: { data: SourceCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateSource: <T = Source | null>(args: { data: SourceUpdateInput, where: SourceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    updateManySources: <T = BatchPayload>(args: { data: SourceUpdateManyMutationInput, where?: SourceWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertSource: <T = Source>(args: { where: SourceWhereUniqueInput, create: SourceCreateInput, update: SourceUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteSource: <T = Source | null>(args: { where: SourceWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    deleteManySources: <T = BatchPayload>(args: { where?: SourceWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createStage: <T = Stage>(args: { data: StageCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateStage: <T = Stage | null>(args: { data: StageUpdateInput, where: StageWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
     updateManyStages: <T = BatchPayload>(args: { data: StageUpdateManyMutationInput, where?: StageWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
@@ -175,6 +184,7 @@ export interface Subscription {
     invite: <T = InviteSubscriptionPayload | null>(args: { where?: InviteSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
     job: <T = JobSubscriptionPayload | null>(args: { where?: JobSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
     location: <T = LocationSubscriptionPayload | null>(args: { where?: LocationSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
+    source: <T = SourceSubscriptionPayload | null>(args: { where?: SourceSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
     stage: <T = StageSubscriptionPayload | null>(args: { where?: StageSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
     tag: <T = TagSubscriptionPayload | null>(args: { where?: TagSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
     task: <T = TaskSubscriptionPayload | null>(args: { where?: TaskSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
@@ -195,6 +205,7 @@ export interface Exists {
   Invite: (where?: InviteWhereInput) => Promise<boolean>
   Job: (where?: JobWhereInput) => Promise<boolean>
   Location: (where?: LocationWhereInput) => Promise<boolean>
+  Source: (where?: SourceWhereInput) => Promise<boolean>
   Stage: (where?: StageWhereInput) => Promise<boolean>
   Tag: (where?: TagWhereInput) => Promise<boolean>
   Task: (where?: TaskWhereInput) => Promise<boolean>
@@ -266,6 +277,10 @@ type AggregateJob {
 }
 
 type AggregateLocation {
+  count: Int!
+}
+
+type AggregateSource {
   count: Int!
 }
 
@@ -424,8 +439,8 @@ input ApplicationSubscriptionWhereInput {
 }
 
 enum ApplicationType {
-  Qualified
-  Disqualified
+  QUALIFIED
+  DISQUALIFIED
 }
 
 input ApplicationUpdateInput {
@@ -569,15 +584,15 @@ type Candidate {
   phones: [String!]!
   links: [String!]!
   avatar: File
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: [String!]!
   resumesFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   coverLettersString: [String!]!
   coverLettersFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  source: [String!]!
+  sources(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Source!]
   fields(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldInstance!]
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
@@ -605,15 +620,15 @@ input CandidateCreateInput {
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
   avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateCreateresumesStringInput
   resumesFile: FileCreateManyInput
   coverLettersString: CandidateCreatecoverLettersStringInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
+  sources: SourceCreateManyInput
   fields: FieldInstanceCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   applications: ApplicationCreateManyWithoutCandidateInput
@@ -647,10 +662,6 @@ input CandidateCreateresumesStringInput {
   set: [String!]
 }
 
-input CandidateCreatesourceInput {
-  set: [String!]
-}
-
 input CandidateCreateWithoutApplicationsInput {
   firstName: String!
   lastName: String!
@@ -658,15 +669,15 @@ input CandidateCreateWithoutApplicationsInput {
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
   avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateCreateresumesStringInput
   resumesFile: FileCreateManyInput
   coverLettersString: CandidateCreatecoverLettersStringInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
+  sources: SourceCreateManyInput
   fields: FieldInstanceCreateManyInput
   tasks: TaskCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -679,15 +690,15 @@ input CandidateCreateWithoutTasksInput {
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
   avatar: FileCreateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateCreateresumesStringInput
   resumesFile: FileCreateManyInput
   coverLettersString: CandidateCreatecoverLettersStringInput
   coverLettersFile: FileCreateManyInput
   tags: TagCreateManyInput
-  source: CandidateCreatesourceInput
+  sources: SourceCreateManyInput
   fields: FieldInstanceCreateManyInput
   applications: ApplicationCreateManyWithoutCandidateInput
   comments: CommentCreateManyInput
@@ -709,12 +720,12 @@ enum CandidateOrderByInput {
   firstName_DESC
   lastName_ASC
   lastName_DESC
-  metaCompany_ASC
-  metaCompany_DESC
-  metaHeadline_ASC
-  metaHeadline_DESC
-  metaPosition_ASC
-  metaPosition_DESC
+  company_ASC
+  company_DESC
+  headline_ASC
+  headline_DESC
+  position_ASC
+  position_DESC
 }
 
 type CandidatePreviousValues {
@@ -726,12 +737,11 @@ type CandidatePreviousValues {
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: [String!]!
   coverLettersString: [String!]!
-  source: [String!]!
 }
 
 input CandidateScalarWhereInput {
@@ -793,48 +803,48 @@ input CandidateScalarWhereInput {
   lastName_not_starts_with: String
   lastName_ends_with: String
   lastName_not_ends_with: String
-  metaCompany: String
-  metaCompany_not: String
-  metaCompany_in: [String!]
-  metaCompany_not_in: [String!]
-  metaCompany_lt: String
-  metaCompany_lte: String
-  metaCompany_gt: String
-  metaCompany_gte: String
-  metaCompany_contains: String
-  metaCompany_not_contains: String
-  metaCompany_starts_with: String
-  metaCompany_not_starts_with: String
-  metaCompany_ends_with: String
-  metaCompany_not_ends_with: String
-  metaHeadline: String
-  metaHeadline_not: String
-  metaHeadline_in: [String!]
-  metaHeadline_not_in: [String!]
-  metaHeadline_lt: String
-  metaHeadline_lte: String
-  metaHeadline_gt: String
-  metaHeadline_gte: String
-  metaHeadline_contains: String
-  metaHeadline_not_contains: String
-  metaHeadline_starts_with: String
-  metaHeadline_not_starts_with: String
-  metaHeadline_ends_with: String
-  metaHeadline_not_ends_with: String
-  metaPosition: String
-  metaPosition_not: String
-  metaPosition_in: [String!]
-  metaPosition_not_in: [String!]
-  metaPosition_lt: String
-  metaPosition_lte: String
-  metaPosition_gt: String
-  metaPosition_gte: String
-  metaPosition_contains: String
-  metaPosition_not_contains: String
-  metaPosition_starts_with: String
-  metaPosition_not_starts_with: String
-  metaPosition_ends_with: String
-  metaPosition_not_ends_with: String
+  company: String
+  company_not: String
+  company_in: [String!]
+  company_not_in: [String!]
+  company_lt: String
+  company_lte: String
+  company_gt: String
+  company_gte: String
+  company_contains: String
+  company_not_contains: String
+  company_starts_with: String
+  company_not_starts_with: String
+  company_ends_with: String
+  company_not_ends_with: String
+  headline: String
+  headline_not: String
+  headline_in: [String!]
+  headline_not_in: [String!]
+  headline_lt: String
+  headline_lte: String
+  headline_gt: String
+  headline_gte: String
+  headline_contains: String
+  headline_not_contains: String
+  headline_starts_with: String
+  headline_not_starts_with: String
+  headline_ends_with: String
+  headline_not_ends_with: String
+  position: String
+  position_not: String
+  position_in: [String!]
+  position_not_in: [String!]
+  position_lt: String
+  position_lte: String
+  position_gt: String
+  position_gte: String
+  position_contains: String
+  position_not_contains: String
+  position_starts_with: String
+  position_not_starts_with: String
+  position_ends_with: String
+  position_not_ends_with: String
   AND: [CandidateScalarWhereInput!]
   OR: [CandidateScalarWhereInput!]
   NOT: [CandidateScalarWhereInput!]
@@ -869,15 +879,15 @@ input CandidateUpdateDataInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
@@ -895,15 +905,15 @@ input CandidateUpdateInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   applications: ApplicationUpdateManyWithoutCandidateInput
@@ -920,12 +930,11 @@ input CandidateUpdateManyDataInput {
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
-  source: CandidateUpdatesourceInput
 }
 
 input CandidateUpdateManyInput {
@@ -945,12 +954,11 @@ input CandidateUpdateManyMutationInput {
   emails: CandidateUpdateemailsInput
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
-  source: CandidateUpdatesourceInput
 }
 
 input CandidateUpdateManyWithWhereNestedInput {
@@ -982,10 +990,6 @@ input CandidateUpdateresumesStringInput {
   set: [String!]
 }
 
-input CandidateUpdatesourceInput {
-  set: [String!]
-}
-
 input CandidateUpdateWithoutApplicationsDataInput {
   firstName: String
   lastName: String
@@ -993,15 +997,15 @@ input CandidateUpdateWithoutApplicationsDataInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   tasks: TaskUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
@@ -1014,15 +1018,15 @@ input CandidateUpdateWithoutTasksDataInput {
   phones: CandidateUpdatephonesInput
   links: CandidateUpdatelinksInput
   avatar: FileUpdateOneInput
-  metaCompany: String
-  metaHeadline: String
-  metaPosition: String
+  company: String
+  headline: String
+  position: String
   resumesString: CandidateUpdateresumesStringInput
   resumesFile: FileUpdateManyInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
   coverLettersFile: FileUpdateManyInput
   tags: TagUpdateManyInput
-  source: CandidateUpdatesourceInput
+  sources: SourceUpdateManyInput
   fields: FieldInstanceUpdateManyInput
   applications: ApplicationUpdateManyWithoutCandidateInput
   comments: CommentUpdateManyInput
@@ -1109,48 +1113,48 @@ input CandidateWhereInput {
   lastName_ends_with: String
   lastName_not_ends_with: String
   avatar: FileWhereInput
-  metaCompany: String
-  metaCompany_not: String
-  metaCompany_in: [String!]
-  metaCompany_not_in: [String!]
-  metaCompany_lt: String
-  metaCompany_lte: String
-  metaCompany_gt: String
-  metaCompany_gte: String
-  metaCompany_contains: String
-  metaCompany_not_contains: String
-  metaCompany_starts_with: String
-  metaCompany_not_starts_with: String
-  metaCompany_ends_with: String
-  metaCompany_not_ends_with: String
-  metaHeadline: String
-  metaHeadline_not: String
-  metaHeadline_in: [String!]
-  metaHeadline_not_in: [String!]
-  metaHeadline_lt: String
-  metaHeadline_lte: String
-  metaHeadline_gt: String
-  metaHeadline_gte: String
-  metaHeadline_contains: String
-  metaHeadline_not_contains: String
-  metaHeadline_starts_with: String
-  metaHeadline_not_starts_with: String
-  metaHeadline_ends_with: String
-  metaHeadline_not_ends_with: String
-  metaPosition: String
-  metaPosition_not: String
-  metaPosition_in: [String!]
-  metaPosition_not_in: [String!]
-  metaPosition_lt: String
-  metaPosition_lte: String
-  metaPosition_gt: String
-  metaPosition_gte: String
-  metaPosition_contains: String
-  metaPosition_not_contains: String
-  metaPosition_starts_with: String
-  metaPosition_not_starts_with: String
-  metaPosition_ends_with: String
-  metaPosition_not_ends_with: String
+  company: String
+  company_not: String
+  company_in: [String!]
+  company_not_in: [String!]
+  company_lt: String
+  company_lte: String
+  company_gt: String
+  company_gte: String
+  company_contains: String
+  company_not_contains: String
+  company_starts_with: String
+  company_not_starts_with: String
+  company_ends_with: String
+  company_not_ends_with: String
+  headline: String
+  headline_not: String
+  headline_in: [String!]
+  headline_not_in: [String!]
+  headline_lt: String
+  headline_lte: String
+  headline_gt: String
+  headline_gte: String
+  headline_contains: String
+  headline_not_contains: String
+  headline_starts_with: String
+  headline_not_starts_with: String
+  headline_ends_with: String
+  headline_not_ends_with: String
+  position: String
+  position_not: String
+  position_in: [String!]
+  position_not_in: [String!]
+  position_lt: String
+  position_lte: String
+  position_gt: String
+  position_gte: String
+  position_contains: String
+  position_not_contains: String
+  position_starts_with: String
+  position_not_starts_with: String
+  position_ends_with: String
+  position_not_ends_with: String
   resumesFile_every: FileWhereInput
   resumesFile_some: FileWhereInput
   resumesFile_none: FileWhereInput
@@ -1160,6 +1164,9 @@ input CandidateWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
+  sources_every: SourceWhereInput
+  sources_some: SourceWhereInput
+  sources_none: SourceWhereInput
   fields_every: FieldInstanceWhereInput
   fields_some: FieldInstanceWhereInput
   fields_none: FieldInstanceWhereInput
@@ -1845,6 +1852,7 @@ type Field {
   updatedAt: DateTime!
   type: FieldType!
   label: String!
+  description: String
 }
 
 type FieldConnection {
@@ -1856,6 +1864,7 @@ type FieldConnection {
 input FieldCreateInput {
   type: FieldType!
   label: String!
+  description: String
 }
 
 input FieldCreateManyInput {
@@ -2099,6 +2108,8 @@ enum FieldOrderByInput {
   type_DESC
   label_ASC
   label_DESC
+  description_ASC
+  description_DESC
 }
 
 type FieldPreviousValues {
@@ -2107,6 +2118,7 @@ type FieldPreviousValues {
   updatedAt: DateTime!
   type: FieldType!
   label: String!
+  description: String
 }
 
 input FieldScalarWhereInput {
@@ -2158,6 +2170,20 @@ input FieldScalarWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [FieldScalarWhereInput!]
   OR: [FieldScalarWhereInput!]
   NOT: [FieldScalarWhereInput!]
@@ -2182,28 +2208,30 @@ input FieldSubscriptionWhereInput {
 }
 
 enum FieldType {
-  Int
-  Float
-  String
-  Text
-  Paragraph
-  Boolean
-  DateTime
+  INT
+  FLOAT
+  TEXT
+  PARAGRAPH
+  BOOLEAN
+  DATETIME
 }
 
 input FieldUpdateDataInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateManyDataInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateManyInput {
@@ -2220,6 +2248,7 @@ input FieldUpdateManyInput {
 input FieldUpdateManyMutationInput {
   type: FieldType
   label: String
+  description: String
 }
 
 input FieldUpdateManyWithWhereNestedInput {
@@ -2299,6 +2328,20 @@ input FieldWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [FieldWhereInput!]
   OR: [FieldWhereInput!]
   NOT: [FieldWhereInput!]
@@ -2889,6 +2932,8 @@ type Job {
   department: String
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location!]
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2908,6 +2953,8 @@ input JobCreateInput {
   department: String
   locations: LocationCreateManyInput
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2930,6 +2977,8 @@ input JobCreateWithoutApplicationsInput {
   department: String
   locations: LocationCreateManyInput
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2942,6 +2991,8 @@ input JobCreateWithoutWorkspaceInput {
   department: String
   locations: LocationCreateManyInput
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -2964,6 +3015,10 @@ enum JobOrderByInput {
   department_DESC
   name_ASC
   name_DESC
+  excerpt_ASC
+  excerpt_DESC
+  companyDescription_ASC
+  companyDescription_DESC
   description_ASC
   description_DESC
   requirements_ASC
@@ -2977,6 +3032,8 @@ type JobPreviousValues {
   type: JobType!
   department: String
   name: String!
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -3044,6 +3101,34 @@ input JobScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  excerpt: String
+  excerpt_not: String
+  excerpt_in: [String!]
+  excerpt_not_in: [String!]
+  excerpt_lt: String
+  excerpt_lte: String
+  excerpt_gt: String
+  excerpt_gte: String
+  excerpt_contains: String
+  excerpt_not_contains: String
+  excerpt_starts_with: String
+  excerpt_not_starts_with: String
+  excerpt_ends_with: String
+  excerpt_not_ends_with: String
+  companyDescription: String
+  companyDescription_not: String
+  companyDescription_in: [String!]
+  companyDescription_not_in: [String!]
+  companyDescription_lt: String
+  companyDescription_lte: String
+  companyDescription_gt: String
+  companyDescription_gte: String
+  companyDescription_contains: String
+  companyDescription_not_contains: String
+  companyDescription_starts_with: String
+  companyDescription_not_starts_with: String
+  companyDescription_ends_with: String
+  companyDescription_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -3096,9 +3181,9 @@ input JobSubscriptionWhereInput {
 }
 
 enum JobType {
-  Draft
-  Published
-  Archived
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }
 
 input JobUpdateInput {
@@ -3110,6 +3195,8 @@ input JobUpdateInput {
   department: String
   locations: LocationUpdateManyInput
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -3118,6 +3205,8 @@ input JobUpdateManyDataInput {
   type: JobType
   department: String
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -3126,6 +3215,8 @@ input JobUpdateManyMutationInput {
   type: JobType
   department: String
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -3161,6 +3252,8 @@ input JobUpdateWithoutApplicationsDataInput {
   department: String
   locations: LocationUpdateManyInput
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -3173,6 +3266,8 @@ input JobUpdateWithoutWorkspaceDataInput {
   department: String
   locations: LocationUpdateManyInput
   name: String
+  excerpt: String
+  companyDescription: String
   description: String
   requirements: String
 }
@@ -3267,6 +3362,34 @@ input JobWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  excerpt: String
+  excerpt_not: String
+  excerpt_in: [String!]
+  excerpt_not_in: [String!]
+  excerpt_lt: String
+  excerpt_lte: String
+  excerpt_gt: String
+  excerpt_gte: String
+  excerpt_contains: String
+  excerpt_not_contains: String
+  excerpt_starts_with: String
+  excerpt_not_starts_with: String
+  excerpt_ends_with: String
+  excerpt_not_ends_with: String
+  companyDescription: String
+  companyDescription_not: String
+  companyDescription_in: [String!]
+  companyDescription_not_in: [String!]
+  companyDescription_lt: String
+  companyDescription_lte: String
+  companyDescription_gt: String
+  companyDescription_gte: String
+  companyDescription_contains: String
+  companyDescription_not_contains: String
+  companyDescription_starts_with: String
+  companyDescription_not_starts_with: String
+  companyDescription_ends_with: String
+  companyDescription_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -3304,12 +3427,16 @@ input JobWhereUniqueInput {
   id: ID
 }
 
+scalar Json
+
 type Location {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   country: String!
-  region: String!
+  region: String
   city: String!
-  zip: String!
+  zip: String
 }
 
 type LocationConnection {
@@ -3320,9 +3447,9 @@ type LocationConnection {
 
 input LocationCreateInput {
   country: String!
-  region: String!
+  region: String
   city: String!
-  zip: String!
+  zip: String
 }
 
 input LocationCreateManyInput {
@@ -3338,6 +3465,10 @@ type LocationEdge {
 enum LocationOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   country_ASC
   country_DESC
   region_ASC
@@ -3346,18 +3477,16 @@ enum LocationOrderByInput {
   city_DESC
   zip_ASC
   zip_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type LocationPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   country: String!
-  region: String!
+  region: String
   city: String!
-  zip: String!
+  zip: String
 }
 
 input LocationScalarWhereInput {
@@ -3375,6 +3504,22 @@ input LocationScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   country: String
   country_not: String
   country_in: [String!]
@@ -3524,6 +3669,22 @@ input LocationWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   country: String
   country_not: String
   country_in: [String!]
@@ -3658,6 +3819,12 @@ type Mutation {
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  createSource(data: SourceCreateInput!): Source!
+  updateSource(data: SourceUpdateInput!, where: SourceWhereUniqueInput!): Source
+  updateManySources(data: SourceUpdateManyMutationInput!, where: SourceWhereInput): BatchPayload!
+  upsertSource(where: SourceWhereUniqueInput!, create: SourceCreateInput!, update: SourceUpdateInput!): Source!
+  deleteSource(where: SourceWhereUniqueInput!): Source
+  deleteManySources(where: SourceWhereInput): BatchPayload!
   createStage(data: StageCreateInput!): Stage!
   updateStage(data: StageUpdateInput!, where: StageWhereUniqueInput!): Stage
   updateManyStages(data: StageUpdateManyMutationInput!, where: StageWhereInput): BatchPayload!
@@ -3747,6 +3914,9 @@ type Query {
   location(where: LocationWhereUniqueInput!): Location
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  source(where: SourceWhereUniqueInput!): Source
+  sources(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Source]!
+  sourcesConnection(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SourceConnection!
   stage(where: StageWhereUniqueInput!): Stage
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage]!
   stagesConnection(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StageConnection!
@@ -3766,6 +3936,253 @@ type Query {
   workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
   workspacesConnection(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkspaceConnection!
   node(id: ID!): Node
+}
+
+type Source {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+  description: String
+}
+
+type SourceConnection {
+  pageInfo: PageInfo!
+  edges: [SourceEdge]!
+  aggregate: AggregateSource!
+}
+
+input SourceCreateInput {
+  label: String!
+  description: String
+}
+
+input SourceCreateManyInput {
+  create: [SourceCreateInput!]
+  connect: [SourceWhereUniqueInput!]
+}
+
+type SourceEdge {
+  node: Source!
+  cursor: String!
+}
+
+enum SourceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  label_ASC
+  label_DESC
+  description_ASC
+  description_DESC
+}
+
+type SourcePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+  description: String
+}
+
+input SourceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_lt: String
+  label_lte: String
+  label_gt: String
+  label_gte: String
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [SourceScalarWhereInput!]
+  OR: [SourceScalarWhereInput!]
+  NOT: [SourceScalarWhereInput!]
+}
+
+type SourceSubscriptionPayload {
+  mutation: MutationType!
+  node: Source
+  updatedFields: [String!]
+  previousValues: SourcePreviousValues
+}
+
+input SourceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SourceWhereInput
+  AND: [SourceSubscriptionWhereInput!]
+  OR: [SourceSubscriptionWhereInput!]
+  NOT: [SourceSubscriptionWhereInput!]
+}
+
+input SourceUpdateDataInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateManyDataInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateManyInput {
+  create: [SourceCreateInput!]
+  update: [SourceUpdateWithWhereUniqueNestedInput!]
+  upsert: [SourceUpsertWithWhereUniqueNestedInput!]
+  delete: [SourceWhereUniqueInput!]
+  connect: [SourceWhereUniqueInput!]
+  disconnect: [SourceWhereUniqueInput!]
+  deleteMany: [SourceScalarWhereInput!]
+  updateMany: [SourceUpdateManyWithWhereNestedInput!]
+}
+
+input SourceUpdateManyMutationInput {
+  label: String
+  description: String
+}
+
+input SourceUpdateManyWithWhereNestedInput {
+  where: SourceScalarWhereInput!
+  data: SourceUpdateManyDataInput!
+}
+
+input SourceUpdateWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput!
+  data: SourceUpdateDataInput!
+}
+
+input SourceUpsertWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput!
+  update: SourceUpdateDataInput!
+  create: SourceCreateInput!
+}
+
+input SourceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_lt: String
+  label_lte: String
+  label_gt: String
+  label_gte: String
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [SourceWhereInput!]
+  OR: [SourceWhereInput!]
+  NOT: [SourceWhereInput!]
+}
+
+input SourceWhereUniqueInput {
+  id: ID
 }
 
 type Stage {
@@ -3915,9 +4332,9 @@ input StageSubscriptionWhereInput {
 }
 
 enum StageType {
-  New
-  Pipeline
-  Final
+  NEW
+  PIPELINE
+  FINAL
 }
 
 input StageUpdateDataInput {
@@ -4067,6 +4484,7 @@ type Subscription {
   invite(where: InviteSubscriptionWhereInput): InviteSubscriptionPayload
   job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  source(where: SourceSubscriptionWhereInput): SourceSubscriptionPayload
   stage(where: StageSubscriptionWhereInput): StageSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
@@ -4080,6 +4498,7 @@ type Tag {
   createdAt: DateTime!
   updatedAt: DateTime!
   label: String!
+  description: String
 }
 
 type TagConnection {
@@ -4090,6 +4509,7 @@ type TagConnection {
 
 input TagCreateInput {
   label: String!
+  description: String
 }
 
 input TagCreateManyInput {
@@ -4111,6 +4531,8 @@ enum TagOrderByInput {
   updatedAt_DESC
   label_ASC
   label_DESC
+  description_ASC
+  description_DESC
 }
 
 type TagPreviousValues {
@@ -4118,6 +4540,7 @@ type TagPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   label: String!
+  description: String
 }
 
 input TagScalarWhereInput {
@@ -4165,6 +4588,20 @@ input TagScalarWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [TagScalarWhereInput!]
   OR: [TagScalarWhereInput!]
   NOT: [TagScalarWhereInput!]
@@ -4190,14 +4627,17 @@ input TagSubscriptionWhereInput {
 
 input TagUpdateDataInput {
   label: String
+  description: String
 }
 
 input TagUpdateInput {
   label: String
+  description: String
 }
 
 input TagUpdateManyDataInput {
   label: String
+  description: String
 }
 
 input TagUpdateManyInput {
@@ -4213,6 +4653,7 @@ input TagUpdateManyInput {
 
 input TagUpdateManyMutationInput {
   label: String
+  description: String
 }
 
 input TagUpdateManyWithWhereNestedInput {
@@ -4276,6 +4717,20 @@ input TagWhereInput {
   label_not_starts_with: String
   label_ends_with: String
   label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [TagWhereInput!]
   OR: [TagWhereInput!]
   NOT: [TagWhereInput!]
@@ -4620,6 +5075,7 @@ type User {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  settings: Json
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   firstName: String!
   lastName: String!
@@ -4638,6 +5094,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  settings: Json
   tasks: TaskCreateManyWithoutOwnersInput
   firstName: String!
   lastName: String!
@@ -4665,6 +5122,7 @@ input UserCreateOneInput {
 }
 
 input UserCreateWithoutTasksInput {
+  settings: Json
   firstName: String!
   lastName: String!
   email: String!
@@ -4687,6 +5145,8 @@ enum UserOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  settings_ASC
+  settings_DESC
   firstName_ASC
   firstName_DESC
   lastName_ASC
@@ -4707,6 +5167,7 @@ type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  settings: Json
   firstName: String!
   lastName: String!
   email: String!
@@ -4857,6 +5318,7 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
+  settings: Json
   tasks: TaskUpdateManyWithoutOwnersInput
   firstName: String
   lastName: String
@@ -4869,6 +5331,7 @@ input UserUpdateDataInput {
 }
 
 input UserUpdateInput {
+  settings: Json
   tasks: TaskUpdateManyWithoutOwnersInput
   firstName: String
   lastName: String
@@ -4881,6 +5344,7 @@ input UserUpdateInput {
 }
 
 input UserUpdateManyDataInput {
+  settings: Json
   firstName: String
   lastName: String
   email: String
@@ -4902,6 +5366,7 @@ input UserUpdateManyInput {
 }
 
 input UserUpdateManyMutationInput {
+  settings: Json
   firstName: String
   lastName: String
   email: String
@@ -4935,6 +5400,7 @@ input UserUpdateOneRequiredInput {
 }
 
 input UserUpdateWithoutTasksDataInput {
+  settings: Json
   firstName: String
   lastName: String
   email: String
@@ -5395,9 +5861,9 @@ type Workspace {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
   candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
+  settings: Json
   workflows(where: WorkflowWhereInput, orderBy: WorkflowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workflow!]
   invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   name: String!
 }
 
@@ -5411,9 +5877,9 @@ input WorkspaceCreateInput {
   users: UserCreateManyInput
   jobs: JobCreateManyWithoutWorkspaceInput
   candidates: CandidateCreateManyInput
+  settings: Json
   workflows: WorkflowCreateManyInput
   invites: InviteCreateManyInput
-  tags: TagCreateManyInput
   name: String!
 }
 
@@ -5425,9 +5891,9 @@ input WorkspaceCreateOneWithoutJobsInput {
 input WorkspaceCreateWithoutJobsInput {
   users: UserCreateManyInput
   candidates: CandidateCreateManyInput
+  settings: Json
   workflows: WorkflowCreateManyInput
   invites: InviteCreateManyInput
-  tags: TagCreateManyInput
   name: String!
 }
 
@@ -5443,6 +5909,8 @@ enum WorkspaceOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  settings_ASC
+  settings_DESC
   name_ASC
   name_DESC
 }
@@ -5451,6 +5919,7 @@ type WorkspacePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  settings: Json
   name: String!
 }
 
@@ -5476,13 +5945,14 @@ input WorkspaceUpdateInput {
   users: UserUpdateManyInput
   jobs: JobUpdateManyWithoutWorkspaceInput
   candidates: CandidateUpdateManyInput
+  settings: Json
   workflows: WorkflowUpdateManyInput
   invites: InviteUpdateManyInput
-  tags: TagUpdateManyInput
   name: String
 }
 
 input WorkspaceUpdateManyMutationInput {
+  settings: Json
   name: String
 }
 
@@ -5496,9 +5966,9 @@ input WorkspaceUpdateOneRequiredWithoutJobsInput {
 input WorkspaceUpdateWithoutJobsDataInput {
   users: UserUpdateManyInput
   candidates: CandidateUpdateManyInput
+  settings: Json
   workflows: WorkflowUpdateManyInput
   invites: InviteUpdateManyInput
-  tags: TagUpdateManyInput
   name: String
 }
 
@@ -5553,9 +6023,6 @@ input WorkspaceWhereInput {
   invites_every: InviteWhereInput
   invites_some: InviteWhereInput
   invites_none: InviteWhereInput
-  tags_every: TagWhereInput
-  tags_some: TagWhereInput
-  tags_none: TagWhereInput
   name: String
   name_not: String
   name_in: [String!]
@@ -5595,8 +6062,8 @@ export type ApplicationOrderByInput =   'createdAt_ASC' |
   'type_ASC' |
   'type_DESC'
 
-export type ApplicationType =   'Qualified' |
-  'Disqualified'
+export type ApplicationType =   'QUALIFIED' |
+  'DISQUALIFIED'
 
 export type CandidateOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -5608,12 +6075,12 @@ export type CandidateOrderByInput =   'id_ASC' |
   'firstName_DESC' |
   'lastName_ASC' |
   'lastName_DESC' |
-  'metaCompany_ASC' |
-  'metaCompany_DESC' |
-  'metaHeadline_ASC' |
-  'metaHeadline_DESC' |
-  'metaPosition_ASC' |
-  'metaPosition_DESC'
+  'company_ASC' |
+  'company_DESC' |
+  'headline_ASC' |
+  'headline_DESC' |
+  'position_ASC' |
+  'position_DESC'
 
 export type CommentOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -5662,15 +6129,16 @@ export type FieldOrderByInput =   'id_ASC' |
   'type_ASC' |
   'type_DESC' |
   'label_ASC' |
-  'label_DESC'
+  'label_DESC' |
+  'description_ASC' |
+  'description_DESC'
 
-export type FieldType =   'Int' |
-  'Float' |
-  'String' |
-  'Text' |
-  'Paragraph' |
-  'Boolean' |
-  'DateTime'
+export type FieldType =   'INT' |
+  'FLOAT' |
+  'TEXT' |
+  'PARAGRAPH' |
+  'BOOLEAN' |
+  'DATETIME'
 
 export type FileOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -5710,17 +6178,25 @@ export type JobOrderByInput =   'id_ASC' |
   'department_DESC' |
   'name_ASC' |
   'name_DESC' |
+  'excerpt_ASC' |
+  'excerpt_DESC' |
+  'companyDescription_ASC' |
+  'companyDescription_DESC' |
   'description_ASC' |
   'description_DESC' |
   'requirements_ASC' |
   'requirements_DESC'
 
-export type JobType =   'Draft' |
-  'Published' |
-  'Archived'
+export type JobType =   'DRAFT' |
+  'PUBLISHED' |
+  'ARCHIVED'
 
 export type LocationOrderByInput =   'id_ASC' |
   'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
   'country_ASC' |
   'country_DESC' |
   'region_ASC' |
@@ -5728,15 +6204,22 @@ export type LocationOrderByInput =   'id_ASC' |
   'city_ASC' |
   'city_DESC' |
   'zip_ASC' |
-  'zip_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC'
+  'zip_DESC'
 
 export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
+
+export type SourceOrderByInput =   'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'label_ASC' |
+  'label_DESC' |
+  'description_ASC' |
+  'description_DESC'
 
 export type StageOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -5751,9 +6234,9 @@ export type StageOrderByInput =   'id_ASC' |
   'type_ASC' |
   'type_DESC'
 
-export type StageType =   'New' |
-  'Pipeline' |
-  'Final'
+export type StageType =   'NEW' |
+  'PIPELINE' |
+  'FINAL'
 
 export type TagOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -5762,7 +6245,9 @@ export type TagOrderByInput =   'id_ASC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'label_ASC' |
-  'label_DESC'
+  'label_DESC' |
+  'description_ASC' |
+  'description_DESC'
 
 export type TaskOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -5783,6 +6268,8 @@ export type UserOrderByInput =   'id_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
+  'settings_ASC' |
+  'settings_DESC' |
   'firstName_ASC' |
   'firstName_DESC' |
   'lastName_ASC' |
@@ -5815,6 +6302,8 @@ export type WorkspaceOrderByInput =   'id_ASC' |
   'createdAt_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
+  'settings_ASC' |
+  'settings_DESC' |
   'name_ASC' |
   'name_DESC'
 
@@ -6043,15 +6532,15 @@ export interface CandidateCreateInput {
   phones?: CandidateCreatephonesInput | null
   links?: CandidateCreatelinksInput | null
   avatar?: FileCreateOneInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateCreateresumesStringInput | null
   resumesFile?: FileCreateManyInput | null
   coverLettersString?: CandidateCreatecoverLettersStringInput | null
   coverLettersFile?: FileCreateManyInput | null
   tags?: TagCreateManyInput | null
-  source?: CandidateCreatesourceInput | null
+  sources?: SourceCreateManyInput | null
   fields?: FieldInstanceCreateManyInput | null
   tasks?: TaskCreateManyWithoutCandidateInput | null
   applications?: ApplicationCreateManyWithoutCandidateInput | null
@@ -6085,10 +6574,6 @@ export interface CandidateCreateresumesStringInput {
   set?: String[] | String | null
 }
 
-export interface CandidateCreatesourceInput {
-  set?: String[] | String | null
-}
-
 export interface CandidateCreateWithoutApplicationsInput {
   firstName: String
   lastName: String
@@ -6096,15 +6581,15 @@ export interface CandidateCreateWithoutApplicationsInput {
   phones?: CandidateCreatephonesInput | null
   links?: CandidateCreatelinksInput | null
   avatar?: FileCreateOneInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateCreateresumesStringInput | null
   resumesFile?: FileCreateManyInput | null
   coverLettersString?: CandidateCreatecoverLettersStringInput | null
   coverLettersFile?: FileCreateManyInput | null
   tags?: TagCreateManyInput | null
-  source?: CandidateCreatesourceInput | null
+  sources?: SourceCreateManyInput | null
   fields?: FieldInstanceCreateManyInput | null
   tasks?: TaskCreateManyWithoutCandidateInput | null
   comments?: CommentCreateManyInput | null
@@ -6117,15 +6602,15 @@ export interface CandidateCreateWithoutTasksInput {
   phones?: CandidateCreatephonesInput | null
   links?: CandidateCreatelinksInput | null
   avatar?: FileCreateOneInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateCreateresumesStringInput | null
   resumesFile?: FileCreateManyInput | null
   coverLettersString?: CandidateCreatecoverLettersStringInput | null
   coverLettersFile?: FileCreateManyInput | null
   tags?: TagCreateManyInput | null
-  source?: CandidateCreatesourceInput | null
+  sources?: SourceCreateManyInput | null
   fields?: FieldInstanceCreateManyInput | null
   applications?: ApplicationCreateManyWithoutCandidateInput | null
   comments?: CommentCreateManyInput | null
@@ -6190,48 +6675,48 @@ export interface CandidateScalarWhereInput {
   lastName_not_starts_with?: String | null
   lastName_ends_with?: String | null
   lastName_not_ends_with?: String | null
-  metaCompany?: String | null
-  metaCompany_not?: String | null
-  metaCompany_in?: String[] | String | null
-  metaCompany_not_in?: String[] | String | null
-  metaCompany_lt?: String | null
-  metaCompany_lte?: String | null
-  metaCompany_gt?: String | null
-  metaCompany_gte?: String | null
-  metaCompany_contains?: String | null
-  metaCompany_not_contains?: String | null
-  metaCompany_starts_with?: String | null
-  metaCompany_not_starts_with?: String | null
-  metaCompany_ends_with?: String | null
-  metaCompany_not_ends_with?: String | null
-  metaHeadline?: String | null
-  metaHeadline_not?: String | null
-  metaHeadline_in?: String[] | String | null
-  metaHeadline_not_in?: String[] | String | null
-  metaHeadline_lt?: String | null
-  metaHeadline_lte?: String | null
-  metaHeadline_gt?: String | null
-  metaHeadline_gte?: String | null
-  metaHeadline_contains?: String | null
-  metaHeadline_not_contains?: String | null
-  metaHeadline_starts_with?: String | null
-  metaHeadline_not_starts_with?: String | null
-  metaHeadline_ends_with?: String | null
-  metaHeadline_not_ends_with?: String | null
-  metaPosition?: String | null
-  metaPosition_not?: String | null
-  metaPosition_in?: String[] | String | null
-  metaPosition_not_in?: String[] | String | null
-  metaPosition_lt?: String | null
-  metaPosition_lte?: String | null
-  metaPosition_gt?: String | null
-  metaPosition_gte?: String | null
-  metaPosition_contains?: String | null
-  metaPosition_not_contains?: String | null
-  metaPosition_starts_with?: String | null
-  metaPosition_not_starts_with?: String | null
-  metaPosition_ends_with?: String | null
-  metaPosition_not_ends_with?: String | null
+  company?: String | null
+  company_not?: String | null
+  company_in?: String[] | String | null
+  company_not_in?: String[] | String | null
+  company_lt?: String | null
+  company_lte?: String | null
+  company_gt?: String | null
+  company_gte?: String | null
+  company_contains?: String | null
+  company_not_contains?: String | null
+  company_starts_with?: String | null
+  company_not_starts_with?: String | null
+  company_ends_with?: String | null
+  company_not_ends_with?: String | null
+  headline?: String | null
+  headline_not?: String | null
+  headline_in?: String[] | String | null
+  headline_not_in?: String[] | String | null
+  headline_lt?: String | null
+  headline_lte?: String | null
+  headline_gt?: String | null
+  headline_gte?: String | null
+  headline_contains?: String | null
+  headline_not_contains?: String | null
+  headline_starts_with?: String | null
+  headline_not_starts_with?: String | null
+  headline_ends_with?: String | null
+  headline_not_ends_with?: String | null
+  position?: String | null
+  position_not?: String | null
+  position_in?: String[] | String | null
+  position_not_in?: String[] | String | null
+  position_lt?: String | null
+  position_lte?: String | null
+  position_gt?: String | null
+  position_gte?: String | null
+  position_contains?: String | null
+  position_not_contains?: String | null
+  position_starts_with?: String | null
+  position_not_starts_with?: String | null
+  position_ends_with?: String | null
+  position_not_ends_with?: String | null
   AND?: CandidateScalarWhereInput[] | CandidateScalarWhereInput | null
   OR?: CandidateScalarWhereInput[] | CandidateScalarWhereInput | null
   NOT?: CandidateScalarWhereInput[] | CandidateScalarWhereInput | null
@@ -6259,15 +6744,15 @@ export interface CandidateUpdateDataInput {
   phones?: CandidateUpdatephonesInput | null
   links?: CandidateUpdatelinksInput | null
   avatar?: FileUpdateOneInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateUpdateresumesStringInput | null
   resumesFile?: FileUpdateManyInput | null
   coverLettersString?: CandidateUpdatecoverLettersStringInput | null
   coverLettersFile?: FileUpdateManyInput | null
   tags?: TagUpdateManyInput | null
-  source?: CandidateUpdatesourceInput | null
+  sources?: SourceUpdateManyInput | null
   fields?: FieldInstanceUpdateManyInput | null
   tasks?: TaskUpdateManyWithoutCandidateInput | null
   applications?: ApplicationUpdateManyWithoutCandidateInput | null
@@ -6285,15 +6770,15 @@ export interface CandidateUpdateInput {
   phones?: CandidateUpdatephonesInput | null
   links?: CandidateUpdatelinksInput | null
   avatar?: FileUpdateOneInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateUpdateresumesStringInput | null
   resumesFile?: FileUpdateManyInput | null
   coverLettersString?: CandidateUpdatecoverLettersStringInput | null
   coverLettersFile?: FileUpdateManyInput | null
   tags?: TagUpdateManyInput | null
-  source?: CandidateUpdatesourceInput | null
+  sources?: SourceUpdateManyInput | null
   fields?: FieldInstanceUpdateManyInput | null
   tasks?: TaskUpdateManyWithoutCandidateInput | null
   applications?: ApplicationUpdateManyWithoutCandidateInput | null
@@ -6310,12 +6795,11 @@ export interface CandidateUpdateManyDataInput {
   emails?: CandidateUpdateemailsInput | null
   phones?: CandidateUpdatephonesInput | null
   links?: CandidateUpdatelinksInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateUpdateresumesStringInput | null
   coverLettersString?: CandidateUpdatecoverLettersStringInput | null
-  source?: CandidateUpdatesourceInput | null
 }
 
 export interface CandidateUpdateManyInput {
@@ -6335,12 +6819,11 @@ export interface CandidateUpdateManyMutationInput {
   emails?: CandidateUpdateemailsInput | null
   phones?: CandidateUpdatephonesInput | null
   links?: CandidateUpdatelinksInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateUpdateresumesStringInput | null
   coverLettersString?: CandidateUpdatecoverLettersStringInput | null
-  source?: CandidateUpdatesourceInput | null
 }
 
 export interface CandidateUpdateManyWithWhereNestedInput {
@@ -6372,10 +6855,6 @@ export interface CandidateUpdateresumesStringInput {
   set?: String[] | String | null
 }
 
-export interface CandidateUpdatesourceInput {
-  set?: String[] | String | null
-}
-
 export interface CandidateUpdateWithoutApplicationsDataInput {
   firstName?: String | null
   lastName?: String | null
@@ -6383,15 +6862,15 @@ export interface CandidateUpdateWithoutApplicationsDataInput {
   phones?: CandidateUpdatephonesInput | null
   links?: CandidateUpdatelinksInput | null
   avatar?: FileUpdateOneInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateUpdateresumesStringInput | null
   resumesFile?: FileUpdateManyInput | null
   coverLettersString?: CandidateUpdatecoverLettersStringInput | null
   coverLettersFile?: FileUpdateManyInput | null
   tags?: TagUpdateManyInput | null
-  source?: CandidateUpdatesourceInput | null
+  sources?: SourceUpdateManyInput | null
   fields?: FieldInstanceUpdateManyInput | null
   tasks?: TaskUpdateManyWithoutCandidateInput | null
   comments?: CommentUpdateManyInput | null
@@ -6404,15 +6883,15 @@ export interface CandidateUpdateWithoutTasksDataInput {
   phones?: CandidateUpdatephonesInput | null
   links?: CandidateUpdatelinksInput | null
   avatar?: FileUpdateOneInput | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString?: CandidateUpdateresumesStringInput | null
   resumesFile?: FileUpdateManyInput | null
   coverLettersString?: CandidateUpdatecoverLettersStringInput | null
   coverLettersFile?: FileUpdateManyInput | null
   tags?: TagUpdateManyInput | null
-  source?: CandidateUpdatesourceInput | null
+  sources?: SourceUpdateManyInput | null
   fields?: FieldInstanceUpdateManyInput | null
   applications?: ApplicationUpdateManyWithoutCandidateInput | null
   comments?: CommentUpdateManyInput | null
@@ -6499,48 +6978,48 @@ export interface CandidateWhereInput {
   lastName_ends_with?: String | null
   lastName_not_ends_with?: String | null
   avatar?: FileWhereInput | null
-  metaCompany?: String | null
-  metaCompany_not?: String | null
-  metaCompany_in?: String[] | String | null
-  metaCompany_not_in?: String[] | String | null
-  metaCompany_lt?: String | null
-  metaCompany_lte?: String | null
-  metaCompany_gt?: String | null
-  metaCompany_gte?: String | null
-  metaCompany_contains?: String | null
-  metaCompany_not_contains?: String | null
-  metaCompany_starts_with?: String | null
-  metaCompany_not_starts_with?: String | null
-  metaCompany_ends_with?: String | null
-  metaCompany_not_ends_with?: String | null
-  metaHeadline?: String | null
-  metaHeadline_not?: String | null
-  metaHeadline_in?: String[] | String | null
-  metaHeadline_not_in?: String[] | String | null
-  metaHeadline_lt?: String | null
-  metaHeadline_lte?: String | null
-  metaHeadline_gt?: String | null
-  metaHeadline_gte?: String | null
-  metaHeadline_contains?: String | null
-  metaHeadline_not_contains?: String | null
-  metaHeadline_starts_with?: String | null
-  metaHeadline_not_starts_with?: String | null
-  metaHeadline_ends_with?: String | null
-  metaHeadline_not_ends_with?: String | null
-  metaPosition?: String | null
-  metaPosition_not?: String | null
-  metaPosition_in?: String[] | String | null
-  metaPosition_not_in?: String[] | String | null
-  metaPosition_lt?: String | null
-  metaPosition_lte?: String | null
-  metaPosition_gt?: String | null
-  metaPosition_gte?: String | null
-  metaPosition_contains?: String | null
-  metaPosition_not_contains?: String | null
-  metaPosition_starts_with?: String | null
-  metaPosition_not_starts_with?: String | null
-  metaPosition_ends_with?: String | null
-  metaPosition_not_ends_with?: String | null
+  company?: String | null
+  company_not?: String | null
+  company_in?: String[] | String | null
+  company_not_in?: String[] | String | null
+  company_lt?: String | null
+  company_lte?: String | null
+  company_gt?: String | null
+  company_gte?: String | null
+  company_contains?: String | null
+  company_not_contains?: String | null
+  company_starts_with?: String | null
+  company_not_starts_with?: String | null
+  company_ends_with?: String | null
+  company_not_ends_with?: String | null
+  headline?: String | null
+  headline_not?: String | null
+  headline_in?: String[] | String | null
+  headline_not_in?: String[] | String | null
+  headline_lt?: String | null
+  headline_lte?: String | null
+  headline_gt?: String | null
+  headline_gte?: String | null
+  headline_contains?: String | null
+  headline_not_contains?: String | null
+  headline_starts_with?: String | null
+  headline_not_starts_with?: String | null
+  headline_ends_with?: String | null
+  headline_not_ends_with?: String | null
+  position?: String | null
+  position_not?: String | null
+  position_in?: String[] | String | null
+  position_not_in?: String[] | String | null
+  position_lt?: String | null
+  position_lte?: String | null
+  position_gt?: String | null
+  position_gte?: String | null
+  position_contains?: String | null
+  position_not_contains?: String | null
+  position_starts_with?: String | null
+  position_not_starts_with?: String | null
+  position_ends_with?: String | null
+  position_not_ends_with?: String | null
   resumesFile_every?: FileWhereInput | null
   resumesFile_some?: FileWhereInput | null
   resumesFile_none?: FileWhereInput | null
@@ -6550,6 +7029,9 @@ export interface CandidateWhereInput {
   tags_every?: TagWhereInput | null
   tags_some?: TagWhereInput | null
   tags_none?: TagWhereInput | null
+  sources_every?: SourceWhereInput | null
+  sources_some?: SourceWhereInput | null
+  sources_none?: SourceWhereInput | null
   fields_every?: FieldInstanceWhereInput | null
   fields_some?: FieldInstanceWhereInput | null
   fields_none?: FieldInstanceWhereInput | null
@@ -7093,6 +7575,7 @@ export interface DisqualificationWhereUniqueInput {
 export interface FieldCreateInput {
   type: FieldType
   label: String
+  description?: String | null
 }
 
 export interface FieldCreateManyInput {
@@ -7325,6 +7808,20 @@ export interface FieldScalarWhereInput {
   label_not_starts_with?: String | null
   label_ends_with?: String | null
   label_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
   AND?: FieldScalarWhereInput[] | FieldScalarWhereInput | null
   OR?: FieldScalarWhereInput[] | FieldScalarWhereInput | null
   NOT?: FieldScalarWhereInput[] | FieldScalarWhereInput | null
@@ -7344,16 +7841,19 @@ export interface FieldSubscriptionWhereInput {
 export interface FieldUpdateDataInput {
   type?: FieldType | null
   label?: String | null
+  description?: String | null
 }
 
 export interface FieldUpdateInput {
   type?: FieldType | null
   label?: String | null
+  description?: String | null
 }
 
 export interface FieldUpdateManyDataInput {
   type?: FieldType | null
   label?: String | null
+  description?: String | null
 }
 
 export interface FieldUpdateManyInput {
@@ -7370,6 +7870,7 @@ export interface FieldUpdateManyInput {
 export interface FieldUpdateManyMutationInput {
   type?: FieldType | null
   label?: String | null
+  description?: String | null
 }
 
 export interface FieldUpdateManyWithWhereNestedInput {
@@ -7449,6 +7950,20 @@ export interface FieldWhereInput {
   label_not_starts_with?: String | null
   label_ends_with?: String | null
   label_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
   AND?: FieldWhereInput[] | FieldWhereInput | null
   OR?: FieldWhereInput[] | FieldWhereInput | null
   NOT?: FieldWhereInput[] | FieldWhereInput | null
@@ -7933,6 +8448,8 @@ export interface JobCreateInput {
   department?: String | null
   locations?: LocationCreateManyInput | null
   name: String
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -7955,6 +8472,8 @@ export interface JobCreateWithoutApplicationsInput {
   department?: String | null
   locations?: LocationCreateManyInput | null
   name: String
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -7967,6 +8486,8 @@ export interface JobCreateWithoutWorkspaceInput {
   department?: String | null
   locations?: LocationCreateManyInput | null
   name: String
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -8034,6 +8555,34 @@ export interface JobScalarWhereInput {
   name_not_starts_with?: String | null
   name_ends_with?: String | null
   name_not_ends_with?: String | null
+  excerpt?: String | null
+  excerpt_not?: String | null
+  excerpt_in?: String[] | String | null
+  excerpt_not_in?: String[] | String | null
+  excerpt_lt?: String | null
+  excerpt_lte?: String | null
+  excerpt_gt?: String | null
+  excerpt_gte?: String | null
+  excerpt_contains?: String | null
+  excerpt_not_contains?: String | null
+  excerpt_starts_with?: String | null
+  excerpt_not_starts_with?: String | null
+  excerpt_ends_with?: String | null
+  excerpt_not_ends_with?: String | null
+  companyDescription?: String | null
+  companyDescription_not?: String | null
+  companyDescription_in?: String[] | String | null
+  companyDescription_not_in?: String[] | String | null
+  companyDescription_lt?: String | null
+  companyDescription_lte?: String | null
+  companyDescription_gt?: String | null
+  companyDescription_gte?: String | null
+  companyDescription_contains?: String | null
+  companyDescription_not_contains?: String | null
+  companyDescription_starts_with?: String | null
+  companyDescription_not_starts_with?: String | null
+  companyDescription_ends_with?: String | null
+  companyDescription_not_ends_with?: String | null
   description?: String | null
   description_not?: String | null
   description_in?: String[] | String | null
@@ -8087,6 +8636,8 @@ export interface JobUpdateInput {
   department?: String | null
   locations?: LocationUpdateManyInput | null
   name?: String | null
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -8095,6 +8646,8 @@ export interface JobUpdateManyDataInput {
   type?: JobType | null
   department?: String | null
   name?: String | null
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -8103,6 +8656,8 @@ export interface JobUpdateManyMutationInput {
   type?: JobType | null
   department?: String | null
   name?: String | null
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -8138,6 +8693,8 @@ export interface JobUpdateWithoutApplicationsDataInput {
   department?: String | null
   locations?: LocationUpdateManyInput | null
   name?: String | null
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -8150,6 +8707,8 @@ export interface JobUpdateWithoutWorkspaceDataInput {
   department?: String | null
   locations?: LocationUpdateManyInput | null
   name?: String | null
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -8244,6 +8803,34 @@ export interface JobWhereInput {
   name_not_starts_with?: String | null
   name_ends_with?: String | null
   name_not_ends_with?: String | null
+  excerpt?: String | null
+  excerpt_not?: String | null
+  excerpt_in?: String[] | String | null
+  excerpt_not_in?: String[] | String | null
+  excerpt_lt?: String | null
+  excerpt_lte?: String | null
+  excerpt_gt?: String | null
+  excerpt_gte?: String | null
+  excerpt_contains?: String | null
+  excerpt_not_contains?: String | null
+  excerpt_starts_with?: String | null
+  excerpt_not_starts_with?: String | null
+  excerpt_ends_with?: String | null
+  excerpt_not_ends_with?: String | null
+  companyDescription?: String | null
+  companyDescription_not?: String | null
+  companyDescription_in?: String[] | String | null
+  companyDescription_not_in?: String[] | String | null
+  companyDescription_lt?: String | null
+  companyDescription_lte?: String | null
+  companyDescription_gt?: String | null
+  companyDescription_gte?: String | null
+  companyDescription_contains?: String | null
+  companyDescription_not_contains?: String | null
+  companyDescription_starts_with?: String | null
+  companyDescription_not_starts_with?: String | null
+  companyDescription_ends_with?: String | null
+  companyDescription_not_ends_with?: String | null
   description?: String | null
   description_not?: String | null
   description_in?: String[] | String | null
@@ -8283,9 +8870,9 @@ export interface JobWhereUniqueInput {
 
 export interface LocationCreateInput {
   country: String
-  region: String
+  region?: String | null
   city: String
-  zip: String
+  zip?: String | null
 }
 
 export interface LocationCreateManyInput {
@@ -8308,6 +8895,22 @@ export interface LocationScalarWhereInput {
   id_not_starts_with?: ID_Input | null
   id_ends_with?: ID_Input | null
   id_not_ends_with?: ID_Input | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
   country?: String | null
   country_not?: String | null
   country_in?: String[] | String | null
@@ -8450,6 +9053,22 @@ export interface LocationWhereInput {
   id_not_starts_with?: ID_Input | null
   id_ends_with?: ID_Input | null
   id_not_ends_with?: ID_Input | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
   country?: String | null
   country_not?: String | null
   country_in?: String[] | String | null
@@ -8512,6 +9131,206 @@ export interface LocationWhereInput {
 }
 
 export interface LocationWhereUniqueInput {
+  id?: ID_Input | null
+}
+
+export interface SourceCreateInput {
+  label: String
+  description?: String | null
+}
+
+export interface SourceCreateManyInput {
+  create?: SourceCreateInput[] | SourceCreateInput | null
+  connect?: SourceWhereUniqueInput[] | SourceWhereUniqueInput | null
+}
+
+export interface SourceScalarWhereInput {
+  id?: ID_Input | null
+  id_not?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  id_not_in?: ID_Output[] | ID_Output | null
+  id_lt?: ID_Input | null
+  id_lte?: ID_Input | null
+  id_gt?: ID_Input | null
+  id_gte?: ID_Input | null
+  id_contains?: ID_Input | null
+  id_not_contains?: ID_Input | null
+  id_starts_with?: ID_Input | null
+  id_not_starts_with?: ID_Input | null
+  id_ends_with?: ID_Input | null
+  id_not_ends_with?: ID_Input | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  label?: String | null
+  label_not?: String | null
+  label_in?: String[] | String | null
+  label_not_in?: String[] | String | null
+  label_lt?: String | null
+  label_lte?: String | null
+  label_gt?: String | null
+  label_gte?: String | null
+  label_contains?: String | null
+  label_not_contains?: String | null
+  label_starts_with?: String | null
+  label_not_starts_with?: String | null
+  label_ends_with?: String | null
+  label_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
+  AND?: SourceScalarWhereInput[] | SourceScalarWhereInput | null
+  OR?: SourceScalarWhereInput[] | SourceScalarWhereInput | null
+  NOT?: SourceScalarWhereInput[] | SourceScalarWhereInput | null
+}
+
+export interface SourceSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType | null
+  updatedFields_contains?: String | null
+  updatedFields_contains_every?: String[] | String | null
+  updatedFields_contains_some?: String[] | String | null
+  node?: SourceWhereInput | null
+  AND?: SourceSubscriptionWhereInput[] | SourceSubscriptionWhereInput | null
+  OR?: SourceSubscriptionWhereInput[] | SourceSubscriptionWhereInput | null
+  NOT?: SourceSubscriptionWhereInput[] | SourceSubscriptionWhereInput | null
+}
+
+export interface SourceUpdateDataInput {
+  label?: String | null
+  description?: String | null
+}
+
+export interface SourceUpdateInput {
+  label?: String | null
+  description?: String | null
+}
+
+export interface SourceUpdateManyDataInput {
+  label?: String | null
+  description?: String | null
+}
+
+export interface SourceUpdateManyInput {
+  create?: SourceCreateInput[] | SourceCreateInput | null
+  update?: SourceUpdateWithWhereUniqueNestedInput[] | SourceUpdateWithWhereUniqueNestedInput | null
+  upsert?: SourceUpsertWithWhereUniqueNestedInput[] | SourceUpsertWithWhereUniqueNestedInput | null
+  delete?: SourceWhereUniqueInput[] | SourceWhereUniqueInput | null
+  connect?: SourceWhereUniqueInput[] | SourceWhereUniqueInput | null
+  disconnect?: SourceWhereUniqueInput[] | SourceWhereUniqueInput | null
+  deleteMany?: SourceScalarWhereInput[] | SourceScalarWhereInput | null
+  updateMany?: SourceUpdateManyWithWhereNestedInput[] | SourceUpdateManyWithWhereNestedInput | null
+}
+
+export interface SourceUpdateManyMutationInput {
+  label?: String | null
+  description?: String | null
+}
+
+export interface SourceUpdateManyWithWhereNestedInput {
+  where: SourceScalarWhereInput
+  data: SourceUpdateManyDataInput
+}
+
+export interface SourceUpdateWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput
+  data: SourceUpdateDataInput
+}
+
+export interface SourceUpsertWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput
+  update: SourceUpdateDataInput
+  create: SourceCreateInput
+}
+
+export interface SourceWhereInput {
+  id?: ID_Input | null
+  id_not?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  id_not_in?: ID_Output[] | ID_Output | null
+  id_lt?: ID_Input | null
+  id_lte?: ID_Input | null
+  id_gt?: ID_Input | null
+  id_gte?: ID_Input | null
+  id_contains?: ID_Input | null
+  id_not_contains?: ID_Input | null
+  id_starts_with?: ID_Input | null
+  id_not_starts_with?: ID_Input | null
+  id_ends_with?: ID_Input | null
+  id_not_ends_with?: ID_Input | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  label?: String | null
+  label_not?: String | null
+  label_in?: String[] | String | null
+  label_not_in?: String[] | String | null
+  label_lt?: String | null
+  label_lte?: String | null
+  label_gt?: String | null
+  label_gte?: String | null
+  label_contains?: String | null
+  label_not_contains?: String | null
+  label_starts_with?: String | null
+  label_not_starts_with?: String | null
+  label_ends_with?: String | null
+  label_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
+  AND?: SourceWhereInput[] | SourceWhereInput | null
+  OR?: SourceWhereInput[] | SourceWhereInput | null
+  NOT?: SourceWhereInput[] | SourceWhereInput | null
+}
+
+export interface SourceWhereUniqueInput {
   id?: ID_Input | null
 }
 
@@ -8747,6 +9566,7 @@ export interface StageWhereUniqueInput {
 
 export interface TagCreateInput {
   label: String
+  description?: String | null
 }
 
 export interface TagCreateManyInput {
@@ -8799,6 +9619,20 @@ export interface TagScalarWhereInput {
   label_not_starts_with?: String | null
   label_ends_with?: String | null
   label_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
   AND?: TagScalarWhereInput[] | TagScalarWhereInput | null
   OR?: TagScalarWhereInput[] | TagScalarWhereInput | null
   NOT?: TagScalarWhereInput[] | TagScalarWhereInput | null
@@ -8817,14 +9651,17 @@ export interface TagSubscriptionWhereInput {
 
 export interface TagUpdateDataInput {
   label?: String | null
+  description?: String | null
 }
 
 export interface TagUpdateInput {
   label?: String | null
+  description?: String | null
 }
 
 export interface TagUpdateManyDataInput {
   label?: String | null
+  description?: String | null
 }
 
 export interface TagUpdateManyInput {
@@ -8840,6 +9677,7 @@ export interface TagUpdateManyInput {
 
 export interface TagUpdateManyMutationInput {
   label?: String | null
+  description?: String | null
 }
 
 export interface TagUpdateManyWithWhereNestedInput {
@@ -8903,6 +9741,20 @@ export interface TagWhereInput {
   label_not_starts_with?: String | null
   label_ends_with?: String | null
   label_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
   AND?: TagWhereInput[] | TagWhereInput | null
   OR?: TagWhereInput[] | TagWhereInput | null
   NOT?: TagWhereInput[] | TagWhereInput | null
@@ -9191,6 +10043,7 @@ export interface TaskWhereUniqueInput {
 }
 
 export interface UserCreateInput {
+  settings?: Json | null
   tasks?: TaskCreateManyWithoutOwnersInput | null
   firstName: String
   lastName: String
@@ -9218,6 +10071,7 @@ export interface UserCreateOneInput {
 }
 
 export interface UserCreateWithoutTasksInput {
+  settings?: Json | null
   firstName: String
   lastName: String
   email: String
@@ -9362,6 +10216,7 @@ export interface UserSubscriptionWhereInput {
 }
 
 export interface UserUpdateDataInput {
+  settings?: Json | null
   tasks?: TaskUpdateManyWithoutOwnersInput | null
   firstName?: String | null
   lastName?: String | null
@@ -9374,6 +10229,7 @@ export interface UserUpdateDataInput {
 }
 
 export interface UserUpdateInput {
+  settings?: Json | null
   tasks?: TaskUpdateManyWithoutOwnersInput | null
   firstName?: String | null
   lastName?: String | null
@@ -9386,6 +10242,7 @@ export interface UserUpdateInput {
 }
 
 export interface UserUpdateManyDataInput {
+  settings?: Json | null
   firstName?: String | null
   lastName?: String | null
   email?: String | null
@@ -9407,6 +10264,7 @@ export interface UserUpdateManyInput {
 }
 
 export interface UserUpdateManyMutationInput {
+  settings?: Json | null
   firstName?: String | null
   lastName?: String | null
   email?: String | null
@@ -9440,6 +10298,7 @@ export interface UserUpdateOneRequiredInput {
 }
 
 export interface UserUpdateWithoutTasksDataInput {
+  settings?: Json | null
   firstName?: String | null
   lastName?: String | null
   email?: String | null
@@ -9847,9 +10706,9 @@ export interface WorkspaceCreateInput {
   users?: UserCreateManyInput | null
   jobs?: JobCreateManyWithoutWorkspaceInput | null
   candidates?: CandidateCreateManyInput | null
+  settings?: Json | null
   workflows?: WorkflowCreateManyInput | null
   invites?: InviteCreateManyInput | null
-  tags?: TagCreateManyInput | null
   name: String
 }
 
@@ -9861,9 +10720,9 @@ export interface WorkspaceCreateOneWithoutJobsInput {
 export interface WorkspaceCreateWithoutJobsInput {
   users?: UserCreateManyInput | null
   candidates?: CandidateCreateManyInput | null
+  settings?: Json | null
   workflows?: WorkflowCreateManyInput | null
   invites?: InviteCreateManyInput | null
-  tags?: TagCreateManyInput | null
   name: String
 }
 
@@ -9882,13 +10741,14 @@ export interface WorkspaceUpdateInput {
   users?: UserUpdateManyInput | null
   jobs?: JobUpdateManyWithoutWorkspaceInput | null
   candidates?: CandidateUpdateManyInput | null
+  settings?: Json | null
   workflows?: WorkflowUpdateManyInput | null
   invites?: InviteUpdateManyInput | null
-  tags?: TagUpdateManyInput | null
   name?: String | null
 }
 
 export interface WorkspaceUpdateManyMutationInput {
+  settings?: Json | null
   name?: String | null
 }
 
@@ -9902,9 +10762,9 @@ export interface WorkspaceUpdateOneRequiredWithoutJobsInput {
 export interface WorkspaceUpdateWithoutJobsDataInput {
   users?: UserUpdateManyInput | null
   candidates?: CandidateUpdateManyInput | null
+  settings?: Json | null
   workflows?: WorkflowUpdateManyInput | null
   invites?: InviteUpdateManyInput | null
-  tags?: TagUpdateManyInput | null
   name?: String | null
 }
 
@@ -9959,9 +10819,6 @@ export interface WorkspaceWhereInput {
   invites_every?: InviteWhereInput | null
   invites_some?: InviteWhereInput | null
   invites_none?: InviteWhereInput | null
-  tags_every?: TagWhereInput | null
-  tags_some?: TagWhereInput | null
-  tags_none?: TagWhereInput | null
   name?: String | null
   name_not?: String | null
   name_in?: String[] | String | null
@@ -10030,6 +10887,10 @@ export interface AggregateJob {
 }
 
 export interface AggregateLocation {
+  count: Int
+}
+
+export interface AggregateSource {
   count: Int
 }
 
@@ -10107,15 +10968,15 @@ export interface Candidate {
   phones: Array<String>
   links: Array<String>
   avatar?: File | null
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString: Array<String>
   resumesFile?: Array<File> | null
   coverLettersString: Array<String>
   coverLettersFile?: Array<File> | null
   tags?: Array<Tag> | null
-  source: Array<String>
+  sources?: Array<Source> | null
   fields?: Array<FieldInstance> | null
   tasks?: Array<Task> | null
   applications?: Array<Application> | null
@@ -10142,12 +11003,11 @@ export interface CandidatePreviousValues {
   emails: Array<String>
   phones: Array<String>
   links: Array<String>
-  metaCompany?: String | null
-  metaHeadline?: String | null
-  metaPosition?: String | null
+  company?: String | null
+  headline?: String | null
+  position?: String | null
   resumesString: Array<String>
   coverLettersString: Array<String>
-  source: Array<String>
 }
 
 export interface CandidateSubscriptionPayload {
@@ -10265,6 +11125,7 @@ export interface Field {
   updatedAt: DateTime
   type: FieldType
   label: String
+  description?: String | null
 }
 
 export interface FieldConnection {
@@ -10317,6 +11178,7 @@ export interface FieldPreviousValues {
   updatedAt: DateTime
   type: FieldType
   label: String
+  description?: String | null
 }
 
 export interface FieldSubscriptionPayload {
@@ -10411,6 +11273,8 @@ export interface Job {
   department?: String | null
   locations?: Array<Location> | null
   name: String
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -10433,6 +11297,8 @@ export interface JobPreviousValues {
   type: JobType
   department?: String | null
   name: String
+  excerpt?: String | null
+  companyDescription?: String | null
   description?: String | null
   requirements?: String | null
 }
@@ -10446,10 +11312,12 @@ export interface JobSubscriptionPayload {
 
 export interface Location {
   id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
   country: String
-  region: String
+  region?: String | null
   city: String
-  zip: String
+  zip?: String | null
 }
 
 export interface LocationConnection {
@@ -10465,10 +11333,12 @@ export interface LocationEdge {
 
 export interface LocationPreviousValues {
   id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
   country: String
-  region: String
+  region?: String | null
   city: String
-  zip: String
+  zip?: String | null
 }
 
 export interface LocationSubscriptionPayload {
@@ -10483,6 +11353,40 @@ export interface PageInfo {
   hasPreviousPage: Boolean
   startCursor?: String | null
   endCursor?: String | null
+}
+
+export interface Source {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  label: String
+  description?: String | null
+}
+
+export interface SourceConnection {
+  pageInfo: PageInfo
+  edges: Array<SourceEdge | null>
+  aggregate: AggregateSource
+}
+
+export interface SourceEdge {
+  node: Source
+  cursor: String
+}
+
+export interface SourcePreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  label: String
+  description?: String | null
+}
+
+export interface SourceSubscriptionPayload {
+  mutation: MutationType
+  node?: Source | null
+  updatedFields?: Array<String> | null
+  previousValues?: SourcePreviousValues | null
 }
 
 export interface Stage {
@@ -10526,6 +11430,7 @@ export interface Tag {
   createdAt: DateTime
   updatedAt: DateTime
   label: String
+  description?: String | null
 }
 
 export interface TagConnection {
@@ -10544,6 +11449,7 @@ export interface TagPreviousValues {
   createdAt: DateTime
   updatedAt: DateTime
   label: String
+  description?: String | null
 }
 
 export interface TagSubscriptionPayload {
@@ -10595,6 +11501,7 @@ export interface User {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
+  settings?: Json | null
   tasks?: Array<Task> | null
   firstName: String
   lastName: String
@@ -10621,6 +11528,7 @@ export interface UserPreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
+  settings?: Json | null
   firstName: String
   lastName: String
   email: String
@@ -10681,9 +11589,9 @@ export interface Workspace {
   users?: Array<User> | null
   jobs?: Array<Job> | null
   candidates?: Array<Candidate> | null
+  settings?: Json | null
   workflows?: Array<Workflow> | null
   invites?: Array<Invite> | null
-  tags?: Array<Tag> | null
   name: String
 }
 
@@ -10702,6 +11610,7 @@ export interface WorkspacePreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
+  settings?: Json | null
   name: String
 }
 
@@ -10729,6 +11638,8 @@ export type ID_Output = string
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number
+
+export type Json = any
 
 export type Long = string
 
