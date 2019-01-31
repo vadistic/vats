@@ -195,6 +195,22 @@ export const AuthPayloadNoNestingFragment = gql`
   }
 `
 
+export const LocalTypeNoNestingFragment = gql`
+  fragment LocalTypeNoNesting on LocalType {
+    id
+    name
+  }
+`
+
+export const ToastNoNestingFragment = gql`
+  fragment ToastNoNesting on Toast {
+    id
+    createdAt
+    message
+    type
+  }
+`
+
 export const ApplicationFragment = gql`
   fragment Application on Application {
     createdAt
@@ -539,5 +555,21 @@ export const AuthPayloadFragment = gql`
   fragment AuthPayload on AuthPayload {
     token
     refresh
+  }
+`
+
+export const LocalTypeFragment = gql`
+  fragment LocalType on LocalType {
+    id
+    name
+  }
+`
+
+export const ToastFragment = gql`
+  fragment Toast on Toast {
+    id
+    createdAt
+    message
+    type
   }
 `

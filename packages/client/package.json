@@ -11,12 +11,11 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "yarn typecheck && yarn lint && yarn format",
     "env": "env-cmd .env",
-    "gen:server:sdl": "yarn env graphql get-schema",
-    "gen:server:frag": "yarn env graphql generate-fragments",
-    "gen:server": "yarn gen:server:sdl && yarn gen:server:frag",
+    "gen:server": "yarn env graphql get-schema",
     "gen:client:sdl": "yarn ts-node --project './scripts/tsconfig.json' scripts/client-sdl",
     "gen:client:resolvers": "gql-gen --config codegen.yml",
-    "gen:client": "yarn gen:client:sdl && yarn gen:client:resolvers",
+    "gen:client:frag": "yarn env graphql generate-fragments",
+    "gen:client": "yarn gen:client:sdl && yarn gen:client:resolvers && yarn gen:client:frag",
     "gen:queries": "yarn env yarn apollo client:codegen src/generated/queries.ts --outputFlat --target typescript",
     "gen": "yarn gen:server && yarn gen:client && yarn gen:queries",
     "serve": "serve build -s",
@@ -64,7 +63,8 @@
     "react-apollo-hooks": "^0.3.1",
     "react-dom": "^16.8.0-alpha.1",
     "react-scripts": "2.1.3",
-    "react-transition-group": "^2.5.3"
+    "react-transition-group": "^2.5.3",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@emotion/babel-preset-css-prop": "^10.0.6",
@@ -74,6 +74,7 @@
     "@types/react": "^16.7.22",
     "@types/react-dom": "^16.0.11",
     "@types/react-transition-group": "^2.0.15",
+    "@types/uuid": "^3.4.4",
     "@types/webpack-env": "^1.13.6",
     "apollo": "^2.3.1",
     "dotenv": "^6.2.0",

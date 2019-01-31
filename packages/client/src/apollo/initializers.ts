@@ -14,4 +14,5 @@ export const initializers: IStoreInitializers<IQueryShape> = {
     id: `1`,
     name: 'MyLocalType',
   }),
+  toasts: () => [],
 }

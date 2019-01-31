@@ -2,6 +2,25 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: ToastsQuery
+// ====================================================
+
+export interface ToastsQuery_toasts {
+  __typename: 'Toast'
+  id: string
+  createdAt: any
+  message: string
+  type: ToastType
+}
+
+export interface ToastsQuery {
+  toasts: ToastsQuery_toasts[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CandidateProfileFixtureQuery
 // ====================================================
 
@@ -424,6 +443,48 @@ export interface TableFixtureQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ToastHostFixtureMutation
+// ====================================================
+
+export interface ToastHostFixtureMutation_createToast {
+  __typename: 'Toast'
+  id: string
+  createdAt: any
+  message: string
+  type: ToastType
+}
+
+export interface ToastHostFixtureMutation {
+  createToast: ToastHostFixtureMutation_createToast
+}
+
+export interface ToastHostFixtureMutationVariables {
+  data: ToastInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: ToastHostQuery
+// ====================================================
+
+export interface ToastHostQuery_toasts {
+  __typename: 'Toast'
+  id: string
+  createdAt: any
+  message: string
+  type: ToastType
+}
+
+export interface ToastHostQuery {
+  toasts: ToastHostQuery_toasts[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: ApplicationNoNesting
 // ====================================================
 
@@ -724,6 +785,34 @@ export interface AuthPayloadNoNesting {
   __typename: 'AuthPayload'
   token: string
   refresh: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: LocalTypeNoNesting
+// ====================================================
+
+export interface LocalTypeNoNesting {
+  __typename: 'LocalType'
+  id: string
+  name: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ToastNoNesting
+// ====================================================
+
+export interface ToastNoNesting {
+  __typename: 'Toast'
+  id: string
+  createdAt: any
+  message: string
+  type: ToastType
 }
 
 /* tslint:disable */
@@ -1437,6 +1526,34 @@ export interface AuthPayload {
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL fragment: LocalType
+// ====================================================
+
+export interface LocalType {
+  __typename: 'LocalType'
+  id: string
+  name: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Toast
+// ====================================================
+
+export interface Toast {
+  __typename: 'Toast'
+  id: string
+  createdAt: any
+  message: string
+  type: ToastType
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
@@ -1468,8 +1585,22 @@ export enum StageType {
   Pipeline = 'Pipeline',
 }
 
+export enum ToastType {
+  BLOCKED = 'BLOCKED',
+  ERROR = 'ERROR',
+  INFO = 'INFO',
+  SEVERE_WARNING = 'SEVERE_WARNING',
+  SUCCESS = 'SUCCESS',
+  WARNING = 'WARNING',
+}
+
 export interface CandidateWhereUniqueInput {
   id?: string | null
+}
+
+export interface ToastInput {
+  message: string
+  type: ToastType
 }
 
 export interface UserWhereUniqueInput {

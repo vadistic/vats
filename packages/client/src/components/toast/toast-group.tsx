@@ -3,10 +3,10 @@ import { ActionButton } from 'office-ui-fabric-react'
 import React, { useEffect, useState } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { ITheme } from '../../styles'
-import { IToastProps, Toast } from './toast'
+import { Toast, ToastItem } from './toast'
 
 export interface IToastGroupProps {
-  items: IToastProps[]
+  items: ToastItem[]
   timeout?: number
   max?: number
 }
@@ -69,31 +69,23 @@ const toastGroupStyles = (theme: ITheme) => css`
 
   ${toastAnimationStyles}
 `
-
-export const ToastGroup: React.FC<IToastGroupProps> = ({
-  items: nextItems,
-  timeout = 5000,
-  max = 8,
-}) => {
-  const [items, setItems] = useState(nextItems)
-  // state with last props (without removed elements)
-  const [prevItems, setPrevItems] = useState(nextItems)
+export const ToastGroup: React.FC<IToastGroupProps> = ({ items, timeout = 5000, max = 8 }) => {
+  const [displayItems, setDisplayItems] = useState([] as ToastItem[])
+  const [prevItems, setPrevItems] = useState([] as ToastItem[])
 
   // not in state to prevent rerender
   let timer: number | undefined
   let holdTimer: number | undefined
 
-  // over previtems (prevProps) -to avoid loop on item autoRemoval
-  // and items - to handle case where even older toast are still visible (or some race condition)
-  const itemsDiff = nextItems.filter(
-    nextItem => ![...prevItems, ...items].map(prevItem => prevItem.id).includes(nextItem.id),
-  )
+  const idBlacklist = [...displayItems, ...prevItems].map(item => item.id)
+  const itemsDiff = items.filter(item => !idBlacklist.includes(item.id))
 
-  // received new, unique toasts
+  // received some unique toasts
   if (itemsDiff.length > 0) {
-    setPrevItems(nextItems)
     // slice to max and prevent toasts to heaven
-    setItems([...items, ...itemsDiff].slice(-max))
+    setDisplayItems(prev => [...prev, ...itemsDiff].slice(-max))
+    // remember last props
+    setPrevItems(items)
   }
 
   useEffect(() => {
@@ -120,23 +112,23 @@ export const ToastGroup: React.FC<IToastGroupProps> = ({
   const setDismissTimeout = () => {
     // remove item after $timeout seconds
     timer = window.setTimeout(() => {
-      const [first, ...rest] = items
+      const [first, ...rest] = displayItems
       if (first) {
-        setItems(rest)
+        setDisplayItems(rest)
       }
     }, timeout)
   }
 
-  const dismissItems = () => setItems([])
+  const dismissItems = () => setDisplayItems([])
 
-  const dismissItem = (dismissedItem: IToastProps) => () => {
-    setItems(items.filter(item => item.id !== dismissedItem.id))
+  const dismissItem = (dismissedItem: ToastItem) => () => {
+    setDisplayItems(displayItems.filter(item => item.id !== dismissedItem.id))
   }
 
   return (
     <div css={toastGroupStyles} onMouseOver={holdDismissTimeout}>
       <TransitionGroup component={null}>
-        {items.map(item => (
+        {displayItems.map(item => (
           <CSSTransition
             timeout={toastAnimationDuration}
             in={true}
@@ -145,7 +137,7 @@ export const ToastGroup: React.FC<IToastGroupProps> = ({
             key={item.id}
           >
             <div className={toastClassName}>
-              <Toast {...item} key={item.id} onDismiss={dismissItem(item)} />
+              <Toast item={item} key={item.id} onDismiss={dismissItem(item)} />
             </div>
           </CSSTransition>
         ))}

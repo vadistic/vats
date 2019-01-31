@@ -6270,6 +6270,12 @@ export interface TaskUpdateInput {
   dueAt?: Maybe<DateTime>
 }
 
+export interface ToastInput {
+  message: string
+
+  type: ToastType
+}
+
 export interface Connect {
   connect?: Maybe<WhereUniqueInput>
 }
@@ -6574,6 +6580,15 @@ export enum LocationOrderByInput {
   UpdatedAtDesc = 'updatedAt_DESC',
 }
 
+export enum ToastType {
+  Info = 'INFO',
+  Success = 'SUCCESS',
+  Blocked = 'BLOCKED',
+  Warning = 'WARNING',
+  SevereWarning = 'SEVERE_WARNING',
+  Error = 'ERROR',
+}
+
 export type DateTime = any
 
 // ====================================================
@@ -6612,6 +6627,8 @@ export interface Query {
   localField: string
 
   localType: LocalType
+
+  toasts: Toast[]
 }
 
 export interface Application {
@@ -6926,6 +6943,16 @@ export interface LocalType {
   name: string
 }
 
+export interface Toast {
+  id: string
+
+  createdAt: DateTime
+
+  message: string
+
+  type: ToastType
+}
+
 export interface Mutation {
   createApplication: Application
 
@@ -6966,6 +6993,8 @@ export interface Mutation {
   upsertTask: Task
 
   deleteTask?: Maybe<Task>
+
+  createToast: Toast
 }
 
 export interface AccessPayload {
@@ -7495,6 +7524,9 @@ export interface UpsertTaskMutationArgs {
 export interface DeleteTaskMutationArgs {
   where: TaskWhereUniqueInput
 }
+export interface CreateToastMutationArgs {
+  data: ToastInput
+}
 
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql'
 
@@ -7568,6 +7600,8 @@ export interface QueryResolvers<Context = {}, TypeParent = {}> {
   localField?: QueryLocalFieldResolver<string, TypeParent, Context>
 
   localType?: QueryLocalTypeResolver<LocalType, TypeParent, Context>
+
+  toasts?: QueryToastsResolver<Toast[], TypeParent, Context>
 }
 
 export type QueryApplicationResolver<R = Maybe<Application>, Parent = {}, Context = {}> = Resolver<
@@ -7768,6 +7802,11 @@ export type QueryLocalFieldResolver<R = string, Parent = {}, Context = {}> = Res
   Context
 >
 export type QueryLocalTypeResolver<R = LocalType, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type QueryToastsResolver<R = Toast[], Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
   Context
@@ -9097,6 +9136,33 @@ export type LocalTypeNameResolver<R = string, Parent = LocalType, Context = {}> 
   Context
 >
 
+export interface ToastResolvers<Context = {}, TypeParent = Toast> {
+  id?: ToastIdResolver<string, TypeParent, Context>
+
+  createdAt?: ToastCreatedAtResolver<DateTime, TypeParent, Context>
+
+  message?: ToastMessageResolver<string, TypeParent, Context>
+
+  type?: ToastTypeResolver<ToastType, TypeParent, Context>
+}
+
+export type ToastIdResolver<R = string, Parent = Toast, Context = {}> = Resolver<R, Parent, Context>
+export type ToastCreatedAtResolver<R = DateTime, Parent = Toast, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type ToastMessageResolver<R = string, Parent = Toast, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type ToastTypeResolver<R = ToastType, Parent = Toast, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
 export interface MutationResolvers<Context = {}, TypeParent = {}> {
   createApplication?: MutationCreateApplicationResolver<Application, TypeParent, Context>
 
@@ -9137,6 +9203,8 @@ export interface MutationResolvers<Context = {}, TypeParent = {}> {
   upsertTask?: MutationUpsertTaskResolver<Task, TypeParent, Context>
 
   deleteTask?: MutationDeleteTaskResolver<Maybe<Task>, TypeParent, Context>
+
+  createToast?: MutationCreateToastResolver<Toast, TypeParent, Context>
 }
 
 export type MutationCreateApplicationResolver<
@@ -9363,6 +9431,16 @@ export interface MutationDeleteTaskArgs {
   where: TaskWhereUniqueInput
 }
 
+export type MutationCreateToastResolver<R = Toast, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationCreateToastArgs
+>
+export interface MutationCreateToastArgs {
+  data: ToastInput
+}
+
 export interface AccessPayloadResolvers<Context = {}, TypeParent = AccessPayload> {
   token?: AccessPayloadTokenResolver<string, TypeParent, Context>
 }
@@ -9439,6 +9517,7 @@ export interface IResolvers<Context = {}> {
   Invite?: InviteResolvers<Context>
   Location?: LocationResolvers<Context>
   LocalType?: LocalTypeResolvers<Context>
+  Toast?: ToastResolvers<Context>
   Mutation?: MutationResolvers<Context>
   AccessPayload?: AccessPayloadResolvers<Context>
   AuthPayload?: AuthPayloadResolvers<Context>

@@ -1,9 +1,9 @@
 projects:
-  client:
+  server:
     schemaPath: src/generated/server.graphql
+  client:
+    schemaPath: src/generated/merged.graphql
     extensions:
-      endpoints:
-        default: ${env:ENDPOINT}
       generate-fragments:
         output: src/generated/fragments.ts
         generator: js

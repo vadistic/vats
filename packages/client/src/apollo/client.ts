@@ -44,6 +44,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 export const apolloClientOptions: ApolloClientOptions<NormalizedCacheObject> = {
   connectToDevTools: true,
   link: ApolloLink.from([errorLink, httpLink]),
+
   typeDefs,
   // quite typesafe assertions - only adding index signatures
   initializers: initializers as StrictlyIndexed<typeof initializers>,

@@ -29,10 +29,11 @@ export type StrictlyIndexed<T> = T & IStrictIndexSignature
 export type Indexed<T> = T & IStringIndexSignature
 
 /*
- * Conditional types
+ * Conditional & mapped types
  */
 export type NonUndefined<T> = T extends undefined ? never : T
 
+export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
 /*
  * Filter interfaces by condition
  */
