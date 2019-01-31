@@ -1,15 +1,14 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server'
+import fs from 'fs'
 import { IncomingMessage } from 'http'
-import * as path from 'path'
+import path from 'path'
 import { Prisma as PrismaBinding } from 'prisma-binding'
 
 import { Prisma as PrismaClient } from './generated/prisma-client'
-
 import { resolvers } from './resolvers'
-import { typeDefs } from './schema'
 import { decodeToken, IAccessTokenPayload } from './utils'
 
-export const prismaBinding = new PrismaBinding({
+const prismaBinding = new PrismaBinding({
   typeDefs: path.resolve(__dirname, './generated/prisma.graphql'),
   endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
     process.env.PRISMA_STAGE
@@ -64,7 +63,7 @@ const context = ({ req }: IContextProps): IContext => {
 }
 
 const executableSchema = makeExecutableSchema({
-  typeDefs,
+  typeDefs: fs.readFileSync(path.resolve(__dirname, 'generated/server.graphql'), 'utf-8'),
   resolvers,
   // TODO: implement node resolver
   // https://github.com/prisma/prisma/issues/2225
@@ -84,3 +83,5 @@ server.listen({ port }, () =>
   // tslint:disable-next-line:no-console
   console.log(`Server is running on http://localhost:${port}`),
 )
+
+export default server

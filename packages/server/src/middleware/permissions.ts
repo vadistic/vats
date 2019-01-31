@@ -6,10 +6,10 @@ import { IMutation, IQuery } from '../utils'
 
 type RuleMap<T> = { [K in keyof T]: ShieldRule }
 
-const queryPermissions: RuleMap<IQuery> = {
+export const queryPermissions: RuleMap<IQuery> = {
   users: allow,
 }
 
-const mutationPermissions: RuleMap<IMutation> = {}
+export const mutationPermissions: RuleMap<IMutation> = {}
 
 export const permissions = shield({})
