@@ -1,7 +1,7 @@
 import { initializeIcons, loadTheme } from 'office-ui-fabric-react'
 import React from 'react'
 import { theme } from './styles'
-import { AppWrapper } from './utils/wrappers'
+import { AppWrapper } from './utils/fixtures'
 
 const _window = window as any
 
