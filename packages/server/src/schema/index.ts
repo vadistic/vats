@@ -24,6 +24,7 @@ const schemaConfig: SchemaConfig = {
   application: true,
   job: true,
   tag: true,
+  source: true,
   task: true,
 }
 

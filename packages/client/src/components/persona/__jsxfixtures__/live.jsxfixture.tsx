@@ -27,6 +27,8 @@ export const UserPersonaLiveFixture: React.FC = () => {
     return null
   }
 
+  console.log(data)
+
   return <UserPersona user={data.user} />
 }
 

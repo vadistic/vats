@@ -1,5 +1,5 @@
 export * from './router-config'
 export * from './types'
-export * from './wrappers'
+export * from './fixtures'
 export * from './path'
 export * from './guards'

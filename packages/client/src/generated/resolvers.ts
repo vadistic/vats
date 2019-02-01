@@ -687,89 +687,89 @@ export interface CandidateWhereInput {
 
   avatar?: Maybe<FileWhereInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaCompany_not?: Maybe<string>
+  company_not?: Maybe<string>
 
-  metaCompany_in?: Maybe<string[]>
+  company_in?: Maybe<string[]>
 
-  metaCompany_not_in?: Maybe<string[]>
+  company_not_in?: Maybe<string[]>
 
-  metaCompany_lt?: Maybe<string>
+  company_lt?: Maybe<string>
 
-  metaCompany_lte?: Maybe<string>
+  company_lte?: Maybe<string>
 
-  metaCompany_gt?: Maybe<string>
+  company_gt?: Maybe<string>
 
-  metaCompany_gte?: Maybe<string>
+  company_gte?: Maybe<string>
 
-  metaCompany_contains?: Maybe<string>
+  company_contains?: Maybe<string>
 
-  metaCompany_not_contains?: Maybe<string>
+  company_not_contains?: Maybe<string>
 
-  metaCompany_starts_with?: Maybe<string>
+  company_starts_with?: Maybe<string>
 
-  metaCompany_not_starts_with?: Maybe<string>
+  company_not_starts_with?: Maybe<string>
 
-  metaCompany_ends_with?: Maybe<string>
+  company_ends_with?: Maybe<string>
 
-  metaCompany_not_ends_with?: Maybe<string>
+  company_not_ends_with?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaHeadline_not?: Maybe<string>
+  headline_not?: Maybe<string>
 
-  metaHeadline_in?: Maybe<string[]>
+  headline_in?: Maybe<string[]>
 
-  metaHeadline_not_in?: Maybe<string[]>
+  headline_not_in?: Maybe<string[]>
 
-  metaHeadline_lt?: Maybe<string>
+  headline_lt?: Maybe<string>
 
-  metaHeadline_lte?: Maybe<string>
+  headline_lte?: Maybe<string>
 
-  metaHeadline_gt?: Maybe<string>
+  headline_gt?: Maybe<string>
 
-  metaHeadline_gte?: Maybe<string>
+  headline_gte?: Maybe<string>
 
-  metaHeadline_contains?: Maybe<string>
+  headline_contains?: Maybe<string>
 
-  metaHeadline_not_contains?: Maybe<string>
+  headline_not_contains?: Maybe<string>
 
-  metaHeadline_starts_with?: Maybe<string>
+  headline_starts_with?: Maybe<string>
 
-  metaHeadline_not_starts_with?: Maybe<string>
+  headline_not_starts_with?: Maybe<string>
 
-  metaHeadline_ends_with?: Maybe<string>
+  headline_ends_with?: Maybe<string>
 
-  metaHeadline_not_ends_with?: Maybe<string>
+  headline_not_ends_with?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
-  metaPosition_not?: Maybe<string>
+  position_not?: Maybe<string>
 
-  metaPosition_in?: Maybe<string[]>
+  position_in?: Maybe<string[]>
 
-  metaPosition_not_in?: Maybe<string[]>
+  position_not_in?: Maybe<string[]>
 
-  metaPosition_lt?: Maybe<string>
+  position_lt?: Maybe<string>
 
-  metaPosition_lte?: Maybe<string>
+  position_lte?: Maybe<string>
 
-  metaPosition_gt?: Maybe<string>
+  position_gt?: Maybe<string>
 
-  metaPosition_gte?: Maybe<string>
+  position_gte?: Maybe<string>
 
-  metaPosition_contains?: Maybe<string>
+  position_contains?: Maybe<string>
 
-  metaPosition_not_contains?: Maybe<string>
+  position_not_contains?: Maybe<string>
 
-  metaPosition_starts_with?: Maybe<string>
+  position_starts_with?: Maybe<string>
 
-  metaPosition_not_starts_with?: Maybe<string>
+  position_not_starts_with?: Maybe<string>
 
-  metaPosition_ends_with?: Maybe<string>
+  position_ends_with?: Maybe<string>
 
-  metaPosition_not_ends_with?: Maybe<string>
+  position_not_ends_with?: Maybe<string>
 
   resumesFile_every?: Maybe<FileWhereInput>
 
@@ -788,6 +788,12 @@ export interface CandidateWhereInput {
   tags_some?: Maybe<TagWhereInput>
 
   tags_none?: Maybe<TagWhereInput>
+
+  sources_every?: Maybe<SourceWhereInput>
+
+  sources_some?: Maybe<SourceWhereInput>
+
+  sources_none?: Maybe<SourceWhereInput>
 
   fields_every?: Maybe<FieldInstanceWhereInput>
 
@@ -909,11 +915,163 @@ export interface TagWhereInput {
 
   label_not_ends_with?: Maybe<string>
 
+  description?: Maybe<string>
+
+  description_not?: Maybe<string>
+
+  description_in?: Maybe<string[]>
+
+  description_not_in?: Maybe<string[]>
+
+  description_lt?: Maybe<string>
+
+  description_lte?: Maybe<string>
+
+  description_gt?: Maybe<string>
+
+  description_gte?: Maybe<string>
+
+  description_contains?: Maybe<string>
+
+  description_not_contains?: Maybe<string>
+
+  description_starts_with?: Maybe<string>
+
+  description_not_starts_with?: Maybe<string>
+
+  description_ends_with?: Maybe<string>
+
+  description_not_ends_with?: Maybe<string>
+
   AND?: Maybe<TagWhereInput[]>
 
   OR?: Maybe<TagWhereInput[]>
 
   NOT?: Maybe<TagWhereInput[]>
+}
+
+export interface SourceWhereInput {
+  id?: Maybe<string>
+
+  id_not?: Maybe<string>
+
+  id_in?: Maybe<string[]>
+
+  id_not_in?: Maybe<string[]>
+
+  id_lt?: Maybe<string>
+
+  id_lte?: Maybe<string>
+
+  id_gt?: Maybe<string>
+
+  id_gte?: Maybe<string>
+
+  id_contains?: Maybe<string>
+
+  id_not_contains?: Maybe<string>
+
+  id_starts_with?: Maybe<string>
+
+  id_not_starts_with?: Maybe<string>
+
+  id_ends_with?: Maybe<string>
+
+  id_not_ends_with?: Maybe<string>
+
+  createdAt?: Maybe<DateTime>
+
+  createdAt_not?: Maybe<DateTime>
+
+  createdAt_in?: Maybe<DateTime[]>
+
+  createdAt_not_in?: Maybe<DateTime[]>
+
+  createdAt_lt?: Maybe<DateTime>
+
+  createdAt_lte?: Maybe<DateTime>
+
+  createdAt_gt?: Maybe<DateTime>
+
+  createdAt_gte?: Maybe<DateTime>
+
+  updatedAt?: Maybe<DateTime>
+
+  updatedAt_not?: Maybe<DateTime>
+
+  updatedAt_in?: Maybe<DateTime[]>
+
+  updatedAt_not_in?: Maybe<DateTime[]>
+
+  updatedAt_lt?: Maybe<DateTime>
+
+  updatedAt_lte?: Maybe<DateTime>
+
+  updatedAt_gt?: Maybe<DateTime>
+
+  updatedAt_gte?: Maybe<DateTime>
+
+  label?: Maybe<string>
+
+  label_not?: Maybe<string>
+
+  label_in?: Maybe<string[]>
+
+  label_not_in?: Maybe<string[]>
+
+  label_lt?: Maybe<string>
+
+  label_lte?: Maybe<string>
+
+  label_gt?: Maybe<string>
+
+  label_gte?: Maybe<string>
+
+  label_contains?: Maybe<string>
+
+  label_not_contains?: Maybe<string>
+
+  label_starts_with?: Maybe<string>
+
+  label_not_starts_with?: Maybe<string>
+
+  label_ends_with?: Maybe<string>
+
+  label_not_ends_with?: Maybe<string>
+
+  description?: Maybe<string>
+
+  description_not?: Maybe<string>
+
+  description_in?: Maybe<string[]>
+
+  description_not_in?: Maybe<string[]>
+
+  description_lt?: Maybe<string>
+
+  description_lte?: Maybe<string>
+
+  description_gt?: Maybe<string>
+
+  description_gte?: Maybe<string>
+
+  description_contains?: Maybe<string>
+
+  description_not_contains?: Maybe<string>
+
+  description_starts_with?: Maybe<string>
+
+  description_not_starts_with?: Maybe<string>
+
+  description_ends_with?: Maybe<string>
+
+  description_not_ends_with?: Maybe<string>
+
+  AND?: Maybe<SourceWhereInput[]>
+
+  OR?: Maybe<SourceWhereInput[]>
+
+  NOT?: Maybe<SourceWhereInput[]>
 }
 
 export interface FieldInstanceWhereInput {
@@ -1110,6 +1268,34 @@ export interface FieldWhereInput {
   label_ends_with?: Maybe<string>
 
   label_not_ends_with?: Maybe<string>
+
+  description?: Maybe<string>
+
+  description_not?: Maybe<string>
+
+  description_in?: Maybe<string[]>
+
+  description_not_in?: Maybe<string[]>
+
+  description_lt?: Maybe<string>
+
+  description_lte?: Maybe<string>
+
+  description_gt?: Maybe<string>
+
+  description_gte?: Maybe<string>
+
+  description_contains?: Maybe<string>
+
+  description_not_contains?: Maybe<string>
+
+  description_starts_with?: Maybe<string>
+
+  description_not_starts_with?: Maybe<string>
+
+  description_ends_with?: Maybe<string>
+
+  description_not_ends_with?: Maybe<string>
 
   AND?: Maybe<FieldWhereInput[]>
 
@@ -1705,6 +1891,62 @@ export interface JobWhereInput {
 
   name_not_ends_with?: Maybe<string>
 
+  excerpt?: Maybe<string>
+
+  excerpt_not?: Maybe<string>
+
+  excerpt_in?: Maybe<string[]>
+
+  excerpt_not_in?: Maybe<string[]>
+
+  excerpt_lt?: Maybe<string>
+
+  excerpt_lte?: Maybe<string>
+
+  excerpt_gt?: Maybe<string>
+
+  excerpt_gte?: Maybe<string>
+
+  excerpt_contains?: Maybe<string>
+
+  excerpt_not_contains?: Maybe<string>
+
+  excerpt_starts_with?: Maybe<string>
+
+  excerpt_not_starts_with?: Maybe<string>
+
+  excerpt_ends_with?: Maybe<string>
+
+  excerpt_not_ends_with?: Maybe<string>
+
+  companyDescription?: Maybe<string>
+
+  companyDescription_not?: Maybe<string>
+
+  companyDescription_in?: Maybe<string[]>
+
+  companyDescription_not_in?: Maybe<string[]>
+
+  companyDescription_lt?: Maybe<string>
+
+  companyDescription_lte?: Maybe<string>
+
+  companyDescription_gt?: Maybe<string>
+
+  companyDescription_gte?: Maybe<string>
+
+  companyDescription_contains?: Maybe<string>
+
+  companyDescription_not_contains?: Maybe<string>
+
+  companyDescription_starts_with?: Maybe<string>
+
+  companyDescription_not_starts_with?: Maybe<string>
+
+  companyDescription_ends_with?: Maybe<string>
+
+  companyDescription_not_ends_with?: Maybe<string>
+
   description?: Maybe<string>
 
   description_not?: Maybe<string>
@@ -1858,12 +2100,6 @@ export interface WorkspaceWhereInput {
   invites_some?: Maybe<InviteWhereInput>
 
   invites_none?: Maybe<InviteWhereInput>
-
-  tags_every?: Maybe<TagWhereInput>
-
-  tags_some?: Maybe<TagWhereInput>
-
-  tags_none?: Maybe<TagWhereInput>
 
   name?: Maybe<string>
 
@@ -2285,6 +2521,38 @@ export interface LocationWhereInput {
 
   id_not_ends_with?: Maybe<string>
 
+  createdAt?: Maybe<DateTime>
+
+  createdAt_not?: Maybe<DateTime>
+
+  createdAt_in?: Maybe<DateTime[]>
+
+  createdAt_not_in?: Maybe<DateTime[]>
+
+  createdAt_lt?: Maybe<DateTime>
+
+  createdAt_lte?: Maybe<DateTime>
+
+  createdAt_gt?: Maybe<DateTime>
+
+  createdAt_gte?: Maybe<DateTime>
+
+  updatedAt?: Maybe<DateTime>
+
+  updatedAt_not?: Maybe<DateTime>
+
+  updatedAt_in?: Maybe<DateTime[]>
+
+  updatedAt_not_in?: Maybe<DateTime[]>
+
+  updatedAt_lt?: Maybe<DateTime>
+
+  updatedAt_lte?: Maybe<DateTime>
+
+  updatedAt_gt?: Maybe<DateTime>
+
+  updatedAt_gte?: Maybe<DateTime>
+
   country?: Maybe<string>
 
   country_not?: Maybe<string>
@@ -2475,6 +2743,8 @@ export interface UserCreateOneInput {
 }
 
 export interface UserCreateInput {
+  settings?: Maybe<Json>
+
   tasks?: Maybe<TaskCreateManyWithoutOwnersInput>
 
   firstName: string
@@ -2529,11 +2799,11 @@ export interface CandidateCreateWithoutTasksInput {
 
   avatar?: Maybe<FileCreateOneInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateCreateresumesStringInput>
 
@@ -2545,7 +2815,7 @@ export interface CandidateCreateWithoutTasksInput {
 
   tags?: Maybe<TagCreateManyInput>
 
-  source?: Maybe<CandidateCreatesourceInput>
+  sources?: Maybe<SourceCreateManyInput>
 
   fields?: Maybe<FieldInstanceCreateManyInput>
 
@@ -2610,10 +2880,24 @@ export interface TagCreateManyInput {
 
 export interface TagCreateInput {
   label: string
+
+  description?: Maybe<string>
 }
 
-export interface CandidateCreatesourceInput {
-  set?: Maybe<string[]>
+export interface SourceCreateManyInput {
+  create?: Maybe<SourceCreateInput[]>
+
+  connect?: Maybe<SourceWhereUniqueInput[]>
+}
+
+export interface SourceCreateInput {
+  label: string
+
+  description?: Maybe<string>
+}
+
+export interface SourceWhereUniqueInput {
+  id?: Maybe<string>
 }
 
 export interface FieldInstanceCreateManyInput {
@@ -2638,6 +2922,8 @@ export interface FieldCreateInput {
   type: FieldType
 
   label: string
+
+  description?: Maybe<string>
 }
 
 export interface FieldWhereUniqueInput {
@@ -2703,6 +2989,10 @@ export interface JobCreateWithoutApplicationsInput {
 
   name: string
 
+  excerpt?: Maybe<string>
+
+  companyDescription?: Maybe<string>
+
   description?: Maybe<string>
 
   requirements?: Maybe<string>
@@ -2719,11 +3009,11 @@ export interface WorkspaceCreateWithoutJobsInput {
 
   candidates?: Maybe<CandidateCreateManyInput>
 
+  settings?: Maybe<Json>
+
   workflows?: Maybe<WorkflowCreateManyInput>
 
   invites?: Maybe<InviteCreateManyInput>
-
-  tags?: Maybe<TagCreateManyInput>
 
   name: string
 }
@@ -2753,11 +3043,11 @@ export interface CandidateCreateInput {
 
   avatar?: Maybe<FileCreateOneInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateCreateresumesStringInput>
 
@@ -2769,7 +3059,7 @@ export interface CandidateCreateInput {
 
   tags?: Maybe<TagCreateManyInput>
 
-  source?: Maybe<CandidateCreatesourceInput>
+  sources?: Maybe<SourceCreateManyInput>
 
   fields?: Maybe<FieldInstanceCreateManyInput>
 
@@ -2803,6 +3093,8 @@ export interface UserCreateManyWithoutTasksInput {
 }
 
 export interface UserCreateWithoutTasksInput {
+  settings?: Maybe<Json>
+
   firstName: string
 
   lastName: string
@@ -2917,11 +3209,11 @@ export interface LocationCreateManyInput {
 export interface LocationCreateInput {
   country: string
 
-  region: string
+  region?: Maybe<string>
 
   city: string
 
-  zip: string
+  zip?: Maybe<string>
 }
 
 export interface LocationWhereUniqueInput {
@@ -2951,11 +3243,11 @@ export interface CandidateCreateWithoutApplicationsInput {
 
   avatar?: Maybe<FileCreateOneInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateCreateresumesStringInput>
 
@@ -2967,7 +3259,7 @@ export interface CandidateCreateWithoutApplicationsInput {
 
   tags?: Maybe<TagCreateManyInput>
 
-  source?: Maybe<CandidateCreatesourceInput>
+  sources?: Maybe<SourceCreateManyInput>
 
   fields?: Maybe<FieldInstanceCreateManyInput>
 
@@ -3043,6 +3335,8 @@ export interface UserUpdateOneRequiredInput {
 }
 
 export interface UserUpdateDataInput {
+  settings?: Maybe<Json>
+
   tasks?: Maybe<TaskUpdateManyWithoutOwnersInput>
 
   firstName?: Maybe<string>
@@ -3123,11 +3417,11 @@ export interface CandidateUpdateWithoutTasksDataInput {
 
   avatar?: Maybe<FileUpdateOneInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateUpdateresumesStringInput>
 
@@ -3139,7 +3433,7 @@ export interface CandidateUpdateWithoutTasksDataInput {
 
   tags?: Maybe<TagUpdateManyInput>
 
-  source?: Maybe<CandidateUpdatesourceInput>
+  sources?: Maybe<SourceUpdateManyInput>
 
   fields?: Maybe<FieldInstanceUpdateManyInput>
 
@@ -3440,6 +3734,8 @@ export interface TagUpdateWithWhereUniqueNestedInput {
 
 export interface TagUpdateDataInput {
   label?: Maybe<string>
+
+  description?: Maybe<string>
 }
 
 export interface TagUpsertWithWhereUniqueNestedInput {
@@ -3539,6 +3835,34 @@ export interface TagScalarWhereInput {
 
   label_not_ends_with?: Maybe<string>
 
+  description?: Maybe<string>
+
+  description_not?: Maybe<string>
+
+  description_in?: Maybe<string[]>
+
+  description_not_in?: Maybe<string[]>
+
+  description_lt?: Maybe<string>
+
+  description_lte?: Maybe<string>
+
+  description_gt?: Maybe<string>
+
+  description_gte?: Maybe<string>
+
+  description_contains?: Maybe<string>
+
+  description_not_contains?: Maybe<string>
+
+  description_starts_with?: Maybe<string>
+
+  description_not_starts_with?: Maybe<string>
+
+  description_ends_with?: Maybe<string>
+
+  description_not_ends_with?: Maybe<string>
+
   AND?: Maybe<TagScalarWhereInput[]>
 
   OR?: Maybe<TagScalarWhereInput[]>
@@ -3554,10 +3878,182 @@ export interface TagUpdateManyWithWhereNestedInput {
 
 export interface TagUpdateManyDataInput {
   label?: Maybe<string>
+
+  description?: Maybe<string>
 }
 
-export interface CandidateUpdatesourceInput {
-  set?: Maybe<string[]>
+export interface SourceUpdateManyInput {
+  create?: Maybe<SourceCreateInput[]>
+
+  update?: Maybe<SourceUpdateWithWhereUniqueNestedInput[]>
+
+  upsert?: Maybe<SourceUpsertWithWhereUniqueNestedInput[]>
+
+  delete?: Maybe<SourceWhereUniqueInput[]>
+
+  connect?: Maybe<SourceWhereUniqueInput[]>
+
+  disconnect?: Maybe<SourceWhereUniqueInput[]>
+
+  deleteMany?: Maybe<SourceScalarWhereInput[]>
+
+  updateMany?: Maybe<SourceUpdateManyWithWhereNestedInput[]>
+}
+
+export interface SourceUpdateWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput
+
+  data: SourceUpdateDataInput
+}
+
+export interface SourceUpdateDataInput {
+  label?: Maybe<string>
+
+  description?: Maybe<string>
+}
+
+export interface SourceUpsertWithWhereUniqueNestedInput {
+  where: SourceWhereUniqueInput
+
+  update: SourceUpdateDataInput
+
+  create: SourceCreateInput
+}
+
+export interface SourceScalarWhereInput {
+  id?: Maybe<string>
+
+  id_not?: Maybe<string>
+
+  id_in?: Maybe<string[]>
+
+  id_not_in?: Maybe<string[]>
+
+  id_lt?: Maybe<string>
+
+  id_lte?: Maybe<string>
+
+  id_gt?: Maybe<string>
+
+  id_gte?: Maybe<string>
+
+  id_contains?: Maybe<string>
+
+  id_not_contains?: Maybe<string>
+
+  id_starts_with?: Maybe<string>
+
+  id_not_starts_with?: Maybe<string>
+
+  id_ends_with?: Maybe<string>
+
+  id_not_ends_with?: Maybe<string>
+
+  createdAt?: Maybe<DateTime>
+
+  createdAt_not?: Maybe<DateTime>
+
+  createdAt_in?: Maybe<DateTime[]>
+
+  createdAt_not_in?: Maybe<DateTime[]>
+
+  createdAt_lt?: Maybe<DateTime>
+
+  createdAt_lte?: Maybe<DateTime>
+
+  createdAt_gt?: Maybe<DateTime>
+
+  createdAt_gte?: Maybe<DateTime>
+
+  updatedAt?: Maybe<DateTime>
+
+  updatedAt_not?: Maybe<DateTime>
+
+  updatedAt_in?: Maybe<DateTime[]>
+
+  updatedAt_not_in?: Maybe<DateTime[]>
+
+  updatedAt_lt?: Maybe<DateTime>
+
+  updatedAt_lte?: Maybe<DateTime>
+
+  updatedAt_gt?: Maybe<DateTime>
+
+  updatedAt_gte?: Maybe<DateTime>
+
+  label?: Maybe<string>
+
+  label_not?: Maybe<string>
+
+  label_in?: Maybe<string[]>
+
+  label_not_in?: Maybe<string[]>
+
+  label_lt?: Maybe<string>
+
+  label_lte?: Maybe<string>
+
+  label_gt?: Maybe<string>
+
+  label_gte?: Maybe<string>
+
+  label_contains?: Maybe<string>
+
+  label_not_contains?: Maybe<string>
+
+  label_starts_with?: Maybe<string>
+
+  label_not_starts_with?: Maybe<string>
+
+  label_ends_with?: Maybe<string>
+
+  label_not_ends_with?: Maybe<string>
+
+  description?: Maybe<string>
+
+  description_not?: Maybe<string>
+
+  description_in?: Maybe<string[]>
+
+  description_not_in?: Maybe<string[]>
+
+  description_lt?: Maybe<string>
+
+  description_lte?: Maybe<string>
+
+  description_gt?: Maybe<string>
+
+  description_gte?: Maybe<string>
+
+  description_contains?: Maybe<string>
+
+  description_not_contains?: Maybe<string>
+
+  description_starts_with?: Maybe<string>
+
+  description_not_starts_with?: Maybe<string>
+
+  description_ends_with?: Maybe<string>
+
+  description_not_ends_with?: Maybe<string>
+
+  AND?: Maybe<SourceScalarWhereInput[]>
+
+  OR?: Maybe<SourceScalarWhereInput[]>
+
+  NOT?: Maybe<SourceScalarWhereInput[]>
+}
+
+export interface SourceUpdateManyWithWhereNestedInput {
+  where: SourceScalarWhereInput
+
+  data: SourceUpdateManyDataInput
+}
+
+export interface SourceUpdateManyDataInput {
+  label?: Maybe<string>
+
+  description?: Maybe<string>
 }
 
 export interface FieldInstanceUpdateManyInput {
@@ -3604,6 +4100,8 @@ export interface FieldUpdateDataInput {
   type?: Maybe<FieldType>
 
   label?: Maybe<string>
+
+  description?: Maybe<string>
 }
 
 export interface FieldUpsertNestedInput {
@@ -3809,6 +4307,10 @@ export interface JobUpdateWithoutApplicationsDataInput {
 
   name?: Maybe<string>
 
+  excerpt?: Maybe<string>
+
+  companyDescription?: Maybe<string>
+
   description?: Maybe<string>
 
   requirements?: Maybe<string>
@@ -3829,11 +4331,11 @@ export interface WorkspaceUpdateWithoutJobsDataInput {
 
   candidates?: Maybe<CandidateUpdateManyInput>
 
+  settings?: Maybe<Json>
+
   workflows?: Maybe<WorkflowUpdateManyInput>
 
   invites?: Maybe<InviteUpdateManyInput>
-
-  tags?: Maybe<TagUpdateManyInput>
 
   name?: Maybe<string>
 }
@@ -4117,6 +4619,8 @@ export interface UserUpdateManyWithWhereNestedInput {
 }
 
 export interface UserUpdateManyDataInput {
+  settings?: Maybe<Json>
+
   firstName?: Maybe<string>
 
   lastName?: Maybe<string>
@@ -4169,11 +4673,11 @@ export interface CandidateUpdateDataInput {
 
   avatar?: Maybe<FileUpdateOneInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateUpdateresumesStringInput>
 
@@ -4185,7 +4689,7 @@ export interface CandidateUpdateDataInput {
 
   tags?: Maybe<TagUpdateManyInput>
 
-  source?: Maybe<CandidateUpdatesourceInput>
+  sources?: Maybe<SourceUpdateManyInput>
 
   fields?: Maybe<FieldInstanceUpdateManyInput>
 
@@ -4255,6 +4759,8 @@ export interface UserUpdateWithWhereUniqueWithoutTasksInput {
 }
 
 export interface UserUpdateWithoutTasksDataInput {
+  settings?: Maybe<Json>
+
   firstName?: Maybe<string>
 
   lastName?: Maybe<string>
@@ -4733,89 +5239,89 @@ export interface CandidateScalarWhereInput {
 
   lastName_not_ends_with?: Maybe<string>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaCompany_not?: Maybe<string>
+  company_not?: Maybe<string>
 
-  metaCompany_in?: Maybe<string[]>
+  company_in?: Maybe<string[]>
 
-  metaCompany_not_in?: Maybe<string[]>
+  company_not_in?: Maybe<string[]>
 
-  metaCompany_lt?: Maybe<string>
+  company_lt?: Maybe<string>
 
-  metaCompany_lte?: Maybe<string>
+  company_lte?: Maybe<string>
 
-  metaCompany_gt?: Maybe<string>
+  company_gt?: Maybe<string>
 
-  metaCompany_gte?: Maybe<string>
+  company_gte?: Maybe<string>
 
-  metaCompany_contains?: Maybe<string>
+  company_contains?: Maybe<string>
 
-  metaCompany_not_contains?: Maybe<string>
+  company_not_contains?: Maybe<string>
 
-  metaCompany_starts_with?: Maybe<string>
+  company_starts_with?: Maybe<string>
 
-  metaCompany_not_starts_with?: Maybe<string>
+  company_not_starts_with?: Maybe<string>
 
-  metaCompany_ends_with?: Maybe<string>
+  company_ends_with?: Maybe<string>
 
-  metaCompany_not_ends_with?: Maybe<string>
+  company_not_ends_with?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaHeadline_not?: Maybe<string>
+  headline_not?: Maybe<string>
 
-  metaHeadline_in?: Maybe<string[]>
+  headline_in?: Maybe<string[]>
 
-  metaHeadline_not_in?: Maybe<string[]>
+  headline_not_in?: Maybe<string[]>
 
-  metaHeadline_lt?: Maybe<string>
+  headline_lt?: Maybe<string>
 
-  metaHeadline_lte?: Maybe<string>
+  headline_lte?: Maybe<string>
 
-  metaHeadline_gt?: Maybe<string>
+  headline_gt?: Maybe<string>
 
-  metaHeadline_gte?: Maybe<string>
+  headline_gte?: Maybe<string>
 
-  metaHeadline_contains?: Maybe<string>
+  headline_contains?: Maybe<string>
 
-  metaHeadline_not_contains?: Maybe<string>
+  headline_not_contains?: Maybe<string>
 
-  metaHeadline_starts_with?: Maybe<string>
+  headline_starts_with?: Maybe<string>
 
-  metaHeadline_not_starts_with?: Maybe<string>
+  headline_not_starts_with?: Maybe<string>
 
-  metaHeadline_ends_with?: Maybe<string>
+  headline_ends_with?: Maybe<string>
 
-  metaHeadline_not_ends_with?: Maybe<string>
+  headline_not_ends_with?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
-  metaPosition_not?: Maybe<string>
+  position_not?: Maybe<string>
 
-  metaPosition_in?: Maybe<string[]>
+  position_in?: Maybe<string[]>
 
-  metaPosition_not_in?: Maybe<string[]>
+  position_not_in?: Maybe<string[]>
 
-  metaPosition_lt?: Maybe<string>
+  position_lt?: Maybe<string>
 
-  metaPosition_lte?: Maybe<string>
+  position_lte?: Maybe<string>
 
-  metaPosition_gt?: Maybe<string>
+  position_gt?: Maybe<string>
 
-  metaPosition_gte?: Maybe<string>
+  position_gte?: Maybe<string>
 
-  metaPosition_contains?: Maybe<string>
+  position_contains?: Maybe<string>
 
-  metaPosition_not_contains?: Maybe<string>
+  position_not_contains?: Maybe<string>
 
-  metaPosition_starts_with?: Maybe<string>
+  position_starts_with?: Maybe<string>
 
-  metaPosition_not_starts_with?: Maybe<string>
+  position_not_starts_with?: Maybe<string>
 
-  metaPosition_ends_with?: Maybe<string>
+  position_ends_with?: Maybe<string>
 
-  metaPosition_not_ends_with?: Maybe<string>
+  position_not_ends_with?: Maybe<string>
 
   AND?: Maybe<CandidateScalarWhereInput[]>
 
@@ -4841,17 +5347,15 @@ export interface CandidateUpdateManyDataInput {
 
   links?: Maybe<CandidateUpdatelinksInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateUpdateresumesStringInput>
 
   coverLettersString?: Maybe<CandidateUpdatecoverLettersStringInput>
-
-  source?: Maybe<CandidateUpdatesourceInput>
 }
 
 export interface WorkflowUpdateManyInput {
@@ -5365,6 +5869,34 @@ export interface FieldScalarWhereInput {
 
   label_not_ends_with?: Maybe<string>
 
+  description?: Maybe<string>
+
+  description_not?: Maybe<string>
+
+  description_in?: Maybe<string[]>
+
+  description_not_in?: Maybe<string[]>
+
+  description_lt?: Maybe<string>
+
+  description_lte?: Maybe<string>
+
+  description_gt?: Maybe<string>
+
+  description_gte?: Maybe<string>
+
+  description_contains?: Maybe<string>
+
+  description_not_contains?: Maybe<string>
+
+  description_starts_with?: Maybe<string>
+
+  description_not_starts_with?: Maybe<string>
+
+  description_ends_with?: Maybe<string>
+
+  description_not_ends_with?: Maybe<string>
+
   AND?: Maybe<FieldScalarWhereInput[]>
 
   OR?: Maybe<FieldScalarWhereInput[]>
@@ -5382,6 +5914,8 @@ export interface FieldUpdateManyDataInput {
   type?: Maybe<FieldType>
 
   label?: Maybe<string>
+
+  description?: Maybe<string>
 }
 
 export interface WorkflowUpsertWithWhereUniqueNestedInput {
@@ -5785,6 +6319,38 @@ export interface LocationScalarWhereInput {
 
   id_not_ends_with?: Maybe<string>
 
+  createdAt?: Maybe<DateTime>
+
+  createdAt_not?: Maybe<DateTime>
+
+  createdAt_in?: Maybe<DateTime[]>
+
+  createdAt_not_in?: Maybe<DateTime[]>
+
+  createdAt_lt?: Maybe<DateTime>
+
+  createdAt_lte?: Maybe<DateTime>
+
+  createdAt_gt?: Maybe<DateTime>
+
+  createdAt_gte?: Maybe<DateTime>
+
+  updatedAt?: Maybe<DateTime>
+
+  updatedAt_not?: Maybe<DateTime>
+
+  updatedAt_in?: Maybe<DateTime[]>
+
+  updatedAt_not_in?: Maybe<DateTime[]>
+
+  updatedAt_lt?: Maybe<DateTime>
+
+  updatedAt_lte?: Maybe<DateTime>
+
+  updatedAt_gt?: Maybe<DateTime>
+
+  updatedAt_gte?: Maybe<DateTime>
+
   country?: Maybe<string>
 
   country_not?: Maybe<string>
@@ -6069,11 +6635,11 @@ export interface CandidateUpdateWithoutApplicationsDataInput {
 
   avatar?: Maybe<FileUpdateOneInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateUpdateresumesStringInput>
 
@@ -6085,7 +6651,7 @@ export interface CandidateUpdateWithoutApplicationsDataInput {
 
   tags?: Maybe<TagUpdateManyInput>
 
-  source?: Maybe<CandidateUpdatesourceInput>
+  sources?: Maybe<SourceUpdateManyInput>
 
   fields?: Maybe<FieldInstanceUpdateManyInput>
 
@@ -6113,11 +6679,11 @@ export interface CandidateUpdateInput {
 
   avatar?: Maybe<FileUpdateOneInput>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString?: Maybe<CandidateUpdateresumesStringInput>
 
@@ -6129,7 +6695,7 @@ export interface CandidateUpdateInput {
 
   tags?: Maybe<TagUpdateManyInput>
 
-  source?: Maybe<CandidateUpdatesourceInput>
+  sources?: Maybe<SourceUpdateManyInput>
 
   fields?: Maybe<FieldInstanceUpdateManyInput>
 
@@ -6156,6 +6722,10 @@ export interface JobCreateInput {
   locations?: Maybe<LocationCreateManyInput>
 
   name: string
+
+  excerpt?: Maybe<string>
+
+  companyDescription?: Maybe<string>
 
   description?: Maybe<string>
 
@@ -6194,6 +6764,10 @@ export interface JobUpdateInput {
   locations?: Maybe<LocationUpdateManyInput>
 
   name?: Maybe<string>
+
+  excerpt?: Maybe<string>
+
+  companyDescription?: Maybe<string>
 
   description?: Maybe<string>
 
@@ -6244,6 +6818,8 @@ export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
 
 export interface TagUpdateInput {
   label?: Maybe<string>
+
+  description?: Maybe<string>
 }
 
 export interface TaskCreateInput {
@@ -6333,30 +6909,29 @@ export interface WorkspaceCreateInput {
 }
 
 export enum ApplicationType {
-  Qualified = 'Qualified',
-  Disqualified = 'Disqualified',
+  Qualified = 'QUALIFIED',
+  Disqualified = 'DISQUALIFIED',
 }
 
 export enum FieldType {
-  Int = 'Int',
-  Float = 'Float',
-  String = 'String',
-  Text = 'Text',
-  Paragraph = 'Paragraph',
-  Boolean = 'Boolean',
-  DateTime = 'DateTime',
+  Int = 'INT',
+  Float = 'FLOAT',
+  Text = 'TEXT',
+  Paragraph = 'PARAGRAPH',
+  Boolean = 'BOOLEAN',
+  Datetime = 'DATETIME',
 }
 
 export enum StageType {
-  New = 'New',
-  Pipeline = 'Pipeline',
-  Final = 'Final',
+  New = 'NEW',
+  Pipeline = 'PIPELINE',
+  Final = 'FINAL',
 }
 
 export enum JobType {
-  Draft = 'Draft',
-  Published = 'Published',
-  Archived = 'Archived',
+  Draft = 'DRAFT',
+  Published = 'PUBLISHED',
+  Archived = 'ARCHIVED',
 }
 
 export enum TaskOrderByInput {
@@ -6381,6 +6956,8 @@ export enum UserOrderByInput {
   CreatedAtDesc = 'createdAt_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC',
+  SettingsAsc = 'settings_ASC',
+  SettingsDesc = 'settings_DESC',
   FirstNameAsc = 'firstName_ASC',
   FirstNameDesc = 'firstName_DESC',
   LastNameAsc = 'lastName_ASC',
@@ -6423,6 +7000,21 @@ export enum TagOrderByInput {
   UpdatedAtDesc = 'updatedAt_DESC',
   LabelAsc = 'label_ASC',
   LabelDesc = 'label_DESC',
+  DescriptionAsc = 'description_ASC',
+  DescriptionDesc = 'description_DESC',
+}
+
+export enum SourceOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  LabelAsc = 'label_ASC',
+  LabelDesc = 'label_DESC',
+  DescriptionAsc = 'description_ASC',
+  DescriptionDesc = 'description_DESC',
 }
 
 export enum FieldInstanceOrderByInput {
@@ -6471,6 +7063,10 @@ export enum JobOrderByInput {
   DepartmentDesc = 'department_DESC',
   NameAsc = 'name_ASC',
   NameDesc = 'name_DESC',
+  ExcerptAsc = 'excerpt_ASC',
+  ExcerptDesc = 'excerpt_DESC',
+  CompanyDescriptionAsc = 'companyDescription_ASC',
+  CompanyDescriptionDesc = 'companyDescription_DESC',
   DescriptionAsc = 'description_ASC',
   DescriptionDesc = 'description_DESC',
   RequirementsAsc = 'requirements_ASC',
@@ -6488,12 +7084,12 @@ export enum CandidateOrderByInput {
   FirstNameDesc = 'firstName_DESC',
   LastNameAsc = 'lastName_ASC',
   LastNameDesc = 'lastName_DESC',
-  MetaCompanyAsc = 'metaCompany_ASC',
-  MetaCompanyDesc = 'metaCompany_DESC',
-  MetaHeadlineAsc = 'metaHeadline_ASC',
-  MetaHeadlineDesc = 'metaHeadline_DESC',
-  MetaPositionAsc = 'metaPosition_ASC',
-  MetaPositionDesc = 'metaPosition_DESC',
+  CompanyAsc = 'company_ASC',
+  CompanyDesc = 'company_DESC',
+  HeadlineAsc = 'headline_ASC',
+  HeadlineDesc = 'headline_DESC',
+  PositionAsc = 'position_ASC',
+  PositionDesc = 'position_DESC',
 }
 
 export enum WorkflowOrderByInput {
@@ -6548,6 +7144,8 @@ export enum FieldOrderByInput {
   TypeDesc = 'type_DESC',
   LabelAsc = 'label_ASC',
   LabelDesc = 'label_DESC',
+  DescriptionAsc = 'description_ASC',
+  DescriptionDesc = 'description_DESC',
 }
 
 export enum InviteOrderByInput {
@@ -6566,6 +7164,10 @@ export enum InviteOrderByInput {
 export enum LocationOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
   CountryAsc = 'country_ASC',
   CountryDesc = 'country_DESC',
   RegionAsc = 'region_ASC',
@@ -6574,10 +7176,6 @@ export enum LocationOrderByInput {
   CityDesc = 'city_DESC',
   ZipAsc = 'zip_ASC',
   ZipDesc = 'zip_DESC',
-  CreatedAtAsc = 'createdAt_ASC',
-  CreatedAtDesc = 'createdAt_DESC',
-  UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC',
 }
 
 export enum ToastType {
@@ -6590,6 +7188,8 @@ export enum ToastType {
 }
 
 export type DateTime = any
+
+export type Json = any
 
 // ====================================================
 // Scalars
@@ -6604,25 +7204,37 @@ export interface Query {
 
   applications: Application[]
 
+  applicationsConnection: ApplicationConnection
+
   candidate?: Maybe<Candidate>
 
   candidates: Candidate[]
+
+  candidatesConnection: CandidateConnection
 
   job?: Maybe<Job>
 
   jobs: Job[]
 
+  jobsConnection: JobConnection
+
   tag?: Maybe<Tag>
 
   tags: Tag[]
+
+  tagsConnection: TagConnection
 
   task?: Maybe<Task>
 
   tasks: Task[]
 
+  tasksConnection: TaskConnection
+
   user?: Maybe<User>
 
   users: User[]
+
+  usersConnection: UserConnection
 
   localField: string
 
@@ -6682,6 +7294,8 @@ export interface User {
 
   updatedAt: DateTime
 
+  settings?: Maybe<Json>
+
   tasks?: Maybe<Task[]>
 
   firstName: string
@@ -6738,11 +7352,11 @@ export interface Candidate {
 
   avatar?: Maybe<File>
 
-  metaCompany?: Maybe<string>
+  company?: Maybe<string>
 
-  metaHeadline?: Maybe<string>
+  headline?: Maybe<string>
 
-  metaPosition?: Maybe<string>
+  position?: Maybe<string>
 
   resumesString: string[]
 
@@ -6754,7 +7368,7 @@ export interface Candidate {
 
   tags?: Maybe<Tag[]>
 
-  source: string[]
+  sources?: Maybe<Source[]>
 
   fields?: Maybe<FieldInstance[]>
 
@@ -6789,6 +7403,20 @@ export interface Tag {
   updatedAt: DateTime
 
   label: string
+
+  description?: Maybe<string>
+}
+
+export interface Source {
+  id: string
+
+  createdAt: DateTime
+
+  updatedAt: DateTime
+
+  label: string
+
+  description?: Maybe<string>
 }
 
 export interface FieldInstance {
@@ -6813,6 +7441,8 @@ export interface Field {
   type: FieldType
 
   label: string
+
+  description?: Maybe<string>
 }
 
 export interface Comment {
@@ -6866,6 +7496,10 @@ export interface Job {
 
   name: string
 
+  excerpt?: Maybe<string>
+
+  companyDescription?: Maybe<string>
+
   description?: Maybe<string>
 
   requirements?: Maybe<string>
@@ -6884,11 +7518,11 @@ export interface Workspace {
 
   candidates?: Maybe<Candidate[]>
 
+  settings?: Maybe<Json>
+
   workflows?: Maybe<Workflow[]>
 
   invites?: Maybe<Invite[]>
-
-  tags?: Maybe<Tag[]>
 
   name: string
 }
@@ -6928,13 +7562,135 @@ export interface Invite {
 export interface Location {
   id: string
 
+  createdAt: DateTime
+
+  updatedAt: DateTime
+
   country: string
 
-  region: string
+  region?: Maybe<string>
 
   city: string
 
-  zip: string
+  zip?: Maybe<string>
+}
+
+export interface ApplicationConnection {
+  pageInfo: PageInfo
+
+  edges: ApplicationEdge[]
+
+  aggregate: AggregateApplication
+}
+
+export interface PageInfo {
+  hasNextPage: boolean
+
+  hasPreviousPage: boolean
+
+  startCursor?: Maybe<string>
+
+  endCursor?: Maybe<string>
+}
+
+export interface ApplicationEdge {
+  node: Application
+
+  cursor: string
+}
+
+export interface AggregateApplication {
+  count: number
+}
+
+export interface CandidateConnection {
+  pageInfo: PageInfo
+
+  edges: CandidateEdge[]
+
+  aggregate: AggregateCandidate
+}
+
+export interface CandidateEdge {
+  node: Candidate
+
+  cursor: string
+}
+
+export interface AggregateCandidate {
+  count: number
+}
+
+export interface JobConnection {
+  pageInfo: PageInfo
+
+  edges: JobEdge[]
+
+  aggregate: AggregateJob
+}
+
+export interface JobEdge {
+  node: Job
+
+  cursor: string
+}
+
+export interface AggregateJob {
+  count: number
+}
+
+export interface TagConnection {
+  pageInfo: PageInfo
+
+  edges: TagEdge[]
+
+  aggregate: AggregateTag
+}
+
+export interface TagEdge {
+  node: Tag
+
+  cursor: string
+}
+
+export interface AggregateTag {
+  count: number
+}
+
+export interface TaskConnection {
+  pageInfo: PageInfo
+
+  edges: TaskEdge[]
+
+  aggregate: AggregateTask
+}
+
+export interface TaskEdge {
+  node: Task
+
+  cursor: string
+}
+
+export interface AggregateTask {
+  count: number
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo
+
+  edges: UserEdge[]
+
+  aggregate: AggregateUser
+}
+
+export interface UserEdge {
+  node: User
+
+  cursor: string
+}
+
+export interface AggregateUser {
+  count: number
 }
 
 export interface LocalType {
@@ -7029,10 +7785,40 @@ export interface ApplicationsQueryArgs {
 
   last?: Maybe<number>
 }
+export interface ApplicationsConnectionQueryArgs {
+  where?: Maybe<ApplicationWhereInput>
+
+  orderBy?: Maybe<ApplicationOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
 export interface CandidateQueryArgs {
   where: CandidateWhereUniqueInput
 }
 export interface CandidatesQueryArgs {
+  where?: Maybe<CandidateWhereInput>
+
+  orderBy?: Maybe<CandidateOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+export interface CandidatesConnectionQueryArgs {
   where?: Maybe<CandidateWhereInput>
 
   orderBy?: Maybe<CandidateOrderByInput>
@@ -7065,10 +7851,40 @@ export interface JobsQueryArgs {
 
   last?: Maybe<number>
 }
+export interface JobsConnectionQueryArgs {
+  where?: Maybe<JobWhereInput>
+
+  orderBy?: Maybe<JobOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
 export interface TagQueryArgs {
   where: TagWhereUniqueInput
 }
 export interface TagsQueryArgs {
+  where?: Maybe<TagWhereInput>
+
+  orderBy?: Maybe<TagOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+export interface TagsConnectionQueryArgs {
   where?: Maybe<TagWhereInput>
 
   orderBy?: Maybe<TagOrderByInput>
@@ -7101,10 +7917,40 @@ export interface TasksQueryArgs {
 
   last?: Maybe<number>
 }
+export interface TasksConnectionQueryArgs {
+  where?: Maybe<TaskWhereInput>
+
+  orderBy?: Maybe<TaskOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
 export interface UserQueryArgs {
   where: UserWhereUniqueInput
 }
 export interface UsersQueryArgs {
+  where?: Maybe<UserWhereInput>
+
+  orderBy?: Maybe<UserOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+export interface UsersConnectionQueryArgs {
   where?: Maybe<UserWhereInput>
 
   orderBy?: Maybe<UserOrderByInput>
@@ -7183,6 +8029,21 @@ export interface TagsCandidateArgs {
   where?: Maybe<TagWhereInput>
 
   orderBy?: Maybe<TagOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+export interface SourcesCandidateArgs {
+  where?: Maybe<SourceWhereInput>
+
+  orderBy?: Maybe<SourceOrderByInput>
 
   skip?: Maybe<number>
 
@@ -7363,21 +8224,6 @@ export interface InvitesWorkspaceArgs {
   where?: Maybe<InviteWhereInput>
 
   orderBy?: Maybe<InviteOrderByInput>
-
-  skip?: Maybe<number>
-
-  after?: Maybe<string>
-
-  before?: Maybe<string>
-
-  first?: Maybe<number>
-
-  last?: Maybe<number>
-}
-export interface TagsWorkspaceArgs {
-  where?: Maybe<TagWhereInput>
-
-  orderBy?: Maybe<TagOrderByInput>
 
   skip?: Maybe<number>
 
@@ -7577,25 +8423,41 @@ export interface QueryResolvers<Context = {}, TypeParent = {}> {
 
   applications?: QueryApplicationsResolver<Application[], TypeParent, Context>
 
+  applicationsConnection?: QueryApplicationsConnectionResolver<
+    ApplicationConnection,
+    TypeParent,
+    Context
+  >
+
   candidate?: QueryCandidateResolver<Maybe<Candidate>, TypeParent, Context>
 
   candidates?: QueryCandidatesResolver<Candidate[], TypeParent, Context>
+
+  candidatesConnection?: QueryCandidatesConnectionResolver<CandidateConnection, TypeParent, Context>
 
   job?: QueryJobResolver<Maybe<Job>, TypeParent, Context>
 
   jobs?: QueryJobsResolver<Job[], TypeParent, Context>
 
+  jobsConnection?: QueryJobsConnectionResolver<JobConnection, TypeParent, Context>
+
   tag?: QueryTagResolver<Maybe<Tag>, TypeParent, Context>
 
   tags?: QueryTagsResolver<Tag[], TypeParent, Context>
+
+  tagsConnection?: QueryTagsConnectionResolver<TagConnection, TypeParent, Context>
 
   task?: QueryTaskResolver<Maybe<Task>, TypeParent, Context>
 
   tasks?: QueryTasksResolver<Task[], TypeParent, Context>
 
+  tasksConnection?: QueryTasksConnectionResolver<TaskConnection, TypeParent, Context>
+
   user?: QueryUserResolver<Maybe<User>, TypeParent, Context>
 
   users?: QueryUsersResolver<User[], TypeParent, Context>
+
+  usersConnection?: QueryUsersConnectionResolver<UserConnection, TypeParent, Context>
 
   localField?: QueryLocalFieldResolver<string, TypeParent, Context>
 
@@ -7621,6 +8483,27 @@ export type QueryApplicationsResolver<R = Application[], Parent = {}, Context = 
   QueryApplicationsArgs
 >
 export interface QueryApplicationsArgs {
+  where?: Maybe<ApplicationWhereInput>
+
+  orderBy?: Maybe<ApplicationOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
+export type QueryApplicationsConnectionResolver<
+  R = ApplicationConnection,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, QueryApplicationsConnectionArgs>
+export interface QueryApplicationsConnectionArgs {
   where?: Maybe<ApplicationWhereInput>
 
   orderBy?: Maybe<ApplicationOrderByInput>
@@ -7668,6 +8551,27 @@ export interface QueryCandidatesArgs {
   last?: Maybe<number>
 }
 
+export type QueryCandidatesConnectionResolver<
+  R = CandidateConnection,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, QueryCandidatesConnectionArgs>
+export interface QueryCandidatesConnectionArgs {
+  where?: Maybe<CandidateWhereInput>
+
+  orderBy?: Maybe<CandidateOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
 export type QueryJobResolver<R = Maybe<Job>, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -7685,6 +8589,28 @@ export type QueryJobsResolver<R = Job[], Parent = {}, Context = {}> = Resolver<
   QueryJobsArgs
 >
 export interface QueryJobsArgs {
+  where?: Maybe<JobWhereInput>
+
+  orderBy?: Maybe<JobOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
+export type QueryJobsConnectionResolver<R = JobConnection, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  QueryJobsConnectionArgs
+>
+export interface QueryJobsConnectionArgs {
   where?: Maybe<JobWhereInput>
 
   orderBy?: Maybe<JobOrderByInput>
@@ -7732,6 +8658,28 @@ export interface QueryTagsArgs {
   last?: Maybe<number>
 }
 
+export type QueryTagsConnectionResolver<R = TagConnection, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  QueryTagsConnectionArgs
+>
+export interface QueryTagsConnectionArgs {
+  where?: Maybe<TagWhereInput>
+
+  orderBy?: Maybe<TagOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
 export type QueryTaskResolver<R = Maybe<Task>, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -7764,6 +8712,28 @@ export interface QueryTasksArgs {
   last?: Maybe<number>
 }
 
+export type QueryTasksConnectionResolver<R = TaskConnection, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  QueryTasksConnectionArgs
+>
+export interface QueryTasksConnectionArgs {
+  where?: Maybe<TaskWhereInput>
+
+  orderBy?: Maybe<TaskOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
 export type QueryUserResolver<R = Maybe<User>, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -7781,6 +8751,28 @@ export type QueryUsersResolver<R = User[], Parent = {}, Context = {}> = Resolver
   QueryUsersArgs
 >
 export interface QueryUsersArgs {
+  where?: Maybe<UserWhereInput>
+
+  orderBy?: Maybe<UserOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
+export type QueryUsersConnectionResolver<R = UserConnection, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  QueryUsersConnectionArgs
+>
+export interface QueryUsersConnectionArgs {
   where?: Maybe<UserWhereInput>
 
   orderBy?: Maybe<UserOrderByInput>
@@ -7972,6 +8964,8 @@ export interface UserResolvers<Context = {}, TypeParent = User> {
 
   updatedAt?: UserUpdatedAtResolver<DateTime, TypeParent, Context>
 
+  settings?: UserSettingsResolver<Maybe<Json>, TypeParent, Context>
+
   tasks?: UserTasksResolver<Maybe<Task[]>, TypeParent, Context>
 
   firstName?: UserFirstNameResolver<string, TypeParent, Context>
@@ -7998,6 +8992,11 @@ export type UserCreatedAtResolver<R = DateTime, Parent = User, Context = {}> = R
   Context
 >
 export type UserUpdatedAtResolver<R = DateTime, Parent = User, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type UserSettingsResolver<R = Maybe<Json>, Parent = User, Context = {}> = Resolver<
   R,
   Parent,
   Context
@@ -8156,11 +9155,11 @@ export interface CandidateResolvers<Context = {}, TypeParent = Candidate> {
 
   avatar?: CandidateAvatarResolver<Maybe<File>, TypeParent, Context>
 
-  metaCompany?: CandidateMetaCompanyResolver<Maybe<string>, TypeParent, Context>
+  company?: CandidateCompanyResolver<Maybe<string>, TypeParent, Context>
 
-  metaHeadline?: CandidateMetaHeadlineResolver<Maybe<string>, TypeParent, Context>
+  headline?: CandidateHeadlineResolver<Maybe<string>, TypeParent, Context>
 
-  metaPosition?: CandidateMetaPositionResolver<Maybe<string>, TypeParent, Context>
+  position?: CandidatePositionResolver<Maybe<string>, TypeParent, Context>
 
   resumesString?: CandidateResumesStringResolver<string[], TypeParent, Context>
 
@@ -8172,7 +9171,7 @@ export interface CandidateResolvers<Context = {}, TypeParent = Candidate> {
 
   tags?: CandidateTagsResolver<Maybe<Tag[]>, TypeParent, Context>
 
-  source?: CandidateSourceResolver<string[], TypeParent, Context>
+  sources?: CandidateSourcesResolver<Maybe<Source[]>, TypeParent, Context>
 
   fields?: CandidateFieldsResolver<Maybe<FieldInstance[]>, TypeParent, Context>
 
@@ -8228,17 +9227,17 @@ export type CandidateAvatarResolver<R = Maybe<File>, Parent = Candidate, Context
   Parent,
   Context
 >
-export type CandidateMetaCompanyResolver<
+export type CandidateCompanyResolver<
   R = Maybe<string>,
   Parent = Candidate,
   Context = {}
 > = Resolver<R, Parent, Context>
-export type CandidateMetaHeadlineResolver<
+export type CandidateHeadlineResolver<
   R = Maybe<string>,
   Parent = Candidate,
   Context = {}
 > = Resolver<R, Parent, Context>
-export type CandidateMetaPositionResolver<
+export type CandidatePositionResolver<
   R = Maybe<string>,
   Parent = Candidate,
   Context = {}
@@ -8317,11 +9316,27 @@ export interface CandidateTagsArgs {
   last?: Maybe<number>
 }
 
-export type CandidateSourceResolver<R = string[], Parent = Candidate, Context = {}> = Resolver<
-  R,
-  Parent,
-  Context
->
+export type CandidateSourcesResolver<
+  R = Maybe<Source[]>,
+  Parent = Candidate,
+  Context = {}
+> = Resolver<R, Parent, Context, CandidateSourcesArgs>
+export interface CandidateSourcesArgs {
+  where?: Maybe<SourceWhereInput>
+
+  orderBy?: Maybe<SourceOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
 export type CandidateFieldsResolver<
   R = Maybe<FieldInstance[]>,
   Parent = Candidate,
@@ -8447,6 +9462,8 @@ export interface TagResolvers<Context = {}, TypeParent = Tag> {
   updatedAt?: TagUpdatedAtResolver<DateTime, TypeParent, Context>
 
   label?: TagLabelResolver<string, TypeParent, Context>
+
+  description?: TagDescriptionResolver<Maybe<string>, TypeParent, Context>
 }
 
 export type TagIdResolver<R = string, Parent = Tag, Context = {}> = Resolver<R, Parent, Context>
@@ -8461,6 +9478,49 @@ export type TagUpdatedAtResolver<R = DateTime, Parent = Tag, Context = {}> = Res
   Context
 >
 export type TagLabelResolver<R = string, Parent = Tag, Context = {}> = Resolver<R, Parent, Context>
+export type TagDescriptionResolver<R = Maybe<string>, Parent = Tag, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface SourceResolvers<Context = {}, TypeParent = Source> {
+  id?: SourceIdResolver<string, TypeParent, Context>
+
+  createdAt?: SourceCreatedAtResolver<DateTime, TypeParent, Context>
+
+  updatedAt?: SourceUpdatedAtResolver<DateTime, TypeParent, Context>
+
+  label?: SourceLabelResolver<string, TypeParent, Context>
+
+  description?: SourceDescriptionResolver<Maybe<string>, TypeParent, Context>
+}
+
+export type SourceIdResolver<R = string, Parent = Source, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type SourceCreatedAtResolver<R = DateTime, Parent = Source, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type SourceUpdatedAtResolver<R = DateTime, Parent = Source, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type SourceLabelResolver<R = string, Parent = Source, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type SourceDescriptionResolver<R = Maybe<string>, Parent = Source, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
 
 export interface FieldInstanceResolvers<Context = {}, TypeParent = FieldInstance> {
   id?: FieldInstanceIdResolver<string, TypeParent, Context>
@@ -8510,6 +9570,8 @@ export interface FieldResolvers<Context = {}, TypeParent = Field> {
   type?: FieldTypeResolver<FieldType, TypeParent, Context>
 
   label?: FieldLabelResolver<string, TypeParent, Context>
+
+  description?: FieldDescriptionResolver<Maybe<string>, TypeParent, Context>
 }
 
 export type FieldIdResolver<R = string, Parent = Field, Context = {}> = Resolver<R, Parent, Context>
@@ -8529,6 +9591,11 @@ export type FieldTypeResolver<R = FieldType, Parent = Field, Context = {}> = Res
   Context
 >
 export type FieldLabelResolver<R = string, Parent = Field, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type FieldDescriptionResolver<R = Maybe<string>, Parent = Field, Context = {}> = Resolver<
   R,
   Parent,
   Context
@@ -8643,6 +9710,10 @@ export interface JobResolvers<Context = {}, TypeParent = Job> {
 
   name?: JobNameResolver<string, TypeParent, Context>
 
+  excerpt?: JobExcerptResolver<Maybe<string>, TypeParent, Context>
+
+  companyDescription?: JobCompanyDescriptionResolver<Maybe<string>, TypeParent, Context>
+
   description?: JobDescriptionResolver<Maybe<string>, TypeParent, Context>
 
   requirements?: JobRequirementsResolver<Maybe<string>, TypeParent, Context>
@@ -8741,6 +9812,16 @@ export interface JobLocationsArgs {
 }
 
 export type JobNameResolver<R = string, Parent = Job, Context = {}> = Resolver<R, Parent, Context>
+export type JobExcerptResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type JobCompanyDescriptionResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
 export type JobDescriptionResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<
   R,
   Parent,
@@ -8765,11 +9846,11 @@ export interface WorkspaceResolvers<Context = {}, TypeParent = Workspace> {
 
   candidates?: WorkspaceCandidatesResolver<Maybe<Candidate[]>, TypeParent, Context>
 
+  settings?: WorkspaceSettingsResolver<Maybe<Json>, TypeParent, Context>
+
   workflows?: WorkspaceWorkflowsResolver<Maybe<Workflow[]>, TypeParent, Context>
 
   invites?: WorkspaceInvitesResolver<Maybe<Invite[]>, TypeParent, Context>
-
-  tags?: WorkspaceTagsResolver<Maybe<Tag[]>, TypeParent, Context>
 
   name?: WorkspaceNameResolver<string, TypeParent, Context>
 }
@@ -8854,6 +9935,11 @@ export interface WorkspaceCandidatesArgs {
   last?: Maybe<number>
 }
 
+export type WorkspaceSettingsResolver<R = Maybe<Json>, Parent = Workspace, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
 export type WorkspaceWorkflowsResolver<
   R = Maybe<Workflow[]>,
   Parent = Workspace,
@@ -8884,28 +9970,6 @@ export interface WorkspaceInvitesArgs {
   where?: Maybe<InviteWhereInput>
 
   orderBy?: Maybe<InviteOrderByInput>
-
-  skip?: Maybe<number>
-
-  after?: Maybe<string>
-
-  before?: Maybe<string>
-
-  first?: Maybe<number>
-
-  last?: Maybe<number>
-}
-
-export type WorkspaceTagsResolver<R = Maybe<Tag[]>, Parent = Workspace, Context = {}> = Resolver<
-  R,
-  Parent,
-  Context,
-  WorkspaceTagsArgs
->
-export interface WorkspaceTagsArgs {
-  where?: Maybe<TagWhereInput>
-
-  orderBy?: Maybe<TagOrderByInput>
 
   skip?: Maybe<number>
 
@@ -9084,16 +10148,30 @@ export type InviteInvitedByResolver<R = User, Parent = Invite, Context = {}> = R
 export interface LocationResolvers<Context = {}, TypeParent = Location> {
   id?: LocationIdResolver<string, TypeParent, Context>
 
+  createdAt?: LocationCreatedAtResolver<DateTime, TypeParent, Context>
+
+  updatedAt?: LocationUpdatedAtResolver<DateTime, TypeParent, Context>
+
   country?: LocationCountryResolver<string, TypeParent, Context>
 
-  region?: LocationRegionResolver<string, TypeParent, Context>
+  region?: LocationRegionResolver<Maybe<string>, TypeParent, Context>
 
   city?: LocationCityResolver<string, TypeParent, Context>
 
-  zip?: LocationZipResolver<string, TypeParent, Context>
+  zip?: LocationZipResolver<Maybe<string>, TypeParent, Context>
 }
 
 export type LocationIdResolver<R = string, Parent = Location, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type LocationCreatedAtResolver<R = DateTime, Parent = Location, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type LocationUpdatedAtResolver<R = DateTime, Parent = Location, Context = {}> = Resolver<
   R,
   Parent,
   Context
@@ -9103,7 +10181,7 @@ export type LocationCountryResolver<R = string, Parent = Location, Context = {}>
   Parent,
   Context
 >
-export type LocationRegionResolver<R = string, Parent = Location, Context = {}> = Resolver<
+export type LocationRegionResolver<R = Maybe<string>, Parent = Location, Context = {}> = Resolver<
   R,
   Parent,
   Context
@@ -9113,7 +10191,344 @@ export type LocationCityResolver<R = string, Parent = Location, Context = {}> = 
   Parent,
   Context
 >
-export type LocationZipResolver<R = string, Parent = Location, Context = {}> = Resolver<
+export type LocationZipResolver<R = Maybe<string>, Parent = Location, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface ApplicationConnectionResolvers<Context = {}, TypeParent = ApplicationConnection> {
+  pageInfo?: ApplicationConnectionPageInfoResolver<PageInfo, TypeParent, Context>
+
+  edges?: ApplicationConnectionEdgesResolver<ApplicationEdge[], TypeParent, Context>
+
+  aggregate?: ApplicationConnectionAggregateResolver<AggregateApplication, TypeParent, Context>
+}
+
+export type ApplicationConnectionPageInfoResolver<
+  R = PageInfo,
+  Parent = ApplicationConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type ApplicationConnectionEdgesResolver<
+  R = ApplicationEdge[],
+  Parent = ApplicationConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type ApplicationConnectionAggregateResolver<
+  R = AggregateApplication,
+  Parent = ApplicationConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface PageInfoResolvers<Context = {}, TypeParent = PageInfo> {
+  hasNextPage?: PageInfoHasNextPageResolver<boolean, TypeParent, Context>
+
+  hasPreviousPage?: PageInfoHasPreviousPageResolver<boolean, TypeParent, Context>
+
+  startCursor?: PageInfoStartCursorResolver<Maybe<string>, TypeParent, Context>
+
+  endCursor?: PageInfoEndCursorResolver<Maybe<string>, TypeParent, Context>
+}
+
+export type PageInfoHasNextPageResolver<R = boolean, Parent = PageInfo, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type PageInfoHasPreviousPageResolver<
+  R = boolean,
+  Parent = PageInfo,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type PageInfoStartCursorResolver<
+  R = Maybe<string>,
+  Parent = PageInfo,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type PageInfoEndCursorResolver<
+  R = Maybe<string>,
+  Parent = PageInfo,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface ApplicationEdgeResolvers<Context = {}, TypeParent = ApplicationEdge> {
+  node?: ApplicationEdgeNodeResolver<Application, TypeParent, Context>
+
+  cursor?: ApplicationEdgeCursorResolver<string, TypeParent, Context>
+}
+
+export type ApplicationEdgeNodeResolver<
+  R = Application,
+  Parent = ApplicationEdge,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type ApplicationEdgeCursorResolver<
+  R = string,
+  Parent = ApplicationEdge,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface AggregateApplicationResolvers<Context = {}, TypeParent = AggregateApplication> {
+  count?: AggregateApplicationCountResolver<number, TypeParent, Context>
+}
+
+export type AggregateApplicationCountResolver<
+  R = number,
+  Parent = AggregateApplication,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface CandidateConnectionResolvers<Context = {}, TypeParent = CandidateConnection> {
+  pageInfo?: CandidateConnectionPageInfoResolver<PageInfo, TypeParent, Context>
+
+  edges?: CandidateConnectionEdgesResolver<CandidateEdge[], TypeParent, Context>
+
+  aggregate?: CandidateConnectionAggregateResolver<AggregateCandidate, TypeParent, Context>
+}
+
+export type CandidateConnectionPageInfoResolver<
+  R = PageInfo,
+  Parent = CandidateConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type CandidateConnectionEdgesResolver<
+  R = CandidateEdge[],
+  Parent = CandidateConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type CandidateConnectionAggregateResolver<
+  R = AggregateCandidate,
+  Parent = CandidateConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface CandidateEdgeResolvers<Context = {}, TypeParent = CandidateEdge> {
+  node?: CandidateEdgeNodeResolver<Candidate, TypeParent, Context>
+
+  cursor?: CandidateEdgeCursorResolver<string, TypeParent, Context>
+}
+
+export type CandidateEdgeNodeResolver<
+  R = Candidate,
+  Parent = CandidateEdge,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type CandidateEdgeCursorResolver<
+  R = string,
+  Parent = CandidateEdge,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface AggregateCandidateResolvers<Context = {}, TypeParent = AggregateCandidate> {
+  count?: AggregateCandidateCountResolver<number, TypeParent, Context>
+}
+
+export type AggregateCandidateCountResolver<
+  R = number,
+  Parent = AggregateCandidate,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface JobConnectionResolvers<Context = {}, TypeParent = JobConnection> {
+  pageInfo?: JobConnectionPageInfoResolver<PageInfo, TypeParent, Context>
+
+  edges?: JobConnectionEdgesResolver<JobEdge[], TypeParent, Context>
+
+  aggregate?: JobConnectionAggregateResolver<AggregateJob, TypeParent, Context>
+}
+
+export type JobConnectionPageInfoResolver<
+  R = PageInfo,
+  Parent = JobConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type JobConnectionEdgesResolver<
+  R = JobEdge[],
+  Parent = JobConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type JobConnectionAggregateResolver<
+  R = AggregateJob,
+  Parent = JobConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface JobEdgeResolvers<Context = {}, TypeParent = JobEdge> {
+  node?: JobEdgeNodeResolver<Job, TypeParent, Context>
+
+  cursor?: JobEdgeCursorResolver<string, TypeParent, Context>
+}
+
+export type JobEdgeNodeResolver<R = Job, Parent = JobEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type JobEdgeCursorResolver<R = string, Parent = JobEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface AggregateJobResolvers<Context = {}, TypeParent = AggregateJob> {
+  count?: AggregateJobCountResolver<number, TypeParent, Context>
+}
+
+export type AggregateJobCountResolver<R = number, Parent = AggregateJob, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface TagConnectionResolvers<Context = {}, TypeParent = TagConnection> {
+  pageInfo?: TagConnectionPageInfoResolver<PageInfo, TypeParent, Context>
+
+  edges?: TagConnectionEdgesResolver<TagEdge[], TypeParent, Context>
+
+  aggregate?: TagConnectionAggregateResolver<AggregateTag, TypeParent, Context>
+}
+
+export type TagConnectionPageInfoResolver<
+  R = PageInfo,
+  Parent = TagConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type TagConnectionEdgesResolver<
+  R = TagEdge[],
+  Parent = TagConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type TagConnectionAggregateResolver<
+  R = AggregateTag,
+  Parent = TagConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface TagEdgeResolvers<Context = {}, TypeParent = TagEdge> {
+  node?: TagEdgeNodeResolver<Tag, TypeParent, Context>
+
+  cursor?: TagEdgeCursorResolver<string, TypeParent, Context>
+}
+
+export type TagEdgeNodeResolver<R = Tag, Parent = TagEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type TagEdgeCursorResolver<R = string, Parent = TagEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface AggregateTagResolvers<Context = {}, TypeParent = AggregateTag> {
+  count?: AggregateTagCountResolver<number, TypeParent, Context>
+}
+
+export type AggregateTagCountResolver<R = number, Parent = AggregateTag, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface TaskConnectionResolvers<Context = {}, TypeParent = TaskConnection> {
+  pageInfo?: TaskConnectionPageInfoResolver<PageInfo, TypeParent, Context>
+
+  edges?: TaskConnectionEdgesResolver<TaskEdge[], TypeParent, Context>
+
+  aggregate?: TaskConnectionAggregateResolver<AggregateTask, TypeParent, Context>
+}
+
+export type TaskConnectionPageInfoResolver<
+  R = PageInfo,
+  Parent = TaskConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type TaskConnectionEdgesResolver<
+  R = TaskEdge[],
+  Parent = TaskConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type TaskConnectionAggregateResolver<
+  R = AggregateTask,
+  Parent = TaskConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface TaskEdgeResolvers<Context = {}, TypeParent = TaskEdge> {
+  node?: TaskEdgeNodeResolver<Task, TypeParent, Context>
+
+  cursor?: TaskEdgeCursorResolver<string, TypeParent, Context>
+}
+
+export type TaskEdgeNodeResolver<R = Task, Parent = TaskEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type TaskEdgeCursorResolver<R = string, Parent = TaskEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface AggregateTaskResolvers<Context = {}, TypeParent = AggregateTask> {
+  count?: AggregateTaskCountResolver<number, TypeParent, Context>
+}
+
+export type AggregateTaskCountResolver<R = number, Parent = AggregateTask, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface UserConnectionResolvers<Context = {}, TypeParent = UserConnection> {
+  pageInfo?: UserConnectionPageInfoResolver<PageInfo, TypeParent, Context>
+
+  edges?: UserConnectionEdgesResolver<UserEdge[], TypeParent, Context>
+
+  aggregate?: UserConnectionAggregateResolver<AggregateUser, TypeParent, Context>
+}
+
+export type UserConnectionPageInfoResolver<
+  R = PageInfo,
+  Parent = UserConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type UserConnectionEdgesResolver<
+  R = UserEdge[],
+  Parent = UserConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type UserConnectionAggregateResolver<
+  R = AggregateUser,
+  Parent = UserConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface UserEdgeResolvers<Context = {}, TypeParent = UserEdge> {
+  node?: UserEdgeNodeResolver<User, TypeParent, Context>
+
+  cursor?: UserEdgeCursorResolver<string, TypeParent, Context>
+}
+
+export type UserEdgeNodeResolver<R = User, Parent = UserEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type UserEdgeCursorResolver<R = string, Parent = UserEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface AggregateUserResolvers<Context = {}, TypeParent = AggregateUser> {
+  count?: AggregateUserCountResolver<number, TypeParent, Context>
+}
+
+export type AggregateUserCountResolver<R = number, Parent = AggregateUser, Context = {}> = Resolver<
   R,
   Parent,
   Context
@@ -9496,6 +10911,9 @@ export interface DeprecatedDirectiveArgs {
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<DateTime, any> {
   name: 'DateTime'
 }
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<Json, any> {
+  name: 'Json'
+}
 
 export interface IResolvers<Context = {}> {
   Query?: QueryResolvers<Context>
@@ -9507,6 +10925,7 @@ export interface IResolvers<Context = {}> {
   Candidate?: CandidateResolvers<Context>
   File?: FileResolvers<Context>
   Tag?: TagResolvers<Context>
+  Source?: SourceResolvers<Context>
   FieldInstance?: FieldInstanceResolvers<Context>
   Field?: FieldResolvers<Context>
   Comment?: CommentResolvers<Context>
@@ -9516,12 +10935,32 @@ export interface IResolvers<Context = {}> {
   Workflow?: WorkflowResolvers<Context>
   Invite?: InviteResolvers<Context>
   Location?: LocationResolvers<Context>
+  ApplicationConnection?: ApplicationConnectionResolvers<Context>
+  PageInfo?: PageInfoResolvers<Context>
+  ApplicationEdge?: ApplicationEdgeResolvers<Context>
+  AggregateApplication?: AggregateApplicationResolvers<Context>
+  CandidateConnection?: CandidateConnectionResolvers<Context>
+  CandidateEdge?: CandidateEdgeResolvers<Context>
+  AggregateCandidate?: AggregateCandidateResolvers<Context>
+  JobConnection?: JobConnectionResolvers<Context>
+  JobEdge?: JobEdgeResolvers<Context>
+  AggregateJob?: AggregateJobResolvers<Context>
+  TagConnection?: TagConnectionResolvers<Context>
+  TagEdge?: TagEdgeResolvers<Context>
+  AggregateTag?: AggregateTagResolvers<Context>
+  TaskConnection?: TaskConnectionResolvers<Context>
+  TaskEdge?: TaskEdgeResolvers<Context>
+  AggregateTask?: AggregateTaskResolvers<Context>
+  UserConnection?: UserConnectionResolvers<Context>
+  UserEdge?: UserEdgeResolvers<Context>
+  AggregateUser?: AggregateUserResolvers<Context>
   LocalType?: LocalTypeResolvers<Context>
   Toast?: ToastResolvers<Context>
   Mutation?: MutationResolvers<Context>
   AccessPayload?: AccessPayloadResolvers<Context>
   AuthPayload?: AuthPayloadResolvers<Context>
   DateTime?: GraphQLScalarType
+  Json?: GraphQLScalarType
 }
 
 export interface IDirectiveResolvers<Result> {

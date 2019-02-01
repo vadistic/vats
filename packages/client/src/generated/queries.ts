@@ -63,6 +63,16 @@ export interface CandidateProfileFixtureQuery_candidate_tags {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+export interface CandidateProfileFixtureQuery_candidate_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 export interface CandidateProfileFixtureQuery_candidate_fields {
@@ -107,12 +117,13 @@ export interface CandidateProfileFixtureQuery_candidate {
   firstName: string
   lastName: string
   avatar: CandidateProfileFixtureQuery_candidate_avatar | null
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
   resumesFile: CandidateProfileFixtureQuery_candidate_resumesFile[] | null
   coverLettersFile: CandidateProfileFixtureQuery_candidate_coverLettersFile[] | null
   tags: CandidateProfileFixtureQuery_candidate_tags[] | null
+  sources: CandidateProfileFixtureQuery_candidate_sources[] | null
   fields: CandidateProfileFixtureQuery_candidate_fields[] | null
   tasks: CandidateProfileFixtureQuery_candidate_tasks[] | null
   applications: CandidateProfileFixtureQuery_candidate_applications[] | null
@@ -173,6 +184,16 @@ export interface CandidateProfileFixtureIndexQuery_candidates_tags {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+export interface CandidateProfileFixtureIndexQuery_candidates_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 export interface CandidateProfileFixtureIndexQuery_candidates_fields {
@@ -217,12 +238,13 @@ export interface CandidateProfileFixtureIndexQuery_candidates {
   firstName: string
   lastName: string
   avatar: CandidateProfileFixtureIndexQuery_candidates_avatar | null
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
   resumesFile: CandidateProfileFixtureIndexQuery_candidates_resumesFile[] | null
   coverLettersFile: CandidateProfileFixtureIndexQuery_candidates_coverLettersFile[] | null
   tags: CandidateProfileFixtureIndexQuery_candidates_tags[] | null
+  sources: CandidateProfileFixtureIndexQuery_candidates_sources[] | null
   fields: CandidateProfileFixtureIndexQuery_candidates_fields[] | null
   tasks: CandidateProfileFixtureIndexQuery_candidates_tasks[] | null
   applications: CandidateProfileFixtureIndexQuery_candidates_applications[] | null
@@ -266,6 +288,7 @@ export interface UserPersonaFixtureIndexQuery_users {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   tasks: UserPersonaFixtureIndexQuery_users_tasks[] | null
   firstName: string
   lastName: string
@@ -314,6 +337,7 @@ export interface UserPersonaFixtureQuery_user {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   tasks: UserPersonaFixtureQuery_user_tasks[] | null
   firstName: string
   lastName: string
@@ -379,6 +403,16 @@ export interface TableFixtureQuery_candidates_tags {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+export interface TableFixtureQuery_candidates_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 export interface TableFixtureQuery_candidates_fields {
@@ -423,12 +457,13 @@ export interface TableFixtureQuery_candidates {
   firstName: string
   lastName: string
   avatar: TableFixtureQuery_candidates_avatar | null
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
   resumesFile: TableFixtureQuery_candidates_resumesFile[] | null
   coverLettersFile: TableFixtureQuery_candidates_coverLettersFile[] | null
   tags: TableFixtureQuery_candidates_tags[] | null
+  sources: TableFixtureQuery_candidates_sources[] | null
   fields: TableFixtureQuery_candidates_fields[] | null
   tasks: TableFixtureQuery_candidates_tasks[] | null
   applications: TableFixtureQuery_candidates_applications[] | null
@@ -527,6 +562,16 @@ export interface CandidateViewFixtureIndexQuery_candidates_tags {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+export interface CandidateViewFixtureIndexQuery_candidates_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 export interface CandidateViewFixtureIndexQuery_candidates_fields {
@@ -571,12 +616,13 @@ export interface CandidateViewFixtureIndexQuery_candidates {
   firstName: string
   lastName: string
   avatar: CandidateViewFixtureIndexQuery_candidates_avatar | null
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
   resumesFile: CandidateViewFixtureIndexQuery_candidates_resumesFile[] | null
   coverLettersFile: CandidateViewFixtureIndexQuery_candidates_coverLettersFile[] | null
   tags: CandidateViewFixtureIndexQuery_candidates_tags[] | null
+  sources: CandidateViewFixtureIndexQuery_candidates_sources[] | null
   fields: CandidateViewFixtureIndexQuery_candidates_fields[] | null
   tasks: CandidateViewFixtureIndexQuery_candidates_tasks[] | null
   applications: CandidateViewFixtureIndexQuery_candidates_applications[] | null
@@ -599,6 +645,7 @@ export interface JobViewFixtureIndexQuery_jobs_workspace {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   name: string
 }
 
@@ -630,10 +677,12 @@ export interface JobViewFixtureIndexQuery_jobs_comments {
 export interface JobViewFixtureIndexQuery_jobs_locations {
   __typename: 'Location'
   id: string
+  createdAt: any
+  updatedAt: any
   country: string
-  region: string
+  region: string | null
   city: string
-  zip: string
+  zip: string | null
 }
 
 export interface JobViewFixtureIndexQuery_jobs {
@@ -649,6 +698,8 @@ export interface JobViewFixtureIndexQuery_jobs {
   department: string | null
   locations: JobViewFixtureIndexQuery_jobs_locations[] | null
   name: string
+  excerpt: string | null
+  companyDescription: string | null
   description: string | null
   requirements: string | null
 }
@@ -703,6 +754,16 @@ export interface CandidateQuery_candidate_tags {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+export interface CandidateQuery_candidate_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 export interface CandidateQuery_candidate_fields {
@@ -747,12 +808,13 @@ export interface CandidateQuery_candidate {
   firstName: string
   lastName: string
   avatar: CandidateQuery_candidate_avatar | null
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
   resumesFile: CandidateQuery_candidate_resumesFile[] | null
   coverLettersFile: CandidateQuery_candidate_coverLettersFile[] | null
   tags: CandidateQuery_candidate_tags[] | null
+  sources: CandidateQuery_candidate_sources[] | null
   fields: CandidateQuery_candidate_fields[] | null
   tasks: CandidateQuery_candidate_tasks[] | null
   applications: CandidateQuery_candidate_applications[] | null
@@ -813,6 +875,16 @@ export interface CandidatesQuery_candidates_tags {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+export interface CandidatesQuery_candidates_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 export interface CandidatesQuery_candidates_fields {
@@ -857,12 +929,13 @@ export interface CandidatesQuery_candidates {
   firstName: string
   lastName: string
   avatar: CandidatesQuery_candidates_avatar | null
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
   resumesFile: CandidatesQuery_candidates_resumesFile[] | null
   coverLettersFile: CandidatesQuery_candidates_coverLettersFile[] | null
   tags: CandidatesQuery_candidates_tags[] | null
+  sources: CandidatesQuery_candidates_sources[] | null
   fields: CandidatesQuery_candidates_fields[] | null
   tasks: CandidatesQuery_candidates_tasks[] | null
   applications: CandidatesQuery_candidates_applications[] | null
@@ -889,6 +962,7 @@ export interface JobQuery_job_workspace {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   name: string
 }
 
@@ -920,10 +994,12 @@ export interface JobQuery_job_comments {
 export interface JobQuery_job_locations {
   __typename: 'Location'
   id: string
+  createdAt: any
+  updatedAt: any
   country: string
-  region: string
+  region: string | null
   city: string
-  zip: string
+  zip: string | null
 }
 
 export interface JobQuery_job {
@@ -939,6 +1015,8 @@ export interface JobQuery_job {
   department: string | null
   locations: JobQuery_job_locations[] | null
   name: string
+  excerpt: string | null
+  companyDescription: string | null
   description: string | null
   requirements: string | null
 }
@@ -963,6 +1041,7 @@ export interface JobsQuery_jobs_workspace {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   name: string
 }
 
@@ -994,10 +1073,12 @@ export interface JobsQuery_jobs_comments {
 export interface JobsQuery_jobs_locations {
   __typename: 'Location'
   id: string
+  createdAt: any
+  updatedAt: any
   country: string
-  region: string
+  region: string | null
   city: string
-  zip: string
+  zip: string | null
 }
 
 export interface JobsQuery_jobs {
@@ -1013,6 +1094,8 @@ export interface JobsQuery_jobs {
   department: string | null
   locations: JobsQuery_jobs_locations[] | null
   name: string
+  excerpt: string | null
+  companyDescription: string | null
   description: string | null
   requirements: string | null
 }
@@ -1083,6 +1166,7 @@ export interface UserNoNesting {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   firstName: string
   lastName: string
   email: string
@@ -1123,9 +1207,9 @@ export interface CandidateNoNesting {
   updatedAt: any
   firstName: string
   lastName: string
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
 }
 
 /* tslint:disable */
@@ -1159,6 +1243,23 @@ export interface TagNoNesting {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: SourceNoNesting
+// ====================================================
+
+export interface SourceNoNesting {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 /* tslint:disable */
@@ -1190,6 +1291,7 @@ export interface FieldNoNesting {
   updatedAt: any
   type: FieldType
   label: string
+  description: string | null
 }
 
 /* tslint:disable */
@@ -1239,6 +1341,8 @@ export interface JobNoNesting {
   type: JobType
   department: string | null
   name: string
+  excerpt: string | null
+  companyDescription: string | null
   description: string | null
   requirements: string | null
 }
@@ -1255,6 +1359,7 @@ export interface WorkspaceNoNesting {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   name: string
 }
 
@@ -1300,10 +1405,171 @@ export interface InviteNoNesting {
 export interface LocationNoNesting {
   __typename: 'Location'
   id: string
+  createdAt: any
+  updatedAt: any
   country: string
-  region: string
+  region: string | null
   city: string
-  zip: string
+  zip: string | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: PageInfoNoNesting
+// ====================================================
+
+export interface PageInfoNoNesting {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ApplicationEdgeNoNesting
+// ====================================================
+
+export interface ApplicationEdgeNoNesting {
+  __typename: 'ApplicationEdge'
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateApplicationNoNesting
+// ====================================================
+
+export interface AggregateApplicationNoNesting {
+  __typename: 'AggregateApplication'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CandidateEdgeNoNesting
+// ====================================================
+
+export interface CandidateEdgeNoNesting {
+  __typename: 'CandidateEdge'
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateCandidateNoNesting
+// ====================================================
+
+export interface AggregateCandidateNoNesting {
+  __typename: 'AggregateCandidate'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: JobEdgeNoNesting
+// ====================================================
+
+export interface JobEdgeNoNesting {
+  __typename: 'JobEdge'
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateJobNoNesting
+// ====================================================
+
+export interface AggregateJobNoNesting {
+  __typename: 'AggregateJob'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TagEdgeNoNesting
+// ====================================================
+
+export interface TagEdgeNoNesting {
+  __typename: 'TagEdge'
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateTagNoNesting
+// ====================================================
+
+export interface AggregateTagNoNesting {
+  __typename: 'AggregateTag'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TaskEdgeNoNesting
+// ====================================================
+
+export interface TaskEdgeNoNesting {
+  __typename: 'TaskEdge'
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateTaskNoNesting
+// ====================================================
+
+export interface AggregateTaskNoNesting {
+  __typename: 'AggregateTask'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: UserEdgeNoNesting
+// ====================================================
+
+export interface UserEdgeNoNesting {
+  __typename: 'UserEdge'
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateUserNoNesting
+// ====================================================
+
+export interface AggregateUserNoNesting {
+  __typename: 'AggregateUser'
+  count: number
 }
 
 /* tslint:disable */
@@ -1392,6 +1658,8 @@ export interface Application_job {
   type: JobType
   department: string | null
   name: string
+  excerpt: string | null
+  companyDescription: string | null
   description: string | null
   requirements: string | null
 }
@@ -1403,9 +1671,9 @@ export interface Application_candidate {
   updatedAt: any
   firstName: string
   lastName: string
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
 }
 
 export interface Application {
@@ -1441,6 +1709,7 @@ export interface DisqualificationInstance_createdBy {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   firstName: string
   lastName: string
   email: string
@@ -1509,6 +1778,7 @@ export interface User {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   tasks: User_tasks[] | null
   firstName: string
   lastName: string
@@ -1532,6 +1802,7 @@ export interface Task_owners {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   firstName: string
   lastName: string
   email: string
@@ -1548,9 +1819,9 @@ export interface Task_candidate {
   updatedAt: any
   firstName: string
   lastName: string
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
 }
 
 export interface Task {
@@ -1611,6 +1882,16 @@ export interface Candidate_tags {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+export interface Candidate_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 export interface Candidate_fields {
@@ -1655,12 +1936,13 @@ export interface Candidate {
   firstName: string
   lastName: string
   avatar: Candidate_avatar | null
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
   resumesFile: Candidate_resumesFile[] | null
   coverLettersFile: Candidate_coverLettersFile[] | null
   tags: Candidate_tags[] | null
+  sources: Candidate_sources[] | null
   fields: Candidate_fields[] | null
   tasks: Candidate_tasks[] | null
   applications: Candidate_applications[] | null
@@ -1698,6 +1980,23 @@ export interface Tag {
   createdAt: any
   updatedAt: any
   label: string
+  description: string | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Source
+// ====================================================
+
+export interface Source {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
 }
 
 /* tslint:disable */
@@ -1714,6 +2013,7 @@ export interface FieldInstance_field {
   updatedAt: any
   type: FieldType
   label: string
+  description: string | null
 }
 
 export interface FieldInstance {
@@ -1739,6 +2039,7 @@ export interface Field {
   updatedAt: any
   type: FieldType
   label: string
+  description: string | null
 }
 
 /* tslint:disable */
@@ -1753,6 +2054,7 @@ export interface Comment_createdBy {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   firstName: string
   lastName: string
   email: string
@@ -1809,6 +2111,7 @@ export interface Job_workspace {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   name: string
 }
 
@@ -1840,10 +2143,12 @@ export interface Job_comments {
 export interface Job_locations {
   __typename: 'Location'
   id: string
+  createdAt: any
+  updatedAt: any
   country: string
-  region: string
+  region: string | null
   city: string
-  zip: string
+  zip: string | null
 }
 
 export interface Job {
@@ -1859,6 +2164,8 @@ export interface Job {
   department: string | null
   locations: Job_locations[] | null
   name: string
+  excerpt: string | null
+  companyDescription: string | null
   description: string | null
   requirements: string | null
 }
@@ -1875,6 +2182,7 @@ export interface Workspace_users {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   firstName: string
   lastName: string
   email: string
@@ -1892,6 +2200,8 @@ export interface Workspace_jobs {
   type: JobType
   department: string | null
   name: string
+  excerpt: string | null
+  companyDescription: string | null
   description: string | null
   requirements: string | null
 }
@@ -1903,9 +2213,9 @@ export interface Workspace_candidates {
   updatedAt: any
   firstName: string
   lastName: string
-  metaCompany: string | null
-  metaHeadline: string | null
-  metaPosition: string | null
+  company: string | null
+  headline: string | null
+  position: string | null
 }
 
 export interface Workspace_workflows {
@@ -1926,14 +2236,6 @@ export interface Workspace_invites {
   expireAt: any
 }
 
-export interface Workspace_tags {
-  __typename: 'Tag'
-  id: string
-  createdAt: any
-  updatedAt: any
-  label: string
-}
-
 export interface Workspace {
   __typename: 'Workspace'
   id: string
@@ -1942,9 +2244,9 @@ export interface Workspace {
   users: Workspace_users[] | null
   jobs: Workspace_jobs[] | null
   candidates: Workspace_candidates[] | null
+  settings: any | null
   workflows: Workspace_workflows[] | null
   invites: Workspace_invites[] | null
-  tags: Workspace_tags[] | null
   name: string
 }
 
@@ -1981,6 +2283,7 @@ export interface Workflow_fields {
   updatedAt: any
   type: FieldType
   label: string
+  description: string | null
 }
 
 export interface Workflow {
@@ -2007,6 +2310,7 @@ export interface Invite_invitedBy {
   id: string
   createdAt: any
   updatedAt: any
+  settings: any | null
   firstName: string
   lastName: string
   email: string
@@ -2036,10 +2340,437 @@ export interface Invite {
 export interface Location {
   __typename: 'Location'
   id: string
+  createdAt: any
+  updatedAt: any
   country: string
-  region: string
+  region: string | null
   city: string
-  zip: string
+  zip: string | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ApplicationConnection
+// ====================================================
+
+export interface ApplicationConnection_pageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+export interface ApplicationConnection_edges {
+  __typename: 'ApplicationEdge'
+  cursor: string
+}
+
+export interface ApplicationConnection_aggregate {
+  __typename: 'AggregateApplication'
+  count: number
+}
+
+export interface ApplicationConnection {
+  __typename: 'ApplicationConnection'
+  pageInfo: ApplicationConnection_pageInfo
+  edges: (ApplicationConnection_edges | null)[]
+  aggregate: ApplicationConnection_aggregate
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: PageInfo
+// ====================================================
+
+export interface PageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ApplicationEdge
+// ====================================================
+
+export interface ApplicationEdge_node {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface ApplicationEdge {
+  __typename: 'ApplicationEdge'
+  node: ApplicationEdge_node
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateApplication
+// ====================================================
+
+export interface AggregateApplication {
+  __typename: 'AggregateApplication'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CandidateConnection
+// ====================================================
+
+export interface CandidateConnection_pageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+export interface CandidateConnection_edges {
+  __typename: 'CandidateEdge'
+  cursor: string
+}
+
+export interface CandidateConnection_aggregate {
+  __typename: 'AggregateCandidate'
+  count: number
+}
+
+export interface CandidateConnection {
+  __typename: 'CandidateConnection'
+  pageInfo: CandidateConnection_pageInfo
+  edges: (CandidateConnection_edges | null)[]
+  aggregate: CandidateConnection_aggregate
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CandidateEdge
+// ====================================================
+
+export interface CandidateEdge_node {
+  __typename: 'Candidate'
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  company: string | null
+  headline: string | null
+  position: string | null
+}
+
+export interface CandidateEdge {
+  __typename: 'CandidateEdge'
+  node: CandidateEdge_node
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateCandidate
+// ====================================================
+
+export interface AggregateCandidate {
+  __typename: 'AggregateCandidate'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: JobConnection
+// ====================================================
+
+export interface JobConnection_pageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+export interface JobConnection_edges {
+  __typename: 'JobEdge'
+  cursor: string
+}
+
+export interface JobConnection_aggregate {
+  __typename: 'AggregateJob'
+  count: number
+}
+
+export interface JobConnection {
+  __typename: 'JobConnection'
+  pageInfo: JobConnection_pageInfo
+  edges: (JobConnection_edges | null)[]
+  aggregate: JobConnection_aggregate
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: JobEdge
+// ====================================================
+
+export interface JobEdge_node {
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  type: JobType
+  department: string | null
+  name: string
+  excerpt: string | null
+  companyDescription: string | null
+  description: string | null
+  requirements: string | null
+}
+
+export interface JobEdge {
+  __typename: 'JobEdge'
+  node: JobEdge_node
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateJob
+// ====================================================
+
+export interface AggregateJob {
+  __typename: 'AggregateJob'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TagConnection
+// ====================================================
+
+export interface TagConnection_pageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+export interface TagConnection_edges {
+  __typename: 'TagEdge'
+  cursor: string
+}
+
+export interface TagConnection_aggregate {
+  __typename: 'AggregateTag'
+  count: number
+}
+
+export interface TagConnection {
+  __typename: 'TagConnection'
+  pageInfo: TagConnection_pageInfo
+  edges: (TagConnection_edges | null)[]
+  aggregate: TagConnection_aggregate
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TagEdge
+// ====================================================
+
+export interface TagEdge_node {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface TagEdge {
+  __typename: 'TagEdge'
+  node: TagEdge_node
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateTag
+// ====================================================
+
+export interface AggregateTag {
+  __typename: 'AggregateTag'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TaskConnection
+// ====================================================
+
+export interface TaskConnection_pageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+export interface TaskConnection_edges {
+  __typename: 'TaskEdge'
+  cursor: string
+}
+
+export interface TaskConnection_aggregate {
+  __typename: 'AggregateTask'
+  count: number
+}
+
+export interface TaskConnection {
+  __typename: 'TaskConnection'
+  pageInfo: TaskConnection_pageInfo
+  edges: (TaskConnection_edges | null)[]
+  aggregate: TaskConnection_aggregate
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TaskEdge
+// ====================================================
+
+export interface TaskEdge_node {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface TaskEdge {
+  __typename: 'TaskEdge'
+  node: TaskEdge_node
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateTask
+// ====================================================
+
+export interface AggregateTask {
+  __typename: 'AggregateTask'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: UserConnection
+// ====================================================
+
+export interface UserConnection_pageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+export interface UserConnection_edges {
+  __typename: 'UserEdge'
+  cursor: string
+}
+
+export interface UserConnection_aggregate {
+  __typename: 'AggregateUser'
+  count: number
+}
+
+export interface UserConnection {
+  __typename: 'UserConnection'
+  pageInfo: UserConnection_pageInfo
+  edges: (UserConnection_edges | null)[]
+  aggregate: UserConnection_aggregate
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: UserEdge
+// ====================================================
+
+export interface UserEdge_node {
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  settings: any | null
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
+}
+
+export interface UserEdge {
+  __typename: 'UserEdge'
+  node: UserEdge_node
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateUser
+// ====================================================
+
+export interface AggregateUser {
+  __typename: 'AggregateUser'
+  count: number
 }
 
 /* tslint:disable */
@@ -2103,30 +2834,29 @@ export interface Toast {
 //==============================================================
 
 export enum ApplicationType {
-  Disqualified = 'Disqualified',
-  Qualified = 'Qualified',
+  DISQUALIFIED = 'DISQUALIFIED',
+  QUALIFIED = 'QUALIFIED',
 }
 
 export enum FieldType {
-  Boolean = 'Boolean',
-  DateTime = 'DateTime',
-  Float = 'Float',
-  Int = 'Int',
-  Paragraph = 'Paragraph',
-  String = 'String',
-  Text = 'Text',
+  BOOLEAN = 'BOOLEAN',
+  DATETIME = 'DATETIME',
+  FLOAT = 'FLOAT',
+  INT = 'INT',
+  PARAGRAPH = 'PARAGRAPH',
+  TEXT = 'TEXT',
 }
 
 export enum JobType {
-  Archived = 'Archived',
-  Draft = 'Draft',
-  Published = 'Published',
+  ARCHIVED = 'ARCHIVED',
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
 }
 
 export enum StageType {
-  Final = 'Final',
-  New = 'New',
-  Pipeline = 'Pipeline',
+  FINAL = 'FINAL',
+  NEW = 'NEW',
+  PIPELINE = 'PIPELINE',
 }
 
 export enum ToastType {
@@ -2242,48 +2972,48 @@ export interface CandidateWhereInput {
   lastName_ends_with?: string | null
   lastName_not_ends_with?: string | null
   avatar?: FileWhereInput | null
-  metaCompany?: string | null
-  metaCompany_not?: string | null
-  metaCompany_in?: string[] | null
-  metaCompany_not_in?: string[] | null
-  metaCompany_lt?: string | null
-  metaCompany_lte?: string | null
-  metaCompany_gt?: string | null
-  metaCompany_gte?: string | null
-  metaCompany_contains?: string | null
-  metaCompany_not_contains?: string | null
-  metaCompany_starts_with?: string | null
-  metaCompany_not_starts_with?: string | null
-  metaCompany_ends_with?: string | null
-  metaCompany_not_ends_with?: string | null
-  metaHeadline?: string | null
-  metaHeadline_not?: string | null
-  metaHeadline_in?: string[] | null
-  metaHeadline_not_in?: string[] | null
-  metaHeadline_lt?: string | null
-  metaHeadline_lte?: string | null
-  metaHeadline_gt?: string | null
-  metaHeadline_gte?: string | null
-  metaHeadline_contains?: string | null
-  metaHeadline_not_contains?: string | null
-  metaHeadline_starts_with?: string | null
-  metaHeadline_not_starts_with?: string | null
-  metaHeadline_ends_with?: string | null
-  metaHeadline_not_ends_with?: string | null
-  metaPosition?: string | null
-  metaPosition_not?: string | null
-  metaPosition_in?: string[] | null
-  metaPosition_not_in?: string[] | null
-  metaPosition_lt?: string | null
-  metaPosition_lte?: string | null
-  metaPosition_gt?: string | null
-  metaPosition_gte?: string | null
-  metaPosition_contains?: string | null
-  metaPosition_not_contains?: string | null
-  metaPosition_starts_with?: string | null
-  metaPosition_not_starts_with?: string | null
-  metaPosition_ends_with?: string | null
-  metaPosition_not_ends_with?: string | null
+  company?: string | null
+  company_not?: string | null
+  company_in?: string[] | null
+  company_not_in?: string[] | null
+  company_lt?: string | null
+  company_lte?: string | null
+  company_gt?: string | null
+  company_gte?: string | null
+  company_contains?: string | null
+  company_not_contains?: string | null
+  company_starts_with?: string | null
+  company_not_starts_with?: string | null
+  company_ends_with?: string | null
+  company_not_ends_with?: string | null
+  headline?: string | null
+  headline_not?: string | null
+  headline_in?: string[] | null
+  headline_not_in?: string[] | null
+  headline_lt?: string | null
+  headline_lte?: string | null
+  headline_gt?: string | null
+  headline_gte?: string | null
+  headline_contains?: string | null
+  headline_not_contains?: string | null
+  headline_starts_with?: string | null
+  headline_not_starts_with?: string | null
+  headline_ends_with?: string | null
+  headline_not_ends_with?: string | null
+  position?: string | null
+  position_not?: string | null
+  position_in?: string[] | null
+  position_not_in?: string[] | null
+  position_lt?: string | null
+  position_lte?: string | null
+  position_gt?: string | null
+  position_gte?: string | null
+  position_contains?: string | null
+  position_not_contains?: string | null
+  position_starts_with?: string | null
+  position_not_starts_with?: string | null
+  position_ends_with?: string | null
+  position_not_ends_with?: string | null
   resumesFile_every?: FileWhereInput | null
   resumesFile_some?: FileWhereInput | null
   resumesFile_none?: FileWhereInput | null
@@ -2293,6 +3023,9 @@ export interface CandidateWhereInput {
   tags_every?: TagWhereInput | null
   tags_some?: TagWhereInput | null
   tags_none?: TagWhereInput | null
+  sources_every?: SourceWhereInput | null
+  sources_some?: SourceWhereInput | null
+  sources_none?: SourceWhereInput | null
   fields_every?: FieldInstanceWhereInput | null
   fields_some?: FieldInstanceWhereInput | null
   fields_none?: FieldInstanceWhereInput | null
@@ -2582,6 +3315,20 @@ export interface FieldWhereInput {
   label_not_starts_with?: string | null
   label_ends_with?: string | null
   label_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
   AND?: FieldWhereInput[] | null
   OR?: FieldWhereInput[] | null
   NOT?: FieldWhereInput[] | null
@@ -2806,6 +3553,34 @@ export interface JobWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  excerpt?: string | null
+  excerpt_not?: string | null
+  excerpt_in?: string[] | null
+  excerpt_not_in?: string[] | null
+  excerpt_lt?: string | null
+  excerpt_lte?: string | null
+  excerpt_gt?: string | null
+  excerpt_gte?: string | null
+  excerpt_contains?: string | null
+  excerpt_not_contains?: string | null
+  excerpt_starts_with?: string | null
+  excerpt_not_starts_with?: string | null
+  excerpt_ends_with?: string | null
+  excerpt_not_ends_with?: string | null
+  companyDescription?: string | null
+  companyDescription_not?: string | null
+  companyDescription_in?: string[] | null
+  companyDescription_not_in?: string[] | null
+  companyDescription_lt?: string | null
+  companyDescription_lte?: string | null
+  companyDescription_gt?: string | null
+  companyDescription_gte?: string | null
+  companyDescription_contains?: string | null
+  companyDescription_not_contains?: string | null
+  companyDescription_starts_with?: string | null
+  companyDescription_not_starts_with?: string | null
+  companyDescription_ends_with?: string | null
+  companyDescription_not_ends_with?: string | null
   description?: string | null
   description_not?: string | null
   description_in?: string[] | null
@@ -2858,6 +3633,22 @@ export interface LocationWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
   country?: string | null
   country_not?: string | null
   country_in?: string[] | null
@@ -2917,6 +3708,70 @@ export interface LocationWhereInput {
   AND?: LocationWhereInput[] | null
   OR?: LocationWhereInput[] | null
   NOT?: LocationWhereInput[] | null
+}
+
+export interface SourceWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[] | null
+  id_not_in?: string[] | null
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  createdAt?: any | null
+  createdAt_not?: any | null
+  createdAt_in?: any[] | null
+  createdAt_not_in?: any[] | null
+  createdAt_lt?: any | null
+  createdAt_lte?: any | null
+  createdAt_gt?: any | null
+  createdAt_gte?: any | null
+  updatedAt?: any | null
+  updatedAt_not?: any | null
+  updatedAt_in?: any[] | null
+  updatedAt_not_in?: any[] | null
+  updatedAt_lt?: any | null
+  updatedAt_lte?: any | null
+  updatedAt_gt?: any | null
+  updatedAt_gte?: any | null
+  label?: string | null
+  label_not?: string | null
+  label_in?: string[] | null
+  label_not_in?: string[] | null
+  label_lt?: string | null
+  label_lte?: string | null
+  label_gt?: string | null
+  label_gte?: string | null
+  label_contains?: string | null
+  label_not_contains?: string | null
+  label_starts_with?: string | null
+  label_not_starts_with?: string | null
+  label_ends_with?: string | null
+  label_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
+  AND?: SourceWhereInput[] | null
+  OR?: SourceWhereInput[] | null
+  NOT?: SourceWhereInput[] | null
 }
 
 export interface StageWhereInput {
@@ -3032,6 +3887,20 @@ export interface TagWhereInput {
   label_not_starts_with?: string | null
   label_ends_with?: string | null
   label_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[] | null
+  description_not_in?: string[] | null
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
   AND?: TagWhereInput[] | null
   OR?: TagWhereInput[] | null
   NOT?: TagWhereInput[] | null
@@ -3368,9 +4237,6 @@ export interface WorkspaceWhereInput {
   invites_every?: InviteWhereInput | null
   invites_some?: InviteWhereInput | null
   invites_none?: InviteWhereInput | null
-  tags_every?: TagWhereInput | null
-  tags_some?: TagWhereInput | null
-  tags_none?: TagWhereInput | null
   name?: string | null
   name_not?: string | null
   name_in?: string[] | null

@@ -1,68 +1,62 @@
 {
   "data": {
     "candidate": {
-      "id": "cjrfar2ug7c2i0a25vr7en5t3",
-      "createdAt": "2019-01-27T19:28:13.096Z",
-      "updatedAt": "2019-01-27T19:28:13.096Z",
-      "firstName": "Fredy",
-      "lastName": "Kulas",
-      "avatar": {
-        "id": "cjrfar2uo7c2j0a25a3hccig4",
-        "createdAt": "2019-01-27T19:28:13.096Z",
-        "updatedAt": "2019-01-27T19:28:13.096Z",
-        "size": 27500,
-        "type": "image/png",
-        "name": "Fredy-Kulas-profile-96x96",
-        "url": "https://api.adorable.io/avatars/96/Fredy.Kulas@hotmail.com.png",
-        "__typename": "File"
-      },
-      "metaCompany": "Walker, Schaefer and Runte",
-      "metaHeadline": "District",
-      "metaPosition": null,
+      "id": "cjrl1kfh5gd4p09020svhvjll",
+      "createdAt": "2019-01-31T19:57:43.385Z",
+      "updatedAt": "2019-01-31T19:57:43.385Z",
+      "firstName": "Willow",
+      "lastName": "Howell",
+      "avatar": null,
+      "company": "Boyle - Towne",
+      "headline": "Dynamic",
+      "position": "Chief Intranet Administrator",
       "resumesFile": [
         {
-          "id": "cjrfar2us7c2l0a25gafixjkx",
-          "createdAt": "2019-01-27T19:28:13.096Z",
-          "updatedAt": "2019-01-27T19:28:13.096Z",
-          "size": 4903539,
+          "id": "cjrl1kfhkgd4q0902yywy99lm",
+          "createdAt": "2019-01-31T19:57:43.385Z",
+          "updatedAt": "2019-01-31T19:57:43.385Z",
+          "size": 5413894,
           "type": "application/pdf",
-          "name": "Fredy-Kulas-resume-Fri Aug 10 2018 22:49:50 GMT+0200 (Central European Summer Time)",
-          "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=93c4f815-7d84-4fac-ba77-f2521ed2db0a",
+          "name": "Willow-Howell-resume-Mon Sep 24 2018 10:02:16 GMT+0200 (Central European Summer Time)",
+          "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=fe5cdee1-62fd-493a-a153-ec087c449b88",
           "__typename": "File"
         }
       ],
       "coverLettersFile": [],
       "tags": [
         {
-          "id": "cjrfaqwa3g7ib0a92udas9vgx",
-          "createdAt": "2019-01-27T19:28:04.587Z",
-          "updatedAt": "2019-01-27T19:28:04.587Z",
-          "label": "personal loan account",
-          "__typename": "Tag"
-        },
-        {
-          "id": "cjrfar0hl7c1f0a25eergn4nu",
-          "createdAt": "2019-01-27T19:28:10.040Z",
-          "updatedAt": "2019-01-27T19:28:10.040Z",
+          "id": "cjrl1jl20gckr09028w5v670w",
+          "createdAt": "2019-01-31T19:57:03.960Z",
+          "updatedAt": "2019-01-31T19:57:03.960Z",
           "label": "implementation",
+          "description": null,
           "__typename": "Tag"
         },
         {
-          "id": "cjrfar0qjg7ke0a92bvcbsxw0",
-          "createdAt": "2019-01-27T19:28:10.363Z",
-          "updatedAt": "2019-01-27T19:28:10.363Z",
-          "label": "reduced",
+          "id": "cjrl1jltzgcld0902pi8c4x6d",
+          "createdAt": "2019-01-31T19:57:04.967Z",
+          "updatedAt": "2019-01-31T19:57:04.967Z",
+          "label": "indexing",
+          "description": null,
           "__typename": "Tag"
         }
       ],
+      "sources": [],
       "fields": [],
       "tasks": [],
       "applications": [
         {
-          "createdAt": "2019-01-27T19:35:22.651Z",
-          "id": "cjrfb0aajgeyd0a9208irtox6",
-          "updatedAt": "2019-01-27T19:35:22.651Z",
-          "type": "Qualified",
+          "createdAt": "2019-01-31T20:02:48.640Z",
+          "id": "cjrl1qz0g8ny50a85qddcesw6",
+          "updatedAt": "2019-01-31T20:02:48.640Z",
+          "type": "QUALIFIED",
+          "__typename": "Application"
+        },
+        {
+          "createdAt": "2019-01-31T20:03:20.640Z",
+          "id": "cjrl1rnpc8oea0a85k9blknnp",
+          "updatedAt": "2019-01-31T20:03:20.640Z",
+          "type": "DISQUALIFIED",
           "__typename": "Application"
         }
       ],

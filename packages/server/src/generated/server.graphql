@@ -56,6 +56,25 @@ type Query {
     first: Int
     last: Int
   ): JobConnection!
+  source(where: SourceWhereUniqueInput!): Source
+  sources(
+    where: SourceWhereInput
+    orderBy: SourceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Source]!
+  sourcesConnection(
+    where: SourceWhereInput
+    orderBy: SourceOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): SourceConnection!
   tag(where: TagWhereUniqueInput!): Tag
   tags(
     where: TagWhereInput
@@ -136,6 +155,14 @@ type Mutation {
   updateJob(data: JobUpdateInput!, where: JobWhereUniqueInput!): Job
   upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
   deleteJob(where: JobWhereUniqueInput!): Job
+  createSource(data: SourceCreateInput!): Source!
+  updateSource(data: SourceUpdateInput!, where: SourceWhereUniqueInput!): Source
+  upsertSource(
+    where: SourceWhereUniqueInput!
+    create: SourceCreateInput!
+    update: SourceUpdateInput!
+  ): Source!
+  deleteSource(where: SourceWhereUniqueInput!): Source
   createTag(data: TagCreateInput!): Tag!
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
@@ -744,6 +771,101 @@ type JobConnection {
   aggregate: AggregateJob!
 }
 
+type Source {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  label: String!
+  description: String
+}
+
+input SourceWhereUniqueInput {
+  id: ID
+}
+
+input SourceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  label: String
+  label_not: String
+  label_in: [String!]
+  label_not_in: [String!]
+  label_lt: String
+  label_lte: String
+  label_gt: String
+  label_gte: String
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_not_starts_with: String
+  label_ends_with: String
+  label_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [SourceWhereInput!]
+  OR: [SourceWhereInput!]
+  NOT: [SourceWhereInput!]
+}
+
+enum SourceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  label_ASC
+  label_DESC
+  description_ASC
+  description_DESC
+}
+
+type SourceConnection {
+  pageInfo: PageInfo!
+  edges: [SourceEdge]!
+  aggregate: AggregateSource!
+}
+
 type Tag {
   id: ID!
   createdAt: DateTime!
@@ -1235,6 +1357,16 @@ input JobUpdateInput {
   requirements: String
 }
 
+input SourceCreateInput {
+  label: String!
+  description: String
+}
+
+input SourceUpdateInput {
+  label: String
+  description: String
+}
+
 input TagCreateInput {
   label: String!
   description: String
@@ -1533,91 +1665,6 @@ enum FileOrderByInput {
   name_DESC
   url_ASC
   url_DESC
-}
-
-type Source {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  label: String!
-  description: String
-}
-
-input SourceWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  label: String
-  label_not: String
-  label_in: [String!]
-  label_not_in: [String!]
-  label_lt: String
-  label_lte: String
-  label_gt: String
-  label_gte: String
-  label_contains: String
-  label_not_contains: String
-  label_starts_with: String
-  label_not_starts_with: String
-  label_ends_with: String
-  label_not_ends_with: String
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  AND: [SourceWhereInput!]
-  OR: [SourceWhereInput!]
-  NOT: [SourceWhereInput!]
-}
-
-enum SourceOrderByInput {
-  id_ASC
-  id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  label_ASC
-  label_DESC
-  description_ASC
-  description_DESC
 }
 
 type FieldInstance {
@@ -2128,6 +2175,15 @@ type JobEdge {
 }
 
 type AggregateJob {
+  count: Int!
+}
+
+type SourceEdge {
+  node: Source!
+  cursor: String!
+}
+
+type AggregateSource {
   count: Int!
 }
 
@@ -2886,15 +2942,6 @@ input FileCreateInput {
 input FileWhereUniqueInput {
   id: ID
   url: String
-}
-
-input SourceCreateInput {
-  label: String!
-  description: String
-}
-
-input SourceWhereUniqueInput {
-  id: ID
 }
 
 input FieldInstanceCreateInput {

@@ -36,6 +36,7 @@ export const UserNoNestingFragment = gql`
     id
     createdAt
     updatedAt
+    settings
     firstName
     lastName
     email
@@ -64,9 +65,9 @@ export const CandidateNoNestingFragment = gql`
     updatedAt
     firstName
     lastName
-    metaCompany
-    metaHeadline
-    metaPosition
+    company
+    headline
+    position
   }
 `
 
@@ -88,6 +89,17 @@ export const TagNoNestingFragment = gql`
     createdAt
     updatedAt
     label
+    description
+  }
+`
+
+export const SourceNoNestingFragment = gql`
+  fragment SourceNoNesting on Source {
+    id
+    createdAt
+    updatedAt
+    label
+    description
   }
 `
 
@@ -107,6 +119,7 @@ export const FieldNoNestingFragment = gql`
     updatedAt
     type
     label
+    description
   }
 `
 
@@ -138,6 +151,8 @@ export const JobNoNestingFragment = gql`
     type
     department
     name
+    excerpt
+    companyDescription
     description
     requirements
   }
@@ -148,6 +163,7 @@ export const WorkspaceNoNestingFragment = gql`
     id
     createdAt
     updatedAt
+    settings
     name
   }
 `
@@ -175,10 +191,93 @@ export const InviteNoNestingFragment = gql`
 export const LocationNoNestingFragment = gql`
   fragment LocationNoNesting on Location {
     id
+    createdAt
+    updatedAt
     country
     region
     city
     zip
+  }
+`
+
+export const PageInfoNoNestingFragment = gql`
+  fragment PageInfoNoNesting on PageInfo {
+    hasNextPage
+    hasPreviousPage
+    startCursor
+    endCursor
+  }
+`
+
+export const ApplicationEdgeNoNestingFragment = gql`
+  fragment ApplicationEdgeNoNesting on ApplicationEdge {
+    cursor
+  }
+`
+
+export const AggregateApplicationNoNestingFragment = gql`
+  fragment AggregateApplicationNoNesting on AggregateApplication {
+    count
+  }
+`
+
+export const CandidateEdgeNoNestingFragment = gql`
+  fragment CandidateEdgeNoNesting on CandidateEdge {
+    cursor
+  }
+`
+
+export const AggregateCandidateNoNestingFragment = gql`
+  fragment AggregateCandidateNoNesting on AggregateCandidate {
+    count
+  }
+`
+
+export const JobEdgeNoNestingFragment = gql`
+  fragment JobEdgeNoNesting on JobEdge {
+    cursor
+  }
+`
+
+export const AggregateJobNoNestingFragment = gql`
+  fragment AggregateJobNoNesting on AggregateJob {
+    count
+  }
+`
+
+export const TagEdgeNoNestingFragment = gql`
+  fragment TagEdgeNoNesting on TagEdge {
+    cursor
+  }
+`
+
+export const AggregateTagNoNestingFragment = gql`
+  fragment AggregateTagNoNesting on AggregateTag {
+    count
+  }
+`
+
+export const TaskEdgeNoNestingFragment = gql`
+  fragment TaskEdgeNoNesting on TaskEdge {
+    cursor
+  }
+`
+
+export const AggregateTaskNoNestingFragment = gql`
+  fragment AggregateTaskNoNesting on AggregateTask {
+    count
+  }
+`
+
+export const UserEdgeNoNestingFragment = gql`
+  fragment UserEdgeNoNesting on UserEdge {
+    cursor
+  }
+`
+
+export const AggregateUserNoNestingFragment = gql`
+  fragment AggregateUserNoNesting on AggregateUser {
+    count
   }
 `
 
@@ -270,6 +369,7 @@ export const UserFragment = gql`
     id
     createdAt
     updatedAt
+    settings
     tasks {
       ...TaskNoNesting
     }
@@ -319,9 +419,9 @@ export const CandidateFragment = gql`
     avatar {
       ...FileNoNesting
     }
-    metaCompany
-    metaHeadline
-    metaPosition
+    company
+    headline
+    position
     resumesFile {
       ...FileNoNesting
     }
@@ -330,6 +430,9 @@ export const CandidateFragment = gql`
     }
     tags {
       ...TagNoNesting
+    }
+    sources {
+      ...SourceNoNesting
     }
     fields {
       ...FieldInstanceNoNesting
@@ -349,6 +452,7 @@ export const CandidateFragment = gql`
   ${FileNoNestingFragment}
   ${FileNoNestingFragment}
   ${TagNoNestingFragment}
+  ${SourceNoNestingFragment}
   ${FieldInstanceNoNestingFragment}
   ${TaskNoNestingFragment}
   ${ApplicationNoNestingFragment}
@@ -373,6 +477,17 @@ export const TagFragment = gql`
     createdAt
     updatedAt
     label
+    description
+  }
+`
+
+export const SourceFragment = gql`
+  fragment Source on Source {
+    id
+    createdAt
+    updatedAt
+    label
+    description
   }
 `
 
@@ -397,6 +512,7 @@ export const FieldFragment = gql`
     updatedAt
     type
     label
+    description
   }
 `
 
@@ -452,6 +568,8 @@ export const JobFragment = gql`
       ...LocationNoNesting
     }
     name
+    excerpt
+    companyDescription
     description
     requirements
   }
@@ -477,14 +595,12 @@ export const WorkspaceFragment = gql`
     candidates {
       ...CandidateNoNesting
     }
+    settings
     workflows {
       ...WorkflowNoNesting
     }
     invites {
       ...InviteNoNesting
-    }
-    tags {
-      ...TagNoNesting
     }
     name
   }
@@ -494,7 +610,6 @@ export const WorkspaceFragment = gql`
   ${CandidateNoNestingFragment}
   ${WorkflowNoNestingFragment}
   ${InviteNoNestingFragment}
-  ${TagNoNestingFragment}
 `
 
 export const WorkflowFragment = gql`
@@ -538,10 +653,231 @@ export const InviteFragment = gql`
 export const LocationFragment = gql`
   fragment Location on Location {
     id
+    createdAt
+    updatedAt
     country
     region
     city
     zip
+  }
+`
+
+export const ApplicationConnectionFragment = gql`
+  fragment ApplicationConnection on ApplicationConnection {
+    pageInfo {
+      ...PageInfoNoNesting
+    }
+    edges {
+      ...ApplicationEdgeNoNesting
+    }
+    aggregate {
+      ...AggregateApplicationNoNesting
+    }
+  }
+
+  ${PageInfoNoNestingFragment}
+  ${ApplicationEdgeNoNestingFragment}
+  ${AggregateApplicationNoNestingFragment}
+`
+
+export const PageInfoFragment = gql`
+  fragment PageInfo on PageInfo {
+    hasNextPage
+    hasPreviousPage
+    startCursor
+    endCursor
+  }
+`
+
+export const ApplicationEdgeFragment = gql`
+  fragment ApplicationEdge on ApplicationEdge {
+    node {
+      ...ApplicationNoNesting
+    }
+    cursor
+  }
+
+  ${ApplicationNoNestingFragment}
+`
+
+export const AggregateApplicationFragment = gql`
+  fragment AggregateApplication on AggregateApplication {
+    count
+  }
+`
+
+export const CandidateConnectionFragment = gql`
+  fragment CandidateConnection on CandidateConnection {
+    pageInfo {
+      ...PageInfoNoNesting
+    }
+    edges {
+      ...CandidateEdgeNoNesting
+    }
+    aggregate {
+      ...AggregateCandidateNoNesting
+    }
+  }
+
+  ${PageInfoNoNestingFragment}
+  ${CandidateEdgeNoNestingFragment}
+  ${AggregateCandidateNoNestingFragment}
+`
+
+export const CandidateEdgeFragment = gql`
+  fragment CandidateEdge on CandidateEdge {
+    node {
+      ...CandidateNoNesting
+    }
+    cursor
+  }
+
+  ${CandidateNoNestingFragment}
+`
+
+export const AggregateCandidateFragment = gql`
+  fragment AggregateCandidate on AggregateCandidate {
+    count
+  }
+`
+
+export const JobConnectionFragment = gql`
+  fragment JobConnection on JobConnection {
+    pageInfo {
+      ...PageInfoNoNesting
+    }
+    edges {
+      ...JobEdgeNoNesting
+    }
+    aggregate {
+      ...AggregateJobNoNesting
+    }
+  }
+
+  ${PageInfoNoNestingFragment}
+  ${JobEdgeNoNestingFragment}
+  ${AggregateJobNoNestingFragment}
+`
+
+export const JobEdgeFragment = gql`
+  fragment JobEdge on JobEdge {
+    node {
+      ...JobNoNesting
+    }
+    cursor
+  }
+
+  ${JobNoNestingFragment}
+`
+
+export const AggregateJobFragment = gql`
+  fragment AggregateJob on AggregateJob {
+    count
+  }
+`
+
+export const TagConnectionFragment = gql`
+  fragment TagConnection on TagConnection {
+    pageInfo {
+      ...PageInfoNoNesting
+    }
+    edges {
+      ...TagEdgeNoNesting
+    }
+    aggregate {
+      ...AggregateTagNoNesting
+    }
+  }
+
+  ${PageInfoNoNestingFragment}
+  ${TagEdgeNoNestingFragment}
+  ${AggregateTagNoNestingFragment}
+`
+
+export const TagEdgeFragment = gql`
+  fragment TagEdge on TagEdge {
+    node {
+      ...TagNoNesting
+    }
+    cursor
+  }
+
+  ${TagNoNestingFragment}
+`
+
+export const AggregateTagFragment = gql`
+  fragment AggregateTag on AggregateTag {
+    count
+  }
+`
+
+export const TaskConnectionFragment = gql`
+  fragment TaskConnection on TaskConnection {
+    pageInfo {
+      ...PageInfoNoNesting
+    }
+    edges {
+      ...TaskEdgeNoNesting
+    }
+    aggregate {
+      ...AggregateTaskNoNesting
+    }
+  }
+
+  ${PageInfoNoNestingFragment}
+  ${TaskEdgeNoNestingFragment}
+  ${AggregateTaskNoNestingFragment}
+`
+
+export const TaskEdgeFragment = gql`
+  fragment TaskEdge on TaskEdge {
+    node {
+      ...TaskNoNesting
+    }
+    cursor
+  }
+
+  ${TaskNoNestingFragment}
+`
+
+export const AggregateTaskFragment = gql`
+  fragment AggregateTask on AggregateTask {
+    count
+  }
+`
+
+export const UserConnectionFragment = gql`
+  fragment UserConnection on UserConnection {
+    pageInfo {
+      ...PageInfoNoNesting
+    }
+    edges {
+      ...UserEdgeNoNesting
+    }
+    aggregate {
+      ...AggregateUserNoNesting
+    }
+  }
+
+  ${PageInfoNoNestingFragment}
+  ${UserEdgeNoNestingFragment}
+  ${AggregateUserNoNestingFragment}
+`
+
+export const UserEdgeFragment = gql`
+  fragment UserEdge on UserEdge {
+    node {
+      ...UserNoNesting
+    }
+    cursor
+  }
+
+  ${UserNoNestingFragment}
+`
+
+export const AggregateUserFragment = gql`
+  fragment AggregateUser on AggregateUser {
+    count
   }
 `
 

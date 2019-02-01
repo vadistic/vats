@@ -11,7 +11,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "yarn typecheck && yarn lint && yarn format",
     "env": "env-cmd .env",
-    "gen:server": "yarn env graphql get-schema",
+    "gen:server": "yarn env graphql get-schema -p server",
     "gen:client:sdl": "yarn ts-node --project './scripts/tsconfig.json' scripts/client-sdl",
     "gen:client:resolvers": "gql-gen --config codegen.yml",
     "gen:client:frag": "yarn env graphql generate-fragments",

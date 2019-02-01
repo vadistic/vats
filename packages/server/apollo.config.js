@@ -2,7 +2,7 @@ require('dotenv').config()
 
 module.exports = {
   service: {
-    name: process.env.ENGINE_SERVICE_NAME,
+    name: 'vats-server-1',
     localSchemaFile: 'src/generated/server.graphql',
   },
   engine: {

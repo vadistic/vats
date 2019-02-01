@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { CandidateFragment } from '../../../generated/fragments'
 import {
@@ -7,6 +7,7 @@ import {
   CandidateProfileFixtureQuery,
   CandidateProfileFixtureQueryVariables,
 } from '../../../generated/queries'
+import { random } from '../../../utils'
 import { CandidateContext } from '../../../views'
 import { CandidateProfile } from '../candidate-profile'
 
@@ -15,11 +16,13 @@ export const CandidateProfileLiveFixture: React.FC = () => {
     candidateProfileFixtureIndexQuery,
   )
 
-  if (!indexData || !indexData.candidates[0]) {
+  const [index, setIndex] = useState(random(10))
+
+  if (!indexData || !indexData.candidates[index]) {
     return null
   }
 
-  const candidate = indexData.candidates[0]
+  const candidate = indexData.candidates[index]
 
   const id = (candidate && candidate.id) || ''
 
@@ -31,6 +34,8 @@ export const CandidateProfileLiveFixture: React.FC = () => {
   if (!data || !data.candidate) {
     return null
   }
+
+  console.log(data)
 
   return (
     <CandidateContext.Provider value={data.candidate}>
@@ -51,7 +56,7 @@ const candidateProfileFixtureQuery = gql`
 
 const candidateProfileFixtureIndexQuery = gql`
   query CandidateProfileFixtureIndexQuery {
-    candidates(first: 1) {
+    candidates(first: 10) {
       ...Candidate
     }
   }
