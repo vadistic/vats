@@ -33,6 +33,7 @@ import {
   Toggle,
 } from 'office-ui-fabric-react'
 import React from 'react'
+import { Omit } from '../../utils'
 
 export interface IFieldSpreadProps<V> {
   value: V
@@ -77,8 +78,7 @@ export const mapFieldToTextField = <V extends string>([field, fieldMeta]: UseFie
   }
 }
 
-export type FormikTextFieldProps = IFieldProps &
-  Exclude<ITextFieldProps, TextFieldInjectedPropNames>
+export type FormikTextFieldProps = IFieldProps & Omit<ITextFieldProps, TextFieldInjectedPropNames>
 
 export const FormikTextField: React.FC<FormikTextFieldProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext()
@@ -107,7 +107,7 @@ export const mapFieldToToggle = <V extends boolean>([field, fieldMeta]: UseField
   }
 }
 
-export type FormikToggleProps = IFieldProps & Exclude<IToggleProps, ToggleInjectedPropNames>
+export type FormikToggleProps = IFieldProps & Omit<IToggleProps, ToggleInjectedPropNames>
 
 export const FormikToggle: React.FC<FormikToggleProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext()
@@ -137,7 +137,7 @@ export const mapFieldToCheckbox = <V extends boolean>([field, fieldMeta]: UseFie
   }
 }
 
-export type FormikCheckboxProps = IFieldProps & Exclude<ICheckboxProps, CheckboxInjectedPropNames>
+export type FormikCheckboxProps = IFieldProps & Omit<ICheckboxProps, CheckboxInjectedPropNames>
 
 export const FormikCheckbox: React.FC<FormikCheckboxProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext<{ [name: string]: boolean }>()
@@ -203,7 +203,7 @@ export const mapFieldToSpinButton = <V extends string>(
 }
 
 export type FromikSpinButtonProps = IFieldProps &
-  Exclude<ISpinButtonProps, SpinButtonInjectedPropNames>
+  Omit<ISpinButtonProps, SpinButtonInjectedPropNames>
 
 export const FormikSpinButton: React.FC<FromikSpinButtonProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext<{ [name: string]: number }>()
@@ -233,7 +233,7 @@ export const mapFieldToSlider = <V extends number>([field, fieldMeta]: UseField<
   }
 }
 
-export type FormikSliderProps = IFieldProps & Exclude<ISliderProps, SliderInjectedPropNames>
+export type FormikSliderProps = IFieldProps & Omit<ISliderProps, SliderInjectedPropNames>
 
 export const FormikSlider: React.FC<FormikSliderProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext<{ [name: string]: number }>()
@@ -264,7 +264,7 @@ export const mapFieldToRating = <V extends number>([field, fieldMeta]: UseField<
   }
 }
 
-export type FormikRatingProps = IFieldProps & Exclude<IRatingProps, RatingInjectedPropNames>
+export type FormikRatingProps = IFieldProps & Omit<IRatingProps, RatingInjectedPropNames>
 
 export const FormikRating: React.FC<IFieldProps & IRatingProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext<{ [name: string]: number }>()
@@ -296,7 +296,7 @@ export const mapFieldToChoiceGroup = <V extends string>([field, fieldMeta]: UseF
 }
 
 export type FormikChoiceGroupProps = IFieldProps &
-  Exclude<IChoiceGroupProps, ChoiceGroupInjectedPropNames>
+  Omit<IChoiceGroupProps, ChoiceGroupInjectedPropNames>
 
 export const FormikChoiceGroup: React.FC<FormikChoiceGroupProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext<{ [name: string]: string }>()
@@ -361,7 +361,7 @@ export const mapFieldToDropdown = <V extends string | number | string[] | number
   }
 }
 
-export type FormikDropdownProps = IFieldProps & Exclude<IDropdownProps, DropdownInjectedPropNames>
+export type FormikDropdownProps = IFieldProps & Omit<IDropdownProps, DropdownInjectedPropNames>
 
 export const FormikDropdown: React.FC<FormikDropdownProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext<{ [name: string]: string }>()
