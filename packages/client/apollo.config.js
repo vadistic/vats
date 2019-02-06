@@ -1,7 +1,8 @@
-require('dotenv').config()
+require('./scripts/env-config')
 
 module.exports = {
   client: {
+    service: 'vats-client',
     service: 'vats-server1',
     clientOnlyDirectives: ['connection', 'type'],
     clientSchemaDirectives: ['client', 'rest'],
