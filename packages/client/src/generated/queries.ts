@@ -633,6 +633,10 @@ export interface CandidateViewFixtureIndexQuery {
   candidates: (CandidateViewFixtureIndexQuery_candidates | null)[]
 }
 
+export interface CandidateViewFixtureIndexQueryVariables {
+  first?: number | null
+}
+
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -706,6 +710,10 @@ export interface JobViewFixtureIndexQuery_jobs {
 
 export interface JobViewFixtureIndexQuery {
   jobs: (JobViewFixtureIndexQuery_jobs | null)[]
+}
+
+export interface JobViewFixtureIndexQueryVariables {
+  first?: number | null
 }
 
 /* tslint:disable */
@@ -1106,6 +1114,7 @@ export interface JobsQuery {
 
 export interface JobsQueryVariables {
   where?: JobWhereInput | null
+  orderBy?: JobOrderByInput | null
 }
 
 /* tslint:disable */
@@ -2845,6 +2854,29 @@ export enum FieldType {
   INT = 'INT',
   PARAGRAPH = 'PARAGRAPH',
   TEXT = 'TEXT',
+}
+
+export enum JobOrderByInput {
+  companyDescription_ASC = 'companyDescription_ASC',
+  companyDescription_DESC = 'companyDescription_DESC',
+  createdAt_ASC = 'createdAt_ASC',
+  createdAt_DESC = 'createdAt_DESC',
+  department_ASC = 'department_ASC',
+  department_DESC = 'department_DESC',
+  description_ASC = 'description_ASC',
+  description_DESC = 'description_DESC',
+  excerpt_ASC = 'excerpt_ASC',
+  excerpt_DESC = 'excerpt_DESC',
+  id_ASC = 'id_ASC',
+  id_DESC = 'id_DESC',
+  name_ASC = 'name_ASC',
+  name_DESC = 'name_DESC',
+  requirements_ASC = 'requirements_ASC',
+  requirements_DESC = 'requirements_DESC',
+  type_ASC = 'type_ASC',
+  type_DESC = 'type_DESC',
+  updatedAt_ASC = 'updatedAt_ASC',
+  updatedAt_DESC = 'updatedAt_DESC',
 }
 
 export enum JobType {

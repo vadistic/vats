@@ -28,7 +28,7 @@ const Mutation: IMutation = {
 
     const toastQuery = gql`
       query ToastsQuery {
-        toasts {
+        toasts @client {
           ...Toast
         }
       }
