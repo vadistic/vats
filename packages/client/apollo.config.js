@@ -2,10 +2,8 @@ require('./scripts/env-config')
 
 module.exports = {
   client: {
-    service: 'vats-client',
+    name: 'vats-client',
     service: 'vats-server1',
-    clientOnlyDirectives: ['connection', 'type'],
-    clientSchemaDirectives: ['client', 'rest'],
     includes: ['src/**/*.{ts,tsx}'],
     excludes: ['src/generated/*.graphql'],
   },
