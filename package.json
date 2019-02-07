@@ -6,5 +6,6 @@
   "repository": "https://github.com/vadistic/vats",
   "author": "vadistic <vadistic@gmail.com>",
   "license": "No license",
-  "private": true
+  "private": true,
+  "dependencies": {}
 }

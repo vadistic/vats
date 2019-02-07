@@ -13,7 +13,7 @@ export const mutableSortByProp = <T, Prop extends string>(
   prop: Prop,
 ) => arr.sort((elA, elB) => direction * compareFn(elA[prop], elB[prop]))
 
-export const mutableSortByGetter = <T, Prop extends string>(
+export const mutableSortByGetter = <T>(
   arr: T[],
   direction: SortDirection,
   getter: (element: T) => string | number | null,

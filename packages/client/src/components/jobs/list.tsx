@@ -1,9 +1,9 @@
 import { css } from '@emotion/core'
-import { FocusZone, FocusZoneDirection, GroupedList, List } from 'office-ui-fabric-react'
+import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
 import { Job, JobType } from '../../generated/queries'
 import { styled } from '../../styles'
-import { JobsContext } from '../../views'
+import { JobsContext } from './context'
 
 export interface IJobListItem {
   item: Job
