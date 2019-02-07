@@ -1,7 +1,7 @@
 import { getRoutes } from './utils'
 
 // first level children are views
-export const routesConfig = {
+const routesConfig = {
   home: {
     path: '',
   },
