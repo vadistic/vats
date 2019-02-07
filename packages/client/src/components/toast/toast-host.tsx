@@ -22,7 +22,7 @@ export const ToastHost: React.FC = () => {
 
 export const toastHostQuery = gql`
   query ToastHostQuery {
-    toasts {
+    toasts @client {
       ...Toast
     }
   }

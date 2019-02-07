@@ -1,24 +1,38 @@
 import gql from 'graphql-tag'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { JobFragment } from '../../generated/fragments'
+import { JobViewFixtureIndexQuery } from '../../generated/queries'
+import { random } from '../../utils'
 import { JobView } from '../job'
 
-export const JobViewFixture: React.FC = () => {
-  const { data } = useQuery(jobViewFixtureIndexQuery)
+const RANDOM_POOL = 10
 
-  if (!data || !data.jobs[0]) {
+export const JobViewFixture: React.FC = () => {
+  const { data } = useQuery<JobViewFixtureIndexQuery>(jobViewFixtureIndexQuery, {
+    variables: { first: RANDOM_POOL },
+  })
+
+  const index = random(RANDOM_POOL)
+
+  if (!data) {
     return null
   }
 
-  const id = data.jobs[0].id
+  const job = data.jobs[index]
+
+  if (!job) {
+    return null
+  }
+
+  const id = job.id
 
   return <JobView id={id} />
 }
 
 const jobViewFixtureIndexQuery = gql`
-  query JobViewFixtureIndexQuery {
-    jobs(first: 1) {
+  query JobViewFixtureIndexQuery($first: Int = 1) {
+    jobs(first: $first) {
       ...Job
     }
   }

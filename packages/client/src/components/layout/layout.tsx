@@ -12,7 +12,7 @@ const layoutStyles = (theme: ITheme) => css`
   display: grid;
   grid-template-columns: ${theme.sizes.ms} calc(100% - ${theme.sizes.ms});
 
-  background-color: ${theme.semanticColors.bodyBackground};
+  background-color: ${theme.palette.neutralLighterAlt};
 `
 
 export const Layout: React.FC = ({ children }) => (

@@ -8,6 +8,5 @@ export interface IDevViewProps extends RouteComponentProps {}
 export const DevView: React.FC<IDevViewProps> = () => (
   <>
     <h1>Dev</h1>
-    <Router basepath={routes.dev.basepath}>{/* // noop */}</Router>
   </>
 )
