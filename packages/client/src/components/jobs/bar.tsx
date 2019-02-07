@@ -13,10 +13,11 @@ export const JobsBar: React.FC<IJobsBarProps> = () => {
     key: 'sort-by-' + enumValue,
     onClick: () => dispatch({ type: JobActionType.SortBy, sortBy: enumValue }),
   })
+  // TODO: sorting menu as Callout component!
 
   const items: ICommandBarItemProps[] = [
     {
-      text: `Sort by ${JobsSortDisplayNamesMap[state.local.sortBy]}`,
+      text: `Sort: ${JobsSortDisplayNamesMap[state.local.sortBy]}`,
       key: 'sort',
       split: true,
       iconProps: {

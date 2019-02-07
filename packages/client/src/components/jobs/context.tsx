@@ -34,7 +34,6 @@ export enum JobsSortBy {
   UpdatedAt = 'updatedAt',
   // custom
   Applications = 'applications',
-  Location = 'location',
 }
 
 type TJobsSortDisplayNamesMap = { [K in JobsSortBy]: string }
@@ -44,8 +43,7 @@ export const JobsSortDisplayNamesMap: TJobsSortDisplayNamesMap = {
   [JobsSortBy.Department]: 'department',
   [JobsSortBy.CreatedAt]: 'create date',
   [JobsSortBy.UpdatedAt]: 'update date',
-  [JobsSortBy.Applications]: 'application',
-  [JobsSortBy.Location]: 'location',
+  [JobsSortBy.Applications]: 'applications',
 }
 
 export const jobsSorter = (data: JobsQuery, state: IJobsState): Job[] => {
@@ -54,11 +52,6 @@ export const jobsSorter = (data: JobsQuery, state: IJobsState): Job[] => {
     case JobsSortBy.Applications:
       return mutableSortByGetter(jobs, state.local.sortDirection, job =>
         job.applications ? job.applications.length : null,
-      )
-    // TODO: evaluate if sorting by city of first location makes any sense
-    case JobsSortBy.Location:
-      return mutableSortByGetter(jobs, state.local.sortDirection, job =>
-        job.locations && job.locations[0] ? job.locations[0].city : null,
       )
     default:
       return mutableSortByProp(jobs, state.local.sortDirection, state.local.sortBy)

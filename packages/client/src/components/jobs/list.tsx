@@ -3,6 +3,7 @@ import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-rea
 import React, { useContext } from 'react'
 import { Job, JobType } from '../../generated/queries'
 import { styled } from '../../styles'
+import { Link } from '../link'
 import { JobsContext } from './context'
 
 export interface IJobListItem {
@@ -29,14 +30,21 @@ export const JobListItemCard = styled.div<IJobListItem>(
   },
 )
 
-export const JobListItem: React.FC<IJobListItem> = ({ item }) => (
-  <JobListItemCard item={item}>
-    <h3>{item.name}</h3>
-    <h4>{item.department}</h4>
-    <p>{item.type}</p>
-    <span>Applications: {item.applications && item.applications.length}</span>
-  </JobListItemCard>
-)
+export const JobListItem: React.FC<IJobListItem> = ({ item }) => {
+  // TODO: get from app settings
+  const openJobSurface = true
+
+  return (
+    <JobListItemCard item={item}>
+      <Link plain={true} to={openJobSurface ? item.id : `/job/${item.id}`}>
+        <h3>{item.name}</h3>
+      </Link>
+      <h4>{item.department}</h4>
+      <p>{item.type}</p>
+      <span>Applications: {item.applications && item.applications.length}</span>
+    </JobListItemCard>
+  )
+}
 
 export interface IJobsListProps {}
 

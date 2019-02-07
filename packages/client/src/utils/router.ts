@@ -1,61 +1,43 @@
 import { capitalise } from './random'
+import { NonUndefined } from './types'
 
 /*
  * config types
  */
 
+export interface IRoutesConfigMap {
+  [name: string]: IRouteConfig
+}
+
 interface IRouteConfig {
   path: string
-  children: IRoutesConfigMap
-}
-
-interface ISubRouteConfig {
-  path: string
-  children?: never
-}
-
-interface IRoutesConfigMap {
-  [name: string]: IRouteConfig | ISubRouteConfig
+  children?: IRoutesConfigMap
 }
 
 /*
  * and result routes
  */
 
-interface ISharedRoute {
+interface IRoute<
+  T extends IRouteConfig,
+  Children extends IRoutesConfigMap | undefined = T['children']
+> {
   path: string
   url: string
   key: string
   name: string
-}
-
-interface ISubRoute extends ISharedRoute {
-  basepath: never
-  children: never
-}
-
-interface IRoute<T = IRoutesMap> extends ISharedRoute {
   basepath: string
-  children: RoutesMap<WithRouteIndicies<T>['children']>
+  children: Children extends undefined ? never : RoutesMap<NonUndefined<Children>>
 }
 
+/**
+ * util types for recursive fn
+ */
 interface IRoutesMap {
-  [name: string]: ISubRoute | IRoute
+  [name: string]: IRoute<IRouteConfig>
 }
 
-// hack, but only thing that allow recursive, conditional & strict transform
-interface IRouteIndicies {
-  path: unknown
-  basepath: unknown
-  url: unknown
-  key: string
-  name: unknown
-  children: unknown
-}
-
-type WithRouteIndicies<T> = T & IRouteIndicies
-
-export type RoutesMap<T> = { [K in keyof T]: T[K] extends IRouteConfig ? IRoute<T[K]> : ISubRoute }
+export type RoutesMap<T extends IRoutesConfigMap> = { [K in keyof T]: IRoute<T[K]> }
 
 export const getRoutes = <T extends IRoutesConfigMap>(rootConfig: T) => {
   const recursiveRoutes = (children: IRoutesConfigMap, parentUrl: string) => {

@@ -1,11 +1,13 @@
-import { RouteComponentProps } from '@reach/router'
+import { RouteComponentProps, Router } from '@reach/router'
 import gql from 'graphql-tag'
 import React, { useMemo } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { JobsContext, JobsList, jobsSorter, useJobsReducer } from '../components'
+import { JobSurface } from '../components/job'
 import { JobsBar } from '../components/jobs/bar'
 import { JobFragment } from '../generated/fragments'
 import { JobsQuery, JobsQueryVariables } from '../generated/queries'
+import { routes } from '../routes'
 
 export interface IJobsViewProps extends RouteComponentProps {}
 
@@ -25,10 +27,12 @@ export const JobsView: React.FC<IJobsViewProps> = () => {
   }
 
   const jobs = useMemo(() => jobsSorter(data, state), [data, state])
-
   return (
     <>
       <JobsContext.Provider value={{ jobs, dispatch, state }}>
+        <Router basepath={routes.jobs.basepath} primary={false}>
+          <JobSurface path={routes.jobs.children.jobSurface.path} />
+        </Router>
         <JobsBar />
         <JobsList />
       </JobsContext.Provider>
