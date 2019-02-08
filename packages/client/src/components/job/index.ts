@@ -1,2 +1,2 @@
 export * from './surface'
-export * from './profile'
+export * from './view'

@@ -5,7 +5,7 @@ import React, { useContext, useState } from 'react'
 import { Candidate } from '../../generated/resolvers'
 import { ITheme } from '../../styles'
 import { getLeafPath } from '../../utils'
-import { CandidateContext } from '../../views'
+import { CandidateContext } from './context'
 import { DisplayField, ProfileImage } from './fields'
 
 export const topSectionStyles = (theme: ITheme) => css`
@@ -43,7 +43,7 @@ export const topSectionStyles = (theme: ITheme) => css`
 
 export const TopSection: React.FC = () => {
   const { initialValues: form } = useFormikContext<Candidate>()
-  const candidate = useContext(CandidateContext)
+  const { candidate } = useContext(CandidateContext)
 
   const [disabled, setDisabled] = useState(true)
 

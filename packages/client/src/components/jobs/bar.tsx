@@ -1,7 +1,9 @@
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
 import { capitalise, SortDirection } from '../../utils'
-import { JobActionType, JobsContext, JobsSortBy, JobsSortDisplayNamesMap } from './context'
+import { JobsContext } from './context'
+import { JobActionType } from './reducer'
+import { JobsSortBy, JobsSortDisplayNamesMap } from './sort'
 
 export interface IJobsBarProps {}
 

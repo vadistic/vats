@@ -9,7 +9,7 @@ export interface IJobSurfaceProps extends RouteComponentProps {
   id?: string
 }
 
-export const JobSurface: React.FC<IJobSurfaceProps> = ({ children, navigate, id }) => {
+export const JobSurface: React.FC<IJobSurfaceProps> = ({ navigate, id }) => {
   const handleDismiss = () => {
     if (navigate) {
       navigate('..')

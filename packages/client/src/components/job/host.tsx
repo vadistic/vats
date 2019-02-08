@@ -3,7 +3,8 @@ import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { JobFragment } from '../../generated/fragments'
 import { JobQuery, JobQueryVariables } from '../../generated/queries'
-import { IJobContextInitOptions, JobContext, useJobReducer } from './context'
+import { IJobContextInitOptions, JobContext } from './context'
+import { useJobReducer } from './reducer'
 
 export interface IJobHostProps {
   initOptions: IJobContextInitOptions
@@ -17,13 +18,14 @@ export const JobHost: React.FC<IJobHostProps> = ({ initOptions, children }) => {
   })
 
   if (!data) {
+    console.error(`JobHost: query returned undefined`)
     return null
   }
 
   const job = data.job
 
   if (job === null) {
-    console.error(`JobHost: data fetch error/ job not found jobId(${initOptions.id})`)
+    console.error(`JobHost: data fetch error/ job not found. ID: ${initOptions.id}`)
     // TODO: handle it
     return null
   }

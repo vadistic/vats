@@ -4,11 +4,11 @@ import React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from './apollo'
-import { Layout, Router } from './components'
+import { CandidatesView, CandidateView, JobsView, JobView, Layout, Router } from './components'
 import { routes } from './routes'
 import { theme } from './styles'
 import { StateInspector } from './utils'
-import { CandidatesView, CandidateView, DevView, JobsView, JobView } from './views'
+import { DevView } from './views'
 
 export class App extends React.Component {
   render() {
