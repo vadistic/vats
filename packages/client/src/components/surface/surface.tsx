@@ -51,6 +51,7 @@ export const Surface: React.FC<ISurfaceProps> = ({
 
   const inner = <Suspense fallback={<SurfaceFallback />}>{children}</Suspense>
 
+  // TODO: mayby only panels?
   const renderModal = () => (
     <Modal onDismissed={onDismissed} onDismiss={handleDissmiss} isOpen={open} isBlocking={true}>
       {inner}

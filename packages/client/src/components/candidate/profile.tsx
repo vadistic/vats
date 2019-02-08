@@ -1,14 +1,14 @@
 import { css } from '@emotion/core'
-import { FormikProvider, useFormik } from 'formik'
-import { IImageProps } from 'office-ui-fabric-react'
+import { IButtonProps, IconButton } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
-import { Candidate } from '../../generated/queries'
+import { Editable } from '../editable'
 import { CandidateContext } from './context'
+import { CandidateActionType } from './reducer'
 import { TopSection } from './top-section'
 
-export interface IProfileImageProps extends IImageProps {
-  avatar: Candidate['avatar']
-}
+const EditButton: React.FC<IButtonProps> = props => (
+  <IconButton iconProps={{ iconName: 'Edit' }} {...props} />
+)
 
 export const candidateProfileStyles = () => css`
   width: 100%;
@@ -21,21 +21,22 @@ export const candidateProfileStyles = () => css`
 `
 
 export const CandidateProfile: React.FC = () => {
+  const { candidate, state, dispatch } = useContext(CandidateContext)
+
   const handleSubmit = () => {
     // noop
   }
 
-  const { candidate } = useContext(CandidateContext)
-
-  const formik = useFormik({ initialValues: candidate, onSubmit: handleSubmit })
+  const toggleEdit = () => {
+    dispatch({ type: CandidateActionType.Edit })
+  }
 
   return (
-    <FormikProvider value={formik}>
-      <div css={candidateProfileStyles}>
-        <h2>
-          {candidate.firstName} {candidate.lastName}
-        </h2>
-      </div>
-    </FormikProvider>
+    <div css={candidateProfileStyles}>
+      <EditButton onClick={toggleEdit} />
+      <Editable onSubmit={handleSubmit} initialValues={candidate} editable={state.local.editable}>
+        <TopSection />
+      </Editable>
+    </div>
   )
 }

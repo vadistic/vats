@@ -33,7 +33,7 @@ export const getIn = <State extends any, Paths extends Array<string | number>>(
  * util for safely building nested properties paths (for formik)
  * TODO: maybe change void error type, but it seems most semantic (since void === error)
  */
-type CheckPath<State extends any, Paths extends any[]> = Head<Paths> extends keyof State
+export type CheckPath<State extends any, Paths extends any[]> = Head<Paths> extends keyof State
   ? {
       0: string
       1: CheckPath<State[Head<Paths>], Tail<Paths>>
@@ -42,7 +42,7 @@ type CheckPath<State extends any, Paths extends any[]> = Head<Paths> extends key
 
 type Leaf = string | number | number[] | string[] | boolean | undefined | []
 
-type CheckLeafPath<State extends any, Paths extends any[]> = Head<Paths> extends keyof State
+export type CheckLeafPath<State extends any, Paths extends any[]> = Head<Paths> extends keyof State
   ? {
       0: State[Head<Paths>] extends Leaf ? string : never
       1: CheckPath<State[Head<Paths>], Tail<Paths>>
@@ -60,3 +60,8 @@ export const getPath = <S, P extends string[]>(state: S, ...paths: P) =>
  */
 export const getLeafPath = <S, P extends string[]>(state: S, ...paths: P) =>
   (paths.join('.') as unknown) as CheckLeafPath<S, P>
+
+/**
+ *  and now reversing lodash style paths :/
+ */
+export const getInByPath = (state: object, path: string) => getIn(state, ...path.split('.'))

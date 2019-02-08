@@ -1,12 +1,12 @@
 import { css } from '@emotion/core'
-import { useFormikContext } from 'formik'
-import { IconButton } from 'office-ui-fabric-react'
-import React, { useContext, useState } from 'react'
-import { Candidate } from '../../generated/resolvers'
+import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useIntl } from '../../i18n'
 import { ITheme } from '../../styles'
 import { getLeafPath } from '../../utils'
+import { DisplayTextField } from '../editable'
 import { CandidateContext } from './context'
-import { DisplayField, ProfileImage } from './fields'
+import { ProfileImage } from './fields'
 
 export const topSectionStyles = (theme: ITheme) => css`
   display: flex;
@@ -42,33 +42,39 @@ export const topSectionStyles = (theme: ITheme) => css`
 `
 
 export const TopSection: React.FC = () => {
-  const { initialValues: form } = useFormikContext<Candidate>()
   const { candidate } = useContext(CandidateContext)
 
-  const [disabled, setDisabled] = useState(true)
-
-  const toggle = () => {
-    setDisabled(!disabled)
-  }
+  const { intl } = useIntl()
 
   return (
     <section css={topSectionStyles}>
       <form>
-        <DisplayField className="name" name={getLeafPath(form, 'firstName')} disabled={disabled} />
-        <DisplayField className="name" name={getLeafPath(form, 'lastName')} disabled={disabled} />
+        <DisplayTextField
+          className="name"
+          name={getLeafPath(candidate, 'firstName')}
+          placeholder={intl(undefined, 'candidate', 'firstName')}
+        />
+        <DisplayTextField
+          className="name"
+          name={getLeafPath(candidate, 'lastName')}
+          placeholder={intl(undefined, 'candidate', 'firstName')}
+        />
 
-        <DisplayField className="company" name={getLeafPath(form, 'company')} disabled={disabled} />
-        <DisplayField
+        <DisplayTextField
           className="company"
-          name={getLeafPath(form, 'position')}
-          disabled={disabled}
+          name={getLeafPath(candidate, 'company')}
+          placeholder={intl(undefined, 'candidate', 'company')}
         />
-        <DisplayField
+        <DisplayTextField
           className="company"
-          name={getLeafPath(form, 'headline')}
-          disabled={disabled}
+          name={getLeafPath(candidate, 'position')}
+          placeholder={intl(undefined, 'candidate', 'position')}
         />
-        {disabled && <IconButton iconProps={{ iconName: 'Edit' }} onClick={toggle} />}
+        <DisplayTextField
+          className="company"
+          name={getLeafPath(candidate, 'headline')}
+          placeholder={intl(undefined, 'candidate', 'headline')}
+        />
       </form>
       <div>
         <figure>

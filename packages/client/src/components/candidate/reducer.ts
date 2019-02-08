@@ -4,6 +4,8 @@ import { ICandidateReducerInitArg, ICandidateState, init } from './context'
 
 export enum CandidateActionType {
   Reset = 'RESET',
+  Edit = 'EDIT',
+  Submit = 'SUBMIT',
   Noop = 'NOOP',
 }
 
@@ -15,14 +17,18 @@ export type ICandidateActions =
       type: CandidateActionType.Reset
       initArg: ICandidateReducerInitArg
     }
+  | {
+      type: CandidateActionType.Edit
+      editable?: boolean
+    }
 
 export const candidateReducer = produce<ICandidateState, [ICandidateActions]>((draft, action) => {
   switch (action.type) {
     case CandidateActionType.Reset:
-      console.log('candidate reset')
-      console.log(draft.variables.where.id, action.initArg.id)
-
       return init(action.initArg)
+    case CandidateActionType.Edit:
+      draft.local.editable = action.editable || !draft.local.editable
+      return
     default:
       // noop
       return

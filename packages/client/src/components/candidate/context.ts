@@ -14,7 +14,9 @@ export interface ICandidateState {
   variables: {
     where: CandidateQueryVariables['where']
   }
-  local: {}
+  local: {
+    editable: boolean
+  }
 }
 
 export interface ICandidateReducerInitArg {
@@ -27,5 +29,7 @@ export const init = ({ id }: ICandidateReducerInitArg): ICandidateState => ({
       id,
     },
   },
-  local: {},
+  local: {
+    editable: false,
+  },
 })
