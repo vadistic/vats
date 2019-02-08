@@ -27,7 +27,7 @@ export const JobViewFixture: React.FC = () => {
 
   const id = job.id
 
-  return <JobView id={id} />
+  return <JobView path={id} />
 }
 
 const jobViewFixtureIndexQuery = gql`

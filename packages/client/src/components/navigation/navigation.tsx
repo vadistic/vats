@@ -1,4 +1,4 @@
-import { navigate } from '@reach/router'
+import { Location, navigate } from '@reach/router'
 import { INavLink, INavLinkGroup, INavProps, Nav } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 
@@ -34,14 +34,24 @@ export const Navigation: React.FC<INavigationProps> = ({ groups }) => {
   }
 
   return (
-    <div css={navigationStyles}>
-      <h3 style={{ margin: '20px' }}>Logo</h3>
-      <Nav
-        groups={groups || [mainGroup]}
-        onLinkClick={onLinkClick}
-        selectedKey={active.url}
-        expandButtonAriaLabel={'Expand or collapse'}
-      />
-    </div>
+    <Location>
+      {({ location }) => {
+        // TODO: what about nested?
+        const keyRegex = /\/[a-z]+/g
+        const match = keyRegex.exec(location.pathname)
+
+        return (
+          <div css={navigationStyles}>
+            <h3 style={{ margin: '20px' }}>Logo</h3>
+            <Nav
+              groups={groups || [mainGroup]}
+              onLinkClick={onLinkClick}
+              selectedKey={match ? match[0] : undefined}
+              expandButtonAriaLabel={'Expand or collapse'}
+            />
+          </div>
+        )
+      }}
+    </Location>
   )
 }

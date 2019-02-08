@@ -1,5 +1,11 @@
-import { IModalProps, Modal, Panel, PanelType } from 'office-ui-fabric-react'
-import React, { useState } from 'react'
+import { FocusTrapZone, IModalProps, Modal, Panel, PanelType } from 'office-ui-fabric-react'
+import React, { Suspense, useMemo, useState } from 'react'
+
+const SurfaceFallback: React.FC = () => {
+  console.log('Surface suspense')
+
+  return <p>Loading surface</p>
+}
 
 export interface ISurfaceProps {
   onDismiss: () => void
@@ -14,7 +20,7 @@ export enum SurfaceType {
 export const Surface: React.FC<ISurfaceProps> = ({
   children,
   onDismiss: onDismissed,
-  surfaceType = SurfaceType.Modal,
+  surfaceType = SurfaceType.Panel,
 }) => {
   const [open, setOpen] = useState(true)
 
@@ -23,27 +29,37 @@ export const Surface: React.FC<ISurfaceProps> = ({
     setOpen(false)
   }
 
-  if (surfaceType === SurfaceType.Modal) {
-    return (
-      <Modal onDismissed={onDismissed} onDismiss={handleDissmiss} isOpen={open} isBlocking={true}>
-        {children}
-      </Modal>
-    )
-  }
+  const inner = (
+    <Suspense fallback={<SurfaceFallback />}>
+      <FocusTrapZone>{children}</FocusTrapZone>
+    </Suspense>
+  )
+
+  const renderModal = () => (
+    <Modal onDismissed={onDismissed} onDismiss={handleDissmiss} isOpen={open} isBlocking={true}>
+      {inner}
+    </Modal>
+  )
+
+  const renderPanel = () => (
+    <Panel
+      onDismissed={onDismissed}
+      onDismiss={handleDissmiss}
+      isOpen={open}
+      type={PanelType.medium}
+      isBlocking={false}
+      isLightDismiss={false}
+    >
+      <FocusTrapZone>{inner}</FocusTrapZone>
+    </Panel>
+  )
 
   if (surfaceType === SurfaceType.Panel) {
-    return (
-      <Panel
-        onDismissed={onDismissed}
-        onDismiss={handleDissmiss}
-        isOpen={open}
-        type={PanelType.medium}
-        isBlocking={false}
-        isLightDismiss={false}
-      >
-        {children}
-      </Panel>
-    )
+    return renderPanel()
+  }
+
+  if (surfaceType === SurfaceType.Modal) {
+    return renderModal()
   }
 
   return null

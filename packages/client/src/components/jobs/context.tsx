@@ -105,4 +105,4 @@ export const initalState: IJobsState = {
 }
 
 export const useJobsReducer = () =>
-  useInspectedReducer(jobsReducer, initalState, undefined as any, 'JOBS_VIEW')
+  useInspectedReducer(jobsReducer, initalState, undefined as any, 'JOBS_CONTEXT')

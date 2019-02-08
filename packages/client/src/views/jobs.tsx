@@ -23,7 +23,8 @@ export const JobsView: React.FC<IJobsViewProps> = () => {
   }
 
   if (data.jobs.length === 0) {
-    return <p>Jobs not found</p>
+    // TODO: handle it
+    return null
   }
 
   const jobs = useMemo(() => jobsSorter(data, state), [data, state])
