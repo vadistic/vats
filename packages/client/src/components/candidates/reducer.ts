@@ -19,4 +19,4 @@ export const candidatesReducer = produce<ICandidatesState, [ICandidatesActions]>
 )
 
 export const useCandidatesReducer = () =>
-  useInspectedReducer(candidatesReducer, initalState, undefined as any, 'CANDIDATES_CONTEXT')
+  useInspectedReducer(candidatesReducer, initalState, state => state, 'CANDIDATES_CONTEXT')

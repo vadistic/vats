@@ -1,17 +1,19 @@
 import gql from 'graphql-tag'
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { CandidateFragment } from '../../generated/fragments'
 import { CandidateQuery, CandidateQueryVariables } from '../../generated/queries'
-import { CandidateContext, ICandidateContextInitOptions } from './context'
-import { useCandidateReducer } from './reducer'
+import { CandidateContext, ICandidateReducerInitArg } from './context'
+import { CandidateActionType, useCandidateReducer } from './reducer'
 
 export interface ICandidateHostProps {
-  // TODO:
-  initOptions: ICandidateContextInitOptions
+  initArg: ICandidateReducerInitArg
 }
 
-export const CandidateHost: React.FC<ICandidateHostProps> = ({ initOptions, children }) => {
+export const CandidateHost: React.FC<ICandidateHostProps> = ({
+  initArg: initOptions,
+  children,
+}) => {
   const [state, dispatch] = useCandidateReducer(initOptions)
 
   const { data } = useQuery<CandidateQuery, CandidateQueryVariables>(candidateQuery, {

@@ -8,13 +8,28 @@ const routesConfig: IRoutesConfigMap = {
   jobs: {
     path: 'jobs',
     children: {
-      jobSurface: {
-        path: ':id',
+      list: {
+        path: 'list',
+        children: {
+          surface: {
+            path: ':id',
+          },
+        },
       },
     },
   },
   candidates: {
     path: 'candidates',
+    children: {
+      table: {
+        path: 'table',
+        children: {
+          surface: {
+            path: ':id',
+          },
+        },
+      },
+    },
   },
   job: {
     path: 'job',

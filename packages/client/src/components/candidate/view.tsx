@@ -18,7 +18,7 @@ export const CandidateView: React.FC<ICandidateViewProps> = ({ id }) => {
 
   return (
     <Suspense fallback={CandidateViewFallback}>
-      <CandidateHost initOptions={{ id }}>
+      <CandidateHost initArg={{ id }}>
         <h1>Candidate View</h1>
       </CandidateHost>
     </Suspense>

@@ -34,10 +34,9 @@ export const jobsReducer = produce<IJobsState, [IJobsActions]>((draft, action) =
       draft.local.sortDirection = action.sortDirection || draft.local.sortDirection * -1
       return
     default:
-      // noop
       return
   }
 })
 
 export const useJobsReducer = () =>
-  useInspectedReducer(jobsReducer, initalState, undefined as any, 'JOBS_CONTEXT')
+  useInspectedReducer(jobsReducer, initalState, state => state, 'JOBS_CONTEXT')

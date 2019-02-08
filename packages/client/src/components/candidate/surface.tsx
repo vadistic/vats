@@ -1,5 +1,6 @@
 import { RouteComponentProps } from '@reach/router'
 import React from 'react'
+import { routes } from '../../routes'
 import { Surface } from '../surface'
 import { CandidateHost } from './host'
 import { CandidateProfile } from './profile'
@@ -16,14 +17,22 @@ export const CandidateSurface: React.FC<ICandidateSurfaceProps> = ({ navigate, i
     }
   }
 
+  const handleExpand = () => {
+    if (navigate) {
+      navigate('/' + routes.candidate.basepath + '/' + id)
+    }
+  }
+
   if (!id) {
     console.error('CandidateSurface: No id provided')
     return null
   }
 
+  console.log(id)
+
   return (
-    <Surface onDismiss={handleDismiss}>
-      <CandidateHost initOptions={{ id }}>
+    <Surface onDismiss={handleDismiss} onExpand={handleExpand}>
+      <CandidateHost initArg={{ id }}>
         <CandidateProfile />
       </CandidateHost>
     </Surface>

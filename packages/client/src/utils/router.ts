@@ -48,10 +48,9 @@ export const getRoutes = <T extends IRoutesConfigMap>(rootConfig: T) => {
       _children[key].url = url
       _children[key].key = url
       _children[key].name = capitalise(key)
+      _children[key].basepath = val.path
 
       if (val.children) {
-        // transform path/basepath and traverse all children
-        _children[key].basepath = val.path
         _children[key].path = `${val.path}/*`
         _children[key].children = recursiveRoutes(val.children, url)
       }

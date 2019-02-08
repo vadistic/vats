@@ -12122,9 +12122,9 @@ regjsparser@^0.6.0:
   dependencies:
     jsesc "~0.5.0"
 
-reinspect@vadistic/reinspect#reinspect-v0.4.3-gitpkg:
-  version "0.4.3"
-  resolved "https://codeload.github.com/vadistic/reinspect/tar.gz/411426809cbbb78aea6de420d6a98f5641c6d67b"
+reinspect@vadistic/reinspect#reinspect-v0.0.3-test-gitpkg:
+  version "0.0.3-test"
+  resolved "https://codeload.github.com/vadistic/reinspect/tar.gz/aaf6d617692e1144ab5fe247b003d6a9409bbbc0"
   dependencies:
     redux "^4.0.1"
 

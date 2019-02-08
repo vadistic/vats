@@ -1,4 +1,4 @@
-import { AnyTypename, DeepAnyTypename, IStringIndexSignature, NonUndefined } from './types'
+import { DeepAnyTypename } from './types'
 
 export const isArrEmpty = (arr: Array<unknown>): arr is [] => arr.length === 0
 
@@ -10,3 +10,6 @@ export const filterNull = <T>(arr: T[]) =>
   arr.filter(el => el && el !== null) as Array<NonNullable<T>>
 
 export const hasKey = <O>(obj: O, key: string | number | symbol): key is keyof O => key in obj
+
+// https://github.com/Microsoft/TypeScript/issues/29780
+export const tuplify = <T extends [any] | any[]>(tuple: T): T => tuple

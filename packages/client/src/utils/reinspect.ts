@@ -18,10 +18,14 @@ if (process.env.NODE_ENV === 'development') {
   useInspectedReducer = (reducer, initalState, init, id) => {
     const reduxReducer = useReinspectReducer(reducer, initalState, init, id)
     const state = reduxReducer[0]
+
     if (!state) {
       const dispatch = reduxReducer[1]
-      return [init ? init(initalState) : initalState, dispatch]
+      // assertion because reinspect is missing overloads (my bad :< )
+      const initialState = init ? init(initalState) : (initalState as ReturnType<typeof init>)
+      return [initialState, dispatch]
     }
+
     return reduxReducer
   }
 } else {

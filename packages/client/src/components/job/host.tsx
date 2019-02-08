@@ -3,11 +3,11 @@ import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { JobFragment } from '../../generated/fragments'
 import { JobQuery, JobQueryVariables } from '../../generated/queries'
-import { IJobContextInitOptions, JobContext } from './context'
+import { IJobContextInitArg, JobContext } from './context'
 import { useJobReducer } from './reducer'
 
 export interface IJobHostProps {
-  initOptions: IJobContextInitOptions
+  initOptions: IJobContextInitArg
 }
 
 export const JobHost: React.FC<IJobHostProps> = ({ initOptions, children }) => {

@@ -17,13 +17,11 @@ export interface ICandidateState {
   local: {}
 }
 
-export interface ICandidateContextInitOptions {
+export interface ICandidateReducerInitArg {
   id: string
 }
 
-export const init = ({ id }: ICandidateContextInitOptions) => (
-  state: ICandidateState,
-): ICandidateState => ({
+export const init = ({ id }: ICandidateReducerInitArg): ICandidateState => ({
   variables: {
     where: {
       id,

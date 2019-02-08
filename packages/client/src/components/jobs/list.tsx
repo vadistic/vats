@@ -1,4 +1,5 @@
 import { css } from '@emotion/core'
+import { RouteComponentProps } from '@reach/router'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
 import { Job, JobType } from '../../generated/queries'
@@ -46,9 +47,9 @@ export const JobListItem: React.FC<IJobListItem> = ({ item }) => {
   )
 }
 
-export interface IJobsListProps {}
+export interface IJobsListProps extends RouteComponentProps {}
 
-export const JobsList: React.FC<IJobsListProps> = () => {
+export const JobsList: React.FC<IJobsListProps> = ({ children }) => {
   const { jobs } = useContext(JobsContext)
 
   const handleGroupedRenderCell = (nestingDepth?: number, item?: Job, index?: number) => {
@@ -58,9 +59,10 @@ export const JobsList: React.FC<IJobsListProps> = () => {
     return null
   }
 
-  const getKey = (item: Job) => item.id
   return (
     <FocusZone direction={FocusZoneDirection.vertical}>
+      {/* children necessary for reach router */}
+      {children}
       <GroupedList items={jobs} onRenderCell={handleGroupedRenderCell} />
     </FocusZone>
   )

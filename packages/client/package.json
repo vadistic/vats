@@ -93,7 +93,7 @@
     "react-cosmos": "^4.7.0",
     "react-testing-library": "^5.5.3",
     "redux": "^4.0.1",
-    "reinspect": "vadistic/reinspect#reinspect-v0.4.3-gitpkg",
+    "reinspect": "vadistic/reinspect#reinspect-v0.0.3-test-gitpkg",
     "serve": "^10.1.2",
     "ts-node": "^8.0.2",
     "tslint": "^5.12.1",

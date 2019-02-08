@@ -17,11 +17,11 @@ export interface IJobState {
   local: {}
 }
 
-export interface IJobContextInitOptions {
+export interface IJobContextInitArg {
   id: string
 }
 
-export const init = ({ id }: IJobContextInitOptions) => (): IJobState => ({
+export const init = ({ id }: IJobContextInitArg) => ({
   variables: {
     where: {
       id,

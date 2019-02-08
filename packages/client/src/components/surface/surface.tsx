@@ -1,4 +1,12 @@
-import { FocusTrapZone, IModalProps, Modal, Panel, PanelType } from 'office-ui-fabric-react'
+import {
+  FocusTrapZone,
+  IconButton,
+  IModalProps,
+  IPanelProps,
+  Modal,
+  Panel,
+  PanelType,
+} from 'office-ui-fabric-react'
 import React, { Suspense, useMemo, useState } from 'react'
 
 const SurfaceFallback: React.FC = () => {
@@ -7,20 +15,32 @@ const SurfaceFallback: React.FC = () => {
   return <p>Loading surface</p>
 }
 
-export interface ISurfaceProps {
+interface ISurfaceNavigation {
   onDismiss: () => void
-  surfaceType?: SurfaceType
+  onExpand: () => void
 }
+
+const SurfaceNavigation: React.FC<ISurfaceNavigation> = ({ onDismiss, onExpand }) => (
+  <div>
+    <IconButton onClick={onDismiss} iconProps={{ iconName: 'ChromeClose' }} />
+    <IconButton onClick={onExpand} iconProps={{ iconName: 'FullScreen' }} />
+  </div>
+)
 
 export enum SurfaceType {
   Panel = 'PANEL',
   Modal = 'MODAL',
 }
 
+export interface ISurfaceProps extends ISurfaceNavigation {
+  surfaceType?: SurfaceType
+}
+
 export const Surface: React.FC<ISurfaceProps> = ({
   children,
   onDismiss: onDismissed,
   surfaceType = SurfaceType.Panel,
+  onExpand,
 }) => {
   const [open, setOpen] = useState(true)
 
@@ -29,11 +49,7 @@ export const Surface: React.FC<ISurfaceProps> = ({
     setOpen(false)
   }
 
-  const inner = (
-    <Suspense fallback={<SurfaceFallback />}>
-      <FocusTrapZone>{children}</FocusTrapZone>
-    </Suspense>
-  )
+  const inner = <Suspense fallback={<SurfaceFallback />}>{children}</Suspense>
 
   const renderModal = () => (
     <Modal onDismissed={onDismissed} onDismiss={handleDissmiss} isOpen={open} isBlocking={true}>
@@ -41,8 +57,13 @@ export const Surface: React.FC<ISurfaceProps> = ({
     </Modal>
   )
 
+  const renderNavigation = () => (
+    <SurfaceNavigation onDismiss={handleDissmiss} onExpand={onExpand} />
+  )
+
   const renderPanel = () => (
     <Panel
+      onRenderNavigation={renderNavigation}
       onDismissed={onDismissed}
       onDismiss={handleDissmiss}
       isOpen={open}

@@ -32,7 +32,9 @@ export const CandidateProfile: React.FC = () => {
   return (
     <FormikProvider value={formik}>
       <div css={candidateProfileStyles}>
-        <TopSection />
+        <h2>
+          {candidate.firstName} {candidate.lastName}
+        </h2>
       </div>
     </FormikProvider>
   )

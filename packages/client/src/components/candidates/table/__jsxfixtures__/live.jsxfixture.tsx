@@ -1,10 +1,10 @@
 import React from 'react'
-import { Table } from '..'
+import { CandidatesTable } from '..'
 import { CandidatesHost } from '../../host'
 
 export const TableLiveFixture: React.FC = () => (
   <CandidatesHost>
-    <Table />
+    <CandidatesTable />
   </CandidatesHost>
 )
 
