@@ -1,9 +1,9 @@
 import { css } from '@emotion/core'
 import { getTheme, Image, ImageFit } from 'office-ui-fabric-react'
 import React from 'react'
-import { IProfileImageProps } from '.'
 import { ITheme } from '../../styles'
 import { FormikTextField, FormikTextFieldProps } from '../formik'
+import { IProfileImageProps } from './profile'
 
 export const profileImageStyles = (theme: ITheme) => css`
   width: ${theme.sizes.ms};

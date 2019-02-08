@@ -9,7 +9,7 @@ import {
 } from '../../../generated/queries'
 import { random } from '../../../utils'
 import { CandidateContext } from '../../../views'
-import { CandidateProfile } from '../candidate-profile'
+import { CandidateProfile } from '../profile'
 
 export const CandidateProfileLiveFixture: React.FC = () => {
   const { data: indexData } = useQuery<CandidateProfileFixtureIndexQuery>(

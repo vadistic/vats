@@ -1,1 +1,0 @@
-export * from './candidate-profile'

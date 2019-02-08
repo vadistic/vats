@@ -1,5 +1,5 @@
 import React from 'react'
-import { CandidateProfile } from '../candidate-profile'
+import { CandidateProfile } from '../profile'
 
 import { anyTypename } from '../../../utils'
 import { CandidateContext } from '../../../views'

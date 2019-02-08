@@ -1,4 +1,4 @@
-export * from './candidate-profile'
+export * from './candidate'
 export * from './formik'
 export * from './layout'
 export * from './navigation'
