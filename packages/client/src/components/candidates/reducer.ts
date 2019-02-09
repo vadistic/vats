@@ -1,12 +1,29 @@
 import produce from 'immer'
-import { useInspectedReducer } from '../../utils'
-import { ICandidatesState, initalState } from './context'
+import { CandidatesQueryVariables } from '../../generated/queries'
+import { SortDirection } from '../../utils'
+import { IHostState } from '../host'
+import { CandidatesSortBy } from './sort'
 
-export enum CandidatesActionType {}
-
-export interface ICandidatesActions {
-  type: CandidatesActionType
+export enum CandidatesActionType {
+  Noop = 'Noop',
+  Edit = 'Edit',
 }
+
+export type ICandidatesActions =
+  | {
+      type: CandidatesActionType.Noop
+    }
+  | {
+      type: CandidatesActionType.Edit
+      editable?: boolean
+    }
+
+interface ICandidatesHostLocalState {
+  sortBy: CandidatesSortBy
+  sortDirection: SortDirection
+}
+
+export type ICandidatesState = IHostState<ICandidatesHostLocalState, CandidatesQueryVariables>
 
 export const candidatesReducer = produce<ICandidatesState, [ICandidatesActions]>(
   (draft, action) => {
@@ -18,5 +35,10 @@ export const candidatesReducer = produce<ICandidatesState, [ICandidatesActions]>
   },
 )
 
-export const useCandidatesReducer = () =>
-  useInspectedReducer(candidatesReducer, initalState, state => state, 'CANDIDATES_CONTEXT')
+export const candidatesStateInit = (): ICandidatesState => ({
+  local: {
+    sortBy: CandidatesSortBy.CreatedAt,
+    sortDirection: SortDirection.ASCENDING,
+  },
+  variables: {},
+})

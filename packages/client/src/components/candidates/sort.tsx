@@ -1,6 +1,6 @@
 import { Candidate, CandidatesQuery } from '../../generated/queries'
 import { filterNull, mutableSortByProp } from '../../utils'
-import { ICandidatesState } from './context'
+import { ICandidatesState } from './reducer'
 
 export enum CandidatesSortBy {
   CreatedAt = 'createdAt',

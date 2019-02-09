@@ -1,12 +1,11 @@
 import { css } from '@emotion/core'
-import React, { useContext } from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
 import { useIntl } from '../../i18n'
 import { ITheme } from '../../styles'
 import { getLeafPath } from '../../utils'
 import { DisplayTextField } from '../editable'
-import { CandidateContext } from './context'
 import { ProfileImage } from './fields'
+import { useCandidateContext } from './host'
 
 export const topSectionStyles = (theme: ITheme) => css`
   display: flex;
@@ -42,7 +41,7 @@ export const topSectionStyles = (theme: ITheme) => css`
 `
 
 export const TopSection: React.FC = () => {
-  const { candidate } = useContext(CandidateContext)
+  const { value: candidate } = useCandidateContext()
 
   const { intl } = useIntl()
 

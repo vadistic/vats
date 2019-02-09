@@ -10,7 +10,7 @@ import {
 import React, { Suspense, useMemo, useState } from 'react'
 
 const SurfaceFallback: React.FC = () => {
-  console.log('Surface suspense')
+  console.log('Surface suspensed')
 
   return <p>Loading surface</p>
 }

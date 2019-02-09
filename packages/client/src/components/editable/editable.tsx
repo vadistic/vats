@@ -7,7 +7,7 @@ import { FormikTextField, FormikTextFieldProps } from '../formik'
 export interface IEditableProps {
   editable: boolean
   initialValues: object
-  onSubmit: (values: object) => void
+  onSubmit: (values: any) => void
 }
 
 // substitute formik context for non-editable mode

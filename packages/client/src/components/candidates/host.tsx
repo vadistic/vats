@@ -1,40 +1,13 @@
 import gql from 'graphql-tag'
-import React, { useMemo } from 'react'
-import { useQuery } from 'react-apollo-hooks'
 import { CandidateFragment } from '../../generated/fragments'
-import { CandidatesQuery, CandidatesQueryVariables } from '../../generated/queries'
-import { CandidatesContext } from './context'
-import { useCandidatesReducer } from './reducer'
-import { candidatesSorter } from './sort'
-
-export interface ICandidatesHostProps {}
-
-export const CandidatesHost: React.FC<ICandidatesHostProps> = ({ children }) => {
-  const [state, dispatch] = useCandidatesReducer()
-
-  const { data } = useQuery<CandidatesQuery, CandidatesQueryVariables>(CANDIDATES_QUERY, {
-    variables: state.variables,
-  })
-
-  if (!data) {
-    console.error(`CandidatesHost returned null data`)
-    return null
-  }
-
-  if (data.candidates.length === 0) {
-    console.error(`CandidatesHost found no candidates`)
-    // TODO: handle it
-    return null
-  }
-
-  const candidates = useMemo(() => candidatesSorter(data, state), [data, state])
-
-  return (
-    <CandidatesContext.Provider value={{ candidates, dispatch, state }}>
-      {children}
-    </CandidatesContext.Provider>
-  )
-}
+import { Candidate } from '../../generated/queries'
+import { hostFactory, HostType, IHostConfig } from '../host'
+import {
+  candidatesReducer,
+  candidatesStateInit,
+  ICandidatesActions,
+  ICandidatesState,
+} from './reducer'
 
 export const CANDIDATES_QUERY = gql`
   query CandidatesQuery($where: CandidateWhereInput) {
@@ -45,3 +18,21 @@ export const CANDIDATES_QUERY = gql`
 
   ${CandidateFragment}
 `
+
+const candidatesHostConfig: IHostConfig<
+  Candidate[],
+  ICandidatesState,
+  ICandidatesActions,
+  undefined
+> = {
+  query: CANDIDATES_QUERY,
+  name: 'CANDIDATES_HOST',
+  propName: 'candidates',
+  type: HostType.Multi,
+  reducer: candidatesReducer,
+  init: candidatesStateInit,
+}
+
+export const { Host: CandidatesHost, useContext: useCandidatesContext } = hostFactory(
+  candidatesHostConfig,
+)

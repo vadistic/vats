@@ -3,11 +3,12 @@ import { getTheme, IImageProps, Image, ImageFit } from 'office-ui-fabric-react'
 import React from 'react'
 import { Candidate } from '../../generated/queries'
 import { ITheme } from '../../styles'
-import { FormikTextField, FormikTextFieldProps } from '../formik'
 
 export const profileImageStyles = (theme: ITheme) => css`
   width: ${theme.sizes.ms};
   height: ${theme.sizes.ms};
+
+  border-radius: 100%;
 `
 
 export interface IProfileImageProps extends IImageProps {
@@ -25,7 +26,7 @@ export const ProfileImage: React.FC<IProfileImageProps> = ({ avatar }) => {
     <Image
       styles={{ root: { ...theme.effects.elevation8 } }}
       css={profileImageStyles}
-      shouldFadeIn={true}
+      shouldStartVisible={true}
       imageFit={ImageFit.cover}
       src={avatar.url}
     />

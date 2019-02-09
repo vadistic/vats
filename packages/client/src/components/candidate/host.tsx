@@ -1,46 +1,16 @@
 import gql from 'graphql-tag'
-import React, { useState } from 'react'
-import { useQuery } from 'react-apollo-hooks'
 import { CandidateFragment } from '../../generated/fragments'
-import { CandidateQuery, CandidateQueryVariables } from '../../generated/queries'
-import { CandidateContext, ICandidateReducerInitArg } from './context'
-import { CandidateActionType, useCandidateReducer } from './reducer'
+import { Candidate } from '../../generated/queries'
+import { hostFactory, HostType, IHostConfig } from '../host'
+import {
+  candidateReducer,
+  candidateStateInit,
+  ICandidateActions,
+  ICandidateHostInitArg,
+  ICandidateState,
+} from './reducer'
 
-export interface ICandidateHostProps {
-  initArg: ICandidateReducerInitArg
-}
-
-export const CandidateHost: React.FC<ICandidateHostProps> = ({
-  initArg: initOptions,
-  children,
-}) => {
-  const [state, dispatch] = useCandidateReducer(initOptions)
-
-  const { data } = useQuery<CandidateQuery, CandidateQueryVariables>(candidateQuery, {
-    variables: state.variables,
-  })
-
-  if (!data) {
-    console.error(`CandidateHost: query returned undefined`)
-    return null
-  }
-
-  const candidate = data.candidate
-
-  if (candidate === null) {
-    console.error(`CandidateHost: data fetch error/ candidate not found. ID: ${initOptions.id}`)
-    // TODO: Not-found fallback
-    return null
-  }
-
-  return (
-    <CandidateContext.Provider value={{ candidate, dispatch, state }}>
-      {children}
-    </CandidateContext.Provider>
-  )
-}
-
-export const candidateQuery = gql`
+export const CANDIDATE_QUERY = gql`
   query CandidateQuery($where: CandidateWhereUniqueInput!) {
     candidate(where: $where) {
       ...Candidate
@@ -49,3 +19,34 @@ export const candidateQuery = gql`
 
   ${CandidateFragment}
 `
+
+export const CANDIDATE_UPDATE_MUTATION = gql`
+  mutation CandidateUpdateMutation(
+    $data: CandidateUpdateInput!
+    $where: CandidateWhereUniqueInput!
+  ) {
+    updateCandidate(data: $data, where: $where) {
+      ...Candidate
+    }
+  }
+
+  ${CandidateFragment}
+`
+
+const candidateHostConfig: IHostConfig<
+  Candidate,
+  ICandidateState,
+  ICandidateActions,
+  ICandidateHostInitArg
+> = {
+  query: CANDIDATE_QUERY,
+  name: 'CANDIDATE_HOST',
+  propName: 'candidate',
+  type: HostType.Single,
+  reducer: candidateReducer,
+  init: candidateStateInit,
+}
+
+export const { Host: CandidateHost, useContext: useCandidateContext } = hostFactory(
+  candidateHostConfig,
+)

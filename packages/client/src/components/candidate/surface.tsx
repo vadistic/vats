@@ -28,8 +28,6 @@ export const CandidateSurface: React.FC<ICandidateSurfaceProps> = ({ navigate, i
     return null
   }
 
-  console.log(id)
-
   return (
     <Surface onDismiss={handleDismiss} onExpand={handleExpand}>
       <CandidateHost initArg={{ id }}>

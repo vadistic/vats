@@ -1,6 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
 import React, { Suspense } from 'react'
-import { Candidate } from '../../generated/queries'
 import { Loading } from '../loading'
 import { CandidateHost } from './host'
 

@@ -1,12 +1,10 @@
 import produce from 'immer'
-import { tuplify, useInspectedReducer } from '../../utils'
-import { ICandidateReducerInitArg, ICandidateState, init } from './context'
+import { CandidatesQueryVariables } from '../../generated/queries'
+import { IHostState } from '../host'
 
 export enum CandidateActionType {
-  Reset = 'RESET',
-  Edit = 'EDIT',
-  Submit = 'SUBMIT',
-  Noop = 'NOOP',
+  Noop = 'Noop',
+  Edit = 'Edit',
 }
 
 export type ICandidateActions =
@@ -14,38 +12,37 @@ export type ICandidateActions =
       type: CandidateActionType.Noop
     }
   | {
-      type: CandidateActionType.Reset
-      initArg: ICandidateReducerInitArg
-    }
-  | {
       type: CandidateActionType.Edit
       editable?: boolean
     }
 
+interface ICandidateHostLocalState {
+  editable: boolean
+}
+
+export type ICandidateState = IHostState<ICandidateHostLocalState, CandidatesQueryVariables>
+
 export const candidateReducer = produce<ICandidateState, [ICandidateActions]>((draft, action) => {
   switch (action.type) {
-    case CandidateActionType.Reset:
-      return init(action.initArg)
+    case CandidateActionType.Noop:
+      return
     case CandidateActionType.Edit:
       draft.local.editable = action.editable || !draft.local.editable
       return
     default:
-      // noop
       return
   }
 })
 
-export const useCandidateReducer = (initArg: ICandidateReducerInitArg) => {
-  const [state, dispatch] = useInspectedReducer(
-    candidateReducer,
-    initArg,
-    init,
-    'CANDIDATE_CONTEXT',
-  )
-
-  if (state.variables.where.id !== initArg.id) {
-    dispatch({ type: CandidateActionType.Reset, initArg })
-  }
-
-  return tuplify([state, dispatch])
+export interface ICandidateHostInitArg {
+  id: string
 }
+
+export const candidateStateInit = ({ id }: ICandidateHostInitArg): ICandidateState => ({
+  local: {
+    editable: false,
+  },
+  variables: {
+    where: { id },
+  },
+})
