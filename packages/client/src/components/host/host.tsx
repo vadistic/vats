@@ -24,9 +24,10 @@ export interface IHostConfig<Value, State, CustomActions, InitArg> {
   propName: string
   type: HostType
   filter?: FilterFn<Value, State>
-  query: DocumentNode
   reducer: React.Reducer<any, any>
   init: InitFn<State, InitArg>
+  query: DocumentNode
+  updateMutation?: DocumentNode
 }
 
 export interface IHostContext<Value, State, CustomActions, InitArg> {
@@ -53,15 +54,25 @@ export const hostFactory = <
   propName,
   type,
   filter,
-  query,
-  reducer: intristicReducer,
+  reducer,
   init,
+  query,
+  updateMutation,
 }: IHostConfig<Value, State, CustomActions, InitArg>) => {
   const Context = React.createContext<IHostContext<Value, State, CustomActions, InitArg>>({} as any)
 
   const useContext = () => React.useContext(Context)
 
-  const hostReducer = hostReducerFactory<Value, State, CustomActions, InitArg>({ intristicReducer })
+  const hostReducer = hostReducerFactory<Value, State, CustomActions, InitArg>({
+    name,
+    propName,
+    type,
+    filter,
+    query,
+    reducer,
+    init,
+    updateMutation,
+  })
 
   const useReducer = (initArg?: InitArg) => {
     // this assertion on initArg is fine - just allowing undefined if init fn does it all

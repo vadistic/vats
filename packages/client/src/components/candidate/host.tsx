@@ -41,9 +41,10 @@ const candidateHostConfig: IHostConfig<
   ICandidateActions,
   ICandidateHostInitArg
 > = {
-  query: CANDIDATE_QUERY,
   name: 'CANDIDATE_HOST',
   propName: 'candidate',
+  query: CANDIDATE_QUERY,
+  updateMutation: CANDIDATE_UPDATE_MUTATION,
   type: HostType.Single,
   reducer: candidateReducer,
   init: candidateStateInit,

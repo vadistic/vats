@@ -3,10 +3,11 @@ import { TextField } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
 import { getInByPath } from '../../utils'
 import { FormikTextField, FormikTextFieldProps } from '../formik'
+import { normaliseFormikInput, normaliseFormikResult } from './normalise'
 
 export interface IEditableProps {
   editable: boolean
-  initialValues: object
+  values: object
   onSubmit: (values: any) => void
 }
 
@@ -21,16 +22,25 @@ const useEditableContext = () => useContext(EditableContext)
  * Editable component should:
  * - [x] provide formik context
  * - [x] provide replacement ctx when not editable
- * - [?] take data snapshot (via formik initValues)
+ * - [x] take data snapshot on edit start(via formik initValues)
+ * - [x] change inital deep null values to undefined
+ * - [x] change result array-like values to arrays
  * - take model (as subset of fields)
- * - render lightweigth markup as replacemnts when not editable mode
  */
-export const Editable: React.FC<IEditableProps> = ({
-  initialValues,
-  editable,
-  onSubmit,
-  children,
-}) => {
+export const Editable: React.FC<IEditableProps> = ({ values, editable, onSubmit, children }) => {
+  const initialValues = useMemo(() => normaliseFormikInput(values), [values])
+
+  const handleSubmit = (payload: object) => {
+    onSubmit(normaliseFormikResult(payload))
+  }
+
+  const formik = useFormik({ initialValues, onSubmit: handleSubmit })
+
+  // reset form on value change (but not editable)
+  useMemo(() => {
+    formik.resetForm(initialValues)
+  }, [values])
+
   if (!editable) {
     return (
       <EditableContext.Provider value={{ values: initialValues }}>
@@ -40,16 +50,6 @@ export const Editable: React.FC<IEditableProps> = ({
   }
 
   if (editable) {
-    const handleSubmit = (values: object) => {
-      onSubmit(values)
-    }
-
-    const formik = useFormik({ initialValues, onSubmit: handleSubmit })
-
-    useMemo(() => {
-      formik.resetForm(initialValues)
-    }, [initialValues])
-
     return <FormikProvider value={formik}>{children}</FormikProvider>
   }
 

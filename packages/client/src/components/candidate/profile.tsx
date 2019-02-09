@@ -37,7 +37,8 @@ export const CandidateProfile: React.FC = () => {
   const { value, state, dispatch } = useCandidateContext()
 
   const handleSubmit = (values: object) => {
-    dispatch({ type: HostActionType.Update })
+    dispatch({ type: CandidateActionType.Edit, editable: false })
+    dispatch({ type: HostActionType.Update, payload: values })
   }
 
   const toggleEdit = () => {
@@ -47,7 +48,7 @@ export const CandidateProfile: React.FC = () => {
   return (
     <div css={candidateProfileStyles}>
       <EditButton onClick={toggleEdit} />
-      <Editable onSubmit={handleSubmit} initialValues={value} editable={state.local.editable}>
+      <Editable onSubmit={handleSubmit} values={value} editable={state.local.editable}>
         <TopSection />
         <SubmitButton />
       </Editable>

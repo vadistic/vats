@@ -1,4 +1,5 @@
-import { Head, Tail } from './types'
+import { tuplify } from './guards'
+import { Head, Omit, Tail } from './types'
 /*
  * util for safely traversing object trees
  */
@@ -29,6 +30,59 @@ export const getIn = <State extends any, Paths extends Array<string | number>>(
   return state[head]
 }
 
+/**
+ * set nested object property to value
+ */
+
+export const mutableSetValueIn = <
+  State extends any,
+  Value extends any,
+  Paths extends Array<string | number>
+>(
+  state: State,
+  value: Value,
+  path: Paths,
+) => {
+  const [head, ...tail] = path
+
+  if (tail.length > 0) {
+    state[head] = mutableSetValueIn(state[head] || typeof head === 'number' ? [] : {}, value, tail)
+  }
+
+  if (tail.length === 0) {
+    state[head] = value
+  }
+
+  return state
+}
+
+/**
+ * this one's immutable
+ */
+export const setValueIn = <
+  State extends any,
+  Value extends any,
+  Paths extends Array<string | number>
+>(
+  state: State,
+  value: Value,
+  path: Paths,
+) => {
+  const [head, ...tail] = path
+
+  let temp: any
+
+  if (tail.length > 0) {
+    temp = mutableSetValueIn(state[head] || typeof head === 'number' ? [] : {}, value, tail)
+  }
+
+  if (tail.length === 0) {
+    temp = value
+  }
+
+  return { ...state, [head]: temp }
+}
+
 /*
  * util for safely building nested properties paths (for formik)
  * TODO: maybe change void error type, but it seems most semantic (since void === error)
@@ -52,7 +106,7 @@ export type CheckLeafPath<State extends any, Paths extends any[]> = Head<Paths> 
 /**
  * validate path and transform to lodash.style
  */
-export const getPath = <S, P extends string[]>(state: S, ...paths: P) =>
+export const getLoPath = <S, P extends string[]>(state: S, ...paths: P) =>
   (paths.join('.') as unknown) as CheckPath<S, P>
 
 /**
