@@ -7,4 +7,11 @@ export const translation = {
     position: 'Position',
     headline: 'Headline',
   },
+  job: {
+    name: 'Name',
+    department: 'Department',
+    createdAt: 'Add date',
+    updatedAt: 'Update date',
+    applications: 'Applications',
+  },
 }

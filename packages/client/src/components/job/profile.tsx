@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { JobContext } from './context'
+import { useJobContext } from './host'
 
 export const JobProfile: React.FC = () => {
-  const { job } = useContext(JobContext)
+  const { value: job } = useJobContext()
   return (
     <div>
       <h2>{job.name}</h2>

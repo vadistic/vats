@@ -35,7 +35,7 @@ export const JobSurface: React.FC<IJobSurfaceProps> = ({ navigate, id }) => {
 
   return (
     <Surface onDismiss={handleDismiss} onExpand={handleExpand}>
-      <JobHost initOptions={{ id }}>
+      <JobHost initArg={{ id }}>
         <JobProfile />
       </JobHost>
     </Surface>

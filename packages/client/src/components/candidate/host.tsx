@@ -33,8 +33,10 @@ export const CANDIDATE_UPDATE_MUTATION = gql`
   ${CandidateFragment}
 `
 
+export type CandidateValue = Candidate
+
 const candidateHostConfig: IHostConfig<
-  Candidate,
+  CandidateValue,
   ICandidateState,
   ICandidateActions,
   ICandidateHostInitArg

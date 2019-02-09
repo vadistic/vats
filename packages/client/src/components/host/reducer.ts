@@ -10,12 +10,17 @@ export interface IHostState<LocalState = {}, HostQueryVariables = {}> {
 }
 
 export enum HostActionType {
+  Reset = 'RESET',
   Create = 'CREATE',
   Update = 'UPDATE',
   Delete = 'DELETE',
 }
 
 export type IHostActions =
+  | {
+      type: HostActionType.Reset
+      payload: object // State
+    }
   | {
       type: HostActionType.Create
     }
@@ -33,8 +38,14 @@ export interface IHostReducerConfig<State, InitArg> {
 export const hostReducerFactory = <Value, State, CustomActions extends IIntristicActions, InitArg>({
   intristicReducer,
 }: IHostReducerConfig<State, InitArg>) => {
-  const reducer: React.Reducer<State, CustomActions | IHostActions> = (state, action) => {
+  // hack for correct discriminitation in switch
+  type AllActions = CustomActions | IHostActions
+
+  const reducer: React.Reducer<State, IHostActions> = (state, action) => {
     switch (action.type) {
+      case HostActionType.Reset:
+        // do stuff
+        return action.payload
       case HostActionType.Create:
         // do stuff
         return state
@@ -50,5 +61,5 @@ export const hostReducerFactory = <Value, State, CustomActions extends IIntristi
     }
   }
 
-  return reducer
+  return reducer as React.Reducer<State, AllActions>
 }

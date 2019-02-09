@@ -25,6 +25,14 @@ interface ICandidatesHostLocalState {
 
 export type ICandidatesState = IHostState<ICandidatesHostLocalState, CandidatesQueryVariables>
 
+export const candidatesStateInit = (): ICandidatesState => ({
+  local: {
+    sortBy: CandidatesSortBy.CreatedAt,
+    sortDirection: SortDirection.ASCENDING,
+  },
+  variables: {},
+})
+
 export const candidatesReducer = produce<ICandidatesState, [ICandidatesActions]>(
   (draft, action) => {
     switch (action.type) {
@@ -34,11 +42,3 @@ export const candidatesReducer = produce<ICandidatesState, [ICandidatesActions]>
     }
   },
 )
-
-export const candidatesStateInit = (): ICandidatesState => ({
-  local: {
-    sortBy: CandidatesSortBy.CreatedAt,
-    sortDirection: SortDirection.ASCENDING,
-  },
-  variables: {},
-})

@@ -1,6 +1,8 @@
-import { Job, JobsQuery } from '../../generated/queries'
-import { filterNull, mutableSortByGetter, mutableSortByProp } from '../../utils'
-import { IJobsState } from './context'
+import { Job } from '../../generated/queries'
+import { mutableSortByGetter, mutableSortByProp } from '../../utils'
+import { FilterFn } from '../host'
+import { JobsValue } from './host'
+import { IJobsState } from './reducer'
 
 export enum JobsSortBy {
   // auto
@@ -12,24 +14,13 @@ export enum JobsSortBy {
   Applications = 'applications',
 }
 
-type TJobsSortDisplayNamesMap = { [K in JobsSortBy]: string }
-
-export const JobsSortDisplayNamesMap: TJobsSortDisplayNamesMap = {
-  [JobsSortBy.Name]: 'job name',
-  [JobsSortBy.Department]: 'department',
-  [JobsSortBy.CreatedAt]: 'create date',
-  [JobsSortBy.UpdatedAt]: 'update date',
-  [JobsSortBy.Applications]: 'applications',
-}
-
-export const jobsSorter = (data: JobsQuery, state: IJobsState): Job[] => {
-  const jobs = filterNull(data.jobs)
+export const jobsSorter: FilterFn<JobsValue, IJobsState> = (value, state): Job[] => {
   switch (state.local.sortBy) {
     case JobsSortBy.Applications:
-      return mutableSortByGetter(jobs, state.local.sortDirection, job =>
+      return mutableSortByGetter(value, state.local.sortDirection, job =>
         job.applications ? job.applications.length : null,
       )
     default:
-      return mutableSortByProp(jobs, state.local.sortDirection, state.local.sortBy)
+      return mutableSortByProp(value, state.local.sortDirection, state.local.sortBy)
   }
 }

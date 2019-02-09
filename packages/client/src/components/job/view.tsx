@@ -16,7 +16,7 @@ export const JobView: React.FC<IJobViewProps> = ({ id }) => {
   }
   return (
     <Suspense fallback={JobViewFallback}>
-      <JobHost initOptions={{ id }}>
+      <JobHost initArg={{ id }}>
         <p>Single job view</p>
       </JobHost>
     </Suspense>

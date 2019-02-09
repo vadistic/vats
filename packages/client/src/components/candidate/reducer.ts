@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { CandidatesQueryVariables } from '../../generated/queries'
+import { CandidateQueryVariables } from '../../generated/queries'
 import { IHostState } from '../host'
 
 export enum CandidateActionType {
@@ -20,19 +20,7 @@ interface ICandidateHostLocalState {
   editable: boolean
 }
 
-export type ICandidateState = IHostState<ICandidateHostLocalState, CandidatesQueryVariables>
-
-export const candidateReducer = produce<ICandidateState, [ICandidateActions]>((draft, action) => {
-  switch (action.type) {
-    case CandidateActionType.Noop:
-      return
-    case CandidateActionType.Edit:
-      draft.local.editable = action.editable || !draft.local.editable
-      return
-    default:
-      return
-  }
-})
+export type ICandidateState = IHostState<ICandidateHostLocalState, CandidateQueryVariables>
 
 export interface ICandidateHostInitArg {
   id: string
@@ -45,4 +33,16 @@ export const candidateStateInit = ({ id }: ICandidateHostInitArg): ICandidateSta
   variables: {
     where: { id },
   },
+})
+
+export const candidateReducer = produce<ICandidateState, [ICandidateActions]>((draft, action) => {
+  switch (action.type) {
+    case CandidateActionType.Noop:
+      return
+    case CandidateActionType.Edit:
+      draft.local.editable = action.editable || !draft.local.editable
+      return
+    default:
+      return
+  }
 })

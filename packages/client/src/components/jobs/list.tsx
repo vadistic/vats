@@ -5,7 +5,7 @@ import React, { useContext } from 'react'
 import { Job, JobType } from '../../generated/queries'
 import { styled } from '../../styles'
 import { Link } from '../link'
-import { JobsContext } from './context'
+import { useJobsContect } from './host'
 
 export interface IJobListItem {
   item: Job
@@ -50,7 +50,7 @@ export const JobListItem: React.FC<IJobListItem> = ({ item }) => {
 export interface IJobsListProps extends RouteComponentProps {}
 
 export const JobsList: React.FC<IJobsListProps> = ({ children }) => {
-  const { jobs } = useContext(JobsContext)
+  const { value: jobs } = useJobsContect()
 
   const handleGroupedRenderCell = (nestingDepth?: number, item?: Job, index?: number) => {
     if (item) {

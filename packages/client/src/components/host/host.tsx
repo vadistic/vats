@@ -2,20 +2,28 @@ import { DocumentNode } from 'graphql'
 import React, { useMemo } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { filterNull, tuplify, useInspectedReducer } from '../../utils'
-import { hostReducerFactory, IHostActions, IHostState, IIntristicActions } from './reducer'
+import {
+  HostActionType,
+  hostReducerFactory,
+  IHostActions,
+  IHostState,
+  IIntristicActions,
+} from './reducer'
 
 export enum HostType {
   Single = 'SINGLE',
   Multi = 'MULTI',
 }
 
-type InitFn<State, InitArg> = ((initArg: InitArg) => State) | ((initArg?: InitArg) => State)
+export type InitFn<State, InitArg> = ((initArg: InitArg) => State) | ((initArg?: InitArg) => State)
+
+export type FilterFn<Value, State> = (arr: Value, state: State) => Value
 
 export interface IHostConfig<Value, State, CustomActions, InitArg> {
   name: string
   propName: string
   type: HostType
-  filter?: (arr: Value) => Value
+  filter?: FilterFn<Value, State>
   query: DocumentNode
   reducer: React.Reducer<any, any>
   init: InitFn<State, InitArg>
@@ -56,8 +64,16 @@ export const hostFactory = <
   const hostReducer = hostReducerFactory<Value, State, CustomActions, InitArg>({ intristicReducer })
 
   const useReducer = (initArg?: InitArg) => {
-    // this assertion is fine
+    // this assertion on initArg is fine - just allowing undefined if init fn does it all
     const [state, dispatch] = useInspectedReducer(hostReducer, initArg as any, init, name)
+
+    // reset state on new initArg
+    // TODO: enable blocking this dfault behaviour?
+    if (initArg) {
+      useMemo(() => {
+        dispatch({ type: HostActionType.Reset, payload: init(initArg) })
+      }, [initArg])
+    }
 
     return tuplify([state, dispatch])
   }
@@ -90,11 +106,11 @@ export const hostFactory = <
         }
 
         if (filter) {
-          return filter(nonNullValues)
+          return filter(nonNullValues, state)
         }
 
         return nonNullValues
-      }, [state, data])
+      }, [data, state])
 
       return (
         <Context.Provider value={{ value: values, dispatch, state }}>{children}</Context.Provider>
