@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import { CandidateFragment } from '../../generated/fragments'
-import { Candidate } from '../../generated/queries'
+import { Candidate, CandidateQuery, CandidateQuery_candidate } from '../../generated/queries'
 import { hostFactory, HostType, IHostConfig } from '../host'
 import {
   candidateReducer,
@@ -13,6 +13,9 @@ import {
 export const CANDIDATE_QUERY = gql`
   query CandidateQuery($where: CandidateWhereUniqueInput!) {
     candidate(where: $where) {
+      phones
+      emails
+      links
       ...Candidate
     }
   }
@@ -33,7 +36,7 @@ export const CANDIDATE_UPDATE_MUTATION = gql`
   ${CandidateFragment}
 `
 
-export type CandidateValue = Candidate
+export type CandidateValue = CandidateQuery_candidate
 
 const candidateHostConfig: IHostConfig<
   CandidateValue,

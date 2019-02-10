@@ -38,7 +38,7 @@ export const CandidateProfile: React.FC = () => {
 
   const handleSubmit = (values: object) => {
     dispatch({ type: CandidateActionType.Edit, editable: false })
-    dispatch({ type: HostActionType.Update, payload: values })
+    dispatch({ type: HostActionType.AutoUpdate, payload: values })
   }
 
   const toggleEdit = () => {

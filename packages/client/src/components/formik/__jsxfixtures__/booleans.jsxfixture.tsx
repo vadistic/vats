@@ -1,6 +1,6 @@
 import { FormikProvider, useFormik } from 'formik'
 import React from 'react'
-import { getLeafPath } from '../../../utils'
+import { getLoLeafPath } from '../../../utils'
 import { FormikCheckbox, FormikToggle } from '../formik'
 
 export const BooleanPickersFixture: React.FC = () => {
@@ -30,14 +30,14 @@ export const BooleanPickersFixture: React.FC = () => {
         <form>
           <h3>Checkbox</h3>
           <span>Plain</span>
-          <FormikCheckbox name={getLeafPath(form, 'newsletter')} />
+          <FormikCheckbox name={getLoLeafPath(form, 'newsletter')} />
           <span>Nested</span>
-          <FormikCheckbox name={getLeafPath(form, 'nested', 'important')} />
+          <FormikCheckbox name={getLoLeafPath(form, 'nested', 'important')} />
           <h3>Toggle</h3>
           <span>Plain</span>
-          <FormikToggle name={getLeafPath(form, 'spam')} />
+          <FormikToggle name={getLoLeafPath(form, 'spam')} />
           <span>Nested</span>
-          <FormikToggle name={getLeafPath(form, 'nested', 'isWorking')} />
+          <FormikToggle name={getLoLeafPath(form, 'nested', 'isWorking')} />
         </form>
       </FormikProvider>
     </div>

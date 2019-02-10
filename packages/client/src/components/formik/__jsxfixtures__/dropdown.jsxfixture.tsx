@@ -3,7 +3,7 @@ import { FormikProvider, useFormik } from 'formik'
 import { DropdownMenuItemType, IDropdownOption } from 'office-ui-fabric-react'
 import React from 'react'
 import { ITheme } from '../../../styles'
-import { getLeafPath } from '../../../utils'
+import { getLoLeafPath } from '../../../utils'
 import { FormikDropdown } from '../formik'
 
 const options: IDropdownOption[] = [
@@ -49,9 +49,9 @@ export const DropdownFixture: React.FC = () => {
         <form>
           <h3>Dropdown</h3>
           <span>Single select</span>
-          <FormikDropdown name={getLeafPath(form, 'single')} options={options} />
+          <FormikDropdown name={getLoLeafPath(form, 'single')} options={options} />
           <span>Multi select</span>
-          <FormikDropdown name={getLeafPath(form, 'multi')} options={options} />
+          <FormikDropdown name={getLoLeafPath(form, 'multi')} options={options} />
         </form>
       </FormikProvider>
     </div>

@@ -1,7 +1,4 @@
-import { Diff } from 'deep-diff'
-import { getIn, mutableSetValueIn } from './path'
-import { IStringIndexSignature } from './types'
-
+// TODO: think about how ascending/descending should work on different types
 const compareFn = <T extends string | number | null>(a: T, b: T) => (a < b ? -1 : b < a ? 1 : 0)
 
 type SortableObject<T, Prop extends string> = T & { [K in Prop]: string | number | null }

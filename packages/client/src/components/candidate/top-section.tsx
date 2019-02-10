@@ -2,7 +2,7 @@ import { css } from '@emotion/core'
 import React from 'react'
 import { useIntl } from '../../i18n'
 import { ITheme } from '../../styles'
-import { getLeafPath } from '../../utils'
+import { getLoLeafPath } from '../../utils'
 import { DisplayTextField } from '../editable'
 import { ProfileImage } from './fields'
 import { useCandidateContext } from './host'
@@ -44,36 +44,39 @@ export const TopSection: React.FC = () => {
   const { value: candidate } = useCandidateContext()
 
   const { intl } = useIntl()
-
   return (
     <section css={topSectionStyles}>
       <form>
         <DisplayTextField
           className="name"
-          name={getLeafPath(candidate, 'firstName')}
+          name={getLoLeafPath(candidate, 'firstName')}
           placeholder={intl(undefined, 'candidate', 'firstName')}
         />
         <DisplayTextField
           className="name"
-          name={getLeafPath(candidate, 'lastName')}
+          name={getLoLeafPath(candidate, 'lastName')}
           placeholder={intl(undefined, 'candidate', 'firstName')}
         />
 
         <DisplayTextField
           className="company"
-          name={getLeafPath(candidate, 'company')}
+          name={getLoLeafPath(candidate, 'company')}
           placeholder={intl(undefined, 'candidate', 'company')}
         />
         <DisplayTextField
           className="company"
-          name={getLeafPath(candidate, 'position')}
+          name={getLoLeafPath(candidate, 'position')}
           placeholder={intl(undefined, 'candidate', 'position')}
         />
         <DisplayTextField
           className="company"
-          name={getLeafPath(candidate, 'headline')}
+          name={getLoLeafPath(candidate, 'headline')}
           placeholder={intl(undefined, 'candidate', 'headline')}
         />
+        {candidate.phones.map((el, i) => (
+          // TODO: fix lo builder
+          <DisplayTextField key={el} name={getLoLeafPath(candidate, 'phones', i)} />
+        ))}
       </form>
       <div>
         <figure>

@@ -28,6 +28,7 @@ export interface IHostConfig<Value, State, CustomActions, InitArg> {
   init: InitFn<State, InitArg>
   query: DocumentNode
   updateMutation?: DocumentNode
+  resetOnInitArgChange?: boolean
 }
 
 export interface IHostContext<Value, State, CustomActions, InitArg> {
@@ -58,6 +59,7 @@ export const hostFactory = <
   init,
   query,
   updateMutation,
+  resetOnInitArgChange = true,
 }: IHostConfig<Value, State, CustomActions, InitArg>) => {
   const Context = React.createContext<IHostContext<Value, State, CustomActions, InitArg>>({} as any)
 
@@ -78,11 +80,9 @@ export const hostFactory = <
     // this assertion on initArg is fine - just allowing undefined if init fn does it all
     const [state, dispatch] = useInspectedReducer(hostReducer, initArg as any, init, name)
 
-    // reset state on new initArg
-    // TODO: enable blocking this dfault behaviour?
-    if (initArg) {
+    if (initArg && resetOnInitArgChange) {
       useMemo(() => {
-        dispatch({ type: HostActionType.Reset, payload: init(initArg) })
+        dispatch({ type: HostActionType.Reset, initArg })
       }, [initArg])
     }
 

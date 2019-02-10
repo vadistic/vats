@@ -2,7 +2,7 @@ import { FormikProvider, useFormik } from 'formik'
 // tslint:disable-next-line:no-submodule-imports
 import { Position } from 'office-ui-fabric-react/lib/utilities/positioning'
 import React from 'react'
-import { getLeafPath } from '../../../utils'
+import { getLoLeafPath } from '../../../utils'
 import { FormikRating, FormikSlider, FormikSpinButton } from '../formik'
 
 export const NumbersPickersFixture: React.FC = () => {
@@ -37,19 +37,19 @@ export const NumbersPickersFixture: React.FC = () => {
           <h3>SpinButton</h3>
           <span>Plain</span>
           <FormikSpinButton
-            name={getLeafPath(form, 'cats')}
+            name={getLoLeafPath(form, 'cats')}
             label="cats"
             labelPosition={Position.end}
           />
           <span>Nested value</span>
           <FormikSpinButton
-            name={getLeafPath(form, 'dogs', 'small')}
+            name={getLoLeafPath(form, 'dogs', 'small')}
             label="small dogs"
             labelPosition={Position.end}
           />
           <span>Custom min/max/step</span>
           <FormikSpinButton
-            name={getLeafPath(form, 'dogs', 'large')}
+            name={getLoLeafPath(form, 'dogs', 'large')}
             label="large dogs"
             labelPosition={Position.end}
             min={2}
@@ -59,13 +59,13 @@ export const NumbersPickersFixture: React.FC = () => {
 
           <h3>Slider</h3>
           <span>Plain</span>
-          <FormikSlider name={getLeafPath(form, 'howLovely')} />
+          <FormikSlider name={getLoLeafPath(form, 'howLovely')} />
           <span>Custom min/max/step</span>
-          <FormikSlider name={getLeafPath(form, 'howNice')} min={3} max={75} step={4} />
+          <FormikSlider name={getLoLeafPath(form, 'howNice')} min={3} max={75} step={4} />
 
           <h3>Rating</h3>
           <span>Plain</span>
-          <FormikRating name={getLeafPath(form, 'rateMe')} />
+          <FormikRating name={getLoLeafPath(form, 'rateMe')} />
         </form>
       </FormikProvider>
     </div>

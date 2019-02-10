@@ -13,3 +13,6 @@ export const hasKey = <O>(obj: O, key: string | number | symbol): key is keyof O
 
 // https://github.com/Microsoft/TypeScript/issues/29780
 export const tuplify = <T extends [any] | any[]>(tuple: T): T => tuple
+
+export const XOR = (a: boolean, b: boolean) => (a && !b) || (!a && b)
+export const XNOR = (a: boolean, b: boolean) => (a && b) || !(a || b)

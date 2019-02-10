@@ -3,6 +3,7 @@ import { DocumentNode } from 'graphql'
 import React from 'react'
 import { client } from '../../apollo'
 import { IStrictIndexSignature, mutableSetValueIn, setValueIn } from '../../utils'
+import { buildAutoUpdateMutationData } from './diff'
 import { IHostConfig } from './host'
 
 export interface IIntristicActions {
@@ -16,26 +17,17 @@ export interface IHostState<LocalState = {}, HostQueryVariables = {}> {
 
 export enum HostActionType {
   Reset = 'RESET',
-  Create = 'CREATE',
-  Update = 'UPDATE',
-  Delete = 'DELETE',
+  AutoUpdate = 'AUTO_UPDATE',
 }
 
-// TODO: strict generic?
-export type IHostActions =
+export type IHostActions<Value = object, State = object, CustomActions = any, InitArg = any> =
   | {
       type: HostActionType.Reset
-      payload: object // State
+      initArg: InitArg // State
     }
   | {
-      type: HostActionType.Create
-    }
-  | {
-      type: HostActionType.Update
-      payload: object // State
-    }
-  | {
-      type: HostActionType.Delete
+      type: HostActionType.AutoUpdate
+      payload: Value // State
     }
 
 export const hostReducerFactory = <
@@ -49,64 +41,50 @@ export const hostReducerFactory = <
   propName,
   name,
   updateMutation,
+  init,
 }: IHostConfig<Value, State, CustomActions, InitArg>) => {
   const hostReducer: React.Reducer<State, IHostActions> = (state, action) => {
     switch (action.type) {
       case HostActionType.Reset:
         // do stuff
-        return action.payload
-      case HostActionType.Create:
-        // do stuff
-        return state
-      case HostActionType.Update:
+        return init(action.initArg)
+      case HostActionType.AutoUpdate:
         if (!updateMutation) {
           return state
         }
 
+        // maybe fetch fresh data from server to awoid some edge case out-of-sync
+        // or async and validate by path with diff data
         const prev = client.readQuery<IStrictIndexSignature>({ query, variables: state.variables })
 
         if (prev === null) {
-          console.error(`Host ${name}: cannot read query in update reducer`)
+          console.error(`Host ${name}: cannot read query data in AutoUpdate reducer`)
           return state
         }
 
         const clientValue = prev[propName]
 
-        const updateDiffs = diff<Value, Partial<Value>>(clientValue, action.payload as Partial<
-          Value
-        >)
+        const data = buildAutoUpdateMutationData(clientValue, action.payload)
 
-        if (updateDiffs) {
-          const data = {}
+        if (data) {
+          client.mutate({
+            mutation: updateMutation,
+            variables: {
+              ...state.variables,
+              data,
+            },
+          })
 
-          // TODO: refactor as fn of diff and source
-          updateDiffs.forEach(change => {
-            if (change.kind === 'N' && change.path) {
-              mutableSetValueIn(data, change.rhs, change.path)
-            }
-            if (change.kind === 'E' && change.path) {
-              mutableSetValueIn(data, change.rhs, change.path)
-            }
-            if (change.kind === 'D' && change.path) {
-              mutableSetValueIn(data, null, change.path)
-            }
-
-            client.mutate({
-              mutation: updateMutation,
-              variables: {
-                ...state.variables,
-                data,
-              },
-            })
+          // payload can be partial, but it's fine, because apollo merges cache
+          client.writeQuery({
+            query,
+            data: { [propName]: action.payload },
+            variables: state.variables,
           })
         }
 
         return state
-      case HostActionType.Delete:
-        // do stuff
-        return state
       default:
-        // use provided reducer
         return reducer(state, action)
     }
   }

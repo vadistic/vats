@@ -128,6 +128,9 @@ export interface CandidateQuery_candidate {
   tasks: CandidateQuery_candidate_tasks[] | null
   applications: CandidateQuery_candidate_applications[] | null
   comments: CandidateQuery_candidate_comments[] | null
+  phones: string[]
+  emails: string[]
+  links: string[]
 }
 
 export interface CandidateQuery {

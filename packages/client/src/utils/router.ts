@@ -1,4 +1,4 @@
-import { capitalise } from './random'
+import { capitalise } from './string'
 import { NonUndefined } from './types'
 
 /*

@@ -1,9 +1,10 @@
+import { diff } from 'deep-diff'
 import { FormikProvider, useFormik, useFormikContext } from 'formik'
 import { TextField } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
 import { getInByPath } from '../../utils'
 import { FormikTextField, FormikTextFieldProps } from '../formik'
-import { normaliseFormikInput, normaliseFormikResult } from './normalise'
+import { normaliseFormikInput, normaliseFormikResult as normaliseFormikPayload } from './normalise'
 
 export interface IEditableProps {
   editable: boolean
@@ -27,34 +28,45 @@ const useEditableContext = () => useContext(EditableContext)
  * - [x] change result array-like values to arrays
  * - take model (as subset of fields)
  */
-export const Editable: React.FC<IEditableProps> = ({ values, editable, onSubmit, children }) => {
-  const initialValues = useMemo(() => normaliseFormikInput(values), [values])
+
+export const Editable: React.FC<IEditableProps> = ({ values, onSubmit, ...rest }) => {
+  const { editable } = rest
+  const initialValues = useMemo(() => normaliseFormikInput(values), [values, editable])
 
   const handleSubmit = (payload: object) => {
-    onSubmit(normaliseFormikResult(payload))
-  }
-
-  const formik = useFormik({ initialValues, onSubmit: handleSubmit })
-
-  // reset form on value change (but not editable)
-  useMemo(() => {
-    formik.resetForm(initialValues)
-  }, [values])
-
-  if (!editable) {
-    return (
-      <EditableContext.Provider value={{ values: initialValues }}>
-        {children}
-      </EditableContext.Provider>
-    )
+    const normalisedPayload = normaliseFormikPayload(payload)
+    onSubmit(normalisedPayload)
   }
 
   if (editable) {
-    return <FormikProvider value={formik}>{children}</FormikProvider>
+    return <EnabledEditable values={initialValues} onSubmit={handleSubmit} {...rest} />
+  }
+
+  if (!editable) {
+    return <DisabledEditable values={initialValues} onSubmit={handleSubmit} {...rest} />
   }
 
   // noop
   return null
+}
+
+/*
+ * Hack with disabled-enabled editable, because fromik@gamma does not handle reset consistently
+ */
+const EnabledEditable: React.FC<IEditableProps> = ({ values, onSubmit, children, editable }) => {
+  const formik = useFormik({ initialValues: values, onSubmit })
+
+  // Formik bug
+  // Warning: Can't perform a React state update on an unmounted component.
+  // useMemo(() => {
+  //   formik.resetForm(values)
+  // }, [values, editable])
+
+  return <FormikProvider value={formik}>{children}</FormikProvider>
+}
+
+const DisabledEditable: React.FC<IEditableProps> = ({ values, onSubmit, children, editable }) => {
+  return <EditableContext.Provider value={{ values }}>{children}</EditableContext.Provider>
 }
 
 export const DisplayTextField: React.FC<FormikTextFieldProps> = ({
@@ -80,7 +92,6 @@ export const DisplayTextField: React.FC<FormikTextFieldProps> = ({
   }
 
   if (editableValues) {
-    // TODO: map to nice replacmenet components (or maybe use fabric input components but without formik?)
     const value = getInByPath(editableValues, name)
     return (
       <TextField

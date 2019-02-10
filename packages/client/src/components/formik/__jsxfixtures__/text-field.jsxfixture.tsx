@@ -1,6 +1,6 @@
 import { FormikProvider, useFormik } from 'formik'
 import React from 'react'
-import { getLeafPath } from '../../../utils'
+import { getLoLeafPath } from '../../../utils'
 import { FormikTextField } from '../formik'
 
 export const TextFieldFixture: React.FC = () => {
@@ -29,9 +29,9 @@ export const TextFieldFixture: React.FC = () => {
   return (
     <div>
       <FormikProvider value={formik}>
-        <FormikTextField name={getLeafPath(form, 'firstName')} />
-        <FormikTextField name={getLeafPath(form, 'lastName')} />
-        <FormikTextField name={getLeafPath(form, 'position')} />
+        <FormikTextField name={getLoLeafPath(form, 'firstName')} />
+        <FormikTextField name={getLoLeafPath(form, 'lastName')} />
+        <FormikTextField name={getLoLeafPath(form, 'position')} />
       </FormikProvider>
     </div>
   )
