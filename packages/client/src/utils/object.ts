@@ -1,5 +1,5 @@
 import { XNOR, XOR } from './guards'
-import { Head, Tail } from './types'
+import { Head, IStringIndexSignature, Tail } from './types'
 
 /*
  * util for safely traversing object trees
@@ -110,4 +110,35 @@ export const setValueIn = <
   }
 
   return { ...state, [head]: temp }
+}
+
+/**
+ * traverse object and apply return some (immutable!) change on some prop
+ */
+
+export type TransformFn = (value: any, keyOrIndex: string | number) => any
+
+// quite wide definition of literal value
+const isLeaf = (input: any) => typeof input !== 'object' || input === null
+
+export const recursiveTransformLeafs = (
+  input: any,
+  keyOrIndex: string | number,
+  transformFn: TransformFn,
+): any => {
+  if (isLeaf(input)) {
+    return transformFn(input, keyOrIndex)
+  } else if (Array.isArray(input)) {
+    return input.map((el, index) => recursiveTransformLeafs(el, index, transformFn))
+  } else if (typeof input === 'object') {
+    const init: IStringIndexSignature = {}
+
+    return Object.keys(input as object).reduce((acc, key) => {
+      acc[key] = recursiveTransformLeafs(input[key], key, transformFn)
+
+      return acc
+    }, init)
+  } else {
+    throw Error('Should never happen')
+  }
 }

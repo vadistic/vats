@@ -1,4 +1,3 @@
-import { diff } from 'deep-diff'
 import { FormikProvider, useFormik, useFormikContext } from 'formik'
 import { TextField } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
@@ -55,12 +54,6 @@ export const Editable: React.FC<IEditableProps> = ({ values, onSubmit, ...rest }
  */
 const EnabledEditable: React.FC<IEditableProps> = ({ values, onSubmit, children, editable }) => {
   const formik = useFormik({ initialValues: values, onSubmit })
-
-  // Formik bug
-  // Warning: Can't perform a React state update on an unmounted component.
-  // useMemo(() => {
-  //   formik.resetForm(values)
-  // }, [values, editable])
 
   return <FormikProvider value={formik}>{children}</FormikProvider>
 }

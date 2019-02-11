@@ -1,11 +1,13 @@
 import { css } from '@emotion/core'
+import { FieldArray, useFormikContext } from 'formik'
 import React from 'react'
 import { useIntl } from '../../i18n'
 import { ITheme } from '../../styles'
 import { getLoLeafPath } from '../../utils'
 import { DisplayTextField } from '../editable'
+import { FormikTextField } from '../formik'
 import { ProfileImage } from './fields'
-import { useCandidateContext } from './host'
+import { CandidateValue, useCandidateContext } from './host'
 
 export const topSectionStyles = (theme: ITheme) => css`
   display: flex;
@@ -31,17 +33,13 @@ export const topSectionStyles = (theme: ITheme) => css`
         ${theme.fonts.xLarge as any};
       }
     }
-
-    button {
-      position: absolute;
-      top: -${theme.spacing.s1};
-      left: -${theme.spacing.s1};
-    }
   }
 `
 
 export const TopSection: React.FC = () => {
-  const { value: candidate } = useCandidateContext()
+  const { value: candidate, state } = useCandidateContext()
+
+  const { values } = useFormikContext<CandidateValue>()
 
   const { intl } = useIntl()
   return (
@@ -73,10 +71,6 @@ export const TopSection: React.FC = () => {
           name={getLoLeafPath(candidate, 'headline')}
           placeholder={intl(undefined, 'candidate', 'headline')}
         />
-        {candidate.phones.map((el, i) => (
-          // TODO: fix lo builder
-          <DisplayTextField key={el} name={getLoLeafPath(candidate, 'phones', i)} />
-        ))}
       </form>
       <div>
         <figure>

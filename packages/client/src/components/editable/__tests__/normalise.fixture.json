@@ -1,0 +1,84 @@
+{
+  "phones": ["123 123 123", "123 123 123"],
+  "emails": [],
+  "links": ["github.com/Brain.Howell", "facebook.com/Moriah14", "github.com/Sam68"],
+  "id": "cjrl1kk0sgda10902q4v4r4ed",
+  "createdAt": "2019-01-31T19:57:49.276Z",
+  "updatedAt": "2019-02-10T21:45:19.341Z",
+  "firstName": "Leilaa",
+  "lastName": "Senger",
+  "avatar": {
+    "id": "cjrl1kk11gda20902a861vusa",
+    "createdAt": "2019-01-31T19:57:49.276Z",
+    "updatedAt": "2019-01-31T19:57:49.276Z",
+    "size": 27500,
+    "type": "image/png",
+    "name": "Leila-Senger-profile-96x96",
+    "url": "https://api.adorable.io/avatars/96/Leila_Senger@yahoo.com.png",
+    "__typename": "File"
+  },
+  "company": null,
+  "headline": null,
+  "position": null,
+  "resumesFile": [
+    {
+      "id": "cjrl1kk13gda40902ohcfp1w8",
+      "createdAt": "2019-01-31T19:57:49.276Z",
+      "updatedAt": "2019-01-31T19:57:49.276Z",
+      "size": 5383948,
+      "type": "application/pdf",
+      "name": "Leila-Senger-resume-Sun Jan 13 2019 19:15:56 GMT+0100 (Central European Standard Time)",
+      "url": "https://www.overleaf.com/latex/templates/cv-template/gsztvcrdvvbj.pdf?random=07c0d593-2b35-4801-9959-11efca49852a",
+      "__typename": "File"
+    }
+  ],
+  "coverLettersFile": [],
+  "tags": [
+    {
+      "id": "cjrl1jl20gckr09028w5v670w",
+      "createdAt": "2019-01-31T19:57:03.960Z",
+      "updatedAt": "2019-01-31T19:57:03.960Z",
+      "label": "implementation",
+      "description": null,
+      "__typename": "Tag"
+    },
+    {
+      "id": "cjrl1jncw8itg0a85a7bsvdro",
+      "createdAt": "2019-01-31T19:57:06.944Z",
+      "updatedAt": "2019-01-31T19:57:06.944Z",
+      "label": "withdrawal",
+      "description": null,
+      "__typename": "Tag"
+    }
+  ],
+  "sources": [
+    {
+      "id": "cjrl1jvme8iy00a85ysfd8uo8",
+      "createdAt": "2019-01-31T19:57:17.654Z",
+      "updatedAt": "2019-01-31T19:57:17.654Z",
+      "label": "licensed steel mouse",
+      "description": "clicks-and-mortar protocol Handmade Rubber Towels incubate Syrian Pound Handmade Soft Salad Industrial recontextualize withdrawal Wooden",
+      "__typename": "Source"
+    }
+  ],
+  "fields": [],
+  "tasks": [],
+  "applications": [
+    {
+      "createdAt": "2019-01-31T20:01:47.357Z",
+      "id": "cjrl1pnq5ghhs0902b1oiihah",
+      "updatedAt": "2019-01-31T20:01:47.357Z",
+      "type": "DISQUALIFIED",
+      "__typename": "Application"
+    },
+    {
+      "createdAt": "2019-01-31T20:01:56.301Z",
+      "id": "cjrl1pumlghlg0902g2u2pz3q",
+      "updatedAt": "2019-01-31T20:01:56.301Z",
+      "type": "DISQUALIFIED",
+      "__typename": "Application"
+    }
+  ],
+  "comments": [],
+  "__typename": "Candidate"
+}

@@ -66,6 +66,8 @@ export const hostReducerFactory = <
 
         const data = buildAutoUpdateMutationData(clientValue, action.payload)
 
+        console.log('SUBMIT', data)
+
         if (data) {
           client.mutate({
             mutation: updateMutation,
