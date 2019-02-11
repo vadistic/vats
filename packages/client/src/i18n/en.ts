@@ -6,6 +6,8 @@ export const translation = {
     company: 'Company',
     position: 'Position',
     headline: 'Headline',
+    phone: 'Phone number',
+    phone_plural: 'Phone numbers',
   },
   job: {
     name: 'Name',

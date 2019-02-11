@@ -29,7 +29,7 @@ export const deepNullToUndefined = <T>(obj: T): DeepNullToUndefined<T> =>
     }
   })
 
-export const normaliseFormikInput = deepNullToUndefined
+export const normaliseFormikInitialValues = deepNullToUndefined
 
 /*
  * And now reverse
@@ -43,4 +43,4 @@ export const deepUndefinedToNull = <T>(obj: T): DeepNullToUndefined<T> =>
     }
   })
 
-export const normaliseFormikResult = deepUndefinedToNull
+export const normaliseFormikPayload = deepUndefinedToNull

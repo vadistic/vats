@@ -3,7 +3,7 @@ import { TextField } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
 import { getInByPath } from '../../utils'
 import { FormikTextField, FormikTextFieldProps } from './formik'
-import { normaliseFormikInput, normaliseFormikResult as normaliseFormikPayload } from './normalise'
+import { normaliseFormikInitialValues, normaliseFormikPayload } from './normalise'
 
 export interface IEditableProps {
   editable: boolean
@@ -20,7 +20,7 @@ export const useEditableContext = () => useContext(EditableContext)
 
 export const Editable: React.FC<IEditableProps> = ({ values, onSubmit, ...rest }) => {
   const { editable } = rest
-  const initialValues = useMemo(() => normaliseFormikInput(values), [values, editable])
+  const initialValues = useMemo(() => normaliseFormikInitialValues(values), [values, editable])
 
   const handleSubmit = (payload: object) => {
     const normalisedPayload = normaliseFormikPayload(payload)

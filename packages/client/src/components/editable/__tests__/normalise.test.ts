@@ -1,10 +1,8 @@
-import { normaliseFormikInput } from '../normalise'
+import { normaliseFormikInitialValues, normaliseFormikPayload } from '../normalise'
 import fixture from './normalise.fixture.json'
 
-it('normaliseFormikInput convers nulls to undefined', () => {
-  const result = normaliseFormikInput(fixture)
-
-  console.log(result)
+it('normaliseFormikInitialValues() convers nulls to undefined', () => {
+  const result = normaliseFormikInitialValues(fixture)
 
   // handle empty array
   expect(result.emails).toEqual([])
@@ -13,7 +11,13 @@ it('normaliseFormikInput convers nulls to undefined', () => {
 
   // convert non nested null to undefined
   expect(result.company).toBe(undefined)
-
   // converts nested null to undefined
   expect(result.tags[0].description).toBe(undefined)
+})
+
+it('normaliseFormikPayload() convers undefined back to nulls', () => {
+  const result = normaliseFormikInitialValues(fixture)
+  const reversed = normaliseFormikPayload(result)
+
+  expect(reversed).toEqual(fixture)
 })
