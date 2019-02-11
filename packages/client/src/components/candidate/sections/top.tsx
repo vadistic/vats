@@ -1,40 +1,13 @@
 import { css } from '@emotion/core'
-import { FieldArray, useFormikContext } from 'formik'
+import { useFormikContext } from 'formik'
 import React from 'react'
-import { useIntl } from '../../i18n'
-import { ITheme } from '../../styles'
-import { getLoLeafPath } from '../../utils'
-import { DisplayTextField } from '../editable'
-import { FormikTextField } from '../formik'
-import { ProfileImage } from './fields'
-import { CandidateValue, useCandidateContext } from './host'
-
-export const topSectionStyles = (theme: ITheme) => css`
-  display: flex;
-  justify-content: space-between;
-
-  form {
-    position: relative;
-
-    .ms-TextField-fieldGroup {
-      background-color: inherit;
-      height: auto;
-    }
-
-    .name {
-      input {
-        ${theme.fonts.superLarge as any};
-        font-weight: bold;
-      }
-    }
-
-    .company {
-      input {
-        ${theme.fonts.xLarge as any};
-      }
-    }
-  }
-`
+import { useIntl } from '../../../i18n'
+import { ITheme } from '../../../styles'
+import { getLoLeafPath } from '../../../utils'
+import { Box } from '../../box'
+import { DisplayTextField } from '../../editable'
+import { ProfileImage } from '../fields'
+import { CandidateValue, useCandidateContext } from '../host'
 
 export const TopSection: React.FC = () => {
   const { value: candidate, state } = useCandidateContext()
@@ -43,40 +16,40 @@ export const TopSection: React.FC = () => {
 
   const { intl } = useIntl()
   return (
-    <section css={topSectionStyles}>
-      <form>
+    <Box direction="row">
+      <Box>
         <DisplayTextField
-          className="name"
+          fontSize="xxLarge"
           name={getLoLeafPath(candidate, 'firstName')}
           placeholder={intl(undefined, 'candidate', 'firstName')}
         />
         <DisplayTextField
-          className="name"
+          fontSize="xxLarge"
           name={getLoLeafPath(candidate, 'lastName')}
           placeholder={intl(undefined, 'candidate', 'firstName')}
         />
 
         <DisplayTextField
-          className="company"
+          fontSize="large"
           name={getLoLeafPath(candidate, 'company')}
           placeholder={intl(undefined, 'candidate', 'company')}
         />
         <DisplayTextField
-          className="company"
+          fontSize="large"
           name={getLoLeafPath(candidate, 'position')}
           placeholder={intl(undefined, 'candidate', 'position')}
         />
         <DisplayTextField
-          className="company"
+          fontSize="large"
           name={getLoLeafPath(candidate, 'headline')}
           placeholder={intl(undefined, 'candidate', 'headline')}
         />
-      </form>
-      <div>
+      </Box>
+      <Box>
         <figure>
           <ProfileImage avatar={candidate.avatar} />
         </figure>
-      </div>
-    </section>
+      </Box>
+    </Box>
   )
 }

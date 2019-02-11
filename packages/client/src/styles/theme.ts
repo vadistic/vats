@@ -1,3 +1,4 @@
+import { SerializedStyles } from '@emotion/core'
 import { createTheme, IPartialTheme, ISpacing, ITheme as IFabricTheme } from '@uifabric/styling'
 
 interface IWithUnitInput {
@@ -66,3 +67,5 @@ export interface IThemeProps {
   theme: ITheme
 }
 export const theme = { ...createTheme(fabricTheme), ...customTheme }
+
+export type CSSProp = SerializedStyles | ((theme: ITheme) => SerializedStyles)

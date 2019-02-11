@@ -1,2 +1,2 @@
 export * from './editable'
-export * from './normalise'
+export * from './fields'

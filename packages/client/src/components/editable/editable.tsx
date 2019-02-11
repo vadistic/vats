@@ -2,7 +2,7 @@ import { FormikProvider, useFormik, useFormikContext } from 'formik'
 import { TextField } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
 import { getInByPath } from '../../utils'
-import { FormikTextField, FormikTextFieldProps } from '../formik'
+import { FormikTextField, FormikTextFieldProps } from './formik'
 import { normaliseFormikInput, normaliseFormikResult as normaliseFormikPayload } from './normalise'
 
 export interface IEditableProps {
@@ -12,21 +12,11 @@ export interface IEditableProps {
 }
 
 // substitute formik context for non-editable mode
-const EditableContext = React.createContext({
+export const EditableContext = React.createContext({
   values: {},
 })
 
-const useEditableContext = () => useContext(EditableContext)
-
-/**
- * Editable component should:
- * - [x] provide formik context
- * - [x] provide replacement ctx when not editable
- * - [x] take data snapshot on edit start(via formik initValues)
- * - [x] change inital deep null values to undefined
- * - [x] change result array-like values to arrays
- * - take model (as subset of fields)
- */
+export const useEditableContext = () => useContext(EditableContext)
 
 export const Editable: React.FC<IEditableProps> = ({ values, onSubmit, ...rest }) => {
   const { editable } = rest
@@ -60,45 +50,4 @@ const EnabledEditable: React.FC<IEditableProps> = ({ values, onSubmit, children,
 
 const DisabledEditable: React.FC<IEditableProps> = ({ values, onSubmit, children, editable }) => {
   return <EditableContext.Provider value={{ values }}>{children}</EditableContext.Provider>
-}
-
-export const DisplayTextField: React.FC<FormikTextFieldProps> = ({
-  name,
-  placeholder,
-  ...rest
-}) => {
-  const { values: formikValues } = useFormikContext()
-  const { values: editableValues } = useEditableContext()
-
-  if (formikValues) {
-    return (
-      <FormikTextField
-        name={name}
-        placeholder={placeholder}
-        // shared
-        borderless={true}
-        autoComplete="off"
-        resizable={false}
-        {...rest}
-      />
-    )
-  }
-
-  if (editableValues) {
-    const value = getInByPath(editableValues, name)
-    return (
-      <TextField
-        value={value}
-        // shared
-        borderless={true}
-        autoComplete="off"
-        resizable={false}
-        disabled={true}
-        {...rest}
-      />
-    )
-  }
-
-  // noop
-  return null
 }

@@ -19,8 +19,10 @@ export const CANDIDATES_QUERY = gql`
   ${CandidateFragment}
 `
 
+export type CandidatesValue = Candidate[]
+
 const candidatesHostConfig: IHostConfig<
-  Candidate[],
+  CandidatesValue,
   ICandidatesState,
   ICandidatesActions,
   undefined

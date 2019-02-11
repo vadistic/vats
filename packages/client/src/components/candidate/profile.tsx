@@ -1,37 +1,26 @@
-import { css } from '@emotion/core'
-import { useFormikContext } from 'formik'
+import { Form, useFormikContext } from 'formik'
 import { IButtonProps, IconButton } from 'office-ui-fabric-react'
-import React, { useContext } from 'react'
+import React from 'react'
+import { Box } from '../box'
 import { Editable } from '../editable'
 import { HostActionType } from '../host'
 import { useCandidateContext } from './host'
 import { CandidateActionType } from './reducer'
-import { TopSection } from './top-section'
+import { TopSection } from './sections/top'
 
-const EditButton: React.FC<IButtonProps> = props => (
-  <IconButton iconProps={{ iconName: 'Edit' }} {...props} />
-)
+const EditButton: React.FC = () => {
+  const { state, dispatch } = useCandidateContext()
 
-const SubmitButton: React.FC<IButtonProps> = props => {
-  const { submitForm } = useFormikContext()
-
-  const handleClick = () => {
-    if (submitForm) {
-      submitForm()
-    }
+  const toggleEdit = () => {
+    dispatch({ type: CandidateActionType.Edit })
   }
-  return <IconButton iconProps={{ iconName: 'Save' }} onClick={handleClick} {...props} />
+
+  if (state.local.editable) {
+    return <IconButton iconProps={{ iconName: 'Save' }} type="submit" />
+  } else {
+    return <IconButton iconProps={{ iconName: 'Edit' }} onClick={toggleEdit} />
+  }
 }
-
-export const candidateProfileStyles = () => css`
-  width: 100%;
-  height: 100%;
-
-  main {
-    display: flex;
-    flex-direction: column;
-  }
-`
 
 export const CandidateProfile: React.FC = () => {
   const { value, state, dispatch } = useCandidateContext()
@@ -41,17 +30,14 @@ export const CandidateProfile: React.FC = () => {
     dispatch({ type: HostActionType.AutoUpdate, payload: values })
   }
 
-  const toggleEdit = () => {
-    dispatch({ type: CandidateActionType.Edit })
-  }
-
   return (
-    <div css={candidateProfileStyles}>
-      <EditButton onClick={toggleEdit} />
+    <Box>
       <Editable onSubmit={handleSubmit} values={value} editable={state.local.editable}>
-        <TopSection />
-        <SubmitButton />
+        <Form>
+          <EditButton />
+          <TopSection />
+        </Form>
       </Editable>
-    </div>
+    </Box>
   )
 }

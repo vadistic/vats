@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import { CandidateFragment } from '../../generated/fragments'
-import { Candidate, CandidateQuery, CandidateQuery_candidate } from '../../generated/queries'
+import { CandidateQuery_candidate } from '../../generated/queries'
 import { hostFactory, HostType, IHostConfig } from '../host'
 import {
   candidateReducer,

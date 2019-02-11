@@ -64,18 +64,17 @@ export const mutableSetValueIn = <
 ) => {
   const [head, ...tail] = path
 
-  // handle obj <=> array conversion
-  const isHeadArray = Array.isArray(state[head])
-  const shouldHeadBeArray = typeof tail[0] === 'number'
-
   if (tail.length > 0) {
-    const nextHead = XNOR(shouldHeadBeArray, isHeadArray)
+    // handle obj <=> array conversion
+    const isHeadArray = Array.isArray(state[head])
+    const shouldHeadBeArray = typeof tail[0] === 'number'
+    const nextState = XNOR(shouldHeadBeArray, isHeadArray)
       ? state[head]
       : shouldHeadBeArray
       ? []
       : {}
 
-    state[head] = mutableSetValueIn(nextHead, value, tail)
+    state[head] = mutableSetValueIn(nextState, value, tail)
   }
 
   if (tail.length === 0) {
@@ -102,7 +101,16 @@ export const setValueIn = <
   let temp: any
 
   if (tail.length > 0) {
-    temp = mutableSetValueIn(state[head] || typeof head === 'number' ? [] : {}, value, tail)
+    // handle obj <=> array conversion
+    const isHeadArray = Array.isArray(state[head])
+    const shouldHeadBeArray = typeof tail[0] === 'number'
+    const nextState = XNOR(shouldHeadBeArray, isHeadArray)
+      ? state[head]
+      : shouldHeadBeArray
+      ? []
+      : {}
+
+    temp = mutableSetValueIn(nextState, value, tail)
   }
 
   if (tail.length === 0) {

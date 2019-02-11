@@ -45,6 +45,7 @@
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
     "@reach/router": "^1.2.1",
+    "@uifabric/fluent-theme": "^0.13.4",
     "@uifabric/icons": "^6.3.0",
     "@uifabric/styling": "^6.41.0",
     "apollo-cache-inmemory": "^1.5.0-beta.1",
