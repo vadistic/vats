@@ -57,6 +57,7 @@ export const hostReducerFactory = <
         return hostInit(action.initArg)
       case HostActionType.AutoUpdate:
         if (!updateMutation) {
+          console.error(`Host ${name}: AutoUpdate action missing update mutation`)
           return state
         }
 
@@ -67,7 +68,7 @@ export const hostReducerFactory = <
         })
 
         if (queryCache === null) {
-          console.error(`Host ${name}: cannot read query data in AutoUpdate reducer`)
+          console.error(`Host ${name}: AutoUpdate action cannot read query data`)
           return state
         }
 

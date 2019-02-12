@@ -1,42 +1,86 @@
 import { css } from '@emotion/core'
-import { TextField } from 'office-ui-fabric-react'
-import { ITheme, styled } from '../../styles'
+import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
+import { ITheme } from '../../styles'
 import { displayFieldFactory } from './factory'
 import { FormikTextField, FormikTextFieldProps } from './formik'
 
-export const DisplayTextFieldBase = displayFieldFactory<FormikTextFieldProps>({
-  fallbackComponent: TextField,
-  formikComponent: FormikTextField,
-  fallbackValueProp: 'value',
-  props: {
-    borderless: true,
-    autoComplete: 'off',
-    resizable: false,
-    onClick: ev => {
-      ev.preventDefault()
-    },
-  },
-})
+const handleRenderLabel = (props: ITextFieldProps | undefined) => {
+  if (!props || !props.label) {
+    return null
+  }
 
-export interface InjectedDisplayTextFieldProps {
+  return <h4>{props.label}</h4>
+}
+
+export interface IDisplayTextFieldStylingProps {
   fontSize?: keyof ITheme['fonts']
 }
 
-export const DisplayTextField = styled<typeof DisplayTextFieldBase, InjectedDisplayTextFieldProps>(
-  DisplayTextFieldBase,
-)(
-  ({ theme }) => css`
+export const DisplayTextField = displayFieldFactory<
+  FormikTextFieldProps & IDisplayTextFieldStylingProps
+>({
+  fallbackComponent: TextField,
+  formikComponent: FormikTextField,
+  fallbackValueProp: 'value',
+  defaultProps: ({ editable }) => ({
+    borderless: !editable,
+    underlined: editable,
+    autoComplete: 'off',
+    resizable: false,
+    multiline: false,
+    onRenderLabel: handleRenderLabel,
+  }),
+  cssProp: ({ fontSize = 'medium' as 'medium', editable }) => theme => css`
+    /* fix editable bottom border height */
+    .ms-TextField-wrapper {
+      margin-bottom: ${editable && `-1px`};
+    }
+
     .ms-TextField-fieldGroup {
       background-color: inherit;
       min-height: ${theme.sizes.s3};
       height: auto;
     }
+
+    .ms-TextField-suffix {
+      background-color: inherit;
+    }
+
+    input {
+      ${theme.fonts[fontSize] as any};
+      padding: 0;
+    }
   `,
-  ({ theme, fontSize = 'medium' as 'medium' }) =>
-    css`
-      input {
-        ${theme.fonts[fontSize] as any};
-        padding: 0;
-      }
-    `,
-)
+})
+
+export const MultilineDisplayTextField = displayFieldFactory<
+  FormikTextFieldProps & IDisplayTextFieldStylingProps
+>({
+  fallbackComponent: TextField,
+  formikComponent: FormikTextField,
+  fallbackValueProp: 'value',
+  defaultProps: ({ editable }) => ({
+    borderless: !editable,
+    underlined: editable,
+    autoComplete: 'off',
+    autoAdjustHeight: true,
+    resizable: true,
+    multiline: true,
+    onRenderLabel: handleRenderLabel,
+  }),
+  cssProp: ({ fontSize = 'medium' as 'medium', editable }) => theme => css`
+    /* fix editable bottom border height */
+    .ms-TextField-wrapper {
+      margin-bottom: ${editable && `-1px`};
+    }
+
+    .ms-TextField-fieldGroup {
+      background-color: inherit;
+    }
+
+    textarea {
+      ${theme.fonts[fontSize] as any};
+      padding: 0;
+    }
+  `,
+})

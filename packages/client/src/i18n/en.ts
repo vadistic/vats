@@ -16,6 +16,10 @@ export const translation = {
   job: {
     name: 'Name',
     department: 'Department',
+    excerpt: 'Intro',
+    companyDescription: 'Company description',
+    description: 'Description',
+    requirements: 'Requirements',
     createdAt: 'Add date',
     updatedAt: 'Update date',
     applications: 'Applications',

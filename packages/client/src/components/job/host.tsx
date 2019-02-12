@@ -13,10 +13,20 @@ export const JOB_QUERY = gql`
   ${JobFragment}
 `
 
+export const JOB_UPDATE_MUTATION = gql`
+  mutation JobUpdateMutation($where: JobWhereUniqueInput!, $data: JobUpdateInput!) {
+    updateJob(where: $where, data: $data) {
+      ...Job
+    }
+  }
+  ${JobFragment}
+`
+
 export type JobValue = Job
 
 const jobHostConfig: IHostConfig<JobValue, IJobState, IJobActions, IJobHostInitArg> = {
   query: JOB_QUERY,
+  updateMutation: JOB_UPDATE_MUTATION,
   name: 'JOB_HOST',
   propName: 'job',
   type: HostType.Single,
@@ -24,4 +34,6 @@ const jobHostConfig: IHostConfig<JobValue, IJobState, IJobActions, IJobHostInitA
   init: jobStateInit,
 }
 
-export const { Host: JobHost, useContext: useJobContext } = hostFactory(jobHostConfig)
+export const { Host: JobHost, useContext: useJobContext, Context: JobContext } = hostFactory(
+  jobHostConfig,
+)
