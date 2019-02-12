@@ -13,6 +13,7 @@ import {
 export const CANDIDATE_QUERY = gql`
   query CandidateQuery($where: CandidateWhereUniqueInput!) {
     candidate(where: $where) {
+      # TODO: Fix generate fragments
       phones
       emails
       links
@@ -29,6 +30,9 @@ export const CANDIDATE_UPDATE_MUTATION = gql`
     $where: CandidateWhereUniqueInput!
   ) {
     updateCandidate(data: $data, where: $where) {
+      phones
+      emails
+      links
       ...Candidate
     }
   }

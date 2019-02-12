@@ -1,6 +1,8 @@
 import { DocumentNode } from 'graphql'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
+// tslint:disable-next-line:no-implicit-dependencies
+import compare from 'react-fast-compare'
 import { filterNull, tuplify, useInspectedReducer } from '../../utils'
 import {
   HostActionType,
@@ -107,6 +109,16 @@ export const hostFactory = <
       console.error(`Host ${name}: query empty or null`)
       return null
     }
+
+    const [prevData, setPrevData] = useState(data)
+    if (!compare(data, prevData)) {
+      console.log('compare NEW_DATA', data)
+      setPrevData(data)
+    }
+
+    useMemo(() => {
+      console.log('memo NEW DATA', data)
+    }, [data])
 
     if (type === HostType.Multi) {
       const values = useMemo(() => {

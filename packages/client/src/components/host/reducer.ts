@@ -68,17 +68,9 @@ export const hostReducerFactory = <
           return state
         }
 
-        const clientData = prev[propName]
+        const cachedData = prev[propName]
 
-        const updateField = 'update' + capitalise(propName)
-
-        const { updateData, queryData } = diffAutoUpdataData(clientData, action.payload)
-
-        const optimisticResponse = {
-          [updateField]: { ...clientData, ...queryData },
-        }
-
-        console.log('optimistic', optimisticResponse)
+        const { updateData, queryData } = diffAutoUpdataData(cachedData, action.payload)
 
         if (updateData) {
           client.mutate({
@@ -91,14 +83,12 @@ export const hostReducerFactory = <
 
           client.writeQuery({
             query,
-            data: {
-              [propName]: action.payload,
-            },
             variables: state.variables,
+            data: { [propName]: { ...cachedData, queryData } },
           })
         }
 
-        return state
+        return { ...state }
       default:
         return reducer(state, action)
     }

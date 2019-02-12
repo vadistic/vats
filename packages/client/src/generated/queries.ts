@@ -111,6 +111,9 @@ export interface CandidateQuery_candidate_comments {
 
 export interface CandidateQuery_candidate {
   __typename: 'Candidate'
+  phones: string[]
+  emails: string[]
+  links: string[]
   id: string
   createdAt: any
   updatedAt: any
@@ -128,9 +131,6 @@ export interface CandidateQuery_candidate {
   tasks: CandidateQuery_candidate_tasks[] | null
   applications: CandidateQuery_candidate_applications[] | null
   comments: CandidateQuery_candidate_comments[] | null
-  phones: string[]
-  emails: string[]
-  links: string[]
 }
 
 export interface CandidateQuery {

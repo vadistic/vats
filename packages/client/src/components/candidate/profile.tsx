@@ -26,8 +26,9 @@ export const CandidateProfile: React.FC = () => {
   const { value, state, dispatch } = useCandidateContext()
 
   const handleSubmit = (values: object) => {
-    dispatch({ type: CandidateActionType.Edit, editable: false })
+    // THE ORDER HERE IS THE MOST IMPORTANT THING OR QUERIES WONT UPDATE!
     dispatch({ type: HostActionType.AutoUpdate, payload: values })
+    dispatch({ type: CandidateActionType.Edit, editable: false })
   }
 
   return (
