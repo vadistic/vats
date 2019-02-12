@@ -1,14 +1,6 @@
-import { applyDiff, diff } from 'deep-diff'
-import { DocumentNode } from 'graphql'
 import React from 'react'
 import { client } from '../../apollo'
-import {
-  capitalise,
-  IStrictIndexSignature,
-  IStringIndexSignature,
-  mutableSetValueIn,
-  setValueIn,
-} from '../../utils'
+import { IStringIndexSignature } from '../../utils'
 import { diffAutoUpdataData } from './diff'
 import { IHostConfig } from './host'
 
@@ -21,12 +13,16 @@ export interface IHostState<LocalState = {}, HostQueryVariables = {}> {
   local: LocalState
 }
 
+export interface IHostStateForceUpdateProp {
+  forceUpdate: React.Dispatch<React.SetStateAction<void>>
+}
+
 export enum HostActionType {
   Reset = 'RESET',
   AutoUpdate = 'AUTO_UPDATE',
 }
 
-export type IHostActions<Value = object, State = object, CustomActions = any, InitArg = any> =
+export type IHostActions<Value = object, InitArg = any> =
   | {
       type: HostActionType.Reset
       initArg: InitArg // State
@@ -49,26 +45,33 @@ export const hostReducerFactory = <
   updateMutation,
   init,
 }: IHostConfig<Value, State, CustomActions, InitArg>) => {
-  const hostReducer: React.Reducer<State, IHostActions> = (state, action) => {
+  const hostReducer: React.Reducer<State & IHostStateForceUpdateProp, IHostActions> = (
+    state,
+    action,
+  ) => {
+    const hostInit = (_initArg: any) => ({ ...init(_initArg), forceUpdate: state.forceUpdate })
+
     switch (action.type) {
       case HostActionType.Reset:
         // do stuff
-        return init(action.initArg)
+        return hostInit(action.initArg)
       case HostActionType.AutoUpdate:
         if (!updateMutation) {
           return state
         }
 
         // maybe fetch fresh data from server to awoid some edge case out-of-sync
-        // or async and validate by path with diff data
-        const prev = client.readQuery<IStringIndexSignature>({ query, variables: state.variables })
+        const queryCache = client.readQuery<IStringIndexSignature>({
+          query,
+          variables: state.variables,
+        })
 
-        if (prev === null) {
+        if (queryCache === null) {
           console.error(`Host ${name}: cannot read query data in AutoUpdate reducer`)
           return state
         }
 
-        const cachedData = prev[propName]
+        const cachedData = queryCache[propName]
 
         const { updateData, queryData } = diffAutoUpdataData(cachedData, action.payload)
 
@@ -86,9 +89,11 @@ export const hostReducerFactory = <
             variables: state.variables,
             data: { [propName]: { ...cachedData, queryData } },
           })
+
+          // state.forceUpdate()
         }
 
-        return { ...state }
+        return state
       default:
         return reducer(state, action)
     }
@@ -96,5 +101,6 @@ export const hostReducerFactory = <
 
   // hack for correct discriminitation in switch
   type AllActions = CustomActions | IHostActions
-  return hostReducer as React.Reducer<State, AllActions>
+  // and hiding force update from myself for now
+  return (hostReducer as unknown) as React.Reducer<State, AllActions>
 }

@@ -11,11 +11,12 @@ interface IGroupLabelProps {
   label: string
 }
 
-const FieldsGroupLabel: React.FC<IGroupLabelProps> = ({ label, iconName }) => (
-  <h4>
-    {label}
+const FieldsGroupLabel: React.FC<IGroupLabelProps> = ({ label, iconName, children }) => (
+  <Box direction="row" css={{ alignItems: 'center' }}>
+    <h4>{label}</h4>
     <Icon iconName={iconName} styles={{ root: { marginLeft: '0.5em' } }} />
-  </h4>
+    {children}
+  </Box>
 )
 
 interface IFieldsGroupProps {
@@ -30,41 +31,33 @@ const FieldsGroup: React.FC<IFieldsGroupProps> = ({ propName }) => {
     <Box>
       <DisplayFieldArray<CandidateValue> name={getLoLeafPath(candidate, propName)}>
         {({ values: _candidate, push, handleRemove, handlePush, editable }) => {
-          if (_candidate[propName].length === 0) {
-            push('')
-          }
+          const listIsEmpty = _candidate[propName].length === 0
+          const lastElIsNotEmpty = _candidate[propName].slice(-1)[0]
 
           return (
             <>
               <Box direction="row">
-                {editable && _candidate[propName].slice(-1) && (
-                  <IconButton
-                    iconProps={{ iconName: 'Add' }}
-                    css={{ marginLeft: -32 }}
-                    onClick={handlePush('')}
-                  />
-                )}
                 <FieldsGroupLabel
                   iconName="Phone"
                   label={intl({ count: 3 }, 'candidate', propName)}
-                />
+                >
+                  {editable && (listIsEmpty || lastElIsNotEmpty) && (
+                    <IconButton iconProps={{ iconName: 'Add' }} onClick={handlePush('')} />
+                  )}
+                </FieldsGroupLabel>
               </Box>
               {_candidate[propName].map((_, i) => (
                 <Box key={propName + '_' + i}>
                   <Box direction="row">
-                    {editable && _candidate[propName][i] && (
-                      <IconButton
-                        iconProps={{ iconName: 'Remove' }}
-                        css={{ marginLeft: -32 }}
-                        onClick={handleRemove(i)}
-                      />
-                    )}
                     <DisplayTextField
                       key={'item_' + i}
                       fontSize="medium"
                       name={getLoLeafPath(candidate, propName, i)}
                       placeholder={intl({ count: 1 }, 'candidate', propName)}
                     />
+                    {editable && (
+                      <IconButton iconProps={{ iconName: 'Remove' }} onClick={handleRemove(i)} />
+                    )}
                   </Box>
                 </Box>
               ))}

@@ -1,8 +1,6 @@
 import { DocumentNode } from 'graphql'
 import React, { useMemo, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
-// tslint:disable-next-line:no-implicit-dependencies
-import compare from 'react-fast-compare'
 import { filterNull, tuplify, useInspectedReducer } from '../../utils'
 import {
   HostActionType,
@@ -79,8 +77,13 @@ export const hostFactory = <
   })
 
   const useReducer = (initArg?: InitArg) => {
+    // implementation of hooked forceUpdate
+    const [, forceUpdate] = useState<void>(undefined)
+
+    const hostInit = (_initArg: any) => ({ ...init(_initArg), forceUpdate })
+
     // this assertion on initArg is fine - just allowing undefined if init fn does it all
-    const [state, dispatch] = useInspectedReducer(hostReducer, initArg as any, init, name)
+    const [state, dispatch] = useInspectedReducer(hostReducer, initArg as any, hostInit, name)
 
     if (initArg && resetOnInitArgChange) {
       useMemo(() => {
@@ -110,22 +113,13 @@ export const hostFactory = <
       return null
     }
 
-    const [prevData, setPrevData] = useState(data)
-    if (!compare(data, prevData)) {
-      console.log('compare NEW_DATA', data)
-      setPrevData(data)
-    }
-
-    useMemo(() => {
-      console.log('memo NEW DATA', data)
-    }, [data])
-
     if (type === HostType.Multi) {
       const values = useMemo(() => {
         const nonNullValues = filterNull(value) as Value & Array<unknown>
 
         if (nonNullValues.length === 0) {
-          console.error(`Host ${name}: collection empty`)
+          console.warn(`Host ${name}: collection empty`)
+          return ([] as unknown) as Value
         }
 
         if (filter) {

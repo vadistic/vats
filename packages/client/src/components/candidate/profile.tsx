@@ -4,7 +4,7 @@ import React from 'react'
 import { Box } from '../box'
 import { Editable } from '../editable'
 import { HostActionType } from '../host'
-import { useCandidateContext } from './host'
+import { CandidateContext, useCandidateContext } from './host'
 import { CandidateActionType } from './reducer'
 import { InfoSection, TopSection } from './sections'
 
@@ -26,14 +26,13 @@ export const CandidateProfile: React.FC = () => {
   const { value, state, dispatch } = useCandidateContext()
 
   const handleSubmit = (values: object) => {
-    // THE ORDER HERE IS THE MOST IMPORTANT THING OR QUERIES WONT UPDATE!
-    dispatch({ type: HostActionType.AutoUpdate, payload: values })
     dispatch({ type: CandidateActionType.Edit, editable: false })
+    dispatch({ type: HostActionType.AutoUpdate, payload: values })
   }
 
   return (
     <Box>
-      <Editable onSubmit={handleSubmit} values={value} editable={state.local.editable}>
+      <Editable onSubmit={handleSubmit} context={CandidateContext} editable={state.local.editable}>
         <Form>
           <EditButton />
           <TopSection />

@@ -1,5 +1,4 @@
-import cloneDeep from 'clone-deep'
-import { IStringIndexSignature, recursiveTransformLeafs } from '../../utils'
+import { recursiveTransform } from '../../utils'
 
 /*
  * Formik and subsequent input fields & react expect undefined for empty, not null
@@ -20,27 +19,24 @@ export type DeepNullToUndefined<T> = T extends any[]
   ? NullToUndefinedObjOrLit<T>
   : NullToUndefinedLit<T>
 
-export const deepNullToUndefined = <T>(obj: T): DeepNullToUndefined<T> =>
-  recursiveTransformLeafs(obj, 'root', (value, key) => {
+export const normaliseFormikInitialValues = <T>(obj: T): DeepNullToUndefined<T> =>
+  recursiveTransform(obj, [], value => {
+    // null vals to undefined
     if (value === null) {
       return undefined
-    } else {
-      return value
     }
-  })
 
-export const normaliseFormikInitialValues = deepNullToUndefined
+    return value
+  })
 
 /*
  * And now reverse
  */
-export const deepUndefinedToNull = <T>(obj: T): DeepNullToUndefined<T> =>
-  recursiveTransformLeafs(obj, 'root', (value, key) => {
+export const normaliseFormikPayload = <T>(obj: T): DeepNullToUndefined<T> =>
+  recursiveTransform(obj, [], value => {
     if (value === undefined) {
       return null
     } else {
       return value
     }
   })
-
-export const normaliseFormikPayload = deepUndefinedToNull

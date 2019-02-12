@@ -57,6 +57,8 @@ const candidateHostConfig: IHostConfig<
   init: candidateStateInit,
 }
 
-export const { Host: CandidateHost, useContext: useCandidateContext } = hostFactory(
-  candidateHostConfig,
-)
+export const {
+  Host: CandidateHost,
+  useContext: useCandidateContext,
+  Context: CandidateContext,
+} = hostFactory(candidateHostConfig)
