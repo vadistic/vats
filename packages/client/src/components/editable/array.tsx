@@ -5,6 +5,7 @@ import { useEditableContext } from './editable'
 export interface IDisplayFieldArrayRenderProps<Value> extends ArrayHelpers {
   name: string
   values: Value
+  editable: boolean
 }
 
 export interface IDisplayFieldArrayProps<Value> {
@@ -72,13 +73,15 @@ export const DisplayFieldArray = <T extends any>({
   if (formikValues) {
     return (
       <FieldArray name={name} validateOnChange={false}>
-        {({ form, ...rest }) => children({ values: formikValues, ...rest })}
+        {({ form, ...rest }) => children({ values: formikValues, editable: true, ...rest })}
       </FieldArray>
     )
   }
 
   if (editableValues) {
-    return <>{children({ name, values: editableValues as T, ...noopArrayHelpers })}</>
+    return (
+      <>{children({ name, values: editableValues as T, editable: false, ...noopArrayHelpers })}</>
+    )
   }
 
   return null

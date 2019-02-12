@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test": "craco test --verbose false",
     "format": "prettier --write --no-color -l src/**/*.{ts,tsx}",
     "lint": "tslint -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",

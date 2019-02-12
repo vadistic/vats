@@ -1,113 +1,63 @@
-import { diff, Diff } from 'deep-diff'
-import {
-  getIn,
-  insertElOnIndex,
-  mutableSetValueIn,
-  removeElOnIndex,
-  updateElOnIndex,
-} from '../../utils'
+import { applyChange, diff } from 'deep-diff'
+import { getIn, mutableSetValueIn, recursiveTransform, tryGetIn } from '../../utils'
 
-export const buildAutoUpdateMutationData = <Value>(prev: Value, next: Value) => {
+export const diffAutoUpdataData = <Value>(prev: Value, next: Value) => {
   const updateDiffs = diff<Value, Value>(prev, next, (path, key) => {
-    return ['id', 'createdAt', 'updatedAt', 'deletedAt'].includes(key)
+    return ['__typename', 'id', 'createdAt', 'updatedAt', 'deletedAt'].includes(key)
   })
 
   if (!updateDiffs) {
-    return undefined
+    return { queryData: undefined, updateData: undefined }
   }
 
-  const result = {}
+  const queryData: Partial<Value> | undefined = {}
 
-  const litPropUpdates: Array<Diff<Value, Value>> = []
-  const litArrPropUpdates: Array<Diff<Value, Value>> = []
+  // reverse for correct array diffs update
+  updateDiffs.reverse().forEach(change => {
+    const path = change.path
 
-  updateDiffs.forEach(change => {
-    if (change.path) {
-      // own literal prop update
-      const isLitPropUpdate = change.path.length === 1 && typeof change.path[0] === 'string'
-      // own array of literals prop update
-      const isLitArrPropUpdate = change.path.length === 2 && typeof change.path[1] === 'number'
+    if (path) {
+      const dir = path.slice(0, -1)
+      const el = path.slice(-1)[0]
 
-      if (isLitPropUpdate) {
-        litPropUpdates.push(change)
-      } else if (isLitArrPropUpdate) {
-        litArrPropUpdates.push(change)
-      } else {
-        console.error('CHANGE:', change)
-        throw Error(
-          `Invalid AutoUpdate payload. Relations updates are not handled by auto diff (yet)`,
-        )
+      const isValid =
+        // non-nested prop updates or complex arr changes
+        (typeof el === 'string' && dir.length === 0) ||
+        // not nested single arr elements updates
+        (typeof el === 'number' && dir.length === 1 && typeof dir[0] === 'string')
+
+      if (!isValid) {
+        throw Error('Autoupdate cannot update relations')
       }
+
+      // single array element change
+      // without checking for other edits on array or because they would be reported as 'A' chnage
+      if (typeof el === 'number') {
+        mutableSetValueIn(queryData, getIn(prev, ...dir), dir)
+      }
+
+      // multiple array element changes
+      if (change.kind === 'A') {
+        const isTouched = !!tryGetIn(queryData, ...path)
+        if (!isTouched) {
+          mutableSetValueIn(queryData, getIn(prev, ...path), path)
+        }
+
+        applyChange(queryData, undefined, { ...change.item, path: [...path, change.index] })
+      }
+
+      applyChange(queryData, undefined, change)
     }
   })
 
-  litPropUpdates.forEach(mutableHandleLitPropUpdate(result))
-  litArrPropUpdates.forEach(mutableHandleLitArrPropUpdate(result, prev))
-
-  return result
-}
-
-const mutableHandleLitPropUpdate = (result: any) => (
-  change: Diff<any, any>,
-  i: number,
-  diffs: Array<Diff<any, any>>,
-) => {
-  const path = change.path
-  if (path) {
-    if (change.kind === 'N') {
-      mutableSetValueIn(result, change.rhs, path)
-    }
-    if (change.kind === 'E') {
-      mutableSetValueIn(result, change.rhs, path)
-    }
-    if (change.kind === 'D') {
-      mutableSetValueIn(result, null, path)
-    }
-  }
-}
-
-const mutableHandleLitArrPropUpdate = (result: any, prev: any) => (
-  change: Diff<any, any>,
-  i: number,
-  diffs: Array<Diff<any, any>>,
-) => {
-  const elPath = change.path
-  const getArrPath = (path: any[]) => path.slice(0, -1) as Array<string | number>
-  const getElIndex = (path: any[]) => (path.slice(-1) as unknown) as number
-
-  if (elPath) {
-    const arrPath = getArrPath(elPath)
-    const elIndex = getElIndex(elPath)
-
-    // checks if any changes were already applied on this array
-    // join('/') is just simple path serialisation
-    const isFirstUpdateOnArr = diffs.some(
-      (_change, _i) =>
-        !!_change.path && getArrPath(_change.path).join('/') === arrPath.join('/') && _i < i,
-    )
-
-    // copy prev array values as {set: []} on first run
-    if (!isFirstUpdateOnArr) {
-      mutableSetValueIn(result, { set: getIn(prev, ...arrPath) }, arrPath)
+  const updateData = recursiveTransform(queryData, [], (value, path) => {
+    // just set {} all arrays
+    if (Array.isArray(value)) {
+      return { set: value }
     }
 
-    // apply changes
-    const prevSetArr = getIn(result, ...arrPath, 'set')
+    return value
+  })
 
-    if (change.kind === 'N') {
-      mutableSetValueIn(result, insertElOnIndex(prevSetArr, elIndex, change.rhs), [
-        ...arrPath,
-        'set',
-      ])
-    }
-    if (change.kind === 'E') {
-      mutableSetValueIn(result, updateElOnIndex(prevSetArr, elIndex, change.rhs), [
-        ...arrPath,
-        'set',
-      ])
-    }
-    if (change.kind === 'D') {
-      mutableSetValueIn(result, removeElOnIndex(prevSetArr, elIndex), [...arrPath, 'set'])
-    }
-  }
+  return { queryData, updateData }
 }

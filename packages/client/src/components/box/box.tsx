@@ -3,7 +3,6 @@ import React from 'react'
 import { ITheme, styled } from '../../styles'
 
 export interface IBoxProps {
-  fill?: boolean
   direction?: 'row' | 'column'
   as?: keyof React.ReactHTML
 }
@@ -16,10 +15,4 @@ export const Box = styled(BoxBase)(
     flex-direction: ${direction};
     box-sizing: border-box;
   `,
-  ({ fill }) =>
-    fill &&
-    css`
-      height: 100%;
-      width: 100%;
-    `,
 )

@@ -12,6 +12,9 @@ export const DisplayTextFieldBase = displayFieldFactory<FormikTextFieldProps>({
     borderless: true,
     autoComplete: 'off',
     resizable: false,
+    onClick: ev => {
+      ev.preventDefault()
+    },
   },
 })
 
@@ -33,6 +36,7 @@ export const DisplayTextField = styled<typeof DisplayTextFieldBase, InjectedDisp
     css`
       input {
         ${theme.fonts[fontSize] as any};
+        padding: 0;
       }
     `,
 )

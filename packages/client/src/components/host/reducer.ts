@@ -2,8 +2,14 @@ import { applyDiff, diff } from 'deep-diff'
 import { DocumentNode } from 'graphql'
 import React from 'react'
 import { client } from '../../apollo'
-import { IStrictIndexSignature, mutableSetValueIn, setValueIn } from '../../utils'
-import { buildAutoUpdateMutationData } from './diff'
+import {
+  capitalise,
+  IStrictIndexSignature,
+  IStringIndexSignature,
+  mutableSetValueIn,
+  setValueIn,
+} from '../../utils'
+import { diffAutoUpdataData } from './diff'
 import { IHostConfig } from './host'
 
 export interface IIntristicActions {
@@ -55,32 +61,39 @@ export const hostReducerFactory = <
 
         // maybe fetch fresh data from server to awoid some edge case out-of-sync
         // or async and validate by path with diff data
-        const prev = client.readQuery<IStrictIndexSignature>({ query, variables: state.variables })
+        const prev = client.readQuery<IStringIndexSignature>({ query, variables: state.variables })
 
         if (prev === null) {
           console.error(`Host ${name}: cannot read query data in AutoUpdate reducer`)
           return state
         }
 
-        const clientValue = prev[propName]
+        const clientData = prev[propName]
 
-        const data = buildAutoUpdateMutationData(clientValue, action.payload)
+        const updateField = 'update' + capitalise(propName)
 
-        console.log('SUBMIT', data)
+        const { updateData, queryData } = diffAutoUpdataData(clientData, action.payload)
 
-        if (data) {
+        const optimisticResponse = {
+          [updateField]: { ...clientData, ...queryData },
+        }
+
+        console.log('optimistic', optimisticResponse)
+
+        if (updateData) {
           client.mutate({
             mutation: updateMutation,
             variables: {
               ...state.variables,
-              data,
+              data: updateData,
             },
           })
 
-          // payload can be partial, but it's fine, because apollo merges cache
           client.writeQuery({
             query,
-            data: { [propName]: action.payload },
+            data: {
+              [propName]: action.payload,
+            },
             variables: state.variables,
           })
         }

@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next'
 import { translation } from './en'
 
 i18next.use(initReactI18next).init({
-  debug: true,
+  debug: false,
 
   interpolation: {
     escapeValue: false,

@@ -1,12 +1,12 @@
-import { Form, useFormikContext } from 'formik'
-import { IButtonProps, IconButton } from 'office-ui-fabric-react'
+import { Form } from 'formik'
+import { IconButton } from 'office-ui-fabric-react'
 import React from 'react'
 import { Box } from '../box'
 import { Editable } from '../editable'
 import { HostActionType } from '../host'
 import { useCandidateContext } from './host'
 import { CandidateActionType } from './reducer'
-import { TopSection } from './sections/top'
+import { InfoSection, TopSection } from './sections'
 
 const EditButton: React.FC = () => {
   const { state, dispatch } = useCandidateContext()
@@ -36,6 +36,7 @@ export const CandidateProfile: React.FC = () => {
         <Form>
           <EditButton />
           <TopSection />
+          <InfoSection />
         </Form>
       </Editable>
     </Box>

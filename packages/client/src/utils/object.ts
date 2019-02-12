@@ -2,6 +2,10 @@ import { XNOR, XOR } from './guards'
 import { Head, IStringIndexSignature, Tail } from './types'
 
 /*
+ * GET VALUE IN
+ */
+
+/*
  * util for safely traversing object trees
  */
 export type TraversePath<State extends any, Paths extends any[]> = Head<Paths> extends keyof State
@@ -12,7 +16,7 @@ export type TraversePath<State extends any, Paths extends any[]> = Head<Paths> e
   : void
 
 /**
- * access nested object property
+ * access existing nested object property
  */
 export const getIn = <State extends any, Paths extends Array<string | number>>(
   state: State,
@@ -32,6 +36,9 @@ export const getIn = <State extends any, Paths extends Array<string | number>>(
   return state[head]
 }
 
+/**
+ * same as getIn but with undefined as fallback
+ */
 export const tryGetIn = <State extends any, Paths extends Array<string | number>>(
   state: State,
   ...paths: Paths
@@ -49,10 +56,14 @@ export const tryGetIn = <State extends any, Paths extends Array<string | number>
   return state[head]
 }
 
-/**
- * set nested object property to value
+/*
+ * SET VALUE IN
  */
 
+/**
+ * set nested object property to value
+ * allows arr <=> obj transform (but it wipes prev data)
+ */
 export const mutableSetValueIn = <
   State extends any,
   Value extends any,
@@ -85,7 +96,8 @@ export const mutableSetValueIn = <
 }
 
 /**
- * this one's immutable
+ * immutable set nested object property to value,
+ * allows `arr <=> obj` transform (but it wipes prev data)
  */
 export const setValueIn = <
   State extends any,
@@ -120,19 +132,22 @@ export const setValueIn = <
   return { ...state, [head]: temp }
 }
 
-/**
- * traverse object and apply return some (immutable!) change on some prop
+/*
+ * RECURSIVE TRANSFORM LEAFS
  */
 
-export type TransformFn = (value: any, keyOrIndex: string | number) => any
+export type TransformLeafFn = (value: any, keyOrIndex: string | number) => any
 
 // quite wide definition of literal value
 const isLeaf = (input: any) => typeof input !== 'object' || input === null
 
+/**
+ * traverse object and apply return some (immutable!) changes on leaf
+ */
 export const recursiveTransformLeafs = (
   input: any,
   keyOrIndex: string | number,
-  transformFn: TransformFn,
+  transformFn: TransformLeafFn,
 ): any => {
   if (isLeaf(input)) {
     return transformFn(input, keyOrIndex)
@@ -146,6 +161,40 @@ export const recursiveTransformLeafs = (
 
       return acc
     }, init)
+  } else {
+    throw Error('Should never happen')
+  }
+}
+
+/*
+ * RECURSIVE TRANSFORM
+ */
+export type TransformFn = (value: any, path: Array<string | number>) => any
+
+/**
+ * Same as recursiveTransformLeafs, but gets called on each level
+ * Deep first!
+ */
+export const recursiveTransform = (
+  input: any,
+  path: Array<string | number>,
+  transformFn: TransformFn,
+): any => {
+  if (isLeaf(input)) {
+    return transformFn(input, path)
+  } else if (Array.isArray(input)) {
+    const deepArr = input.map((el, index) => recursiveTransform(el, [...path, index], transformFn))
+
+    return transformFn(deepArr, path)
+  } else if (typeof input === 'object') {
+    const init: IStringIndexSignature = {}
+
+    const deepObj = Object.keys(input as object).reduce((acc, key) => {
+      acc[key] = recursiveTransform(input[key], [...path, key], transformFn)
+      return acc
+    }, init)
+
+    return transformFn(deepObj, path)
   } else {
     throw Error('Should never happen')
   }
