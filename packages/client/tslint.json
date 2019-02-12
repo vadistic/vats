@@ -8,6 +8,7 @@
     "no-empty-interface": false,
     "ordered-imports": true,
     "only-arrow-functions": true,
+    "jsx-no-lambda": [false],
     "member-access": [true, "no-public"],
     "file-name-casing": [true, "kebab-case"],
     "no-implicit-dependencies": [true, ["graphql-tag", "react-testing-library"]],
