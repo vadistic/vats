@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { CheckPath } from '../utils'
-import { translation } from './en'
 import { i18next } from './i18n'
+import { translation } from './translations/en'
 
 /**
  * validate path and transform to lodash.style including 2 arg as parent(for translations)

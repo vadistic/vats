@@ -1,6 +1,6 @@
-import * as fs from 'fs'
+import fs from 'fs'
 import { print } from 'graphql'
-import * as path from 'path'
+import path from 'path'
 // tslint:disable-next-line:no-implicit-dependencies
 import * as prettier from 'prettier'
 

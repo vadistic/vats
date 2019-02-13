@@ -345,7 +345,7 @@ type Candidate {
     first: Int
     last: Int
   ): [Application!]
-  comments(
+  applications(
     where: CommentWhereInput
     orderBy: CommentOrderByInput
     skip: Int
