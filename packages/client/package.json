@@ -11,7 +11,7 @@
     "lint": "tslint -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate": "yarn typecheck && yarn lint && yarn format",
-    "env": "node scripts/env-config",
+    "env": "node ./scripts/env-cli",
     "gen:server": "graphql get-schema -p server",
     "gen:client:sdl": "yarn ts-node --project './scripts/tsconfig.json' scripts/client-sdl",
     "gen:client:resolvers": "gql-gen --config codegen.yml",
