@@ -83,6 +83,7 @@
     "@types/uuid": "^3.4.4",
     "@types/webpack-env": "^1.13.7",
     "apollo": "^2.4.4",
+    "cross-spawn": "^6.0.5",
     "dotenv": "^6.2.0",
     "graphql-cli": "^3.0.9",
     "graphql-cli-generate-fragments": "vadistic/graphql-cli-generate-fragments#graphql-tag",

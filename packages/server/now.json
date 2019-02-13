@@ -3,5 +3,13 @@
   "alias": "vats-server",
   "public": true,
   "version": 1,
-  "dotenv": true
+  "env": {
+    "PRISMA_ENDPOINT": "https://eu1.prisma.sh/vadistic",
+    "PRISMA_SERVICE": "vats-prisma",
+    "PRISMA_STAGE": "dev",
+    "ENGINE_SERVICE_NAME": "vats-server1",
+    "ENGINE_API_KEY": "@engine_api_key",
+    "PORT": "4000",
+    "LIVE_ENDPOINT": "https://vats-server.now.sh"
+  }
 }

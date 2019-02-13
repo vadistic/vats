@@ -1,13 +1,39 @@
-# Workspace
-*.env
-.vscode
-
-# Project dependencies
+# dependencies
 node_modules
-yarn-error.log
 
-# Build directory
+.pnp
+.pnp.js
+
+# testing
+/coverage
+packages/*/coverage
+
+# production
+build
+dist
+public
+.cache
+
+packages/*/build
+packages/*/dist
+packages/*/public
+packages/*/.cache
+
+# misc
 .DS_Store
 
-# Custom
-packages/app/.graphqlconfig.yml
+# envs
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+packages/*/now.json
+packages/*/.env.local
+packages/*/.env.development.local
+packages/*/.env.test.local
+packages/*/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
