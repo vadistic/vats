@@ -1,11 +1,11 @@
 import { FormikProvider, useFormik } from 'formik'
 import React, { useContext, useMemo } from 'react'
-import { IHostContext } from '../host'
+import { HostContext } from '../host'
 import { normaliseFormikInitialValues, normaliseFormikPayload } from './normalise'
 
 export interface IEditableProps {
   editable: boolean
-  context: React.Context<IHostContext<any, any, any, any>>
+  context: HostContext<any>
   onSubmit: (values: any) => void
 }
 

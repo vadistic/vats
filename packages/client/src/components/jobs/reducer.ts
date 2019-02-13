@@ -1,7 +1,6 @@
 import produce from 'immer'
-import { JobsQueryVariables } from '../../generated/queries'
-import { SortDirection, useInspectedReducer } from '../../utils'
-import { IHostState } from '../host'
+import { SortDirection } from '../../utils'
+import { JobsState } from './host'
 import { JobsSortBy } from './sort'
 
 export enum JobActionType {
@@ -9,7 +8,7 @@ export enum JobActionType {
   SortDirection = 'SORT_DIRECTION',
 }
 
-export type IJobsActions =
+export type JobsActions =
   | {
       type: JobActionType.SortBy
       sortBy: JobsSortBy
@@ -19,22 +18,14 @@ export type IJobsActions =
       sortDirection?: SortDirection
     }
 
-interface IJobsHostLocalState {
-  sortBy: JobsSortBy
-  sortDirection: SortDirection
-}
-
-export type IJobsState = IHostState<IJobsHostLocalState, JobsQueryVariables>
-
-export const jobsStateInit = (): IJobsState => ({
-  local: {
-    sortBy: JobsSortBy.CreatedAt,
-    sortDirection: SortDirection.ASCENDING,
-  },
-  variables: {},
+export const jobsStateInit = () => ({
+  sortBy: JobsSortBy.CreatedAt,
+  sortDirection: SortDirection.ASCENDING,
 })
 
-export const jobsReducer = produce<IJobsState, [IJobsActions]>((draft, action) => {
+export type JobsLocalState = ReturnType<typeof jobsStateInit>
+
+export const jobsReducer = produce<JobsState, [JobsActions]>((draft, action) => {
   switch (action.type) {
     case JobActionType.SortBy:
       draft.local.sortBy = action.sortBy

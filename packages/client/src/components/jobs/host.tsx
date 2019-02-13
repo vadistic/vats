@@ -1,8 +1,9 @@
 import gql from 'graphql-tag'
 import { JobFragment } from '../../generated/fragments'
-import { Job } from '../../generated/queries'
-import { hostFactory, HostType, IHostConfig } from '../host'
-import { IJobsActions, IJobsState, jobsReducer, jobsStateInit } from './reducer'
+import { Job, JobsQuery_jobs, JobsQueryVariables } from '../../generated/queries'
+import { hostFactory, HostType, IHostTyping } from '../host'
+import { JOB_UPDATE_MUTATION } from '../job/host'
+import { JobsActions, JobsLocalState, jobsReducer, jobsStateInit } from './reducer'
 import { jobsSorter } from './sort'
 
 export const JOBS_QUERY = gql`
@@ -15,16 +16,31 @@ export const JOBS_QUERY = gql`
   ${JobFragment}
 `
 
-export type JobsValue = Job[]
+export type JobsValue = JobsQuery_jobs[]
 
-const jobsHostConfig: IHostConfig<JobsValue, IJobsState, IJobsActions, undefined> = {
-  query: JOBS_QUERY,
-  name: 'JOBS_HOST',
-  propName: 'jobs',
+export type JobsHostTyping = IHostTyping<
+  JobsLocalState,
+  JobsActions,
+  JobsQueryVariables | undefined,
+  JobsQueryVariables['where'],
+  JobsValue
+>
+
+export type JobsState = JobsHostTyping['state']
+
+const jobsHostConfig: JobsHostTyping['config'] = {
+  displayName: 'CANDIDATES',
+  rootField: 'jobs',
   type: HostType.Multi,
-  reducer: jobsReducer,
   init: jobsStateInit,
-  filter: jobsSorter,
+  reducer: jobsReducer,
+  query: JOBS_QUERY,
+  updateMutation: JOB_UPDATE_MUTATION,
+  resetOnInitArgChange: true,
+  // TODO: specific init variables?
+  initVariables: () => null,
 }
 
-export const { Host: JobsHost, useContext: useJobsContect } = hostFactory(jobsHostConfig)
+export const { Host: JobsHost, useContext: useJobsContext, Context: JobsContext } = hostFactory<
+  JobsHostTyping
+>(jobsHostConfig)

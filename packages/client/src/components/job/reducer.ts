@@ -1,13 +1,12 @@
 import produce from 'immer'
-import { JobQueryVariables } from '../../generated/queries'
-import { IHostState } from '../host'
+import { JobHostTyping } from './host'
 
 export enum JobActionType {
   Noop = 'NOOP',
   Edit = 'EDIT',
 }
 
-export type IJobActions =
+export type JobActions =
   | {
       type: JobActionType.Noop
     }
@@ -16,26 +15,17 @@ export type IJobActions =
       editable?: boolean
     }
 
-interface IJobHostLocalState {
-  editable: boolean
-}
-
-export type IJobState = IHostState<IJobHostLocalState, JobQueryVariables>
-
 export interface IJobHostInitArg {
   id: string
 }
 
-export const jobStateInit = ({ id }: IJobHostInitArg): IJobState => ({
-  local: {
-    editable: false,
-  },
-  variables: {
-    where: { id },
-  },
+export const jobStateInit = ({ id }: IJobHostInitArg) => ({
+  editable: false,
 })
 
-export const jobReducer = produce<IJobState, [IJobActions]>((draft, action) => {
+export type IJobHostLocalState = ReturnType<typeof jobStateInit>
+
+export const jobReducer = produce<JobHostTyping['state'], [JobActions]>((draft, action) => {
   switch (action.type) {
     case JobActionType.Noop:
       return

@@ -1,14 +1,12 @@
-import { Candidate, CandidatesQuery } from '../../generated/queries'
-import { filterNull, mutableSortByProp } from '../../utils'
-import { ICandidatesState } from './reducer'
+import { Candidate } from '../../generated/queries'
+import { CandidatesState, CandidatesValue } from './host'
 
 export enum CandidatesSortBy {
   CreatedAt = 'createdAt',
   UpdatedAt = 'updatedAt',
 }
-// auto
-// custom
 
+// TODO: get rid of
 type TCandidatesSortDisplayNamesMap = { [K in CandidatesSortBy]: string }
 
 export const CandidatesSortDisplayNamesMap: TCandidatesSortDisplayNamesMap = {
@@ -16,11 +14,10 @@ export const CandidatesSortDisplayNamesMap: TCandidatesSortDisplayNamesMap = {
   [CandidatesSortBy.UpdatedAt]: 'update date',
 }
 
-export const candidatesSorter = (data: CandidatesQuery, state: ICandidatesState): Candidate[] => {
-  const candidates = filterNull(data.candidates)
+export const candidatesSorter = (arr: CandidatesValue, state: CandidatesState): Candidate[] => {
   switch (state.local.sortBy) {
     default:
-      return candidates
+      return arr
     // return mutableSortByProp(candidates, state.local.sortDirection, state.local.sortBy)
   }
 }

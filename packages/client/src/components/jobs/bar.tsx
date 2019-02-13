@@ -1,8 +1,8 @@
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React from 'react'
 import { useIntl } from '../../i18n'
-import { capitalise, SortDirection } from '../../utils'
-import { useJobsContect } from './host'
+import { SortDirection } from '../../utils'
+import { useJobsContext } from './host'
 import { JobActionType } from './reducer'
 import { JobsSortBy } from './sort'
 
@@ -10,7 +10,7 @@ export interface IJobsBarProps {}
 
 // TODO: sorting menu as Callout component!
 export const JobsBar: React.FC<IJobsBarProps> = () => {
-  const { dispatch, state } = useJobsContect()
+  const { dispatch, state } = useJobsContext()
   const { intl } = useIntl()
 
   const getSortSubmenuItem = (enumValue: JobsSortBy.Name) => ({

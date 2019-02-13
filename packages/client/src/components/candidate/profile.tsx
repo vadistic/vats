@@ -4,7 +4,7 @@ import React from 'react'
 import { Box } from '../box'
 import { Editable } from '../editable'
 import { HostActionType } from '../host'
-import { CandidateContext, useCandidateContext } from './host'
+import { CandidateContext, CandidateValue, useCandidateContext } from './host'
 import { CandidateActionType } from './reducer'
 import { InfoSection, TopSection } from './sections'
 
@@ -12,7 +12,7 @@ const EditButton: React.FC = () => {
   const { state, dispatch } = useCandidateContext()
 
   const toggleEdit = () => {
-    dispatch({ type: CandidateActionType.Edit })
+    dispatch({ type: CandidateActionType.Edit, editable: !state.local.editable })
   }
 
   if (state.local.editable) {
@@ -25,9 +25,9 @@ const EditButton: React.FC = () => {
 export const CandidateProfile: React.FC = () => {
   const { value, state, dispatch } = useCandidateContext()
 
-  const handleSubmit = (values: object) => {
+  const handleSubmit = (values: CandidateValue) => {
     dispatch({ type: CandidateActionType.Edit, editable: false })
-    dispatch({ type: HostActionType.AutoUpdate, payload: values })
+    dispatch({ type: HostActionType.SingleUpdate, data: values })
   }
 
   return (

@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
 import { RouteComponentProps } from '@reach/router'
 import { DetailsList, DetailsListLayoutMode, IColumn } from 'office-ui-fabric-react'
-import React, { useContext, useMemo } from 'react'
+import React from 'react'
 import { Candidate } from '../../../generated/queries'
 import { useCandidatesContext } from '../host'
 import { getColumns } from './columns'

@@ -1,7 +1,5 @@
 import produce from 'immer'
-import { CandidatesQueryVariables } from '../../generated/queries'
 import { SortDirection } from '../../utils'
-import { IHostState } from '../host'
 import { CandidatesSortBy } from './sort'
 
 export enum CandidatesActionType {
@@ -9,7 +7,7 @@ export enum CandidatesActionType {
   Edit = 'Edit',
 }
 
-export type ICandidatesActions =
+export type CandidatesActions =
   | {
       type: CandidatesActionType.Noop
     }
@@ -18,27 +16,17 @@ export type ICandidatesActions =
       editable?: boolean
     }
 
-interface ICandidatesHostLocalState {
-  sortBy: CandidatesSortBy
-  sortDirection: SortDirection
-}
-
-export type ICandidatesState = IHostState<ICandidatesHostLocalState, CandidatesQueryVariables>
-
-export const candidatesStateInit = (): ICandidatesState => ({
-  local: {
-    sortBy: CandidatesSortBy.CreatedAt,
-    sortDirection: SortDirection.ASCENDING,
-  },
-  variables: {},
+export const candidatesStateInit = () => ({
+  sortBy: CandidatesSortBy.CreatedAt,
+  sortDirection: SortDirection.ASCENDING,
 })
 
-export const candidatesReducer = produce<ICandidatesState, [ICandidatesActions]>(
-  (draft, action) => {
-    switch (action.type) {
-      default:
-        // noop
-        return
-    }
-  },
-)
+export type CandidatesHostLocalState = ReturnType<typeof candidatesStateInit>
+
+export const candidatesReducer = produce<any, [CandidatesActions]>((draft, action) => {
+  switch (action.type) {
+    default:
+      // noop
+      return
+  }
+})

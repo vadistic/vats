@@ -1,13 +1,13 @@
 import gql from 'graphql-tag'
 import { CandidateFragment } from '../../generated/fragments'
-import { CandidateQuery_candidate } from '../../generated/queries'
-import { hostFactory, HostType, IHostConfig } from '../host'
+import { CandidateQuery_candidate, CandidateQueryVariables } from '../../generated/queries'
+import { hostFactory, HostType, IHostTyping } from '../host'
 import {
+  CandidateActions,
+  CandidateHostLocalState,
   candidateReducer,
   candidateStateInit,
-  ICandidateActions,
-  ICandidateHostInitArg,
-  ICandidateState,
+  ICandidateInitArg,
 } from './reducer'
 
 export const CANDIDATE_QUERY = gql`
@@ -42,23 +42,28 @@ export const CANDIDATE_UPDATE_MUTATION = gql`
 
 export type CandidateValue = CandidateQuery_candidate
 
-const candidateHostConfig: IHostConfig<
-  CandidateValue,
-  ICandidateState,
-  ICandidateActions,
-  ICandidateHostInitArg
-> = {
-  name: 'CANDIDATE_HOST',
-  propName: 'candidate',
+export type CandidateHostTyping = IHostTyping<
+  CandidateHostLocalState,
+  CandidateActions,
+  ICandidateInitArg,
+  CandidateQueryVariables,
+  CandidateValue
+>
+
+const candidateHostConfig: CandidateHostTyping['config'] = {
+  displayName: 'CANDIDATE',
+  rootField: 'candidate',
+  type: HostType.Single,
+  init: candidateStateInit,
+  reducer: candidateReducer,
   query: CANDIDATE_QUERY,
   updateMutation: CANDIDATE_UPDATE_MUTATION,
-  type: HostType.Single,
-  reducer: candidateReducer,
-  init: candidateStateInit,
+  resetOnInitArgChange: true,
+  initVariables: ({ id }) => ({ where: { id } }),
 }
 
 export const {
   Host: CandidateHost,
   useContext: useCandidateContext,
   Context: CandidateContext,
-} = hostFactory(candidateHostConfig)
+} = hostFactory<CandidateHostTyping>(candidateHostConfig)

@@ -1,8 +1,5 @@
-import { Job } from '../../generated/queries'
 import { mutableSortByGetter, mutableSortByProp } from '../../utils'
-import { FilterFn } from '../host'
-import { JobsValue } from './host'
-import { IJobsState } from './reducer'
+import { JobsState, JobsValue } from './host'
 
 export enum JobsSortBy {
   // auto
@@ -14,7 +11,7 @@ export enum JobsSortBy {
   Applications = 'applications',
 }
 
-export const jobsSorter: FilterFn<JobsValue, IJobsState> = (value, state): Job[] => {
+export const jobsSorter = (value: JobsValue, state: JobsState): JobsValue => {
   switch (state.local.sortBy) {
     case JobsSortBy.Applications:
       return mutableSortByGetter(value, state.local.sortDirection, job =>

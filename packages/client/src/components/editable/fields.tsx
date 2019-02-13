@@ -31,9 +31,12 @@ export const DisplayTextField = displayFieldFactory<
     onRenderLabel: handleRenderLabel,
   }),
   cssProp: ({ fontSize = 'medium' as 'medium', editable }) => theme => css`
-    /* fix editable bottom border height */
     .ms-TextField-wrapper {
+      /* fix editable bottom border height */
       margin-bottom: ${editable && `-1px`};
+
+      /* display flex in edit mode - may br temp bug */
+      display: block;
     }
 
     .ms-TextField-fieldGroup {
@@ -69,9 +72,12 @@ export const MultilineDisplayTextField = displayFieldFactory<
     onRenderLabel: handleRenderLabel,
   }),
   cssProp: ({ fontSize = 'medium' as 'medium', editable }) => theme => css`
-    /* fix editable bottom border height */
     .ms-TextField-wrapper {
+      /* fix editable bottom border height */
       margin-bottom: ${editable && `-1px`};
+
+      /* display flex in edit mode - may br temp bug */
+      display: block;
     }
 
     .ms-TextField-fieldGroup {

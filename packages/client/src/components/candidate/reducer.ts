@@ -1,48 +1,38 @@
 import produce from 'immer'
-import { CandidateQueryVariables } from '../../generated/queries'
-import { IHostState } from '../host'
+import { CandidateHostTyping } from './host'
 
-export enum CandidateActionType {
-  Noop = 'Noop',
-  Edit = 'Edit',
+const EDIT = 'EDIT'
+
+class Edit {
+  readonly type = EDIT
+  constructor(public editable: boolean) {}
 }
 
-export type ICandidateActions =
-  | {
-      type: CandidateActionType.Noop
-    }
-  | {
-      type: CandidateActionType.Edit
-      editable?: boolean
-    }
+export type CandidateActions = Edit
 
-interface ICandidateHostLocalState {
-  editable: boolean
+export const CandidateActionType = {
+  Edit: EDIT as typeof EDIT,
 }
 
-export type ICandidateState = IHostState<ICandidateHostLocalState, CandidateQueryVariables>
-
-export interface ICandidateHostInitArg {
+export interface ICandidateInitArg {
   id: string
 }
 
-export const candidateStateInit = ({ id }: ICandidateHostInitArg): ICandidateState => ({
-  local: {
-    editable: false,
-  },
-  variables: {
-    where: { id },
-  },
+export const candidateStateInit = ({ id }: ICandidateInitArg) => ({
+  editable: false,
 })
 
-export const candidateReducer = produce<ICandidateState, [ICandidateActions]>((draft, action) => {
-  switch (action.type) {
-    case CandidateActionType.Noop:
-      return
-    case CandidateActionType.Edit:
-      draft.local.editable = action.editable || !draft.local.editable
-      return
-    default:
-      return
-  }
-})
+export type CandidateHostLocalState = ReturnType<typeof candidateStateInit>
+
+// TODO: get candidate State!
+export const candidateReducer = produce<CandidateHostTyping['state'], [CandidateActions]>(
+  (draft, action) => {
+    switch (action.type) {
+      case CandidateActionType.Edit:
+        draft.local.editable = action.editable || !draft.local.editable
+        return
+      default:
+        return
+    }
+  },
+)

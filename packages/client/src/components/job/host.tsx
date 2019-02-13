@@ -1,8 +1,14 @@
 import gql from 'graphql-tag'
 import { JobFragment } from '../../generated/fragments'
-import { Job } from '../../generated/queries'
-import { hostFactory, HostType, IHostConfig } from '../host'
-import { IJobActions, IJobHostInitArg, IJobState, jobReducer, jobStateInit } from './reducer'
+import { Job, JobQueryVariables } from '../../generated/queries'
+import { hostFactory, HostType, IHostTyping } from '../host'
+import {
+  IJobHostInitArg,
+  IJobHostLocalState,
+  JobActions,
+  jobReducer,
+  jobStateInit,
+} from './reducer'
 
 export const JOB_QUERY = gql`
   query JobQuery($where: JobWhereUniqueInput!) {
@@ -24,16 +30,26 @@ export const JOB_UPDATE_MUTATION = gql`
 
 export type JobValue = Job
 
-const jobHostConfig: IHostConfig<JobValue, IJobState, IJobActions, IJobHostInitArg> = {
+export type JobHostTyping = IHostTyping<
+  IJobHostLocalState,
+  JobActions,
+  IJobHostInitArg,
+  JobQueryVariables,
+  JobValue
+>
+
+const jobHostConfig: JobHostTyping['config'] = {
+  displayName: 'JOB',
+  rootField: 'job',
+  type: HostType.Single,
+  init: jobStateInit,
+  reducer: jobReducer,
   query: JOB_QUERY,
   updateMutation: JOB_UPDATE_MUTATION,
-  name: 'JOB_HOST',
-  propName: 'job',
-  type: HostType.Single,
-  reducer: jobReducer,
-  init: jobStateInit,
+  resetOnInitArgChange: true,
+  initVariables: ({ id }) => ({ where: { id } }),
 }
 
-export const { Host: JobHost, useContext: useJobContext, Context: JobContext } = hostFactory(
-  jobHostConfig,
-)
+export const { Host: JobHost, useContext: useJobContext, Context: JobContext } = hostFactory<
+  JobHostTyping
+>(jobHostConfig)

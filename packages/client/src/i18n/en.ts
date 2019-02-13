@@ -1,5 +1,9 @@
 export const translation = {
   error: 'Error occured',
+  helper: {
+    content: 'Content',
+    empty: 'Empty',
+  },
   candidate: {
     firstName: 'First name',
     lastName: 'Last name',
