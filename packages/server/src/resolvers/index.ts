@@ -1,5 +1,4 @@
 import { forwardTo } from 'prisma-binding'
-
 import { mutationList, queryList } from '../schema'
 import { IMutation, IQuery } from '../utils'
 

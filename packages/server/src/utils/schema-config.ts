@@ -12,9 +12,9 @@ export interface ISchemaMutationFieldConfig {
   update?: boolean
   upsert?: boolean
   delete?: boolean
-  createMany?: boolean
+  // there is no createMany & upsertMany as root field
+  // https://github.com/prisma/prisma/issues/2160
   updateMany?: boolean
-  upsertMany?: boolean
   deleteMany?: boolean
 }
 
@@ -51,13 +51,11 @@ export const buildSchemaConfig = (
       },
       mutation: {
         create: false,
-        createMany: false,
         delete: false,
         deleteMany: false,
         update: false,
         updateMany: false,
         upsert: false,
-        upsertMany: false,
       },
     }
 
@@ -110,8 +108,6 @@ export const buildSchemaConfig = (
       conf.mutation.upsert && mutationList.push(`upsert${uppercaseName}`)
       conf.mutation.update && mutationList.push(`update${uppercaseName}`)
       conf.mutation.delete && mutationList.push(`delete${uppercaseName}`)
-      conf.mutation.createMany && mutationList.push(`createMany${uppercaseName}s`)
-      conf.mutation.upsertMany && mutationList.push(`upsertMany${uppercaseName}s`)
       conf.mutation.updateMany && mutationList.push(`updateMany${uppercaseName}s`)
       conf.mutation.deleteMany && mutationList.push(`deleteMany${uppercaseName}s`)
       // tslint:enable:no-unused-expression

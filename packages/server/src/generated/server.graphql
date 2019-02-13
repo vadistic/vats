@@ -137,44 +137,62 @@ type Query {
 type Mutation {
   createApplication(data: ApplicationCreateInput!): Application!
   updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
+  updateManyApplications(
+    data: ApplicationUpdateManyMutationInput!
+    where: ApplicationWhereInput
+  ): BatchPayload!
   upsertApplication(
     where: ApplicationWhereUniqueInput!
     create: ApplicationCreateInput!
     update: ApplicationUpdateInput!
   ): Application!
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
+  deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
   createCandidate(data: CandidateCreateInput!): Candidate!
   updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
+  updateManyCandidates(
+    data: CandidateUpdateManyMutationInput!
+    where: CandidateWhereInput
+  ): BatchPayload!
   upsertCandidate(
     where: CandidateWhereUniqueInput!
     create: CandidateCreateInput!
     update: CandidateUpdateInput!
   ): Candidate!
   deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
+  deleteManyCandidates(where: CandidateWhereInput): BatchPayload!
   createJob(data: JobCreateInput!): Job!
   updateJob(data: JobUpdateInput!, where: JobWhereUniqueInput!): Job
+  updateManyJobs(data: JobUpdateManyMutationInput!, where: JobWhereInput): BatchPayload!
   upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
   deleteJob(where: JobWhereUniqueInput!): Job
+  deleteManyJobs(where: JobWhereInput): BatchPayload!
   createSource(data: SourceCreateInput!): Source!
   updateSource(data: SourceUpdateInput!, where: SourceWhereUniqueInput!): Source
+  updateManySources(data: SourceUpdateManyMutationInput!, where: SourceWhereInput): BatchPayload!
   upsertSource(
     where: SourceWhereUniqueInput!
     create: SourceCreateInput!
     update: SourceUpdateInput!
   ): Source!
   deleteSource(where: SourceWhereUniqueInput!): Source
+  deleteManySources(where: SourceWhereInput): BatchPayload!
   createTag(data: TagCreateInput!): Tag!
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+  updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteManyTags(where: TagWhereInput): BatchPayload!
   createTask(data: TaskCreateInput!): Task!
   updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+  updateManyTasks(data: TaskUpdateManyMutationInput!, where: TaskWhereInput): BatchPayload!
   upsertTask(
     where: TaskWhereUniqueInput!
     create: TaskCreateInput!
     update: TaskUpdateInput!
   ): Task!
   deleteTask(where: TaskWhereUniqueInput!): Task
+  deleteManyTasks(where: TaskWhereInput): BatchPayload!
 }
 
 input WorkspaceCreateInput {
@@ -1283,6 +1301,14 @@ input ApplicationUpdateInput {
   candidate: CandidateUpdateOneRequiredWithoutApplicationsInput
 }
 
+type BatchPayload {
+  count: Long!
+}
+
+input ApplicationUpdateManyMutationInput {
+  type: ApplicationType
+}
+
 input CandidateCreateInput {
   firstName: String!
   lastName: String!
@@ -1327,6 +1353,19 @@ input CandidateUpdateInput {
   comments: CommentUpdateManyInput
 }
 
+input CandidateUpdateManyMutationInput {
+  firstName: String
+  lastName: String
+  emails: CandidateUpdateemailsInput
+  phones: CandidateUpdatephonesInput
+  links: CandidateUpdatelinksInput
+  company: String
+  headline: String
+  position: String
+  resumesString: CandidateUpdateresumesStringInput
+  coverLettersString: CandidateUpdatecoverLettersStringInput
+}
+
 input JobCreateInput {
   workspace: WorkspaceCreateOneWithoutJobsInput!
   applications: ApplicationCreateManyWithoutJobInput
@@ -1357,6 +1396,16 @@ input JobUpdateInput {
   requirements: String
 }
 
+input JobUpdateManyMutationInput {
+  type: JobType
+  department: String
+  name: String
+  excerpt: String
+  companyDescription: String
+  description: String
+  requirements: String
+}
+
 input SourceCreateInput {
   label: String!
   description: String
@@ -1367,12 +1416,22 @@ input SourceUpdateInput {
   description: String
 }
 
+input SourceUpdateManyMutationInput {
+  label: String
+  description: String
+}
+
 input TagCreateInput {
   label: String!
   description: String
 }
 
 input TagUpdateInput {
+  label: String
+  description: String
+}
+
+input TagUpdateManyMutationInput {
   label: String
   description: String
 }
@@ -1388,6 +1447,12 @@ input TaskCreateInput {
 input TaskUpdateInput {
   owners: UserUpdateManyWithoutTasksInput
   candidate: CandidateUpdateOneWithoutTasksInput
+  title: String
+  description: String
+  dueAt: DateTime
+}
+
+input TaskUpdateManyMutationInput {
   title: String
   description: String
   dueAt: DateTime
@@ -2265,6 +2330,8 @@ input CandidateUpdateOneRequiredWithoutApplicationsInput {
   upsert: CandidateUpsertWithoutApplicationsInput
   connect: CandidateWhereUniqueInput
 }
+
+scalar Long
 
 input CandidateCreateemailsInput {
   set: [String!]

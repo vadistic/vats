@@ -1,9 +1,11 @@
 import { gql as graphql } from 'apollo-server'
+import { changeDefaultSource, gqlImport } from 'gql-import'
 import { importSchema } from 'graphql-import'
-
-import { buildSchemaConfig, gql, gqlImport, IObjSchemaFieldConfig, SchemaConfig } from '../utils'
+import { buildSchemaConfig, gql, IObjSchemaFieldConfig, SchemaConfig } from '../utils'
 import { authSchema } from './auth'
 import { connectionsSchema } from './connections'
+
+changeDefaultSource('src/generated/prisma.graphql')
 
 export const singleQueryArguments = gql`
 where: WhereUniqueInput!
@@ -21,8 +23,8 @@ const schemaConfig: SchemaConfig = {
     },
   },
   candidate: true,
-  application: true,
   job: true,
+  application: true,
   tag: true,
   source: true,
   task: true,
@@ -39,10 +41,8 @@ const defaultFieldConfig: IObjSchemaFieldConfig = {
     upsert: true,
     update: true,
     delete: true,
-    createMany: false,
-    upsertMany: false,
-    updateMany: false,
-    deleteMany: false,
+    updateMany: true,
+    deleteMany: true,
   },
 }
 
@@ -50,13 +50,13 @@ export const { queryList, mutationList } = buildSchemaConfig(schemaConfig, defau
 
 const Query = gql`
   type Query {
-    ${gqlImport.require('Query').pick(queryList).fields}
+    ${gqlImport.get('Query').pick(queryList).fields}
   }
 `
 
 const Mutation = gql`
   type Mutation {
-    ${gqlImport.require('Mutation').pick(mutationList).fields}
+    ${gqlImport.get('Mutation').pick(mutationList).fields}
   }
 `
 

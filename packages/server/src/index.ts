@@ -1,9 +1,10 @@
 import { ApolloServer, makeExecutableSchema } from 'apollo-server'
 import fs from 'fs'
+import { DocumentNode } from 'graphql'
 import { IncomingMessage } from 'http'
 import path from 'path'
 import { Prisma as PrismaBinding } from 'prisma-binding'
-
+import util from 'util'
 import { Prisma as PrismaClient } from './generated/prisma-client'
 import { resolvers } from './resolvers'
 import { decodeToken, IAccessTokenPayload } from './utils'
@@ -62,26 +63,47 @@ const context = ({ req }: IContextProps): IContext => {
   }
 }
 
-const executableSchema = makeExecutableSchema({
-  typeDefs: fs.readFileSync(path.resolve(__dirname, 'generated/server.graphql'), 'utf-8'),
-  resolvers,
-  // TODO: implement node resolver
-  // https://github.com/prisma/prisma/issues/2225
-  resolverValidationOptions: { requireResolversForResolveType: false },
-})
+const main = async () => {
+  let typeDefs: string | DocumentNode
 
-// const schema = applyMiddleware(executableSchema, permissions) // ,filters)
+  // tslint:disable-next-line: prefer-conditional-expression
+  if (process.env.NODE_ENV === 'production') {
+    typeDefs = await util.promisify(fs.readFile)(
+      path.resolve(__dirname, 'generated/server.graphql'),
+      'utf-8',
+    )
+  } else {
+    typeDefs = (await import('./schema')).typeDefs
+  }
 
-const server = new ApolloServer({
-  schema: executableSchema,
-  context,
-})
+  const executableSchema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+    // TODO: implement node resolver
+    // https://github.com/prisma/prisma/issues/2225
+    resolverValidationOptions: { requireResolversForResolveType: false },
+  })
 
-const port = process.env.PORT || 4000
+  // const schema = applyMiddleware(executableSchema, permissions) // ,filters)
 
-server.listen({ port }, () =>
-  // tslint:disable-next-line:no-console
-  console.log(`Server is running on http://localhost:${port}`),
-)
+  const server = new ApolloServer({
+    schema: executableSchema,
+    context,
+  })
 
-export default server
+  const port = process.env.PORT || 4000
+
+  server.listen({ port }, () => {
+    if (process.env.NODE_ENV === 'production') {
+      console.log(`Server is running on ${process.env.LIVE_ENDPOINT}`)
+    } else {
+      console.log(`Server is running on http://localhost:${port}`)
+    }
+  })
+
+  return server
+}
+
+main()
+
+export default main
