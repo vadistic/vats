@@ -5,15 +5,27 @@ import { useIntl } from '../../i18n'
 import { getLoLeafPath } from '../../utils'
 import { Box } from '../box'
 import { DisplayTextField, Editable, MultilineDisplayTextField } from '../editable'
-import { HostActionType } from '../host'
-import { JobContext, JobValue, useJobContext } from './host'
-import { JobActionType } from './reducer'
+import { JobActions, JobContext, JobValue, useJobContext } from './host'
+
+const TestButton: React.FC = () => {
+  const { state, dispatch } = useJobContext()
+
+  const handleMagic = () => {
+    dispatch(
+      JobActions.customUpdate({
+        excerpt: 'Hello',
+      }),
+    )
+  }
+
+  return <IconButton iconProps={{ iconName: 'Error' }} onClick={handleMagic} />
+}
 
 const EditButton: React.FC = () => {
   const { state, dispatch } = useJobContext()
 
   const toggleEdit = () => {
-    dispatch({ type: JobActionType.Edit })
+    dispatch(JobActions.edit(!state.local.editable))
   }
 
   if (state.local.editable) {
@@ -28,8 +40,14 @@ export const JobProfile: React.FC = () => {
   const { intl } = useIntl()
 
   const handleSubmit = (values: JobValue) => {
-    dispatch({ type: JobActionType.Edit, editable: false })
-    dispatch({ type: HostActionType.SingleUpdate, data: values })
+    dispatch(JobActions.update(values))
+
+    dispatch({
+      type: 'UPDATE',
+      payload: values,
+    })
+
+    dispatch(JobActions.edit(false))
   }
 
   const contentPlaceholder = intl(undefined, 'helper', 'empty')
@@ -39,6 +57,7 @@ export const JobProfile: React.FC = () => {
       <Form>
         <Box>
           <EditButton />
+          <TestButton />
           <DisplayTextField
             fontSize="xLarge"
             name={getLoLeafPath(job, 'name')}

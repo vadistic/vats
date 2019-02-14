@@ -3,16 +3,20 @@ import { IconButton } from 'office-ui-fabric-react'
 import React from 'react'
 import { Box } from '../box'
 import { Editable } from '../editable'
-import { HostActionType } from '../host'
-import { CandidateContext, CandidateValue, useCandidateContext } from './host'
-import { CandidateActionType } from './reducer'
+import {
+  CandidateActions,
+  CandidateContext,
+  CandidateHostActions,
+  CandidateValue,
+  useCandidateContext,
+} from './host'
 import { InfoSection, TopSection } from './sections'
 
 const EditButton: React.FC = () => {
   const { state, dispatch } = useCandidateContext()
 
   const toggleEdit = () => {
-    dispatch({ type: CandidateActionType.Edit, editable: !state.local.editable })
+    dispatch(CandidateActions.edit(!state.local.editable))
   }
 
   if (state.local.editable) {
@@ -26,8 +30,8 @@ export const CandidateProfile: React.FC = () => {
   const { value, state, dispatch } = useCandidateContext()
 
   const handleSubmit = (values: CandidateValue) => {
-    dispatch({ type: CandidateActionType.Edit, editable: false })
-    dispatch({ type: HostActionType.SingleUpdate, data: values })
+    dispatch({ type: 'EDIT', payload: false })
+    dispatch(CandidateHostActions.update(values))
   }
 
   return (

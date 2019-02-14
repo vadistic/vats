@@ -1,10 +1,10 @@
 import React from 'react'
-import { HostActions } from './reducer'
+import { HostActionsUnion } from './actions'
 import { IHostTyping } from './types'
 
 export interface IHostContextValue<HostTyping extends IHostTyping> {
   value: HostTyping['types']['value']
-  dispatch: React.Dispatch<HostActions | HostTyping['types']['customActions']>
+  dispatch: React.Dispatch<HostActionsUnion<IHostTyping> | HostTyping['types']['customActions']>
   state: HostTyping['state']
 }
 

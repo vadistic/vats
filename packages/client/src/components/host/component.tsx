@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { filterNull } from '../../utils'
-import { HostContext } from './context'
-import { HostUseReducer } from './reducer'
+import { hostReducerFactory } from './reducer'
 import { HostType, IHostTyping } from './types'
 
-export interface IHostFactoryDependencies<HostTyping extends IHostTyping> {
-  useReducer: HostUseReducer<HostTyping>
-  Context: HostContext<HostTyping>
+// losely typed - only for non-public apis
+interface IHostComponentFactoryDependencies {
+  useReducer: ReturnType<typeof hostReducerFactory>['useReducer']
+  Context: React.Context<any>
 }
 
 const hostLog = (state: IHostTyping['state'], ...print: string[]) => {
@@ -19,7 +19,7 @@ const hostLog = (state: IHostTyping['state'], ...print: string[]) => {
 
 export const hostComponentFactory = <HostTyping extends IHostTyping>(
   config: HostTyping['config'],
-  { useReducer, Context }: IHostFactoryDependencies<HostTyping>,
+  { useReducer, Context }: IHostComponentFactoryDependencies,
 ) => {
   interface IHostProps {
     initArg?: HostTyping['types']['initArg']

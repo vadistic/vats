@@ -1,4 +1,5 @@
 import { DocumentNode } from 'graphql'
+import { HostActionsUnion } from './actions'
 
 export interface IAction {
   type: string
@@ -9,19 +10,24 @@ export enum HostType {
   Multi = 'MULTI',
 }
 
-// TODO: export type mixings like FilterFn
+export type FilterFn<HostTyping extends IHostTyping> = (
+  value: HostTyping['types']['value'],
+  state: HostTyping['state'],
+) => HostTyping['types']['value']
 
 export interface IHostTyping<
+  Value = any,
   LocalState = any,
-  CustomActions extends IAction = IAction,
+  ActionsUnion extends IAction = any,
   InitArg = any,
   QueryVariables = any,
-  DataVariables = any
+  DataVariable = any
 > {
   types: {
-    value: DataVariables
-    customActions: CustomActions
+    value: Value
+    dataVariable: DataVariable
     initArg: InitArg
+    customActions: ActionsUnion
   }
   config: {
     displayName: string
@@ -30,24 +36,24 @@ export interface IHostTyping<
     reducer: React.Reducer<any, any>
     query: DocumentNode
     updateMutation?: DocumentNode
-    resetOnInitArgChange?: boolean
-    filter?: (
-      arr: DataVariables,
-      state: IHostTyping<
-        LocalState,
-        CustomActions,
-        InitArg,
-        QueryVariables,
-        DataVariables
-      >['state'],
-    ) => DataVariables
-    init: (initArg: InitArg) => LocalState
-    initVariables: (initArg: InitArg) => QueryVariables
+    filter?: FilterFn<
+      IHostTyping<Value, LocalState, ActionsUnion, InitArg, QueryVariables, DataVariable>
+    >
+    initState: (initArg: InitArg) => LocalState | (() => LocalState)
+    initVariables: (initArg: InitArg) => QueryVariables | (() => QueryVariables)
+    resetOnInitArgPropChange?: boolean
   }
   state: {
     variables: QueryVariables
     local: LocalState
-    config: IHostTyping<LocalState, CustomActions, InitArg, QueryVariables, DataVariables>['config']
+    config: IHostTyping<
+      Value,
+      LocalState,
+      ActionsUnion,
+      InitArg,
+      QueryVariables,
+      DataVariable
+    >['config']
     forceUpdate: React.Dispatch<React.SetStateAction<void>>
   }
 }

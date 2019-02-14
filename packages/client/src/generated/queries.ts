@@ -114,6 +114,8 @@ export interface CandidateQuery_candidate {
   phones: string[]
   emails: string[]
   links: string[]
+  resumesString: string[]
+  coverLettersString: string[]
   id: string
   createdAt: any
   updatedAt: any
@@ -235,6 +237,10 @@ export interface CandidateUpdateMutation_updateCandidate_comments {
 
 export interface CandidateUpdateMutation_updateCandidate {
   __typename: 'Candidate'
+  phones: string[]
+  emails: string[]
+  links: string[]
+  resumesString: string[]
   id: string
   createdAt: any
   updatedAt: any
@@ -357,6 +363,11 @@ export interface CandidatesQuery_candidates_comments {
 
 export interface CandidatesQuery_candidates {
   __typename: 'Candidate'
+  phones: string[]
+  emails: string[]
+  links: string[]
+  resumesString: string[]
+  coverLettersString: string[]
   id: string
   createdAt: any
   updatedAt: any
@@ -461,6 +472,86 @@ export interface JobQuery {
 
 export interface JobQueryVariables {
   where: JobWhereUniqueInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: JobUpdateMutation
+// ====================================================
+
+export interface JobUpdateMutation_updateJob_workspace {
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  settings: any | null
+  name: string
+}
+
+export interface JobUpdateMutation_updateJob_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface JobUpdateMutation_updateJob_workflow {
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+}
+
+export interface JobUpdateMutation_updateJob_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface JobUpdateMutation_updateJob_locations {
+  __typename: 'Location'
+  id: string
+  createdAt: any
+  updatedAt: any
+  country: string
+  region: string | null
+  city: string
+  zip: string | null
+}
+
+export interface JobUpdateMutation_updateJob {
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  workspace: JobUpdateMutation_updateJob_workspace
+  applications: JobUpdateMutation_updateJob_applications[] | null
+  workflow: JobUpdateMutation_updateJob_workflow
+  comments: JobUpdateMutation_updateJob_comments[] | null
+  type: JobType
+  department: string | null
+  locations: JobUpdateMutation_updateJob_locations[] | null
+  name: string
+  excerpt: string | null
+  companyDescription: string | null
+  description: string | null
+  requirements: string | null
+}
+
+export interface JobUpdateMutation {
+  updateJob: JobUpdateMutation_updateJob | null
+}
+
+export interface JobUpdateMutationVariables {
+  where: JobWhereUniqueInput
+  data: JobUpdateInput
 }
 
 /* tslint:disable */
@@ -2482,6 +2573,13 @@ export interface ApplicationCreateWithoutCandidateInput {
   job: JobCreateOneWithoutApplicationsInput
 }
 
+export interface ApplicationCreateWithoutJobInput {
+  type: ApplicationType
+  disqualification?: DisqualificationInstanceCreateOneInput | null
+  stage: StageCreateOneInput
+  candidate: CandidateCreateOneWithoutApplicationsInput
+}
+
 export interface ApplicationScalarWhereInput {
   createdAt?: any | null
   createdAt_not?: any | null
@@ -2542,9 +2640,25 @@ export interface ApplicationUpdateManyWithoutCandidateInput {
   updateMany?: ApplicationUpdateManyWithWhereNestedInput[] | null
 }
 
+export interface ApplicationUpdateManyWithoutJobInput {
+  create?: ApplicationCreateWithoutJobInput[] | null
+  delete?: ApplicationWhereUniqueInput[] | null
+  connect?: ApplicationWhereUniqueInput[] | null
+  disconnect?: ApplicationWhereUniqueInput[] | null
+  update?: ApplicationUpdateWithWhereUniqueWithoutJobInput[] | null
+  upsert?: ApplicationUpsertWithWhereUniqueWithoutJobInput[] | null
+  deleteMany?: ApplicationScalarWhereInput[] | null
+  updateMany?: ApplicationUpdateManyWithWhereNestedInput[] | null
+}
+
 export interface ApplicationUpdateWithWhereUniqueWithoutCandidateInput {
   where: ApplicationWhereUniqueInput
   data: ApplicationUpdateWithoutCandidateDataInput
+}
+
+export interface ApplicationUpdateWithWhereUniqueWithoutJobInput {
+  where: ApplicationWhereUniqueInput
+  data: ApplicationUpdateWithoutJobDataInput
 }
 
 export interface ApplicationUpdateWithoutCandidateDataInput {
@@ -2554,10 +2668,23 @@ export interface ApplicationUpdateWithoutCandidateDataInput {
   job?: JobUpdateOneRequiredWithoutApplicationsInput | null
 }
 
+export interface ApplicationUpdateWithoutJobDataInput {
+  type?: ApplicationType | null
+  disqualification?: DisqualificationInstanceUpdateOneInput | null
+  stage?: StageUpdateOneRequiredInput | null
+  candidate?: CandidateUpdateOneRequiredWithoutApplicationsInput | null
+}
+
 export interface ApplicationUpsertWithWhereUniqueWithoutCandidateInput {
   where: ApplicationWhereUniqueInput
   update: ApplicationUpdateWithoutCandidateDataInput
   create: ApplicationCreateWithoutCandidateInput
+}
+
+export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
+  where: ApplicationWhereUniqueInput
+  update: ApplicationUpdateWithoutJobDataInput
+  create: ApplicationCreateWithoutJobInput
 }
 
 export interface ApplicationWhereInput {
@@ -2635,9 +2762,35 @@ export interface CandidateCreateManyInput {
   connect?: CandidateWhereUniqueInput[] | null
 }
 
+export interface CandidateCreateOneWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput | null
+  connect?: CandidateWhereUniqueInput | null
+}
+
 export interface CandidateCreateOneWithoutTasksInput {
   create?: CandidateCreateWithoutTasksInput | null
   connect?: CandidateWhereUniqueInput | null
+}
+
+export interface CandidateCreateWithoutApplicationsInput {
+  firstName: string
+  lastName: string
+  emails?: CandidateCreateemailsInput | null
+  phones?: CandidateCreatephonesInput | null
+  links?: CandidateCreatelinksInput | null
+  avatar?: FileCreateOneInput | null
+  company?: string | null
+  headline?: string | null
+  position?: string | null
+  resumesString?: CandidateCreateresumesStringInput | null
+  resumesFile?: FileCreateManyInput | null
+  coverLettersString?: CandidateCreatecoverLettersStringInput | null
+  coverLettersFile?: FileCreateManyInput | null
+  tags?: TagCreateManyInput | null
+  sources?: SourceCreateManyInput | null
+  fields?: FieldInstanceCreateManyInput | null
+  tasks?: TaskCreateManyWithoutCandidateInput | null
+  comments?: CommentCreateManyInput | null
 }
 
 export interface CandidateCreateWithoutTasksInput {
@@ -2860,6 +3013,13 @@ export interface CandidateUpdateManyWithWhereNestedInput {
   data: CandidateUpdateManyDataInput
 }
 
+export interface CandidateUpdateOneRequiredWithoutApplicationsInput {
+  create?: CandidateCreateWithoutApplicationsInput | null
+  update?: CandidateUpdateWithoutApplicationsDataInput | null
+  upsert?: CandidateUpsertWithoutApplicationsInput | null
+  connect?: CandidateWhereUniqueInput | null
+}
+
 export interface CandidateUpdateOneWithoutTasksInput {
   create?: CandidateCreateWithoutTasksInput | null
   update?: CandidateUpdateWithoutTasksDataInput | null
@@ -2872,6 +3032,27 @@ export interface CandidateUpdateOneWithoutTasksInput {
 export interface CandidateUpdateWithWhereUniqueNestedInput {
   where: CandidateWhereUniqueInput
   data: CandidateUpdateDataInput
+}
+
+export interface CandidateUpdateWithoutApplicationsDataInput {
+  firstName?: string | null
+  lastName?: string | null
+  emails?: CandidateUpdateemailsInput | null
+  phones?: CandidateUpdatephonesInput | null
+  links?: CandidateUpdatelinksInput | null
+  avatar?: FileUpdateOneInput | null
+  company?: string | null
+  headline?: string | null
+  position?: string | null
+  resumesString?: CandidateUpdateresumesStringInput | null
+  resumesFile?: FileUpdateManyInput | null
+  coverLettersString?: CandidateUpdatecoverLettersStringInput | null
+  coverLettersFile?: FileUpdateManyInput | null
+  tags?: TagUpdateManyInput | null
+  sources?: SourceUpdateManyInput | null
+  fields?: FieldInstanceUpdateManyInput | null
+  tasks?: TaskUpdateManyWithoutCandidateInput | null
+  comments?: CommentUpdateManyInput | null
 }
 
 export interface CandidateUpdateWithoutTasksDataInput {
@@ -2919,6 +3100,11 @@ export interface CandidateUpsertWithWhereUniqueNestedInput {
   where: CandidateWhereUniqueInput
   update: CandidateUpdateDataInput
   create: CandidateCreateInput
+}
+
+export interface CandidateUpsertWithoutApplicationsInput {
+  update: CandidateUpdateWithoutApplicationsDataInput
+  create: CandidateCreateWithoutApplicationsInput
 }
 
 export interface CandidateUpsertWithoutTasksInput {
@@ -4305,6 +4491,21 @@ export interface JobCreateWithoutApplicationsInput {
   department?: string | null
   locations?: LocationCreateManyInput | null
   name: string
+  excerpt?: string | null
+  companyDescription?: string | null
+  description?: string | null
+  requirements?: string | null
+}
+
+export interface JobUpdateInput {
+  workspace?: WorkspaceUpdateOneRequiredWithoutJobsInput | null
+  applications?: ApplicationUpdateManyWithoutJobInput | null
+  workflow?: WorkflowUpdateOneRequiredInput | null
+  comments?: CommentUpdateManyInput | null
+  type?: JobType | null
+  department?: string | null
+  locations?: LocationUpdateManyInput | null
+  name?: string | null
   excerpt?: string | null
   companyDescription?: string | null
   description?: string | null

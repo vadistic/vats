@@ -1149,6 +1149,14 @@
     request-promise "^4.1.1"
     yargs "^8.0.2"
 
+"@martin_hotell/rex-tils@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@martin_hotell/rex-tils/-/rex-tils-2.1.1.tgz#3d90356d91311f11ae1ccf9b32cfb5a1c1744597"
+  integrity sha512-tXuSpXbwKsKK40xJPQYSWDH5oI30y/C4TGmwEgQrJAmWsEUnCrQYpgjooEZuURkT+90wVdYHVljppqQBkMf/lA==
+  optionalDependencies:
+    react "^16.5.2"
+    rxjs "^6.3.3"
+
 "@microsoft/load-themed-styles@^1.7.13":
   version "1.8.56"
   resolved "https://registry.yarnpkg.com/@microsoft/load-themed-styles/-/load-themed-styles-1.8.56.tgz#52870947fed945727ac178582b64417af9fbbdbe"
@@ -11939,7 +11947,7 @@ react-transition-group@^2.5.3:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.8.1:
+react@^16.5.2, react@^16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.1.tgz#ae11831f6cb2a05d58603a976afc8a558e852c4a"
   integrity sha512-wLw5CFGPdo7p/AgteFz7GblI2JPOos0+biSoxf1FPsGxWQZdN/pj6oToJs1crn61DL3Ln7mN86uZ4j74p31ELQ==

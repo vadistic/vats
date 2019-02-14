@@ -16,9 +16,9 @@ export interface IDisplayTextFieldStylingProps {
   fontSize?: keyof ITheme['fonts']
 }
 
-export const DisplayTextField = displayFieldFactory<
-  FormikTextFieldProps & IDisplayTextFieldStylingProps
->({
+export type DisplayTextFieldProps = FormikTextFieldProps & IDisplayTextFieldStylingProps
+
+export const DisplayTextField = displayFieldFactory<DisplayTextFieldProps>({
   fallbackComponent: TextField,
   formikComponent: FormikTextField,
   fallbackValueProp: 'value',

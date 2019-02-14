@@ -2,8 +2,7 @@ import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React from 'react'
 import { useIntl } from '../../i18n'
 import { SortDirection } from '../../utils'
-import { useJobsContext } from './host'
-import { JobActionType } from './reducer'
+import { JobsActions, useJobsContext } from './host'
 import { JobsSortBy } from './sort'
 
 export interface IJobsBarProps {}
@@ -16,7 +15,7 @@ export const JobsBar: React.FC<IJobsBarProps> = () => {
   const getSortSubmenuItem = (enumValue: JobsSortBy.Name) => ({
     text: intl(undefined, 'job', enumValue),
     key: 'sort-by-' + enumValue,
-    onClick: () => dispatch({ type: JobActionType.SortBy, sortBy: enumValue }),
+    onClick: () => dispatch(JobsActions.sortBy(enumValue)),
   })
 
   const items: ICommandBarItemProps[] = [
@@ -28,7 +27,7 @@ export const JobsBar: React.FC<IJobsBarProps> = () => {
         iconName: state.local.sortDirection === SortDirection.ASCENDING ? 'SortUp' : 'SortDown',
       },
       onClick: () => {
-        dispatch({ type: JobActionType.SortDirection })
+        dispatch(JobsActions.sortDirection(state.local.sortDirection * -1))
       },
       subMenuProps: {
         items: Object.values(JobsSortBy).map(enumValue => getSortSubmenuItem(enumValue)),
