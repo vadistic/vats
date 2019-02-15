@@ -23,7 +23,7 @@ const TestButton: React.FC = () => {
   }
 
   const handleMagic = () => {
-    dispatch(someThunk as any)
+    dispatch(someThunk)
   }
 
   return <IconButton iconProps={{ iconName: 'Error' }} onClick={handleMagic} />

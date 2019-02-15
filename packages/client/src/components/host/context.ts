@@ -1,7 +1,7 @@
 import React from 'react'
 import { HostActionsUnion } from './actions'
 import { TGraphqlTyping } from './graphql-types'
-import { IHostState, IHostTyping } from './types'
+import { HostThunk, IHostState, IHostTyping } from './types'
 
 export interface IHostContextValue<
   HostTyping extends IHostTyping,
@@ -9,7 +9,9 @@ export interface IHostContextValue<
 > {
   value: HostTyping['value']
   dispatch: React.Dispatch<
-    HostActionsUnion<HostTyping, GraphqlTyping> | HostTyping['customActions']
+    | HostActionsUnion<HostTyping, GraphqlTyping>
+    | HostTyping['customActions']
+    | HostThunk<HostTyping, GraphqlTyping>
   >
   state: IHostState<HostTyping, GraphqlTyping>
 }
