@@ -12,7 +12,7 @@ export const JobsBar: React.FC<IJobsBarProps> = () => {
   const { dispatch, state } = useJobsContext()
   const { intl } = useIntl()
 
-  const getSortSubmenuItem = (enumValue: JobsSortBy.Name) => ({
+  const getSortSubmenuItem = (enumValue: JobsSortBy) => ({
     text: intl(undefined, 'job', enumValue),
     key: 'sort-by-' + enumValue,
     onClick: () => dispatch(JobsActions.sortBy(enumValue)),

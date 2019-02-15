@@ -1,17 +1,22 @@
 import { hostActionsFactory } from './actions'
 import { hostComponentFactory } from './component'
 import { hostContextFactory } from './context'
+import { TGraphqlTyping } from './graphql-types'
 import { hostReducerFactory } from './reducer'
-import { IHostTyping } from './types'
+import { IHostConfig, IHostTyping } from './types'
 
-export const hostFactory = <HostTyping extends IHostTyping>(config: HostTyping['config']) => {
-  const { Context, useContext } = hostContextFactory<HostTyping>()
+export const hostFactory = <HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping>(
+  config: IHostConfig<HostTyping, GraphqlTyping>,
+) => {
+  const { Context, useContext } = hostContextFactory<HostTyping, GraphqlTyping>()
 
-  const { Actions } = hostActionsFactory<HostTyping>()
+  const { Actions } = hostActionsFactory<HostTyping, GraphqlTyping>()
 
-  const { hostReducer, useReducer } = hostReducerFactory<HostTyping>(config, { Actions })
+  const { hostReducer, useReducer } = hostReducerFactory<HostTyping, GraphqlTyping>(config, {
+    Actions: Actions as any,
+  })
 
-  const { Host } = hostComponentFactory<HostTyping>(config, { Context, useReducer })
+  const { Host } = hostComponentFactory<HostTyping, GraphqlTyping>(config, { Context, useReducer })
 
   return { Context, useContext, hostReducer, useReducer, Host, Actions }
 }

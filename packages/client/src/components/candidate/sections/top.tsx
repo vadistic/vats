@@ -18,6 +18,7 @@ const CustomDisplayTextField: React.FC<ICustomDisplayTextField> = ({ name, ...re
     <DisplayTextField
       name={getLoLeafPath(candidate, name)}
       placeholder={intl(undefined, 'candidate', name)}
+      {...rest}
     />
   )
 }

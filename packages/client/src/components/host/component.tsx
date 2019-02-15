@@ -1,34 +1,37 @@
 import React, { useMemo } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { filterNull } from '../../utils'
-import { hostReducerFactory } from './reducer'
-import { HostType, IHostTyping } from './types'
+import { TGraphqlTyping } from './graphql-types'
+import { HostType, IHostConfig, IHostState, IHostTyping } from './types'
 
-// losely typed - only for non-public apis
+// losely typed - does not matter
 interface IHostComponentFactoryDependencies {
-  useReducer: ReturnType<typeof hostReducerFactory>['useReducer']
+  useReducer: any
   Context: React.Context<any>
 }
 
-const hostLog = (state: IHostTyping['state'], ...print: string[]) => {
+const hostLog = (state: any, ...print: string[]) => {
   if (process.env.NODE_ENV === 'development') {
     console.warn(`Host ${state.config.displayName}/component: `, ...print)
     console.warn(`STATE:`, state)
   }
 }
 
-export const hostComponentFactory = <HostTyping extends IHostTyping>(
-  config: HostTyping['config'],
+export const hostComponentFactory = <
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+>(
+  config: IHostConfig<HostTyping, GraphqlTyping>,
   { useReducer, Context }: IHostComponentFactoryDependencies,
 ) => {
   interface IHostProps {
-    initArg?: HostTyping['types']['initArg']
+    initArg?: HostTyping['initArg']
   }
 
   const Host: React.FC<IHostProps> = ({ initArg, children }) => {
     const [state, dispatch] = useReducer(initArg)
 
-    const { data } = useQuery(config.query, {
+    const { data } = useQuery(config.graphql.query, {
       variables: state.variables,
     })
 
@@ -38,7 +41,7 @@ export const hostComponentFactory = <HostTyping extends IHostTyping>(
       return null
     }
 
-    const value = data[config.rootField]
+    const value = data[config.graphql.queryRoot]
 
     // TODO: allow handling NOT_FOUND falback
     if (!value) {
@@ -54,12 +57,12 @@ export const hostComponentFactory = <HostTyping extends IHostTyping>(
       // memo because filter fn is usually expensive
       const values = useMemo(() => {
         // TODO: evaluate if api ever return nulls mixed with data
-        const nonNullValues = filterNull(value) as HostTyping['types']['value'] & Array<unknown>
+        const nonNullValues = filterNull(value)
 
         // here's not found fallback for multi host
         if (nonNullValues.length === 0) {
           hostLog(state, `query returned emoty array`)
-          return ([] as unknown) as HostTyping['types']['value']
+          return []
         }
 
         if (config.filter) {

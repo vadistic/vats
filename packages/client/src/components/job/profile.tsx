@@ -5,17 +5,25 @@ import { useIntl } from '../../i18n'
 import { getLoLeafPath } from '../../utils'
 import { Box } from '../box'
 import { DisplayTextField, Editable, MultilineDisplayTextField } from '../editable'
-import { JobActions, JobContext, JobValue, useJobContext } from './host'
+import { JobActions, JobContext, JobHostThunk, JobValue, useJobContext } from './host'
 
 const TestButton: React.FC = () => {
-  const { state, dispatch } = useJobContext()
+  const { state, dispatch, value } = useJobContext()
+
+  const someThunk: JobHostThunk = async (_dispatch, _state, helper) => {
+    const res = await helper.updateMutation({
+      variables: {
+        data: {
+          name: 'Magic thunk',
+        },
+      },
+    })
+
+    console.log(res.data)
+  }
 
   const handleMagic = () => {
-    dispatch(
-      JobActions.customUpdate({
-        excerpt: 'Hello',
-      }),
-    )
+    dispatch(someThunk as any)
   }
 
   return <IconButton iconProps={{ iconName: 'Error' }} onClick={handleMagic} />
@@ -40,14 +48,8 @@ export const JobProfile: React.FC = () => {
   const { intl } = useIntl()
 
   const handleSubmit = (values: JobValue) => {
-    dispatch(JobActions.update(values))
-
-    dispatch({
-      type: 'UPDATE',
-      payload: values,
-    })
-
     dispatch(JobActions.edit(false))
+    dispatch(JobActions.update(values))
   }
 
   const contentPlaceholder = intl(undefined, 'helper', 'empty')

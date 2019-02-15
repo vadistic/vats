@@ -1,19 +1,29 @@
 import React from 'react'
 import { HostActionsUnion } from './actions'
-import { IHostTyping } from './types'
+import { TGraphqlTyping } from './graphql-types'
+import { IHostState, IHostTyping } from './types'
 
-export interface IHostContextValue<HostTyping extends IHostTyping> {
-  value: HostTyping['types']['value']
-  dispatch: React.Dispatch<HostActionsUnion<IHostTyping> | HostTyping['types']['customActions']>
-  state: HostTyping['state']
+export interface IHostContextValue<
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+> {
+  value: HostTyping['value']
+  dispatch: React.Dispatch<
+    HostActionsUnion<HostTyping, GraphqlTyping> | HostTyping['customActions']
+  >
+  state: IHostState<HostTyping, GraphqlTyping>
 }
 
-export type HostContext<HostTyping extends IHostTyping> = React.Context<
-  IHostContextValue<HostTyping>
->
+export type HostContext<
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+> = React.Context<IHostContextValue<HostTyping, GraphqlTyping>>
 
-export const hostContextFactory = <HostTyping extends IHostTyping>() => {
-  const Context = React.createContext<IHostContextValue<HostTyping>>({} as any)
+export const hostContextFactory = <
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+>() => {
+  const Context = React.createContext<IHostContextValue<HostTyping, GraphqlTyping>>({} as any)
 
   const useContext = () => React.useContext(Context)
 

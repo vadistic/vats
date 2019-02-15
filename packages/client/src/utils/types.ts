@@ -31,6 +31,19 @@ export type Indexed<T> = T & IStringIndexSignature
 /*
  * Conditional & mapped types
  */
+
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends Array<infer U>
+    ? Array<DeepPartial<U>> // tslint:disable-next-line: no-shadowed-variable
+    : T[P] extends ReadonlyArray<infer U>
+    ? ReadonlyArray<DeepPartial<U>>
+    : DeepPartial<T[P]>
+}
+/**
+ * Return type of array element or just the same type
+ */
+export type ElementTypeOr<T> = T extends Array<infer E> ? E : T
+
 export type NonUndefined<T> = T extends undefined ? never : T
 
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>

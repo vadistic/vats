@@ -2,12 +2,30 @@ import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import gql from 'graphql-tag'
 import produce from 'immer'
 import { CandidateFragment } from '../../generated/fragments'
-import { CandidateQuery_candidate, CandidateQueryVariables } from '../../generated/queries'
-import { hostFactory, HostType, IHostTyping } from '../host'
+import {
+  CandidateCreateMutation,
+  CandidateCreateMutationVariables,
+  CandidateDeleteMutation,
+  CandidateDeleteMutationVariables,
+  CandidateQuery,
+  CandidateQuery_candidate,
+  CandidateQueryVariables,
+  CandidateUpdateMutation,
+  CandidateUpdateMutationVariables,
+} from '../../generated/queries'
+import {
+  hostFactory,
+  HostType,
+  IGraphqlSingleTyping,
+  IHostConfig,
+  IHostState,
+  IHostTyping,
+} from '../host'
 
 /*
  * GRAPHQL
  */
+
 export const CANDIDATE_QUERY = gql`
   query CandidateQuery($where: CandidateWhereUniqueInput!) {
     candidate(where: $where) {
@@ -17,6 +35,20 @@ export const CANDIDATE_QUERY = gql`
       links
       resumesString
       coverLettersString
+      ...Candidate
+    }
+  }
+
+  ${CandidateFragment}
+`
+
+export const CANDIDATE_CREATE_MUTATION = gql`
+  mutation CandidateCreateMutation($data: CandidateCreateInput!) {
+    createCandidate(data: $data) {
+      phones
+      emails
+      links
+      resumesString
       ...Candidate
     }
   }
@@ -34,7 +66,20 @@ export const CANDIDATE_UPDATE_MUTATION = gql`
       emails
       links
       resumesString
+      ...Candidate
+    }
+  }
 
+  ${CandidateFragment}
+`
+
+export const CANDIDATE_DELETE_MUTATION = gql`
+  mutation CandidateDeleteMutation($where: CandidateWhereUniqueInput!) {
+    deleteCandidate(where: $where) {
+      phones
+      emails
+      links
+      resumesString
       ...Candidate
     }
   }
@@ -58,17 +103,15 @@ type CandidateActionsUnion = ActionsUnion<typeof CandidateCustomActions>
  * REDUCER
  */
 
-const candidateReducer = produce<CandidateHostTyping['state'], [CandidateActionsUnion]>(
-  (draft, action) => {
-    switch (action.type) {
-      case EDIT:
-        draft.local.editable = action.payload || !draft.local.editable
-        return
-      default:
-        return
-    }
-  },
-)
+const candidateReducer = produce<CandidateState, [CandidateActionsUnion]>((draft, action) => {
+  switch (action.type) {
+    case EDIT:
+      draft.local.editable = action.payload || !draft.local.editable
+      return
+    default:
+      return
+  }
+})
 
 /*
  * HOST
@@ -85,25 +128,43 @@ const candidateStateInit = ({ id }: ICandidateInitArg) => ({
 })
 
 export type CandidateLocalState = ReturnType<typeof candidateStateInit>
+export type CandidateState = IHostState<CandidateHostTyping, CandidateGraphqlTyping>
+
+export type CandidateGraphqlTyping = IGraphqlSingleTyping<
+  CandidateQuery,
+  CandidateQueryVariables,
+  CandidateCreateMutation,
+  CandidateCreateMutationVariables,
+  CandidateUpdateMutation,
+  CandidateUpdateMutationVariables,
+  CandidateDeleteMutation,
+  CandidateDeleteMutationVariables
+>
 
 export type CandidateHostTyping = IHostTyping<
   CandidateValue,
   CandidateLocalState,
   CandidateActionsUnion,
-  ICandidateInitArg,
-  CandidateQueryVariables
+  ICandidateInitArg
 >
 
-const candidateHostConfig: CandidateHostTyping['config'] = {
+const candidateHostConfig: IHostConfig<CandidateHostTyping, CandidateGraphqlTyping> = {
   displayName: 'CANDIDATE',
-  rootField: 'candidate',
   type: HostType.Single,
   reducer: candidateReducer,
-  query: CANDIDATE_QUERY,
-  updateMutation: CANDIDATE_UPDATE_MUTATION,
   initState: candidateStateInit,
   initVariables: ({ id }) => ({ where: { id } }),
   resetOnInitArgPropChange: true,
+  graphql: {
+    query: CANDIDATE_QUERY,
+    queryRoot: 'candidate',
+    createMutation: CANDIDATE_CREATE_MUTATION,
+    createMutationRoot: 'createCandidate',
+    updateMutation: CANDIDATE_UPDATE_MUTATION,
+    updateMutationRoot: 'updateCandidate',
+    deleteMutation: CANDIDATE_DELETE_MUTATION,
+    deleteMutationRoot: 'deleteCandidate',
+  },
 }
 
 export const {
@@ -111,7 +172,7 @@ export const {
   useContext: useCandidateContext,
   Context: CandidateContext,
   Actions: CandidateHostActions,
-} = hostFactory<CandidateHostTyping>(candidateHostConfig)
+} = hostFactory<CandidateHostTyping, CandidateGraphqlTyping>(candidateHostConfig)
 
 export const CandidateActions = {
   ...CandidateHostActions,

@@ -1,45 +1,62 @@
 import React, { useMemo, useReducer as useReactReducer, useState } from 'react'
+import { client } from '../../apollo'
 import { tuplify } from '../../utils'
 import { actionsReducers, hostActionsFactory, HostActionsUnion, HostActionTypes } from './actions'
-import { IHostTyping } from './types'
+import { TGraphqlTyping } from './graphql-types'
+import { helpers, IThunkHelpers } from './helpers'
+import { HostAction, HostThunk, IHostConfig, IHostState, IHostTyping } from './types'
 
-// deps losely typed - only for non-public apis
+// inspiration
+// https://medium.com/yld-engineering-blog/rolling-your-own-redux-with-react-hooks-and-context-bbeea18b1253
+
 interface IHostReducerFactoryDependencies {
+  // deps losely typed
   Actions: ReturnType<typeof hostActionsFactory>['Actions']
 }
 
-export const hostReducerFactory = <HostTyping extends IHostTyping>(
-  config: IHostTyping['config'],
+export const hostReducerFactory = <
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+>(
+  config: IHostConfig<HostTyping, GraphqlTyping>,
   { Actions }: IHostReducerFactoryDependencies,
 ) => {
-  const hostReducer: React.Reducer<
-    IHostTyping['state'],
-    HostActionsUnion<HostTyping> | IHostTyping['types']['customActions']
-  > = (state, action) => {
-    // TODO: combine reducers fn
-    switch (action.type) {
+  type State = IHostState<HostTyping, GraphqlTyping>
+  type Action = HostAction<HostTyping, GraphqlTyping>
+  type Thunk = HostThunk<HostTyping, GraphqlTyping>
+  type InitArg = HostTyping['initArg']
+
+  type _HostOwnAction = HostActionsUnion<HostTyping, GraphqlTyping>
+  type _State = IHostState<IHostTyping, TGraphqlTyping>
+
+  const hostReducer: React.Reducer<State, Action> = (state, action) => {
+    const _action = action as _HostOwnAction
+    const _state = (state as unknown) as _State
+
+    switch (_action.type) {
       case HostActionTypes.RESET:
-        return actionsReducers.reset(state, action)
+        return actionsReducers.reset(_state, _action)
       case HostActionTypes.UPDATE:
-        return actionsReducers.update(state, action)
+        return actionsReducers.update(_state, _action)
       case HostActionTypes.CUSTOM_UPDATE:
-        return actionsReducers.customUpdate(state, action)
+        return actionsReducers.customUpdate(_state, _action)
       case HostActionTypes.SET_STATE:
-        return actionsReducers.setState(state, action)
+        return actionsReducers.setState(_state, _action)
       case HostActionTypes.SET_CONFIG:
-        return actionsReducers.setConfig(state, action)
+        // assertion because actions are loosely typed and do no fit
+        return actionsReducers.setConfig(_state, _action as any)
       default:
         // delegate to provided reducer
         return config.reducer(state, action)
     }
   }
 
-  const useReducer = (initArg?: HostTyping['types']['initArg']) => {
+  const useReducer = (initArg?: InitArg) => {
     // implementation of hooked forceUpdate
     const [, forceUpdate] = useState<void>(undefined)
 
     // same as Reset reducer
-    const hostInit = (_initArg: HostTyping['types']['initArg']): HostTyping['state'] => ({
+    const hostInit = (_initArg: InitArg): State => ({
       local: config.initState(_initArg),
       variables: config.initVariables(_initArg),
       config,
@@ -48,9 +65,18 @@ export const hostReducerFactory = <HostTyping extends IHostTyping>(
 
     const initalState = useMemo(() => hostInit(initArg), [initArg])
 
-    // TODO: fix reinspect...
     // const [state, dispatch] = useInspectedReducer(hostReducer, initalState, undefined as any, config.displayName)
     const [state, dispatch] = useReactReducer(hostReducer, initalState, undefined as any)
+
+    // allow thunk-like actions
+    type AugmentedDispatch = React.Dispatch<Thunk | Action>
+
+    const augmentDispatch = (
+      _dispatch: React.Dispatch<Action>,
+      _state: State,
+      _helpers: IThunkHelpers<GraphqlTyping>,
+    ): AugmentedDispatch => (input: Thunk | Action) =>
+      input instanceof Function ? input(_dispatch, _state, _helpers) : _dispatch(input)
 
     if (initArg && config.resetOnInitArgPropChange) {
       useMemo(() => {
@@ -58,7 +84,7 @@ export const hostReducerFactory = <HostTyping extends IHostTyping>(
       }, [initArg])
     }
 
-    return tuplify([state, dispatch])
+    return tuplify([state, augmentDispatch(dispatch, state, helpers(state, client))])
   }
 
   return { hostReducer, useReducer }

@@ -2680,6 +2680,10 @@ export interface JobWhereUniqueInput {
   id?: Maybe<string>
 }
 
+export interface SourceWhereUniqueInput {
+  id?: Maybe<string>
+}
+
 export interface TagWhereUniqueInput {
   id?: Maybe<string>
 }
@@ -2894,10 +2898,6 @@ export interface SourceCreateInput {
   label: string
 
   description?: Maybe<string>
-}
-
-export interface SourceWhereUniqueInput {
-  id?: Maybe<string>
 }
 
 export interface FieldInstanceCreateManyInput {
@@ -6666,6 +6666,10 @@ export interface CandidateUpsertWithoutApplicationsInput {
   create: CandidateCreateWithoutApplicationsInput
 }
 
+export interface ApplicationUpdateManyMutationInput {
+  type?: Maybe<ApplicationType>
+}
+
 export interface CandidateUpdateInput {
   firstName?: Maybe<string>
 
@@ -6704,6 +6708,28 @@ export interface CandidateUpdateInput {
   applications?: Maybe<ApplicationUpdateManyWithoutCandidateInput>
 
   comments?: Maybe<CommentUpdateManyInput>
+}
+
+export interface CandidateUpdateManyMutationInput {
+  firstName?: Maybe<string>
+
+  lastName?: Maybe<string>
+
+  emails?: Maybe<CandidateUpdateemailsInput>
+
+  phones?: Maybe<CandidateUpdatephonesInput>
+
+  links?: Maybe<CandidateUpdatelinksInput>
+
+  company?: Maybe<string>
+
+  headline?: Maybe<string>
+
+  position?: Maybe<string>
+
+  resumesString?: Maybe<CandidateUpdateresumesStringInput>
+
+  coverLettersString?: Maybe<CandidateUpdatecoverLettersStringInput>
 }
 
 export interface JobCreateInput {
@@ -6816,7 +6842,41 @@ export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
   create: ApplicationCreateWithoutJobInput
 }
 
+export interface JobUpdateManyMutationInput {
+  type?: Maybe<JobType>
+
+  department?: Maybe<string>
+
+  name?: Maybe<string>
+
+  excerpt?: Maybe<string>
+
+  companyDescription?: Maybe<string>
+
+  description?: Maybe<string>
+
+  requirements?: Maybe<string>
+}
+
+export interface SourceUpdateInput {
+  label?: Maybe<string>
+
+  description?: Maybe<string>
+}
+
+export interface SourceUpdateManyMutationInput {
+  label?: Maybe<string>
+
+  description?: Maybe<string>
+}
+
 export interface TagUpdateInput {
+  label?: Maybe<string>
+
+  description?: Maybe<string>
+}
+
+export interface TagUpdateManyMutationInput {
   label?: Maybe<string>
 
   description?: Maybe<string>
@@ -6839,6 +6899,14 @@ export interface TaskUpdateInput {
 
   candidate?: Maybe<CandidateUpdateOneWithoutTasksInput>
 
+  title?: Maybe<string>
+
+  description?: Maybe<string>
+
+  dueAt?: Maybe<DateTime>
+}
+
+export interface TaskUpdateManyMutationInput {
   title?: Maybe<string>
 
   description?: Maybe<string>
@@ -7191,6 +7259,8 @@ export type DateTime = any
 
 export type Json = any
 
+export type Long = any
+
 // ====================================================
 // Scalars
 // ====================================================
@@ -7217,6 +7287,12 @@ export interface Query {
   jobs: Job[]
 
   jobsConnection: JobConnection
+
+  source?: Maybe<Source>
+
+  sources: Source[]
+
+  sourcesConnection: SourceConnection
 
   tag?: Maybe<Tag>
 
@@ -7639,6 +7715,24 @@ export interface AggregateJob {
   count: number
 }
 
+export interface SourceConnection {
+  pageInfo: PageInfo
+
+  edges: SourceEdge[]
+
+  aggregate: AggregateSource
+}
+
+export interface SourceEdge {
+  node: Source
+
+  cursor: string
+}
+
+export interface AggregateSource {
+  count: number
+}
+
 export interface TagConnection {
   pageInfo: PageInfo
 
@@ -7714,43 +7808,79 @@ export interface Mutation {
 
   updateApplication?: Maybe<Application>
 
+  updateManyApplications: BatchPayload
+
   upsertApplication: Application
 
   deleteApplication?: Maybe<Application>
+
+  deleteManyApplications: BatchPayload
 
   createCandidate: Candidate
 
   updateCandidate?: Maybe<Candidate>
 
+  updateManyCandidates: BatchPayload
+
   upsertCandidate: Candidate
 
   deleteCandidate?: Maybe<Candidate>
+
+  deleteManyCandidates: BatchPayload
 
   createJob: Job
 
   updateJob?: Maybe<Job>
 
+  updateManyJobs: BatchPayload
+
   upsertJob: Job
 
   deleteJob?: Maybe<Job>
+
+  deleteManyJobs: BatchPayload
+
+  createSource: Source
+
+  updateSource?: Maybe<Source>
+
+  updateManySources: BatchPayload
+
+  upsertSource: Source
+
+  deleteSource?: Maybe<Source>
+
+  deleteManySources: BatchPayload
 
   createTag: Tag
 
   updateTag?: Maybe<Tag>
 
+  updateManyTags: BatchPayload
+
   upsertTag: Tag
 
   deleteTag?: Maybe<Tag>
+
+  deleteManyTags: BatchPayload
 
   createTask: Task
 
   updateTask?: Maybe<Task>
 
+  updateManyTasks: BatchPayload
+
   upsertTask: Task
 
   deleteTask?: Maybe<Task>
 
+  deleteManyTasks: BatchPayload
+
   createToast: Toast
+}
+
+export interface BatchPayload {
+  count: Long
 }
 
 export interface AccessPayload {
@@ -7855,6 +7985,39 @@ export interface JobsConnectionQueryArgs {
   where?: Maybe<JobWhereInput>
 
   orderBy?: Maybe<JobOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+export interface SourceQueryArgs {
+  where: SourceWhereUniqueInput
+}
+export interface SourcesQueryArgs {
+  where?: Maybe<SourceWhereInput>
+
+  orderBy?: Maybe<SourceOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+export interface SourcesConnectionQueryArgs {
+  where?: Maybe<SourceWhereInput>
+
+  orderBy?: Maybe<SourceOrderByInput>
 
   skip?: Maybe<number>
 
@@ -8288,6 +8451,11 @@ export interface UpdateApplicationMutationArgs {
 
   where: ApplicationWhereUniqueInput
 }
+export interface UpdateManyApplicationsMutationArgs {
+  data: ApplicationUpdateManyMutationInput
+
+  where?: Maybe<ApplicationWhereInput>
+}
 export interface UpsertApplicationMutationArgs {
   where: ApplicationWhereUniqueInput
 
@@ -8298,6 +8466,9 @@ export interface UpsertApplicationMutationArgs {
 export interface DeleteApplicationMutationArgs {
   where: ApplicationWhereUniqueInput
 }
+export interface DeleteManyApplicationsMutationArgs {
+  where?: Maybe<ApplicationWhereInput>
+}
 export interface CreateCandidateMutationArgs {
   data: CandidateCreateInput
 }
@@ -8305,6 +8476,11 @@ export interface UpdateCandidateMutationArgs {
   data: CandidateUpdateInput
 
   where: CandidateWhereUniqueInput
+}
+export interface UpdateManyCandidatesMutationArgs {
+  data: CandidateUpdateManyMutationInput
+
+  where?: Maybe<CandidateWhereInput>
 }
 export interface UpsertCandidateMutationArgs {
   where: CandidateWhereUniqueInput
@@ -8316,6 +8492,9 @@ export interface UpsertCandidateMutationArgs {
 export interface DeleteCandidateMutationArgs {
   where: CandidateWhereUniqueInput
 }
+export interface DeleteManyCandidatesMutationArgs {
+  where?: Maybe<CandidateWhereInput>
+}
 export interface CreateJobMutationArgs {
   data: JobCreateInput
 }
@@ -8323,6 +8502,11 @@ export interface UpdateJobMutationArgs {
   data: JobUpdateInput
 
   where: JobWhereUniqueInput
+}
+export interface UpdateManyJobsMutationArgs {
+  data: JobUpdateManyMutationInput
+
+  where?: Maybe<JobWhereInput>
 }
 export interface UpsertJobMutationArgs {
   where: JobWhereUniqueInput
@@ -8334,6 +8518,35 @@ export interface UpsertJobMutationArgs {
 export interface DeleteJobMutationArgs {
   where: JobWhereUniqueInput
 }
+export interface DeleteManyJobsMutationArgs {
+  where?: Maybe<JobWhereInput>
+}
+export interface CreateSourceMutationArgs {
+  data: SourceCreateInput
+}
+export interface UpdateSourceMutationArgs {
+  data: SourceUpdateInput
+
+  where: SourceWhereUniqueInput
+}
+export interface UpdateManySourcesMutationArgs {
+  data: SourceUpdateManyMutationInput
+
+  where?: Maybe<SourceWhereInput>
+}
+export interface UpsertSourceMutationArgs {
+  where: SourceWhereUniqueInput
+
+  create: SourceCreateInput
+
+  update: SourceUpdateInput
+}
+export interface DeleteSourceMutationArgs {
+  where: SourceWhereUniqueInput
+}
+export interface DeleteManySourcesMutationArgs {
+  where?: Maybe<SourceWhereInput>
+}
 export interface CreateTagMutationArgs {
   data: TagCreateInput
 }
@@ -8341,6 +8554,11 @@ export interface UpdateTagMutationArgs {
   data: TagUpdateInput
 
   where: TagWhereUniqueInput
+}
+export interface UpdateManyTagsMutationArgs {
+  data: TagUpdateManyMutationInput
+
+  where?: Maybe<TagWhereInput>
 }
 export interface UpsertTagMutationArgs {
   where: TagWhereUniqueInput
@@ -8352,6 +8570,9 @@ export interface UpsertTagMutationArgs {
 export interface DeleteTagMutationArgs {
   where: TagWhereUniqueInput
 }
+export interface DeleteManyTagsMutationArgs {
+  where?: Maybe<TagWhereInput>
+}
 export interface CreateTaskMutationArgs {
   data: TaskCreateInput
 }
@@ -8359,6 +8580,11 @@ export interface UpdateTaskMutationArgs {
   data: TaskUpdateInput
 
   where: TaskWhereUniqueInput
+}
+export interface UpdateManyTasksMutationArgs {
+  data: TaskUpdateManyMutationInput
+
+  where?: Maybe<TaskWhereInput>
 }
 export interface UpsertTaskMutationArgs {
   where: TaskWhereUniqueInput
@@ -8369,6 +8595,9 @@ export interface UpsertTaskMutationArgs {
 }
 export interface DeleteTaskMutationArgs {
   where: TaskWhereUniqueInput
+}
+export interface DeleteManyTasksMutationArgs {
+  where?: Maybe<TaskWhereInput>
 }
 export interface CreateToastMutationArgs {
   data: ToastInput
@@ -8440,6 +8669,12 @@ export interface QueryResolvers<Context = {}, TypeParent = {}> {
   jobs?: QueryJobsResolver<Job[], TypeParent, Context>
 
   jobsConnection?: QueryJobsConnectionResolver<JobConnection, TypeParent, Context>
+
+  source?: QuerySourceResolver<Maybe<Source>, TypeParent, Context>
+
+  sources?: QuerySourcesResolver<Source[], TypeParent, Context>
+
+  sourcesConnection?: QuerySourcesConnectionResolver<SourceConnection, TypeParent, Context>
 
   tag?: QueryTagResolver<Maybe<Tag>, TypeParent, Context>
 
@@ -8614,6 +8849,59 @@ export interface QueryJobsConnectionArgs {
   where?: Maybe<JobWhereInput>
 
   orderBy?: Maybe<JobOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
+export type QuerySourceResolver<R = Maybe<Source>, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  QuerySourceArgs
+>
+export interface QuerySourceArgs {
+  where: SourceWhereUniqueInput
+}
+
+export type QuerySourcesResolver<R = Source[], Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  QuerySourcesArgs
+>
+export interface QuerySourcesArgs {
+  where?: Maybe<SourceWhereInput>
+
+  orderBy?: Maybe<SourceOrderByInput>
+
+  skip?: Maybe<number>
+
+  after?: Maybe<string>
+
+  before?: Maybe<string>
+
+  first?: Maybe<number>
+
+  last?: Maybe<number>
+}
+
+export type QuerySourcesConnectionResolver<
+  R = SourceConnection,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, QuerySourcesConnectionArgs>
+export interface QuerySourcesConnectionArgs {
+  where?: Maybe<SourceWhereInput>
+
+  orderBy?: Maybe<SourceOrderByInput>
 
   skip?: Maybe<number>
 
@@ -10381,6 +10669,57 @@ export type AggregateJobCountResolver<R = number, Parent = AggregateJob, Context
   Context
 >
 
+export interface SourceConnectionResolvers<Context = {}, TypeParent = SourceConnection> {
+  pageInfo?: SourceConnectionPageInfoResolver<PageInfo, TypeParent, Context>
+
+  edges?: SourceConnectionEdgesResolver<SourceEdge[], TypeParent, Context>
+
+  aggregate?: SourceConnectionAggregateResolver<AggregateSource, TypeParent, Context>
+}
+
+export type SourceConnectionPageInfoResolver<
+  R = PageInfo,
+  Parent = SourceConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type SourceConnectionEdgesResolver<
+  R = SourceEdge[],
+  Parent = SourceConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+export type SourceConnectionAggregateResolver<
+  R = AggregateSource,
+  Parent = SourceConnection,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
+export interface SourceEdgeResolvers<Context = {}, TypeParent = SourceEdge> {
+  node?: SourceEdgeNodeResolver<Source, TypeParent, Context>
+
+  cursor?: SourceEdgeCursorResolver<string, TypeParent, Context>
+}
+
+export type SourceEdgeNodeResolver<R = Source, Parent = SourceEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+export type SourceEdgeCursorResolver<R = string, Parent = SourceEdge, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
+
+export interface AggregateSourceResolvers<Context = {}, TypeParent = AggregateSource> {
+  count?: AggregateSourceCountResolver<number, TypeParent, Context>
+}
+
+export type AggregateSourceCountResolver<
+  R = number,
+  Parent = AggregateSource,
+  Context = {}
+> = Resolver<R, Parent, Context>
+
 export interface TagConnectionResolvers<Context = {}, TypeParent = TagConnection> {
   pageInfo?: TagConnectionPageInfoResolver<PageInfo, TypeParent, Context>
 
@@ -10583,41 +10922,73 @@ export interface MutationResolvers<Context = {}, TypeParent = {}> {
 
   updateApplication?: MutationUpdateApplicationResolver<Maybe<Application>, TypeParent, Context>
 
+  updateManyApplications?: MutationUpdateManyApplicationsResolver<BatchPayload, TypeParent, Context>
+
   upsertApplication?: MutationUpsertApplicationResolver<Application, TypeParent, Context>
 
   deleteApplication?: MutationDeleteApplicationResolver<Maybe<Application>, TypeParent, Context>
+
+  deleteManyApplications?: MutationDeleteManyApplicationsResolver<BatchPayload, TypeParent, Context>
 
   createCandidate?: MutationCreateCandidateResolver<Candidate, TypeParent, Context>
 
   updateCandidate?: MutationUpdateCandidateResolver<Maybe<Candidate>, TypeParent, Context>
 
+  updateManyCandidates?: MutationUpdateManyCandidatesResolver<BatchPayload, TypeParent, Context>
+
   upsertCandidate?: MutationUpsertCandidateResolver<Candidate, TypeParent, Context>
 
   deleteCandidate?: MutationDeleteCandidateResolver<Maybe<Candidate>, TypeParent, Context>
+
+  deleteManyCandidates?: MutationDeleteManyCandidatesResolver<BatchPayload, TypeParent, Context>
 
   createJob?: MutationCreateJobResolver<Job, TypeParent, Context>
 
   updateJob?: MutationUpdateJobResolver<Maybe<Job>, TypeParent, Context>
 
+  updateManyJobs?: MutationUpdateManyJobsResolver<BatchPayload, TypeParent, Context>
+
   upsertJob?: MutationUpsertJobResolver<Job, TypeParent, Context>
 
   deleteJob?: MutationDeleteJobResolver<Maybe<Job>, TypeParent, Context>
+
+  deleteManyJobs?: MutationDeleteManyJobsResolver<BatchPayload, TypeParent, Context>
+
+  createSource?: MutationCreateSourceResolver<Source, TypeParent, Context>
+
+  updateSource?: MutationUpdateSourceResolver<Maybe<Source>, TypeParent, Context>
+
+  updateManySources?: MutationUpdateManySourcesResolver<BatchPayload, TypeParent, Context>
+
+  upsertSource?: MutationUpsertSourceResolver<Source, TypeParent, Context>
+
+  deleteSource?: MutationDeleteSourceResolver<Maybe<Source>, TypeParent, Context>
+
+  deleteManySources?: MutationDeleteManySourcesResolver<BatchPayload, TypeParent, Context>
 
   createTag?: MutationCreateTagResolver<Tag, TypeParent, Context>
 
   updateTag?: MutationUpdateTagResolver<Maybe<Tag>, TypeParent, Context>
 
+  updateManyTags?: MutationUpdateManyTagsResolver<BatchPayload, TypeParent, Context>
+
   upsertTag?: MutationUpsertTagResolver<Tag, TypeParent, Context>
 
   deleteTag?: MutationDeleteTagResolver<Maybe<Tag>, TypeParent, Context>
+
+  deleteManyTags?: MutationDeleteManyTagsResolver<BatchPayload, TypeParent, Context>
 
   createTask?: MutationCreateTaskResolver<Task, TypeParent, Context>
 
   updateTask?: MutationUpdateTaskResolver<Maybe<Task>, TypeParent, Context>
 
+  updateManyTasks?: MutationUpdateManyTasksResolver<BatchPayload, TypeParent, Context>
+
   upsertTask?: MutationUpsertTaskResolver<Task, TypeParent, Context>
 
   deleteTask?: MutationDeleteTaskResolver<Maybe<Task>, TypeParent, Context>
+
+  deleteManyTasks?: MutationDeleteManyTasksResolver<BatchPayload, TypeParent, Context>
 
   createToast?: MutationCreateToastResolver<Toast, TypeParent, Context>
 }
@@ -10642,6 +11013,17 @@ export interface MutationUpdateApplicationArgs {
   where: ApplicationWhereUniqueInput
 }
 
+export type MutationUpdateManyApplicationsResolver<
+  R = BatchPayload,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, MutationUpdateManyApplicationsArgs>
+export interface MutationUpdateManyApplicationsArgs {
+  data: ApplicationUpdateManyMutationInput
+
+  where?: Maybe<ApplicationWhereInput>
+}
+
 export type MutationUpsertApplicationResolver<
   R = Application,
   Parent = {},
@@ -10664,6 +11046,15 @@ export interface MutationDeleteApplicationArgs {
   where: ApplicationWhereUniqueInput
 }
 
+export type MutationDeleteManyApplicationsResolver<
+  R = BatchPayload,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, MutationDeleteManyApplicationsArgs>
+export interface MutationDeleteManyApplicationsArgs {
+  where?: Maybe<ApplicationWhereInput>
+}
+
 export type MutationCreateCandidateResolver<R = Candidate, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -10683,6 +11074,17 @@ export interface MutationUpdateCandidateArgs {
   data: CandidateUpdateInput
 
   where: CandidateWhereUniqueInput
+}
+
+export type MutationUpdateManyCandidatesResolver<
+  R = BatchPayload,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, MutationUpdateManyCandidatesArgs>
+export interface MutationUpdateManyCandidatesArgs {
+  data: CandidateUpdateManyMutationInput
+
+  where?: Maybe<CandidateWhereInput>
 }
 
 export type MutationUpsertCandidateResolver<R = Candidate, Parent = {}, Context = {}> = Resolver<
@@ -10708,6 +11110,15 @@ export interface MutationDeleteCandidateArgs {
   where: CandidateWhereUniqueInput
 }
 
+export type MutationDeleteManyCandidatesResolver<
+  R = BatchPayload,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, MutationDeleteManyCandidatesArgs>
+export interface MutationDeleteManyCandidatesArgs {
+  where?: Maybe<CandidateWhereInput>
+}
+
 export type MutationCreateJobResolver<R = Job, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -10728,6 +11139,18 @@ export interface MutationUpdateJobArgs {
   data: JobUpdateInput
 
   where: JobWhereUniqueInput
+}
+
+export type MutationUpdateManyJobsResolver<R = BatchPayload, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationUpdateManyJobsArgs
+>
+export interface MutationUpdateManyJobsArgs {
+  data: JobUpdateManyMutationInput
+
+  where?: Maybe<JobWhereInput>
 }
 
 export type MutationUpsertJobResolver<R = Job, Parent = {}, Context = {}> = Resolver<
@@ -10754,6 +11177,82 @@ export interface MutationDeleteJobArgs {
   where: JobWhereUniqueInput
 }
 
+export type MutationDeleteManyJobsResolver<R = BatchPayload, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationDeleteManyJobsArgs
+>
+export interface MutationDeleteManyJobsArgs {
+  where?: Maybe<JobWhereInput>
+}
+
+export type MutationCreateSourceResolver<R = Source, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationCreateSourceArgs
+>
+export interface MutationCreateSourceArgs {
+  data: SourceCreateInput
+}
+
+export type MutationUpdateSourceResolver<R = Maybe<Source>, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationUpdateSourceArgs
+>
+export interface MutationUpdateSourceArgs {
+  data: SourceUpdateInput
+
+  where: SourceWhereUniqueInput
+}
+
+export type MutationUpdateManySourcesResolver<
+  R = BatchPayload,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, MutationUpdateManySourcesArgs>
+export interface MutationUpdateManySourcesArgs {
+  data: SourceUpdateManyMutationInput
+
+  where?: Maybe<SourceWhereInput>
+}
+
+export type MutationUpsertSourceResolver<R = Source, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationUpsertSourceArgs
+>
+export interface MutationUpsertSourceArgs {
+  where: SourceWhereUniqueInput
+
+  create: SourceCreateInput
+
+  update: SourceUpdateInput
+}
+
+export type MutationDeleteSourceResolver<R = Maybe<Source>, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationDeleteSourceArgs
+>
+export interface MutationDeleteSourceArgs {
+  where: SourceWhereUniqueInput
+}
+
+export type MutationDeleteManySourcesResolver<
+  R = BatchPayload,
+  Parent = {},
+  Context = {}
+> = Resolver<R, Parent, Context, MutationDeleteManySourcesArgs>
+export interface MutationDeleteManySourcesArgs {
+  where?: Maybe<SourceWhereInput>
+}
+
 export type MutationCreateTagResolver<R = Tag, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -10774,6 +11273,18 @@ export interface MutationUpdateTagArgs {
   data: TagUpdateInput
 
   where: TagWhereUniqueInput
+}
+
+export type MutationUpdateManyTagsResolver<R = BatchPayload, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationUpdateManyTagsArgs
+>
+export interface MutationUpdateManyTagsArgs {
+  data: TagUpdateManyMutationInput
+
+  where?: Maybe<TagWhereInput>
 }
 
 export type MutationUpsertTagResolver<R = Tag, Parent = {}, Context = {}> = Resolver<
@@ -10800,6 +11311,16 @@ export interface MutationDeleteTagArgs {
   where: TagWhereUniqueInput
 }
 
+export type MutationDeleteManyTagsResolver<R = BatchPayload, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationDeleteManyTagsArgs
+>
+export interface MutationDeleteManyTagsArgs {
+  where?: Maybe<TagWhereInput>
+}
+
 export type MutationCreateTaskResolver<R = Task, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -10820,6 +11341,18 @@ export interface MutationUpdateTaskArgs {
   data: TaskUpdateInput
 
   where: TaskWhereUniqueInput
+}
+
+export type MutationUpdateManyTasksResolver<R = BatchPayload, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationUpdateManyTasksArgs
+>
+export interface MutationUpdateManyTasksArgs {
+  data: TaskUpdateManyMutationInput
+
+  where?: Maybe<TaskWhereInput>
 }
 
 export type MutationUpsertTaskResolver<R = Task, Parent = {}, Context = {}> = Resolver<
@@ -10846,6 +11379,16 @@ export interface MutationDeleteTaskArgs {
   where: TaskWhereUniqueInput
 }
 
+export type MutationDeleteManyTasksResolver<R = BatchPayload, Parent = {}, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context,
+  MutationDeleteManyTasksArgs
+>
+export interface MutationDeleteManyTasksArgs {
+  where?: Maybe<TaskWhereInput>
+}
+
 export type MutationCreateToastResolver<R = Toast, Parent = {}, Context = {}> = Resolver<
   R,
   Parent,
@@ -10855,6 +11398,16 @@ export type MutationCreateToastResolver<R = Toast, Parent = {}, Context = {}> = 
 export interface MutationCreateToastArgs {
   data: ToastInput
 }
+
+export interface BatchPayloadResolvers<Context = {}, TypeParent = BatchPayload> {
+  count?: BatchPayloadCountResolver<Long, TypeParent, Context>
+}
+
+export type BatchPayloadCountResolver<R = Long, Parent = BatchPayload, Context = {}> = Resolver<
+  R,
+  Parent,
+  Context
+>
 
 export interface AccessPayloadResolvers<Context = {}, TypeParent = AccessPayload> {
   token?: AccessPayloadTokenResolver<string, TypeParent, Context>
@@ -10914,6 +11467,9 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<DateTime, 
 export interface JsonScalarConfig extends GraphQLScalarTypeConfig<Json, any> {
   name: 'Json'
 }
+export interface LongScalarConfig extends GraphQLScalarTypeConfig<Long, any> {
+  name: 'Long'
+}
 
 export interface IResolvers<Context = {}> {
   Query?: QueryResolvers<Context>
@@ -10945,6 +11501,9 @@ export interface IResolvers<Context = {}> {
   JobConnection?: JobConnectionResolvers<Context>
   JobEdge?: JobEdgeResolvers<Context>
   AggregateJob?: AggregateJobResolvers<Context>
+  SourceConnection?: SourceConnectionResolvers<Context>
+  SourceEdge?: SourceEdgeResolvers<Context>
+  AggregateSource?: AggregateSourceResolvers<Context>
   TagConnection?: TagConnectionResolvers<Context>
   TagEdge?: TagEdgeResolvers<Context>
   AggregateTag?: AggregateTagResolvers<Context>
@@ -10957,10 +11516,12 @@ export interface IResolvers<Context = {}> {
   LocalType?: LocalTypeResolvers<Context>
   Toast?: ToastResolvers<Context>
   Mutation?: MutationResolvers<Context>
+  BatchPayload?: BatchPayloadResolvers<Context>
   AccessPayload?: AccessPayloadResolvers<Context>
   AuthPayload?: AuthPayloadResolvers<Context>
   DateTime?: GraphQLScalarType
   Json?: GraphQLScalarType
+  Long?: GraphQLScalarType
 }
 
 export interface IDirectiveResolvers<Result> {

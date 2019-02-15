@@ -3,7 +3,6 @@ import { Head, Tail } from './types'
 
 /*
  * util for safely building nested properties paths (for formik)
- * TODO: maybe change void error type, but it seems most semantic (since void === error)
  */
 export type CheckPath<State extends any, Paths extends any[]> = Head<Paths> extends keyof State
   ? {

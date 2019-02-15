@@ -245,6 +245,18 @@ export const AggregateJobNoNestingFragment = gql`
   }
 `
 
+export const SourceEdgeNoNestingFragment = gql`
+  fragment SourceEdgeNoNesting on SourceEdge {
+    cursor
+  }
+`
+
+export const AggregateSourceNoNestingFragment = gql`
+  fragment AggregateSourceNoNesting on AggregateSource {
+    count
+  }
+`
+
 export const TagEdgeNoNestingFragment = gql`
   fragment TagEdgeNoNesting on TagEdge {
     cursor
@@ -277,6 +289,12 @@ export const UserEdgeNoNestingFragment = gql`
 
 export const AggregateUserNoNestingFragment = gql`
   fragment AggregateUserNoNesting on AggregateUser {
+    count
+  }
+`
+
+export const BatchPayloadNoNestingFragment = gql`
+  fragment BatchPayloadNoNesting on BatchPayload {
     count
   }
 `
@@ -776,6 +794,41 @@ export const AggregateJobFragment = gql`
   }
 `
 
+export const SourceConnectionFragment = gql`
+  fragment SourceConnection on SourceConnection {
+    pageInfo {
+      ...PageInfoNoNesting
+    }
+    edges {
+      ...SourceEdgeNoNesting
+    }
+    aggregate {
+      ...AggregateSourceNoNesting
+    }
+  }
+
+  ${PageInfoNoNestingFragment}
+  ${SourceEdgeNoNestingFragment}
+  ${AggregateSourceNoNestingFragment}
+`
+
+export const SourceEdgeFragment = gql`
+  fragment SourceEdge on SourceEdge {
+    node {
+      ...SourceNoNesting
+    }
+    cursor
+  }
+
+  ${SourceNoNestingFragment}
+`
+
+export const AggregateSourceFragment = gql`
+  fragment AggregateSource on AggregateSource {
+    count
+  }
+`
+
 export const TagConnectionFragment = gql`
   fragment TagConnection on TagConnection {
     pageInfo {
@@ -877,6 +930,12 @@ export const UserEdgeFragment = gql`
 
 export const AggregateUserFragment = gql`
   fragment AggregateUser on AggregateUser {
+    count
+  }
+`
+
+export const BatchPayloadFragment = gql`
+  fragment BatchPayload on BatchPayload {
     count
   }
 `

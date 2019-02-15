@@ -25,7 +25,7 @@
     "now:json": "node scripts/now-json",
     "now:deploy": "yarn now:json && now deploy && now alias",
     "dev": "yarn env ts-node src/index.ts",
-    "now-start": "NODE_ENV=\"production\" node dist/index.js",
+    "now-start": "NODE_ENV=\"development\" node dist/index.js",
     "watch": "tsc -w",
     "test": "jest",
     "lint": "tslint --project .",

@@ -147,6 +147,131 @@ export interface CandidateQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CandidateCreateMutation
+// ====================================================
+
+export interface CandidateCreateMutation_createCandidate_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateCreateMutation_createCandidate_resumesFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateCreateMutation_createCandidate_coverLettersFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateCreateMutation_createCandidate_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface CandidateCreateMutation_createCandidate_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface CandidateCreateMutation_createCandidate_fields {
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
+}
+
+export interface CandidateCreateMutation_createCandidate_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidateCreateMutation_createCandidate_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface CandidateCreateMutation_createCandidate_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidateCreateMutation_createCandidate {
+  __typename: 'Candidate'
+  phones: string[]
+  emails: string[]
+  links: string[]
+  resumesString: string[]
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: CandidateCreateMutation_createCandidate_avatar | null
+  company: string | null
+  headline: string | null
+  position: string | null
+  resumesFile: CandidateCreateMutation_createCandidate_resumesFile[] | null
+  coverLettersFile: CandidateCreateMutation_createCandidate_coverLettersFile[] | null
+  tags: CandidateCreateMutation_createCandidate_tags[] | null
+  sources: CandidateCreateMutation_createCandidate_sources[] | null
+  fields: CandidateCreateMutation_createCandidate_fields[] | null
+  tasks: CandidateCreateMutation_createCandidate_tasks[] | null
+  applications: CandidateCreateMutation_createCandidate_applications[] | null
+  comments: CandidateCreateMutation_createCandidate_comments[] | null
+}
+
+export interface CandidateCreateMutation {
+  createCandidate: CandidateCreateMutation_createCandidate
+}
+
+export interface CandidateCreateMutationVariables {
+  data: CandidateCreateInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CandidateUpdateMutation
 // ====================================================
 
@@ -266,6 +391,131 @@ export interface CandidateUpdateMutation {
 
 export interface CandidateUpdateMutationVariables {
   data: CandidateUpdateInput
+  where: CandidateWhereUniqueInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CandidateDeleteMutation
+// ====================================================
+
+export interface CandidateDeleteMutation_deleteCandidate_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_resumesFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_coverLettersFile {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_sources {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_fields {
+  __typename: 'FieldInstance'
+  id: string
+  createdAt: any
+  updatedAt: any
+  value: string | null
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface CandidateDeleteMutation_deleteCandidate_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidateDeleteMutation_deleteCandidate {
+  __typename: 'Candidate'
+  phones: string[]
+  emails: string[]
+  links: string[]
+  resumesString: string[]
+  id: string
+  createdAt: any
+  updatedAt: any
+  firstName: string
+  lastName: string
+  avatar: CandidateDeleteMutation_deleteCandidate_avatar | null
+  company: string | null
+  headline: string | null
+  position: string | null
+  resumesFile: CandidateDeleteMutation_deleteCandidate_resumesFile[] | null
+  coverLettersFile: CandidateDeleteMutation_deleteCandidate_coverLettersFile[] | null
+  tags: CandidateDeleteMutation_deleteCandidate_tags[] | null
+  sources: CandidateDeleteMutation_deleteCandidate_sources[] | null
+  fields: CandidateDeleteMutation_deleteCandidate_fields[] | null
+  tasks: CandidateDeleteMutation_deleteCandidate_tasks[] | null
+  applications: CandidateDeleteMutation_deleteCandidate_applications[] | null
+  comments: CandidateDeleteMutation_deleteCandidate_comments[] | null
+}
+
+export interface CandidateDeleteMutation {
+  deleteCandidate: CandidateDeleteMutation_deleteCandidate | null
+}
+
+export interface CandidateDeleteMutationVariables {
   where: CandidateWhereUniqueInput
 }
 
@@ -399,6 +649,47 @@ export interface CandidatesQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CandidatesUpdateManyMutation
+// ====================================================
+
+export interface CandidatesUpdateManyMutation_updateManyCandidates {
+  __typename: 'BatchPayload'
+  count: any
+}
+
+export interface CandidatesUpdateManyMutation {
+  updateManyCandidates: CandidatesUpdateManyMutation_updateManyCandidates
+}
+
+export interface CandidatesUpdateManyMutationVariables {
+  where: CandidateWhereInput
+  data: CandidateUpdateManyMutationInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CandidatesDeleteManyMutation
+// ====================================================
+
+export interface CandidatesDeleteManyMutation_deleteManyCandidates {
+  __typename: 'BatchPayload'
+  count: any
+}
+
+export interface CandidatesDeleteManyMutation {
+  deleteManyCandidates: CandidatesDeleteManyMutation_deleteManyCandidates
+}
+
+export interface CandidatesDeleteManyMutationVariables {
+  where: CandidateWhereInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: JobQuery
 // ====================================================
 
@@ -472,6 +763,85 @@ export interface JobQuery {
 
 export interface JobQueryVariables {
   where: JobWhereUniqueInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: JobCreateMutation
+// ====================================================
+
+export interface JobCreateMutation_createJob_workspace {
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  settings: any | null
+  name: string
+}
+
+export interface JobCreateMutation_createJob_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface JobCreateMutation_createJob_workflow {
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+}
+
+export interface JobCreateMutation_createJob_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface JobCreateMutation_createJob_locations {
+  __typename: 'Location'
+  id: string
+  createdAt: any
+  updatedAt: any
+  country: string
+  region: string | null
+  city: string
+  zip: string | null
+}
+
+export interface JobCreateMutation_createJob {
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  workspace: JobCreateMutation_createJob_workspace
+  applications: JobCreateMutation_createJob_applications[] | null
+  workflow: JobCreateMutation_createJob_workflow
+  comments: JobCreateMutation_createJob_comments[] | null
+  type: JobType
+  department: string | null
+  locations: JobCreateMutation_createJob_locations[] | null
+  name: string
+  excerpt: string | null
+  companyDescription: string | null
+  description: string | null
+  requirements: string | null
+}
+
+export interface JobCreateMutation {
+  createJob: JobCreateMutation_createJob
+}
+
+export interface JobCreateMutationVariables {
+  data: JobCreateInput
 }
 
 /* tslint:disable */
@@ -558,6 +928,85 @@ export interface JobUpdateMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: JobDeleteMutation
+// ====================================================
+
+export interface JobDeleteMutation_deleteJob_workspace {
+  __typename: 'Workspace'
+  id: string
+  createdAt: any
+  updatedAt: any
+  settings: any | null
+  name: string
+}
+
+export interface JobDeleteMutation_deleteJob_applications {
+  __typename: 'Application'
+  createdAt: any
+  id: string
+  updatedAt: any
+  type: ApplicationType
+}
+
+export interface JobDeleteMutation_deleteJob_workflow {
+  __typename: 'Workflow'
+  id: string
+  createdAt: any
+  updatedAt: any
+  name: string
+  description: string | null
+}
+
+export interface JobDeleteMutation_deleteJob_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface JobDeleteMutation_deleteJob_locations {
+  __typename: 'Location'
+  id: string
+  createdAt: any
+  updatedAt: any
+  country: string
+  region: string | null
+  city: string
+  zip: string | null
+}
+
+export interface JobDeleteMutation_deleteJob {
+  __typename: 'Job'
+  id: string
+  createdAt: any
+  updatedAt: any
+  workspace: JobDeleteMutation_deleteJob_workspace
+  applications: JobDeleteMutation_deleteJob_applications[] | null
+  workflow: JobDeleteMutation_deleteJob_workflow
+  comments: JobDeleteMutation_deleteJob_comments[] | null
+  type: JobType
+  department: string | null
+  locations: JobDeleteMutation_deleteJob_locations[] | null
+  name: string
+  excerpt: string | null
+  companyDescription: string | null
+  description: string | null
+  requirements: string | null
+}
+
+export interface JobDeleteMutation {
+  deleteJob: JobDeleteMutation_deleteJob | null
+}
+
+export interface JobDeleteMutationVariables {
+  where: JobWhereUniqueInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: JobsQuery
 // ====================================================
 
@@ -632,6 +1081,47 @@ export interface JobsQuery {
 export interface JobsQueryVariables {
   where?: JobWhereInput | null
   orderBy?: JobOrderByInput | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: JobsUpdateManyMutation
+// ====================================================
+
+export interface JobsUpdateManyMutation_updateManyJobs {
+  __typename: 'BatchPayload'
+  count: any
+}
+
+export interface JobsUpdateManyMutation {
+  updateManyJobs: JobsUpdateManyMutation_updateManyJobs
+}
+
+export interface JobsUpdateManyMutationVariables {
+  where: JobWhereInput
+  data: JobUpdateManyMutationInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: JobsDeleteManyMutation
+// ====================================================
+
+export interface JobsDeleteManyMutation_deleteManyJobs {
+  __typename: 'BatchPayload'
+  count: any
+}
+
+export interface JobsDeleteManyMutation {
+  deleteManyJobs: JobsDeleteManyMutation_deleteManyJobs
+}
+
+export interface JobsDeleteManyMutationVariables {
+  where: JobWhereInput
 }
 
 /* tslint:disable */
@@ -1174,6 +1664,30 @@ export interface AggregateJobNoNesting {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: SourceEdgeNoNesting
+// ====================================================
+
+export interface SourceEdgeNoNesting {
+  __typename: 'SourceEdge'
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateSourceNoNesting
+// ====================================================
+
+export interface AggregateSourceNoNesting {
+  __typename: 'AggregateSource'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: TagEdgeNoNesting
 // ====================================================
 
@@ -1240,6 +1754,18 @@ export interface UserEdgeNoNesting {
 export interface AggregateUserNoNesting {
   __typename: 'AggregateUser'
   count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: BatchPayloadNoNesting
+// ====================================================
+
+export interface BatchPayloadNoNesting {
+  __typename: 'BatchPayload'
+  count: any
 }
 
 /* tslint:disable */
@@ -2242,6 +2768,72 @@ export interface AggregateJob {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: SourceConnection
+// ====================================================
+
+export interface SourceConnection_pageInfo {
+  __typename: 'PageInfo'
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}
+
+export interface SourceConnection_edges {
+  __typename: 'SourceEdge'
+  cursor: string
+}
+
+export interface SourceConnection_aggregate {
+  __typename: 'AggregateSource'
+  count: number
+}
+
+export interface SourceConnection {
+  __typename: 'SourceConnection'
+  pageInfo: SourceConnection_pageInfo
+  edges: (SourceConnection_edges | null)[]
+  aggregate: SourceConnection_aggregate
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: SourceEdge
+// ====================================================
+
+export interface SourceEdge_node {
+  __typename: 'Source'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface SourceEdge {
+  __typename: 'SourceEdge'
+  node: SourceEdge_node
+  cursor: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateSource
+// ====================================================
+
+export interface AggregateSource {
+  __typename: 'AggregateSource'
+  count: number
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: TagConnection
 // ====================================================
 
@@ -2447,6 +3039,18 @@ export interface AggregateUser {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: BatchPayload
+// ====================================================
+
+export interface BatchPayload {
+  __typename: 'BatchPayload'
+  count: any
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: AccessPayload
 // ====================================================
 
@@ -2563,6 +3167,11 @@ export enum ToastType {
 
 export interface ApplicationCreateManyWithoutCandidateInput {
   create?: ApplicationCreateWithoutCandidateInput[] | null
+  connect?: ApplicationWhereUniqueInput[] | null
+}
+
+export interface ApplicationCreateManyWithoutJobInput {
+  create?: ApplicationCreateWithoutJobInput[] | null
   connect?: ApplicationWhereUniqueInput[] | null
 }
 
@@ -3006,6 +3615,19 @@ export interface CandidateUpdateManyInput {
   disconnect?: CandidateWhereUniqueInput[] | null
   deleteMany?: CandidateScalarWhereInput[] | null
   updateMany?: CandidateUpdateManyWithWhereNestedInput[] | null
+}
+
+export interface CandidateUpdateManyMutationInput {
+  firstName?: string | null
+  lastName?: string | null
+  emails?: CandidateUpdateemailsInput | null
+  phones?: CandidateUpdatephonesInput | null
+  links?: CandidateUpdatelinksInput | null
+  company?: string | null
+  headline?: string | null
+  position?: string | null
+  resumesString?: CandidateUpdateresumesStringInput | null
+  coverLettersString?: CandidateUpdatecoverLettersStringInput | null
 }
 
 export interface CandidateUpdateManyWithWhereNestedInput {
@@ -4478,6 +5100,21 @@ export interface InviteWhereUniqueInput {
   id?: string | null
 }
 
+export interface JobCreateInput {
+  workspace: WorkspaceCreateOneWithoutJobsInput
+  applications?: ApplicationCreateManyWithoutJobInput | null
+  workflow: WorkflowCreateOneInput
+  comments?: CommentCreateManyInput | null
+  type: JobType
+  department?: string | null
+  locations?: LocationCreateManyInput | null
+  name: string
+  excerpt?: string | null
+  companyDescription?: string | null
+  description?: string | null
+  requirements?: string | null
+}
+
 export interface JobCreateOneWithoutApplicationsInput {
   create?: JobCreateWithoutApplicationsInput | null
   connect?: JobWhereUniqueInput | null
@@ -4505,6 +5142,16 @@ export interface JobUpdateInput {
   type?: JobType | null
   department?: string | null
   locations?: LocationUpdateManyInput | null
+  name?: string | null
+  excerpt?: string | null
+  companyDescription?: string | null
+  description?: string | null
+  requirements?: string | null
+}
+
+export interface JobUpdateManyMutationInput {
+  type?: JobType | null
+  department?: string | null
   name?: string | null
   excerpt?: string | null
   companyDescription?: string | null

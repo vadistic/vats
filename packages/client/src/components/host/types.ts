@@ -1,8 +1,21 @@
-import { DocumentNode } from 'graphql'
 import { HostActionsUnion } from './actions'
+import {
+  IGraphqlMultiTyping,
+  IGraphqlSingleTyping,
+  IHostGraphqlMultiConfig,
+  IHostGraphqlSingleConfig,
+  TGraphqlTyping,
+} from './graphql-types'
+import { IThunkHelpers } from './helpers'
+
+// UTIL
 
 export interface IAction {
   type: string
+}
+
+interface ISingleInitArg {
+  id: string
 }
 
 export enum HostType {
@@ -10,52 +23,51 @@ export enum HostType {
   Multi = 'MULTI',
 }
 
-export type FilterFn<HostTyping extends IHostTyping> = (
-  value: HostTyping['types']['value'],
-  state: HostTyping['state'],
-) => HostTyping['types']['value']
+export type HostFilterFn<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> = (
+  value: HostTyping['value'],
+  state: IHostState<HostTyping, GraphqlTyping>,
+) => HostTyping['value']
+
+export type HostAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> =
+  | HostActionsUnion<HostTyping, GraphqlTyping>
+  | HostTyping['customActions']
+
+export type HostThunk<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> = (
+  dispatch: React.Dispatch<HostAction<HostTyping, GraphqlTyping>>,
+  state: IHostState<HostTyping, GraphqlTyping>,
+  helpers: IThunkHelpers<GraphqlTyping>,
+) => void | Promise<void>
 
 export interface IHostTyping<
   Value = any,
   LocalState = any,
-  ActionsUnion extends IAction = any,
-  InitArg = any,
-  QueryVariables = any,
-  DataVariable = any
+  CustomActions extends IAction = IAction,
+  InitArg extends Value extends any[] ? any : ISingleInitArg = any
 > {
-  types: {
-    value: Value
-    dataVariable: DataVariable
-    initArg: InitArg
-    customActions: ActionsUnion
-  }
-  config: {
-    displayName: string
-    rootField: string
-    type: HostType
-    reducer: React.Reducer<any, any>
-    query: DocumentNode
-    updateMutation?: DocumentNode
-    filter?: FilterFn<
-      IHostTyping<Value, LocalState, ActionsUnion, InitArg, QueryVariables, DataVariable>
-    >
-    initState: (initArg: InitArg) => LocalState | (() => LocalState)
-    initVariables: (initArg: InitArg) => QueryVariables | (() => QueryVariables)
-    resetOnInitArgPropChange?: boolean
-  }
-  state: {
-    variables: QueryVariables
-    local: LocalState
-    config: IHostTyping<
-      Value,
-      LocalState,
-      ActionsUnion,
-      InitArg,
-      QueryVariables,
-      DataVariable
-    >['config']
-    forceUpdate: React.Dispatch<React.SetStateAction<void>>
-  }
+  value: Value
+  localState: LocalState
+  customActions: CustomActions
+  initArg: InitArg
 }
 
-// export nicer aliases?
+export interface IHostConfig<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
+  displayName: string
+  type: HostType
+  reducer: React.Reducer<any, any>
+  filter?: HostFilterFn<HostTyping, GraphqlTyping>
+  initState:
+    | ((initArg: HostTyping['initArg']) => HostTyping['localState'])
+    | (() => HostTyping['localState'])
+  initVariables:
+    | (() => GraphqlTyping['queryVariables'])
+    | ((initArg: HostTyping['initArg']) => GraphqlTyping['queryVariables'])
+  resetOnInitArgPropChange?: boolean
+  graphql: HostTyping['value'] extends any[] ? IHostGraphqlMultiConfig : IHostGraphqlSingleConfig
+}
+
+export interface IHostState<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
+  variables: GraphqlTyping['queryVariables']
+  local: HostTyping['localState']
+  config: IHostConfig<HostTyping, GraphqlTyping>
+  forceUpdate: React.Dispatch<React.SetStateAction<void>>
+}

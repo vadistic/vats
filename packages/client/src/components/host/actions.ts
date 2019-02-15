@@ -1,75 +1,93 @@
 import { ActionsOfType, createAction, Enum } from '@martin_hotell/rex-tils'
 import { client } from '../../apollo'
-import { IStringIndexSignature } from '../../utils'
+import { ElementTypeOr, IStringIndexSignature } from '../../utils'
 import { diffAutoUpdataData } from './diff'
-import { IAction, IHostTyping } from './types'
+import { IGraphqlMultiTyping, IHostGraphqlMultiConfig, TGraphqlTyping } from './graphql-types'
+import { HostType, IAction, IHostConfig, IHostState, IHostTyping } from './types'
 
 /*
  * NOTE TO SELF: it's extremely verbose
  * but do not waste time again trying to improve it
+ *
+ * (doing it again...)
  */
 
-const log = (state: IHostTyping['state'], action: IAction, ...print: string[]) => {
+const log = (state: any, action: IAction, ...print: string[]) => {
   if (process.env.NODE_ENV === 'development') {
     console.warn(`Host ${state.config.displayName}/${action.type}: `, ...print)
     console.warn(`STATE:`, state, 'ACTION:', action)
   }
 }
 
-type HostActionReducer<HostTyping extends IHostTyping, Name extends string> = (
-  state: HostTyping['state'],
-  action: ActionsOfType<HostActionsUnion<HostTyping>, Name>,
-) => HostTyping['state']
+// helper only
+type HostActionReducer<
+  Name extends string,
+  HostTyping extends IHostTyping = IHostTyping,
+  GraphqlTyping extends TGraphqlTyping = TGraphqlTyping
+> = (
+  state: IHostState<HostTyping, any>,
+  action: ActionsOfType<HostActionsUnion<HostTyping, any>, Name>,
+) => IHostState<HostTyping, any>
 
 /*
  * ACTIONS
  */
-const RESET = 'RESET'
-interface IResetAction<HostTyping extends IHostTyping> {
-  type: typeof RESET
-  payload: HostTyping['types']['initArg']
-}
-
 const UPDATE = 'UPDATE'
-interface IUpdateAction<HostTyping extends IHostTyping> {
+interface IUpdateAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
   type: typeof UPDATE
-  payload: HostTyping['types']['value']
+  payload: ElementTypeOr<HostTyping['value']>
 }
 
 const CUSTOM_UPDATE = 'CUSTOM_UPDATE'
-interface ICustomUpdateAction<HostTyping extends IHostTyping> {
+interface ICustomUpdateAction<
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+> {
   type: typeof CUSTOM_UPDATE
-  payload: HostTyping['types']['dataVariable']
+  payload: GraphqlTyping['updateMutationVariables']['data']
+}
+
+const RESET = 'RESET'
+interface IResetAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
+  type: typeof RESET
+  payload: HostTyping['initArg']
 }
 
 const SET_STATE = 'SET_STATE'
-interface ISetStateAction<HostTyping extends IHostTyping> {
+interface ISetStateAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
   type: typeof SET_STATE
-  payload: HostTyping['state']['local']
+  payload: HostTyping['localState']
 }
 
 const SET_CONFIG = 'SET_CONFIG'
-interface ISetConfigAction<HostTyping extends IHostTyping> {
+interface ISetConfigAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
   type: typeof SET_CONFIG
-  payload: HostTyping['config']
+  payload: IHostConfig<HostTyping, GraphqlTyping>
 }
 
-export type HostActionsUnion<HostTyping extends IHostTyping> =
-  | IResetAction<HostTyping>
-  | IUpdateAction<HostTyping>
-  | ICustomUpdateAction<HostTyping>
-  | ISetStateAction<HostTyping>
-  | ISetConfigAction<HostTyping>
+export type HostActionsUnion<
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+> =
+  | IUpdateAction<HostTyping, GraphqlTyping>
+  | ICustomUpdateAction<HostTyping, GraphqlTyping>
+  | IResetAction<HostTyping, GraphqlTyping>
+  | ISetStateAction<HostTyping, GraphqlTyping>
+  | ISetConfigAction<HostTyping, GraphqlTyping>
 
 export const HostActionTypes = Enum(RESET, UPDATE, CUSTOM_UPDATE, SET_STATE, SET_CONFIG)
 
-export const hostActionsFactory = <HostTyping extends IHostTyping>() => {
+export const hostActionsFactory = <
+  HostTyping extends IHostTyping,
+  GraphqlTyping extends TGraphqlTyping
+>() => {
   const Actions = {
-    reset: (initArg: HostTyping['types']['initArg']) => createAction(RESET, initArg),
-    update: (value: HostTyping['types']['value']) => createAction(UPDATE, value),
-    customUpdate: (data: HostTyping['types']['dataVariable']) => createAction(CUSTOM_UPDATE, data),
-    setState: (state: HostTyping['state']['local']) => createAction(SET_STATE, state),
-    setConfig: (config: HostTyping['config']) => createAction(SET_CONFIG, config),
+    reset: (initArg: HostTyping['initArg']) => createAction(RESET, initArg),
+    update: (value: ElementTypeOr<HostTyping['value']>) => createAction(UPDATE, value),
+    customUpdate: (data: GraphqlTyping['updateMutationVariables']['data']) =>
+      createAction(CUSTOM_UPDATE, data),
+    setState: (state: HostTyping['localState']) => createAction(SET_STATE, state),
+    setConfig: (config: IHostConfig<HostTyping, GraphqlTyping>) => createAction(SET_CONFIG, config),
   }
 
   return { Actions }
@@ -79,7 +97,11 @@ export const hostActionsFactory = <HostTyping extends IHostTyping>() => {
  * REDUCERS
  */
 
-const reset: HostActionReducer<IHostTyping, typeof RESET> = (state, action) => {
+/*
+ * RESET
+ */
+
+const reset: HostActionReducer<typeof RESET> = (state, action) => {
   return {
     ...state,
     local: state.config.initState(action.payload),
@@ -87,15 +109,19 @@ const reset: HostActionReducer<IHostTyping, typeof RESET> = (state, action) => {
   }
 }
 
-const update: HostActionReducer<IHostTyping, typeof UPDATE> = (state, action) => {
-  if (!state.config.updateMutation) {
-    log(state, action, `missing graphql update mutation`)
+/*
+ * UPDATE
+ */
+
+const update: HostActionReducer<typeof UPDATE> = (state, action) => {
+  if (state.config.type !== HostType.Single) {
+    log(state, action, `need to think how to implement it for multi host`)
     return state
   }
 
   // maybe fetch fresh data from server to awoid some edge case out-of-sync
   const queryCache = client.readQuery<IStringIndexSignature>({
-    query: state.config.query,
+    query: state.config.graphql.query,
     variables: state.variables,
   })
 
@@ -104,13 +130,13 @@ const update: HostActionReducer<IHostTyping, typeof UPDATE> = (state, action) =>
     return state
   }
 
-  const cache = queryCache[state.config.rootField]
+  const cache = queryCache[state.config.graphql.queryRoot]
 
   const { updateData, queryData } = diffAutoUpdataData(cache, action.payload)
 
   if (updateData) {
     client.mutate({
-      mutation: state.config.updateMutation,
+      mutation: state.config.graphql.updateMutation,
       variables: {
         ...state.variables,
         data: updateData,
@@ -118,23 +144,22 @@ const update: HostActionReducer<IHostTyping, typeof UPDATE> = (state, action) =>
     })
 
     client.writeQuery({
-      query: state.config.query,
+      query: state.config.graphql.query,
       variables: state.variables,
-      data: { [state.config.rootField]: { ...cache, queryData } },
+      data: { [state.config.graphql.queryRoot]: { ...cache, queryData } },
     })
   }
 
   return state
 }
 
-const customUpdate: HostActionReducer<IHostTyping, typeof SET_STATE> = (state, action) => {
-  if (!state.config.updateMutation) {
-    log(state, action, `missing graphql update mutation`)
-    return state
-  }
+/*
+ * CUSTOM_UPDATE
+ */
 
+const customUpdate: HostActionReducer<typeof CUSTOM_UPDATE> = (state, action) => {
   client.mutate({
-    mutation: state.config.updateMutation,
+    mutation: state.config.graphql.updateMutation,
     variables: {
       ...state.variables,
       data: action.payload,
@@ -144,11 +169,20 @@ const customUpdate: HostActionReducer<IHostTyping, typeof SET_STATE> = (state, a
   return state
 }
 
-const setState: HostActionReducer<IHostTyping, typeof SET_STATE> = (state, action) => {
+/*
+/*
+ * SET_STATE
+ */
+
+const setState: HostActionReducer<typeof SET_STATE> = (state, action) => {
   return { ...state, local: { ...state.local, ...action.payload } }
 }
 
-const setConfig: HostActionReducer<IHostTyping, typeof SET_CONFIG> = (state, action) => {
+/*
+ * SET_CONFIG
+ */
+
+const setConfig: HostActionReducer<typeof SET_CONFIG> = (state, action) => {
   return { ...state, config: { ...state.config, ...action.payload } }
 }
 
