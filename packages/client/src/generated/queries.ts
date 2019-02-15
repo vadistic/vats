@@ -9,8 +9,8 @@ export interface ToastsQuery_toasts {
   __typename: 'Toast'
   id: string
   createdAt: any
-  message: string
   type: ToastType
+  message: string
 }
 
 export interface ToastsQuery {
@@ -1230,6 +1230,30 @@ export interface UserPersonaFixtureQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TagsQuery
+// ====================================================
+
+export interface TagsQuery_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface TagsQuery {
+  tags: (TagsQuery_tags | null)[]
+}
+
+export interface TagsQueryVariables {
+  where?: TagWhereInput | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ToastHostFixtureMutation
 // ====================================================
 
@@ -1791,34 +1815,6 @@ export interface AuthPayloadNoNesting {
   __typename: 'AuthPayload'
   token: string
   refresh: string
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: LocalTypeNoNesting
-// ====================================================
-
-export interface LocalTypeNoNesting {
-  __typename: 'LocalType'
-  id: string
-  name: string
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: ToastNoNesting
-// ====================================================
-
-export interface ToastNoNesting {
-  __typename: 'Toast'
-  id: string
-  createdAt: any
-  message: string
-  type: ToastType
 }
 
 /* tslint:disable */
@@ -3070,34 +3066,6 @@ export interface AuthPayload {
   __typename: 'AuthPayload'
   token: string
   refresh: string
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: LocalType
-// ====================================================
-
-export interface LocalType {
-  __typename: 'LocalType'
-  id: string
-  name: string
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: Toast
-// ====================================================
-
-export interface Toast {
-  __typename: 'Toast'
-  id: string
-  createdAt: any
-  message: string
-  type: ToastType
 }
 
 /* tslint:disable */

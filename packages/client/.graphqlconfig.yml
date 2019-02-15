@@ -5,7 +5,7 @@ projects:
       endpoints:
         dev: https://vats-server.now.sh
   client:
-    schemaPath: src/generated/merged.graphql
+    schemaPath: src/generated/server.graphql
     extensions:
       generate-fragments:
         output: src/generated/fragments.ts

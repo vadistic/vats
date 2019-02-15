@@ -31,6 +31,7 @@ export interface IDisplayFieldFactoryOptions<Props extends IDisplayFieldBaseProp
   formikComponent: React.FC<any>
   fallbackComponent: React.FC<any>
   fallbackValueProp: string
+  transformValue?: (val: any) => any
   defaultProps: (props: Props & IDisplayFieldStylingProps) => Partial<Props>
   cssProp?: (props: Props & IDisplayFieldStylingProps) => CSSProp
 }

@@ -1,8 +1,20 @@
 import { css } from '@emotion/core'
-import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
+import {
+  ITag,
+  ITextFieldProps,
+  TagItem,
+  TagItemSuggestion,
+  TagPicker,
+  TextField,
+} from 'office-ui-fabric-react'
 import { ITheme } from '../../styles'
 import { displayFieldFactory } from './factory'
-import { FormikTextField, FormikTextFieldProps } from './formik'
+import {
+  FormikTagPicker,
+  FormikTagsPickerProps,
+  FormikTextField,
+  FormikTextFieldProps,
+} from './formik'
 
 const handleRenderLabel = (props: ITextFieldProps | undefined) => {
   if (!props || !props.label) {
@@ -87,6 +99,45 @@ export const MultilineDisplayTextField = displayFieldFactory<
     textarea {
       ${theme.fonts[fontSize] as any};
       padding: 0;
+    }
+  `,
+})
+
+type TagElement = any
+
+export const DisplayTagPicker = displayFieldFactory<FormikTagsPickerProps<TagElement>>({
+  fallbackComponent: TagPicker,
+  formikComponent: FormikTagPicker,
+  fallbackValueProp: 'selectedItems',
+  defaultProps: ({ editable }) => ({
+    inputProps: { autoComplete: 'off' },
+    pickerSuggestionsProps: {
+      suggestionsHeaderText: 'Suggested Tags',
+      noResultsFoundText: 'No Tags Found',
+    },
+    onRenderItem: ({ item, ...rest }: any) => (
+      <TagItem {...rest} key={item.id} styles={{ close: !editable && { display: 'none' } }}>
+        {item.label}
+      </TagItem>
+    ),
+    onRenderSuggestionsItem: (item: any) => (
+      <TagItemSuggestion key={item.id}>{item.label}</TagItemSuggestion>
+    ),
+  }),
+  cssProp: () => theme => css`
+    input {
+      background-color: inherit;
+    }
+
+    .ms-BasePicker-text {
+      background-color: inherit;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .ms-BasePicker-text:after {
+      background: inherit;
     }
   `,
 })

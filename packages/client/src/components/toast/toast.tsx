@@ -1,8 +1,8 @@
 import { IMessageBarProps, MessageBar, MessageBarType } from 'office-ui-fabric-react'
 import React from 'react'
-import { Toast as GraphqlToast, ToastType } from '../../generated/queries'
+import { ToastHostQuery_toasts, ToastType } from '../../generated/queries'
 
-export type ToastItem = GraphqlToast
+export type ToastItem = ToastHostQuery_toasts
 
 export interface IToastProps {
   onDismiss?: IMessageBarProps['onDismiss']

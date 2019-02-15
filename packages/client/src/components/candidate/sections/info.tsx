@@ -23,6 +23,12 @@ interface IFieldsGroupProps {
   propName: 'phones' | 'emails' | 'links'
 }
 
+const propToIconMap = {
+  phones: 'Phone',
+  emails: 'Mail',
+  links: 'Link',
+}
+
 const FieldsGroup: React.FC<IFieldsGroupProps> = ({ propName }) => {
   const { intl } = useIntl()
   const { value: candidate } = useCandidateContext()
@@ -41,7 +47,10 @@ const FieldsGroup: React.FC<IFieldsGroupProps> = ({ propName }) => {
         return (
           <>
             <Box direction="row">
-              <FieldsGroupLabel iconName="Phone" label={intl({ count: 3 }, 'candidate', propName)}>
+              <FieldsGroupLabel
+                iconName={propToIconMap[propName]}
+                label={intl({ count: 3 }, 'candidate', propName)}
+              >
                 {editable && (listIsEmpty || lastElIsNotEmpty) && (
                   <IconButton iconProps={{ iconName: 'Add' }} onClick={handlePush('')} />
                 )}

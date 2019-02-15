@@ -20,33 +20,64 @@ export const diffAutoUpdataData = <Value>(prev: Value, next: Value) => {
       const dir = path.slice(0, -1)
       const el = path.slice(-1)[0]
 
-      const isValid =
-        // non-nested prop updates or complex arr changes
-        (typeof el === 'string' && dir.length === 0) ||
-        // not nested single arr elements updates
-        (typeof el === 'number' && dir.length === 1 && typeof dir[0] === 'string')
+      const isScalar = (value: any) =>
+        typeof value === 'string' ||
+        typeof value === 'number' ||
+        typeof value === 'boolean' ||
+        value === null
 
-      if (!isValid) {
-        throw Error('Autoupdate cannot update relations')
-      }
+      // is valid type (to catch relations)
+      const isValidType = (() => {
+        if (change.kind === 'A') {
+          if (change.item.kind === 'N') {
+            return isScalar(change.item.rhs)
+          }
+          if (change.item.kind === 'E') {
+            return isScalar(change.item.lhs) && isScalar(change.item.rhs)
+          }
+          if (change.item.kind === 'D') {
+            return isScalar(change.item.lhs)
+          }
 
-      // single array element change
-      // without checking for other edits on array or because they would be reported as 'A' chnage
-      if (typeof el === 'number') {
-        mutableSetValueIn(queryData, getIn(prev, ...dir), dir)
-      }
-
-      // multiple array element changes
-      if (change.kind === 'A') {
-        const isTouched = !!tryGetIn(queryData, ...path)
-        if (!isTouched) {
-          mutableSetValueIn(queryData, getIn(prev, ...path), path)
+          return false
         }
 
-        applyChange(queryData, undefined, { ...change.item, path: [...path, change.index] })
-      }
+        const value = getIn(next, ...path) as any
 
-      applyChange(queryData, undefined, change)
+        // scalar prop update
+        if (path.length === 1 && isScalar(value)) {
+          return true
+        }
+
+        // single array scalar change
+        if (path.length === 2 && typeof el === 'number' && isScalar(value)) {
+          return true
+        }
+
+        return false
+      })()
+
+      if (isValidType) {
+        // single array element change
+        // without checking for other edits on array or because they would be reported as 'A' chnage
+        if (typeof el === 'number') {
+          mutableSetValueIn(queryData, getIn(prev, ...dir), dir)
+        }
+
+        // multiple array element changes
+        if (change.kind === 'A') {
+          const isTouched = !!tryGetIn(queryData, ...path)
+          if (!isTouched) {
+            mutableSetValueIn(queryData, getIn(prev, ...path), path)
+          }
+
+          applyChange(queryData, undefined, { ...change.item, path: [...path, change.index] })
+        }
+
+        applyChange(queryData, undefined, change)
+      } else {
+        console.log('host update action diff: skipping change', change)
+      }
     }
   })
 

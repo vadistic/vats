@@ -18,17 +18,21 @@ import {
   Checkbox,
   ChoiceGroup,
   Dropdown,
+  IBasePickerProps,
   ICheckboxProps,
   IChoiceGroupProps,
   IDropdownProps,
   IRatingProps,
   ISliderProps,
   ISpinButtonProps,
+  ITag,
+  ITagPickerProps,
   ITextFieldProps,
   IToggleProps,
   Rating,
   Slider,
   SpinButton,
+  TagPicker,
   TextField,
   Toggle,
 } from 'office-ui-fabric-react'
@@ -367,4 +371,44 @@ export const FormikDropdown: React.FC<FormikDropdownProps> = ({ name, type, ...r
   const formik = useFormikContext<{ [name: string]: string }>()
   const field = formik.getFieldProps(name, type || 'select')
   return <Dropdown {...rest} {...mapFieldToDropdown(field)} />
+}
+
+/*
+ * Tags Picker
+ */
+type ElementType<T> = T extends Array<infer E> ? E : never
+
+export type TagsPickerInjectedProps = 'selectedItems' | 'onChange' | 'onBlur'
+
+export type FormikTagsPickerProps<V extends ITag[]> = IFieldProps &
+  Omit<IBasePickerProps<ElementType<V>>, TagsPickerInjectedProps>
+
+// heres is not generic, but idk why ElementType<Arr[]>[] !== Arr[]
+export const mapFieldToTagPicker = ([field, fieldMeta]: UseField<ITag[]>): Pick<
+  ITagPickerProps,
+  TagsPickerInjectedProps
+> => {
+  const formik = useFormikContext<{ [name: string]: ITag[] }>()
+
+  const handleChange = (items: ITag[] | undefined) => {
+    formik.setFieldValue(field.name, items ? items : null)
+    field.onBlur(createFakeEvent(field))
+  }
+
+  return {
+    selectedItems: field.value,
+    onChange: handleChange,
+    // ! maybe not needed
+    onBlur: () => field.onBlur(createFakeEvent(field)),
+  }
+}
+
+export const FormikTagPicker: React.FC<FormikTagsPickerProps<ITag[]>> = ({
+  name,
+  type,
+  ...rest
+}) => {
+  const formik = useFormikContext<{ [name: string]: ITag[] }>()
+  const field = formik.getFieldProps(name, type || 'select')
+  return <TagPicker {...rest} {...mapFieldToTagPicker(field)} />
 }

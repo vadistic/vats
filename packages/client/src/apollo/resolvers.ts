@@ -1,7 +1,6 @@
 import gql from 'graphql-tag'
 import uuid from 'uuid/v4'
 import { ToastType } from '../components'
-import { ToastFragment } from '../generated/fragments'
 import { ToastsQuery } from '../generated/queries'
 import { MutationResolvers, QueryResolvers } from '../generated/resolvers'
 import { IContext } from './client'
@@ -29,10 +28,12 @@ const Mutation: IMutation = {
     const toastQuery = gql`
       query ToastsQuery {
         toasts @client {
-          ...Toast
+          id
+          createdAt
+          type
+          message
         }
       }
-      ${ToastFragment}
     `
 
     const prev = cache.readQuery<ToastsQuery>({

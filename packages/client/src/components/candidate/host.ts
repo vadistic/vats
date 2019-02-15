@@ -15,6 +15,7 @@ import {
 } from '../../generated/queries'
 import {
   hostFactory,
+  HostThunk,
   HostType,
   IGraphqlSingleTyping,
   IHostConfig,
@@ -129,6 +130,8 @@ const candidateStateInit = ({ id }: ICandidateInitArg) => ({
 
 export type CandidateLocalState = ReturnType<typeof candidateStateInit>
 export type CandidateState = IHostState<CandidateHostTyping, CandidateGraphqlTyping>
+
+export type CandidateHostThunk = HostThunk<CandidateHostTyping, CandidateGraphqlTyping>
 
 export type CandidateGraphqlTyping = IGraphqlSingleTyping<
   CandidateQuery,

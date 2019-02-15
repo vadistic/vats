@@ -1,7 +1,6 @@
 import gql from 'graphql-tag'
 import React, { useEffect } from 'react'
 import { useMutation } from 'react-apollo-hooks'
-import { ToastFragment } from '../../../generated/fragments'
 import {
   ToastHostFixtureMutation,
   ToastHostFixtureMutationVariables,
@@ -37,10 +36,11 @@ export const ToastHostFixture: React.FC = () => {
 export const toastHostFixtureMutation = gql`
   mutation ToastHostFixtureMutation($data: ToastInput!) {
     createToast(data: $data) @client {
-      ...Toast
+      id
+      createdAt
+      message
+      type
     }
   }
-
-  ${ToastFragment}
 `
 export default <ToastHostFixture />

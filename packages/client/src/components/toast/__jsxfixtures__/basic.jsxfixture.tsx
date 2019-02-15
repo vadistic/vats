@@ -6,7 +6,7 @@ const data = {
   shortMessage: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
 }
 
-const shared: Pick<ToastItem, '__typename' | 'createdAt'> = {
+const shared: any = {
   __typename: 'Toast',
   createdAt: new Date(),
 }

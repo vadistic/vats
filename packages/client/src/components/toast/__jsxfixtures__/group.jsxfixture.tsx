@@ -50,7 +50,7 @@ const makeItems = (items: typeof prevItemsData): ToastItem[] =>
     id: uuid(),
     createdAt: new Date(),
     message: item.message,
-    type: item.type,
+    type: item.type as any,
   }))
 
 const prevItems = makeItems(prevItemsData)

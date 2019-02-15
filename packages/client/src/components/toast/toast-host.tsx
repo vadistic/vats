@@ -1,7 +1,6 @@
 import gql from 'graphql-tag'
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import { ToastFragment } from '../../generated/fragments'
 import { ToastHostQuery } from '../../generated/queries'
 import { ToastGroup } from './toast-group'
 
@@ -23,9 +22,10 @@ export const ToastHost: React.FC = () => {
 export const toastHostQuery = gql`
   query ToastHostQuery {
     toasts @client {
-      ...Toast
+      id
+      createdAt
+      message
+      type
     }
   }
-
-  ${ToastFragment}
 `

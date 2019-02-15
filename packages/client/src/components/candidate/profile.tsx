@@ -7,10 +7,24 @@ import {
   CandidateActions,
   CandidateContext,
   CandidateHostActions,
+  CandidateHostThunk,
   CandidateValue,
   useCandidateContext,
 } from './host'
-import { InfoSection, TopSection } from './sections'
+import { InfoSection, MetaSection, TopSection } from './sections'
+
+const profileSubmitThunk = (values: CandidateValue): CandidateHostThunk => (
+  dispatch,
+  state,
+  helper,
+) => {
+  console.log('submit', values)
+
+  const { tags } = values
+
+  dispatch(CandidateActions.update(values))
+  dispatch(CandidateActions.edit(false))
+}
 
 const EditButton: React.FC = () => {
   const { state, dispatch } = useCandidateContext()
@@ -30,8 +44,7 @@ export const CandidateProfile: React.FC = () => {
   const { value, state, dispatch } = useCandidateContext()
 
   const handleSubmit = (values: CandidateValue) => {
-    dispatch({ type: 'EDIT', payload: false })
-    dispatch(CandidateHostActions.update(values))
+    dispatch(profileSubmitThunk(values))
   }
 
   return (
@@ -40,6 +53,7 @@ export const CandidateProfile: React.FC = () => {
         <Form>
           <EditButton />
           <TopSection />
+          <MetaSection />
           <InfoSection />
         </Form>
       </Editable>
