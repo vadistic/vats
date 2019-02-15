@@ -1,31 +1,59 @@
 import cloneDeep from 'clone-deep'
-import { diffAutoUpdataData } from '../diff'
+import { diffAutoUpdataData, IRelationsMap } from '../diff'
+
+const fixtureFields = {
+  __typename: '',
+  id: '123',
+  createdAt: '123',
+  updatedAt: '123',
+  scalarString: 'hello',
+  scalarNumber: 21,
+  scalarBoolean: true,
+  scalarNull: null,
+  scalarArrayStrings: ['hello', 'world'],
+  scalarArrayNumbers: [1, 2, 3],
+}
 
 const fixture = {
   __typename: 'fixture',
-  id: '123123123',
-  literalString: 'hello',
-  literalNumber: 21,
-  literalBoolean: true,
-  literalNull: null,
-  literalArrayStrings: ['hello', 'world'],
-  literalArrayNumbers: [1, 2, 3],
+  ...fixtureFields,
   // ! this one sneaks through validation, but there is not such graphql data structure
   trickyArray: [[1, 2], [2, 3]],
-  nested: {
-    __typeName: 'fixture',
-    id: '123123123',
-    literalString: 'hello',
-    literalNumber: 21,
-    literalBoolean: true,
-    literalNull: null,
-    literalArrayStrings: ['hello', 'world'],
-    literalArrayNumbers: [1, 2, 3],
+  empty: null,
+  oneToOne: {
+    __typeName: 'oneToOne',
+    ...fixtureFields,
+    oneToOneToOne: {
+      __typeName: 'oneToOneToOne',
+      ...fixtureFields,
+    },
+    oneToOneToMany: [
+      {
+        __typeName: 'onetoOneToMany',
+        ...fixtureFields,
+      },
+      {
+        __typeName: 'onetoOneToMany',
+        ...fixtureFields,
+      },
+    ],
   },
+  oneToMany: [
+    {
+      __typeName: 'oneToMany',
+      ...fixtureFields,
+      id: '1',
+    },
+    {
+      __typeName: 'oneToMany',
+      ...fixtureFields,
+      id: '2',
+    },
+  ],
 }
 
-describe('diffAutoUpdataData', () => {
-  let copy: any = cloneDeep(fixture)
+describe('diff scalar changes', () => {
+  let copy: typeof fixture
 
   beforeEach(() => {
     copy = cloneDeep(fixture)
@@ -34,86 +62,59 @@ describe('diffAutoUpdataData', () => {
   const getData = () => diffAutoUpdataData(fixture, copy)
 
   it('report string to null', () => {
-    // change string
-    copy.literalString = null
+    copy.scalarString = null as any
 
     const { queryData } = getData()
 
     expect(queryData).toEqual({
-      literalString: null,
+      scalarString: null,
     })
   })
 
   it('report null to string', () => {
-    // change string
-    copy.literalNull = 'hello'
+    copy.scalarNull = 'hello' as any
 
     const { queryData, updateData } = getData()
 
     expect(queryData).toEqual({
-      literalNull: 'hello',
+      scalarNull: 'hello',
     })
 
     expect(queryData).toEqual(updateData)
   })
 
-  it('report array element change', () => {
-    // change string
-    copy.literalArrayNumbers = [1, 2, 4]
+  it('report single array element change', () => {
+    copy.scalarArrayNumbers = [1, 2, 4]
 
     const { queryData, updateData } = getData()
 
     expect(queryData).toEqual({
-      literalArrayNumbers: [1, 2, 4],
+      scalarArrayNumbers: [1, 2, 4],
     })
 
     expect(updateData).toEqual({
-      literalArrayNumbers: { set: [1, 2, 4] },
+      scalarArrayNumbers: { set: [1, 2, 4] },
     })
   })
 
   it('report multiple array element changes', () => {
-    // change string
-    copy.literalArrayNumbers = [2, 2, 1, 3, 2, 3]
-    copy.literalArrayStrings = ['hola!']
+    copy.scalarArrayNumbers = [2, 2, 1, 3, 2, 3]
+    copy.scalarArrayStrings = ['hola!']
 
     const { queryData, updateData } = getData()
 
     expect(queryData).toEqual({
-      literalArrayNumbers: [2, 2, 1, 3, 2, 3],
-      literalArrayStrings: ['hola!'],
+      scalarArrayNumbers: [2, 2, 1, 3, 2, 3],
+      scalarArrayStrings: ['hola!'],
     })
 
     expect(updateData).toEqual({
-      literalArrayNumbers: { set: [2, 2, 1, 3, 2, 3] },
-      literalArrayStrings: { set: ['hola!'] },
+      scalarArrayNumbers: { set: [2, 2, 1, 3, 2, 3] },
+      scalarArrayStrings: { set: ['hola!'] },
     })
   })
 
-  it('throw on nested updates', () => {
-    // change string
-    copy.nested.literalString = 'abc'
-    copy.literalArrayStrings = 'hola!'
-
-    expect(() => {
-      const { queryData, updateData } = getData()
-      console.log(queryData)
-    }).toThrow()
-  })
-
-  it('throw on nested updates 2', () => {
-    // change string
-    copy.nested.literalArrayNumbers = [3, 6]
-    copy.literalArrayStrings = 'hola!'
-
-    expect(() => {
-      const { queryData, updateData } = getData()
-      console.log(queryData)
-    }).toThrow()
-  })
-
   it('does not diff system fields & return undefinded on no changes', () => {
-    // change string
     copy.id = '12321321'
     copy.__typename = 'newType'
     copy.createdAt = 'newType'
@@ -122,5 +123,76 @@ describe('diffAutoUpdataData', () => {
     const { queryData, updateData } = getData()
     expect(queryData).toBeUndefined()
     expect(updateData).toBeUndefined()
+  })
+})
+
+describe('diff relation changes', () => {
+  let copy = cloneDeep(fixture)
+
+  beforeEach(() => {
+    copy = cloneDeep(fixture)
+  })
+
+  const getData = (map?: IRelationsMap) => diffAutoUpdataData(fixture, copy, map)
+
+  it('report undefined on scalars or without map', () => {
+    copy.scalarString = '213223'
+
+    const { relationsData: onScalar } = getData({
+      scalarString: {
+        onUpdate: 'update',
+      },
+    })
+
+    const { relationsData: withoutMap } = getData()
+
+    expect(onScalar).toBeUndefined()
+    expect(withoutMap).toBeUndefined()
+  })
+
+  it('non-nested oneToOne delete', () => {
+    // delete
+    copy.oneToOne = null as any
+
+    const { relationsData } = getData({
+      oneToOne: {
+        onDelete: 'disconnect',
+      },
+    })
+
+    expect(relationsData).toEqual({
+      oneToOne: null,
+    })
+  })
+
+  it('non-nested oneToOne create', () => {
+    // delete
+    copy.empty = fixture.oneToOne as any
+
+    const { relationsData } = getData({
+      empty: {
+        onCreate: 'connect',
+      },
+    })
+
+    expect(relationsData).toEqual({
+      empty: fixture.oneToOne,
+    })
+  })
+
+  it('non-nested single oneToMany create', () => {
+    // delete
+    copy.oneToMany.push(fixture.oneToMany[0])
+
+    const { relationsData } = getData({
+      oneToMany: {
+        onCreate: 'connect',
+      },
+    })
+
+    // how to build both diffs and upodate data on relationships?
+    expect(relationsData).toEqual({
+      oneToOne: { ...fixture.oneToOne, scalarNumber: 123 },
+    })
   })
 })

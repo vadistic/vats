@@ -199,3 +199,44 @@ export const recursiveTransform = (
     throw Error('Should never happen')
   }
 }
+
+export type CallbackFn = (value: any, path: Array<string | number>) => any
+/*
+ * just traversing
+ */
+export const recursiveTraverse = (
+  input: any,
+  path: Array<string | number>,
+  callback: CallbackFn,
+): any => {
+  if (isLeaf(input)) {
+    return callback(input, path)
+  } else if (Array.isArray(input)) {
+    const parentReturn = callback(input, path)
+    if (parentReturn) {
+      return parentReturn
+    }
+
+    let index = 0
+    for (const el of input) {
+      const elementReturn = recursiveTraverse(el, [...path, index], callback)
+      if (elementReturn) {
+        return elementReturn
+      }
+      index += 1
+    }
+  } else if (typeof input === 'object') {
+    const parentReturn = callback(input, path)
+    if (parentReturn) {
+      return parentReturn
+    }
+
+    const entries = Object.entries(input)
+    for (const [key, val] of entries) {
+      const elementReturn = recursiveTraverse(val, [...path, key], callback)
+      if (elementReturn) {
+        return elementReturn
+      }
+    }
+  }
+}
