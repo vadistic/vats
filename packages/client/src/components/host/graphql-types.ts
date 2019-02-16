@@ -1,5 +1,5 @@
 import { DocumentNode } from 'graphql'
-import { IStringIndexSignature, Omit } from '../../utils'
+import { Omit } from '../../utils'
 
 export interface IWhereVariables {
   where?: any

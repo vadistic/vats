@@ -8,7 +8,7 @@ import { IHostState, IHostTyping } from './types'
 /**
  * rigth now they mostly provide typings, but the idea is:
  *  - smart cache updates
- *  - consistent error handlign or validation
+ *  - consistent error handling and/or validation
  */
 
 type CreateMutationOptions<GraphqlTyping extends TGraphqlTyping> = MutationOptions<

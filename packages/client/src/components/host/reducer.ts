@@ -3,7 +3,7 @@ import { client } from '../../apollo'
 import { tuplify } from '../../utils'
 import { actionsReducers, hostActionsFactory, HostActionsUnion, HostActionTypes } from './actions'
 import { TGraphqlTyping } from './graphql-types'
-import { helpers, IThunkHelpers } from './helpers'
+import { helpers, IThunkHelpers } from './helper'
 import { HostAction, HostThunk, IHostConfig, IHostState, IHostTyping } from './types'
 
 // inspiration

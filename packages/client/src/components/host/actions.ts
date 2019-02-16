@@ -2,14 +2,12 @@ import { ActionsOfType, createAction, Enum } from '@martin_hotell/rex-tils'
 import { client } from '../../apollo'
 import { ElementTypeOr, IStringIndexSignature } from '../../utils'
 import { diffAutoUpdataData } from './diff'
-import { IGraphqlMultiTyping, IHostGraphqlMultiConfig, TGraphqlTyping } from './graphql-types'
+import { TGraphqlTyping } from './graphql-types'
 import { HostType, IAction, IHostConfig, IHostState, IHostTyping } from './types'
 
 /*
  * NOTE TO SELF: it's extremely verbose
  * but do not waste time again trying to improve it
- *
- * (doing it again...)
  */
 
 const log = (state: any, action: IAction, ...print: string[]) => {
@@ -20,11 +18,7 @@ const log = (state: any, action: IAction, ...print: string[]) => {
 }
 
 // helper only
-type HostActionReducer<
-  Name extends string,
-  HostTyping extends IHostTyping = IHostTyping,
-  GraphqlTyping extends TGraphqlTyping = TGraphqlTyping
-> = (
+type HostActionReducer<Name extends string, HostTyping extends IHostTyping = IHostTyping> = (
   state: IHostState<HostTyping, any>,
   action: ActionsOfType<HostActionsUnion<HostTyping, any>, Name>,
 ) => IHostState<HostTyping, any>
@@ -33,28 +27,25 @@ type HostActionReducer<
  * ACTIONS
  */
 const UPDATE = 'UPDATE'
-interface IUpdateAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
+interface IUpdateAction<HostTyping extends IHostTyping> {
   type: typeof UPDATE
   payload: ElementTypeOr<HostTyping['value']>
 }
 
 const CUSTOM_UPDATE = 'CUSTOM_UPDATE'
-interface ICustomUpdateAction<
-  HostTyping extends IHostTyping,
-  GraphqlTyping extends TGraphqlTyping
-> {
+interface ICustomUpdateAction<GraphqlTyping extends TGraphqlTyping> {
   type: typeof CUSTOM_UPDATE
   payload: GraphqlTyping['updateMutationVariables']['data']
 }
 
 const RESET = 'RESET'
-interface IResetAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
+interface IResetAction<HostTyping extends IHostTyping> {
   type: typeof RESET
   payload: HostTyping['initArg']
 }
 
 const SET_STATE = 'SET_STATE'
-interface ISetStateAction<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
+interface ISetStateAction<HostTyping extends IHostTyping> {
   type: typeof SET_STATE
   payload: HostTyping['localState']
 }
@@ -69,10 +60,10 @@ export type HostActionsUnion<
   HostTyping extends IHostTyping,
   GraphqlTyping extends TGraphqlTyping
 > =
-  | IUpdateAction<HostTyping, GraphqlTyping>
-  | ICustomUpdateAction<HostTyping, GraphqlTyping>
-  | IResetAction<HostTyping, GraphqlTyping>
-  | ISetStateAction<HostTyping, GraphqlTyping>
+  | IUpdateAction<HostTyping>
+  | ICustomUpdateAction<GraphqlTyping>
+  | IResetAction<HostTyping>
+  | ISetStateAction<HostTyping>
   | ISetConfigAction<HostTyping, GraphqlTyping>
 
 export const HostActionTypes = Enum(RESET, UPDATE, CUSTOM_UPDATE, SET_STATE, SET_CONFIG)
@@ -92,10 +83,6 @@ export const hostActionsFactory = <
 
   return { Actions }
 }
-
-/*
- * REDUCERS
- */
 
 /*
  * RESET

@@ -164,9 +164,6 @@ const applyRelationChange = (
   const path = change.path
 
   if (path && map) {
-    const dir = path.slice(0, -1)
-    const el = path.slice(-1)[0]
-
     applyChange(target, undefined, change)
   }
 }
@@ -191,7 +188,7 @@ export const diffAutoUpdataData = <Value>(prev: Value, next: Value, map?: IRelat
       if (isValidScalarChange(change)) {
         applyScalarChange(scalarData, prev, change)
       } else if (isValidRelationChange(change, map)) {
-        applyRelationChange(relationsData, prev, change, map)
+        // applyRelationChange(relationsData, prev, change, map)
       } else {
         console.log('skipping change', change)
       }

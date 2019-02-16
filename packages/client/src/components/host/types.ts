@@ -1,14 +1,6 @@
 import { HostActionsUnion } from './actions'
-import {
-  IGraphqlMultiTyping,
-  IGraphqlSingleTyping,
-  IHostGraphqlMultiConfig,
-  IHostGraphqlSingleConfig,
-  TGraphqlTyping,
-} from './graphql-types'
-import { IThunkHelpers } from './helpers'
-
-// UTIL
+import { IHostGraphqlMultiConfig, IHostGraphqlSingleConfig, TGraphqlTyping } from './graphql-types'
+import { IThunkHelpers } from './helper'
 
 export interface IAction {
   type: string
