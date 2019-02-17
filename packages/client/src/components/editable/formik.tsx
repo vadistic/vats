@@ -37,7 +37,7 @@ import {
   Toggle,
 } from 'office-ui-fabric-react'
 import React from 'react'
-import { Omit } from '../../utils'
+import { ElementType, Omit } from '../../utils'
 
 export interface IFieldSpreadProps<V> {
   value: V
@@ -376,39 +376,37 @@ export const FormikDropdown: React.FC<FormikDropdownProps> = ({ name, type, ...r
 /*
  * Tags Picker
  */
-type ElementType<T> = T extends Array<infer E> ? E : never
-
 export type TagsPickerInjectedProps = 'selectedItems' | 'onChange' | 'onBlur'
 
-export type FormikTagsPickerProps<V extends ITag[]> = IFieldProps &
+export type FormikTagsPickerProps<V extends any[]> = IFieldProps &
   Omit<IBasePickerProps<ElementType<V>>, TagsPickerInjectedProps>
 
-// heres is not generic, but idk why ElementType<Arr[]>[] !== Arr[]
-export const mapFieldToTagPicker = ([field, fieldMeta]: UseField<ITag[]>): Pick<
+export const mapFieldToTagPicker = <V extends any[]>([field, fieldMeta]: UseField<V>): Pick<
   ITagPickerProps,
   TagsPickerInjectedProps
 > => {
-  const formik = useFormikContext<{ [name: string]: ITag[] }>()
+  const formik = useFormikContext<{ [name: string]: V }>()
 
-  const handleChange = (items: ITag[] | undefined) => {
+  const handleChange = (items: V | undefined) => {
     formik.setFieldValue(field.name, items ? items : null)
     field.onBlur(createFakeEvent(field))
   }
 
   return {
-    selectedItems: field.value,
-    onChange: handleChange,
+    // assertion are fine, just need to remember to provide name/key or custom onRender
+    selectedItems: field.value as ITag[],
+    onChange: handleChange as (items: ITag[] | undefined) => void,
     // ! maybe not needed
     onBlur: () => field.onBlur(createFakeEvent(field)),
   }
 }
 
-export const FormikTagPicker: React.FC<FormikTagsPickerProps<ITag[]>> = ({
+export const FormikTagPicker: React.FC<FormikTagsPickerProps<any[]>> = ({
   name,
   type,
   ...rest
 }) => {
-  const formik = useFormikContext<{ [name: string]: ITag[] }>()
+  const formik = useFormikContext<{ [name: string]: any[] }>()
   const field = formik.getFieldProps(name, type || 'select')
   return <TagPicker {...rest} {...mapFieldToTagPicker(field)} />
 }

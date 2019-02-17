@@ -2,9 +2,9 @@ import React from 'react'
 import { useIntl } from '../../../i18n'
 import { getLoLeafPath } from '../../../utils'
 import { Box } from '../../box'
-import { DisplayFieldArray, DisplayTextField, DisplayTextFieldProps } from '../../editable'
-import { ProfileImage } from '../fields'
+import { DisplayTextField, DisplayTextFieldProps } from '../../editable'
 import { CandidateValue, useCandidateContext } from '../host'
+import { UserAvatar } from '../widgets'
 
 interface ICustomDisplayTextField extends DisplayTextFieldProps {
   name: keyof CandidateValue
@@ -36,9 +36,7 @@ export const TopSection: React.FC = () => {
         <CustomDisplayTextField fontSize="large" name="headline" />
       </Box>
       <Box>
-        <figure>
-          <ProfileImage avatar={candidate.avatar} />
-        </figure>
+        <UserAvatar avatar={candidate.avatar} />
       </Box>
     </Box>
   )

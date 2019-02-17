@@ -28,7 +28,7 @@ export interface IDisplayFieldStylingProps {
 }
 
 export interface IDisplayFieldFactoryOptions<Props extends IDisplayFieldBaseProps> {
-  formikComponent: React.FC<any>
+  formikComponent: React.FC<Props>
   fallbackComponent: React.FC<any>
   fallbackValueProp: string
   transformValue?: (val: any) => any
@@ -60,11 +60,9 @@ export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
     if (editable) {
       return (
         <FormikComponent
-          name={name}
-          placeholder={placeholder}
           css={cssProp ? cssProp(stylingProps) : undefined}
+          {...props}
           {...defaultProps(stylingProps)}
-          {...rest}
         />
       )
     }

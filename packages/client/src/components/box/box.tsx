@@ -5,6 +5,7 @@ import { ITheme, styled } from '../../styles'
 export interface IBoxProps {
   direction?: 'row' | 'column'
   as?: keyof React.ReactHTML
+  className?: string
 }
 
 const BoxBase: React.FC<IBoxProps> = ({ as: Tag = 'div', ...rest }) => <Tag {...rest} />

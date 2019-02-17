@@ -42,6 +42,7 @@ export type DeepPartial<T> = {
 /**
  * Return type of array element or just the same type
  */
+export type ElementType<T> = T extends Array<infer E> ? E : never
 export type ElementTypeOr<T> = T extends Array<infer E> ? E : T
 
 export type NonUndefined<T> = T extends undefined ? never : T
