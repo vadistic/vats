@@ -49,8 +49,8 @@ export const tryGetIn = <State extends any, Paths extends Array<string | number>
     return undefined
   }
 
-  if (tail.length) {
-    return getIn(state[head], ...tail)
+  if (tail.length > 0) {
+    return tryGetIn(state[head], ...tail)
   }
 
   return state[head]

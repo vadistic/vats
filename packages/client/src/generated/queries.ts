@@ -523,6 +523,54 @@ export interface CandidateDeleteMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TagsQuery
+// ====================================================
+
+export interface TagsQuery_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface TagsQuery {
+  tags: (TagsQuery_tags | null)[]
+}
+
+export interface TagsQueryVariables {
+  where?: TagWhereInput | null
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: TagCreateMutation
+// ====================================================
+
+export interface TagCreateMutation_createTag {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface TagCreateMutation {
+  createTag: TagCreateMutation_createTag
+}
+
+export interface TagCreateMutationVariables {
+  data: TagCreateInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CandidatesQuery
 // ====================================================
 
@@ -1224,30 +1272,6 @@ export interface UserPersonaFixtureQuery {
 
 export interface UserPersonaFixtureQueryVariables {
   where: UserWhereUniqueInput
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: TagsQuery
-// ====================================================
-
-export interface TagsQuery_tags {
-  __typename: 'Tag'
-  id: string
-  createdAt: any
-  updatedAt: any
-  label: string
-  description: string | null
-}
-
-export interface TagsQuery {
-  tags: (TagsQuery_tags | null)[]
-}
-
-export interface TagsQueryVariables {
-  where?: TagWhereInput | null
 }
 
 /* tslint:disable */

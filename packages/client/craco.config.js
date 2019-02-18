@@ -15,4 +15,11 @@ module.exports = {
   babel: {
     plugins: [...emotionBabelPreset.plugins],
   },
+  jest: {
+    configure: {
+      moduleNameMapper: {
+        'office-ui-fabric-react/lib/(.*)$': 'office-ui-fabric-react/lib-commonjs/$1',
+      },
+    },
+  },
 }

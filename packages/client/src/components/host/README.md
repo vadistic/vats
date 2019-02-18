@@ -165,7 +165,7 @@ dispatch(Actions.update(user))
 
 ### How to get it working...
 
-Currently I'm using it client-side and only for non-related fields, relations are skipped - but it's work in-progress.
+Currently I'm using it client-side and only scalar fields or create/delete/connect/disconnect of top level fields relations.
 
 1. Query data with apollo-client and send it down the context. One host component for one type, in one place - that handles response validation, loading state etc. Those can be also nested.
 
@@ -181,7 +181,9 @@ Currently I'm using it client-side and only for non-related fields, relations ar
 
    - (Easy part) build cache update & mutation `data` for scalar properties changes.
 
-   - (Tricky part, [WIP]) build cache update (still easy) and nested reflations's mutation `data`. The info how to handle relations (create vs. connect) can be provided as simple map or extracted from graphql schema directives.
+   - (Trickier part) build cache update (still easy) and nested reflations's mutation `data` for create/delete of top level relation fields. The info how to handle relations (create vs. connect) can be provided as simple map or extracted from graphql schema directives.
+
+   - (Tricky part, [WIP]) Resolve nested relations changes & node updates.
 
 7. Simultaneously update UI and database
 

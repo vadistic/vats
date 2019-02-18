@@ -26,7 +26,6 @@ import {
   ISliderProps,
   ISpinButtonProps,
   ITag,
-  ITagPickerProps,
   ITextFieldProps,
   IToggleProps,
   Rating,
@@ -38,6 +37,7 @@ import {
 } from 'office-ui-fabric-react'
 import React from 'react'
 import { ElementType, Omit } from '../../utils'
+import { CustomTagPicker, ICustomBasePickerProps } from './picker'
 
 export interface IFieldSpreadProps<V> {
   value: V
@@ -374,39 +374,34 @@ export const FormikDropdown: React.FC<FormikDropdownProps> = ({ name, type, ...r
 }
 
 /*
- * Tags Picker
+ * Base Picker
  */
-export type TagsPickerInjectedProps = 'selectedItems' | 'onChange' | 'onBlur'
+export type PickerInjectedProps = 'selectedItems' | 'onChange' | 'onBlur'
 
-export type FormikTagsPickerProps<V extends any[]> = IFieldProps &
-  Omit<IBasePickerProps<ElementType<V>>, TagsPickerInjectedProps>
+export type FormikPickerProps<V extends any[]> = IFieldProps &
+  Omit<IBasePickerProps<ElementType<V>>, PickerInjectedProps>
 
 export const mapFieldToTagPicker = <V extends any[]>([field, fieldMeta]: UseField<V>): Pick<
-  ITagPickerProps,
-  TagsPickerInjectedProps
+  IBasePickerProps<ElementType<V>>,
+  PickerInjectedProps
 > => {
   const formik = useFormikContext<{ [name: string]: V }>()
 
-  const handleChange = (items: V | undefined) => {
+  const handleChange = (items: Array<ElementType<V>> | undefined) => {
     formik.setFieldValue(field.name, items ? items : null)
     field.onBlur(createFakeEvent(field))
   }
 
   return {
-    // assertion are fine, just need to remember to provide name/key or custom onRender
-    selectedItems: field.value as ITag[],
-    onChange: handleChange as (items: ITag[] | undefined) => void,
+    selectedItems: field.value,
+    onChange: handleChange,
     // ! maybe not needed
     onBlur: () => field.onBlur(createFakeEvent(field)),
   }
 }
 
-export const FormikTagPicker: React.FC<FormikTagsPickerProps<any[]>> = ({
-  name,
-  type,
-  ...rest
-}) => {
-  const formik = useFormikContext<{ [name: string]: any[] }>()
+export const FormikTagPicker: React.FC<FormikPickerProps<ITag[]>> = ({ name, type, ...rest }) => {
+  const formik = useFormikContext<{ [name: string]: ITag[] }>()
   const field = formik.getFieldProps(name, type || 'select')
-  return <TagPicker {...rest} {...mapFieldToTagPicker(field)} />
+  return <TagPicker {...rest} {...mapFieldToTagPicker<ITag[]>(field)} />
 }

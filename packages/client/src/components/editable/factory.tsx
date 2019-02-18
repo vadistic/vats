@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik'
-import React from 'react'
+import React, { Component, useRef } from 'react'
 import { CSSProp } from '../../styles'
 import { getInByPath } from '../../utils'
 import { useEditableContext } from './editable'
@@ -55,14 +55,16 @@ export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
     // removing name & placeholdre from fallback component
     const { name, placeholder, ...rest } = props
 
-    const stylingProps = { ...props, editable }
+    // creating ref for accessing underyling components methods in defaultProps fn
+
+    const wrapperProps = { ...props, editable }
 
     if (editable) {
       return (
         <FormikComponent
-          css={cssProp ? cssProp(stylingProps) : undefined}
+          css={cssProp ? cssProp(wrapperProps) : undefined}
           {...props}
-          {...defaultProps(stylingProps)}
+          {...defaultProps(wrapperProps)}
         />
       )
     }
@@ -72,8 +74,8 @@ export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
       return (
         <FallbackComponent
           disabled={true}
-          css={cssProp ? cssProp(stylingProps) : undefined}
-          {...defaultProps(stylingProps)}
+          css={cssProp ? cssProp(wrapperProps) : undefined}
+          {...defaultProps(wrapperProps)}
           {...{ [fallbackValueProp]: value }}
           {...rest}
         />

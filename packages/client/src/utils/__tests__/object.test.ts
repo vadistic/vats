@@ -1,5 +1,5 @@
 import cloneDeep from 'clone-deep'
-import { recursiveTraverse } from '../object'
+import { recursiveTraverse, tryGetIn } from '../object'
 
 const fixture = {
   string: 'string',
@@ -50,5 +50,15 @@ describe('object utils', () => {
     })
 
     expect(result).toBe('ok')
+  })
+
+  it('try get in', () => {
+    const result = tryGetIn(fixture, 'nested', 'deepNested')
+    const resultFb = tryGetIn(fixture, 'nested', 'nonexistent')
+
+    expect(result).toEqual({
+      string: 'abc',
+    })
+    expect(resultFb).toBeUndefined()
   })
 })

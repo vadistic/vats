@@ -1,4 +1,5 @@
 import cloneDeep from 'clone-deep'
+import { diff } from 'deep-diff'
 import { diffAutoUpdataData, IRelationsMap } from '../diff'
 
 const fixtureFields = {
@@ -10,7 +11,7 @@ const fixtureFields = {
   scalarNumber: 21,
   scalarBoolean: true,
   scalarNull: null,
-  scalarArrayStrings: ['hello', 'world'],
+  scalarArrayStrings: ['hello', 'new', 'world'],
   scalarArrayNumbers: [1, 2, 3],
 }
 
@@ -59,12 +60,12 @@ describe('diff scalar changes', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = () => diffAutoUpdataData(fixture, copy)
+  const getData = (map?: IRelationsMap) => diffAutoUpdataData(fixture, copy, map)
 
   it('report string to null', () => {
     copy.scalarString = null as any
 
-    const { queryData } = getData()
+    const { queryData, scalars } = getData()
 
     expect(queryData).toEqual({
       scalarString: null,
@@ -99,28 +100,42 @@ describe('diff scalar changes', () => {
 
   it('report multiple array element changes', () => {
     copy.scalarArrayNumbers = [2, 2, 1, 3, 2, 3]
-    copy.scalarArrayStrings = ['hola!']
+    copy.scalarArrayStrings = ['world']
 
     const { queryData, updateData } = getData()
 
     expect(queryData).toEqual({
       scalarArrayNumbers: [2, 2, 1, 3, 2, 3],
-      scalarArrayStrings: ['hola!'],
+      scalarArrayStrings: ['world'],
     })
 
     expect(updateData).toEqual({
       scalarArrayNumbers: { set: [2, 2, 1, 3, 2, 3] },
-      scalarArrayStrings: { set: ['hola!'] },
+      scalarArrayStrings: { set: ['world'] },
     })
   })
 
   it('does not diff system fields & return undefinded on no changes', () => {
-    copy.id = '12321321'
-    copy.__typename = 'newType'
     copy.createdAt = 'newType'
     copy.updatedAt = 'newType'
 
     const { queryData, updateData } = getData()
+    expect(queryData).toBeUndefined()
+    expect(updateData).toBeUndefined()
+  })
+
+  it('report scalar undefined on when only relations change', () => {
+    copy.oneToOne = null as any
+
+    const {
+      scalars: { queryData, updateData },
+    } = getData({
+      oneToOne: {
+        onCreate: 'connect',
+        onDelete: 'disconnect',
+      },
+    })
+
     expect(queryData).toBeUndefined()
     expect(updateData).toBeUndefined()
   })
@@ -135,64 +150,32 @@ describe('diff relation changes', () => {
 
   const getData = (map?: IRelationsMap) => diffAutoUpdataData(fixture, copy, map)
 
-  it('report undefined on scalars or without map', () => {
+  it('report relations undefined on when only scalars change', () => {
     copy.scalarString = '213223'
 
-    const { relationsData: onScalar } = getData({
+    const {
+      relations: { queryData, updateData },
+    } = getData({
       scalarString: {
-        onUpdate: 'update',
-      },
-    })
-
-    const { relationsData: withoutMap } = getData()
-
-    expect(onScalar).toBeUndefined()
-    expect(withoutMap).toBeUndefined()
-  })
-
-  it('non-nested oneToOne delete', () => {
-    // delete
-    copy.oneToOne = null as any
-
-    const { relationsData } = getData({
-      oneToOne: {
+        onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
 
-    expect(relationsData).toEqual({
-      oneToOne: null,
-    })
+    expect(queryData).toBeUndefined()
+    expect(updateData).toBeUndefined()
   })
 
-  it('non-nested oneToOne create', () => {
-    // delete
-    copy.empty = fixture.oneToOne as any
+  // comment for clean console
 
-    const { relationsData } = getData({
-      empty: {
-        onCreate: 'connect',
-      },
-    })
+  it('report relations undefined without map', () => {
+    copy.oneToMany = [copy.oneToMany[0]]
 
-    expect(relationsData).toEqual({
-      empty: fixture.oneToOne,
-    })
-  })
-
-  it('non-nested single oneToMany create', () => {
-    // delete
-    copy.oneToMany.push(fixture.oneToMany[0])
-
-    const { relationsData } = getData({
-      oneToMany: {
-        onCreate: 'connect',
-      },
-    })
-
-    // how to build both diffs and upodate data on relationships?
-    expect(relationsData).toEqual({
-      oneToOne: { ...fixture.oneToOne, scalarNumber: 123 },
-    })
+    const {
+      relations: { queryData, updateData },
+    } = getData()
+    console.warn('IGNORE PREVIOUS WARNING!')
+    expect(queryData).toBeUndefined()
+    expect(updateData).toBeUndefined()
   })
 })
