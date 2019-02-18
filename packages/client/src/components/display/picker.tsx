@@ -3,8 +3,8 @@ import { useFormikContext } from 'formik'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
 import { ActionButton, IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
-import React, { useRef } from 'react'
-import { useApolloClient, useQuery } from 'react-apollo-hooks'
+import React, { useCallback, useRef } from 'react'
+import { useApolloClient } from 'react-apollo-hooks'
 import { ElementType, filterNull, Omit } from '../../utils'
 import {
   CustomBasePicker,
@@ -13,7 +13,6 @@ import {
   FormikCustomPickerProps,
 } from '../formik'
 import { displayFieldFactory } from './factory'
-import { suspendField } from './suspend'
 
 type PoweredPickerBaseProps<V = any> = FormikCustomPickerProps<V> & {
   displayProp: string
@@ -81,24 +80,36 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
   ...rest
 }) => {
   const picker = useRef<PickerType<any>>(undefined as any)
-  const queryRes = useQuery<any>(graphql.query, { variables })
   const client = useApolloClient()
 
   const { setFieldValue, getFieldProps } = useFormikContext<any>()
 
   const { name, displayProp } = rest
 
-  if (!queryRes || !queryRes.data) {
-    console.error('No data')
-    return null
-  }
+  // calback to load value sonly when called
+  const loadValues = useCallback(async () => {
+    const queryRes = await client.query<any>({
+      query: graphql.query,
+      variables,
+    })
 
-  const values = filterNull(queryRes.data[graphql.queryRoot])
+    if (!queryRes || !queryRes.data) {
+      console.error('No data')
+      return []
+    }
 
-  const searcher = new FuzzySearch<any>(filterNull(values), [displayProp], {
-    caseSensitive: false,
-    sort: true,
-  })
+    return filterNull<any>(queryRes.data[graphql.queryRoot])
+  }, [variables])
+
+  // callback to memo searcher initialization
+  const loadSearcher = useCallback(
+    async () =>
+      new FuzzySearch<any>(await loadValues(), [displayProp], {
+        caseSensitive: false,
+        sort: true,
+      }),
+    [variables],
+  )
 
   const create = async () => {
     if (picker.current && picker.current.inputComponentRef.current) {
@@ -131,12 +142,16 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
     }
   }
 
-  const handleResolveSuggestions = (filterText: string, list: any[] | undefined) => {
-    const result = searcher
+  const handleResolveSuggestions = async (filterText: string, list: any[] | undefined) => {
+    if (!filterText) {
+      return []
+    }
+
+    const searcher = await loadSearcher()
+
+    return searcher
       .search(filterText)
       .filter(value => (list ? !list.some(listItem => listItem.id === value.id) : true))
-
-    return filterText ? result : []
   }
 
   const handleClick = () => {
@@ -177,7 +192,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
 }
 
 export const DisplayPicker = displayFieldFactory({
-  formikComponent: suspendField(PoweredPicker),
+  formikComponent: PoweredPicker,
   fallbackComponent: PickerFallback,
   fallbackValueProp: 'selectedItems',
   defaultProps: ({ editable }) => ({

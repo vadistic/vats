@@ -4,7 +4,8 @@ import React from 'react'
 import { useIntl } from '../../i18n'
 import { getLoLeafPath } from '../../utils'
 import { Box } from '../box'
-import { DisplayTextField, Editable, MultilineDisplayTextField } from '../editable'
+import { DisplayTextField, MultilineDisplayTextField } from '../display'
+import { Editable } from '../editable'
 import { JobActions, JobContext, JobHostThunk, JobValue, useJobContext } from './host'
 
 const TestButton: React.FC = () => {
