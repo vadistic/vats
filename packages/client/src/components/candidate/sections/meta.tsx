@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '../../box'
-import { DisplayTagPicker } from '../widgets/tag-picker'
+import { DisplayTagPicker } from '../widgets'
 
 export const MetaSection: React.FC = () => {
   return (

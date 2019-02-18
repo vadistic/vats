@@ -37,7 +37,7 @@ import {
 } from 'office-ui-fabric-react'
 import React from 'react'
 import { ElementType, Omit } from '../../utils'
-import { CustomTagPicker, ICustomBasePickerProps } from './picker'
+import { CustomPicker, ICustomBasePickerProps } from './picker'
 
 export interface IFieldSpreadProps<V> {
   value: V
@@ -381,7 +381,7 @@ export type PickerInjectedProps = 'selectedItems' | 'onChange' | 'onBlur'
 export type FormikPickerProps<V extends any[]> = IFieldProps &
   Omit<IBasePickerProps<ElementType<V>>, PickerInjectedProps>
 
-export const mapFieldToTagPicker = <V extends any[]>([field, fieldMeta]: UseField<V>): Pick<
+export const mapFieldToPicker = <V extends any[]>([field, fieldMeta]: UseField<V>): Pick<
   IBasePickerProps<ElementType<V>>,
   PickerInjectedProps
 > => {
@@ -398,10 +398,4 @@ export const mapFieldToTagPicker = <V extends any[]>([field, fieldMeta]: UseFiel
     // ! maybe not needed
     onBlur: () => field.onBlur(createFakeEvent(field)),
   }
-}
-
-export const FormikTagPicker: React.FC<FormikPickerProps<ITag[]>> = ({ name, type, ...rest }) => {
-  const formik = useFormikContext<{ [name: string]: ITag[] }>()
-  const field = formik.getFieldProps(name, type || 'select')
-  return <TagPicker {...rest} {...mapFieldToTagPicker<ITag[]>(field)} />
 }

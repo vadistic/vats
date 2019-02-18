@@ -4,8 +4,7 @@ import { CSSProp } from '../../styles'
 import { getInByPath } from '../../utils'
 import { useEditableContext } from './editable'
 
-/* @doc displayFieldFactory
- *
+/*
  * > HOC-like factory for display fields
  *
  * features:
@@ -23,7 +22,7 @@ export interface IDisplayFieldBaseProps {
   placeholder?: string
 }
 
-export interface IDisplayFieldStylingProps {
+export interface IDisplayFieldCbProps {
   editable?: boolean
 }
 
@@ -31,9 +30,8 @@ export interface IDisplayFieldFactoryOptions<Props extends IDisplayFieldBaseProp
   formikComponent: React.FC<Props>
   fallbackComponent: React.FC<any>
   fallbackValueProp: string
-  transformValue?: (val: any) => any
-  defaultProps: (props: Props & IDisplayFieldStylingProps) => Partial<Props>
-  cssProp?: (props: Props & IDisplayFieldStylingProps) => CSSProp
+  defaultProps: (props: Props & IDisplayFieldCbProps) => Partial<Props>
+  cssProp?: (props: Props & IDisplayFieldCbProps) => CSSProp
 }
 
 export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
@@ -55,16 +53,14 @@ export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
     // removing name & placeholdre from fallback component
     const { name, placeholder, ...rest } = props
 
-    // creating ref for accessing underyling components methods in defaultProps fn
-
-    const wrapperProps = { ...props, editable }
+    const allProps = { ...props, editable }
 
     if (editable) {
       return (
         <FormikComponent
-          css={cssProp ? cssProp(wrapperProps) : undefined}
+          css={cssProp ? cssProp(allProps) : undefined}
           {...props}
-          {...defaultProps(wrapperProps)}
+          {...defaultProps(allProps)}
         />
       )
     }
@@ -74,8 +70,8 @@ export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
       return (
         <FallbackComponent
           disabled={true}
-          css={cssProp ? cssProp(wrapperProps) : undefined}
-          {...defaultProps(wrapperProps)}
+          css={cssProp ? cssProp(allProps) : undefined}
+          {...defaultProps(allProps)}
           {...{ [fallbackValueProp]: value }}
           {...rest}
         />
