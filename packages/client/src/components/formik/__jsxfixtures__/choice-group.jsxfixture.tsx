@@ -2,7 +2,7 @@ import { FormikProvider, useFormik } from 'formik'
 import { IChoiceGroupOption } from 'office-ui-fabric-react'
 import React from 'react'
 import { getLoLeafPath } from '../../../utils'
-import { FormikChoiceGroup } from '../formik'
+import { FormikChoiceGroup } from '../adapters'
 
 const plainOptions: IChoiceGroupOption[] = [
   {

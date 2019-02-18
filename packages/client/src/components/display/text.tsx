@@ -1,8 +1,8 @@
 import { css } from '@emotion/core'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
 import { ITheme } from '../../styles'
+import { FormikTextField, FormikTextFieldProps } from '../formik'
 import { displayFieldFactory } from './factory'
-import { FormikTextField, FormikTextFieldProps } from './formik'
 
 const handleRenderLabel = (props: ITextFieldProps | undefined) => {
   if (!props || !props.label) {
@@ -30,7 +30,7 @@ export const DisplayTextField = displayFieldFactory<DisplayTextFieldProps>({
     multiline: false,
     onRenderLabel: handleRenderLabel,
   }),
-  cssProp: ({ fontSize = 'medium' as 'medium', editable }) => theme => css`
+  cssProp: ({ fontSize = 'medium' as 'medium', editable }) => (theme: ITheme) => css`
     .ms-TextField-wrapper {
       /* fix editable bottom border height */
       margin-bottom: ${editable && `-1px`};
@@ -71,7 +71,7 @@ export const MultilineDisplayTextField = displayFieldFactory<
     multiline: true,
     onRenderLabel: handleRenderLabel,
   }),
-  cssProp: ({ fontSize = 'medium' as 'medium', editable }) => theme => css`
+  cssProp: ({ fontSize = 'medium' as 'medium', editable }) => (theme: ITheme) => css`
     .ms-TextField-wrapper {
       /* fix editable bottom border height */
       margin-bottom: ${editable && `-1px`};

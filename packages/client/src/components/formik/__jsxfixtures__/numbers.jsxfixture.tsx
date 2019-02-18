@@ -3,7 +3,7 @@ import { FormikProvider, useFormik } from 'formik'
 import { Position } from 'office-ui-fabric-react/lib/utilities/positioning'
 import React from 'react'
 import { getLoLeafPath } from '../../../utils'
-import { FormikRating, FormikSlider, FormikSpinButton } from '../formik'
+import { FormikRating, FormikSlider, FormikSpinButton } from '../adapters'
 
 export const NumbersPickersFixture: React.FC = () => {
   const onSubmit = () => {

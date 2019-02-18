@@ -27,12 +27,14 @@ And formik, immer, 18n, jest, 3 or 4 codegens...
 
 - Hook driven fabric inputs adapters for `formik@gamma`
 
-[`src/components/editable/formik.ts`](src/components/editable/formik.ts)
+[`src/components/formik/adapters.tsx`](src/components/formik/adapters.tsx)
 
-- Factory for controlling whole context of editable/ non-editable components
+- Context of editable/ non-editable components
 
-[`src/components/editable/editable.ts`](src/components/editable/editable.ts)
-[`src/components/editable/factory.ts`](src/components/editable/factory.ts)
+[`src/components/editable/editable.tsx`](src/components/editable/editable.tsx)
+
+- Factory for display fields
+  [`src/components/display/factory.tsx`](src/components/display/factory.tsx)
 
 ### Some utils
 

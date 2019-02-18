@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik'
 import React, { Component, useRef } from 'react'
 import { CSSProp } from '../../styles'
 import { getInByPath } from '../../utils'
-import { useEditableContext } from './editable'
+import { useEditableContext } from '../editable'
 
 /*
  * > HOC-like factory for display fields

@@ -1,7 +1,7 @@
 import { FormikProvider, useFormik } from 'formik'
 import React from 'react'
 import { getLoLeafPath } from '../../../utils'
-import { FormikTextField } from '../formik'
+import { FormikTextField } from '../adapters'
 
 export const TextFieldFixture: React.FC = () => {
   const onSubmit = () => {

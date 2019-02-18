@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import { TagFragment } from '../../../generated/fragments'
-import { IFieldProps } from '../../editable'
-import { DisplayPicker, OnCreateData } from './picker'
+import { DisplayPicker, OnCreateData } from '../../display'
+import { IFieldProps } from '../../formik'
 
 export interface IDisplayTagPickerProps extends IFieldProps {}
 

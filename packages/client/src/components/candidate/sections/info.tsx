@@ -3,7 +3,7 @@ import React from 'react'
 import { useIntl } from '../../../i18n'
 import { getLoLeafPath } from '../../../utils'
 import { Box } from '../../box'
-import { DisplayFieldArray, DisplayTextField } from '../../editable'
+import { DisplayFieldArray, DisplayTextField } from '../../display'
 import { CandidateValue, useCandidateContext } from '../host'
 
 interface IGroupLabelProps {

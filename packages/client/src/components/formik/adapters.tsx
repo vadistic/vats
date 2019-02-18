@@ -1,3 +1,26 @@
+import { useFormik, useFormikContext } from 'formik'
+import {
+  Checkbox,
+  ChoiceGroup,
+  Dropdown,
+  IBasePickerProps,
+  ICheckboxProps,
+  IChoiceGroupProps,
+  IDropdownProps,
+  IRatingProps,
+  ISliderProps,
+  ISpinButtonProps,
+  ITextFieldProps,
+  IToggleProps,
+  Rating,
+  Slider,
+  SpinButton,
+  TextField,
+  Toggle,
+} from 'office-ui-fabric-react'
+import React from 'react'
+import { ElementType, Omit } from '../../utils'
+
 /**
  * Based on this
  * https://github.com/kmees/formik-office-ui-fabric-react/tree/master/src
@@ -12,32 +35,6 @@
  *   - PeoplePicker
  *   - SwatchColorPicker
  */
-
-import { useFormik, useFormikContext } from 'formik'
-import {
-  Checkbox,
-  ChoiceGroup,
-  Dropdown,
-  IBasePickerProps,
-  ICheckboxProps,
-  IChoiceGroupProps,
-  IDropdownProps,
-  IRatingProps,
-  ISliderProps,
-  ISpinButtonProps,
-  ITag,
-  ITextFieldProps,
-  IToggleProps,
-  Rating,
-  Slider,
-  SpinButton,
-  TagPicker,
-  TextField,
-  Toggle,
-} from 'office-ui-fabric-react'
-import React from 'react'
-import { ElementType, Omit } from '../../utils'
-import { CustomPicker, ICustomBasePickerProps } from './picker'
 
 export interface IFieldSpreadProps<V> {
   value: V

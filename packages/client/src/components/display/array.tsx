@@ -1,6 +1,6 @@
 import { ArrayHelpers, FieldArray, useFormikContext } from 'formik'
 import React from 'react'
-import { useEditableContext } from './editable'
+import { useEditableContext } from '../editable'
 
 export interface IDisplayFieldArrayRenderProps<Value> extends ArrayHelpers {
   name: string

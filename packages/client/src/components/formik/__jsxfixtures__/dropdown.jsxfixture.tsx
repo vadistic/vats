@@ -4,7 +4,7 @@ import { DropdownMenuItemType, IDropdownOption } from 'office-ui-fabric-react'
 import React from 'react'
 import { ITheme } from '../../../styles'
 import { getLoLeafPath } from '../../../utils'
-import { FormikDropdown } from '../formik'
+import { FormikDropdown } from '../adapters'
 
 const options: IDropdownOption[] = [
   { key: 'Header', text: 'Actions', itemType: DropdownMenuItemType.Header },

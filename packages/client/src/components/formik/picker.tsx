@@ -9,7 +9,7 @@ import {
 // tslint:disable-next-line: no-submodule-imports
 import { getStyles } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.styles'
 import { ElementType, Omit } from '../../utils'
-import { IFieldProps, mapFieldToPicker, PickerInjectedProps } from './formik'
+import { IFieldProps, mapFieldToPicker, PickerInjectedProps } from './adapters'
 
 export interface ICustomBasePickerProps<V> extends IBasePickerProps<V> {}
 

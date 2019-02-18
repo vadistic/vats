@@ -5,15 +5,15 @@ import { DocumentNode } from 'graphql'
 import { ActionButton, IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
 import React, { useRef } from 'react'
 import { useApolloClient, useQuery } from 'react-apollo-hooks'
-import { ElementType, filterNull, Omit } from '../../../utils'
+import { ElementType, filterNull, Omit } from '../../utils'
 import {
   CustomBasePicker,
   CustomPicker,
-  displayFieldFactory,
   FormikCustomPicker,
   FormikCustomPickerProps,
-  suspendField,
-} from '../../editable'
+} from '../formik'
+import { displayFieldFactory } from './factory'
+import { suspendField } from './suspend'
 
 type PoweredPickerBaseProps<V = any> = FormikCustomPickerProps<V> & {
   displayProp: string
@@ -38,7 +38,7 @@ const PoweredPickerBase: React.FC<PoweredPickerBaseProps> = props => {
   return <FormikCustomPicker onRenderItem={renderItem} {...props} />
 }
 
-const PoweredPickerFallback: React.FC<PoweredPickerBaseProps> = props => {
+const PickerFallback: React.FC<PoweredPickerBaseProps> = props => {
   const { editable, displayProp } = props
   const renderItem: ItemRenderFunction = ({ item, ...rest }) => (
     <TagItem
@@ -178,7 +178,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
 
 export const DisplayPicker = displayFieldFactory({
   formikComponent: suspendField(PoweredPicker),
-  fallbackComponent: PoweredPickerFallback,
+  fallbackComponent: PickerFallback,
   fallbackValueProp: 'selectedItems',
   defaultProps: ({ editable }) => ({
     editable,

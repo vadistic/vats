@@ -1,7 +1,7 @@
 import { FormikProvider, useFormik } from 'formik'
 import React from 'react'
 import { getLoLeafPath } from '../../../utils'
-import { FormikCheckbox, FormikToggle } from '../formik'
+import { FormikCheckbox, FormikToggle } from '../adapters'
 
 export const BooleanPickersFixture: React.FC = () => {
   const onSubmit = () => {

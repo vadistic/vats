@@ -2,7 +2,7 @@ import React from 'react'
 import { useIntl } from '../../../i18n'
 import { getLoLeafPath } from '../../../utils'
 import { Box } from '../../box'
-import { DisplayTextField, DisplayTextFieldProps } from '../../editable'
+import { DisplayTextField, DisplayTextFieldProps } from '../../display'
 import { CandidateValue, useCandidateContext } from '../host'
 import { UserAvatar } from '../widgets'
 
