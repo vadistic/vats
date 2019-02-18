@@ -21,6 +21,7 @@ import {
   IHostConfig,
   IHostState,
   IHostTyping,
+  Relations,
 } from '../host'
 
 /*
@@ -151,6 +152,17 @@ export type CandidateHostTyping = IHostTyping<
   ICandidateInitArg
 >
 
+const candidateRelations: Relations<CandidateValue> = {
+  tags: {
+    onCreate: 'connect',
+    onDelete: 'disconnect',
+  },
+  sources: {
+    onCreate: 'connect',
+    onDelete: 'disconnect',
+  },
+}
+
 const candidateHostConfig: IHostConfig<CandidateHostTyping, CandidateGraphqlTyping> = {
   displayName: 'CANDIDATE',
   type: HostType.Single,
@@ -158,6 +170,7 @@ const candidateHostConfig: IHostConfig<CandidateHostTyping, CandidateGraphqlTypi
   initState: candidateStateInit,
   initVariables: ({ id }) => ({ where: { id } }),
   resetOnInitArgPropChange: true,
+  relations: candidateRelations,
   graphql: {
     query: CANDIDATE_QUERY,
     queryRoot: 'candidate',

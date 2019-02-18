@@ -119,7 +119,11 @@ const update: HostActionReducer<typeof UPDATE> = (state, action) => {
 
   const cache = queryCache[state.config.graphql.queryRoot]
 
-  const { updateData, queryData } = diffAutoUpdataData(cache, action.payload)
+  const { updateData, queryData } = diffAutoUpdataData(
+    cache,
+    action.payload,
+    state.config.relations,
+  )
 
   if (updateData) {
     client.mutate({

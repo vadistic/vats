@@ -52,7 +52,7 @@ const PoweredTagPicker: React.FC<PoweredTagPickerProps> = props => {
     if (picker.current && picker.current.inputComponentRef.current) {
       const _picker = picker.current
       const _input = picker.current.inputComponentRef.current
-      const inputValue = picker.current.inputComponentRef.current.value
+      const inputValue = picker.current.inputComponentRef.current.value.trim()
 
       const [{ value: prevValue }] = getFieldProps(name)
       const safePrevValue = Array.isArray(prevValue) ? prevValue : []
@@ -97,7 +97,7 @@ const PoweredTagPicker: React.FC<PoweredTagPickerProps> = props => {
 
   const renderNoResultFound = () => {
     if (picker.current && picker.current.inputComponentRef.current) {
-      const inputValue = picker.current.inputComponentRef.current.value
+      const inputValue = picker.current.inputComponentRef.current.value.trim()
       return (
         <ActionButton
           iconProps={{ iconName: 'Add', css: { height: '0.5em', width: '0.5em' } }}

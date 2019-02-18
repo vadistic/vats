@@ -1,6 +1,6 @@
 import cloneDeep from 'clone-deep'
 import { diff } from 'deep-diff'
-import { diffAutoUpdataData, IRelationsMap } from '../diff'
+import { diffAutoUpdataData, IRelations } from '../diff'
 
 const fixtureFields = {
   __typename: '',
@@ -60,7 +60,7 @@ describe('diff scalar changes', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: IRelationsMap) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (map?: IRelations) => diffAutoUpdataData(fixture, copy, map)
 
   it('report string to null', () => {
     copy.scalarString = null as any
@@ -148,7 +148,7 @@ describe('diff relation changes', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: IRelationsMap) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (map?: IRelations) => diffAutoUpdataData(fixture, copy, map)
 
   it('report relations undefined on when only scalars change', () => {
     copy.scalarString = '213223'

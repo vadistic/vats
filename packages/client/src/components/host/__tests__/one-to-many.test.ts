@@ -1,6 +1,6 @@
 import cloneDeep from 'clone-deep'
 import { insertElOnIndex } from '../../../utils'
-import { diffAutoUpdataData, IRelationsMap } from '../diff'
+import { diffAutoUpdataData, IRelations } from '../diff'
 
 const fixtureFields = {
   id: '123',
@@ -59,7 +59,7 @@ describe('oneToMany', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: IRelationsMap) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (map?: IRelations) => diffAutoUpdataData(fixture, copy, map)
 
   it('append', () => {
     const element = {

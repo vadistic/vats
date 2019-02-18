@@ -1,13 +1,6 @@
 import cloneDeep from 'clone-deep'
 import { applyChange, diff, Diff } from 'deep-diff'
-import {
-  getIn,
-  mutableSetValueIn,
-  recursiveTransform,
-  removeElOnIndex,
-  setValueIn,
-  tryGetIn,
-} from '../../utils'
+import { getIn, recursiveTransform, removeElOnIndex, setValueIn, tryGetIn } from '../../utils'
 
 const isScalarValue = (value: any) =>
   typeof value === 'string' ||
@@ -21,11 +14,15 @@ const isNonNestedElement = (path: any[]) =>
   path.length === 2 && typeof path[0] === 'string' && typeof path[1] === 'number'
 
 export interface IRelationsMap {
-  [index: string]: {
-    onCreate: 'create' | 'connect'
-    onDelete: 'delete' | 'disconnect'
-  }
+  onCreate: 'create' | 'connect'
+  onDelete: 'delete' | 'disconnect'
 }
+
+export interface IRelations {
+  [index: string]: IRelationsMap
+}
+
+export type Relations<T> = { [K in keyof T]?: IRelationsMap }
 
 interface IDiffResult<Value> {
   queryData: Partial<Value> | undefined
@@ -118,7 +115,7 @@ const applyScalarChange = (targetQueryData: any, change: Diff<any, any>) => {
  *  updates and nested relations are tricky and not supported yet...
  */
 
-const isValidRelationChange = (change: Diff<any, any>, map?: IRelationsMap) => {
+const isValidRelationChange = (change: Diff<any, any>, map?: Relations<any>) => {
   const path = change.path
 
   if (path && map) {
@@ -165,7 +162,7 @@ const applyRelationChange = (
   targetQueryData: any,
   targetUpdateData: any,
   change: Diff<any, any>,
-  map?: IRelationsMap,
+  map?: Relations<any>,
 ) => {
   const path = change.path
   const queryData = targetQueryData
@@ -465,7 +462,7 @@ const transformRelationsUpdateData = <T extends any>(target: T) =>
     return value
   })
 
-export const diffAutoUpdataData = <Value>(prev: Value, next: Value, map?: IRelationsMap) => {
+export const diffAutoUpdataData = <Value>(prev: Value, next: Value, map?: Relations<any>) => {
   const scalars: IDiffResult<Value> = {
     queryData: undefined,
     updateData: undefined,

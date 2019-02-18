@@ -13,17 +13,22 @@ import {
 } from './host'
 import { InfoSection, MetaSection, TopSection } from './sections'
 
-const profileSubmitThunk = (values: CandidateValue): CandidateHostThunk => (
+const profileSubmitThunk = (values: CandidateValue): CandidateHostThunk => async (
   dispatch,
   state,
   helper,
 ) => {
-  console.log('submit', values)
+  console.log(values)
 
-  const { tags } = values
-
-  dispatch(CandidateActions.update(values))
+  const promise = helper.autoUpdate(values)
   dispatch(CandidateActions.edit(false))
+
+  const res = await promise
+
+  if (res && res.data) {
+    console.log(res)
+    // send toast
+  }
 }
 
 const EditButton: React.FC = () => {

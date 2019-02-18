@@ -1,4 +1,5 @@
 import { HostActionsUnion } from './actions'
+import { Relations } from './diff'
 import { IHostGraphqlMultiConfig, IHostGraphqlSingleConfig, TGraphqlTyping } from './graphql-types'
 import { IThunkHelpers } from './helper'
 
@@ -55,6 +56,7 @@ export interface IHostConfig<HostTyping extends IHostTyping, GraphqlTyping exten
     | ((initArg: HostTyping['initArg']) => GraphqlTyping['queryVariables'])
   resetOnInitArgPropChange?: boolean
   graphql: HostTyping['value'] extends any[] ? IHostGraphqlMultiConfig : IHostGraphqlSingleConfig
+  relations?: Relations<HostTyping['value']>
 }
 
 export interface IHostState<HostTyping extends IHostTyping, GraphqlTyping extends TGraphqlTyping> {
