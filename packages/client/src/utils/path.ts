@@ -36,6 +36,9 @@ export const buildLoPath = (paths: Array<string | number>) => {
 export const getLoPath = <S, P extends string[]>(state: S, ...paths: P) =>
   (buildLoPath(paths) as unknown) as CheckPath<S, P>
 
+export const getLoPathAlt = <S>() => <P extends string[]>(...paths: P) =>
+  (buildLoPath(paths) as unknown) as CheckPath<S, P>
+
 /**
  * validate type path for leaf node and transform to lodash.style
  */
