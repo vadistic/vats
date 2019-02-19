@@ -98,7 +98,29 @@ export interface ITheme extends IFabricTheme {
 
 const fabricTheme: IPartialTheme = {
   palette: {
-    accent: 'hotpink',
+    /** han purple */
+    themePrimary: '#5218fa',
+    themeLighterAlt: '#f8f6ff',
+    themeLighter: '#e3dafe',
+    themeLight: '#cab9fd',
+    themeTertiary: '#9674fc',
+    themeSecondary: '#6634fb',
+    themeDarkAlt: '#4916e1',
+    themeDark: '#3e13be',
+    themeDarker: '#2d0e8c',
+    neutralLighterAlt: '#f6f6f6',
+    neutralLighter: '#f2f2f2',
+    neutralLight: '#e8e8e8',
+    neutralQuaternaryAlt: '#d8d8d8',
+    neutralQuaternary: '#cecece',
+    neutralTertiaryAlt: '#c6c6c6',
+    neutralTertiary: '#c2c2c2',
+    neutralSecondary: '#858585',
+    neutralPrimaryAlt: '#4b4b4b',
+    neutralPrimary: '#333333',
+    neutralDark: '#272727',
+    black: '#1d1d1d',
+    white: '#fcfcfc',
   },
 }
 
