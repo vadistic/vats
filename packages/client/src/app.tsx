@@ -1,4 +1,3 @@
-import { ThemeProvider } from 'emotion-theming'
 import { Fabric } from 'office-ui-fabric-react'
 import React from 'react'
 import { ApolloProvider } from 'react-apollo'
@@ -8,7 +7,7 @@ import { client } from './apollo'
 import { CandidatesView, CandidateView, JobsView, JobView, Layout, Router } from './components'
 import { i18next } from './i18n'
 import { routes } from './routes'
-import { theme } from './styles'
+import { theme, ThemeProvider } from './styles'
 import { StateInspector } from './utils'
 import { DevView } from './views'
 
@@ -21,7 +20,7 @@ export class App extends React.Component {
             <I18nextProvider i18n={i18next}>
               <StateInspector name="APP">
                 <ThemeProvider theme={theme}>
-                  <Fabric>
+                  <Fabric theme={theme}>
                     <Layout>
                       <Router>
                         <DevView path={routes.dev.path} />

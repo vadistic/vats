@@ -1,8 +1,12 @@
 {
-  "error": "Error occured",
   "helper": {
+    "error": "Error",
     "content": "Content",
-    "empty": "Empty"
+    "empty": "Empty",
+    "add": "Add",
+    "create": "Create",
+    "remove": "Remove",
+    "noResults": "No results found"
   },
   "candidate": {
     "id": "Id",
@@ -53,6 +57,10 @@
     "applications": "Application",
     "applications_plural": "Applications",
     "__typename": "Job",
+    "workspace": "Worskpace",
+    "workflow": "Workflows",
+    "locations": "Location",
+    "type": "Status",
     "name": "Name",
     "name_plural": "Names",
     "department": "Department",

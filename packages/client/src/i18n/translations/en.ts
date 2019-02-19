@@ -47,12 +47,18 @@ const job: TranslationTyping<JobValue> = {
   requirements: 'Requirements',
 }
 
+const helper = {
+  error: 'Error',
+  content: 'Content',
+  empty: 'Empty',
+  add: 'Add',
+  create: 'Create',
+  remove: 'Remove',
+  noResults: 'No results found',
+}
+
 export const translation = {
-  error: 'Error occured',
-  helper: {
-    content: 'Content',
-    empty: 'Empty',
-  },
+  helper,
   candidate,
   job,
   shared,

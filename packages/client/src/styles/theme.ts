@@ -1,5 +1,12 @@
 import { SerializedStyles } from '@emotion/core'
-import { createTheme, IPartialTheme, ISpacing, ITheme as IFabricTheme } from '@uifabric/styling'
+import {
+  createTheme,
+  IEffects,
+  IFontStyles,
+  IPalette,
+  IPartialTheme,
+  ISemanticColors,
+} from '@uifabric/styling'
 
 interface IWithUnitInput {
   [inxex: string]: number
@@ -16,56 +23,93 @@ const withUnit = <T extends IWithUnitInput>(unit: string, input: T) =>
 
 const spacingBase = 16
 
+interface ISpacing {
+  /** 4px */
+  s2: string
+  /** 8px */
+  s1: string
+  /** 12px */
+  ms: string
+  /** 16px */
+  m: string
+  /** 20px */
+  ml: string
+  /** 32px */
+  l1: string
+  /** 64px */
+  l2: string
+}
+
 const spacing: ISpacing = withUnit('px', {
   s2: spacingBase / 4,
   s1: spacingBase / 2,
+  ms: spacingBase * 0.75,
   m: spacingBase,
-  l1: spacingBase * 1.25,
-  l2: spacingBase * 2,
+  ml: spacingBase * 1.25,
+  l1: spacingBase * 2,
+  l2: spacingBase * 4,
 })
 
 interface ISizing {
+  /** 32px */
   s3: string
+  /** 64px */
   s2: string
+  /** 128px */
   s1: string
+  /** 192px */
   ms: string
+  /** 256px */
   m: string
+  /** 348px */
   ml: string
+  /** 512px */
   l1: string
+  /** 1024px */
   l2: string
 }
 
 const sizes: ISizing = withUnit('px', {
-  s3: spacingBase * 2, // 32
-  s2: spacingBase * 4, // 64
-  s1: spacingBase * 8, // 128
-  ms: spacingBase * 12, // 192
-  m: spacingBase * 16, // 256
-  ml: spacingBase * 24, // 348
-  l1: spacingBase * 32, // 512
-  l2: spacingBase * 64, // 1024
+  s3: spacingBase * 2,
+  s2: spacingBase * 4,
+  s1: spacingBase * 8,
+  ms: spacingBase * 12,
+  m: spacingBase * 16,
+  ml: spacingBase * 24,
+  l1: spacingBase * 32,
+  l2: spacingBase * 64,
 })
 
-interface ICustomTheme {
+interface IFabricTheme {
+  palette: IPalette
+  fonts: IFontStyles
+  semanticColors: ISemanticColors
+  isInverted: boolean
+  effects: IEffects
+  disableGlobalClassNames: boolean
+}
+
+export interface ITheme extends IFabricTheme {
+  /** for sizing components (height, width...) */
   sizes: ISizing
+  /** for spacing components (padding, margin...) */
+  spacing: ISpacing
 }
 
 const fabricTheme: IPartialTheme = {
   palette: {
     accent: 'hotpink',
   },
-  spacing,
 }
 
-const customTheme: ICustomTheme = {
+export const theme: ITheme = {
+  ...createTheme(fabricTheme),
+  spacing,
   sizes,
 }
-
-export type ITheme = IFabricTheme & ICustomTheme
 
 export interface IThemeProps {
   theme: ITheme
 }
-export const theme = { ...createTheme(fabricTheme), ...customTheme }
 
 export type CSSProp = SerializedStyles | ((theme: ITheme) => SerializedStyles)

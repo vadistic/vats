@@ -71,7 +71,7 @@ const main = async () => {
     )
   })
 
-  console.log(`118n json generated: ${configs.map(val => val[0])}`)
+  console.log(`i18n json generated: ${configs.map(val => val[0]).join('| ')}`)
 }
 
 main()
