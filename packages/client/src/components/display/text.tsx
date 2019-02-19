@@ -1,22 +1,16 @@
 import { css } from '@emotion/core'
-import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
+import { IIconProps, ITextFieldProps, TextField } from 'office-ui-fabric-react'
 import { ITheme } from '../../styles'
 import { FormikTextField, FormikTextFieldProps } from '../formik'
 import { displayFieldFactory } from './factory'
+import { DisplayLabel } from './label'
 
-const handleRenderLabel = (props: ITextFieldProps | undefined) => {
-  if (!props || !props.label) {
-    return null
-  }
-
-  return <h4>{props.label}</h4>
-}
-
-export interface IDisplayTextFieldStylingProps {
+export interface IDisplayTextFieldCbProps {
   fontSize?: keyof ITheme['fonts']
+  labelIconProps?: IIconProps
 }
 
-export type DisplayTextFieldProps = FormikTextFieldProps & IDisplayTextFieldStylingProps
+export type DisplayTextFieldProps = FormikTextFieldProps & IDisplayTextFieldCbProps
 
 export const DisplayTextField = displayFieldFactory<DisplayTextFieldProps>({
   fallbackComponent: TextField,
@@ -28,7 +22,8 @@ export const DisplayTextField = displayFieldFactory<DisplayTextFieldProps>({
     autoComplete: 'off',
     resizable: false,
     multiline: false,
-    onRenderLabel: handleRenderLabel,
+    onRenderLabel: props =>
+      props && props.label ? <DisplayLabel text={props.label} {...props.iconProps} /> : null,
   }),
   cssProp: ({ fontSize = 'medium' as 'medium', editable }) => (theme: ITheme) => css`
     .ms-TextField-wrapper {
@@ -57,7 +52,7 @@ export const DisplayTextField = displayFieldFactory<DisplayTextFieldProps>({
 })
 
 export const MultilineDisplayTextField = displayFieldFactory<
-  FormikTextFieldProps & IDisplayTextFieldStylingProps
+  FormikTextFieldProps & IDisplayTextFieldCbProps
 >({
   fallbackComponent: TextField,
   formikComponent: FormikTextField,
@@ -69,7 +64,8 @@ export const MultilineDisplayTextField = displayFieldFactory<
     autoAdjustHeight: true,
     resizable: true,
     multiline: true,
-    onRenderLabel: handleRenderLabel,
+    onRenderLabel: props =>
+      props && props.label ? <DisplayLabel text={props.label} {...props.iconProps} /> : null,
   }),
   cssProp: ({ fontSize = 'medium' as 'medium', editable }) => (theme: ITheme) => css`
     .ms-TextField-wrapper {

@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik'
-import React, { Component, useRef } from 'react'
+import React from 'react'
 import { CSSProp } from '../../styles'
 import { getInByPath } from '../../utils'
 import { useEditableContext } from '../editable'
@@ -44,7 +44,7 @@ export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
   const FormikComponent = formikComponent
   const FallbackComponent = fallbackComponent
 
-  const DisplayField: React.FC<Props> = props => {
+  const DisplayField = <P extends Props = Props>(props: P) => {
     const { values: formikValues } = useFormikContext()
     const { values: editableValues } = useEditableContext()
 

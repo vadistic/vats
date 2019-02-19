@@ -1,88 +1,65 @@
-import { ArrayHelpers, FieldArray, useFormikContext } from 'formik'
 import React from 'react'
-import { useEditableContext } from '../editable'
+import { useIntl } from '../../i18n'
+import { Box } from '../box'
+import { EditableFieldArray } from '../editable'
+import { IFieldProps } from '../formik'
+import { DisplayActionButton, DisplayIconButton } from './button'
+import { DisplayLabel, IDisplayLabelProps } from './label'
+import { DisplayTextField, DisplayTextFieldProps } from './text'
 
-export interface IDisplayFieldArrayRenderProps<Value> extends ArrayHelpers {
-  name: string
-  values: Value
-  editable: boolean
+interface IDisplayTextFieldArrayProps extends IFieldProps {
+  emptyElement: any
+  labelProps?: IDisplayLabelProps
+  textFieldProps?: DisplayTextFieldProps
 }
 
-export interface IDisplayFieldArrayProps<Value> {
-  children: (renderProps: IDisplayFieldArrayRenderProps<Value>) => JSX.Element | JSX.Element[]
-  name: string
-}
-
-/**
- * for runtime type safety of calling those by mistake when non-editable mode
- */
-const noopArrayHelpers: ArrayHelpers = {
-  push: () => {
-    /* noop */
-  },
-  handlePush: () => () => {
-    /* noop */
-  },
-  swap: () => {
-    /* noop */
-  },
-  handleSwap: () => () => {
-    /* noop */
-  },
-  move: () => {
-    /* noop */
-  },
-  handleMove: () => () => {
-    /* noop */
-  },
-  insert: () => {
-    /* noop */
-  },
-  handleInsert: () => () => {
-    /* noop */
-  },
-  replace: () => {
-    /* noop */
-  },
-  handleReplace: () => () => {
-    /* noop */
-  },
-  unshift: () => 0,
-  handleUnshift: () => () => {
-    /* noop */
-  },
-  handleRemove: () => () => {
-    /* noop */
-  },
-  handlePop: () => () => {
-    /* noop */
-  },
-  remove: () => undefined,
-  pop: () => undefined,
-}
-
-export type DisplayFieldArrayI<T = any> = React.FC<IDisplayFieldArrayProps<T>>
-
-export const DisplayFieldArray = <T extends any>({
-  children,
+export const DisplayTextFieldArray: React.FC<IDisplayTextFieldArrayProps> = ({
   name,
-}: IDisplayFieldArrayProps<T>) => {
-  const { values: editableValues } = useEditableContext()
-  const { values: formikValues } = useFormikContext()
+  type,
+  emptyElement,
+  labelProps,
+  textFieldProps,
+}: IDisplayTextFieldArrayProps) => {
+  const { intl } = useIntl()
 
-  if (formikValues) {
-    return (
-      <FieldArray name={name} validateOnChange={false}>
-        {({ form, ...rest }) => children({ values: formikValues, editable: true, ...rest })}
-      </FieldArray>
-    )
-  }
+  return (
+    <EditableFieldArray<{ [index: string]: any[] }> name={name}>
+      {({ values, handleRemove, handlePush, editable }) => {
+        const isArrEmpty = values[name].length === 0
+        const lastNotEmpty = !!values[name].slice(-1)[0]
 
-  if (editableValues) {
-    return (
-      <>{children({ name, values: editableValues as T, editable: false, ...noopArrayHelpers })}</>
-    )
-  }
+        const renderRemoveButton = (index: number) => () =>
+          editable ? (
+            <DisplayIconButton iconProps={{ iconName: 'remove' }} onClick={handleRemove(index)} />
+          ) : null
 
-  return null
+        return (
+          <>
+            {labelProps && (
+              <Box direction="row">
+                <DisplayLabel {...labelProps} />
+              </Box>
+            )}
+            {values[name].map((_, i) => (
+              <DisplayTextField
+                key={name + '_' + i}
+                fontSize="medium"
+                name={[name, i].join('.')}
+                type={type}
+                onRenderSuffix={renderRemoveButton(i)}
+                {...textFieldProps}
+              />
+            ))}
+            {editable && (isArrEmpty || lastNotEmpty) && (
+              <DisplayActionButton
+                iconProps={{ iconName: 'add' }}
+                text={intl(null, 'helper', 'add')}
+                onClick={handlePush(emptyElement)}
+              />
+            )}
+          </>
+        )
+      }}
+    </EditableFieldArray>
+  )
 }
