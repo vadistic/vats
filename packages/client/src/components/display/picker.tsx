@@ -3,9 +3,10 @@ import { useFormikContext } from 'formik'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
 import { ActionButton, IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
 import { ElementType, filterNull, Omit } from '../../utils'
+import { Box } from '../box'
 import {
   CustomBasePicker,
   CustomPicker,
@@ -86,7 +87,10 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
 
   const { name, displayProp } = rest
 
-  // calback to load value sonly when called
+  // values in state only to access them in create button section
+  const [values, setValues] = useState([] as any[])
+
+  // calback to load value only whn needed
   const loadValues = useCallback(async () => {
     const queryRes = await client.query<any>({
       query: graphql.query,
@@ -97,18 +101,30 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
       console.error('No data')
       return []
     }
-
-    return filterNull<any>(queryRes.data[graphql.queryRoot])
+    const result = filterNull<any>(queryRes.data[graphql.queryRoot])
+    setValues(result)
+    return result
   }, [variables])
 
-  // callback to memo searcher initialization
-  const loadSearcher = useCallback(
+  // I'd like to useMemo for searcher initialization,
+  // but it would skip inital state suggestion for the first typed letter or load too quick
+  // it's a duplication, but seems like the most effective way
+  const loadFirstRenderSearcher = useCallback(
     async () =>
       new FuzzySearch<any>(await loadValues(), [displayProp], {
         caseSensitive: false,
         sort: true,
       }),
     [variables],
+  )
+
+  const searcher = useMemo(
+    () =>
+      new FuzzySearch<any>(values, [displayProp], {
+        caseSensitive: false,
+        sort: true,
+      }),
+    [variables, values],
   )
 
   const create = async () => {
@@ -147,9 +163,9 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
       return []
     }
 
-    const searcher = await loadSearcher()
+    const _searcher = values.length === 0 ? await loadFirstRenderSearcher() : searcher
 
-    return searcher
+    return _searcher
       .search(filterText)
       .filter(value => (list ? !list.some(listItem => listItem.id === value.id) : true))
   }
@@ -165,13 +181,31 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
   const renderNoResultFound = () => {
     if (picker.current && picker.current.inputComponentRef.current) {
       const inputValue = picker.current.inputComponentRef.current.value.trim()
+
+      const duplicate = values.some(value => value[displayProp] === inputValue)
+      const notResultsFoundText =
+        (rest.pickerSuggestionsProps && rest.pickerSuggestionsProps.noResultsFoundText) ||
+        'No results found'
+
       return (
-        <ActionButton
-          iconProps={{ iconName: 'Add', css: { height: '0.5em', width: '0.5em' } }}
-          onClick={handleClick}
+        <Box
+          role="alert"
+          css={({ palette, fonts, sizes }) => ({
+            fontSize: fonts.small.fontSize,
+            color: palette.neutralSecondary,
+            height: sizes.s3,
+            justifyContent: 'center',
+            padding: '0 12px',
+          })}
         >
-          Create "{inputValue}"
-        </ActionButton>
+          {duplicate ? (
+            <span>{notResultsFoundText}</span>
+          ) : (
+            <ActionButton css={{ padding: 0, height: '100%' }} onClick={handleClick}>
+              Create "{inputValue}"
+            </ActionButton>
+          )}
+        </Box>
       )
     }
     return null

@@ -1,8 +1,11 @@
 import { css } from '@emotion/core'
 import React from 'react'
-import { ITheme, styled } from '../../styles'
+import { styled } from '../../styles'
+import { Omit } from '../../utils'
 
-export interface IBoxProps {
+type IntristicDivAttributes = React.HTMLAttributes<any>
+
+export interface IBoxProps extends IntristicDivAttributes {
   direction?: 'row' | 'column'
   as?: keyof React.ReactHTML
   className?: string
