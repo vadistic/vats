@@ -523,11 +523,11 @@ export interface CandidateDeleteMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: TagsQuery
+// GraphQL query operation: SourcesQuery
 // ====================================================
 
-export interface TagsQuery_tags {
-  __typename: 'Tag'
+export interface SourcesQuery_sources {
+  __typename: 'Source'
   id: string
   createdAt: any
   updatedAt: any
@@ -535,12 +535,12 @@ export interface TagsQuery_tags {
   description: string | null
 }
 
-export interface TagsQuery {
-  tags: (TagsQuery_tags | null)[]
+export interface SourcesQuery {
+  sources: (SourcesQuery_sources | null)[]
 }
 
-export interface TagsQueryVariables {
-  where?: TagWhereInput | null
+export interface SourcesQueryVariables {
+  where?: SourceWhereInput | null
 }
 
 /* tslint:disable */
@@ -565,6 +565,30 @@ export interface TagCreateMutation {
 
 export interface TagCreateMutationVariables {
   data: TagCreateInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: TagsQuery
+// ====================================================
+
+export interface TagsQuery_tags {
+  __typename: 'Tag'
+  id: string
+  createdAt: any
+  updatedAt: any
+  label: string
+  description: string | null
+}
+
+export interface TagsQuery {
+  tags: (TagsQuery_tags | null)[]
+}
+
+export interface TagsQueryVariables {
+  where?: TagWhereInput | null
 }
 
 /* tslint:disable */

@@ -2,9 +2,10 @@ import { css } from '@emotion/core'
 import { useFormikContext } from 'formik'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
-import { ActionButton, IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
+import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
+import { useIntl } from '../../i18n'
 import { ElementType, filterNull, Omit } from '../../utils'
 import { Box } from '../box'
 import {
@@ -13,10 +14,11 @@ import {
   FormikCustomPicker,
   FormikCustomPickerProps,
 } from '../formik'
+import { DisplayActionButton } from './button'
 import { displayFieldFactory } from './factory'
 
-type PoweredPickerBaseProps<V = any> = FormikCustomPickerProps<V> & {
-  displayProp: string
+type PoweredPickerBaseProps<V extends any[] = any[]> = FormikCustomPickerProps<V> & {
+  displayProp: keyof ElementType<V>
   editable?: boolean
 }
 
@@ -54,14 +56,20 @@ const PickerFallback: React.FC<PoweredPickerBaseProps> = props => {
   return <CustomPicker onRenderItem={renderItem} {...props} />
 }
 
-interface IOnCreateDataProp {
+interface IOnCreateDataProp<V extends any[]> {
   inputValue: string
-  displayProp: string
+  displayProp: keyof ElementType<V>
 }
 
-export type OnCreateData = ({ inputValue, displayProp }: IOnCreateDataProp) => any
+export type OnCreateData<V extends any[]> = ({
+  inputValue,
+  displayProp,
+}: IOnCreateDataProp<V>) => Partial<ElementType<V>>
 
-type PoweredPickerProps<V> = Omit<PoweredPickerBaseProps<V>, 'onResolveSuggestions'> & {
+export type PoweredPickerProps<V extends any[] = any[]> = Omit<
+  PoweredPickerBaseProps<V>,
+  'onResolveSuggestions'
+> & {
   variables: any
   graphql: {
     query: DocumentNode
@@ -69,12 +77,12 @@ type PoweredPickerProps<V> = Omit<PoweredPickerBaseProps<V>, 'onResolveSuggestio
     createMutation: DocumentNode
     createMutationRoot: string
   }
-  onCreateData: OnCreateData
+  onCreateData: OnCreateData<V>
 }
 
 type PickerType<V> = CustomBasePicker<ElementType<V>>
 
-const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
+const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   graphql,
   onCreateData,
   variables,
@@ -82,6 +90,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
 }) => {
   const picker = useRef<PickerType<any>>(undefined as any)
   const client = useApolloClient()
+  const { intl } = useIntl()
 
   const { setFieldValue, getFieldProps } = useFormikContext<any>()
 
@@ -107,11 +116,11 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
   }, [variables])
 
   // I'd like to useMemo for searcher initialization,
-  // but it would skip inital state suggestion for the first typed letter or load too quick
+  // but it would skip inital state suggestion for the first typed letter or load index query too quickly
   // it's a duplication, but seems like the most effective way
   const loadFirstRenderSearcher = useCallback(
     async () =>
-      new FuzzySearch<any>(await loadValues(), [displayProp], {
+      new FuzzySearch<any>(await loadValues(), [displayProp as string], {
         caseSensitive: false,
         sort: true,
       }),
@@ -120,7 +129,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
 
   const searcher = useMemo(
     () =>
-      new FuzzySearch<any>(values, [displayProp], {
+      new FuzzySearch<any>(values, [displayProp as string], {
         caseSensitive: false,
         sort: true,
       }),
@@ -183,9 +192,12 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
       const inputValue = picker.current.inputComponentRef.current.value.trim()
 
       const duplicate = values.some(value => value[displayProp] === inputValue)
-      const notResultsFoundText =
+
+      const noResultsText: string =
         (rest.pickerSuggestionsProps && rest.pickerSuggestionsProps.noResultsFoundText) ||
-        'No results found'
+        intl(null, 'helper', 'noResults')
+
+      const createText: string = intl(null, 'helper', 'create')
 
       return (
         <Box
@@ -199,11 +211,15 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
           })}
         >
           {duplicate ? (
-            <span>{notResultsFoundText}</span>
+            <span>{noResultsText}</span>
           ) : (
-            <ActionButton css={{ padding: 0, height: '100%' }} onClick={handleClick}>
-              Create "{inputValue}"
-            </ActionButton>
+            <DisplayActionButton
+              css={{ padding: 0, height: '100%' }}
+              iconProps={{ iconName: 'triggerApproval' }}
+              onClick={handleClick}
+            >
+              {createText} "{inputValue}"
+            </DisplayActionButton>
           )}
         </Box>
       )
@@ -225,16 +241,18 @@ const PoweredPicker: React.FC<PoweredPickerProps<any>> = ({
   )
 }
 
-export const DisplayPicker = displayFieldFactory({
+export const DisplayPicker = displayFieldFactory<PoweredPickerProps>({
   formikComponent: PoweredPicker,
   fallbackComponent: PickerFallback,
   fallbackValueProp: 'selectedItems',
   defaultProps: ({ editable }) => ({
     editable,
   }),
-  cssProp: () => css`
+  cssProp: ({ editable }) => css`
     input {
       background-color: inherit;
+
+      ${!editable && `display: none`};
     }
 
     .ms-BasePicker-text {
