@@ -67,21 +67,18 @@ export const EditableFieldArray = <T extends any>({
   children,
   name,
 }: IEditableFieldArrayProps<T>) => {
-  const { values: editableValues } = useEditableContext()
-  const { values: formikValues } = useFormikContext()
+  const { values, editable } = useEditableContext()
 
-  if (formikValues) {
+  if (editable) {
     return (
       <FieldArray name={name} validateOnChange={false}>
-        {({ form, ...rest }) => children({ values: formikValues, editable: true, ...rest })}
+        {({ form, ...rest }) => children({ values, editable: true, ...rest })}
       </FieldArray>
     )
   }
 
-  if (editableValues) {
-    return (
-      <>{children({ name, values: editableValues as T, editable: false, ...noopArrayHelpers })}</>
-    )
+  if (!editable) {
+    return <>{children({ name, values, editable: false, ...noopArrayHelpers })}</>
   }
 
   return null

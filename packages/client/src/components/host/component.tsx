@@ -33,44 +33,52 @@ export const hostComponentFactory = <
 
     const { data } = useQuery(config.graphql.query, {
       variables: state.variables,
+      suspend: true,
     })
 
     // this is error, because connection error or suspense bug
     if (!data) {
-      hostLog(state, `query returned no undefined or null`)
+      hostLog(state, `query returned no data`)
       return null
     }
 
     const value = data[config.graphql.queryRoot]
 
-    // TODO: allow handling NOT_FOUND falback
-    if (!value) {
-      hostLog(state, `query root value empty or null`)
-      return null
-    }
+    const values = useMemo(() => {
+      if (config.type === HostType.Multi) {
+        const queryValue = data[config.graphql.queryRoot]
 
-    if (config.type === HostType.Single) {
-      return <Context.Provider value={{ value, dispatch, state }}>{children}</Context.Provider>
-    }
-
-    if (config.type === HostType.Multi) {
-      // memo because filter fn is usually expensive
-      const values = useMemo(() => {
-        // TODO: evaluate if api ever return nulls mixed with data
-        const nonNullValues = filterNull(value)
-
-        // here's not found fallback for multi host
-        if (nonNullValues.length === 0) {
-          hostLog(state, `query returned emoty array`)
+        if (!queryValue) {
           return []
         }
+
+        // TODO: evaluate if api ever return nulls mixed with data
+        const nonNullValues = filterNull(queryValue)
 
         if (config.filter) {
           return config.filter(nonNullValues, state)
         }
 
         return nonNullValues
-      }, [data, state])
+      }
+
+      return []
+    }, [data, state])
+
+    if (config.type === HostType.Single) {
+      if (!value) {
+        hostLog(state, `host value empty or null`)
+        return null
+      }
+
+      return <Context.Provider value={{ value, dispatch, state }}>{children}</Context.Provider>
+    }
+
+    if (config.type === HostType.Multi) {
+      if (values.length === 0) {
+        hostLog(state, `host value empty or null`)
+        return null
+      }
 
       return (
         <Context.Provider value={{ value: values, dispatch, state }}>{children}</Context.Provider>

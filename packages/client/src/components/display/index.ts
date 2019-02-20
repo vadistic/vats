@@ -1,5 +1,4 @@
 export * from './text'
-export * from './factory'
 export * from './suspend'
 export * from './picker'
 export * from './label'

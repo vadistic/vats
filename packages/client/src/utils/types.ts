@@ -76,6 +76,14 @@ export type RejectValues<T, Condition> = {
   [Key in keyof T]: T[Key] extends Condition ? never : T[Key]
 }
 
+/**
+ * accept only interface keys, and nothing more
+ *
+ * (typescript sometimes does not enforce type of unspecified properties
+ * in function return type annotation)
+ */
+export type StrictReturnInterface<T> = T & FilterKeys<any, keyof T>
+
 /*
  * Graphql utils
  */

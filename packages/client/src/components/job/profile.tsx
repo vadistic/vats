@@ -4,37 +4,15 @@ import React from 'react'
 import { useIntl } from '../../i18n'
 import { getLoLeafPath } from '../../utils'
 import { Box } from '../box'
-import { DisplayTextField, MultilineDisplayTextField } from '../display'
+import { DisplayTextField } from '../display'
 import { Editable } from '../editable'
-import { JobActions, JobContext, JobHostThunk, JobValue, useJobContext } from './host'
-
-const TestButton: React.FC = () => {
-  const { state, dispatch, value } = useJobContext()
-
-  const someThunk: JobHostThunk = async (_dispatch, _state, helper) => {
-    const res = await helper.updateMutation({
-      variables: {
-        data: {
-          name: 'Magic thunk',
-        },
-      },
-    })
-
-    console.log(res.data)
-  }
-
-  const handleMagic = () => {
-    dispatch(someThunk)
-  }
-
-  return <IconButton iconProps={{ iconName: 'Error' }} onClick={handleMagic} />
-}
+import { JobActions, JobContext, JobValue, useJobContext } from './host'
 
 const EditButton: React.FC = () => {
   const { state, dispatch } = useJobContext()
 
   const toggleEdit = () => {
-    dispatch(JobActions.edit(!state.local.editable))
+    dispatch(JobActions.editable(!state.local.editable))
   }
 
   if (state.local.editable) {
@@ -45,43 +23,46 @@ const EditButton: React.FC = () => {
 }
 
 export const JobProfile: React.FC = () => {
-  const { dispatch, state, value: job } = useJobContext()
+  const { dispatch, value: job } = useJobContext()
   const { intl } = useIntl()
 
   const handleSubmit = (values: JobValue) => {
-    dispatch(JobActions.edit(false))
+    dispatch(JobActions.editable(false))
     dispatch(JobActions.update(values))
   }
 
   const contentPlaceholder = intl(undefined, 'helper', 'empty')
 
   return (
-    <Editable context={JobContext} onSubmit={handleSubmit} editable={state.local.editable}>
+    <Editable context={JobContext} onSubmit={handleSubmit}>
       <Form>
         <Box>
           <EditButton />
-          <TestButton />
           <DisplayTextField
             fontSize="xLarge"
             name={getLoLeafPath(job, 'name')}
             placeholder={intl(undefined, 'job', 'name')}
           />
-          <MultilineDisplayTextField
+          <DisplayTextField
+            multiline={true}
             name={getLoLeafPath(job, 'excerpt')}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'excerpt')}
           />
-          <MultilineDisplayTextField
+          <DisplayTextField
+            multiline={true}
             name={getLoLeafPath(job, 'companyDescription')}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'companyDescription')}
           />
-          <MultilineDisplayTextField
+          <DisplayTextField
+            multiline={true}
             name={getLoLeafPath(job, 'description')}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'description')}
           />
-          <MultilineDisplayTextField
+          <DisplayTextField
+            multiline={true}
             name={getLoLeafPath(job, 'requirements')}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'requirements')}

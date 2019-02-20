@@ -24,8 +24,6 @@ const CustomDisplayTextField: React.FC<ICustomDisplayTextField> = ({ name, ...re
 }
 
 export const TopSection: React.FC = () => {
-  const { value: candidate } = useCandidateContext()
-
   return (
     <Box direction="row">
       <Box css={{ justifyContent: 'center' }}>
@@ -36,7 +34,7 @@ export const TopSection: React.FC = () => {
         <CustomDisplayTextField fontSize="large" name="headline" />
       </Box>
       <Box>
-        <UserAvatar avatar={candidate.avatar} />
+        <UserAvatar />
       </Box>
     </Box>
   )

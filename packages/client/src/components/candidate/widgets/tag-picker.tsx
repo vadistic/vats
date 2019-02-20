@@ -1,20 +1,31 @@
 import gql from 'graphql-tag'
 import { TagFragment } from '../../../generated/fragments'
 import { Tag } from '../../../generated/queries'
-import { DisplayPicker, OnCreateData, PoweredPickerProps } from '../../display'
+import { useIntl } from '../../../i18n'
+import { DisplayPicker, DisplayPickerI, OnCreateData } from '../../display'
 import { IFieldProps } from '../../formik'
 
 export type TagsValue = Tag[]
 
 export interface IDisplayTagPickerProps extends IFieldProps {}
 
+const DisplayTagPickerBase = DisplayPicker as DisplayPickerI<TagsValue>
+
 export const DisplayTagPicker: React.FC<IDisplayTagPickerProps> = props => {
+  const { intl } = useIntl()
+
   const handleCreateData: OnCreateData<TagsValue> = ({ inputValue }) => ({
     label: inputValue,
   })
 
   return (
-    <DisplayPicker<PoweredPickerProps<TagsValue>>
+    <DisplayTagPickerBase
+      labelProps={{
+        iconProps: {
+          iconName: 'tag',
+        },
+        text: intl({ count: 3 }, 'candidate', 'tags'),
+      }}
       graphql={{
         query: TAGS_QUERY,
         queryRoot: 'tags',

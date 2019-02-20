@@ -1,5 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { routes } from '../../routes'
 import { Surface } from '../surface'
 import { CandidateHost } from './host'

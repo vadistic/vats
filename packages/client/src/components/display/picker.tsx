@@ -6,59 +6,29 @@ import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-r
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
 import { useIntl } from '../../i18n'
-import { ElementType, filterNull, Omit } from '../../utils'
+import { ElementType, filterNull, getInByPath, Omit } from '../../utils'
 import { Box } from '../box'
+import { useEditableContext } from '../editable'
 import {
   CustomBasePicker,
   CustomPicker,
   FormikCustomPicker,
   FormikCustomPickerProps,
-  IFieldProps,
 } from '../formik'
 import { DisplayActionButton } from './button'
-import { displayFieldFactory } from './factory'
 import { DisplayLabel, IDisplayLabelProps } from './label'
 
-type PoweredPickerBaseProps<V extends any[] = any[]> = FormikCustomPickerProps<V> &
-  IFieldProps & {
-    displayProp: keyof ElementType<V>
-    editable?: boolean
-    labelProps?: IDisplayLabelProps
+export interface IPoweredPickerOwnProps<V extends any[]> {
+  displayProp: keyof ElementType<V>
+  labelProps?: IDisplayLabelProps
+  variables: any
+  onCreateData: OnCreateData<V>
+  graphql: {
+    query: DocumentNode
+    queryRoot: string
+    createMutation: DocumentNode
+    createMutationRoot: string
   }
-
-type ItemRenderFunction = (props: IPickerItemProps<any>) => JSX.Element
-
-const PoweredPickerBase: React.FC<PoweredPickerBaseProps> = ({
-  editable,
-  displayProp,
-  labelProps,
-  ...rest
-}) => {
-  const renderItem: ItemRenderFunction = ({ item, index, ..._rest }) => (
-    <TagItem
-      {..._rest}
-      index={index}
-      item={item}
-      key={item.id}
-      styles={{ close: !editable && { display: 'none' } }}
-    >
-      {item[displayProp]}
-    </TagItem>
-  )
-
-  return (
-    <Box>
-      {labelProps && <DisplayLabel {...labelProps} />}
-      {(() => {
-        if (editable) {
-          return <FormikCustomPicker onRenderItem={renderItem} {...rest} />
-        }
-        if (rest.selectedItems && rest.selectedItems.length !== 0) {
-          return <CustomPicker onRenderItem={renderItem} {...rest} />
-        }
-      })()}
-    </Box>
-  )
 }
 
 interface IOnCreateDataProp<V extends any[]> {
@@ -72,37 +42,30 @@ export type OnCreateData<V extends any[]> = ({
 }: IOnCreateDataProp<V>) => Partial<ElementType<V>>
 
 export type PoweredPickerProps<V extends any[] = any[]> = Omit<
-  PoweredPickerBaseProps<V>,
+  FormikCustomPickerProps<V>,
   'onResolveSuggestions'
-> & {
-  variables: any
-  graphql: {
-    query: DocumentNode
-    queryRoot: string
-    createMutation: DocumentNode
-    createMutationRoot: string
-  }
-  onCreateData: OnCreateData<V>
-}
-
-type PickerType<V> = CustomBasePicker<ElementType<V>>
+> &
+  IPoweredPickerOwnProps<V>
 
 const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   graphql,
   onCreateData,
   variables,
+  selectedItems,
   ...rest
 }) => {
-  const picker = useRef<PickerType<any>>(undefined as any)
+  type PickerType = CustomBasePicker<any>
+  const picker = useRef<PickerType>(undefined as any)
   const client = useApolloClient()
   const { intl } = useIntl()
 
-  const { setFieldValue, getFieldProps } = useFormikContext<any>()
+  const { setFieldValue } = useFormikContext<any>()
 
   const { name, displayProp } = rest
 
-  // values in state only to access them in create button section
   const [values, setValues] = useState([] as any[])
+
+  const safeSelectedItems = Array.isArray(selectedItems) ? selectedItems : []
 
   // calback to load value only whn needed
   const loadValues = useCallback(async () => {
@@ -120,8 +83,9 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
     return result
   }, [variables])
 
-  // I'd like to useMemo for searcher initialization,
-  // but it would skip inital state suggestion for the first typed letter or load index query too quickly
+  // I'd like to simply useMemo for searcher initialization,
+  // but it would skip inital state suggestion for the first typed letter
+  // or need to load index query on page load
   // it's a duplication, but seems like the most effective way
   const loadFirstRenderSearcher = useCallback(
     async () =>
@@ -147,9 +111,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
       const _input = picker.current.inputComponentRef.current
       const inputValue = picker.current.inputComponentRef.current.value.trim()
 
-      const [{ value: prev }] = getFieldProps(name)
-      const safePrev = Array.isArray(prev) ? prev : []
-      const tempItems = [...safePrev, { [displayProp]: inputValue, id: 'TEMP' }]
+      const tempItems = [...safeSelectedItems, { [displayProp]: inputValue, id: 'TEMP' }]
 
       _picker.dismissSuggestions()
       _input.clear()
@@ -167,7 +129,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
       })
 
       if (mutationRes && mutationRes.data) {
-        setFieldValue(name, [...safePrev, mutationRes.data[graphql.createMutationRoot]])
+        setFieldValue(name, [...safeSelectedItems, mutationRes.data[graphql.createMutationRoot]])
       }
     }
   }
@@ -196,7 +158,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
     if (picker.current && picker.current.inputComponentRef.current) {
       const inputValue = picker.current.inputComponentRef.current.value.trim()
 
-      const duplicate = values.some(value => value[displayProp] === inputValue)
+      const duplicate = safeSelectedItems.some(item => item[displayProp] === inputValue)
 
       const noResultsText: string =
         (rest.pickerSuggestionsProps && rest.pickerSuggestionsProps.noResultsFoundText) ||
@@ -233,7 +195,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   }
 
   return (
-    <PoweredPickerBase
+    <FormikCustomPicker
       {...rest}
       componentRef={picker}
       onResolveSuggestions={handleResolveSuggestions}
@@ -246,18 +208,23 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   )
 }
 
-export const DisplayPicker = displayFieldFactory<PoweredPickerProps>({
-  formikComponent: PoweredPicker,
-  fallbackComponent: PoweredPickerBase,
-  fallbackValueProp: 'selectedItems',
-  setProps: ({ ...rest }) => ({
-    ...rest,
-  }),
-  cssProp: ({ editable }) => css`
+export type DisplayPickerI<V extends any[]> = React.FC<PoweredPickerProps<V>>
+
+export const DisplayPicker: React.FC<PoweredPickerProps<any[]>> = props => {
+  const { editable, values } = useEditableContext()
+
+  const { displayProp, labelProps, name } = props
+
+  const selectedItems = getInByPath(values, name)
+
+  const styles = css`
     input {
       background-color: inherit;
 
-      ${!editable && `display: none`};
+      ${!editable &&
+        css`
+          display: none;
+        `}
     }
 
     .ms-BasePicker-text {
@@ -266,9 +233,46 @@ export const DisplayPicker = displayFieldFactory<PoweredPickerProps>({
       border-left: none;
       border-right: none;
     }
-
     .ms-BasePicker-text:after {
       background: inherit;
     }
-  `,
-})
+  `
+
+  type ItemRenderFunction = (props: IPickerItemProps<any>) => JSX.Element
+  const renderItem: ItemRenderFunction = ({ item, index, ...rest }) => (
+    <TagItem
+      {...rest}
+      index={index}
+      item={item}
+      key={item.id || item.key || item.label}
+      styles={{ close: !editable && { display: 'none' } }}
+    >
+      {item[displayProp]}
+    </TagItem>
+  )
+
+  const label = labelProps ? <DisplayLabel {...labelProps} /> : null
+
+  const picker = editable ? (
+    <PoweredPicker
+      css={styles}
+      onRenderItem={renderItem}
+      selectedItems={selectedItems}
+      {...props}
+    />
+  ) : (
+    <CustomPicker
+      css={styles}
+      onRenderItem={renderItem}
+      selectedItems={selectedItems}
+      onResolveSuggestions={() => []}
+    />
+  )
+
+  return (
+    <Box>
+      {label}
+      {picker}
+    </Box>
+  )
+}

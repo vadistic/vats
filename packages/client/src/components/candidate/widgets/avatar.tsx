@@ -1,9 +1,9 @@
 import { css } from '@emotion/core'
-import { IImageProps, Image, ImageFit } from 'office-ui-fabric-react'
+import { Image, ImageFit } from 'office-ui-fabric-react'
 import React from 'react'
 import { ITheme } from '../../../styles'
 import { Box } from '../../box'
-import { CandidateValue } from '../host'
+import { useCandidateContext } from '../host'
 
 export const userAvatarStyles = (theme: ITheme) => css`
   width: ${theme.sizes.ms};
@@ -14,11 +14,11 @@ export const userAvatarStyles = (theme: ITheme) => css`
   background-color: ${theme.semanticColors.disabledBackground};
 `
 
-export interface IProfileImageProps extends IImageProps {
-  avatar: CandidateValue['avatar']
-}
+export const UserAvatar: React.FC = () => {
+  const {
+    value: { avatar },
+  } = useCandidateContext()
 
-export const UserAvatar: React.FC<IProfileImageProps> = ({ avatar }) => {
   return (
     <Box as="figure">
       {avatar ? (

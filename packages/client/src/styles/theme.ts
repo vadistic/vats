@@ -135,3 +135,7 @@ export interface IThemeProps {
 }
 
 export type CSSProp = SerializedStyles | ((theme: ITheme) => SerializedStyles)
+
+export interface ICSSPropProps {
+  css?: CSSProp
+}

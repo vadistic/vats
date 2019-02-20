@@ -29,12 +29,10 @@ And formik, immer, 18n, jest, 3 or 4 codegens...
 
 [`src/components/formik/adapters.tsx`](src/components/formik/adapters.tsx)
 
-- Context of editable/ non-editable components
+- Context for editable/ non-editable ready components
 
 [`src/components/editable/editable.tsx`](src/components/editable/editable.tsx)
-
-- Factory for display fields
-  [`src/components/display/factory.tsx`](src/components/display/factory.tsx)
+[`src/components/display/index.ts`](src/components/editable/editable.tsx)
 
 ### Some utils
 

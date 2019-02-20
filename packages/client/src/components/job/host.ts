@@ -70,7 +70,7 @@ export const JOB_DELETE_MUTATION = gql`
 const EDIT = 'EDIT'
 
 const JobCustomActions = {
-  edit: (editable: boolean) => createAction(EDIT, editable),
+  editable: (setEditable: boolean) => createAction(EDIT, setEditable),
 }
 
 type JobActionsUnion = ActionsUnion<typeof JobCustomActions>

@@ -18,7 +18,7 @@ import {
   TextField,
   Toggle,
 } from 'office-ui-fabric-react'
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { ElementType, Omit } from '../../utils'
 
 /**
@@ -52,7 +52,7 @@ export interface IFieldMetaProps<V> {
 
 export type UseField<V = any> = [IFieldSpreadProps<V>, IFieldMetaProps<V>]
 
-export type Formik = ReturnType<typeof useFormik>
+export type FormikContextValue = ReturnType<typeof useFormikContext>
 
 export interface IFieldProps {
   name: string
@@ -61,6 +61,18 @@ export interface IFieldProps {
 
 export const createFakeEvent = ({ name }: { name: string }) => {
   return { target: { name } }
+}
+
+export const registerEffect = (formik: any, name: string) => {
+  return useEffect(() => {
+    console.log('field registerd')
+    formik.registerField(name, {})
+
+    return () => {
+      console.log('field un-registerd')
+      formik.unregisterField(name)
+    }
+  })
 }
 
 /*
@@ -79,12 +91,13 @@ export const mapFieldToTextField = <V extends string>([field, fieldMeta]: UseFie
   }
 }
 
-export type FormikTextFieldProps = IFieldProps & Omit<ITextFieldProps, TextFieldInjectedPropNames>
+export type FormikTextFieldProps = IFieldProps & ITextFieldProps
 
 export const FormikTextField: React.FC<FormikTextFieldProps> = ({ name, type, ...rest }) => {
   const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'text')
-  return <TextField {...rest} {...mapFieldToTextField(field)} />
+
+  return <TextField {...mapFieldToTextField(field)} {...rest} />
 }
 
 /*

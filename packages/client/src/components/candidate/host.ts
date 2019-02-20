@@ -105,15 +105,14 @@ type CandidateActionsUnion = ActionsUnion<typeof CandidateCustomActions>
  * REDUCER
  */
 
-const candidateReducer = produce<CandidateState, [CandidateActionsUnion]>((draft, action) => {
+const candidateReducer = (state: CandidateState, action: CandidateActionsUnion) => {
   switch (action.type) {
     case EDIT:
-      draft.local.editable = action.payload || !draft.local.editable
-      return
+      return { ...state, local: { ...state.local, editable: action.payload } }
     default:
-      return
+      return state
   }
-})
+}
 
 /*
  * HOST
