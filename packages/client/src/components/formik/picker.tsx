@@ -25,8 +25,7 @@ export const CustomPicker = styled<
   scope: 'TagPicker',
 })
 
-export type FormikCustomPickerProps<V> = IFieldProps &
-  Omit<ICustomBasePickerProps<ElementType<V>>, PickerInjectedProps>
+export type FormikCustomPickerProps<V> = IFieldProps & ICustomBasePickerProps<ElementType<V>>
 
 export const FormikCustomPicker: React.FC<FormikCustomPickerProps<any[]>> = ({
   name,

@@ -1,66 +1,61 @@
 import { useFormikContext } from 'formik'
 import React from 'react'
 import { CSSProp } from '../../styles'
-import { getInByPath } from '../../utils'
+import { getInByPath, StrictReturnInterface } from '../../utils'
 import { useEditableContext } from '../editable'
+import { IFieldProps } from '../formik'
 
 /*
  * > HOC-like factory for display fields
+ *
+ *  It's basically reimplemantation of `styled` function with few extras
  *
  * features:
  * - connect formik compatible components with editable context
  * - display (more) lightweight fallback component
  * - set defalut props
  * - css prop with props value (inversed styled)
- *
- * ideas:
- *  - connect with i18n for auto labeling
  */
 
-export interface IDisplayFieldBaseProps {
-  name: string
-  placeholder?: string
-}
-
-export interface IDisplayFieldCbProps {
+export interface IDisplayFieldFactoryCbProps {
   editable?: boolean
 }
 
-export interface IDisplayFieldFactoryOptions<Props extends IDisplayFieldBaseProps> {
+export interface IDisplayFieldFactoryOptions<Props, CallbackProps> {
   formikComponent: React.FC<Props>
   fallbackComponent: React.FC<any>
   fallbackValueProp: string
-  defaultProps: (props: Props & IDisplayFieldCbProps) => Partial<Props>
-  cssProp?: (props: Props & IDisplayFieldCbProps) => CSSProp
+  // using this pattern allows precise control what props get passed down
+  setProps: (props: Props & CallbackProps & IDisplayFieldFactoryCbProps) => Props
+  cssProp?: (props: Props & CallbackProps & IDisplayFieldFactoryCbProps) => CSSProp
 }
 
-export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
-  defaultProps,
+export const displayFieldFactory = <Props extends IFieldProps, CallbackProps = {}>({
   formikComponent,
   fallbackComponent,
   fallbackValueProp,
+  setProps,
   cssProp,
-}: IDisplayFieldFactoryOptions<Props>) => {
+}: IDisplayFieldFactoryOptions<Props, CallbackProps>) => {
   const FormikComponent = formikComponent
   const FallbackComponent = fallbackComponent
 
-  const DisplayField = <P extends Props = Props>(props: P) => {
+  const DisplayField = <P extends Props & CallbackProps>(props: P) => {
     const { values: formikValues } = useFormikContext()
     const { values: editableValues } = useEditableContext()
 
     const editable = !!formikValues
 
-    // removing name & placeholdre from fallback component
-    const { name, placeholder, ...rest } = props
-
-    const allProps = { ...props, editable }
+    const callbackProps = { editable, ...props }
+    const { name, type } = props
 
     if (editable) {
       return (
         <FormikComponent
-          css={cssProp ? cssProp(allProps) : undefined}
-          {...props}
-          {...defaultProps(allProps)}
+          name={name}
+          type={type}
+          css={cssProp ? cssProp(callbackProps) : undefined}
+          {...setProps(callbackProps)}
         />
       )
     }
@@ -69,11 +64,11 @@ export const displayFieldFactory = <Props extends IDisplayFieldBaseProps>({
       const value = getInByPath(editableValues, name)
       return (
         <FallbackComponent
+          type={type}
           disabled={true}
-          css={cssProp ? cssProp(allProps) : undefined}
-          {...defaultProps(allProps)}
+          css={cssProp ? cssProp(callbackProps) : undefined}
+          {...setProps(callbackProps)}
           {...{ [fallbackValueProp]: value }}
-          {...rest}
         />
       )
     }

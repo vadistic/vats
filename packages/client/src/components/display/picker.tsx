@@ -13,22 +13,31 @@ import {
   CustomPicker,
   FormikCustomPicker,
   FormikCustomPickerProps,
+  IFieldProps,
 } from '../formik'
 import { DisplayActionButton } from './button'
 import { displayFieldFactory } from './factory'
+import { DisplayLabel, IDisplayLabelProps } from './label'
 
-type PoweredPickerBaseProps<V extends any[] = any[]> = FormikCustomPickerProps<V> & {
-  displayProp: keyof ElementType<V>
-  editable?: boolean
-}
+type PoweredPickerBaseProps<V extends any[] = any[]> = FormikCustomPickerProps<V> &
+  IFieldProps & {
+    displayProp: keyof ElementType<V>
+    editable?: boolean
+    labelProps?: IDisplayLabelProps
+  }
 
 type ItemRenderFunction = (props: IPickerItemProps<any>) => JSX.Element
 
-const PoweredPickerBase: React.FC<PoweredPickerBaseProps> = props => {
-  const { editable, displayProp } = props
-  const renderItem: ItemRenderFunction = ({ item, ...rest }) => (
+const PoweredPickerBase: React.FC<PoweredPickerBaseProps> = ({
+  editable,
+  displayProp,
+  labelProps,
+  ...rest
+}) => {
+  const renderItem: ItemRenderFunction = ({ item, index, ..._rest }) => (
     <TagItem
-      {...rest}
+      {..._rest}
+      index={index}
       item={item}
       key={item.id}
       styles={{ close: !editable && { display: 'none' } }}
@@ -37,23 +46,19 @@ const PoweredPickerBase: React.FC<PoweredPickerBaseProps> = props => {
     </TagItem>
   )
 
-  return <FormikCustomPicker onRenderItem={renderItem} {...props} />
-}
-
-const PickerFallback: React.FC<PoweredPickerBaseProps> = props => {
-  const { editable, displayProp } = props
-  const renderItem: ItemRenderFunction = ({ item, ...rest }) => (
-    <TagItem
-      {...rest}
-      item={item}
-      key={item.id}
-      styles={{ close: !editable && { display: 'none' } }}
-    >
-      {item[displayProp]}
-    </TagItem>
+  return (
+    <Box>
+      {labelProps && <DisplayLabel {...labelProps} />}
+      {(() => {
+        if (editable) {
+          return <FormikCustomPicker onRenderItem={renderItem} {...rest} />
+        }
+        if (rest.selectedItems && rest.selectedItems.length !== 0) {
+          return <CustomPicker onRenderItem={renderItem} {...rest} />
+        }
+      })()}
+    </Box>
   )
-
-  return <CustomPicker onRenderItem={renderItem} {...props} />
 }
 
 interface IOnCreateDataProp<V extends any[]> {
@@ -243,10 +248,10 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
 
 export const DisplayPicker = displayFieldFactory<PoweredPickerProps>({
   formikComponent: PoweredPicker,
-  fallbackComponent: PickerFallback,
+  fallbackComponent: PoweredPickerBase,
   fallbackValueProp: 'selectedItems',
-  defaultProps: ({ editable }) => ({
-    editable,
+  setProps: ({ ...rest }) => ({
+    ...rest,
   }),
   cssProp: ({ editable }) => css`
     input {

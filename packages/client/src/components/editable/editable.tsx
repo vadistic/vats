@@ -42,7 +42,6 @@ export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, ...rest 
 
 export interface ISubEditableProps {
   values: any
-  editable: boolean
   onSubmit: (values: any) => void
 }
 
