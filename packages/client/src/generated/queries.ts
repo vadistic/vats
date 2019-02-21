@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -18,6 +19,7 @@ export interface ToastsQuery {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -144,6 +146,7 @@ export interface CandidateQueryVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -269,6 +272,7 @@ export interface CandidateCreateMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -395,6 +399,7 @@ export interface CandidateUpdateMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -520,6 +525,84 @@ export interface CandidateDeleteMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: CandidateCommentsQuery
+// ====================================================
+
+export interface CandidateCommentsQuery_candidate_comments_createdBy_tasks {
+  __typename: 'Task'
+  id: string
+  createdAt: any
+  updatedAt: any
+  title: string | null
+  description: string | null
+  dueAt: any | null
+}
+
+export interface CandidateCommentsQuery_candidate_comments_createdBy_avatar {
+  __typename: 'File'
+  id: string
+  createdAt: any
+  updatedAt: any
+  size: number
+  type: string
+  name: string
+  url: string
+}
+
+export interface CandidateCommentsQuery_candidate_comments_createdBy {
+  __typename: 'User'
+  id: string
+  createdAt: any
+  updatedAt: any
+  settings: any | null
+  firstName: string
+  lastName: string
+  email: string
+  username: string
+  lastLogin: any | null
+  deletedAt: any | null
+  position: string | null
+  tasks: CandidateCommentsQuery_candidate_comments_createdBy_tasks[] | null
+  avatar: CandidateCommentsQuery_candidate_comments_createdBy_avatar | null
+}
+
+export interface CandidateCommentsQuery_candidate_comments_parent {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  content: string
+}
+
+export interface CandidateCommentsQuery_candidate_comments {
+  __typename: 'Comment'
+  id: string
+  createdAt: any
+  updatedAt: any
+  createdBy: CandidateCommentsQuery_candidate_comments_createdBy
+  parent: CandidateCommentsQuery_candidate_comments_parent | null
+  content: string
+}
+
+export interface CandidateCommentsQuery_candidate {
+  __typename: 'Candidate'
+  comments: CandidateCommentsQuery_candidate_comments[] | null
+}
+
+export interface CandidateCommentsQuery {
+  candidate: CandidateCommentsQuery_candidate | null
+}
+
+export interface CandidateCommentsQueryVariables {
+  where: CandidateWhereUniqueInput
+}
+
+/* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -544,6 +627,7 @@ export interface SourcesQueryVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -568,6 +652,7 @@ export interface TagCreateMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -592,6 +677,7 @@ export interface TagsQueryVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -718,6 +804,7 @@ export interface CandidatesQueryVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -739,6 +826,7 @@ export interface CandidatesUpdateManyMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -759,6 +847,7 @@ export interface CandidatesDeleteManyMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -838,6 +927,7 @@ export interface JobQueryVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -917,6 +1007,7 @@ export interface JobCreateMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -997,6 +1088,7 @@ export interface JobUpdateMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1076,6 +1168,7 @@ export interface JobDeleteMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1156,6 +1249,7 @@ export interface JobsQueryVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1177,6 +1271,7 @@ export interface JobsUpdateManyMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1197,6 +1292,7 @@ export interface JobsDeleteManyMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1246,6 +1342,7 @@ export interface UserPersonaFixtureIndexQuery {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1299,6 +1396,7 @@ export interface UserPersonaFixtureQueryVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1322,6 +1420,7 @@ export interface ToastHostFixtureMutationVariables {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1341,6 +1440,7 @@ export interface ToastHostQuery {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1356,6 +1456,7 @@ export interface ApplicationNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1371,6 +1472,7 @@ export interface DisqualificationInstanceNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1387,6 +1489,7 @@ export interface DisqualificationNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1409,6 +1512,7 @@ export interface UserNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1426,6 +1530,7 @@ export interface TaskNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1445,6 +1550,7 @@ export interface CandidateNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1463,6 +1569,7 @@ export interface FileNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1479,6 +1586,7 @@ export interface TagNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1495,6 +1603,7 @@ export interface SourceNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1510,6 +1619,7 @@ export interface FieldInstanceNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1527,6 +1637,7 @@ export interface FieldNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1542,6 +1653,7 @@ export interface CommentNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1559,6 +1671,7 @@ export interface StageNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1580,6 +1693,7 @@ export interface JobNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1596,6 +1710,7 @@ export interface WorkspaceNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1612,6 +1727,7 @@ export interface WorkflowNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1628,6 +1744,7 @@ export interface InviteNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1646,6 +1763,7 @@ export interface LocationNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1661,6 +1779,7 @@ export interface PageInfoNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1673,6 +1792,7 @@ export interface ApplicationEdgeNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1685,6 +1805,7 @@ export interface AggregateApplicationNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1697,6 +1818,7 @@ export interface CandidateEdgeNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1709,6 +1831,7 @@ export interface AggregateCandidateNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1721,6 +1844,7 @@ export interface JobEdgeNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1733,6 +1857,7 @@ export interface AggregateJobNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1745,6 +1870,7 @@ export interface SourceEdgeNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1757,6 +1883,7 @@ export interface AggregateSourceNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1769,6 +1896,7 @@ export interface TagEdgeNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1781,6 +1909,7 @@ export interface AggregateTagNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1793,6 +1922,7 @@ export interface TaskEdgeNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1805,6 +1935,7 @@ export interface AggregateTaskNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1817,6 +1948,7 @@ export interface UserEdgeNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1829,6 +1961,7 @@ export interface AggregateUserNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1841,6 +1974,7 @@ export interface BatchPayloadNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1853,6 +1987,7 @@ export interface AccessPayloadNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1866,6 +2001,7 @@ export interface AuthPayloadNoNesting {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1929,6 +2065,7 @@ export interface Application {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1970,6 +2107,7 @@ export interface DisqualificationInstance {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -1986,6 +2124,7 @@ export interface Disqualification {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2031,6 +2170,7 @@ export interface User {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2077,6 +2217,7 @@ export interface Task {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2190,6 +2331,7 @@ export interface Candidate {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2208,6 +2350,7 @@ export interface File {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2224,6 +2367,7 @@ export interface Tag {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2240,6 +2384,7 @@ export interface Source {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2266,6 +2411,7 @@ export interface FieldInstance {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2283,6 +2429,7 @@ export interface Field {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2323,6 +2470,7 @@ export interface Comment {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2340,6 +2488,7 @@ export interface Stage {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2411,6 +2560,7 @@ export interface Job {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2491,6 +2641,7 @@ export interface Workspace {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2539,6 +2690,7 @@ export interface Workflow {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2571,6 +2723,7 @@ export interface Invite {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2589,6 +2742,7 @@ export interface Location {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2621,6 +2775,7 @@ export interface ApplicationConnection {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2636,6 +2791,7 @@ export interface PageInfo {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2657,6 +2813,7 @@ export interface ApplicationEdge {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2669,6 +2826,7 @@ export interface AggregateApplication {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2701,6 +2859,7 @@ export interface CandidateConnection {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2726,6 +2885,7 @@ export interface CandidateEdge {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2738,6 +2898,7 @@ export interface AggregateCandidate {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2770,6 +2931,7 @@ export interface JobConnection {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2797,6 +2959,7 @@ export interface JobEdge {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2809,6 +2972,7 @@ export interface AggregateJob {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2841,6 +3005,7 @@ export interface SourceConnection {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2863,6 +3028,7 @@ export interface SourceEdge {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2875,6 +3041,7 @@ export interface AggregateSource {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2907,6 +3074,7 @@ export interface TagConnection {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2929,6 +3097,7 @@ export interface TagEdge {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2941,6 +3110,7 @@ export interface AggregateTag {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2973,6 +3143,7 @@ export interface TaskConnection {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -2996,6 +3167,7 @@ export interface TaskEdge {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -3008,6 +3180,7 @@ export interface AggregateTask {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -3040,6 +3213,7 @@ export interface UserConnection {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -3068,6 +3242,7 @@ export interface UserEdge {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -3080,6 +3255,7 @@ export interface AggregateUser {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -3092,6 +3268,7 @@ export interface BatchPayload {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -3104,6 +3281,7 @@ export interface AccessPayload {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -3117,6 +3295,7 @@ export interface AuthPayload {
 }
 
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 //==============================================================

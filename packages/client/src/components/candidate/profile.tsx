@@ -1,11 +1,10 @@
-import { Form, useFormikContext } from 'formik'
+import { useFormikContext } from 'formik'
 import { IconButton, Pivot, PivotItem } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
+import { useIntl } from '../../i18n'
 import { tryGetIn } from '../../utils'
 import { Box } from '../box'
-import { Comments } from '../comments'
 import { Editable } from '../editable'
-import { diffAutoUpdataData } from '../host'
 import {
   CandidateActions,
   CandidateContext,
@@ -14,6 +13,7 @@ import {
   useCandidateContext,
 } from './host'
 import { InfoSection, MetaSection, TopSection } from './sections'
+import { CandidateComments } from './widgets'
 
 const profileSubmitThunk = (values: CandidateValue): CandidateHostThunk => async (
   dispatch,
@@ -24,8 +24,6 @@ const profileSubmitThunk = (values: CandidateValue): CandidateHostThunk => async
 
   const promise = helper.autoUpdate(values)
   dispatch(CandidateActions.edit(false))
-
-  const res = await promise
 
   // if (res && res.data) {
   // send toast
@@ -52,7 +50,8 @@ const EditButton: React.FC = () => {
 }
 
 export const CandidateProfile: React.FC = () => {
-  const { value: candidate, state, dispatch } = useCandidateContext()
+  const { value: candidate, dispatch } = useCandidateContext()
+  const { intl } = useIntl()
   const [selectedKey, setSelectedKey] = useState('overview')
 
   const handleSubmit = (values: CandidateValue) => {
@@ -71,6 +70,8 @@ export const CandidateProfile: React.FC = () => {
     (tryGetIn(candidate, 'coverLettersFile') || []).length +
     (tryGetIn(candidate, 'coverLettersString') || []).length
 
+  const commentsCount = (tryGetIn(candidate, 'comments') || []).length
+
   return (
     <Box>
       <Editable onSubmit={handleSubmit} context={CandidateContext}>
@@ -82,26 +83,44 @@ export const CandidateProfile: React.FC = () => {
           <EditButton />
           <TopSection />
           <Pivot onLinkClick={handleLinkClick} defaultSelectedKey={selectedKey}>
-            <PivotItem headerText="Overview" itemKey="overview" itemIcon="Trackers">
+            <PivotItem
+              headerText={intl(null, 'candidate', 'overview')}
+              itemKey="overview"
+              itemIcon="Trackers"
+            >
               <p>Overview content</p>
             </PivotItem>
-            <PivotItem headerText="Info" itemKey="info" itemIcon="ContactCard">
+            <PivotItem
+              headerText={intl(null, 'candidate', 'info')}
+              itemKey="info"
+              itemIcon="ContactCard"
+            >
               <MetaSection />
               <InfoSection />
             </PivotItem>
             <PivotItem
-              headerText="Resumes"
+              headerText={intl({ count: 3 }, 'candidate', 'resumes')}
               itemKey="resumes"
               itemCount={resumesCount}
               itemIcon="TextDocument"
             >
               <p>Resume content</p>
             </PivotItem>
-            <PivotItem headerText="Review" itemKey="review" itemCount={42} itemIcon="FavoriteList">
+            <PivotItem
+              headerText={intl({ count: 3 }, 'candidate', 'reviews')}
+              itemKey="review"
+              itemCount={0}
+              itemIcon="FavoriteList"
+            >
               <p>Review content</p>
             </PivotItem>
-            <PivotItem headerText="Comments" itemKey="comments" itemCount={42} itemIcon="Comment">
-              <Comments />
+            <PivotItem
+              headerText={intl({ count: 3 }, 'candidate', 'comments')}
+              itemKey="comments"
+              itemCount={commentsCount}
+              itemIcon="Comment"
+            >
+              <CandidateComments />
             </PivotItem>
           </Pivot>
         </form>

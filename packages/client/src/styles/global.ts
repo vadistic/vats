@@ -5,10 +5,9 @@ export const globalStyles = css`
     margin: 0;
   }
   a {
-    color: 'inherit';
-    text-decoration: 'inherit';
+    text-decoration: inherit;
   }
   fieldset {
-    border: 'none';
+    border: none;
   }
 `
