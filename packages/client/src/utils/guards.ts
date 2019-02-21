@@ -16,3 +16,11 @@ export const tuplify = <T extends [any] | any[]>(tuple: T): T => tuple
 
 export const XOR = (a: boolean, b: boolean) => (a && !b) || (!a && b)
 export const XNOR = (a: boolean, b: boolean) => (a && b) || !(a || b)
+
+/**
+ * for index stringatures in object switch
+ */
+
+export type ObjectSwitch<T> = { [K in keyof T]: T[keyof T] }
+
+export const objSwitch = <T extends {}>(cases: T) => cases as ObjectSwitch<T>

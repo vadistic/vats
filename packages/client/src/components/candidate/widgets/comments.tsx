@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import React, { Suspense } from 'react'
+import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { CommentFragment, UserFragment } from '../../../generated/fragments'
 import { CandidateCommentsQuery, CandidateCommentsQueryVariables } from '../../../generated/queries'

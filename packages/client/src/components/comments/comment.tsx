@@ -3,12 +3,10 @@ import {
   ActionButton,
   ActivityItem,
   IActivityItemProps,
-  IGroup,
   IGroupHeaderProps,
   IPersonaSharedProps,
   IRenderFunction,
   IStyle,
-  IStyleFunctionOrObject,
 } from 'office-ui-fabric-react'
 import React from 'react'
 import { useIntl } from '../../i18n'
@@ -47,7 +45,7 @@ interface IStyles {
   [index: string]: IStyle
 }
 
-export const Comment: React.FC<ICommentProps> = ({ comment, replies, groupHeaderProps }) => {
+export const ParentComment: React.FC<ICommentProps> = ({ comment, replies }) => {
   const theme = useTheme()
 
   const commentStyles: IStyles = {
@@ -138,7 +136,7 @@ export const CommentFooter: React.FC<ICommentFooterProps> = ({ groupFooterProps 
     }
   }
 
-  const handleToggleReply = (ev: React.MouseEvent<any>): void => {
+  const handleToggleReply = (): void => {
     /* noop */
   }
 

@@ -3,46 +3,49 @@ import { RouteComponentProps } from '@reach/router'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
 import { Job, JobType } from '../../generated/queries'
-import { styled } from '../../styles'
+import { useTheme } from '../../styles'
+import { objSwitch } from '../../utils'
 import { Link } from '../link'
 import { useJobsContext } from './host'
 
 export interface IJobListItem {
-  item: Job
+  job: Job
 }
 
-export const JobListItemCard = styled.div<IJobListItem>(
-  ({ theme }) => css`
+export const JobListItemCard: React.FC<IJobListItem> = ({ job, ...rest }) => {
+  const theme = useTheme()
+
+  const borderColor = objSwitch({
+    [JobType.ARCHIVED]: theme.palette.neutralQuaternary,
+    [JobType.DRAFT]: theme.palette.themeLight,
+    [JobType.PUBLISHED]: theme.palette.themePrimary,
+  })[job.type || JobType.PUBLISHED]
+
+  const styles = css`
     padding: ${theme.spacing.m} ${theme.spacing.l2};
     margin: ${theme.spacing.m};
 
     background-color: ${theme.palette.white};
     border-left: solid 4px;
-  `,
-  ({ theme, item }) => {
-    switch (item.type) {
-      case JobType.ARCHIVED:
-        return { borderColor: theme.palette.neutralQuaternary }
-      case JobType.DRAFT:
-        return { borderColor: theme.palette.themeLight }
-      case JobType.PUBLISHED:
-        return { borderColor: theme.palette.themePrimary }
-    }
-  },
-)
 
-export const JobListItem: React.FC<IJobListItem> = ({ item }) => {
+    border-color: ${borderColor};
+  `
+
+  return <div css={styles} {...rest} />
+}
+
+export const JobListItem: React.FC<IJobListItem> = ({ job }) => {
   // TODO: get from app settings
   const openJobSurface = true
 
   return (
-    <JobListItemCard item={item}>
-      <Link plain={true} to={openJobSurface ? item.id : `/job/${item.id}`}>
-        <h3>{item.name}</h3>
+    <JobListItemCard job={job}>
+      <Link plain={true} to={openJobSurface ? job.id : `/job/${job.id}`}>
+        <h3>{job.name}</h3>
       </Link>
-      <h4>{item.department}</h4>
-      <p>{item.type}</p>
-      <span>Applications: {item.applications && item.applications.length}</span>
+      <h4>{job.department}</h4>
+      <p>{job.type}</p>
+      <span>Applications: {job.applications && job.applications.length}</span>
     </JobListItemCard>
   )
 }
@@ -54,7 +57,7 @@ export const JobsList: React.FC<IJobsListProps> = ({ children }) => {
 
   const handleGroupedRenderCell = (nestingDepth?: number, item?: Job, index?: number) => {
     if (item) {
-      return <JobListItem item={item} />
+      return <JobListItem job={item} />
     }
     return null
   }

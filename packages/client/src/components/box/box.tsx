@@ -1,22 +1,23 @@
 import { css } from '@emotion/core'
 import React from 'react'
-import { styled } from '../../styles'
-import { Omit } from '../../utils'
 
-type IntristicDivAttributes = React.HTMLAttributes<any>
-
-export interface IBoxProps extends IntristicDivAttributes {
+export interface IBoxProps {
+  as?: keyof JSX.IntrinsicElements
   direction?: 'row' | 'column'
-  as?: keyof React.ReactHTML
-  className?: string
 }
 
-const BoxBase: React.FC<IBoxProps> = ({ as: Tag = 'div', ...rest }) => <Tag {...rest} />
+export const Box: React.FC<IBoxProps & JSX.IntrinsicElements['div']> = ({
+  as: tag,
+  direction = 'column',
+  ...rest
+}) => {
+  const Tag = (tag || 'div') as 'div'
 
-export const Box = styled(BoxBase)(
-  ({ direction = 'column' }) => css`
+  const styles = css`
     display: flex;
-    flex-direction: ${direction};
     box-sizing: border-box;
-  `,
-)
+    flex-direction: ${direction};
+  `
+
+  return <Tag css={styles} {...rest} />
+}

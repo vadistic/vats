@@ -45,7 +45,6 @@
   "dependencies": {
     "@craco/craco": "^3.4.1",
     "@emotion/core": "^10.0.7",
-    "@emotion/styled": "^10.0.7",
     "@martin_hotell/rex-tils": "^2.1.1",
     "@reach/router": "^1.2.1",
     "@uifabric/icons": "^6.4.0",

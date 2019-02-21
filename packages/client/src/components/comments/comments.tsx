@@ -9,9 +9,7 @@ import {
 import React, { Suspense, useMemo } from 'react'
 import { CandidateCommentsQuery } from '../../generated/queries'
 import { ElementType } from '../../utils'
-import { Box } from '../box'
-import { Comment, CommentFooter, Reply } from './comment'
-import { CommentEditor } from './editor'
+import { CommentFooter, ParentComment, Reply } from './comment'
 import { groupComments, IGroupCommentsOptions } from './group'
 
 export type CommentValue = ElementType<
@@ -50,7 +48,9 @@ export const Comments: React.FC<ICommentsProps> = ({ comments }) => {
 
     const _replies = replies.slice(group.startIndex, group.startIndex + group.count)
 
-    return <Comment comment={parents[groupIndex]} replies={_replies} groupHeaderProps={props} />
+    return (
+      <ParentComment comment={parents[groupIndex]} replies={_replies} groupHeaderProps={props} />
+    )
   }
 
   const renderFooter: IRenderFunction<IGroupFooterProps> = props => {
