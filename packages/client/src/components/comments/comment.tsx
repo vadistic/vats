@@ -9,7 +9,7 @@ import {
   IStyle,
 } from 'office-ui-fabric-react'
 import React from 'react'
-import { useIntl } from '../../i18n'
+import { useTranslation } from '../../i18n'
 import { useTheme } from '../../styles'
 import { sentenceCase } from '../../utils'
 import { DisplayDateTime } from '../datetime'
@@ -92,7 +92,7 @@ export interface ICommentFooterProps {
 
 export const CommentFooter: React.FC<ICommentFooterProps> = ({ groupFooterProps }) => {
   const theme = useTheme()
-  const { intl } = useIntl()
+  const { tp } = useTranslation()
 
   const { onToggleCollapse, group, expandButtonProps } = groupFooterProps
 
@@ -119,9 +119,9 @@ export const CommentFooter: React.FC<ICommentFooterProps> = ({ groupFooterProps 
   const renderCollapseButton = () => {
     if (group && group.count > 0) {
       const collapseButtonText = sentenceCase(
-        `${isCollapsed ? intl(null, 'action', 'show') : intl(null, 'action', 'hide')} ${
-          group.count
-        } ${intl({ count: group.count }, 'candidate', 'replies')}`,
+        `${isCollapsed ? tp.action.show() : tp.action.hide()} ${group.count} ${tp.candidate.replies(
+          { count: group.count },
+        )}`,
       )
 
       return (
@@ -142,7 +142,7 @@ export const CommentFooter: React.FC<ICommentFooterProps> = ({ groupFooterProps 
 
   const renderReplyButton = () => {
     if (group && group.count > 0) {
-      const replyButtonText = intl(null, 'action', 'reply')
+      const replyButtonText = tp.action.reply()
 
       return (
         <ActionButton {...expandButtonProps} onClick={handleToggleReply} css={footerStyles.button}>

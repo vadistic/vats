@@ -5,7 +5,7 @@ import { DocumentNode } from 'graphql'
 import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
-import { useIntl } from '../../i18n'
+import { useTranslation } from '../../i18n'
 import { ElementType, filterNull, getInByPath, Omit } from '../../utils'
 import { Box } from '../box'
 import { useEditableContext } from '../editable'
@@ -57,7 +57,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   type PickerType = CustomBasePicker<any>
   const picker = useRef<PickerType>(undefined as any)
   const client = useApolloClient()
-  const { intl } = useIntl()
+  const { tp } = useTranslation()
 
   const { setFieldValue } = useFormikContext<any>()
 
@@ -162,9 +162,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
 
       const noResultsText: string =
         (rest.pickerSuggestionsProps && rest.pickerSuggestionsProps.noResultsFoundText) ||
-        intl(null, 'helper', 'noResults')
-
-      const createText: string = intl(null, 'action', 'create')
+        tp.helper.noResults()
 
       return (
         <Box
@@ -185,7 +183,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
               iconProps={{ iconName: 'triggerApproval' }}
               onClick={handleClick}
             >
-              {createText} "{inputValue}"
+              {tp.action.create()} "{inputValue}"
             </DisplayActionButton>
           )}
         </Box>

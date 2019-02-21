@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import { SourceFragment } from '../../../generated/fragments'
 import { Source } from '../../../generated/queries'
-import { useIntl } from '../../../i18n'
+import { useTranslation } from '../../../i18n'
 import { DisplayPicker, DisplayPickerI, OnCreateData } from '../../display'
 import { IFieldProps } from '../../formik'
 
@@ -12,7 +12,7 @@ export interface IDisplaySourcePickerProps extends IFieldProps {}
 const DisplaySourcePickerBase = DisplayPicker as DisplayPickerI<SourcesValue>
 
 export const DisplaySourcePicker: React.FC<IDisplaySourcePickerProps> = props => {
-  const { intl } = useIntl()
+  const { tp } = useTranslation()
 
   const handleCreateData: OnCreateData<SourcesValue> = ({ inputValue }) => ({
     label: inputValue,
@@ -24,7 +24,7 @@ export const DisplaySourcePicker: React.FC<IDisplaySourcePickerProps> = props =>
         iconProps: {
           iconName: 'tag',
         },
-        text: intl({ count: 3 }, 'candidate', 'sources'),
+        text: tp.candidate.sources({ count: 3 }),
       }}
       graphql={{
         query: SOURCES_QUERY,

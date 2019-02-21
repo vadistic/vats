@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik'
 import { IconButton, Pivot, PivotItem } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
-import { useIntl } from '../../i18n'
+import { useTranslation } from '../../i18n'
 import { tryGetIn } from '../../utils'
 import { Box } from '../box'
 import { Editable } from '../editable'
@@ -51,7 +51,7 @@ const EditButton: React.FC = () => {
 
 export const CandidateProfile: React.FC = () => {
   const { value: candidate, dispatch } = useCandidateContext()
-  const { intl } = useIntl()
+  const { tp } = useTranslation()
   const [selectedKey, setSelectedKey] = useState('overview')
 
   const handleSubmit = (values: CandidateValue) => {
@@ -83,23 +83,15 @@ export const CandidateProfile: React.FC = () => {
           <EditButton />
           <TopSection />
           <Pivot onLinkClick={handleLinkClick} defaultSelectedKey={selectedKey}>
-            <PivotItem
-              headerText={intl(null, 'candidate', 'overview')}
-              itemKey="overview"
-              itemIcon="Trackers"
-            >
+            <PivotItem headerText={tp.candidate.overview()} itemKey="overview" itemIcon="Trackers">
               <p>Overview content</p>
             </PivotItem>
-            <PivotItem
-              headerText={intl(null, 'candidate', 'info')}
-              itemKey="info"
-              itemIcon="ContactCard"
-            >
+            <PivotItem headerText={tp.candidate.info()} itemKey="info" itemIcon="ContactCard">
               <MetaSection />
               <InfoSection />
             </PivotItem>
             <PivotItem
-              headerText={intl({ count: 3 }, 'candidate', 'resumes')}
+              headerText={tp.candidate.resumes({ count: 3 })}
               itemKey="resumes"
               itemCount={resumesCount}
               itemIcon="TextDocument"
@@ -107,7 +99,7 @@ export const CandidateProfile: React.FC = () => {
               <p>Resume content</p>
             </PivotItem>
             <PivotItem
-              headerText={intl({ count: 3 }, 'candidate', 'reviews')}
+              headerText={tp.candidate.reviews({ count: 3 })}
               itemKey="review"
               itemCount={0}
               itemIcon="FavoriteList"
@@ -115,7 +107,7 @@ export const CandidateProfile: React.FC = () => {
               <p>Review content</p>
             </PivotItem>
             <PivotItem
-              headerText={intl({ count: 3 }, 'candidate', 'comments')}
+              headerText={tp.candidate.comments({ count: 3 })}
               itemKey="comments"
               itemCount={commentsCount}
               itemIcon="Comment"

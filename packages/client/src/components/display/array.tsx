@@ -1,5 +1,5 @@
 import React from 'react'
-import { useIntl } from '../../i18n'
+import { useTranslation } from '../../i18n'
 import { Box } from '../box'
 import { EditableFieldArray } from '../editable'
 import { IFieldProps } from '../formik'
@@ -20,7 +20,7 @@ export const DisplayTextFieldArray: React.FC<IDisplayTextFieldArrayProps> = ({
   labelProps,
   textFieldProps,
 }: IDisplayTextFieldArrayProps) => {
-  const { intl } = useIntl()
+  const { tp } = useTranslation()
 
   return (
     <EditableFieldArray<{ [index: string]: any[] }> name={name}>
@@ -53,7 +53,7 @@ export const DisplayTextFieldArray: React.FC<IDisplayTextFieldArrayProps> = ({
             {editable && (isArrEmpty || lastNotEmpty) && (
               <DisplayActionButton
                 iconProps={{ iconName: 'add' }}
-                text={intl(null, 'action', 'add')}
+                text={tp.action.add()}
                 onClick={handlePush(emptyElement)}
               />
             )}

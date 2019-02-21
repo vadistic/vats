@@ -1,16 +1,45 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation as useOriginalTranslation } from 'react-i18next'
 import { CheckPath } from '../utils'
 import { i18next } from './i18n'
 import { translation } from './translations/en'
+import { ITranslationTypingConfig } from './types'
 
-/**
- * validate path and transform to lodash.style including 2 arg as parent(for translations)
- */
 type Translation = typeof translation
 
-export const useIntl = () => {
-  const { i18n, t } = useTranslation()
+// TODO: Customise string map
+type TOptions = i18next.TOptions<i18next.StringMap> | string
 
+export type TranslationProxyFunction = (options?: TOptions) => string
+
+export type TranslationProxy<S> = S extends (ITranslationTypingConfig | string)
+  ? TranslationProxyFunction
+  : { [K in keyof S]: TranslationProxy<S[K]> }
+
+export const useTranslation = () => {
+  const { t, i18n } = useOriginalTranslation()
+
+  const translationProxy = (new Proxy(t, {
+    get(target: i18next.TFunction, key: any) {
+      return _translationProxy(key)
+    },
+    apply(target: i18next.TFunction, thisArg, args) {
+      return t(args[0], args[1])
+    },
+  }) as unknown) as TranslationProxy<Translation>
+
+  const _translationProxy = (path: string): any =>
+    new Proxy(t, {
+      get(target: i18next.TFunction, key: any) {
+        return _translationProxy(path + '.' + key)
+      },
+      apply(target: i18next.TFunction, thisArg, args) {
+        return t(path, args[0])
+      },
+    })
+
+  /**
+   * @depreciated use proxy^^
+   */
   const intl = <K extends keyof Translation, P extends string[]>(
     opts: i18next.TOptions | string | number | null | undefined,
     root: K,
@@ -26,5 +55,5 @@ export const useIntl = () => {
     return t(path, normalisedOptions) as CheckPath<Translation[K], P>
   }
 
-  return { i18n, intl }
+  return { i18n, intl, t, tp: translationProxy }
 }

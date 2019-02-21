@@ -1,6 +1,6 @@
 import { CandidateValue } from '../../components/candidate/host'
 import { JobValue } from '../../components/job/host'
-import { TranslationTyping } from '../types'
+import { ITranslationTyping } from '../types'
 
 const shared = {
   id: { single: 'Id', plural: 'Ids' },
@@ -11,7 +11,7 @@ const shared = {
   applications: { single: 'Application', plural: 'Applications' },
 }
 
-const candidate: TranslationTyping<CandidateValue> = {
+const candidate = {
   ...shared,
   __typename: 'Candidate',
   firstName: 'First name',
@@ -46,7 +46,7 @@ const candidateHelper = {
   },
 }
 
-const job: TranslationTyping<JobValue> = {
+const job = {
   ...shared,
   __typename: 'Job',
   workspace: 'Worskpace',

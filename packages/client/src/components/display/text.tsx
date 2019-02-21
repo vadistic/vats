@@ -1,6 +1,6 @@
 import { css } from '@emotion/core'
 import { TextField } from 'office-ui-fabric-react'
-import { i18next, TranslationKeys, useIntl } from '../../i18n'
+import { i18next, TranslationKeys, useTranslation } from '../../i18n'
 import { ITheme } from '../../styles'
 import { getInByPath } from '../../utils'
 import { useEditableContext } from '../editable'
@@ -27,9 +27,7 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   ...rest
 }) => {
   const { editable, values } = useEditableContext()
-  const { intl } = useIntl()
-
-  console.log('NAME', name)
+  const { t } = useTranslation()
 
   const value = getInByPath(values, name)
 
@@ -74,7 +72,7 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
 
   const _placeholder =
     placeholder ||
-    (intlProps && intl(intlProps.options, intlProps.root, intlProps.path || name)) ||
+    (intlProps && t([intlProps.root, intlProps.path || name].join('.'), intlProps.options)) ||
     undefined
 
   const sharedProps: Partial<DisplayTextFieldProps> = {

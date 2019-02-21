@@ -1,12 +1,12 @@
 import React from 'react'
-import { useIntl } from '../../../i18n'
+import { useTranslation } from '../../../i18n'
 import { pathProxy } from '../../../utils'
 import { Box } from '../../box'
 import { DisplayTextFieldArray } from '../../display'
 import { CandidateValue } from '../host'
 
 export const InfoSection: React.FC = () => {
-  const { intl } = useIntl()
+  const { tp } = useTranslation()
   const p = pathProxy<CandidateValue>()
 
   return (
@@ -14,17 +14,17 @@ export const InfoSection: React.FC = () => {
       <DisplayTextFieldArray
         name={p.phones.PATH}
         emptyElement=""
-        labelProps={{ text: intl(null, 'candidate', 'phones'), iconProps: { iconName: 'phone' } }}
+        labelProps={{ text: tp.candidate.phones({ count: 3 }), iconProps: { iconName: 'phone' } }}
       />
       <DisplayTextFieldArray
         name={p.emails.PATH}
         emptyElement=""
-        labelProps={{ text: intl(null, 'candidate', 'emails'), iconProps: { iconName: 'mail' } }}
+        labelProps={{ text: tp.candidate.emails({ count: 3 }), iconProps: { iconName: 'mail' } }}
       />
       <DisplayTextFieldArray
         name={p.links.PATH}
         emptyElement=""
-        labelProps={{ text: intl(null, 'candidate', 'links'), iconProps: { iconName: 'link' } }}
+        labelProps={{ text: tp.candidate.links({ count: 3 }), iconProps: { iconName: 'link' } }}
       />
     </Box>
   )
