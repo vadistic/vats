@@ -6,6 +6,7 @@ export interface ITranslationTypingConfig {
   interval?: string
 }
 
-export type TranslationTyping<T> = { [K in keyof T]: ITranslationTypingConfig | string }
+export type TranslationTyping<T> = { [K in keyof T]: ITranslationTypingConfig | string } &
+  { [K in string]: ITranslationTypingConfig | string }
 
 export type TranslationKeys = keyof typeof translation

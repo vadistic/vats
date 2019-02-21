@@ -7,6 +7,7 @@ const shared = {
   createdAt: { single: 'Add date' },
   updatedAt: { single: 'Update date' },
   comments: { single: 'Comment', plural: 'Comments' },
+  replies: { single: 'Reply', plural: 'Replies' },
   applications: { single: 'Application', plural: 'Applications' },
 }
 
@@ -32,6 +33,19 @@ const candidate: TranslationTyping<CandidateValue> = {
   tasks: { single: 'Task', plural: 'Tasks' },
 }
 
+const candidateHelper = {
+  resumes: {
+    single: 'Resume',
+    plural: 'Resumes',
+  },
+  info: 'Info',
+  overview: 'Overview',
+  reviews: {
+    single: 'Review',
+    plural: 'Reviews',
+  },
+}
+
 const job: TranslationTyping<JobValue> = {
   ...shared,
   __typename: 'Job',
@@ -51,17 +65,42 @@ const helper = {
   error: 'Error',
   content: 'Content',
   empty: 'Empty',
-  add: 'Add',
-  create: 'Create',
-  remove: 'Remove',
   noResults: 'No results found',
+}
+
+const action = {
+  add: 'Add',
+  added: 'Added',
+  create: 'Create',
+  created: 'Created',
+  remove: 'Remove',
+  removed: 'Removed',
+  edit: 'Edit',
+  edited: 'Edited',
+  update: 'Update',
+  updated: 'Updated',
+  sort: 'Sort',
+  sorted: 'Sorted',
+  show: 'Show',
+  showed: 'Showed',
+  hide: 'Hide',
+  hid: 'Were hidden',
+  write: 'Write',
+  wrote: 'Wrote',
+  reply: 'Reply',
+  replied: 'Replied',
+  comment: 'Comment',
+  commented: 'Commented',
 }
 
 export const translation = {
   helper,
-  candidate,
+  action,
+  candidate: {
+    ...candidate,
+    ...candidateHelper,
+  },
   job,
-  shared,
 }
 
 export default translation

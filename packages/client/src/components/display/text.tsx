@@ -1,15 +1,19 @@
 import { css } from '@emotion/core'
-import { useFormikContext } from 'formik'
 import { TextField } from 'office-ui-fabric-react'
-import { useContext } from 'react'
+import { i18next, TranslationKeys, useIntl } from '../../i18n'
 import { ITheme } from '../../styles'
 import { getInByPath } from '../../utils'
-import { EditableContext, useEditableContext } from '../editable'
+import { useEditableContext } from '../editable'
 import { FormikTextField, FormikTextFieldProps } from '../formik'
 import { DisplayLabel } from './label'
 
 export interface IDisplayTextFieldOwnProps {
   fontSize?: keyof ITheme['fonts']
+  intlProps?: {
+    root: TranslationKeys
+    path?: string
+    options?: i18next.TOptions
+  }
 }
 
 export type DisplayTextFieldProps = FormikTextFieldProps & IDisplayTextFieldOwnProps
@@ -18,9 +22,12 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   name,
   fontSize = 'medium',
   multiline,
+  intlProps,
+  placeholder,
   ...rest
 }) => {
   const { editable, values } = useEditableContext()
+  const { intl } = useIntl()
 
   const value = getInByPath(values, name)
 
@@ -63,7 +70,13 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   const renderLabel: DisplayTextFieldProps['onRenderLabel'] = props =>
     props && props.label ? <DisplayLabel text={props.label} {...props.iconProps} /> : null
 
+  const _placeholder =
+    placeholder ||
+    (intlProps && intl(intlProps.options, intlProps.root, intlProps.path || name)) ||
+    undefined
+
   const sharedProps: Partial<DisplayTextFieldProps> = {
+    placeholder: _placeholder,
     autoComplete: 'off',
     resizable: false,
     multiline: false,

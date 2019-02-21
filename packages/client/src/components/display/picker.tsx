@@ -164,7 +164,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
         (rest.pickerSuggestionsProps && rest.pickerSuggestionsProps.noResultsFoundText) ||
         intl(null, 'helper', 'noResults')
 
-      const createText: string = intl(null, 'helper', 'create')
+      const createText: string = intl(null, 'action', 'create')
 
       return (
         <Box

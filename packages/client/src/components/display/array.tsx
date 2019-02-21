@@ -53,7 +53,7 @@ export const DisplayTextFieldArray: React.FC<IDisplayTextFieldArrayProps> = ({
             {editable && (isArrEmpty || lastNotEmpty) && (
               <DisplayActionButton
                 iconProps={{ iconName: 'add' }}
-                text={intl(null, 'helper', 'add')}
+                text={intl(null, 'action', 'add')}
                 onClick={handlePush(emptyElement)}
               />
             )}
