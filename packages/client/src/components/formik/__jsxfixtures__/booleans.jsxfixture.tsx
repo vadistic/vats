@@ -1,6 +1,6 @@
 import { FormikProvider, useFormik } from 'formik'
 import React from 'react'
-import { getLoLeafPath } from '../../../utils'
+import { pathProxy } from '../../../utils'
 import { FormikCheckbox, FormikToggle } from '../adapters'
 
 export const BooleanPickersFixture: React.FC = () => {
@@ -17,6 +17,8 @@ export const BooleanPickersFixture: React.FC = () => {
     },
   }
 
+  const p = pathProxy<typeof form>()
+
   const formik = useFormik({
     initialValues: form,
     onSubmit,
@@ -30,14 +32,14 @@ export const BooleanPickersFixture: React.FC = () => {
         <form>
           <h3>Checkbox</h3>
           <span>Plain</span>
-          <FormikCheckbox name={getLoLeafPath(form, 'newsletter')} />
+          <FormikCheckbox name={p.newsletter.PATH} />
           <span>Nested</span>
-          <FormikCheckbox name={getLoLeafPath(form, 'nested', 'important')} />
+          <FormikCheckbox name={p.nested.important.PATH} />
           <h3>Toggle</h3>
           <span>Plain</span>
-          <FormikToggle name={getLoLeafPath(form, 'spam')} />
+          <FormikToggle name={p.spam.PATH} />
           <span>Nested</span>
-          <FormikToggle name={getLoLeafPath(form, 'nested', 'isWorking')} />
+          <FormikToggle name={p.nested.isWorking.PATH} />
         </form>
       </FormikProvider>
     </div>

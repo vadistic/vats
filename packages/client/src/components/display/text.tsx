@@ -29,6 +29,8 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   const { editable, values } = useEditableContext()
   const { intl } = useIntl()
 
+  console.log('NAME', name)
+
   const value = getInByPath(values, name)
 
   const styles = (theme: ITheme) => css`

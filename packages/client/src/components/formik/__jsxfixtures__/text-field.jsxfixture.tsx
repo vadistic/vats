@@ -1,6 +1,6 @@
 import { FormikProvider, useFormik } from 'formik'
 import React from 'react'
-import { getLoLeafPath } from '../../../utils'
+import { pathProxy } from '../../../utils'
 import { FormikTextField } from '../adapters'
 
 export const TextFieldFixture: React.FC = () => {
@@ -13,6 +13,8 @@ export const TextFieldFixture: React.FC = () => {
     lastName: 'wadas',
     position: 'developer',
   }
+
+  const p = pathProxy<typeof form>()
 
   const formik = useFormik({
     initialValues: form,
@@ -29,9 +31,9 @@ export const TextFieldFixture: React.FC = () => {
   return (
     <div>
       <FormikProvider value={formik}>
-        <FormikTextField name={getLoLeafPath(form, 'firstName')} />
-        <FormikTextField name={getLoLeafPath(form, 'lastName')} />
-        <FormikTextField name={getLoLeafPath(form, 'position')} />
+        <FormikTextField name={p.firstName.PATH} />
+        <FormikTextField name={p.lastName.PATH} />
+        <FormikTextField name={p.position.PATH} />
       </FormikProvider>
     </div>
   )

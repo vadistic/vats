@@ -2,7 +2,7 @@ import { Form } from 'formik'
 import { IconButton } from 'office-ui-fabric-react'
 import React from 'react'
 import { useIntl } from '../../i18n'
-import { getLoLeafPath } from '../../utils'
+import { pathProxy } from '../../utils'
 import { Box } from '../box'
 import { DisplayTextField } from '../display'
 import { Editable } from '../editable'
@@ -23,12 +23,13 @@ const EditButton: React.FC = () => {
 }
 
 export const JobProfile: React.FC = () => {
-  const { dispatch, value: job } = useJobContext()
+  const { dispatch } = useJobContext()
   const { intl } = useIntl()
+  const p = pathProxy<JobValue>()
 
   const handleSubmit = (values: JobValue) => {
-    dispatch(JobActions.editable(false))
     dispatch(JobActions.update(values))
+    dispatch(JobActions.editable(false))
   }
 
   const contentPlaceholder = intl(undefined, 'helper', 'empty')
@@ -40,30 +41,30 @@ export const JobProfile: React.FC = () => {
           <EditButton />
           <DisplayTextField
             fontSize="xLarge"
-            name={getLoLeafPath(job, 'name')}
+            name={p.name.PATH}
             placeholder={intl(undefined, 'job', 'name')}
           />
           <DisplayTextField
             multiline={true}
-            name={getLoLeafPath(job, 'excerpt')}
+            name={p.excerpt.PATH}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'excerpt')}
           />
           <DisplayTextField
             multiline={true}
-            name={getLoLeafPath(job, 'companyDescription')}
+            name={p.companyDescription.PATH}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'companyDescription')}
           />
           <DisplayTextField
             multiline={true}
-            name={getLoLeafPath(job, 'description')}
+            name={p.description.PATH}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'description')}
           />
           <DisplayTextField
             multiline={true}
-            name={getLoLeafPath(job, 'requirements')}
+            name={p.requirements.PATH}
             placeholder={contentPlaceholder}
             label={intl(undefined, 'job', 'requirements')}
           />

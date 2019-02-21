@@ -36,9 +36,6 @@ export const buildLoPath = (paths: Array<string | number>) => {
 export const getLoPath = <S, P extends string[]>(state: S, ...paths: P) =>
   (buildLoPath(paths) as unknown) as CheckPath<S, P>
 
-export const getLoPathAlt = <S>() => <P extends string[]>(...paths: P) =>
-  (buildLoPath(paths) as unknown) as CheckPath<S, P>
-
 /**
  * validate type path for leaf node and transform to lodash.style
  */
@@ -50,3 +47,31 @@ export const getLoLeafPath = <S, P extends Array<string | number>>(state: S, ...
  */
 export const getInByPath = (state: object, path: string) =>
   getIn(state, ...path.split(/\.|(?:\[|\])/).filter(el => !!el))
+
+/*
+ * Different approach
+ * https://github.com/jaredpalmer/formik/issues/1334
+ */
+
+export interface IFieldPath {
+  PATH: string
+}
+
+export type PathProxy<S> = IFieldPath & { [K in keyof S]: PathProxyValue<S[K]> }
+
+type PathProxyValue<S> = S extends object ? PathProxy<S> : IFieldPath
+
+const idPath = { PATH: '' } as IFieldPath
+
+export const pathProxy = <S>(parent: IFieldPath = idPath as any): PathProxy<S> => {
+  return new Proxy(parent as any, {
+    get(target: any, key: any) {
+      if (key in target) {
+        return target[key]
+      }
+      return pathProxy<any>({
+        PATH: `${parent.PATH ? parent.PATH + '.' : idPath.PATH}${key}`,
+      } as any)
+    },
+  })
+}

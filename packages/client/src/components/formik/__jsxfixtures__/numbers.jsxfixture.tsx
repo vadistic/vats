@@ -2,7 +2,7 @@ import { FormikProvider, useFormik } from 'formik'
 // tslint:disable-next-line:no-submodule-imports
 import { Position } from 'office-ui-fabric-react/lib/utilities/positioning'
 import React from 'react'
-import { getLoLeafPath } from '../../../utils'
+import { pathProxy } from '../../../utils'
 import { FormikRating, FormikSlider, FormikSpinButton } from '../adapters'
 
 export const NumbersPickersFixture: React.FC = () => {
@@ -23,6 +23,8 @@ export const NumbersPickersFixture: React.FC = () => {
     rateMe: 3,
   }
 
+  const p = pathProxy<typeof form>()
+
   const formik = useFormik({
     initialValues: form,
     onSubmit,
@@ -36,20 +38,16 @@ export const NumbersPickersFixture: React.FC = () => {
         <form>
           <h3>SpinButton</h3>
           <span>Plain</span>
-          <FormikSpinButton
-            name={getLoLeafPath(form, 'cats')}
-            label="cats"
-            labelPosition={Position.end}
-          />
+          <FormikSpinButton name={p.cats.PATH} label="cats" labelPosition={Position.end} />
           <span>Nested value</span>
           <FormikSpinButton
-            name={getLoLeafPath(form, 'dogs', 'small')}
+            name={p.dogs.small.PATH}
             label="small dogs"
             labelPosition={Position.end}
           />
           <span>Custom min/max/step</span>
           <FormikSpinButton
-            name={getLoLeafPath(form, 'dogs', 'large')}
+            name={p.dogs.large.PATH}
             label="large dogs"
             labelPosition={Position.end}
             min={2}
@@ -59,13 +57,13 @@ export const NumbersPickersFixture: React.FC = () => {
 
           <h3>Slider</h3>
           <span>Plain</span>
-          <FormikSlider name={getLoLeafPath(form, 'howLovely')} />
+          <FormikSlider name={p.howLovely.PATH} />
           <span>Custom min/max/step</span>
-          <FormikSlider name={getLoLeafPath(form, 'howNice')} min={3} max={75} step={4} />
+          <FormikSlider name={p.howNice.PATH} min={3} max={75} step={4} />
 
           <h3>Rating</h3>
           <span>Plain</span>
-          <FormikRating name={getLoLeafPath(form, 'rateMe')} />
+          <FormikRating name={p.rateMe.PATH} />
         </form>
       </FormikProvider>
     </div>
