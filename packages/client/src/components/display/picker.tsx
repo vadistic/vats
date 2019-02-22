@@ -9,12 +9,7 @@ import { useTranslation } from '../../i18n'
 import { ElementType, filterNull, getInByPath, Omit } from '../../utils'
 import { Box } from '../box'
 import { useEditableContext } from '../editable'
-import {
-  CustomBasePicker,
-  CustomPicker,
-  FormikCustomPicker,
-  FormikCustomPickerProps,
-} from '../formik'
+import { CustomBasePicker, CustomPicker, FormikPicker, FormikPickerProps } from '../formik'
 import { DisplayActionButton } from './button'
 import { DisplayLabel, IDisplayLabelProps } from './label'
 
@@ -42,7 +37,7 @@ export type OnCreateData<V extends any[]> = ({
 }: IOnCreateDataProp<V>) => Partial<ElementType<V>>
 
 export type PoweredPickerProps<V extends any[] = any[]> = Omit<
-  FormikCustomPickerProps<V>,
+  FormikPickerProps<V>,
   'onResolveSuggestions'
 > &
   IPoweredPickerOwnProps<V>
@@ -193,7 +188,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   }
 
   return (
-    <FormikCustomPicker
+    <FormikPicker
       {...rest}
       componentRef={picker}
       onResolveSuggestions={handleResolveSuggestions}

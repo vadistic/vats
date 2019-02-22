@@ -1,10 +1,10 @@
 import { css } from '@emotion/core'
-import { TextField } from 'office-ui-fabric-react'
+import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
 import { i18next, TranslationKeys, useTranslation } from '../../i18n'
 import { ITheme } from '../../styles'
 import { getInByPath } from '../../utils'
 import { useEditableContext } from '../editable'
-import { FormikTextField, FormikTextFieldProps } from '../formik'
+import { FormikTextField, IFieldProps } from '../formik'
 import { DisplayLabel } from './label'
 
 export interface IDisplayTextFieldOwnProps {
@@ -16,7 +16,7 @@ export interface IDisplayTextFieldOwnProps {
   }
 }
 
-export type DisplayTextFieldProps = FormikTextFieldProps & IDisplayTextFieldOwnProps
+export type DisplayTextFieldProps = IFieldProps & ITextFieldProps & IDisplayTextFieldOwnProps
 
 export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   name,

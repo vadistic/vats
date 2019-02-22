@@ -1,4 +1,13 @@
-import { useFormik, useFormikContext } from 'formik'
+import {
+  FormikComputedProps,
+  FormikConfig,
+  FormikHandlers,
+  FormikHelpers,
+  FormikRegistration,
+  FormikSharedConfig,
+  FormikState,
+  useFormikContext,
+} from 'formik'
 import {
   Checkbox,
   ChoiceGroup,
@@ -18,8 +27,7 @@ import {
   TextField,
   Toggle,
 } from 'office-ui-fabric-react'
-import React, { useEffect, useMemo } from 'react'
-import { ElementType, Omit } from '../../utils'
+import React, { useEffect } from 'react'
 
 /**
  * Based on this
@@ -29,11 +37,6 @@ import { ElementType, Omit } from '../../utils'
  *
  * TODO: Make custom formik-validation for components missing it
  *
- * TODO: Implement all components
- *   - ColorPicker
- *   - DatePicker
- *   - PeoplePicker
- *   - SwatchColorPicker
  */
 
 export interface IFieldSpreadProps<V> {
@@ -50,20 +53,37 @@ export interface IFieldMetaProps<V> {
   initialValue?: V
 }
 
-export type UseField<V = any> = [IFieldSpreadProps<V>, IFieldMetaProps<V>]
-
-export type FormikContextValue = ReturnType<typeof useFormikContext>
-
 export interface IFieldProps {
   name: string
   type?: string
 }
 
+export type UseField<V = any> = [IFieldSpreadProps<V>, IFieldMetaProps<V>]
+
+export type FormikContextValue<V = any> = FormikSharedConfig &
+  FormikState<V> &
+  FormikHelpers<V> &
+  FormikHandlers &
+  FormikComputedProps<V> &
+  FormikRegistration &
+  Pick<FormikConfig<V>, 'validate' | 'validationSchema'>
+
+type AdapterMap<BaseValue, FabricProps, InjectedKeys extends keyof FabricProps> = <
+  V extends BaseValue
+>(
+  [field, fieldMeta]: UseField<V>,
+  formik: FormikContextValue<{ [name: string]: V }>,
+) => Pick<FabricProps, InjectedKeys>
+
 export const createFakeEvent = ({ name }: { name: string }) => {
   return { target: { name } }
 }
 
-export const registerEffect = (formik: any, name: string) => {
+/*
+ * ! seems unnecesary, but original formik components use this
+ * leaving it just in case
+ */
+export const useRegisterFieldEffect = (formik: any, name: string) => {
   return useEffect(() => {
     console.log('field registerd')
     formik.registerField(name, {})
@@ -81,23 +101,36 @@ export const registerEffect = (formik: any, name: string) => {
 
 export type TextFieldInjectedPropNames = 'value' | 'onChange' | 'onBlur' | 'errorMessage'
 
-export const mapFieldToTextField = <V extends string>([field, fieldMeta]: UseField<V>): Pick<
+export const mapFieldToTextField: AdapterMap<
+  string,
   ITextFieldProps,
   TextFieldInjectedPropNames
-> => {
+> = ([field, fieldMeta], formik) => {
   return {
     ...field,
     errorMessage: fieldMeta.touch ? fieldMeta.error : undefined,
   }
 }
 
-export type FormikTextFieldProps = IFieldProps & ITextFieldProps
-
-export const FormikTextField: React.FC<FormikTextFieldProps> = ({ name, type, ...rest }) => {
+export const useFormikTextField = (name: string, type?: string) => {
   const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'text')
 
-  return <TextField {...mapFieldToTextField(field)} {...rest} />
+  return {
+    formik,
+    field,
+    bind: mapFieldToTextField(field, formik),
+  }
+}
+
+export const FormikTextField: React.FC<ITextFieldProps & IFieldProps> = ({
+  name,
+  type,
+  ...rest
+}) => {
+  const { bind } = useFormikTextField(name, type)
+
+  return <TextField {...bind} {...rest} />
 }
 
 /*
@@ -105,28 +138,31 @@ export const FormikTextField: React.FC<FormikTextFieldProps> = ({ name, type, ..
  */
 export type ToggleInjectedPropNames = 'checked' | 'onChange' | 'onBlur'
 
-export const mapFieldToToggle = <V extends boolean>([field, fieldMeta]: UseField<V>): Pick<
-  IToggleProps,
-  ToggleInjectedPropNames
-> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
+export const mapFieldToToggle: AdapterMap<boolean, IToggleProps, ToggleInjectedPropNames> = (
+  [field, fieldMeta],
+  formik,
+) => {
   const handleChange: IToggleProps['onChange'] = (ev, checked) => {
     formik.setFieldValue(field.name, checked)
     field.onBlur(createFakeEvent(field))
   }
+
   return {
     onChange: handleChange,
     checked: field.value,
   }
 }
 
-export type FormikToggleProps = IFieldProps & Omit<IToggleProps, ToggleInjectedPropNames>
-
-export const FormikToggle: React.FC<FormikToggleProps> = ({ name, type, ...rest }) => {
+export const useFormikToggle = (name: string, type?: string) => {
   const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'checkbox')
-  return <Toggle {...rest} {...mapFieldToToggle(field)} />
+
+  return { formik, field, bind: mapFieldToToggle(field, formik) }
+}
+
+export const FormikToggle: React.FC<IToggleProps & IFieldProps> = ({ name, type, ...rest }) => {
+  const { bind } = useFormikToggle(name, type)
+  return <Toggle {...bind} {...rest} />
 }
 
 /*
@@ -134,29 +170,32 @@ export const FormikToggle: React.FC<FormikToggleProps> = ({ name, type, ...rest 
  */
 export type CheckboxInjectedPropNames = 'checked' | 'onChange' | 'onBlur'
 
-export const mapFieldToCheckbox = <V extends boolean>([field, fieldMeta]: UseField<V>): Pick<
-  ICheckboxProps,
-  CheckboxInjectedPropNames
-> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
+export const mapFieldToCheckbox: AdapterMap<boolean, ICheckboxProps, CheckboxInjectedPropNames> = (
+  [field, fieldMeta],
+  formik,
+) => {
   const handleChange: ICheckboxProps['onChange'] = (ev, checked) => {
     formik.setFieldValue(field.name, checked)
     field.onBlur(createFakeEvent(field))
   }
 
+  // add on blur?
   return {
     onChange: handleChange,
     checked: field.value,
   }
 }
 
-export type FormikCheckboxProps = IFieldProps & Omit<ICheckboxProps, CheckboxInjectedPropNames>
-
-export const FormikCheckbox: React.FC<FormikCheckboxProps> = ({ name, type, ...rest }) => {
-  const formik = useFormikContext<{ [name: string]: boolean }>()
+export const useFormikCheckbox = (name: string, type?: string) => {
+  const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'checkbox')
-  return <Checkbox {...rest} {...mapFieldToCheckbox(field)} />
+
+  return { formik, field, bind: mapFieldToCheckbox(field, formik) }
+}
+
+export const FormikCheckbox: React.FC<ICheckboxProps & IFieldProps> = ({ name, type, ...rest }) => {
+  const { bind } = useFormikCheckbox(name, type)
+  return <Checkbox {...bind} {...rest} />
 }
 
 /*
@@ -169,19 +208,17 @@ export type SpinButtonInjectedPropNames =
   | 'onValidate'
   | 'onBlur'
 
-export const mapFieldToSpinButton = <V extends string>(
-  [field, fieldMeta]: UseField<V>,
-  {
-    min = -Infinity,
-    max = +Infinity,
-    onIncrement,
-    onDecrement,
-    onValidate,
-    step = 1,
-  }: ISpinButtonProps,
-): Pick<ISpinButtonProps, SpinButtonInjectedPropNames> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
+export const mapFieldToSpinButton = ({
+  min = -Infinity,
+  max = +Infinity,
+  onIncrement,
+  onDecrement,
+  onValidate,
+  step = 1,
+}: ISpinButtonProps): AdapterMap<string, ISpinButtonProps, SpinButtonInjectedPropNames> => (
+  [field, fieldMeta],
+  formik,
+) => {
   const handleIncrement: ISpinButtonProps['onIncrement'] = (value: string) => {
     const newValue = onIncrement ? onIncrement(value) : Math.min(max, +value + step)
 
@@ -216,13 +253,25 @@ export const mapFieldToSpinButton = <V extends string>(
   }
 }
 
-export type FromikSpinButtonProps = IFieldProps &
-  Omit<ISpinButtonProps, SpinButtonInjectedPropNames>
-
-export const FormikSpinButton: React.FC<FromikSpinButtonProps> = ({ name, type, ...rest }) => {
-  const formik = useFormikContext<{ [name: string]: number }>()
+export const useFormikSpinButton = (props: ISpinButtonProps) => (name: string, type?: string) => {
+  const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'number')
-  return <SpinButton {...rest} {...mapFieldToSpinButton(field, rest)} />
+
+  return {
+    formik,
+    field,
+    bind: mapFieldToSpinButton(props)(field, formik),
+  }
+}
+
+export const FormikSpinButton: React.FC<ISpinButtonProps & IFieldProps> = ({
+  name,
+  type,
+  ...rest
+}) => {
+  const { bind } = useFormikSpinButton(rest)(name, type)
+
+  return <SpinButton {...bind} {...rest} />
 }
 
 /*
@@ -230,12 +279,10 @@ export const FormikSpinButton: React.FC<FromikSpinButtonProps> = ({ name, type, 
  */
 export type SliderInjectedPropNames = 'value' | 'onChange' | 'onChanged'
 
-export const mapFieldToSlider = <V extends number>([field, fieldMeta]: UseField<V>): Pick<
-  ISliderProps,
-  SliderInjectedPropNames
-> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
+export const mapFieldToSlider: AdapterMap<number, ISliderProps, SliderInjectedPropNames> = (
+  [field, fieldMeta],
+  formik,
+) => {
   const handleChange: ISliderProps['onChange'] = value => {
     formik.setFieldValue(field.name, value)
   }
@@ -247,12 +294,21 @@ export const mapFieldToSlider = <V extends number>([field, fieldMeta]: UseField<
   }
 }
 
-export type FormikSliderProps = IFieldProps & Omit<ISliderProps, SliderInjectedPropNames>
-
-export const FormikSlider: React.FC<FormikSliderProps> = ({ name, type, ...rest }) => {
-  const formik = useFormikContext<{ [name: string]: number }>()
+export const useFormikSlider = (name: string, type?: string) => {
+  const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'range')
-  return <Slider {...rest} {...mapFieldToSlider(field)} />
+
+  return {
+    formik,
+    field,
+    bind: mapFieldToSlider(field, formik),
+  }
+}
+
+export const FormikSlider: React.FC<ISliderProps & IFieldProps> = ({ name, type, ...rest }) => {
+  const { bind } = useFormikSlider(name, type)
+
+  return <Slider {...bind} {...rest} />
 }
 
 /*
@@ -261,12 +317,10 @@ export const FormikSlider: React.FC<FormikSliderProps> = ({ name, type, ...rest 
 
 export type RatingInjectedPropNames = 'rating' | 'onChange'
 
-export const mapFieldToRating = <V extends number>([field, fieldMeta]: UseField<V>): Pick<
-  IRatingProps,
-  RatingInjectedPropNames
-> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
+export const mapFieldToRating: AdapterMap<number, IRatingProps, RatingInjectedPropNames> = (
+  [field, fieldMeta],
+  formik,
+) => {
   const handleChange: IRatingProps['onChange'] = (ev, value) => {
     formik.setFieldValue(field.name, value)
     field.onBlur(createFakeEvent(field))
@@ -278,12 +332,20 @@ export const mapFieldToRating = <V extends number>([field, fieldMeta]: UseField<
   }
 }
 
-export type FormikRatingProps = IFieldProps & Omit<IRatingProps, RatingInjectedPropNames>
-
-export const FormikRating: React.FC<IFieldProps & IRatingProps> = ({ name, type, ...rest }) => {
-  const formik = useFormikContext<{ [name: string]: number }>()
+export const useFormikRating = (name: string, type?: string) => {
+  const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'rating')
-  return <Rating {...rest} {...mapFieldToRating(field)} />
+
+  return {
+    formik,
+    field,
+    bind: mapFieldToRating(field, formik),
+  }
+}
+
+export const FormikRating: React.FC<IRatingProps & IFieldProps> = ({ name, type, ...rest }) => {
+  const { bind } = useFormikRating(name, type)
+  return <Rating {...bind} {...rest} />
 }
 
 /*
@@ -292,12 +354,11 @@ export const FormikRating: React.FC<IFieldProps & IRatingProps> = ({ name, type,
  */
 export type ChoiceGroupInjectedPropNames = 'selectedKey' | 'onChange'
 
-export const mapFieldToChoiceGroup = <V extends string>([field, fieldMeta]: UseField<V>): Pick<
+export const mapFieldToChoiceGroup: AdapterMap<
+  string,
   IChoiceGroupProps,
   ChoiceGroupInjectedPropNames
-> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
+> = ([field, fieldMeta], formik) => {
   const handleChange: IChoiceGroupProps['onChange'] = (ev, option) => {
     formik.setFieldValue(field.name, option ? option.key : null)
     field.onBlur(createFakeEvent(field))
@@ -309,13 +370,25 @@ export const mapFieldToChoiceGroup = <V extends string>([field, fieldMeta]: UseF
   }
 }
 
-export type FormikChoiceGroupProps = IFieldProps &
-  Omit<IChoiceGroupProps, ChoiceGroupInjectedPropNames>
-
-export const FormikChoiceGroup: React.FC<FormikChoiceGroupProps> = ({ name, type, ...rest }) => {
-  const formik = useFormikContext<{ [name: string]: string }>()
+export const useFormikChoiceGroup = (name: string, type?: string) => {
+  const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'radio')
-  return <ChoiceGroup {...rest} {...mapFieldToChoiceGroup(field)} />
+
+  return {
+    formik,
+    field,
+    bind: mapFieldToChoiceGroup(field, formik),
+  }
+}
+
+export const FormikChoiceGroup: React.FC<IChoiceGroupProps & IFieldProps> = ({
+  name,
+  type,
+  ...rest
+}) => {
+  const { bind } = useFormikChoiceGroup(name, type)
+
+  return <ChoiceGroup {...bind} {...rest} />
 }
 
 /*
@@ -330,12 +403,11 @@ export type DropdownInjectedPropNames =
   | 'errorMessage'
   | 'multiSelect'
 
-export const mapFieldToDropdown = <V extends string | number | string[] | number[]>([
-  field,
-  fieldMeta,
-]: UseField<V>): Pick<IDropdownProps, DropdownInjectedPropNames> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
+export const mapFieldToDropdown: AdapterMap<
+  string | number | string[] | number[],
+  IDropdownProps,
+  DropdownInjectedPropNames
+> = ([field, fieldMeta], formik) => {
   const multiSelect = Array.isArray(field.value)
 
   const handleSingleChange: IDropdownProps['onChange'] = (ev, option) => {
@@ -375,12 +447,20 @@ export const mapFieldToDropdown = <V extends string | number | string[] | number
   }
 }
 
-export type FormikDropdownProps = IFieldProps & Omit<IDropdownProps, DropdownInjectedPropNames>
-
-export const FormikDropdown: React.FC<FormikDropdownProps> = ({ name, type, ...rest }) => {
-  const formik = useFormikContext<{ [name: string]: string }>()
+export const useFormikDropdown = (name: string, type?: string) => {
+  const formik = useFormikContext()
   const field = formik.getFieldProps(name, type || 'select')
-  return <Dropdown {...rest} {...mapFieldToDropdown(field)} />
+
+  return {
+    formik,
+    field,
+    bind: mapFieldToDropdown(field, formik),
+  }
+}
+
+export const FormikDropdown: React.FC<IDropdownProps & IFieldProps> = ({ name, type, ...rest }) => {
+  const { bind } = useFormikDropdown(name, type)
+  return <Dropdown {...bind} {...rest} />
 }
 
 /*
@@ -388,16 +468,11 @@ export const FormikDropdown: React.FC<FormikDropdownProps> = ({ name, type, ...r
  */
 export type PickerInjectedProps = 'selectedItems' | 'onChange' | 'onBlur'
 
-export type FormikPickerProps<V extends any[]> = IFieldProps &
-  Omit<IBasePickerProps<ElementType<V>>, PickerInjectedProps>
-
-export const mapFieldToPicker = <V extends any[]>([field, fieldMeta]: UseField<V>): Pick<
-  IBasePickerProps<ElementType<V>>,
-  PickerInjectedProps
-> => {
-  const formik = useFormikContext<{ [name: string]: V }>()
-
-  const handleChange = (items: Array<ElementType<V>> | undefined) => {
+export const mapFieldToPicker: AdapterMap<any[], IBasePickerProps<any>, PickerInjectedProps> = (
+  [field, fieldMeta],
+  formik,
+) => {
+  const handleChange = (items: any[] | undefined) => {
     formik.setFieldValue(field.name, items ? items : null)
     field.onBlur(createFakeEvent(field))
   }
@@ -407,5 +482,16 @@ export const mapFieldToPicker = <V extends any[]>([field, fieldMeta]: UseField<V
     onChange: handleChange,
     // ! maybe not needed
     onBlur: () => field.onBlur(createFakeEvent(field)),
+  }
+}
+
+export const useFormikPicker = (name: string, type?: string) => {
+  const formik = useFormikContext()
+  const field = formik.getFieldProps(name, type || 'select')
+
+  return {
+    formik,
+    field,
+    bind: mapFieldToPicker(field, formik),
   }
 }

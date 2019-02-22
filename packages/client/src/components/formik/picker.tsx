@@ -1,4 +1,3 @@
-import { useFormikContext } from 'formik'
 import {
   BasePicker,
   IBasePickerProps,
@@ -8,8 +7,8 @@ import {
 } from 'office-ui-fabric-react'
 // tslint:disable-next-line: no-submodule-imports
 import { getStyles } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.styles'
-import { ElementType, Omit } from '../../utils'
-import { IFieldProps, mapFieldToPicker, PickerInjectedProps, registerEffect } from './adapters'
+import { ElementType } from '../../utils'
+import { IFieldProps, useFormikPicker } from './adapters'
 
 export interface ICustomBasePickerProps<V> extends IBasePickerProps<V> {}
 
@@ -25,15 +24,11 @@ export const CustomPicker = styled<
   scope: 'TagPicker',
 })
 
-export type FormikCustomPickerProps<V> = IFieldProps & ICustomBasePickerProps<ElementType<V>>
+// leaving this interface because typing complex picker items is actually useful
+export type FormikPickerProps<V> = IFieldProps & ICustomBasePickerProps<ElementType<V>>
 
-export const FormikCustomPicker: React.FC<FormikCustomPickerProps<any[]>> = ({
-  name,
-  type,
-  ...rest
-}) => {
-  const formik = useFormikContext<{ [name: string]: any[] }>()
-  const field = formik.getFieldProps(name, type || 'select')
+export const FormikPicker: React.FC<FormikPickerProps<any[]>> = ({ name, type, ...rest }) => {
+  const { bind } = useFormikPicker(name, type)
 
-  return <CustomPicker {...rest} {...mapFieldToPicker<any>(field)} />
+  return <CustomPicker {...bind} {...rest} />
 }
