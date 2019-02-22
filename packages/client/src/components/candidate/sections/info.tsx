@@ -14,17 +14,17 @@ export const InfoSection: React.FC = () => {
       <DisplayTextFieldArray
         name={p.phones.PATH}
         emptyElement=""
-        labelProps={{ text: tp.candidate.phones({ count: 3 }), iconProps: { iconName: 'phone' } }}
+        labelProps={{ text: tp.candidate.phone({ count: 3 }), iconProps: { iconName: 'phone' } }}
       />
       <DisplayTextFieldArray
         name={p.emails.PATH}
         emptyElement=""
-        labelProps={{ text: tp.candidate.emails({ count: 3 }), iconProps: { iconName: 'mail' } }}
+        labelProps={{ text: tp.candidate.email({ count: 3 }), iconProps: { iconName: 'mail' } }}
       />
       <DisplayTextFieldArray
         name={p.links.PATH}
         emptyElement=""
-        labelProps={{ text: tp.candidate.links({ count: 3 }), iconProps: { iconName: 'link' } }}
+        labelProps={{ text: tp.candidate.link({ count: 3 }), iconProps: { iconName: 'link' } }}
       />
     </Box>
   )

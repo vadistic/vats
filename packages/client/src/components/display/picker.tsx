@@ -157,7 +157,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
 
       const noResultsText: string =
         (rest.pickerSuggestionsProps && rest.pickerSuggestionsProps.noResultsFoundText) ||
-        tp.helper.noResults()
+        tp.common.noResult()
 
       return (
         <Box

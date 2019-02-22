@@ -1,15 +1,9 @@
 import { useTranslation as useOriginalTranslation } from 'react-i18next'
 import { CheckPath } from '../utils'
 import { i18next } from './i18n'
-import { translation } from './translations/en'
-import { ITranslationTypingConfig } from './types'
+import { ITranslationTypingConfig, Translation, TranslationOptions } from './types'
 
-type Translation = typeof translation
-
-// TODO: Customise string map
-type TOptions = i18next.TOptions<i18next.StringMap> | string
-
-export type TranslationProxyFunction = (options?: TOptions) => string
+export type TranslationProxyFunction = (options?: TranslationOptions) => string
 
 export type TranslationProxy<S> = S extends (ITranslationTypingConfig | string)
   ? TranslationProxyFunction

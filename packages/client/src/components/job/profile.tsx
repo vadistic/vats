@@ -32,7 +32,7 @@ export const JobProfile: React.FC = () => {
     dispatch(JobActions.editable(false))
   }
 
-  const contentPlaceholder = tp.helper.empty()
+  const contentPlaceholder = tp.common.empty()
 
   return (
     <Editable context={JobContext} onSubmit={handleSubmit}>

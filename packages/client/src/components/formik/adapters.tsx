@@ -71,7 +71,7 @@ export type FormikContextValue<V = any> = FormikSharedConfig &
 type AdapterMap<BaseValue, FabricProps, InjectedKeys extends keyof FabricProps> = <
   V extends BaseValue
 >(
-  [field, fieldMeta]: UseField<V>,
+  field: UseField<V>,
   formik: FormikContextValue<{ [name: string]: V }>,
 ) => Pick<FabricProps, InjectedKeys>
 

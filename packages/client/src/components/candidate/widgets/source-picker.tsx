@@ -24,7 +24,7 @@ export const DisplaySourcePicker: React.FC<IDisplaySourcePickerProps> = props =>
         iconProps: {
           iconName: 'tag',
         },
-        text: tp.candidate.sources({ count: 3 }),
+        text: tp.candidate.source({ count: 3 }),
       }}
       graphql={{
         query: SOURCES_QUERY,

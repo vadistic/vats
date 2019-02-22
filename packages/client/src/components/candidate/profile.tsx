@@ -91,7 +91,7 @@ export const CandidateProfile: React.FC = () => {
               <InfoSection />
             </PivotItem>
             <PivotItem
-              headerText={tp.candidate.resumes({ count: 3 })}
+              headerText={tp.candidate.resume({ count: 3 })}
               itemKey="resumes"
               itemCount={resumesCount}
               itemIcon="TextDocument"
@@ -99,7 +99,7 @@ export const CandidateProfile: React.FC = () => {
               <p>Resume content</p>
             </PivotItem>
             <PivotItem
-              headerText={tp.candidate.reviews({ count: 3 })}
+              headerText={tp.candidate.review({ count: 3 })}
               itemKey="review"
               itemCount={0}
               itemIcon="FavoriteList"
@@ -107,7 +107,7 @@ export const CandidateProfile: React.FC = () => {
               <p>Review content</p>
             </PivotItem>
             <PivotItem
-              headerText={tp.candidate.comments({ count: 3 })}
+              headerText={tp.candidate.comment({ count: 3 })}
               itemKey="comments"
               itemCount={commentsCount}
               itemIcon="Comment"

@@ -119,9 +119,9 @@ export const CommentFooter: React.FC<ICommentFooterProps> = ({ groupFooterProps 
   const renderCollapseButton = () => {
     if (group && group.count > 0) {
       const collapseButtonText = sentenceCase(
-        `${isCollapsed ? tp.action.show() : tp.action.hide()} ${group.count} ${tp.candidate.replies(
-          { count: group.count },
-        )}`,
+        `${isCollapsed ? tp.action.show() : tp.action.hide()} ${group.count} ${tp.candidate.reply({
+          count: group.count,
+        })}`,
       )
 
       return (

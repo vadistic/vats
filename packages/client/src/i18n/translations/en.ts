@@ -1,46 +1,47 @@
-import { CandidateValue } from '../../components/candidate/host'
-import { JobValue } from '../../components/job/host'
-import { ITranslationTyping } from '../types'
-
 const shared = {
+  // system
   id: { single: 'Id', plural: 'Ids' },
   createdAt: { single: 'Add date' },
   updatedAt: { single: 'Update date' },
-  comments: { single: 'Comment', plural: 'Comments' },
-  replies: { single: 'Reply', plural: 'Replies' },
+  // comments
+  comment: { single: 'Comment', plural: 'Comments' },
+  reply: { single: 'Reply', plural: 'Replies' },
+  // candidate <=> job
   applications: { single: 'Application', plural: 'Applications' },
 }
 
 const candidate = {
   ...shared,
-  __typename: 'Candidate',
+  // Graphql type
+  label: {
+    single: 'Candidate',
+    plural: 'Candidates',
+  },
   firstName: 'First name',
   lastName: 'Last name',
-  emails: { single: 'Email', plural: 'Emails' },
-  phones: { single: 'Phone number', plural: 'Phone numbers' },
-  links: { single: 'Link', plural: 'Links' },
-  avatar: 'Avatar',
-  company: 'Company',
-  position: 'Position',
-  headline: 'Headline',
-  resumesString: { single: 'Resume text', plural: 'Text resumes' },
-  resumesFile: { single: 'Resume file', plural: 'File resumes' },
-  coverLettersString: { single: 'Cover letter text', plural: 'Text cover letters' },
-  coverLettersFile: { single: 'Cover letter file', plural: 'File cover letters' },
-  tags: { single: 'Tag', plural: 'Tags' },
-  sources: { single: 'Source', plural: 'Sources' },
-  fields: { single: 'Custom field', plural: 'Custom fields' },
-  tasks: { single: 'Task', plural: 'Tasks' },
-}
-
-const candidateHelper = {
-  resumes: {
+  email: { single: 'Email', plural: 'Emails' },
+  phone: { single: 'Phone number', plural: 'Phone numbers' },
+  link: { single: 'Link', plural: 'Links' },
+  avatar: { single: 'Avatar', plural: 'Avatars' },
+  company: { single: 'Company', plural: 'companies' },
+  position: { single: 'Position', plural: 'Positions' },
+  headline: { single: 'Headline', plural: 'Headlines' },
+  resume: {
     single: 'Resume',
     plural: 'Resumes',
   },
+  coverLetter: {
+    single: 'Cover letter text',
+    plural: 'Text cover letters',
+  },
+  tag: { single: 'Tag', plural: 'Tags' },
+  source: { single: 'Source', plural: 'Sources' },
+  customField: { single: 'Custom field', plural: 'Custom fields' },
+  task: { single: 'Task', plural: 'Tasks' },
+  // views
   info: 'Info',
   overview: 'Overview',
-  reviews: {
+  review: {
     single: 'Review',
     plural: 'Reviews',
   },
@@ -48,24 +49,27 @@ const candidateHelper = {
 
 const job = {
   ...shared,
-  __typename: 'Job',
-  workspace: 'Worskpace',
-  workflow: 'Workflows',
-  locations: 'Location',
-  type: 'Status',
+  label: {
+    single: 'Job',
+    plural: 'Jobs',
+  },
   name: { single: 'Name', plural: 'Names' },
+  workspace: { single: 'Worskpace', plural: 'Workspaces' },
+  workflow: { single: 'Workflow', plural: 'Workflows' },
+  location: { single: 'Location', plural: 'Locations' },
   department: { single: 'Department', plural: 'Departments' },
+  type: 'Status',
   excerpt: 'Intro',
   companyDescription: 'Company description',
   description: 'Description',
   requirements: 'Requirements',
 }
 
-const helper = {
+const common = {
   error: 'Error',
   content: 'Content',
   empty: 'Empty',
-  noResults: 'No results found',
+  noResult: 'No results found',
 }
 
 const action = {
@@ -94,12 +98,9 @@ const action = {
 }
 
 export const translation = {
-  helper,
+  common,
   action,
-  candidate: {
-    ...candidate,
-    ...candidateHelper,
-  },
+  candidate,
   job,
 }
 

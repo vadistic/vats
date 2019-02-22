@@ -24,7 +24,7 @@ export const DisplayTagPicker: React.FC<IDisplayTagPickerProps> = props => {
         iconProps: {
           iconName: 'tag',
         },
-        text: tp.candidate.tags({ count: 3 }),
+        text: tp.candidate.tag({ count: 3 }),
       }}
       graphql={{
         query: TAGS_QUERY,

@@ -1,6 +1,5 @@
 import { css } from '@emotion/core'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
-import { i18next, TranslationKeys, useTranslation } from '../../i18n'
 import { ITheme } from '../../styles'
 import { getInByPath } from '../../utils'
 import { useEditableContext } from '../editable'
@@ -9,11 +8,6 @@ import { DisplayLabel } from './label'
 
 export interface IDisplayTextFieldOwnProps {
   fontSize?: keyof ITheme['fonts']
-  intlProps?: {
-    root: TranslationKeys
-    path?: string
-    options?: i18next.TOptions
-  }
 }
 
 export type DisplayTextFieldProps = IFieldProps & ITextFieldProps & IDisplayTextFieldOwnProps
@@ -22,12 +16,10 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   name,
   fontSize = 'medium',
   multiline,
-  intlProps,
   placeholder,
   ...rest
 }) => {
   const { editable, values } = useEditableContext()
-  const { t } = useTranslation()
 
   const value = getInByPath(values, name)
 
@@ -70,13 +62,7 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   const renderLabel: DisplayTextFieldProps['onRenderLabel'] = props =>
     props && props.label ? <DisplayLabel text={props.label} {...props.iconProps} /> : null
 
-  const _placeholder =
-    placeholder ||
-    (intlProps && t([intlProps.root, intlProps.path || name].join('.'), intlProps.options)) ||
-    undefined
-
   const sharedProps: Partial<DisplayTextFieldProps> = {
-    placeholder: _placeholder,
     autoComplete: 'off',
     resizable: false,
     multiline: false,

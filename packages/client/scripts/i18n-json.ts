@@ -9,32 +9,26 @@ import { ITranslationTypingConfig } from '../src/i18n'
 const TRANSLATIONS_DIR = 'src/i18n/translations'
 const TARGET_DIR = 'src/generated/translations'
 
-// make keys for both plural forms for convinience
-const pluralise = (key: string) => (key[key.length - 1] === 's' ? key.slice(0, -1) : key + 's')
-
 // recursively build i18n json
 const buildJson = (key: string, entry: ITranslationTypingConfig | object): any => {
   if (typeof entry === 'string') {
     return {
       [key]: entry,
-      [pluralise(key)]: entry,
     }
   }
 
+  // means it is single type config because 'single' is required
   if ('single' in entry) {
     const result = {
       [key]: entry.single,
-      [pluralise(key)]: entry.single,
     }
 
     if (entry.plural) {
       result[key + '_plural'] = entry.plural
-      result[pluralise(key) + '_plural'] = entry.plural
     }
 
     if (entry.interval) {
       result[key + '_interval'] = entry.interval
-      result[pluralise(key) + +'_interval'] = entry.interval
     }
 
     return result
@@ -53,7 +47,6 @@ const buildJson = (key: string, entry: ITranslationTypingConfig | object): any =
 
     return {
       [key]: result,
-      [pluralise(key)]: result,
     }
   }
 
