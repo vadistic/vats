@@ -10,14 +10,14 @@ import { getStyles } from 'office-ui-fabric-react/lib/components/pickers/BasePic
 import { ElementType } from '../../utils'
 import { IFieldProps, useFormikPicker } from './adapters'
 
-export interface ICustomBasePickerProps<V> extends IBasePickerProps<V> {}
+export interface ICustomPickerProps<V> extends IBasePickerProps<V> {}
 
-export class CustomBasePicker<V> extends BasePicker<V, ICustomBasePickerProps<V>> {
+export class CustomBasePicker<V> extends BasePicker<V, ICustomPickerProps<V>> {
   inputComponentRef = this.input
 }
 
 export const CustomPicker = styled<
-  ICustomBasePickerProps<any>,
+  ICustomPickerProps<any>,
   IBasePickerStyleProps,
   IBasePickerStyles
 >(CustomBasePicker, getStyles, undefined, {
@@ -25,7 +25,7 @@ export const CustomPicker = styled<
 })
 
 // leaving this interface because typing complex picker items is actually useful
-export type FormikPickerProps<V> = IFieldProps & ICustomBasePickerProps<ElementType<V>>
+export type FormikPickerProps<V> = IFieldProps & ICustomPickerProps<ElementType<V>>
 
 export const FormikPicker: React.FC<FormikPickerProps<any[]>> = ({ name, type, ...rest }) => {
   const { bind } = useFormikPicker(name, type)

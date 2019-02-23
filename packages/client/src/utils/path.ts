@@ -45,7 +45,7 @@ export const getLoLeafPath = <S, P extends Array<string | number>>(state: S, ...
 /**
  *  and now reversing lodash style paths :/
  */
-export const getInByPath = (state: object, path: string) =>
+export const getInByPath = (state: any, path: string) =>
   getIn(state, ...path.split(/\.|(?:\[|\])/).filter(el => !!el))
 
 /*

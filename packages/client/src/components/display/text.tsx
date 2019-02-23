@@ -1,9 +1,8 @@
 import { css } from '@emotion/core'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
 import { ITheme } from '../../styles'
-import { getInByPath } from '../../utils'
 import { useEditableContext } from '../editable'
-import { FormikTextField, IFieldProps } from '../formik'
+import { IFieldProps, useFormikTextField } from '../formik'
 import { DisplayLabel } from './label'
 
 export interface IDisplayTextFieldOwnProps {
@@ -18,9 +17,8 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   multiline,
   ...rest
 }) => {
-  const { editable, values } = useEditableContext()
-
-  const value = getInByPath(values, name)
+  const { editable, value } = useEditableContext(name)
+  const { bind } = useFormikTextField(name)
 
   const styles = (theme: ITheme) => css`
     .ms-TextField-wrapper {
@@ -78,15 +76,14 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
 
   const mergedProps = multiline ? { ...sharedProps, ...multilineProps } : sharedProps
 
-  return editable ? (
-    <FormikTextField
-      name={name}
+  return (
+    <TextField
+      value={value}
+      {...bind}
       css={styles}
       onRenderLabel={renderLabel}
       {...mergedProps}
       {...rest}
     />
-  ) : (
-    <TextField value={value} css={styles} onRenderLabel={renderLabel} {...mergedProps} {...rest} />
   )
 }

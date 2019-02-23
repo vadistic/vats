@@ -7,10 +7,11 @@ import { normaliseFormikInitialValues, normaliseFormikPayload } from './normalis
 export interface IEditableProps {
   context: HostContext<any, any>
   onSubmit: (values: any) => void
+  formikRef?: React.MutableRefObject<any>
 }
 
-export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, children }) => {
-  const { value, state, dispatch } = useContext<IHostContextValue<any, any>>(context)
+export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, formikRef, children }) => {
+  const { value, state } = useContext<IHostContextValue<any, any>>(context)
 
   const editable = state.local.editable || false
   const safeValues = useMemo(() => normaliseFormikInitialValues(value), [value, state])
@@ -22,15 +23,21 @@ export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, children
 
   const formik = useFormik<any>({ onSubmit: handleSubmit, initialValues: safeValues })
 
-  // HACK
-  // BUT DO NOT TOUCH!!!
+  if (formikRef) {
+    formikRef.current = formik
+  }
 
   /*
-   * There's a tricky bug iwhen host was left dirty and then candidate switched
-   * sometimes (every 2 or 10 or never, idk) after toggling edit again
-   * the fields display previous dirty values...
+   * There's a tricky bug when host was left in dirty state and then candidate switched
+   * sometimes, after switching to edit formik values would show previous candidate
    *
-   * This is a hack, and it does not always work, but it's such a waste of time already :<
+   * Seems (mostly) fixed by:
+   * - not subsituting display fields with fabric on the last stage, but using hook formik adapter
+   * - using flag to give react time for async dispatch
+   * - returning null to force children to update
+   * - providing empty formik value on editable switch
+   *
+   * but still happens :<
    */
   const [flag, setFlag] = useState(false)
 
@@ -38,26 +45,45 @@ export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, children
     (value && formik.values && value.id !== formik.values.id) || !value || !formik.values
 
   if (shouldReset) {
-    console.log('Editable form reset')
     if (!flag) {
       formik.resetForm(safeValues)
       setFlag(true)
     }
 
     return null
-  }
-
-  if (flag && !shouldReset) {
-    // for good measure
-    formik.resetForm(safeValues)
-    setFlag(false)
-
-    return null
-  }
-
-  if (!editable) {
-    return <EditableContext.Provider value={{ values: safeValues }} children={children} />
   } else {
-    return <FormikProvider value={formik} children={children} />
+    if (flag) {
+      // for good measure
+      formik.resetForm(safeValues)
+      setFlag(false)
+      return null
+    }
+  }
+
+  const contexts = (
+    <EditableContext.Provider value={{ values: safeValues, editable }}>
+      <FormikProvider value={editable ? formik : ({} as any)} children={children} />
+    </EditableContext.Provider>
+  )
+
+  if (editable) {
+    return (
+      <form
+        onReset={ev => {
+          console.log('form html reset')
+          ev.preventDefault()
+          /* noop */
+        }}
+        onSubmit={ev => {
+          console.log('form html submit')
+          ev.preventDefault()
+          /* noop */
+        }}
+      >
+        {contexts}
+      </form>
+    )
+  } else {
+    return contexts
   }
 }

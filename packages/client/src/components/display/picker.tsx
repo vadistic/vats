@@ -1,15 +1,21 @@
 import { css } from '@emotion/core'
-import { useFormikContext } from 'formik'
+import { StringMap } from '@martin_hotell/rex-tils'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
 import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
 import { useTranslation } from '../../i18n'
-import { ElementType, filterNull, getInByPath, Omit } from '../../utils'
+import { ElementType, filterNull, Omit } from '../../utils'
 import { Box } from '../box'
 import { useEditableContext } from '../editable'
-import { CustomBasePicker, CustomPicker, FormikPicker, FormikPickerProps } from '../formik'
+import {
+  CustomBasePicker,
+  CustomPicker,
+  ICustomPickerProps,
+  IFieldProps,
+  useFormikPicker,
+} from '../formik'
 import { DisplayActionButton } from './button'
 import { DisplayLabel, IDisplayLabelProps } from './label'
 
@@ -43,12 +49,13 @@ export type OnCreateData<V extends any[]> = ({
 }: IOnCreateDataProp<V>) => Partial<ElementType<V>>
 
 export type PoweredPickerProps<V extends any[] = any[]> = Omit<
-  FormikPickerProps<V>,
+  ICustomPickerProps<ElementType<V>>,
   'onResolveSuggestions'
 > &
-  IPoweredPickerOwnProps<V>
+  IPoweredPickerOwnProps<V> &
+  IFieldProps
 
-const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
+const PoweredPicker: React.FC<PoweredPickerProps<Array<StringMap<any>>>> = ({
   graphql,
   onCreateData,
   variables,
@@ -60,12 +67,13 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   const client = useApolloClient()
   const { tp } = useTranslation()
 
-  const { setFieldValue } = useFormikContext<any>()
-
   const { name, tagItemMap } = rest
+
+  const { bind, formik } = useFormikPicker(name)
+
   const dataKey = tagItemMap.display
 
-  const [values, setValues] = useState([] as any[])
+  const [possibleValues, setPossibleValues] = useState([] as any[])
 
   const safeSelectedItems = Array.isArray(selectedItems) ? selectedItems : []
 
@@ -81,7 +89,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
       return []
     }
     const result = filterNull<any>(queryRes.data[graphql.queryRoot])
-    setValues(result)
+    setPossibleValues(result)
     return result
   }, [variables])
 
@@ -100,11 +108,11 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
 
   const searcher = useMemo(
     () =>
-      new FuzzySearch<any>(values, [dataKey as string], {
+      new FuzzySearch<any>(possibleValues, [dataKey as string], {
         caseSensitive: false,
         sort: true,
       }),
-    [variables, values],
+    [variables, possibleValues],
   )
 
   const create = async () => {
@@ -130,8 +138,11 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
         },
       })
 
-      if (mutationRes && mutationRes.data) {
-        setFieldValue(name, [...safeSelectedItems, mutationRes.data[graphql.createMutationRoot]])
+      if (mutationRes && mutationRes.data && 'setFieldValue' in formik) {
+        formik.setFieldValue(name, [
+          ...safeSelectedItems,
+          mutationRes.data[graphql.createMutationRoot],
+        ])
       }
     }
   }
@@ -141,7 +152,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
       return []
     }
 
-    const _searcher = values.length === 0 ? await loadFirstRenderSearcher() : searcher
+    const _searcher = possibleValues.length === 0 ? await loadFirstRenderSearcher() : searcher
 
     return _searcher
       .search(filterText)
@@ -195,8 +206,9 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   }
 
   return (
-    <FormikPicker
+    <CustomPicker
       {...rest}
+      {...bind}
       componentRef={picker}
       onResolveSuggestions={handleResolveSuggestions}
       onRenderSuggestionsItem={renderSuggestionItem}
@@ -211,11 +223,8 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
 export type DisplayPickerI<V extends any[]> = React.FC<PoweredPickerProps<V>>
 
 export const DisplayPicker: React.FC<PoweredPickerProps<any[]>> = props => {
-  const { editable, values } = useEditableContext()
-
   const { tagItemMap, labelProps, name } = props
-
-  const selectedItems = getInByPath(values, name)
+  const { editable, value: selectedItems } = useEditableContext(name)
 
   const styles = css`
     input {
