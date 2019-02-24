@@ -1,6 +1,6 @@
 # vats
 
-> Applications Tracking System build with cool tech [🚧wip]
+> Applications Tracking System built with cool tech [🚧wip]
 
 As I'm (ex-) recruiter this is an obvious choice for pet project^^. It's mostly playground for utils and architecture patterns, that kind of grew to ~20k of source LOC and few packages (despite my honest efforts to trim it).
 
