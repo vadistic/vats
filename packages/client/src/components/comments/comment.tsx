@@ -12,7 +12,7 @@ import { useTranslation } from '../../i18n'
 import { IFabricStyles, useTheme } from '../../styles'
 import { sentenceCase } from '../../utils'
 import { DisplayDateTime } from '../datetime'
-import { Link } from '../link'
+import { Link } from '../router'
 import { CommentValue } from './comments'
 
 const renderTimeStamp: IRenderFunction<IActivityItemProps> = props => {
@@ -62,6 +62,7 @@ export const ParentComment: React.FC<ICommentProps> = ({ comment, replies, group
 
   const activityDescription = (
     <span>
+      {/* TODO: via router config */}
       <Link to={`/user/${comment.createdBy.id}`}>{authorName}</Link> commented
     </span>
   )

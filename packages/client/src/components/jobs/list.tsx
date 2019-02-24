@@ -1,11 +1,11 @@
 import { css } from '@emotion/core'
 import { RouteComponentProps } from '@reach/router'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Job, JobType } from '../../generated/queries'
 import { useTheme } from '../../styles'
 import { objSwitch } from '../../utils'
-import { Link } from '../link'
+import { Link } from '../router'
 import { useJobsContext } from './host'
 
 export interface IJobListItem {
@@ -55,7 +55,7 @@ export interface IJobsListProps extends RouteComponentProps {}
 export const JobsList: React.FC<IJobsListProps> = ({ children }) => {
   const { value: jobs, state } = useJobsContext()
 
-  const handleGroupedRenderCell = (nestingDepth?: number, job?: Job, index?: number) => {
+  const renderCell = (nestingDepth?: number, job?: Job, index?: number) => {
     if (job) {
       return <JobListItem job={job} key={job.id} />
     }
@@ -66,7 +66,7 @@ export const JobsList: React.FC<IJobsListProps> = ({ children }) => {
     <FocusZone direction={FocusZoneDirection.vertical}>
       {/* children necessary for reach router */}
       {children}
-      <GroupedList items={jobs} onRenderCell={handleGroupedRenderCell} />
+      <GroupedList items={jobs} onRenderCell={renderCell} />
     </FocusZone>
   )
 }

@@ -29,6 +29,14 @@ const routesConfig: IRoutesConfigMap = {
           },
         },
       },
+      list: {
+        path: 'list',
+        children: {
+          surface: {
+            path: ':id',
+          },
+        },
+      },
     },
   },
   job: {

@@ -1,7 +1,7 @@
+import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
 import { useTranslation } from '../../../i18n'
 import { pathProxy } from '../../../utils'
-import { Box } from '../../box'
 import { DisplayTextField } from '../../display'
 import { CandidateValue } from '../host'
 import { UserAvatar } from '../widgets'
@@ -11,8 +11,8 @@ export const CandidateTopSection: React.FC = () => {
   const { tp } = useTranslation()
 
   return (
-    <Box direction="row">
-      <Box css={{ justifyContent: 'center' }}>
+    <Stack horizontal={true} horizontalAlign="space-between">
+      <Stack verticalAlign="center">
         <DisplayTextField
           fontSize="xxLarge"
           name={p.firstName.PATH}
@@ -38,10 +38,10 @@ export const CandidateTopSection: React.FC = () => {
           name={p.headline.PATH}
           placeholder={tp.candidate.headline()}
         />
-      </Box>
-      <Box>
+      </Stack>
+      <Stack verticalAlign="center">
         <UserAvatar />
-      </Box>
-    </Box>
+      </Stack>
+    </Stack>
   )
 }

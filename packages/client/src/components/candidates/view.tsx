@@ -5,6 +5,7 @@ import { CandidateSurface } from '../candidate/surface'
 import { HostQuery } from '../host'
 import { Router } from '../router'
 import { CandidatesContext, CandidatesHostProvider } from './host'
+import { CandidatesList } from './list'
 import { CandidatesTable } from './table'
 
 const CandidatesViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
@@ -30,6 +31,9 @@ export const CandidatesView: React.FC<ICandidatesViewProps> = () => {
           <CandidatesTable path={routes.candidates.children.table.basepath}>
             <CandidateSurface path={routes.candidates.children.table.children.surface.basepath} />
           </CandidatesTable>
+          <CandidatesList path={routes.candidates.children.list.basepath}>
+            <CandidateSurface path={routes.candidates.children.list.children.surface.basepath} />
+          </CandidatesList>
         </Router>
       </HostQuery>
     </CandidatesHostProvider>

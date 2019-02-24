@@ -26,7 +26,6 @@ import {
   HostTypingCreator,
   IHostConfig,
   IHostState,
-  IHostTyping,
 } from '../host'
 import { JOB_CREATE_MUTATION, JOB_DELETE_MUTATION, JOB_UPDATE_MUTATION } from '../job/host'
 import { JobsState } from './host'

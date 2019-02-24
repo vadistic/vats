@@ -1,3 +1,5 @@
 export * from './view'
 export * from './surface'
 export * from './host'
+export * from './sections'
+export * from './widgets'
