@@ -16,7 +16,10 @@ export const hostFactory = <HostTyping extends IHostTyping, GraphqlTyping extend
     Actions: Actions as any,
   })
 
-  const { Host } = hostComponentFactory<HostTyping, GraphqlTyping>(config, { Context, useReducer })
+  const { Host, HostProvider, HostQuery } = hostComponentFactory<HostTyping, GraphqlTyping>(
+    config,
+    { Context, useReducer },
+  )
 
-  return { Context, useContext, hostReducer, useReducer, Host, Actions }
+  return { Context, useContext, hostReducer, useReducer, Host, HostProvider, HostQuery, Actions }
 }

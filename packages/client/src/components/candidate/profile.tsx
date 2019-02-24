@@ -1,19 +1,11 @@
-import { useFormikContext } from 'formik'
-import { IconButton, Pivot, PivotItem, Stack } from 'office-ui-fabric-react'
-import React, { useRef, useState } from 'react'
+import { PivotItem } from 'office-ui-fabric-react'
+import React, { useState } from 'react'
 import { useTranslation } from '../../i18n'
 import { tryGetIn } from '../../utils'
 import { Box } from '../box'
-import { Editable } from '../editable'
-import { FormikContextValue } from '../formik'
+import { DisplayForm } from '../display'
 import { SurfacePivot } from '../surface'
-import {
-  CandidateActions,
-  CandidateContext,
-  CandidateHostThunk,
-  CandidateValue,
-  useCandidateContext,
-} from './host'
+import { useCandidateContext } from './host'
 import {
   CandidateCommentsSection,
   CandidateInfoSection,
@@ -23,55 +15,10 @@ import {
   CandidateTopSection,
 } from './sections'
 
-const profileSubmitThunk = (values: CandidateValue): CandidateHostThunk => async (
-  dispatch,
-  state,
-  helper,
-) => {
-  console.log('SUBMIT', values)
-
-  const promise = helper.autoUpdate(values)
-  dispatch(CandidateActions.edit(false))
-
-  // if (res && res.data) {
-  // send toast
-  // }
-}
-
-interface IEditButtonProps {
-  submitForm: () => void
-}
-
-const EditButton: React.FC<IEditButtonProps> = ({ submitForm }) => {
-  const { state, dispatch } = useCandidateContext()
-
-  const toggleEdit = () => {
-    dispatch(CandidateActions.edit(!state.local.editable))
-  }
-
-  if (state.local.editable) {
-    return <IconButton iconProps={{ iconName: 'Save' }} type="button" onClick={submitForm} />
-  } else {
-    return <IconButton iconProps={{ iconName: 'Edit' }} type="button" onClick={toggleEdit} />
-  }
-}
-
 export const CandidateProfile: React.FC = () => {
-  const { value: candidate, dispatch } = useCandidateContext()
+  const { value: candidate } = useCandidateContext()
   const { tp } = useTranslation()
   const [selectedKey, setSelectedKey] = useState('overview')
-
-  const formikRef = useRef<FormikContextValue<CandidateValue>>(null)
-
-  const submitForm = () => {
-    if (formikRef.current) {
-      formikRef.current.submitForm()
-    }
-  }
-
-  const handleSubmit = (values: CandidateValue) => {
-    dispatch(profileSubmitThunk(values))
-  }
 
   const handleLinkClick = (item?: PivotItem) => {
     if (item && item.props.itemKey) {
@@ -89,8 +36,7 @@ export const CandidateProfile: React.FC = () => {
 
   return (
     <Box>
-      <EditButton submitForm={submitForm} />
-      <Editable onSubmit={handleSubmit} context={CandidateContext} formikRef={formikRef}>
+      <DisplayForm>
         <CandidateTopSection />
         <SurfacePivot
           onLinkClick={handleLinkClick}
@@ -136,7 +82,7 @@ export const CandidateProfile: React.FC = () => {
             },
           ]}
         />
-      </Editable>
+      </DisplayForm>
     </Box>
   )
 }

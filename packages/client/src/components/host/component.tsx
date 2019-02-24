@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { filterNull } from '../../utils'
 import { TGraphqlTyping } from './graphql-types'
@@ -28,8 +28,14 @@ export const hostComponentFactory = <
     initArg?: HostTyping['initArg']
   }
 
-  const Host: React.FC<IHostProps> = ({ initArg, children }) => {
+  const HostProvider: React.FC<IHostProps> = ({ initArg, children }) => {
     const [state, dispatch] = useReducer(initArg)
+
+    return <Context.Provider value={{ value: null, dispatch, state }}>{children}</Context.Provider>
+  }
+
+  const HostQuery: React.FC = ({ children }) => {
+    const { dispatch, state } = useContext(Context)
 
     const { data } = useQuery(config.graphql.query, {
       variables: state.variables,
@@ -89,5 +95,11 @@ export const hostComponentFactory = <
     return null
   }
 
-  return { Host }
+  const Host: React.FC<IHostProps> = ({ initArg, children }) => (
+    <HostProvider initArg={initArg}>
+      <HostQuery>{children}</HostQuery>
+    </HostProvider>
+  )
+
+  return { Host, HostQuery, HostProvider }
 }

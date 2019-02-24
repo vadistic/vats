@@ -1,6 +1,6 @@
 import React from 'react'
-import { Loading } from '../loading'
+import { LoadingSpinner } from '../loading'
 
-export const LoadingFixture: React.FC = () => <Loading label="Wait a bit..." />
+export const LoadingFixture: React.FC = () => <LoadingSpinner label="Wait a bit..." />
 
 export default <LoadingFixture />

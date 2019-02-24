@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from '../apollo'
-import { Layout, Loading } from '../components'
+import { Layout, LoadingSpinner } from '../components'
 import { theme, ThemeProvider } from '../styles'
 
 export const random = (max: number) => Math.round(Math.random() * max)
@@ -43,7 +43,7 @@ export const ViewWrapper: React.FC = ({ children }) => <Layout>{children}</Layou
 
 export const ComponentWrapper: React.FC = ({ children }) => (
   <div css={componentWrapperStyles}>
-    <Suspense fallback={<Loading label="Fetching stuff..." />}>{children}</Suspense>
+    <Suspense fallback={<LoadingSpinner label="Fetching stuff..." />}>{children}</Suspense>
   </div>
 )
 

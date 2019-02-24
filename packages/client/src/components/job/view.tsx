@@ -1,13 +1,13 @@
 import { RouteComponentProps } from '@reach/router'
 import React, { Suspense } from 'react'
-import { Loading } from '../loading'
+import { LoadingSpinner } from '../loading'
 import { JobHost } from './host'
 
 export interface IJobViewProps extends RouteComponentProps {
   id?: string
 }
 
-export const JobViewFallback = Loading
+export const JobViewFallback = LoadingSpinner
 
 export const JobView: React.FC<IJobViewProps> = ({ id }) => {
   if (!id) {

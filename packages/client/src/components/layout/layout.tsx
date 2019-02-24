@@ -3,7 +3,7 @@ import React, { Suspense } from 'react'
 
 import { Navigation } from '..'
 import { globalStyles, ITheme } from '../../styles'
-import { Loading } from '../loading'
+import { LoadingSpinner } from '../loading'
 
 const layoutStyles = (theme: ITheme) => css`
   min-height: 100vh;
@@ -20,7 +20,7 @@ export const Layout: React.FC = ({ children }) => (
     <Global styles={globalStyles} />
     <div css={layoutStyles}>
       <Navigation />
-      <Suspense fallback={<Loading label="Loading view..." />}>{children}</Suspense>
+      <Suspense fallback={<LoadingSpinner label="Loading view..." />}>{children}</Suspense>
     </div>
   </>
 )

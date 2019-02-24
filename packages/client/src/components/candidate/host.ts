@@ -1,6 +1,5 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import gql from 'graphql-tag'
-import produce from 'immer'
 import { CandidateFragment } from '../../generated/fragments'
 import {
   CandidateCreateMutation,
@@ -96,7 +95,7 @@ export const CANDIDATE_DELETE_MUTATION = gql`
 const EDIT = 'EDIT'
 
 const CandidateCustomActions = {
-  edit: (editable: boolean) => createAction(EDIT, editable),
+  setEditable: (editable: boolean) => createAction(EDIT, editable),
 }
 
 type CandidateActionsUnion = ActionsUnion<typeof CandidateCustomActions>
@@ -184,6 +183,8 @@ const candidateHostConfig: IHostConfig<CandidateHostTyping, CandidateGraphqlTypi
 
 export const {
   Host: CandidateHost,
+  HostProvider: CandidateHostProvider,
+  HostQuery: CandidateHostQuery,
   useContext: useCandidateContext,
   Context: CandidateContext,
   Actions: CandidateHostActions,

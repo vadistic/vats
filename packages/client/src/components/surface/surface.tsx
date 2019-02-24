@@ -1,29 +1,25 @@
-import {
-  FocusTrapZone,
-  IconButton,
-  IModalProps,
-  IPanelProps,
-  Modal,
-  Panel,
-  PanelType,
-} from 'office-ui-fabric-react'
-import React, { Suspense, useMemo, useState } from 'react'
-
-const SurfaceFallback: React.FC = () => {
-  console.log('Surface suspensed')
-
-  return <p>Loading surface</p>
-}
+import { css, FocusTrapZone, IconButton, Modal, Panel, PanelType } from 'office-ui-fabric-react'
+import React, { useState } from 'react'
 
 interface ISurfaceNavigation {
   onDismiss: () => void
   onExpand: () => void
+  onEdit: () => void
+  onSubmit: () => void
+  editable?: boolean
 }
 
-const SurfaceNavigation: React.FC<ISurfaceNavigation> = ({ onDismiss, onExpand }) => (
+const SurfaceNavigation: React.FC<ISurfaceNavigation> = ({
+  onDismiss,
+  onExpand,
+  onEdit,
+  onSubmit,
+}) => (
   <div>
-    <IconButton onClick={onDismiss} iconProps={{ iconName: 'ChromeClose' }} />
-    <IconButton onClick={onExpand} iconProps={{ iconName: 'FullScreen' }} />
+    <IconButton onClick={onDismiss} iconProps={{ iconName: 'chromeclose' }} />
+    <IconButton onClick={onExpand} iconProps={{ iconName: 'fullscreen' }} />
+    <IconButton onClick={onEdit} iconProps={{ iconName: 'edit' }} />
+    <IconButton onClick={onSubmit} iconProps={{ iconName: 'save' }} />
   </div>
 )
 
@@ -32,15 +28,15 @@ export enum SurfaceType {
   Modal = 'MODAL',
 }
 
-export interface ISurfaceProps extends ISurfaceNavigation {
-  surfaceType?: SurfaceType
+export interface ISurfaceProps {
+  type?: SurfaceType
+  navitationProps: ISurfaceNavigation
 }
 
 export const Surface: React.FC<ISurfaceProps> = ({
   children,
-  onDismiss: onDismissed,
-  surfaceType = SurfaceType.Panel,
-  onExpand,
+  type = SurfaceType.Panel,
+  navitationProps: { onDismiss: onDismissed, onEdit, onExpand, onSubmit },
 }) => {
   const [open, setOpen] = useState(true)
 
@@ -49,17 +45,20 @@ export const Surface: React.FC<ISurfaceProps> = ({
     setOpen(false)
   }
 
-  const inner = <Suspense fallback={<SurfaceFallback />}>{children}</Suspense>
-
   // TODO: mayby only panels?
   const renderModal = () => (
     <Modal onDismissed={onDismissed} onDismiss={handleDissmiss} isOpen={open} isBlocking={true}>
-      {inner}
+      {children}
     </Modal>
   )
 
   const renderNavigation = () => (
-    <SurfaceNavigation onDismiss={handleDissmiss} onExpand={onExpand} />
+    <SurfaceNavigation
+      onDismiss={handleDissmiss}
+      onEdit={onEdit}
+      onSubmit={onSubmit}
+      onExpand={onExpand}
+    />
   )
 
   const renderPanel = () => (
@@ -71,16 +70,25 @@ export const Surface: React.FC<ISurfaceProps> = ({
       type={PanelType.medium}
       isBlocking={false}
       isLightDismiss={false}
+      styles={{
+        content: {
+          display: 'flex',
+          height: '100%',
+          // focus trap zone
+        },
+      }}
     >
-      <FocusTrapZone>{inner}</FocusTrapZone>
+      <FocusTrapZone css={{ display: 'flex', height: '100%', width: '100%' }}>
+        {children}
+      </FocusTrapZone>
     </Panel>
   )
 
-  if (surfaceType === SurfaceType.Panel) {
+  if (type === SurfaceType.Panel) {
     return renderPanel()
   }
 
-  if (surfaceType === SurfaceType.Modal) {
+  if (type === SurfaceType.Modal) {
     return renderModal()
   }
 

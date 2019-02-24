@@ -70,7 +70,7 @@ export const JOB_DELETE_MUTATION = gql`
 const EDIT = 'EDIT'
 
 const JobCustomActions = {
-  editable: (setEditable: boolean) => createAction(EDIT, setEditable),
+  setEditable: (editable: boolean) => createAction(EDIT, editable),
 }
 
 type JobActionsUnion = ActionsUnion<typeof JobCustomActions>
@@ -147,6 +147,8 @@ const jobHostConfig: IHostConfig<JobHostTyping, JobGraphqlTyping> = {
 
 export const {
   Host: JobHost,
+  HostProvider: JobHostProvider,
+  HostQuery: JobHostQuery,
   useContext: useJobContext,
   Context: JobContext,
   Actions: JobHostActions,

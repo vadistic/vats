@@ -60,30 +60,9 @@ export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, formikRe
     }
   }
 
-  const contexts = (
+  return (
     <EditableContext.Provider value={{ values: safeValues, editable }}>
       <FormikProvider value={editable ? formik : ({} as any)} children={children} />
     </EditableContext.Provider>
   )
-
-  if (editable) {
-    return (
-      <form
-        onReset={ev => {
-          console.log('form html reset')
-          ev.preventDefault()
-          /* noop */
-        }}
-        onSubmit={ev => {
-          console.log('form html submit')
-          ev.preventDefault()
-          /* noop */
-        }}
-      >
-        {contexts}
-      </form>
-    )
-  } else {
-    return contexts
-  }
 }

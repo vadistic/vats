@@ -1,13 +1,13 @@
 import { RouteComponentProps } from '@reach/router'
 import React, { Suspense } from 'react'
-import { Loading } from '../loading'
+import { LoadingSpinner } from '../loading'
 import { CandidateHost } from './host'
 
 export interface ICandidateViewProps extends RouteComponentProps {
   id?: string
 }
 
-const CandidateViewFallback = <Loading label="Fetching candidate view" />
+const CandidateViewFallback = <LoadingSpinner label="Fetching candidate view" />
 
 export const CandidateView: React.FC<ICandidateViewProps> = ({ id }) => {
   if (!id) {

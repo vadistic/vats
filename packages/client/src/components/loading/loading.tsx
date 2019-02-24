@@ -22,7 +22,7 @@ export const loadingStyles = (theme: ITheme) => css`
   }
 `
 
-export const Loading: React.FC<ILoadingProps> = ({ label: initalLabel }) => {
+export const LoadingSpinner: React.FC<ILoadingProps> = ({ label: initalLabel }) => {
   const [label, setLabel] = useState(initalLabel)
   const [messagesCount, setMessagesCount] = useState(0)
 
