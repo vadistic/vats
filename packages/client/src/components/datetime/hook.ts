@@ -8,7 +8,7 @@ Settings.defaultLocale = 'en'
 export const useDateTime = (fromISO?: string) => {
   const DateTime = fromISO ? LuxonDateTime.fromISO(fromISO) : LuxonDateTime.local()
 
-  const defaultFormat: Intl.DateTimeFormatOptions = {
+  const localeFormat: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
     minute: 'numeric',
     day: 'numeric',
@@ -17,11 +17,17 @@ export const useDateTime = (fromISO?: string) => {
   }
   const relativeFormat: ToRelativeOptions = {}
 
+  const localeString = DateTime.toLocaleString(localeFormat)
+
+  const relativeString = DateTime.toRelative(relativeFormat) || localeString
+
   return {
     DateTime,
     Interval,
     Duration,
-    defaultFormat,
+    localeFormat,
     relativeFormat,
+    relativeString,
+    localeString,
   }
 }

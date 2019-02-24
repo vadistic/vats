@@ -6,8 +6,8 @@ import { Box } from '../../box'
 import { useCandidateContext } from '../host'
 
 export const userAvatarStyles = (theme: ITheme) => css`
-  width: ${theme.sizes.ms};
-  height: ${theme.sizes.ms};
+  width: ${theme.sizes.s1};
+  height: ${theme.sizes.s1};
 
   border-radius: 100%;
 
@@ -30,7 +30,7 @@ export const UserAvatar: React.FC = () => {
           src={avatar.url}
         />
       ) : (
-        <Box css={userAvatarStyles} className="fallback" />
+        <Box css={userAvatarStyles} />
       )}
     </Box>
   )

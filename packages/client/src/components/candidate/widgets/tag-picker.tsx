@@ -34,7 +34,10 @@ export const DisplayTagPicker: React.FC<IDisplayTagPickerProps> = props => {
       }}
       variables={undefined}
       onCreateData={handleCreateData}
-      displayProp="label"
+      tagItemMap={{
+        display: 'label',
+        title: 'description',
+      }}
       {...props}
     />
   )

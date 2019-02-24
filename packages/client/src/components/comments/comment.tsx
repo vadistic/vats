@@ -6,11 +6,10 @@ import {
   IGroupHeaderProps,
   IPersonaSharedProps,
   IRenderFunction,
-  IStyle,
 } from 'office-ui-fabric-react'
 import React from 'react'
 import { useTranslation } from '../../i18n'
-import { useTheme } from '../../styles'
+import { IFabricStyles, useTheme } from '../../styles'
 import { sentenceCase } from '../../utils'
 import { DisplayDateTime } from '../datetime'
 import { Link } from '../link'
@@ -41,17 +40,18 @@ export interface ICommentProps {
   groupHeaderProps: IGroupHeaderProps
 }
 
-interface IStyles {
-  [index: string]: IStyle
-}
-
-export const ParentComment: React.FC<ICommentProps> = ({ comment, replies }) => {
+export const ParentComment: React.FC<ICommentProps> = ({ comment, replies, groupHeaderProps }) => {
   const theme = useTheme()
 
-  const commentStyles: IStyles = {
+  const isFirst = groupHeaderProps.groupIndex === 0
+  const isLast =
+    !!groupHeaderProps.groups && groupHeaderProps.groups.length - 1 === groupHeaderProps.groupIndex
+
+  //
+  const commentStyles: IFabricStyles = {
     root: {
-      paddingTop: theme.spacing.m,
-      paddingBottom: theme.spacing.m,
+      paddingTop: !isFirst ? theme.spacing.m : 'inherit',
+      paddingBottom: !isLast ? theme.spacing.m : 'inherit',
     },
   }
 

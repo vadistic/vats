@@ -5,7 +5,7 @@ import { Box } from '../../box'
 import { DisplayTextFieldArray } from '../../display'
 import { CandidateValue } from '../host'
 
-export const InfoSection: React.FC = () => {
+export const CandidateInfoSection: React.FC = () => {
   const { tp } = useTranslation()
   const p = pathProxy<CandidateValue>()
 

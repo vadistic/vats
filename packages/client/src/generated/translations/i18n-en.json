@@ -27,7 +27,9 @@
     "reply": "Reply",
     "replied": "Replied",
     "comment": "Comment",
-    "commented": "Commented"
+    "commented": "Commented",
+    "download": "Download",
+    "downloaded": "Downloaded"
   },
   "candidate": {
     "id": "Id",

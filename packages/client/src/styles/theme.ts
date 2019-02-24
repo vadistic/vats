@@ -6,6 +6,7 @@ import {
   IPalette,
   IPartialTheme,
   ISemanticColors,
+  IStyle,
 } from '@uifabric/styling'
 
 interface IWithUnitInput {
@@ -138,4 +139,8 @@ export type CSSProp = SerializedStyles | ((theme: ITheme) => SerializedStyles)
 
 export interface ICSSPropProps {
   css?: CSSProp
+}
+
+export interface IFabricStyles {
+  [index: string]: IStyle
 }

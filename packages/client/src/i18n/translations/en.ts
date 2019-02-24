@@ -95,6 +95,8 @@ const action = {
   replied: 'Replied',
   comment: 'Comment',
   commented: 'Commented',
+  download: 'Download',
+  downloaded: 'Downloaded',
 }
 
 export const translation = {

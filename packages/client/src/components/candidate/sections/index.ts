@@ -1,3 +1,6 @@
 export * from './top'
 export * from './info'
 export * from './meta'
+export * from './comments'
+export * from './resumes'
+export * from './overview'

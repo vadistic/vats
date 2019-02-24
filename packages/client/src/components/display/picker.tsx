@@ -14,7 +14,10 @@ import { DisplayActionButton } from './button'
 import { DisplayLabel, IDisplayLabelProps } from './label'
 
 export interface IPoweredPickerOwnProps<V extends any[]> {
-  displayProp: keyof ElementType<V>
+  tagItemMap: {
+    display: keyof ElementType<V> & string
+    title?: keyof ElementType<V> & (string | undefined)
+  }
   labelProps?: IDisplayLabelProps
   variables: any
   onCreateData: OnCreateData<V>
@@ -28,12 +31,15 @@ export interface IPoweredPickerOwnProps<V extends any[]> {
 
 interface IOnCreateDataProp<V extends any[]> {
   inputValue: string
-  displayProp: keyof ElementType<V>
+  tagItemMap: {
+    display: keyof ElementType<V>
+    title?: keyof ElementType<V>
+  }
 }
 
 export type OnCreateData<V extends any[]> = ({
   inputValue,
-  displayProp,
+  tagItemMap,
 }: IOnCreateDataProp<V>) => Partial<ElementType<V>>
 
 export type PoweredPickerProps<V extends any[] = any[]> = Omit<
@@ -56,7 +62,8 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
 
   const { setFieldValue } = useFormikContext<any>()
 
-  const { name, displayProp } = rest
+  const { name, tagItemMap } = rest
+  const dataKey = tagItemMap.display
 
   const [values, setValues] = useState([] as any[])
 
@@ -84,7 +91,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   // it's a duplication, but seems like the most effective way
   const loadFirstRenderSearcher = useCallback(
     async () =>
-      new FuzzySearch<any>(await loadValues(), [displayProp as string], {
+      new FuzzySearch<any>(await loadValues(), [dataKey as string], {
         caseSensitive: false,
         sort: true,
       }),
@@ -93,7 +100,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
 
   const searcher = useMemo(
     () =>
-      new FuzzySearch<any>(values, [displayProp as string], {
+      new FuzzySearch<any>(values, [dataKey as string], {
         caseSensitive: false,
         sort: true,
       }),
@@ -106,7 +113,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
       const _input = picker.current.inputComponentRef.current
       const inputValue = picker.current.inputComponentRef.current.value.trim()
 
-      const tempItems = [...safeSelectedItems, { [displayProp]: inputValue, id: 'TEMP' }]
+      const tempItems = [...safeSelectedItems, { [dataKey]: inputValue, id: 'TEMP' }]
 
       _picker.dismissSuggestions()
       _input.clear()
@@ -118,7 +125,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
         mutation: graphql.createMutation,
         variables: {
           data: {
-            ...onCreateData({ displayProp, inputValue }),
+            ...onCreateData({ tagItemMap, inputValue }),
           },
         },
       })
@@ -146,14 +153,14 @@ const PoweredPicker: React.FC<PoweredPickerProps<any[]>> = ({
   }
 
   const renderSuggestionItem = (item: any) => (
-    <TagItemSuggestion key={item.id}>{item[displayProp]}</TagItemSuggestion>
+    <TagItemSuggestion key={item.id}>{item[tagItemMap.display]}</TagItemSuggestion>
   )
 
   const renderNoResultFound = () => {
     if (picker.current && picker.current.inputComponentRef.current) {
       const inputValue = picker.current.inputComponentRef.current.value.trim()
 
-      const duplicate = safeSelectedItems.some(item => item[displayProp] === inputValue)
+      const duplicate = safeSelectedItems.some(item => item[dataKey] === inputValue)
 
       const noResultsText: string =
         (rest.pickerSuggestionsProps && rest.pickerSuggestionsProps.noResultsFoundText) ||
@@ -206,7 +213,7 @@ export type DisplayPickerI<V extends any[]> = React.FC<PoweredPickerProps<V>>
 export const DisplayPicker: React.FC<PoweredPickerProps<any[]>> = props => {
   const { editable, values } = useEditableContext()
 
-  const { displayProp, labelProps, name } = props
+  const { tagItemMap, labelProps, name } = props
 
   const selectedItems = getInByPath(values, name)
 
@@ -239,8 +246,9 @@ export const DisplayPicker: React.FC<PoweredPickerProps<any[]>> = props => {
       item={item}
       key={item.id || item.key || item.label}
       styles={{ close: !editable && { display: 'none' } }}
+      title={tagItemMap.title}
     >
-      {item[displayProp]}
+      {item[tagItemMap.display]}
     </TagItem>
   )
 

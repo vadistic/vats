@@ -1,10 +1,11 @@
 import { useFormikContext } from 'formik'
-import { IconButton, Pivot, PivotItem } from 'office-ui-fabric-react'
+import { IconButton, Pivot, PivotItem, Stack } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 import { useTranslation } from '../../i18n'
 import { tryGetIn } from '../../utils'
 import { Box } from '../box'
 import { Editable } from '../editable'
+import { SurfacePivot } from '../surface'
 import {
   CandidateActions,
   CandidateContext,
@@ -12,8 +13,14 @@ import {
   CandidateValue,
   useCandidateContext,
 } from './host'
-import { InfoSection, MetaSection, TopSection } from './sections'
-import { CandidateComments } from './widgets'
+import {
+  CandidateCommentsSection,
+  CandidateInfoSection,
+  CandidateMetaSection,
+  CandidateOverviewSection,
+  CandidateResumesSection,
+  CandidateTopSection,
+} from './sections'
 
 const profileSubmitThunk = (values: CandidateValue): CandidateHostThunk => async (
   dispatch,
@@ -75,46 +82,52 @@ export const CandidateProfile: React.FC = () => {
   return (
     <Box>
       <Editable onSubmit={handleSubmit} context={CandidateContext}>
-        <form
-          onSubmit={ev => {
-            ev.preventDefault()
-          }}
-        >
+        <form>
           <EditButton />
-          <TopSection />
-          <Pivot onLinkClick={handleLinkClick} defaultSelectedKey={selectedKey}>
-            <PivotItem headerText={tp.candidate.overview()} itemKey="overview" itemIcon="Trackers">
-              <p>Overview content</p>
-            </PivotItem>
-            <PivotItem headerText={tp.candidate.info()} itemKey="info" itemIcon="ContactCard">
-              <MetaSection />
-              <InfoSection />
-            </PivotItem>
-            <PivotItem
-              headerText={tp.candidate.resume({ count: 3 })}
-              itemKey="resumes"
-              itemCount={resumesCount}
-              itemIcon="TextDocument"
-            >
-              <p>Resume content</p>
-            </PivotItem>
-            <PivotItem
-              headerText={tp.candidate.review({ count: 3 })}
-              itemKey="review"
-              itemCount={0}
-              itemIcon="FavoriteList"
-            >
-              <p>Review content</p>
-            </PivotItem>
-            <PivotItem
-              headerText={tp.candidate.comment({ count: 3 })}
-              itemKey="comments"
-              itemCount={commentsCount}
-              itemIcon="Comment"
-            >
-              <CandidateComments />
-            </PivotItem>
-          </Pivot>
+          <CandidateTopSection />
+          <SurfacePivot
+            onLinkClick={handleLinkClick}
+            defaultSelectedKey={selectedKey}
+            items={[
+              {
+                headerText: tp.candidate.overview(),
+                itemKey: 'overview',
+                itemIcon: 'trackers',
+                children: <CandidateOverviewSection />,
+              },
+              {
+                headerText: tp.candidate.info(),
+                itemKey: 'info',
+                itemIcon: 'contactcard',
+                children: (
+                  <>
+                    <CandidateMetaSection />
+                    <CandidateInfoSection />
+                  </>
+                ),
+              },
+              {
+                headerText: tp.candidate.review({ count: 3 }),
+                itemKey: 'reviews',
+                itemIcon: 'textdocument',
+                itemCount: 0,
+                children: <p>Review content</p>,
+              },
+              {
+                headerText: tp.candidate.resume({ count: 3 }),
+                itemKey: 'resumes',
+                itemIcon: 'favoritelist',
+                itemCount: resumesCount,
+                children: <CandidateResumesSection />,
+              },
+              {
+                headerText: tp.candidate.comment({ count: 3 }),
+                itemKey: 'comments',
+                itemIcon: 'comment',
+                children: <CandidateCommentsSection />,
+              },
+            ]}
+          />
         </form>
       </Editable>
     </Box>

@@ -16,7 +16,6 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   name,
   fontSize = 'medium',
   multiline,
-  placeholder,
   ...rest
 }) => {
   const { editable, values } = useEditableContext()
@@ -77,17 +76,17 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
     multiline: true,
   }
 
-  const finalProps = multiline ? { ...sharedProps, ...multilineProps } : sharedProps
+  const mergedProps = multiline ? { ...sharedProps, ...multilineProps } : sharedProps
 
   return editable ? (
     <FormikTextField
       name={name}
       css={styles}
       onRenderLabel={renderLabel}
-      {...finalProps}
+      {...mergedProps}
       {...rest}
     />
   ) : (
-    <TextField value={value} css={styles} onRenderLabel={renderLabel} {...finalProps} {...rest} />
+    <TextField value={value} css={styles} onRenderLabel={renderLabel} {...mergedProps} {...rest} />
   )
 }

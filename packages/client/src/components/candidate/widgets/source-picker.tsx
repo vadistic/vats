@@ -22,7 +22,7 @@ export const DisplaySourcePicker: React.FC<IDisplaySourcePickerProps> = props =>
     <DisplaySourcePickerBase
       labelProps={{
         iconProps: {
-          iconName: 'tag',
+          iconName: 'opensource',
         },
         text: tp.candidate.source({ count: 3 }),
       }}
@@ -34,7 +34,10 @@ export const DisplaySourcePicker: React.FC<IDisplaySourcePickerProps> = props =>
       }}
       variables={undefined}
       onCreateData={handleCreateData}
-      displayProp="label"
+      tagItemMap={{
+        display: 'label',
+        title: 'description',
+      }}
       {...props}
     />
   )

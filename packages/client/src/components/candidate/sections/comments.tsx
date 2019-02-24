@@ -32,7 +32,7 @@ export const CandidateCommentsBase: React.FC = () => {
   return null
 }
 
-export const CandidateComments = suspendComments(CandidateCommentsBase)
+export const CandidateCommentsSection = suspendComments(CandidateCommentsBase)
 
 const CANDIDATE_COMMENTS_QUERY = gql`
   query CandidateCommentsQuery($where: CandidateWhereUniqueInput!) {

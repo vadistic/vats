@@ -13,7 +13,7 @@ export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, children
   const { value, state, dispatch } = useContext<IHostContextValue<any, any>>(context)
 
   const editable = state.local.editable || false
-  const safeValues = normaliseFormikInitialValues(value)
+  const safeValues = useMemo(() => normaliseFormikInitialValues(value), [value, state])
 
   const handleSubmit = (payload: object) => {
     const normalisedPayload = normaliseFormikPayload(payload)
@@ -24,27 +24,40 @@ export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, children
 
   // HACK
   // BUT DO NOT TOUCH!!!
+
+  /*
+   * There's a tricky bug iwhen host was left dirty and then candidate switched
+   * sometimes (every 2 or 10 or never, idk) after toggling edit again
+   * the fields display previous dirty values...
+   *
+   * This is a hack, and it does not always work, but it's such a waste of time already :<
+   */
   const [flag, setFlag] = useState(false)
 
-  if (value && formik.values && value.id !== formik.values.id) {
+  const shouldReset =
+    (value && formik.values && value.id !== formik.values.id) || !value || !formik.values
+
+  if (shouldReset) {
+    console.log('Editable form reset')
     if (!flag) {
       formik.resetForm(safeValues)
       setFlag(true)
     }
 
-    return <p>This is not visible</p>
-  } else {
-    // tslint:disable-next-line: no-unused-expression
-    flag && setFlag(false)
+    return null
   }
 
-  if (editable) {
-    return <FormikProvider value={formik} children={children} />
+  if (flag && !shouldReset) {
+    // for good measure
+    formik.resetForm(safeValues)
+    setFlag(false)
+
+    return null
   }
 
   if (!editable) {
     return <EditableContext.Provider value={{ values: safeValues }} children={children} />
+  } else {
+    return <FormikProvider value={formik} children={children} />
   }
-
-  return null
 }
