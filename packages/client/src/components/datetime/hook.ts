@@ -1,33 +1,26 @@
-import { DateTime as LuxonDateTime, Duration, Interval, Settings, ToRelativeOptions } from 'luxon'
-import React from 'react'
+import dayjs from 'dayjs'
+// tslint:disable-next-line: no-submodule-imports
+import advancedFormat from 'dayjs/plugin/advancedFormat'
+// tslint:disable-next-line: no-submodule-imports
+import relativeTime from 'dayjs/plugin/relativeTime'
 
-// TODO: get locale from i18n
+export const useDayjs = (fromISO?: string) => {
+  // TODO: get locale from i18n
+  const defaultLocale = 'en'
 
-Settings.defaultLocale = 'en'
+  const longDateFormat = `MMMM Do, YY`
+  const shortDateFormat = `D/MM/YY`
 
-export const useDateTime = (fromISO?: string) => {
-  const DateTime = fromISO ? LuxonDateTime.fromISO(fromISO) : LuxonDateTime.local()
+  const timeFormat = `h:mm:ss A`
 
-  const localeFormat: Intl.DateTimeFormatOptions = {
-    hour: 'numeric',
-    minute: 'numeric',
-    day: 'numeric',
-    month: 'short',
-    year: DateTime.diffNow().years > 0.5 ? '2-ditit' : undefined,
-  }
-  const relativeFormat: ToRelativeOptions = {}
-
-  const localeString = DateTime.toLocaleString(localeFormat)
-
-  const relativeString = DateTime.toRelative(relativeFormat) || localeString
+  dayjs.locale(defaultLocale)
+  dayjs.extend(relativeTime)
+  dayjs.extend(advancedFormat)
 
   return {
-    DateTime,
-    Interval,
-    Duration,
-    localeFormat,
-    relativeFormat,
-    relativeString,
-    localeString,
+    dayjs: dayjs(fromISO),
+    longDateFormat,
+    shortDateFormat,
+    timeFormat,
   }
 }
