@@ -1,22 +1,20 @@
 # Host
 
-Host component is more or less a playground for few ideas. It's a set of separate factories, for one host instance. with set of functionalities.
+Host component is more or less a playground for few ideas.
 
-- DataProvider => `component.tsx`
+- DataProvider => `query.tsx`
 - Catch-it-all typing `graphql-types.ts` & `types.ts`
-- Custom reducer/useReducer with thunk support => `reducer.ts`
-- Graphql binding => `helper.ts`
+- Custom reducer/useReducer with thunk support => `reducer.ts` / `actions.tsx`
+- Graphql thunk helpers => `thunks.ts`
 - Actions, action creators, reducers and mostly typing => `actions.ts`
-- Centralised factory => `host.ts`
+- Centralised context factory => `context.ts`
 - Mutation serialisation => `diff.ts`
 
 ## Improvised higher-kindred typing
 
-As of now, typescript does not allow for higher-kindred types and, that's exactly what I needed to create constructor for all possible data types of instance of host component.
+As of now, typescript does not allow for higher-kindred types and generic variables and that's exactly what I needed to create constructor for all possible data types of instance of host component.
 
-I've created two catch-it-all interfaces `IHostTyping` & `IGraphQLTyping` that can be used as generic argument for host factory and strictly type all of produced components based on specific instance data shape and actions.
-
-The one downside is that I still needed to declare quite a lot duplicated interfaces for some of public types :/
+I've created two catch-it-all interfaces `IHostTyping` & `IGraphQLTyping` that can be used as generic argument, and then some `TypingCreator`s for easier use.
 
 ## Thunks & Binding-like query/mutation helper
 
@@ -24,11 +22,11 @@ I really like the way `prisma-client` or `prisma binding` abstract actual graphq
 
 So I made my custom dispatch function to accepts thunks (inspired by this: https://medium.com/yld-engineering-blog/rolling-your-own-redux-with-react-hooks-and-context-bbeea18b1253)
 
-And having all graphQl types provided by host typing interface I've put `helper` argument to my thunk dispatch function that provide typed client operation driven by host's base typing, and provide default variables from host state.
+And having all graphQl types provided by host typing interface I can create typed thunk helpers for client operations - driven by host's base & graphql typing, and with default variables from host state.
 
 ```ts
-const deleteUser: Thunk = async (state, dispatch, helper) => {
-  const res = await helper.deleteMutation()
+const deleteUser: Thunk = async (state, dispatch) => {
+  const res = await helper.deleteMutation(state)
 
   if (res && res.data) {
     navigate('/')
@@ -55,8 +53,8 @@ The second thing is separation of state & data. It's my take of mixing apollo wi
 
 ```tsx
 
-// configuring host (TODO: make most of otions optional)
-const hostConfig: IHostConfig<HostTyping, GraphqlTyping> = {
+// configuring host
+const hostConfig: IHostConfig<HostTyping> = {
   displayName: 'MY_HOST',
   type: HostType.Single,
   reducer: (state, action) => state,
@@ -70,26 +68,35 @@ const hostConfig: IHostConfig<HostTyping, GraphqlTyping> = {
 
 // produce configured & typed components
 export const {
-  Host,
+  Context,
   useContext,
-  Actions,
-} = hostFactory<HostTyping, GraphqlTyping>(hostConfig)
+  // this init data store
+  HostProvider,
+} = hostContextFactory<HostTyping>(hostConfig)
 
 // provide host contexts
 const SomeImportantComponent: React.FC = () => {
   return (
-    <Host>
-      <SectionOne />
-      <SectionOne />
-      <SectionOne />
-    </Host>
+    <HostProvider>
+      <Section />
+      <Section />
+        <Supense fallback={...}>
+          // decoupled query from provider
+          // it allow to easily lift state and suspend where it's needed
+          <HostQuery context={Context} >
+            <SectionWithData />
+          </HostQuery >
+        </Suspense>
+    </HostProvider>
   )
 }
 
-const SectionOne: React.FC = () => {
+// and use
+const SectionWithData: React.FC = () => {
   const {value: user, state, dispatch} = useContext()
 
-  const handleClick = () => dispatch(SomeHostOrInstanceActionOrThunk)
+  const handleClick = () => dispatch(SomeAction)
+
   return (
     <div>
       <p> Hello {user.name} </p>
@@ -165,7 +172,7 @@ dispatch(Actions.update(user))
 
 ### How to get it working...
 
-Currently I'm using it client-side and only scalar fields or create/delete/connect/disconnect of top level fields relations.
+Currently I'm using it client-side and only scalar fields AND create/delete/connect/disconnect of top level fields relations.
 
 1. Query data with apollo-client and send it down the context. One host component for one type, in one place - that handles response validation, loading state etc. Those can be also nested.
 
@@ -187,4 +194,4 @@ Currently I'm using it client-side and only scalar fields or create/delete/conne
 
 7. Simultaneously update UI and database
 
-So it is a bit complex, but in the core of it I just need one smart diff function to build mutations for me and then I can keep easily my application data in sync with the server, both ways.
+And - performance-wise it's just few milliseconds to out-source most of common update logic to algorithm... totally worth it :)

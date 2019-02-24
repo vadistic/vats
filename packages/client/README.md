@@ -2,8 +2,6 @@
 
 ## Tech stack
 
-> alphas/ betas/ (also one gamma) and forks^^
-
 - [react](https://github.com/facebook/react) (with hooks)
 - [apollo-client](https://github.com/apollographql/apollo-client) (with hooks)
 - [TypeScript](https://github.com/Microsoft/TypeScript) (no hooks, but lots of other ways to abuse it)
@@ -17,9 +15,9 @@ And formik, immer, 18n, jest, 3 or 4 codegens...
 ### React (redux-like state) & apollo-client integration with host component.
 
 - Typed factory with improvised higher-kindred typing
-- Thunks & binding-like query/mutation helper
+- Thunks & query/mutation helpers
 - Data context & separation of data & state
-- Automated serialization of GraphQL Mutations
+- Automated serialization of GraphQL Mutations (diff autoUpdate)
 
 **Long description**: [`src/components/host/README.md`](src/components/host/README.md)
 
@@ -36,11 +34,12 @@ And formik, immer, 18n, jest, 3 or 4 codegens...
 
 ### Some utils
 
-Typesafe lodash-like paths builder
+Typesafe lodash-like paths builder (and proxies)
 
 [`src/utils/path.ts`](src/components/path.ts)
 
-i18n with typed paths & json generation
+i18n with typed paths (proxies!) & json generation
+(it's great because I can even rename translation keys from source)
 
 [`src/i18n/hook.ts`](src/i18n/hook.ts)
 
