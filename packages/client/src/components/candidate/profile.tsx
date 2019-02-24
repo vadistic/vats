@@ -35,54 +35,52 @@ export const CandidateProfile: React.FC = () => {
   const commentsCount = (tryGetIn(candidate, 'comments') || []).length
 
   return (
-    <Box>
-      <DisplayForm>
-        <CandidateTopSection />
-        <SurfacePivot
-          onLinkClick={handleLinkClick}
-          defaultSelectedKey={selectedKey}
-          items={[
-            {
-              headerText: tp.candidate.overview(),
-              itemKey: 'overview',
-              itemIcon: 'trackers',
-              children: <CandidateOverviewSection />,
-            },
-            {
-              headerText: tp.candidate.info(),
-              itemKey: 'info',
-              itemIcon: 'contactcard',
-              children: (
-                <>
-                  <CandidateMetaSection />
-                  <CandidateInfoSection />
-                </>
-              ),
-            },
-            {
-              headerText: tp.candidate.review({ count: 3 }),
-              itemKey: 'reviews',
-              itemIcon: 'textdocument',
-              itemCount: 0,
-              children: <p>Review content</p>,
-            },
-            {
-              headerText: tp.candidate.resume({ count: 3 }),
-              itemKey: 'resumes',
-              itemIcon: 'favoritelist',
-              itemCount: resumesCount,
-              children: <CandidateResumesSection />,
-            },
-            {
-              headerText: tp.candidate.comment({ count: 3 }),
-              itemKey: 'comments',
-              itemIcon: 'comment',
-              itemCount: commentsCount,
-              children: <CandidateCommentsSection />,
-            },
-          ]}
-        />
-      </DisplayForm>
-    </Box>
+    <>
+      <CandidateTopSection />
+      <SurfacePivot
+        onLinkClick={handleLinkClick}
+        defaultSelectedKey={selectedKey}
+        items={[
+          {
+            headerText: tp.candidate.overview(),
+            itemKey: 'overview',
+            itemIcon: 'trackers',
+            children: <CandidateOverviewSection />,
+          },
+          {
+            headerText: tp.candidate.info(),
+            itemKey: 'info',
+            itemIcon: 'contactcard',
+            children: (
+              <>
+                <CandidateMetaSection />
+                <CandidateInfoSection />
+              </>
+            ),
+          },
+          {
+            headerText: tp.candidate.review({ count: 3 }),
+            itemKey: 'reviews',
+            itemIcon: 'textdocument',
+            itemCount: 0,
+            children: <p>Review content</p>,
+          },
+          {
+            headerText: tp.candidate.resume({ count: 3 }),
+            itemKey: 'resumes',
+            itemIcon: 'favoritelist',
+            itemCount: resumesCount,
+            children: <CandidateResumesSection />,
+          },
+          {
+            headerText: tp.candidate.comment({ count: 3 }),
+            itemKey: 'comments',
+            itemIcon: 'comment',
+            itemCount: commentsCount,
+            children: <CandidateCommentsSection />,
+          },
+        ]}
+      />
+    </>
   )
 }

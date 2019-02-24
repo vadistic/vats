@@ -13,13 +13,14 @@ import {
   CandidateUpdateMutationVariables,
 } from '../../generated/queries'
 import {
-  hostFactory,
-  HostThunk,
+  GraphqlSingleTypingCreator,
+  HostActions,
+  hostContextFactory,
   HostType,
-  IGraphqlSingleTyping,
+  HostTypingCreator,
+  IAugumentedDispatch,
   IHostConfig,
   IHostState,
-  IHostTyping,
   Relations,
 } from '../host'
 
@@ -98,13 +99,18 @@ const CandidateCustomActions = {
   setEditable: (editable: boolean) => createAction(EDIT, editable),
 }
 
-type CandidateActionsUnion = ActionsUnion<typeof CandidateCustomActions>
+export const CandidateActions = {
+  ...HostActions,
+  ...CandidateCustomActions,
+}
+
+export type CandidateActions = ActionsUnion<typeof CandidateActions>
 
 /*
  * REDUCER
  */
 
-const candidateReducer = (state: CandidateState, action: CandidateActionsUnion) => {
+const candidateReducer = (state: CandidateState, action: CandidateActions) => {
   switch (action.type) {
     case EDIT:
       return { ...state, local: { ...state.local, editable: action.payload } }
@@ -128,27 +134,31 @@ const candidateStateInit = ({ id }: ICandidateInitArg) => ({
 })
 
 export type CandidateLocalState = ReturnType<typeof candidateStateInit>
-export type CandidateState = IHostState<CandidateHostTyping, CandidateGraphqlTyping>
+export type CandidateState = IHostState<CandidateHostTyping>
 
-export type CandidateHostThunk = HostThunk<CandidateHostTyping, CandidateGraphqlTyping>
-
-export type CandidateGraphqlTyping = IGraphqlSingleTyping<
-  CandidateQuery,
-  CandidateQueryVariables,
-  CandidateCreateMutation,
-  CandidateCreateMutationVariables,
-  CandidateUpdateMutation,
-  CandidateUpdateMutationVariables,
-  CandidateDeleteMutation,
-  CandidateDeleteMutationVariables
+export type CandidateDispatch = IAugumentedDispatch<
+  CandidateActions,
+  IHostState<CandidateHostTyping>
 >
 
-export type CandidateHostTyping = IHostTyping<
-  CandidateValue,
-  CandidateLocalState,
-  CandidateActionsUnion,
-  ICandidateInitArg
->
+export type CandidateGraphqlTyping = GraphqlSingleTypingCreator<{
+  query: CandidateQuery
+  queryVariables: CandidateQueryVariables
+  createMutation: CandidateCreateMutation
+  createMutationVariables: CandidateCreateMutationVariables
+  updateMutation: CandidateUpdateMutation
+  updateMutationVariables: CandidateUpdateMutationVariables
+  deleteMutation: CandidateDeleteMutation
+  deleteMutationVariables: CandidateDeleteMutationVariables
+}>
+
+export type CandidateHostTyping = HostTypingCreator<{
+  value: CandidateValue
+  localState: CandidateLocalState
+  actions: CandidateActions
+  initArg: ICandidateInitArg
+  queryVariables: CandidateQueryVariables
+}>
 
 const candidateRelations: Relations<CandidateValue> = {
   tags: {
@@ -161,7 +171,7 @@ const candidateRelations: Relations<CandidateValue> = {
   },
 }
 
-const candidateHostConfig: IHostConfig<CandidateHostTyping, CandidateGraphqlTyping> = {
+export const candidateHostConfig: IHostConfig<CandidateHostTyping> = {
   displayName: 'CANDIDATE',
   type: HostType.Single,
   reducer: candidateReducer,
@@ -182,15 +192,7 @@ const candidateHostConfig: IHostConfig<CandidateHostTyping, CandidateGraphqlTypi
 }
 
 export const {
-  Host: CandidateHost,
-  HostProvider: CandidateHostProvider,
-  HostQuery: CandidateHostQuery,
-  useContext: useCandidateContext,
   Context: CandidateContext,
-  Actions: CandidateHostActions,
-} = hostFactory<CandidateHostTyping, CandidateGraphqlTyping>(candidateHostConfig)
-
-export const CandidateActions = {
-  ...CandidateHostActions,
-  ...CandidateCustomActions,
-}
+  HostProvider: CandidateHostProvider,
+  useContext: useCandidateContext,
+} = hostContextFactory(candidateHostConfig)

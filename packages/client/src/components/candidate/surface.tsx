@@ -3,18 +3,18 @@ import React, { Suspense, useRef } from 'react'
 import { routes } from '../../routes'
 import { Editable } from '../editable'
 import { FormikContextValue } from '../formik'
+import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
 import { Surface } from '../surface'
 import {
   CandidateActions,
   CandidateContext,
   CandidateHostProvider,
-  CandidateHostQuery,
-  CandidateHostThunk,
   CandidateValue,
   useCandidateContext,
 } from './host'
 import { CandidateProfile } from './profile'
+import { updateCandidate } from './thunks'
 
 export interface ICandidateSurfaceProps extends RouteComponentProps {
   // injected by router
@@ -51,24 +51,8 @@ export const CandidateSurfaceBase: React.FC<ICandidateSurfaceProps> = ({ navigat
   }
 
   const processSubmit = (values: CandidateValue) => {
-    const submitThunk = (_values: CandidateValue): CandidateHostThunk => async (
-      _dispatch,
-      _state,
-      _helper,
-    ) => {
-      const res = _helper.autoUpdate(_values)
-
-      if (res) {
-        _dispatch(CandidateActions.setEditable(false))
-      }
-
-      // if (res && res.data) {
-      // send toast
-      // }
-    }
-
     if (formikRef.current && formikRef.current.dirty) {
-      dispatch(submitThunk(values))
+      dispatch(updateCandidate(values))
     }
   }
 
@@ -82,11 +66,11 @@ export const CandidateSurfaceBase: React.FC<ICandidateSurfaceProps> = ({ navigat
       }}
     >
       <Suspense fallback={<CandidateSurfaceFallback />}>
-        <CandidateHostQuery>
+        <HostQuery context={CandidateContext}>
           <Editable onSubmit={processSubmit} context={CandidateContext} formikRef={formikRef}>
             <CandidateProfile />
           </Editable>
-        </CandidateHostQuery>
+        </HostQuery>
       </Suspense>
     </Surface>
   )

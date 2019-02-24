@@ -1,6 +1,5 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import gql from 'graphql-tag'
-import produce from 'immer'
 import { JobFragment } from '../../generated/fragments'
 import {
   Job,
@@ -14,13 +13,14 @@ import {
   JobUpdateMutationVariables,
 } from '../../generated/queries'
 import {
-  hostFactory,
-  HostThunk,
+  GraphqlSingleTypingCreator,
+  HostActions,
+  hostContextFactory,
   HostType,
-  IGraphqlSingleTyping,
+  HostTypingCreator,
+  IAugumentedDispatch,
   IHostConfig,
   IHostState,
-  IHostTyping,
 } from '../host'
 
 /*
@@ -73,21 +73,25 @@ const JobCustomActions = {
   setEditable: (editable: boolean) => createAction(EDIT, editable),
 }
 
-type JobActionsUnion = ActionsUnion<typeof JobCustomActions>
+export const JobActions = {
+  ...HostActions,
+  ...JobCustomActions,
+}
+
+export type JobActions = ActionsUnion<typeof JobActions>
 
 /*
  * REDUCER
  */
 
-const jobReducer = produce<JobHostState, [JobActionsUnion]>((draft, action) => {
+const jobReducer = (state: JobState, action: JobActions) => {
   switch (action.type) {
     case EDIT:
-      draft.local.editable = action.payload || !draft.local.editable
-      return
+      return { ...state, local: { ...state.local, editable: action.payload } }
     default:
-      return
+      return state
   }
-})
+}
 
 /*
  * HOST
@@ -103,30 +107,31 @@ const jobStateInit = ({ id }: IJobHostInitArg) => ({
   editable: false,
 })
 
-export type JobHostLocalState = ReturnType<typeof jobStateInit>
-export type JobHostState = IHostState<JobHostTyping, JobGraphqlTyping>
+export type JobLocalState = ReturnType<typeof jobStateInit>
+export type JobState = IHostState<JobHostTyping>
 
-export type JobGraphqlTyping = IGraphqlSingleTyping<
-  JobQuery,
-  JobQueryVariables,
-  JobCreateMutation,
-  JobCreateMutationVariables,
-  JobUpdateMutation,
-  JobUpdateMutationVariables,
-  JobDeleteMutation,
-  JobDeleteMutationVariables
->
+export type JobDispatch = IAugumentedDispatch<JobActions, IHostState<JobHostTyping>>
 
-export type JobHostTyping = IHostTyping<
-  JobValue,
-  JobHostLocalState,
-  JobActionsUnion,
-  IJobHostInitArg
->
+export type JobGraphqlTyping = GraphqlSingleTypingCreator<{
+  query: JobQuery
+  queryVariables: JobQueryVariables
+  createMutation: JobCreateMutation
+  createMutationVariables: JobCreateMutationVariables
+  updateMutation: JobUpdateMutation
+  updateMutationVariables: JobUpdateMutationVariables
+  deleteMutation: JobDeleteMutation
+  deleteMutationVariables: JobDeleteMutationVariables
+}>
 
-export type JobHostThunk = HostThunk<JobHostTyping, JobGraphqlTyping>
+export type JobHostTyping = HostTypingCreator<{
+  value: JobValue
+  localState: JobLocalState
+  actions: JobActions
+  initArg: IJobHostInitArg
+  queryVariables: JobQueryVariables
+}>
 
-const jobHostConfig: IHostConfig<JobHostTyping, JobGraphqlTyping> = {
+export const jobHostConfig: IHostConfig<JobHostTyping> = {
   displayName: 'JOB',
   type: HostType.Single,
   reducer: jobReducer,
@@ -146,15 +151,7 @@ const jobHostConfig: IHostConfig<JobHostTyping, JobGraphqlTyping> = {
 }
 
 export const {
-  Host: JobHost,
   HostProvider: JobHostProvider,
-  HostQuery: JobHostQuery,
   useContext: useJobContext,
   Context: JobContext,
-  Actions: JobHostActions,
-} = hostFactory<JobHostTyping, JobGraphqlTyping>(jobHostConfig)
-
-export const JobActions = {
-  ...JobHostActions,
-  ...JobCustomActions,
-}
+} = hostContextFactory<JobHostTyping>(jobHostConfig)

@@ -240,3 +240,10 @@ export const recursiveTraverse = (
     }
   }
 }
+
+export const cloneShallow = <T extends any>(input: T) =>
+  (Array.isArray(input)
+    ? [...(input as any[])]
+    : typeof input === 'object' && input !== null
+    ? { ...input }
+    : input) as T

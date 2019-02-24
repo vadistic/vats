@@ -12,7 +12,7 @@ export const JobProfile: React.FC = () => {
   const contentPlaceholder = tp.common.empty()
 
   return (
-    <Box>
+    <>
       <DisplayTextField fontSize="xLarge" name={p.name.PATH} />
       <DisplayTextField
         multiline={true}
@@ -38,6 +38,6 @@ export const JobProfile: React.FC = () => {
         placeholder={contentPlaceholder}
         label={tp.job.requirements()}
       />
-    </Box>
+    </>
   )
 }

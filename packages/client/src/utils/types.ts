@@ -39,15 +39,37 @@ export type DeepPartial<T> = {
     ? ReadonlyArray<DeepPartial<U>>
     : DeepPartial<T[P]>
 }
-/**
+/*
  * Return type of array element or just the same type
  */
 export type ElementType<T> = T extends Array<infer E> ? E : never
 export type ElementTypeOr<T> = T extends Array<infer E> ? E : T
 
-export type NonUndefined<T> = T extends undefined ? never : T
-
+/*
+ * Helpers
+ */
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
+
+export type Exact<T, S> = { [K in keyof T]: K extends keyof S ? T[K] : never }
+
+export type Merge<A, B> = {
+  [K in keyof A | keyof B]: K extends keyof A ? A[K] : K extends keyof B ? B[K] : never
+}
+
+export type UnionOnProps<A, B> = {
+  [K in keyof A | keyof B]: K extends keyof A & keyof B
+    ? A[K] | B[K]
+    : K extends keyof A
+    ? A[K]
+    : K extends keyof B
+    ? B[K]
+    : never
+}
+
+/*
+ * Nullability
+ */
+export type NonUndefined<T> = T extends undefined ? never : T
 
 export type NonNullableObjOrLit<T> = T extends object
   ? { [K in keyof T]: Idx<T[K]> }
@@ -75,14 +97,6 @@ export type RejectKeys<T, Condition> = { [Key in keyof T]: Key extends Condition
 export type RejectValues<T, Condition> = {
   [Key in keyof T]: T[Key] extends Condition ? never : T[Key]
 }
-
-/**
- * accept only interface keys, and nothing more
- *
- * (typescript sometimes does not enforce type of unspecified properties
- * in function return type annotation)
- */
-export type StrictReturnInterface<T> = T & FilterKeys<any, keyof T>
 
 /*
  * Graphql utils

@@ -5,13 +5,13 @@ import { EditableContext } from './context'
 import { normaliseFormikInitialValues, normaliseFormikPayload } from './normalise'
 
 export interface IEditableProps {
-  context: HostContext<any, any>
+  context: HostContext<any>
   onSubmit: (values: any) => void
   formikRef?: React.MutableRefObject<any>
 }
 
 export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, formikRef, children }) => {
-  const { value, state } = useContext<IHostContextValue<any, any>>(context)
+  const { value, state } = useContext<IHostContextValue<any>>(context)
 
   const editable = state.local.editable || false
   const safeValues = useMemo(() => normaliseFormikInitialValues(value), [value, state])

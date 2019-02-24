@@ -19,9 +19,11 @@ import {
 } from '../../generated/queries'
 import { SortDirection } from '../../utils'
 import {
-  hostFactory,
+  GraphqlMultiTypingCreator,
+  HostActions,
+  hostContextFactory,
   HostType,
-  IGraphqlMultiTyping,
+  HostTypingCreator,
   IHostConfig,
   IHostState,
   IHostTyping,
@@ -71,13 +73,18 @@ const JobsCustomActions = {
   sortBy: (sortBy: JobsSortBy) => createAction(SORT_BY, sortBy),
 }
 
-type JobsActionsUnion = ActionsUnion<typeof JobsCustomActions>
+export const JobsActions = {
+  ...HostActions,
+  ...JobsCustomActions,
+}
+
+type JobsActions = ActionsUnion<typeof JobsActions>
 
 /*
  * REDUCER
  */
 
-export const jobsReducer = produce<JobsState, [JobsActionsUnion]>((draft, action) => {
+export const jobsReducer = produce<JobsState, [JobsActions]>((draft, action) => {
   switch (action.type) {
     case SORT_BY:
       draft.local.sortBy = action.payload
@@ -104,26 +111,32 @@ const jobsStateInit = () => ({
 })
 
 export type JobsLocalState = ReturnType<typeof jobsStateInit>
-export type JobsState = IHostState<JobsHostTyping, JobsGraphqlTyping>
+export type JobsState = IHostState<JobsHostTyping>
 
-export type JobsGraphqlTyping = IGraphqlMultiTyping<
-  JobsQuery,
-  JobsQueryVariables,
-  JobCreateMutation,
-  JobCreateMutationVariables,
-  JobUpdateMutation,
-  JobUpdateMutationVariables,
-  JobDeleteMutation,
-  JobDeleteMutationVariables,
-  JobsUpdateManyMutation,
-  JobsUpdateManyMutationVariables,
-  JobsDeleteManyMutation,
-  JobsDeleteManyMutationVariables
->
+export type JobsGraphqlTyping = GraphqlMultiTypingCreator<{
+  query: JobsQuery
+  queryVariables: JobsQueryVariables
+  createMutation: JobCreateMutation
+  createMutationVariables: JobCreateMutationVariables
+  updateMutation: JobUpdateMutation
+  updateMutationVariables: JobUpdateMutationVariables
+  deleteMutation: JobDeleteMutation
+  deleteMutationVariables: JobDeleteMutationVariables
+  updateManyMutation: JobsUpdateManyMutation
+  updateManyMutationVariables: JobsUpdateManyMutationVariables
+  deleteManyMutation: JobsDeleteManyMutation
+  deleteManyMutationVariables: JobsDeleteManyMutationVariables
+}>
 
-export type JobsHostTyping = IHostTyping<JobsValue, JobsLocalState, JobsActionsUnion, JobsInitArg>
+export type JobsHostTyping = HostTypingCreator<{
+  value: JobsValue
+  localState: JobsLocalState
+  actions: JobsActions
+  initArg: JobsInitArg
+  queryVariables: JobsQueryVariables
+}>
 
-const jobsHostConfig: IHostConfig<JobsHostTyping, JobsGraphqlTyping> = {
+const jobsHostConfig: IHostConfig<JobsHostTyping> = {
   displayName: 'CANDIDATES',
   type: HostType.Multi,
   reducer: jobsReducer,
@@ -148,13 +161,7 @@ const jobsHostConfig: IHostConfig<JobsHostTyping, JobsGraphqlTyping> = {
 }
 
 export const {
-  Host: JobsHost,
   useContext: useJobsContext,
   Context: JobsContext,
-  Actions: JobsHostActions,
-} = hostFactory<JobsHostTyping, JobsGraphqlTyping>(jobsHostConfig)
-
-export const JobsActions = {
-  ...JobsHostActions,
-  ...JobsCustomActions,
-}
+  HostProvider: JobsHostProvider,
+} = hostContextFactory<JobsHostTyping>(jobsHostConfig)

@@ -1,7 +1,8 @@
 import { RouteComponentProps } from '@reach/router'
 import React, { Suspense } from 'react'
+import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
-import { JobHost } from './host'
+import { JobContext, JobHostProvider } from './host'
 
 export interface IJobViewProps extends RouteComponentProps {
   id?: string
@@ -16,9 +17,11 @@ export const JobView: React.FC<IJobViewProps> = ({ id }) => {
   }
   return (
     <Suspense fallback={JobViewFallback}>
-      <JobHost initArg={{ id }}>
-        <p>Single job view</p>
-      </JobHost>
+      <JobHostProvider initArg={{ id }}>
+        <HostQuery context={JobContext}>
+          <p>Single job view</p>
+        </HostQuery>
+      </JobHostProvider>
     </Suspense>
   )
 }

@@ -3,18 +3,12 @@ import React, { Suspense, useRef } from 'react'
 import { routes } from '../../routes'
 import { Editable } from '../editable'
 import { FormikContextValue } from '../formik'
+import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
 import { Surface } from '../surface'
-import {
-  JobActions,
-  JobContext,
-  JobHostProvider,
-  JobHostQuery,
-  JobHostThunk,
-  JobValue,
-  useJobContext,
-} from './host'
+import { JobActions, JobContext, JobHostProvider, JobValue, useJobContext } from './host'
 import { JobProfile } from './profile'
+import { updateJob } from './thunks'
 
 export interface IJobSurfaceProps extends RouteComponentProps {
   // injected by router
@@ -50,20 +44,8 @@ export const JobSurfaceBase: React.FC<IJobSurfaceProps> = ({ navigate, id }) => 
   }
 
   const processSubmit = () => (values: JobValue) => {
-    const submitThunk = (_values: JobValue): JobHostThunk => async (_dispatch, _state, _helper) => {
-      const res = _helper.autoUpdate(_values)
-
-      if (res) {
-        _dispatch(JobActions.setEditable(false))
-      }
-
-      // if (res && res.data) {
-      // send toast
-      // }
-    }
-
     if (formikRef.current && formikRef.current.dirty) {
-      dispatch(submitThunk(values))
+      dispatch(updateJob(values))
     }
   }
 
@@ -77,11 +59,11 @@ export const JobSurfaceBase: React.FC<IJobSurfaceProps> = ({ navigate, id }) => 
       }}
     >
       <Suspense fallback={<JobSurfaceFallback />}>
-        <JobHostQuery>
+        <HostQuery context={JobContext}>
           <Editable onSubmit={processSubmit} context={JobContext} formikRef={formikRef}>
             <JobProfile />
           </Editable>
-        </JobHostQuery>
+        </HostQuery>
       </Suspense>
     </Surface>
   )

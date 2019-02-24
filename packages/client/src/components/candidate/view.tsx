@@ -1,7 +1,8 @@
 import { RouteComponentProps } from '@reach/router'
 import React, { Suspense } from 'react'
+import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
-import { CandidateHost } from './host'
+import { CandidateContext, CandidateHostProvider } from './host'
 
 export interface ICandidateViewProps extends RouteComponentProps {
   id?: string
@@ -17,9 +18,11 @@ export const CandidateView: React.FC<ICandidateViewProps> = ({ id }) => {
 
   return (
     <Suspense fallback={CandidateViewFallback}>
-      <CandidateHost initArg={{ id }}>
-        <h1>Candidate View</h1>
-      </CandidateHost>
+      <CandidateHostProvider initArg={{ id }}>
+        <HostQuery context={CandidateContext}>
+          <h1>Candidate View</h1>
+        </HostQuery>
+      </CandidateHostProvider>
     </Suspense>
   )
 }

@@ -1,6 +1,5 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import gql from 'graphql-tag'
-import produce from 'immer'
 import { CandidateFragment } from '../../generated/fragments'
 import {
   CandidateCreateMutation,
@@ -24,12 +23,13 @@ import {
   CANDIDATE_UPDATE_MUTATION,
 } from '../candidate/host'
 import {
-  hostFactory,
+  GraphqlMultiTypingCreator,
+  HostActions,
+  hostContextFactory,
   HostType,
-  IGraphqlMultiTyping,
+  HostTypingCreator,
   IHostConfig,
   IHostState,
-  IHostTyping,
 } from '../host'
 import { CandidatesSortBy } from './sort'
 
@@ -82,19 +82,24 @@ const CandidatesCustomActions = {
   sortBy: (sortBy: CandidatesSortBy) => createAction(SORT_BY, sortBy),
 }
 
-type CandidatesActionsUnion = ActionsUnion<typeof CandidatesCustomActions>
+export const CandidatesActions = {
+  ...HostActions,
+  ...CandidatesCustomActions,
+}
+
+type CandidatesActions = ActionsUnion<typeof CandidatesActions>
 
 /*
  * REDUCER
  */
 
-export const candidatesReducer = produce<any, [CandidatesActionsUnion]>((draft, action) => {
+export const candidatesReducer = (state: CandidatesState, action: CandidatesActions) => {
   switch (action.type) {
     default:
       // noop
       return
   }
-})
+}
 
 /*
  * HOST
@@ -110,31 +115,32 @@ const candidatesStateInit = () => ({
 })
 
 export type CandidatesLocalState = ReturnType<typeof candidatesStateInit>
-export type CandidatesState = IHostState<CandidatesHostTyping, CandidatesGraphqlTyping>
+export type CandidatesState = IHostState<CandidatesHostTyping>
 
-export type CandidatesGraphqlTyping = IGraphqlMultiTyping<
-  CandidatesQuery,
-  CandidatesQueryVariables,
-  CandidateCreateMutation,
-  CandidateCreateMutationVariables,
-  CandidateUpdateMutation,
-  CandidateUpdateMutationVariables,
-  CandidateDeleteMutation,
-  CandidateDeleteMutationVariables,
-  CandidatesUpdateManyMutation,
-  CandidatesUpdateManyMutationVariables,
-  CandidatesDeleteManyMutation,
-  CandidatesDeleteManyMutationVariables
->
+export type CandidatesGraphqlTyping = GraphqlMultiTypingCreator<{
+  query: CandidatesQuery
+  queryVariables: CandidatesQueryVariables
+  createMutation: CandidateCreateMutation
+  createMutationVariables: CandidateCreateMutationVariables
+  updateMutation: CandidateUpdateMutation
+  updateMutationVariables: CandidateUpdateMutationVariables
+  deleteMutation: CandidateDeleteMutation
+  deleteMutationVariables: CandidateDeleteMutationVariables
+  updateManyMutation: CandidatesUpdateManyMutation
+  updateManyMutationVariables: CandidatesUpdateManyMutationVariables
+  deleteManyMutation: CandidatesDeleteManyMutation
+  deleteManyMutationVariables: CandidatesDeleteManyMutationVariables
+}>
 
-export type CandidatesHostTyping = IHostTyping<
-  CandidatesValue,
-  CandidatesLocalState,
-  CandidatesActionsUnion,
-  CandidatesInitArg
->
+export type CandidatesHostTyping = HostTypingCreator<{
+  value: CandidatesValue
+  localState: CandidatesLocalState
+  actions: CandidatesActions
+  initArg: CandidatesInitArg
+  queryVariables: CandidatesQueryVariables
+}>
 
-const candidatesHostConfig: IHostConfig<CandidatesHostTyping, CandidatesGraphqlTyping> = {
+const candidatesHostConfig: IHostConfig<CandidatesHostTyping> = {
   displayName: 'CANDIDATES',
   type: HostType.Multi,
   reducer: candidatesReducer,
@@ -158,13 +164,7 @@ const candidatesHostConfig: IHostConfig<CandidatesHostTyping, CandidatesGraphqlT
 }
 
 export const {
-  Host: CandidatesHost,
-  useContext: useCandidatesContext,
   Context: CandidatesContext,
-  Actions: CandidatesHostActions,
-} = hostFactory<CandidatesHostTyping, CandidatesGraphqlTyping>(candidatesHostConfig)
-
-export const CandidatesActions = {
-  ...CandidatesHostActions,
-  ...CandidatesCustomActions,
-}
+  HostProvider: CandidatesHostProvider,
+  useContext: useCandidatesContext,
+} = hostContextFactory(candidatesHostConfig)

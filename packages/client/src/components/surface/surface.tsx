@@ -1,4 +1,4 @@
-import { css, FocusTrapZone, IconButton, Modal, Panel, PanelType } from 'office-ui-fabric-react'
+import { FocusZone, IconButton, Modal, Panel, PanelType } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 
 interface ISurfaceNavigation {
@@ -74,13 +74,11 @@ export const Surface: React.FC<ISurfaceProps> = ({
         content: {
           display: 'flex',
           height: '100%',
-          // focus trap zone
+          flexDirection: 'column',
         },
       }}
     >
-      <FocusTrapZone css={{ display: 'flex', height: '100%', width: '100%' }}>
-        {children}
-      </FocusTrapZone>
+      {children}
     </Panel>
   )
 
