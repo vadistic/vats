@@ -6,9 +6,10 @@
 // tslint:disable: no-console
 import * as jwt from 'jsonwebtoken'
 import JwksRsa from 'jwks-rsa'
-import { IAccessTokenPayload } from '../utils'
+import { AccessTokenPayload } from '../utils'
 
-const iss = `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/` + process.env.COGNITO_POOL_ID
+const iss =
+  `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/` + process.env.COGNITO_POOL_ID
 
 const client = JwksRsa({
   cache: true,
@@ -19,7 +20,7 @@ const client = JwksRsa({
 })
 
 export const validateToken = (token: string) => {
-  let result: IAccessTokenPayload | undefined
+  let result: AccessTokenPayload | undefined
   const decodedJwt = jwt.decode(token, { complete: true })
 
   // Fail if the token is not jwt
@@ -66,7 +67,7 @@ export const validateToken = (token: string) => {
         throw new Error('Unauthorized')
       } else {
         // Valid token!
-        result = payload as IAccessTokenPayload
+        result = payload as AccessTokenPayload
       }
     })
   })

@@ -9,7 +9,7 @@ import { theme } from './styles/theme'
 
 const _window = window as any
 
-// hook to prevent fabric initialization every hot load update
+// hook to prevent fabric initialization every reload
 if (!_window.__IS_FABRIC_LOADED__) {
   loadTheme(theme)
   // TODO: replace with not proprietiary icons
@@ -20,13 +20,6 @@ if (!_window.__IS_FABRIC_LOADED__) {
 const root = document.getElementById('root')
 
 ReactDOM.render(<App />, root)
-
-if (module.hot) {
-  module.hot.accept('./app', () => {
-    const HotApp = require('./app').default
-    ReactDOM.render(<HotApp />, root)
-  })
-}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

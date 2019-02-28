@@ -1,12 +1,36 @@
 {
-  "name": "prisma",
+  "name": "@vats/prisma",
   "version": "0.1.0",
-  "description": "Prisma service deployment toolkit",
+  "description": "vats prisma database toolkit",
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
+  "main": "dist/index.js",
   "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "down": "docker-compose down --env-file=.env",
-    "up": "docker-compose up -d --force-recreate --env-file=.env"
+    "up": "docker-compose up -d --force-recreate --env-file=.env",
+    "deploy": "vats-env-cmd prisma deploy",
+    "gen:client": "vats-env-cmd prisma generate",
+    "gen:binding": "vats-env-cmd graphql codegen",
+    "gen": "yarn gen:client && yarn gen:binding"
+  },
+  "dependencies": {
+    "@vats/utils": "^0.1.0",
+    "@vats/scripts": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/faker": "^4.1.5",
+    "@types/ramda": "^0.25.51",
+    "@vats/scripts": "^0.1.0",
+    "faker": "^4.1.0",
+    "graphql": "^14.1.1",
+    "graphql-cli": "^3.0.11",
+    "prisma": "^1.27.3",
+    "ramda": "^0.26.1",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3333"
   }
 }

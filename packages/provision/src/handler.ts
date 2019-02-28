@@ -1,3 +1,4 @@
+// tslint:disable-next-line: no-implicit-dependencies
 import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda'
 
 export const hello: Handler = (event: APIGatewayEvent, context: Context, cb: Callback) => {
@@ -23,4 +24,3 @@ export const printer: Handler = (event: APIGatewayEvent, context: Context, cb: C
 
   cb(null, response)
 }
-

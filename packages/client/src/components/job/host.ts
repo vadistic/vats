@@ -13,14 +13,14 @@ import {
   JobUpdateMutationVariables,
 } from '../../generated/queries'
 import {
+  AugumentedDispatch,
   GraphqlSingleTypingCreator,
   HostActions,
+  HostConfigI,
   hostContextFactory,
+  HostStateI,
   HostType,
   HostTypingCreator,
-  IAugumentedDispatch,
-  IHostConfig,
-  IHostState,
 } from '../host'
 
 /*
@@ -99,18 +99,18 @@ const jobReducer = (state: JobState, action: JobActions) => {
 
 export type JobValue = Job
 
-export interface IJobHostInitArg {
+export interface JobHostInitArg {
   id: string
 }
 
-const jobStateInit = ({ id }: IJobHostInitArg) => ({
+const jobStateInit = ({ id }: JobHostInitArg) => ({
   editable: false,
 })
 
 export type JobLocalState = ReturnType<typeof jobStateInit>
-export type JobState = IHostState<JobHostTyping>
+export type JobState = HostStateI<JobHostTyping>
 
-export type JobDispatch = IAugumentedDispatch<JobActions, IHostState<JobHostTyping>>
+export type JobDispatch = AugumentedDispatch<JobActions, HostStateI<JobHostTyping>>
 
 export type JobGraphqlTyping = GraphqlSingleTypingCreator<{
   query: JobQuery
@@ -127,11 +127,11 @@ export type JobHostTyping = HostTypingCreator<{
   value: JobValue
   localState: JobLocalState
   actions: JobActions
-  initArg: IJobHostInitArg
+  initArg: JobHostInitArg
   queryVariables: JobQueryVariables
 }>
 
-export const jobHostConfig: IHostConfig<JobHostTyping> = {
+export const jobHostConfig: HostConfigI<JobHostTyping> = {
   displayName: 'JOB',
   type: HostType.Single,
   reducer: jobReducer,

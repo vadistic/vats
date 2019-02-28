@@ -1,15 +1,16 @@
 import { css } from '@emotion/core'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
-import { ITheme } from '../../styles'
+import React from 'react'
+import { Theme } from '../../styles'
 import { useEditableContext } from '../editable'
-import { IFieldProps, useFormikTextField } from '../formik'
+import { FieldProps, useFormikTextField } from '../formik'
 import { DisplayLabel } from './label'
 
-export interface IDisplayTextFieldOwnProps {
-  fontSize?: keyof ITheme['fonts']
+export interface DisplayTextFieldOwnProps {
+  fontSize?: keyof Theme['fonts']
 }
 
-export type DisplayTextFieldProps = IFieldProps & ITextFieldProps & IDisplayTextFieldOwnProps
+export type DisplayTextFieldProps = FieldProps & ITextFieldProps & DisplayTextFieldOwnProps
 
 export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   name,
@@ -20,7 +21,7 @@ export const DisplayTextField: React.FC<DisplayTextFieldProps> = ({
   const { editable, value } = useEditableContext(name)
   const { bind } = useFormikTextField(name)
 
-  const styles = (theme: ITheme) => css`
+  const styles = (theme: Theme) => css`
     .ms-TextField-wrapper {
       /* fix editable bottom border height */
       margin-bottom: ${editable && `-1px`};

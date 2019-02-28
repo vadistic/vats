@@ -16,7 +16,7 @@ import {
 import { CandidateProfile } from './profile'
 import { updateCandidate } from './thunks'
 
-export interface ICandidateSurfaceProps extends RouteComponentProps {
+export interface CandidateSurfaceProps extends RouteComponentProps {
   // injected by router
   id?: string
 }
@@ -24,7 +24,7 @@ export interface ICandidateSurfaceProps extends RouteComponentProps {
 // TODO: Skeleton?
 const CandidateSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading candidate...'} />
 
-export const CandidateSurfaceBase: React.FC<ICandidateSurfaceProps> = ({ navigate, id }) => {
+export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
   const { dispatch } = useCandidateContext()
 
   const handleDismiss = () => {
@@ -76,7 +76,7 @@ export const CandidateSurfaceBase: React.FC<ICandidateSurfaceProps> = ({ navigat
   )
 }
 
-export const CandidateSurface: React.FC<ICandidateSurfaceProps> = ({ navigate, id }) => {
+export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
   if (!id) {
     console.error('CandidateSurface: No id provided')
     return null

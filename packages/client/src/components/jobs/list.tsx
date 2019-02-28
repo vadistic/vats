@@ -1,18 +1,18 @@
 import { css } from '@emotion/core'
 import { RouteComponentProps } from '@reach/router'
+import { objSwitch } from '@vats/utils'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React from 'react'
 import { Job, JobType } from '../../generated/queries'
 import { useTheme } from '../../styles'
-import { objSwitch } from '../../utils'
 import { Link } from '../router'
 import { useJobsContext } from './host'
 
-export interface IJobListItem {
+export interface JobListItem {
   job: Job
 }
 
-export const JobListItemCard: React.FC<IJobListItem> = ({ job, ...rest }) => {
+export const JobListItemCard: React.FC<JobListItem> = ({ job, ...rest }) => {
   const theme = useTheme()
 
   const borderColor = objSwitch({
@@ -34,7 +34,7 @@ export const JobListItemCard: React.FC<IJobListItem> = ({ job, ...rest }) => {
   return <div css={styles} {...rest} />
 }
 
-export const JobListItem: React.FC<IJobListItem> = ({ job }) => {
+export const JobListItem: React.FC<JobListItem> = ({ job }) => {
   // TODO: get from app settings
   const openJobSurface = true
 
@@ -50,9 +50,9 @@ export const JobListItem: React.FC<IJobListItem> = ({ job }) => {
   )
 }
 
-export interface IJobsListProps extends RouteComponentProps {}
+export interface JobsListProps extends RouteComponentProps {}
 
-export const JobsList: React.FC<IJobsListProps> = ({ children }) => {
+export const JobsList: React.FC<JobsListProps> = ({ children }) => {
   const { value: jobs, state } = useJobsContext()
 
   const renderCell = (nestingDepth?: number, job?: Job, index?: number) => {

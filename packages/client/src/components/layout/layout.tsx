@@ -2,10 +2,10 @@ import { css, Global } from '@emotion/core'
 import React, { Suspense } from 'react'
 
 import { Navigation } from '..'
-import { globalStyles, ITheme } from '../../styles'
+import { globalStyles, Theme } from '../../styles'
 import { LoadingSpinner } from '../loading'
 
-const layoutStyles = (theme: ITheme) => css`
+const layoutStyles = (theme: Theme) => css`
   min-height: 100vh;
   max-width: 100vw;
 

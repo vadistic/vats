@@ -1,4 +1,5 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
+import { SortDirection } from '@vats/utils'
 import gql from 'graphql-tag'
 import produce from 'immer'
 import { JobFragment } from '../../generated/fragments'
@@ -17,15 +18,14 @@ import {
   JobUpdateMutation,
   JobUpdateMutationVariables,
 } from '../../generated/queries'
-import { SortDirection } from '../../utils'
 import {
   GraphqlMultiTypingCreator,
   HostActions,
+  HostConfigI,
   hostContextFactory,
+  HostStateI,
   HostType,
   HostTypingCreator,
-  IHostConfig,
-  IHostState,
 } from '../host'
 import { JOB_CREATE_MUTATION, JOB_DELETE_MUTATION, JOB_UPDATE_MUTATION } from '../job/host'
 import { JobsState } from './host'
@@ -110,7 +110,7 @@ const jobsStateInit = () => ({
 })
 
 export type JobsLocalState = ReturnType<typeof jobsStateInit>
-export type JobsState = IHostState<JobsHostTyping>
+export type JobsState = HostStateI<JobsHostTyping>
 
 export type JobsGraphqlTyping = GraphqlMultiTypingCreator<{
   query: JobsQuery
@@ -135,7 +135,7 @@ export type JobsHostTyping = HostTypingCreator<{
   queryVariables: JobsQueryVariables
 }>
 
-const jobsHostConfig: IHostConfig<JobsHostTyping> = {
+const jobsHostConfig: HostConfigI<JobsHostTyping> = {
   displayName: 'CANDIDATES',
   type: HostType.Multi,
   reducer: jobsReducer,

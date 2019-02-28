@@ -1,8 +1,8 @@
+import { Omit } from '@vats/utils'
 import { IGroup } from 'office-ui-fabric-react'
-import { Omit } from '../../utils'
 import { CommentValue } from './comments'
 
-export interface IGroupCommentsOptions {
+export interface GroupCommentsOptions {
   shouldGroupCollapse?: (props: {
     parent: CommentValue
     replies: CommentValue[]
@@ -10,13 +10,13 @@ export interface IGroupCommentsOptions {
   }) => boolean
 }
 
-export interface IGroupComments {
+export interface GroupComments {
   groups: IGroup[]
   replies: CommentValue[]
   parents: CommentValue[]
 }
 
-interface IGroupHash {
+interface GroupHash {
   [index: string]: {
     parent: CommentValue
     replies: CommentValue[]
@@ -25,10 +25,10 @@ interface IGroupHash {
 
 export const groupComments = (
   comments: CommentValue[],
-  options?: IGroupCommentsOptions,
-): IGroupComments => {
+  options?: GroupCommentsOptions,
+): GroupComments => {
   // create hash
-  const groupHash: IGroupHash = comments.reduce(
+  const groupHash: GroupHash = comments.reduce(
     (acc, comment) => {
       if (!comment.parent) {
         acc[comment.id] = {
@@ -44,10 +44,10 @@ export const groupComments = (
 
       return acc
     },
-    ({} as unknown) as IGroupHash,
+    ({} as unknown) as GroupHash,
   )
 
-  const init: IGroupComments = {
+  const init: GroupComments = {
     groups: [],
     replies: [],
     parents: [],

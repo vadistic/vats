@@ -1,0 +1,6 @@
+{
+  "extends": "@vats/config/tslint.json",
+  "linterOptions": {
+    "exclude": ["**/node_modules/**", "**/generated/**"]
+  }
+}

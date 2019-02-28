@@ -1,4 +1,5 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
+import { SortDirection } from '@vats/utils'
 import gql from 'graphql-tag'
 import { CandidateFragment } from '../../generated/fragments'
 import {
@@ -16,7 +17,6 @@ import {
   CandidateUpdateMutation,
   CandidateUpdateMutationVariables,
 } from '../../generated/queries'
-import { SortDirection } from '../../utils'
 import {
   CANDIDATE_CREATE_MUTATION,
   CANDIDATE_DELETE_MUTATION,
@@ -25,11 +25,11 @@ import {
 import {
   GraphqlMultiTypingCreator,
   HostActions,
+  HostConfigI,
   hostContextFactory,
+  HostStateI,
   HostType,
   HostTypingCreator,
-  IHostConfig,
-  IHostState,
 } from '../host'
 import { CandidatesSortBy } from './sort'
 
@@ -115,7 +115,7 @@ const candidatesStateInit = () => ({
 })
 
 export type CandidatesLocalState = ReturnType<typeof candidatesStateInit>
-export type CandidatesState = IHostState<CandidatesHostTyping>
+export type CandidatesState = HostStateI<CandidatesHostTyping>
 
 export type CandidatesGraphqlTyping = GraphqlMultiTypingCreator<{
   query: CandidatesQuery
@@ -140,7 +140,7 @@ export type CandidatesHostTyping = HostTypingCreator<{
   queryVariables: CandidatesQueryVariables
 }>
 
-const candidatesHostConfig: IHostConfig<CandidatesHostTyping> = {
+const candidatesHostConfig: HostConfigI<CandidatesHostTyping> = {
   displayName: 'CANDIDATES',
   type: HostType.Multi,
   reducer: candidatesReducer,

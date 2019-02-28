@@ -1,13 +1,13 @@
 import { Indexed } from '.'
 import { IMutation, IQuery } from './types'
 
-export interface ISchemaQueryFieldConfig {
+export interface SchemaQueryFieldConfig {
   single?: boolean
   multi?: boolean
   connection?: boolean
 }
 
-export interface ISchemaMutationFieldConfig {
+export interface SchemaMutationFieldConfig {
   create?: boolean
   update?: boolean
   upsert?: boolean
@@ -18,32 +18,32 @@ export interface ISchemaMutationFieldConfig {
   deleteMany?: boolean
 }
 
-export interface ISchemaFieldConfig {
-  query: ISchemaQueryFieldConfig | boolean
-  mutation: ISchemaMutationFieldConfig | boolean
+export interface SchemaFieldConfig {
+  query: SchemaQueryFieldConfig | boolean
+  mutation: SchemaMutationFieldConfig | boolean
 }
 
-export interface IObjSchemaFieldConfig {
-  query: ISchemaQueryFieldConfig
-  mutation: ISchemaMutationFieldConfig
+export interface ObjSchemaFieldConfig {
+  query: SchemaQueryFieldConfig
+  mutation: SchemaMutationFieldConfig
 }
 
 export type SchemaConfig = Partial<
-  { [K in keyof (IQuery | IMutation)]: ISchemaFieldConfig | boolean }
+  { [K in keyof (IQuery | IMutation)]: SchemaFieldConfig | boolean }
 >
 
 export const buildSchemaConfig = (
   schemaConfig: SchemaConfig,
-  defaultFieldConfig: IObjSchemaFieldConfig,
+  defaultFieldConfig: ObjSchemaFieldConfig,
 ) => {
   const queryList: string[] = []
   const mutationList: string[] = []
 
   // TODO: maybe get rid of this crazy fn
-  const objectifyFieldConfig = (fieldConfig: ISchemaFieldConfig | boolean) => {
-    const objFieldConfig: Partial<Indexed<IObjSchemaFieldConfig>> = {}
+  const objectifyFieldConfig = (fieldConfig: SchemaFieldConfig | boolean) => {
+    const objFieldConfig: Partial<Indexed<ObjSchemaFieldConfig>> = {}
 
-    const falsedFieldConfig: IObjSchemaFieldConfig = {
+    const falsedFieldConfig: ObjSchemaFieldConfig = {
       query: {
         single: false,
         multi: false,
@@ -69,7 +69,7 @@ export const buildSchemaConfig = (
 
     Object.keys(fieldConfig).forEach(field => {
       // https://github.com/Microsoft/TypeScript/pull/12253#issuecomment-263132208
-      const _field = field as keyof ISchemaFieldConfig
+      const _field = field as keyof SchemaFieldConfig
       const fieldValue = fieldConfig[_field]
       // assign for boolean values
       if (fieldValue === true) {
@@ -81,7 +81,7 @@ export const buildSchemaConfig = (
       if (typeof fieldValue !== 'boolean') {
         // handle detailed object
         Object.keys(defaultFieldConfig[_field]).forEach(subfield => {
-          const _subfield = subfield as keyof (ISchemaQueryFieldConfig | ISchemaMutationFieldConfig)
+          const _subfield = subfield as keyof (SchemaQueryFieldConfig | SchemaMutationFieldConfig)
           const configVal = fieldValue[_subfield]
           // undefined to false
           objFieldConfig[_field] = {}
@@ -90,7 +90,7 @@ export const buildSchemaConfig = (
       }
     })
 
-    return objFieldConfig as IObjSchemaFieldConfig
+    return objFieldConfig as ObjSchemaFieldConfig
   }
 
   Object.entries(schemaConfig).forEach(([name, config]) => {

@@ -1,17 +1,17 @@
 import { FormikProvider, useFormik } from 'formik'
 import React, { useContext, useMemo, useState } from 'react'
-import { HostContext, IHostContextValue } from '../host'
+import { HostContext, HostContextValue } from '../host'
 import { EditableContext } from './context'
 import { normaliseFormikInitialValues, normaliseFormikPayload } from './normalise'
 
-export interface IEditableProps {
+export interface EditableProps {
   context: HostContext<any>
   onSubmit: (values: any) => void
   formikRef?: React.MutableRefObject<any>
 }
 
-export const Editable: React.FC<IEditableProps> = ({ context, onSubmit, formikRef, children }) => {
-  const { value, state } = useContext<IHostContextValue<any>>(context)
+export const Editable: React.FC<EditableProps> = ({ context, onSubmit, formikRef, children }) => {
+  const { value, state } = useContext<HostContextValue<any>>(context)
 
   const editable = state.local.editable || false
   const safeValues = useMemo(() => normaliseFormikInitialValues(value), [value, state])

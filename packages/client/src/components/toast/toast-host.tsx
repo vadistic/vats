@@ -10,8 +10,6 @@ export const ToastHost: React.FC = () => {
     fetchPolicy: 'cache-only',
   })
 
-  console.log(data)
-
   if (!data || data.toasts.length === 0) {
     return null
   }

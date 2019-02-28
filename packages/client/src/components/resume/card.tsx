@@ -1,3 +1,4 @@
+import { mimeTypes } from '@vats/utils'
 import {
   DocumentCard,
   DocumentCardActions,
@@ -10,17 +11,16 @@ import {
 import React from 'react'
 import { File } from '../../generated/queries'
 import { useTranslation } from '../../i18n'
-import { mimeTypes } from '../../utils'
 import { useDayjs } from '../datetime'
 
-export interface IResumeCardProps {
+export interface ResumeCardProps {
   type?: DocumentCardType
   resume: ResumeValue
 }
 
 export type ResumeValue = File
 
-export const ResumeCard: React.FC<IResumeCardProps> = ({
+export const ResumeCard: React.FC<ResumeCardProps> = ({
   resume,
   type = DocumentCardType.compact,
 }) => {

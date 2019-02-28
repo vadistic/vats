@@ -13,15 +13,15 @@ import {
   CandidateUpdateMutationVariables,
 } from '../../generated/queries'
 import {
+  AugumentedDispatch,
   GraphqlSingleTypingCreator,
   HostActions,
+  HostConfigI,
   hostContextFactory,
+  HostStateI,
   HostType,
   HostTypingCreator,
-  IAugumentedDispatch,
-  IHostConfig,
-  IHostState,
-  Relations,
+  RelationsType,
 } from '../host'
 
 /*
@@ -49,6 +49,7 @@ export const CANDIDATE_CREATE_MUTATION = gql`
     createCandidate(data: $data) {
       phones
       emails
+
       links
       resumesString
       ...Candidate
@@ -125,20 +126,20 @@ const candidateReducer = (state: CandidateState, action: CandidateActions) => {
 
 export type CandidateValue = CandidateQuery_candidate
 
-export interface ICandidateInitArg {
+export interface CandidateInitArg {
   id: string
 }
 
-const candidateStateInit = ({ id }: ICandidateInitArg) => ({
+const candidateStateInit = ({ id }: CandidateInitArg) => ({
   editable: false,
 })
 
 export type CandidateLocalState = ReturnType<typeof candidateStateInit>
-export type CandidateState = IHostState<CandidateHostTyping>
+export type CandidateState = HostStateI<CandidateHostTyping>
 
-export type CandidateDispatch = IAugumentedDispatch<
+export type CandidateDispatch = AugumentedDispatch<
   CandidateActions,
-  IHostState<CandidateHostTyping>
+  HostStateI<CandidateHostTyping>
 >
 
 export type CandidateGraphqlTyping = GraphqlSingleTypingCreator<{
@@ -156,11 +157,11 @@ export type CandidateHostTyping = HostTypingCreator<{
   value: CandidateValue
   localState: CandidateLocalState
   actions: CandidateActions
-  initArg: ICandidateInitArg
+  initArg: CandidateInitArg
   queryVariables: CandidateQueryVariables
 }>
 
-const candidateRelations: Relations<CandidateValue> = {
+const candidateRelations: RelationsType<CandidateValue> = {
   tags: {
     onCreate: 'connect',
     onDelete: 'disconnect',
@@ -171,7 +172,7 @@ const candidateRelations: Relations<CandidateValue> = {
   },
 }
 
-export const candidateHostConfig: IHostConfig<CandidateHostTyping> = {
+export const candidateHostConfig: HostConfigI<CandidateHostTyping> = {
   displayName: 'CANDIDATE',
   type: HostType.Single,
   reducer: candidateReducer,
@@ -195,4 +196,4 @@ export const {
   Context: CandidateContext,
   HostProvider: CandidateHostProvider,
   useContext: useCandidateContext,
-} = hostContextFactory(candidateHostConfig)
+} = hostContextFactory<CandidateHostTyping>(candidateHostConfig)

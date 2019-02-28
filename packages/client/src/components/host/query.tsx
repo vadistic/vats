@@ -1,6 +1,6 @@
+import { cloneShallow } from '@vats/utils'
 import React, { useContext, useMemo } from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import { cloneShallow } from '../../utils'
 import { HostContext } from './context'
 
 const queryLog = (state: any, ...print: string[]) => {
@@ -10,11 +10,11 @@ const queryLog = (state: any, ...print: string[]) => {
   }
 }
 
-export interface IHostQuery {
+export interface HostQuery {
   context: HostContext<any>
 }
 
-export const HostQuery: React.FC<IHostQuery> = ({ context: Context, children }) => {
+export const HostQuery: React.FC<HostQuery> = ({ context: Context, children }) => {
   const { state, config, dispatch } = useContext(Context)
 
   const { data } = useQuery(config.graphql.query, {

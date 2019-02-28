@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noEmit": true,
+    "jsx": "preserve",
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "moduleResolution": "node"
+  },
+  "include": ["src"],
+  "exclude": [
+    "build",
+    "node_modules",
+    "src/**/*.jsxfixture.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
+}

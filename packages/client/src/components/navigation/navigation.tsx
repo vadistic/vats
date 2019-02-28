@@ -4,17 +4,17 @@ import React, { useState } from 'react'
 
 import { css } from '@emotion/core'
 import { routes } from '../../routes'
-import { ITheme } from '../../styles'
+import { Theme } from '../../styles'
 
-export interface INavigationProps {
+export interface NavigationProps {
   groups?: INavLinkGroup[]
 }
 
-export const navigationStyles = (theme: ITheme) => css`
+export const navigationStyles = (theme: Theme) => css`
   background-color: ${theme.palette.white};
 `
 
-export const Navigation: React.FC<INavigationProps> = ({ groups }) => {
+export const Navigation: React.FC<NavigationProps> = ({ groups }) => {
   const homeLink: INavLink = routes.home
 
   const [active, setActive] = useState(homeLink)
@@ -42,7 +42,7 @@ export const Navigation: React.FC<INavigationProps> = ({ groups }) => {
 
         return (
           <div css={navigationStyles}>
-            <h3 style={{ margin: '20px' }}>Logo</h3>
+            <h3 style={{ margin: '20px' }}>Vats</h3>
             <Nav
               groups={groups || [mainGroup]}
               onLinkClick={onLinkClick}

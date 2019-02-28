@@ -1,5 +1,5 @@
 import { Enum } from '@martin_hotell/rex-tils'
-import { mutableSortByGetter, mutableSortByProp } from '../../utils'
+import { mutableSortByGetter, mutableSortByProp } from '@vats/utils'
 import { JobsState, JobsValue } from './host'
 
 export const JobsSortBy = Enum('name', 'department', 'createdAt', 'updatedAt', 'applications')

@@ -1,7 +1,7 @@
 import { FocusZone, IconButton, Modal, Panel, PanelType } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 
-interface ISurfaceNavigation {
+interface SurfaceNavigation {
   onDismiss: () => void
   onExpand: () => void
   onEdit: () => void
@@ -9,7 +9,7 @@ interface ISurfaceNavigation {
   editable?: boolean
 }
 
-const SurfaceNavigation: React.FC<ISurfaceNavigation> = ({
+const SurfaceNavigation: React.FC<SurfaceNavigation> = ({
   onDismiss,
   onExpand,
   onEdit,
@@ -28,12 +28,12 @@ export enum SurfaceType {
   Modal = 'MODAL',
 }
 
-export interface ISurfaceProps {
+export interface SurfaceProps {
   type?: SurfaceType
-  navitationProps: ISurfaceNavigation
+  navitationProps: SurfaceNavigation
 }
 
-export const Surface: React.FC<ISurfaceProps> = ({
+export const Surface: React.FC<SurfaceProps> = ({
   children,
   type = SurfaceType.Panel,
   navitationProps: { onDismiss: onDismissed, onEdit, onExpand, onSubmit },

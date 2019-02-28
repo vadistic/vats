@@ -1,0 +1,4 @@
+{
+  "extends": "@vats/config/tsconfig.node.json",
+  "include": ["."]
+}

@@ -2,14 +2,14 @@ import { ArrayHelpers, FieldArray, useFormikContext } from 'formik'
 import React from 'react'
 import { useEditableContext } from '.'
 
-export interface IEditableFieldArrayRenderProps<Value> extends ArrayHelpers {
+export interface EditableFieldArrayRenderProps<Value> extends ArrayHelpers {
   name: string
   values: Value
   editable: boolean
 }
 
-export interface IEditableFieldArrayProps<Value> {
-  children: (renderProps: IEditableFieldArrayRenderProps<Value>) => JSX.Element | JSX.Element[]
+export interface EditableFieldArrayProps<Value> {
+  children: (renderProps: EditableFieldArrayRenderProps<Value>) => JSX.Element | JSX.Element[]
   name: string
 }
 
@@ -61,12 +61,12 @@ const noopArrayHelpers: ArrayHelpers = {
   pop: () => undefined,
 }
 
-export type EditableFieldArrayI<T = any> = React.FC<IEditableFieldArrayProps<T>>
+export type EditableFieldArrayI<T = any> = React.FC<EditableFieldArrayProps<T>>
 
 export const EditableFieldArray = <T extends any>({
   children,
   name,
-}: IEditableFieldArrayProps<T>) => {
+}: EditableFieldArrayProps<T>) => {
   const { values, editable } = useEditableContext()
 
   if (editable) {

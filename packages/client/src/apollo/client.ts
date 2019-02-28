@@ -1,19 +1,19 @@
+import { StrictlyIndexed } from '@vats/utils'
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
 import { ApolloClient, ApolloClientOptions } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { onError } from 'apollo-link-error'
 import { HttpLink } from 'apollo-link-http'
-import { StrictlyIndexed } from '../utils'
 import { resolvers } from './resolvers'
 import { schema as typeDefs } from './schema'
 
-export interface IStoreObjectWithId {
+export interface StoreObjectWithId {
   __typename: string
   id: string
   [field: string]: any
 }
 
-export const dataIdFromObject = <T extends IStoreObjectWithId>(entry: T) =>
+export const dataIdFromObject = <T extends StoreObjectWithId>(entry: T) =>
   `${entry.__typename}:${entry.id}`
 
 // not adding dataIdFromObject because above is default
@@ -21,7 +21,7 @@ const cache = new InMemoryCache()
 
 export type TCache = typeof cache
 
-export interface IContext {
+export interface Context {
   cache: TCache
 }
 

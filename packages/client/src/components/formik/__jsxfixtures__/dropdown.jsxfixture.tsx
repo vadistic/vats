@@ -2,7 +2,7 @@ import { css } from '@emotion/core'
 import { FormikProvider, useFormik } from 'formik'
 import { DropdownMenuItemType, IDropdownOption } from 'office-ui-fabric-react'
 import React from 'react'
-import { ITheme } from '../../../styles'
+import { Theme } from '../../../styles'
 import { FormikDropdown } from '../adapters'
 
 const options: IDropdownOption[] = [
@@ -21,7 +21,7 @@ const options: IDropdownOption[] = [
   { key: 'J', text: 'Option j' },
 ]
 
-const dropdownFixtureStyles = (theme: ITheme) => css`
+const dropdownFixtureStyles = (theme: Theme) => css`
   width: ${theme.sizes.m};
 `
 

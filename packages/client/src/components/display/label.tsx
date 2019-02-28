@@ -1,14 +1,14 @@
 import { css } from '@emotion/core'
 import { Icon, IIconProps, Label } from 'office-ui-fabric-react'
 import React from 'react'
-import { ITheme } from '../../styles'
+import { Theme } from '../../styles'
 
-export interface IDisplayLabelProps {
+export interface DisplayLabelProps {
   iconProps?: IIconProps
   text: string
 }
 
-const displaylabelStyles = (theme: ITheme) => css`
+const displaylabelStyles = (theme: Theme) => css`
   display: flex;
   box-sizing: border-box;
   align-items: center;
@@ -24,7 +24,7 @@ const displaylabelStyles = (theme: ITheme) => css`
   }
 `
 
-export const DisplayLabel: React.FC<IDisplayLabelProps> = ({ text, iconProps }) => (
+export const DisplayLabel: React.FC<DisplayLabelProps> = ({ text, iconProps }) => (
   <Label css={displaylabelStyles}>
     <span>{text}</span>
     <Icon {...iconProps} />

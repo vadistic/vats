@@ -1,16 +1,16 @@
-import { ActionsUnion, AnyFunction, createAction, Enum } from '@martin_hotell/rex-tils'
-import { IHostConfig, IHostState, IHostTyping } from './types'
+import { ActionsUnion, createAction, Enum } from '@martin_hotell/rex-tils'
+import { HostConfigI, HostStateI, HostTypingI } from './types'
 
 const RESET = 'RESET'
 const SET_STATE = 'SET_STATE'
 const SET_LOCAL_STATE = 'SET_LOCAL_STATE'
 
 export const HostActions = {
-  reset: <HostTyping extends IHostTyping>(initArg: HostTyping['initArg']) =>
+  reset: <HostTyping extends HostTypingI>(initArg: HostTyping['initArg']) =>
     createAction(RESET, initArg),
-  setState: <HostTyping extends IHostTyping>(state: IHostState<HostTyping>) =>
+  setState: <HostTyping extends HostTypingI>(state: HostStateI<HostTyping>) =>
     createAction(SET_STATE, state),
-  setLocalState: <HostTyping extends IHostTyping>(state: HostTyping['localState']) =>
+  setLocalState: <HostTyping extends HostTypingI>(state: HostTyping['localState']) =>
     createAction(SET_LOCAL_STATE, state),
 }
 
@@ -18,8 +18,8 @@ export type HostActions = ActionsUnion<typeof HostActions>
 
 export const HostActionsType = Enum(RESET, SET_STATE, SET_LOCAL_STATE)
 
-export const hostReducer = <HostTyping extends IHostTyping>(config: IHostConfig<HostTyping>) => (
-  state: IHostState<HostTyping>,
+export const hostReducer = <HostTyping extends HostTypingI>(config: HostConfigI<HostTyping>) => (
+  state: HostStateI<HostTyping>,
   action: HostActions,
 ) => {
   switch (action.type) {

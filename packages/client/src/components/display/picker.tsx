@@ -1,30 +1,30 @@
 import { css } from '@emotion/core'
 import { StringMap } from '@martin_hotell/rex-tils'
+import { ElementType, filterNull, Omit } from '@vats/utils'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
 import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
 import { useTranslation } from '../../i18n'
-import { ElementType, filterNull, Omit } from '../../utils'
 import { Box } from '../box'
 import { useEditableContext } from '../editable'
 import {
   CustomBasePicker,
   CustomPicker,
-  ICustomPickerProps,
-  IFieldProps,
+  CustomPickerProps,
+  FieldProps,
   useFormikPicker,
 } from '../formik'
 import { DisplayActionButton } from './button'
-import { DisplayLabel, IDisplayLabelProps } from './label'
+import { DisplayLabel, DisplayLabelProps } from './label'
 
-export interface IPoweredPickerOwnProps<V extends any[]> {
+export interface PoweredPickerOwnProps<V extends any[]> {
   tagItemMap: {
     display: keyof ElementType<V> & string
     title?: keyof ElementType<V> & (string | undefined)
   }
-  labelProps?: IDisplayLabelProps
+  labelProps?: DisplayLabelProps
   variables: any
   onCreateData: OnCreateData<V>
   graphql: {
@@ -35,7 +35,7 @@ export interface IPoweredPickerOwnProps<V extends any[]> {
   }
 }
 
-interface IOnCreateDataProp<V extends any[]> {
+interface OnCreateDataProp<V extends any[]> {
   inputValue: string
   tagItemMap: {
     display: keyof ElementType<V>
@@ -46,14 +46,14 @@ interface IOnCreateDataProp<V extends any[]> {
 export type OnCreateData<V extends any[]> = ({
   inputValue,
   tagItemMap,
-}: IOnCreateDataProp<V>) => Partial<ElementType<V>>
+}: OnCreateDataProp<V>) => Partial<ElementType<V>>
 
 export type PoweredPickerProps<V extends any[] = any[]> = Omit<
-  ICustomPickerProps<ElementType<V>>,
+  CustomPickerProps<ElementType<V>>,
   'onResolveSuggestions'
 > &
-  IPoweredPickerOwnProps<V> &
-  IFieldProps
+  PoweredPickerOwnProps<V> &
+  FieldProps
 
 const PoweredPicker: React.FC<PoweredPickerProps<Array<StringMap<any>>>> = ({
   graphql,

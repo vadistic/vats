@@ -1,10 +1,10 @@
 import { css } from '@emotion/core'
 import { INavLinkGroup } from 'office-ui-fabric-react'
 import React from 'react'
-import { ITheme } from '../../../styles'
+import { Theme } from '../../../styles'
 import { Navigation } from '../navigation'
 
-const navigationFxtureStyles = (theme: ITheme) => css`
+const navigationFxtureStyles = (theme: Theme) => css`
   width: ${theme.sizes.l1};
   background-color: ${theme.palette.white};
 `

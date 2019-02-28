@@ -4,14 +4,14 @@ import { render } from 'react-testing-library'
 import { augumentDispatch } from '../augument'
 import { combineReducers } from '../combine'
 
-interface IState {
+interface State {
   name: string
   data: {
     colors: string[]
   }
 }
 
-interface IIncompatibleState {
+interface IncompatibleState {
   name: number
   data: {
     colors: string[]
@@ -27,7 +27,7 @@ const ActionsA = {
 
 type ActionsA = ActionsUnion<typeof ActionsA>
 
-const reducerA = (state: IState, action: ActionsA) => {
+const reducerA = (state: State, action: ActionsA) => {
   switch (action.type) {
     case SET_NAME:
       return { ...state, name: action.payload }
@@ -44,7 +44,7 @@ const ActionsB = {
 
 type ActionsB = ActionsUnion<typeof ActionsB>
 
-const reducerB = (state: IState, action: ActionsB) => {
+const reducerB = (state: State, action: ActionsB) => {
   switch (action.type) {
     case ADD_COLOR:
       return { ...state, data: { ...state.data, colors: [...state.data.colors, action.payload] } }
@@ -62,7 +62,7 @@ type CombinedActions = ActionsA | ActionsB
 
 describe('reducer', () => {
   it('combine', () => {
-    const initState: IState = {
+    const initState: State = {
       name: 'Jakub',
       data: {
         colors: ['black'],
@@ -109,7 +109,7 @@ describe('reducer', () => {
   })
 
   it('augument', () => {
-    const initState: IState = {
+    const initState: State = {
       name: 'Jakub',
       data: {
         colors: ['black'],
@@ -123,7 +123,7 @@ describe('reducer', () => {
 
       const nameThunk = (name: string) => async (
         _dispatch: React.Dispatch<CombinedActions>,
-        _state: IState,
+        _state: State,
       ) => {
         _dispatch(ActionsA.setName(name))
         return _state.name
@@ -131,7 +131,7 @@ describe('reducer', () => {
 
       const colorThunk = (color: string) => async (
         _dispatch: React.Dispatch<ActionsB>,
-        _state: IState,
+        _state: State,
       ) => {
         _dispatch(ActionsB.addColor(name))
         return color

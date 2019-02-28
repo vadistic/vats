@@ -1,15 +1,15 @@
-import { Omit } from '../utils'
+import { Omit } from '@vats/utils'
 import { i18next, ProcessKeys } from './i18n'
 import translation from './translations/en'
 
-export interface ITranslationTypingConfig {
+export interface TranslationTypingConfig {
   single: string
   plural?: string
   interval?: string
 }
 
-export interface ITranslationTyping {
-  [index: string]: ITranslationTypingConfig | string
+export interface TranslationTyping {
+  [index: string]: TranslationTypingConfig | string
 }
 
 export type Translation = typeof translation

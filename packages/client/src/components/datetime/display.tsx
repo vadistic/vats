@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Box } from '../box'
 import { useDayjs } from './hook'
 
-export interface IDisplayDateTimeProps {
+export interface DisplayDateTimeProps {
   relative?: boolean
   isoDate: string
 }
 
-export const DisplayDateTime: React.FC<IDisplayDateTimeProps> = ({ isoDate, relative }) => {
+export const DisplayDateTime: React.FC<DisplayDateTimeProps> = ({ isoDate, relative }) => {
   const { dayjs, shortDateFormat } = useDayjs(isoDate)
 
   const [isRelative, setRelative] = useState(relative)

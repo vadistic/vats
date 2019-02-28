@@ -1,7 +1,7 @@
-import { getRoutes, IRoutesConfigMap } from './utils'
+import { getRoutes, RoutesConfigMap } from './utils'
 
 // first level children are views
-const routesConfig: IRoutesConfigMap = {
+const routesConfig: RoutesConfigMap = {
   home: {
     path: '',
   },

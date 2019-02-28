@@ -1,8 +1,8 @@
+import { pathProxy } from '@vats/utils'
 import { FormikProvider, useFormik } from 'formik'
 // tslint:disable-next-line:no-submodule-imports
 import { Position } from 'office-ui-fabric-react/lib/utilities/positioning'
 import React from 'react'
-import { pathProxy } from '../../../utils'
 import { FormikRating, FormikSlider, FormikSpinButton } from '../adapters'
 
 export const NumbersPickersFixture: React.FC = () => {

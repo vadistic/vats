@@ -1,16 +1,16 @@
 import React from 'react'
 
-export interface IAction {
+export interface Action {
   type: string
 }
 
-export interface IAugumentedDispatch<A extends IAction, S> {
+export interface AugumentedDispatch<A extends Action, S> {
   (input: A): void
   <V>(input: (dispatch: React.Dispatch<A>, state: S) => V): V
 }
 
-export const augumentDispatch = <A extends IAction, S>(dispatch: React.Dispatch<A>, state: S) => {
-  const augumentedDispatch: IAugumentedDispatch<A, S> = (input: any) => {
+export const augumentDispatch = <A extends Action, S>(dispatch: React.Dispatch<A>, state: S) => {
+  const augumentedDispatch: AugumentedDispatch<A, S> = (input: any) => {
     return input instanceof Function ? input(dispatch, state) : dispatch(input)
   }
 

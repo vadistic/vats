@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import util from 'util'
-import { ITranslationTypingConfig } from '../src/i18n'
+import { TranslationTypingConfig } from '../src/i18n'
 
 // i18n JSON format
 // https://www.i18next.com/misc/json-format
@@ -10,7 +10,7 @@ const TRANSLATIONS_DIR = 'src/i18n/translations'
 const TARGET_DIR = 'src/generated/translations'
 
 // recursively build i18n json
-const buildJson = (key: string, entry: ITranslationTypingConfig | object): any => {
+const buildJson = (key: string, entry: TranslationTypingConfig | object): any => {
   if (typeof entry === 'string') {
     return {
       [key]: entry,

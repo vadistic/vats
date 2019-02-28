@@ -4,13 +4,13 @@ import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
 import { JobContext, JobHostProvider } from './host'
 
-export interface IJobViewProps extends RouteComponentProps {
+export interface JobViewProps extends RouteComponentProps {
   id?: string
 }
 
 export const JobViewFallback = LoadingSpinner
 
-export const JobView: React.FC<IJobViewProps> = ({ id }) => {
+export const JobView: React.FC<JobViewProps> = ({ id }) => {
   if (!id) {
     console.error(`CandidateView: No id provided`)
     return null

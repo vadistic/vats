@@ -1,14 +1,14 @@
+import { StrictlyIndexed } from '@vats/utils'
 import { IColumn } from 'office-ui-fabric-react'
-import { StrictlyIndexed } from '../../../utils'
 import { TableItem } from './table'
 
 // TODO: Just declare it in object literal. Autogen only for custom fields
 
-interface IColumnMap {
+interface ColumnMap {
   [name: string]: string
 }
 
-const columnMap: IColumnMap = {
+const columnMap: ColumnMap = {
   avatar: 'Photo',
   firstName: 'First name',
   lastName: 'Last name',

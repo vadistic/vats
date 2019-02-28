@@ -1,34 +1,34 @@
+import { Exact, Merge, Omit } from '@vats/utils'
 import { DocumentNode } from 'graphql'
-import { Exact, Merge, Omit } from '../../utils'
 
-export interface IWhereVariables {
+export interface WhereVariables {
   where?: any
 }
 
-export interface IDataVariables {
+export interface DataVariables {
   data?: any
 }
 
-export type TQueryVariables = IWhereVariables
-export type TCreateVariables = IDataVariables
-export type TUpdateVariables = IWhereVariables & IDataVariables
-export type TDeleteVariables = IWhereVariables
-export type TUpdateManyVariables = IWhereVariables & IDataVariables
-export type TDeleteManyVariables = IWhereVariables
+export type TQueryVariables = WhereVariables
+export type TCreateVariables = DataVariables
+export type TUpdateVariables = WhereVariables & DataVariables
+export type TDeleteVariables = WhereVariables
+export type TUpdateManyVariables = WhereVariables & DataVariables
+export type TDeleteManyVariables = WhereVariables
 
-interface IGraphqlObject {
+interface GraphqlObject {
   id: string
   __typename: string
 }
 
-type SingleResponse<T> = { [K in keyof T]: T[K] extends IGraphqlObject | null ? T[K] : never }
+type SingleResponse<T> = { [K in keyof T]: T[K] extends GraphqlObject | null ? T[K] : never }
 
-type MultiResponse<T> = { [K in keyof T]: T[K] extends Array<IGraphqlObject | null> ? T[K] : never }
+type MultiResponse<T> = { [K in keyof T]: T[K] extends Array<GraphqlObject | null> ? T[K] : never }
 
 // TODO: maybe allow for 'count'
 type GraphqlBatch<T> = { [K in keyof T]: any }
 
-export interface IGraphqlSingleQueryTyping<
+export interface GraphqlSingleQueryTyping<
   Query extends SingleResponse<Query> = SingleResponse<any>,
   QueryVariables extends TQueryVariables = TQueryVariables
 > {
@@ -36,7 +36,7 @@ export interface IGraphqlSingleQueryTyping<
   queryVariables: QueryVariables
 }
 
-export interface IGraphqlSingleMutationTyping<
+export interface GraphqlSingleMutationTyping<
   CreateMutation extends SingleResponse<CreateMutation> = SingleResponse<any>,
   CreateMutationVariables extends TCreateVariables = TCreateVariables,
   UpdateMutation extends SingleResponse<UpdateMutation> = SingleResponse<any>,
@@ -52,7 +52,7 @@ export interface IGraphqlSingleMutationTyping<
   deleteMutationVariables: DeleteMutationVariables
 }
 
-export interface IGraphqlMultiQueryTyping<
+export interface GraphqlMultiQueryTyping<
   Query extends MultiResponse<Query> = MultiResponse<any>,
   QueryVariables extends TQueryVariables = TQueryVariables
 > {
@@ -60,7 +60,7 @@ export interface IGraphqlMultiQueryTyping<
   queryVariables: QueryVariables
 }
 
-export interface IGraphqlMultiMutationTyping<
+export interface GraphqlMultiMutationTyping<
   UpdateManyMutation extends GraphqlBatch<UpdateManyMutation> = GraphqlBatch<any>,
   UpdateManyMutationVariables extends TUpdateManyVariables = TUpdateManyVariables,
   DeleteManyMutation extends GraphqlBatch<DeleteManyMutation> = GraphqlBatch<any>,
@@ -73,24 +73,24 @@ export interface IGraphqlMultiMutationTyping<
 }
 
 // for helpers only
-export type TGraphqlSingleTyping = Merge<IGraphqlSingleQueryTyping, IGraphqlSingleMutationTyping>
+export type TGraphqlSingleTyping = Merge<GraphqlSingleQueryTyping, GraphqlSingleMutationTyping>
 
-export type TGraphqlMultiTyping = Merge<IGraphqlMultiQueryTyping, IGraphqlMultiMutationTyping>
+export type TGraphqlMultiTyping = Merge<GraphqlMultiQueryTyping, GraphqlMultiMutationTyping>
 
 export type TGraphqlTyping = TGraphqlSingleTyping & TGraphqlMultiTyping
 
 export type GraphqlSingleTypingCreator<
-  T extends Exact<T, IGraphqlSingleQueryTyping & Partial<IGraphqlSingleMutationTyping>>
-> = T & Omit<IGraphqlSingleMutationTyping, keyof T>
+  T extends Exact<T, GraphqlSingleQueryTyping & Partial<GraphqlSingleMutationTyping>>
+> = T & Omit<GraphqlSingleMutationTyping, keyof T>
 
 export type GraphqlMultiTypingCreator<
   T extends Exact<
     T,
-    IGraphqlMultiQueryTyping & Partial<IGraphqlSingleMutationTyping & IGraphqlMultiMutationTyping>
+    GraphqlMultiQueryTyping & Partial<GraphqlSingleMutationTyping & GraphqlMultiMutationTyping>
   >
-> = T & Omit<IGraphqlSingleMutationTyping & IGraphqlMultiMutationTyping, keyof T>
+> = T & Omit<GraphqlSingleMutationTyping & GraphqlMultiMutationTyping, keyof T>
 
-export interface IHostGraphqlSingleConfig {
+export interface HostGraphqlSingleConfig {
   query: DocumentNode
   queryRoot: string
   createMutation?: DocumentNode
@@ -101,11 +101,11 @@ export interface IHostGraphqlSingleConfig {
   deleteMutationRoot?: string
 }
 
-export interface IHostGraphqlMultiConfig extends IHostGraphqlSingleConfig {
+export interface HostGraphqlMultiConfig extends HostGraphqlSingleConfig {
   updateManyMutation: DocumentNode
   updateManyMutationRoot: string
   deleteManyMutation: DocumentNode
   deleteManyMutationRoot: string
 }
 
-export type TGraphqlConfig = IHostGraphqlSingleConfig | IHostGraphqlMultiConfig
+export type TGraphqlConfig = HostGraphqlSingleConfig | HostGraphqlMultiConfig

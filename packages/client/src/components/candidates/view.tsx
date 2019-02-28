@@ -20,9 +20,9 @@ const CandidatesViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate })
   return null
 }
 
-export interface ICandidatesViewProps extends RouteComponentProps {}
+export interface CandidatesViewProps extends RouteComponentProps {}
 
-export const CandidatesView: React.FC<ICandidatesViewProps> = () => {
+export const CandidatesView: React.FC<CandidatesViewProps> = () => {
   return (
     <CandidatesHostProvider>
       <HostQuery context={CandidatesContext}>

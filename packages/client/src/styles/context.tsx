@@ -1,13 +1,13 @@
 import { ThemeContext } from '@emotion/core'
 import React, { useContext } from 'react'
-import { ITheme } from './theme'
+import { Theme } from './theme'
 
-export const useTheme = () => useContext<ITheme>(ThemeContext as any)
+export const useTheme = () => useContext<Theme>(ThemeContext as any)
 
-export interface IThemeProviderProps {
-  theme: ITheme
+export interface ThemeProviderProps {
+  theme: Theme
 }
 
-export const ThemeProvider: React.FC<IThemeProviderProps> = ({ theme, children }) => (
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ theme, children }) => (
   <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
 )

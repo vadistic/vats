@@ -1,47 +1,46 @@
-import { capitalise } from './string'
-import { NonUndefined } from './types'
+import { capitalise, NonUndefined } from '@vats/utils'
 
 /*
  * config types
  */
 
-export interface IRoutesConfigMap {
-  [name: string]: IRouteConfig
+export interface RoutesConfigMap {
+  [name: string]: RouteConfig
 }
 
-interface IRouteConfig {
+interface RouteConfig {
   path: string
-  children?: IRoutesConfigMap
+  children?: RoutesConfigMap
 }
 
 /*
  * and result routes
  */
 
-interface IRoute<
-  T extends IRouteConfig,
-  Children extends IRoutesConfigMap | undefined = T['children']
+interface Route<
+  T extends RouteConfig,
+  Children extends RoutesConfigMap | undefined = T['children']
 > {
   path: string
   url: string
   key: string
   name: string
   basepath: string
-  children: Children extends undefined ? never : RoutesMap<NonUndefined<Children>>
+  children: Children extends undefined ? never : RoutesMapType<NonUndefined<Children>>
 }
 
 /**
  * util types for recursive fn
  */
-interface IRoutesMap {
-  [name: string]: IRoute<IRouteConfig>
+interface RoutesMap {
+  [name: string]: Route<RouteConfig>
 }
 
-export type RoutesMap<T extends IRoutesConfigMap> = { [K in keyof T]: IRoute<T[K]> }
+export type RoutesMapType<T extends RoutesConfigMap> = { [K in keyof T]: Route<T[K]> }
 
-export const getRoutes = <T extends IRoutesConfigMap>(rootConfig: T) => {
-  const recursiveRoutes = (children: IRoutesConfigMap, parentUrl: string) => {
-    const _children = children as IRoutesMap
+export const getRoutes = <T extends RoutesConfigMap>(rootConfig: T) => {
+  const recursiveRoutes = (children: RoutesConfigMap, parentUrl: string) => {
+    const _children = children as RoutesMap
 
     Object.entries(children).forEach(([key, val]) => {
       const url = `${parentUrl}/${val.path}`
@@ -60,5 +59,5 @@ export const getRoutes = <T extends IRoutesConfigMap>(rootConfig: T) => {
 
   const rootRoutes = recursiveRoutes(rootConfig, '')
 
-  return rootRoutes as RoutesMap<T>
+  return rootRoutes as RoutesMapType<T>
 }

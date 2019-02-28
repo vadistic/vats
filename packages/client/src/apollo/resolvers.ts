@@ -3,19 +3,19 @@ import uuid from 'uuid/v4'
 import { ToastType } from '../components'
 import { ToastsQuery } from '../generated/queries'
 import { MutationResolvers, QueryResolvers } from '../generated/resolvers'
-import { IContext } from './client'
+import { Context } from './client'
 
-export type IQuery = QueryResolvers<IContext>
-export type IMutation = MutationResolvers<IContext>
+export type QueryType = QueryResolvers<Context>
+export type MutationType = MutationResolvers<Context>
 
-const Query: IQuery = {
+const Query: QueryType = {
   localField: (parent, args, { cache }) => {
     // noop
     return 'resolved'
   },
 }
 
-const Mutation: IMutation = {
+const Mutation: MutationType = {
   createToast: (partent, args, { cache }) => {
     const toast = {
       __typename: 'Toast',

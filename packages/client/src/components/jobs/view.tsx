@@ -19,9 +19,9 @@ const JobsViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
   return null
 }
 
-export interface IJobsViewProps extends RouteComponentProps {}
+export interface JobsViewProps extends RouteComponentProps {}
 
-export const JobsView: React.FC<IJobsViewProps> = () => {
+export const JobsView: React.FC<JobsViewProps> = () => {
   return (
     <JobsHostProvider>
       <HostQuery context={JobsContext}>

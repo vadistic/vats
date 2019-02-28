@@ -1,7 +1,7 @@
 import { gql as graphql } from 'apollo-server'
 import { changeDefaultSource, gqlImport } from 'gql-import'
 import { importSchema } from 'graphql-import'
-import { buildSchemaConfig, gql, IObjSchemaFieldConfig, SchemaConfig } from '../utils'
+import { buildSchemaConfig, gql, ObjSchemaFieldConfig, SchemaConfig } from '../utils'
 import { authSchema } from './auth'
 import { connectionsSchema } from './connections'
 
@@ -30,7 +30,7 @@ const schemaConfig: SchemaConfig = {
   task: true,
 }
 
-const defaultFieldConfig: IObjSchemaFieldConfig = {
+const defaultFieldConfig: ObjSchemaFieldConfig = {
   query: {
     single: true,
     multi: true,

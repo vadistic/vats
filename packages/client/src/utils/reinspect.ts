@@ -31,7 +31,9 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   // pluck ids
   useInspectedState = (initalState, id) => useReactState(initalState)
+  // TODO: fix reinspect
   useInspectedReducer = (reducer, initalState, init, id) =>
+    // @ts-ignore
     useReactReducer(reducer, initalState, init)
   // it's basically a noop
   StateInspector = ({ children }) => React.createElement(Fragment, {}, children)

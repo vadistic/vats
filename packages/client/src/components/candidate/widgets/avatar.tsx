@@ -1,11 +1,11 @@
 import { css } from '@emotion/core'
-import { Image, ImageFit, PersonaCoin, PersonaSize } from 'office-ui-fabric-react'
+import { Image, ImageFit, PersonaCoin } from 'office-ui-fabric-react'
 import React from 'react'
-import { ITheme, useTheme } from '../../../styles'
+import { Theme, useTheme } from '../../../styles'
 import { Box } from '../../box'
 import { useCandidateContext } from '../host'
 
-export const userAvatarStyles = (theme: ITheme) => css`
+export const userAvatarStyles = (theme: Theme) => css`
   width: ${theme.sizes.s1};
   height: ${theme.sizes.s1};
 

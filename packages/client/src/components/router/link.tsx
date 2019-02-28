@@ -1,9 +1,9 @@
 import { css } from '@emotion/core'
 import { Link as RouterLink, LinkGetProps, NavigateOptions } from '@reach/router'
+import { Omit } from '@vats/utils'
 import { Link as FabricLink } from 'office-ui-fabric-react'
-import { Omit } from '../../utils'
 
-export interface ILinkState {
+export interface LinkState {
   tab?: string
 }
 
@@ -11,23 +11,20 @@ export type LinkArg =
   | string
   | {
       to: string
-      options?: NavigateOptions<ILinkState>
+      options?: NavigateOptions<LinkState>
     }
 
-type AnchorProps = Omit<
-  JSX.IntrinsicElements['a'] & JSX.IntrinsicElements['button'],
-  'ref' | 'href'
->
+type AnchorProps = Omit<JSX.IntrinsicElements['a'], 'ref' | 'href'>
 
-export interface ILinkToProps {
+export interface LinkToProps {
   to?: string
   replace?: boolean
   getProps?: (props: LinkGetProps) => {}
-  state?: ILinkState
+  state?: LinkState
 }
 
-export interface ILinkProps extends AnchorProps {
-  to?: string | ILinkToProps
+export interface LinkProps extends AnchorProps {
+  to?: string | LinkToProps
   plain?: boolean
 }
 
@@ -36,7 +33,7 @@ const plainLinkStyles = css`
   text-decoration: inherit;
 `
 
-export const Link: React.FC<ILinkProps> = ({ plain, to = '', ...rest }) => {
+export const Link: React.FC<LinkProps> = ({ plain, to = '', ...rest }) => {
   const props =
     typeof to === 'string'
       ? {

@@ -1,11 +1,11 @@
+import { CheckPath } from '@vats/utils'
 import { useTranslation as useOriginalTranslation } from 'react-i18next'
-import { CheckPath } from '../utils'
 import { i18next } from './i18n'
-import { ITranslationTypingConfig, Translation, TranslationOptions } from './types'
+import { Translation, TranslationOptions, TranslationTypingConfig } from './types'
 
 export type TranslationProxyFunction = (options?: TranslationOptions) => string
 
-export type TranslationProxy<S> = S extends (ITranslationTypingConfig | string)
+export type TranslationProxy<S> = S extends (TranslationTypingConfig | string)
   ? TranslationProxyFunction
   : { [K in keyof S]: TranslationProxy<S[K]> }
 

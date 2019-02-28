@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface IReducers {
+export interface ReducersStringMap {
   [index: string]: React.Reducer<any, any>
 }
 
@@ -12,7 +12,7 @@ type NoUnion<T> = [T] extends [infer U]
     : never
   : never
 
-type CombinedReducers<R extends IReducers> = React.Reducer<
+type CombinedReducers<R extends ReducersStringMap> = React.Reducer<
   NoUnion<React.ReducerState<R[keyof R]>>,
   // maybe allow smart state type merging?
   // React.ReducerState<R[keyof R]>
@@ -20,7 +20,7 @@ type CombinedReducers<R extends IReducers> = React.Reducer<
 >
 
 // maybe combine by key to slice of state like redux?
-export const combineReducers = <R extends IReducers>(reducers: R): CombinedReducers<R> =>
+export const combineReducers = <R extends ReducersStringMap>(reducers: R): CombinedReducers<R> =>
   Object.values(reducers).reduce(
     (acc, reducer) => (state, action) => reducer(acc(state, action), action),
     // init (somehow not sure if necessary)

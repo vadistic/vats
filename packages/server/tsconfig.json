@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "es6",
     "sourceMap": true,
@@ -7,18 +8,8 @@
     "outDir": "dist",
     "lib": ["esnext"],
     // modules
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    // strict
-    "strict": true,
-    "noImplicitReturns": true,
-    // less strict
-    "noUnusedLocals": false, // dev
-    "noUnusedParameters": false,
-    "skipLibCheck": true
+    "module": "commonjs"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/node_modules/**", "dist"]
+  "exclude": ["node_modules", "**/node_modules/**"]
 }

@@ -1,28 +1,28 @@
-import { Exact, Omit } from '../../utils'
+import { Exact, Omit } from '@vats/utils'
 import { HostActions } from './actions'
-import { IAction, IAugumentedDispatch } from './augument'
-import { Relations } from './diff'
-import { IHostGraphqlMultiConfig, IHostGraphqlSingleConfig, TQueryVariables } from './graphql-types'
+import { Action, AugumentedDispatch } from './augument'
+import { RelationsType } from './diff'
+import { HostGraphqlMultiConfig, HostGraphqlSingleConfig, TQueryVariables } from './graphql-types'
 
 export enum HostType {
   Single = 'SINGLE',
   Multi = 'MULTI',
 }
 
-export type HostFilterFn<HostTyping extends IHostTyping> = (
+export type HostFilterFn<HostTyping extends HostTypingI> = (
   value: HostTyping['value'],
-  state: IHostState<HostTyping>,
+  state: HostStateI<HostTyping>,
 ) => HostTyping['value']
 
-export type ThunkAction<HostTyping extends IHostTyping> = (
-  dispatch: IAugumentedDispatch<HostActions | HostTyping['actions'], IHostState<HostTyping>>,
-  state: IHostState<HostTyping>,
+export type ThunkAction<HostTyping extends HostTypingI> = (
+  dispatch: AugumentedDispatch<HostActions | HostTyping['actions'], HostStateI<HostTyping>>,
+  state: HostStateI<HostTyping>,
 ) => any
 
-export interface IHostTyping<
+export interface HostTypingI<
   Value = {},
   LocalState = {},
-  Actions extends IAction = any,
+  Actions extends Action = any,
   InitArg = any,
   QueryVariables extends TQueryVariables = TQueryVariables
 > {
@@ -33,10 +33,10 @@ export interface IHostTyping<
   queryVariables: QueryVariables
 }
 
-export type HostTypingCreator<T extends Exact<T, Partial<IHostTyping>>> = T &
-  Omit<IHostTyping, keyof T>
+export type HostTypingCreator<T extends Exact<T, Partial<HostTypingI>>> = T &
+  Omit<HostTypingI, keyof T>
 
-export interface IHostConfig<HostTyping extends IHostTyping = IHostTyping> {
+export interface HostConfigI<HostTyping extends HostTypingI = HostTypingI> {
   displayName: string
   type: HostType
   reducer?: React.Reducer<any, any>
@@ -48,11 +48,11 @@ export interface IHostConfig<HostTyping extends IHostTyping = IHostTyping> {
     | (() => HostTyping['queryVariables'])
     | ((initArg: HostTyping['initArg']) => HostTyping['queryVariables'])
   resetOnInitArgPropChange?: boolean
-  graphql: HostTyping['value'] extends any[] ? IHostGraphqlMultiConfig : IHostGraphqlSingleConfig
-  relations?: Relations<HostTyping['value']>
+  graphql: HostTyping['value'] extends any[] ? HostGraphqlMultiConfig : HostGraphqlSingleConfig
+  relations?: RelationsType<HostTyping['value']>
 }
 
-export interface IHostState<HostTyping extends IHostTyping = IHostTyping> {
+export interface HostStateI<HostTyping extends HostTypingI = HostTypingI> {
   variables: HostTyping['queryVariables']
   local: HostTyping['localState']
 }

@@ -1,0 +1,284 @@
+# Core business logic types
+type Workspace {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  # core connections
+  users: [User!]!
+  jobs: [Job!]!
+  candidates: [Candidate!]!
+
+  settings: Json
+
+  workflows: [Workflow!]!
+
+  # other?
+  invites: [Invite!]!
+
+  # info
+  name: String!
+}
+
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  settings: Json
+
+  # connections
+  tasks: [Task!]! @relation(name: "TaskOwner")
+
+  # info
+  firstName: String!
+  lastName: String!
+  email: String! @unique
+  username: String!
+  lastLogin: DateTime
+  deletedAt: DateTime
+
+  # additional info
+  position: String
+  avatar: File
+}
+
+type Job {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  workspace: Workspace!
+
+  # connections
+  applications: [Application!]!
+
+  # nodes
+  workflow: Workflow!
+  comments: [Comment!]!
+
+  # info
+  type: JobType!
+  department: String
+  locations: [Location!]!
+
+  name: String!
+  excerpt: String
+  companyDescription: String
+  description: String
+  requirements: String
+}
+
+enum JobType {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+type Application {
+  createdAt: DateTime!
+  id: ID! @unique
+  updatedAt: DateTime!
+
+  # ats
+  type: ApplicationType!
+  disqualification: DisqualificationInstance
+  stage: Stage!
+
+  # connections
+  job: Job!
+  candidate: Candidate!
+}
+
+enum ApplicationType {
+  QUALIFIED
+  DISQUALIFIED
+}
+
+type Candidate {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  # info
+  firstName: String!
+  lastName: String!
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  avatar: File @relation(name: "CandidateAvatarFile")
+
+  # meta info
+  company: String
+  headline: String
+  position: String
+
+  resumesString: [String!]!
+  resumesFile: [File!]! @relation(name: "CandidateResumeFiles")
+  coverLettersString: [String!]!
+  coverLettersFile: [File!]! @relation(name: "CandidateCoverLetterFiles")
+
+  tags: [Tag!]!
+  sources: [Source!]!
+
+  fields: [FieldInstance!]!
+
+  # conections
+  tasks: [Task!]!
+  applications: [Application!]!
+  comments: [Comment!]!
+}
+
+type Task {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  # connections
+  owners: [User!]! @relation(name: "TaskOwner")
+  candidate: Candidate
+
+  # info
+  title: String
+  description: String
+  dueAt: DateTime
+}
+
+# DEPENDENCIES
+type Invite {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  email: String!
+  expireAt: DateTime!
+  invitedBy: User!
+}
+
+type Workflow {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  description: String
+  stages: [Stage!]!
+  disqualifications: [Disqualification!]!
+  fields: [Field!]!
+}
+
+type Disqualification {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  description: String
+}
+
+type DisqualificationInstance {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  disqualification: Disqualification!
+  createdBy: User!
+  content: String
+}
+
+type Stage {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  description: String
+  type: StageType!
+}
+
+enum StageType {
+  NEW
+  PIPELINE
+  FINAL
+}
+
+type Comment {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  # connections
+  createdBy: User!
+  parent: Comment
+
+  # info
+  content: String!
+}
+
+# SYSTEM TYPES
+type Location {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  country: String!
+  region: String
+  city: String!
+  zip: String
+}
+
+type Field {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  type: FieldType!
+  label: String!
+  description: String
+}
+
+enum FieldType {
+  INT
+  FLOAT
+  TEXT
+  PARAGRAPH
+  BOOLEAN
+  DATETIME
+}
+
+type FieldInstance {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  field: Field!
+  value: String
+}
+
+type Tag {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  label: String!
+  description: String
+}
+
+type Source {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  label: String!
+  description: String
+}
+
+type File {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  size: Int!
+  type: String!
+  name: String!
+  url: String! @unique
+}

@@ -3,15 +3,15 @@ import { ActionButton, IButtonProps } from 'office-ui-fabric-react'
 import React from 'react'
 import { useTheme } from '../../../styles'
 import { CandidateValue } from '../host'
-import { CandidatePersona, ICandidatePersonaProps } from './persona'
+import { CandidatePersona, CandidatePersonaProps } from './persona'
 
-export interface ICandidateCardProps {
+export interface CandidateCardProps {
   candidate: CandidateValue
-  linkProps?: ICandidatePersonaProps['linkProps']
+  linkProps?: CandidatePersonaProps['linkProps']
   actions?: IButtonProps[]
 }
 
-export const CandidateCard: React.FC<ICandidateCardProps> = ({ candidate, linkProps, actions }) => {
+export const CandidateCard: React.FC<CandidateCardProps> = ({ candidate, linkProps, actions }) => {
   const theme = useTheme()
 
   const styles = css`

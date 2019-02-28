@@ -7,9 +7,9 @@ export enum CandidatesSortBy {
 }
 
 // TODO: get rid of
-type TCandidatesSortDisplayNamesMap = { [K in CandidatesSortBy]: string }
+type CandidatesSortDisplayNamesMap = { [K in CandidatesSortBy]: string }
 
-export const CandidatesSortDisplayNamesMap: TCandidatesSortDisplayNamesMap = {
+export const CandidatesSortDisplayNamesMap: CandidatesSortDisplayNamesMap = {
   [CandidatesSortBy.CreatedAt]: 'add date',
   [CandidatesSortBy.UpdatedAt]: 'update date',
 }

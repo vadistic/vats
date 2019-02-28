@@ -1,3 +1,4 @@
+import { ElementType } from '@vats/utils'
 import {
   GroupedList,
   IGroupedListProps,
@@ -8,21 +9,20 @@ import {
 } from 'office-ui-fabric-react'
 import React, { Suspense, useMemo } from 'react'
 import { CandidateCommentsQuery } from '../../generated/queries'
-import { ElementType } from '../../utils'
 import { CommentFooter, ParentComment, Reply } from './comment'
-import { groupComments, IGroupCommentsOptions } from './group'
+import { groupComments, GroupCommentsOptions } from './group'
 
 export type CommentValue = ElementType<
   NonNullable<NonNullable<CandidateCommentsQuery['candidate']>['comments']>
 >
 
-export interface ICommentsProps {
+export interface CommentsProps {
   comments: CommentValue[]
   truncate?: number
 }
 
-export const Comments: React.FC<ICommentsProps> = ({ comments }) => {
-  const shouldGroupCollapse: IGroupCommentsOptions['shouldGroupCollapse'] = ({
+export const Comments: React.FC<CommentsProps> = ({ comments }) => {
+  const shouldGroupCollapse: GroupCommentsOptions['shouldGroupCollapse'] = ({
     groupIndex: _groupIndex,
     replies: _replies,
   }) => _groupIndex >= 2 || _replies.length >= 5

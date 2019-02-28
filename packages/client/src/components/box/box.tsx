@@ -1,12 +1,12 @@
 import { css } from '@emotion/core'
 import React from 'react'
 
-export interface IBoxProps {
+export interface BoxProps {
   as?: keyof JSX.IntrinsicElements
   direction?: 'row' | 'column'
 }
 
-export const Box: React.FC<IBoxProps & JSX.IntrinsicElements['div']> = ({
+export const Box: React.FC<BoxProps & JSX.IntrinsicElements['div']> = ({
   as: tag,
   direction = 'column',
   ...rest

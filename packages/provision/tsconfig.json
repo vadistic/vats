@@ -1,13 +1,10 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "sourceMap": true,
     "target": "es6",
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "moduleResolution": "node"
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src"]
 }

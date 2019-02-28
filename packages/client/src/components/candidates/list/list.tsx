@@ -6,9 +6,9 @@ import { useTheme } from '../../../styles'
 import { CandidateCard, CandidateValue } from '../../candidate'
 import { useCandidatesContext } from '../host'
 
-export interface ICandidatesListProps extends RouteComponentProps {}
+export interface CandidatesListProps extends RouteComponentProps {}
 
-export const CandidatesList: React.FC<ICandidatesListProps> = ({ children, navigate }) => {
+export const CandidatesList: React.FC<CandidatesListProps> = ({ children, navigate }) => {
   const { value: candidates, state } = useCandidatesContext()
   const theme = useTheme()
 

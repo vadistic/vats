@@ -7,7 +7,7 @@ import { Prisma as PrismaBinding } from 'prisma-binding'
 import util from 'util'
 import { Prisma as PrismaClient } from './generated/prisma-client'
 import { resolvers } from './resolvers'
-import { decodeToken, IAccessTokenPayload } from './utils'
+import { AccessTokenPayload, decodeToken } from './utils'
 
 const prismaBinding = new PrismaBinding({
   typeDefs: path.resolve(__dirname, './generated/prisma.graphql'),
@@ -26,17 +26,17 @@ const prismaClient = new PrismaClient({
   debug: true,
 })
 
-interface IContextProps {
+interface ContextProps {
   req: IncomingMessage
 }
 
-export interface IContext {
+export interface Context {
   db: PrismaBinding
-  token?: IAccessTokenPayload
+  token?: AccessTokenPayload
   client: PrismaClient
 }
 
-const context = ({ req }: IContextProps): IContext => {
+const context = ({ req }: ContextProps): Context => {
   const authorization = req.headers.authorization
   let rawToken
 
@@ -44,7 +44,7 @@ const context = ({ req }: IContextProps): IContext => {
     rawToken = authorization.split(' ')[1]
 
     // const token = validateToken(rawToken)
-    const token = decodeToken(rawToken) as IAccessTokenPayload
+    const token = decodeToken(rawToken) as AccessTokenPayload
 
     if (token) {
       return {

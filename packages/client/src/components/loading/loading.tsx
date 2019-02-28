@@ -1,13 +1,13 @@
 import { css } from '@emotion/core'
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react'
 import React, { useEffect, useState } from 'react'
-import { ITheme } from '../../styles'
+import { Theme } from '../../styles'
 
-export interface ILoadingProps {
+export interface LoadingProps {
   label: string
 }
 
-export const loadingStyles = (theme: ITheme) => css`
+export const loadingStyles = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
 
@@ -22,7 +22,7 @@ export const loadingStyles = (theme: ITheme) => css`
   }
 `
 
-export const LoadingSpinner: React.FC<ILoadingProps> = ({ label: initalLabel }) => {
+export const LoadingSpinner: React.FC<LoadingProps> = ({ label: initalLabel }) => {
   const [label, setLabel] = useState(initalLabel)
   const [messagesCount, setMessagesCount] = useState(0)
 

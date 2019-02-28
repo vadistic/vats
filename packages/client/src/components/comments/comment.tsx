@@ -1,4 +1,5 @@
 import { css } from '@emotion/core'
+import { sentenceCase } from '@vats/utils'
 import {
   ActionButton,
   ActivityItem,
@@ -9,8 +10,7 @@ import {
 } from 'office-ui-fabric-react'
 import React from 'react'
 import { useTranslation } from '../../i18n'
-import { IFabricStyles, useTheme } from '../../styles'
-import { sentenceCase } from '../../utils'
+import { FabricStyles, useTheme } from '../../styles'
 import { DisplayDateTime } from '../datetime'
 import { Link } from '../router'
 import { CommentValue } from './comments'
@@ -34,13 +34,13 @@ const getPersonaProps = (comment: CommentValue) => ({
   title: getAuthorName(comment),
 })
 
-export interface ICommentProps {
+export interface CommentProps {
   comment: CommentValue
   replies: CommentValue[]
   groupHeaderProps: IGroupHeaderProps
 }
 
-export const ParentComment: React.FC<ICommentProps> = ({ comment, replies, groupHeaderProps }) => {
+export const ParentComment: React.FC<CommentProps> = ({ comment, replies, groupHeaderProps }) => {
   const theme = useTheme()
 
   const isFirst = groupHeaderProps.groupIndex === 0
@@ -48,7 +48,7 @@ export const ParentComment: React.FC<ICommentProps> = ({ comment, replies, group
     !!groupHeaderProps.groups && groupHeaderProps.groups.length - 1 === groupHeaderProps.groupIndex
 
   //
-  const commentStyles: IFabricStyles = {
+  const commentStyles: FabricStyles = {
     root: {
       paddingTop: !isFirst ? theme.spacing.m : 'inherit',
       paddingBottom: !isLast ? theme.spacing.m : 'inherit',
@@ -87,11 +87,11 @@ export const ParentComment: React.FC<ICommentProps> = ({ comment, replies, group
   )
 }
 
-export interface ICommentFooterProps {
+export interface CommentFooterProps {
   groupFooterProps: IGroupHeaderProps
 }
 
-export const CommentFooter: React.FC<ICommentFooterProps> = ({ groupFooterProps }) => {
+export const CommentFooter: React.FC<CommentFooterProps> = ({ groupFooterProps }) => {
   const theme = useTheme()
   const { tp } = useTranslation()
 
@@ -161,11 +161,11 @@ export const CommentFooter: React.FC<ICommentFooterProps> = ({ groupFooterProps 
   )
 }
 
-export interface IReplyProps {
+export interface ReplyProps {
   comment: CommentValue
 }
 
-export const Reply: React.FC<IReplyProps> = ({ comment }) => {
+export const Reply: React.FC<ReplyProps> = ({ comment }) => {
   const theme = useTheme()
 
   const replyStyles = css`

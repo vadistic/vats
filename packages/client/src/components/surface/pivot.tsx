@@ -3,11 +3,11 @@ import { IPivotItemProps, IPivotProps, Pivot, PivotItem } from 'office-ui-fabric
 import React from 'react'
 import { useTheme } from '../../styles'
 
-export interface ISurfacePivotProps extends IPivotProps {
+export interface SurfacePivotProps extends IPivotProps {
   items: IPivotItemProps[]
 }
 
-export const SurfacePivot: React.FC<ISurfacePivotProps> = ({ items, ...rest }) => {
+export const SurfacePivot: React.FC<SurfacePivotProps> = ({ items, ...rest }) => {
   const theme = useTheme()
   const itemStyles = css`
     padding-top: ${theme.spacing.m};

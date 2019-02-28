@@ -1,14 +1,14 @@
+import { getInByPath } from '@vats/utils'
 import { useFormikContext } from 'formik'
 import React, { useContext, useState } from 'react'
-import { getInByPath } from '../../utils'
 
-export interface IEditablecontextValue<V = any> {
+export interface EditableContextValue<V = any> {
   values: V
   editable: boolean
 }
 
 // substitute formik context for non-editable mode
-export const EditableContext = React.createContext<IEditablecontextValue>({
+export const EditableContext = React.createContext<EditableContextValue>({
   values: undefined,
   editable: false,
 })

@@ -1,11 +1,11 @@
+import { DeepPartial } from '@vats/utils'
 // tslint:disable-next-line: no-implicit-dependencies
 import { DataProxy } from 'apollo-cache'
 import { MutationOptions } from 'apollo-client'
 import { client } from '../../apollo'
-import { DeepPartial } from '../../utils'
 import { diffAutoUpdataData } from './diff'
 import { TGraphqlSingleTyping } from './graphql-types'
-import { IHostConfig, IHostState, IHostTyping } from './types'
+import { HostConfigI, HostStateI, HostTypingI } from './types'
 
 const mergeOptions = <T extends any>(presetOptions: T, providedOptions: DeepPartial<T>) => {
   return ({
@@ -16,13 +16,13 @@ const mergeOptions = <T extends any>(presetOptions: T, providedOptions: DeepPart
 }
 
 export const hostThunkHelpers = <
-  HostTyping extends IHostTyping,
+  HostTyping extends HostTypingI,
   // TODO: how to handle union??
   GraphqlTyping extends TGraphqlSingleTyping
 >(
-  config: IHostConfig<HostTyping>,
+  config: HostConfigI<HostTyping>,
 ) => {
-  type State = IHostState<HostTyping>
+  type State = HostStateI<HostTyping>
 
   type CreateMutationOptions = MutationOptions<
     GraphqlTyping['createMutation'],

@@ -10,14 +10,14 @@ import { JobActions, JobContext, JobHostProvider, JobValue, useJobContext } from
 import { JobProfile } from './profile'
 import { updateJob } from './thunks'
 
-export interface IJobSurfaceProps extends RouteComponentProps {
+export interface JobSurfaceProps extends RouteComponentProps {
   // injected by router
   id?: string
 }
 
 const JobSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading job...'} />
 
-export const JobSurfaceBase: React.FC<IJobSurfaceProps> = ({ navigate, id }) => {
+export const JobSurfaceBase: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
   const { dispatch } = useJobContext()
 
   const handleDismiss = () => {
@@ -69,7 +69,7 @@ export const JobSurfaceBase: React.FC<IJobSurfaceProps> = ({ navigate, id }) => 
   )
 }
 
-export const JobSurface: React.FC<IJobSurfaceProps> = ({ id, navigate }) => {
+export const JobSurface: React.FC<JobSurfaceProps> = ({ id, navigate }) => {
   if (!id) {
     console.error('JobSurface: No id provided')
     return null

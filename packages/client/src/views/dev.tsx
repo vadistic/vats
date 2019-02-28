@@ -1,11 +1,9 @@
 import { RouteComponentProps } from '@reach/router'
 import React from 'react'
-import { Router } from '../components'
-import { routes } from '../routes'
 
-export interface IDevViewProps extends RouteComponentProps {}
+export interface DevViewProps extends RouteComponentProps {}
 
-export const DevView: React.FC<IDevViewProps> = () => (
+export const DevView: React.FC<DevViewProps> = () => (
   <>
     <h1>Dev</h1>
   </>

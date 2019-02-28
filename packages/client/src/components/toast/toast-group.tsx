@@ -2,10 +2,10 @@ import { css, keyframes } from '@emotion/core'
 import { ActionButton } from 'office-ui-fabric-react'
 import React, { useEffect, useState } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import { ITheme } from '../../styles'
+import { Theme } from '../../styles'
 import { Toast, ToastItem } from './toast'
 
-export interface IToastGroupProps {
+export interface ToastGroupProps {
   items: ToastItem[]
   timeout?: number
   max?: number
@@ -49,7 +49,7 @@ const toastAnimationStyles = css`
   }
 `
 
-const toastGroupStyles = (theme: ITheme) => css`
+const toastGroupStyles = (theme: Theme) => css`
   position: absolute;
   right: ${theme.spacing.s1};
   bottom: ${theme.spacing.s1};
@@ -69,7 +69,7 @@ const toastGroupStyles = (theme: ITheme) => css`
 
   ${toastAnimationStyles}
 `
-export const ToastGroup: React.FC<IToastGroupProps> = ({ items, timeout = 5000, max = 8 }) => {
+export const ToastGroup: React.FC<ToastGroupProps> = ({ items, timeout = 5000, max = 8 }) => {
   const [displayItems, setDisplayItems] = useState([] as ToastItem[])
   const [prevItems, setPrevItems] = useState([] as ToastItem[])
 

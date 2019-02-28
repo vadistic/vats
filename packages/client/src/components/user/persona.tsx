@@ -2,11 +2,11 @@ import { IPersonaSharedProps, Persona } from 'office-ui-fabric-react'
 import React from 'react'
 import { User } from '../../generated/queries'
 
-export interface IUserPersonaProps extends IPersonaSharedProps {
+export interface UserPersonaProps extends IPersonaSharedProps {
   user: User
 }
 
-export const UserPersona: React.FC<IUserPersonaProps> = ({
+export const UserPersona: React.FC<UserPersonaProps> = ({
   user: { avatar, firstName, lastName, position },
   ...rest
 }) => {

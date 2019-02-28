@@ -1,5 +1,5 @@
 import cloneDeep from 'clone-deep'
-import { diffAutoUpdataData, IRelations } from '../diff'
+import { diffAutoUpdataData, Relations, RelationsType } from '../diff'
 
 const fixtureFields = {
   id: '123',
@@ -58,7 +58,7 @@ describe('OneToOne', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: IRelations) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (map?: Relations) => diffAutoUpdataData(fixture, copy, map)
 
   it('non-nested oneToOne connect', () => {
     copy.empty = fixture.oneToOne as any

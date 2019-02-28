@@ -2,24 +2,24 @@ import React from 'react'
 import { useTranslation } from '../../i18n'
 import { Box } from '../box'
 import { EditableFieldArray } from '../editable'
-import { IFieldProps } from '../formik'
+import { FieldProps } from '../formik'
 import { DisplayActionButton, DisplayIconButton } from './button'
-import { DisplayLabel, IDisplayLabelProps } from './label'
+import { DisplayLabel, DisplayLabelProps } from './label'
 import { DisplayTextField, DisplayTextFieldProps } from './text'
 
-interface IDisplayTextFieldArrayProps extends IFieldProps {
+interface DisplayTextFieldArrayProps extends FieldProps {
   emptyElement: any
-  labelProps?: IDisplayLabelProps
+  labelProps?: DisplayLabelProps
   textFieldProps?: DisplayTextFieldProps
 }
 
-export const DisplayTextFieldArray: React.FC<IDisplayTextFieldArrayProps> = ({
+export const DisplayTextFieldArray: React.FC<DisplayTextFieldArrayProps> = ({
   name,
   type,
   emptyElement,
   labelProps,
   textFieldProps,
-}: IDisplayTextFieldArrayProps) => {
+}: DisplayTextFieldArrayProps) => {
   const { tp } = useTranslation()
 
   return (

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    // module
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "downlevelIteration": true,
+    "jsx": "preserve",
+    // strict
+    "strict": true,
+    // lint
+    "noUnusedLocals": false,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedParameters": false
+  }
+}

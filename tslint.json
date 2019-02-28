@@ -1,0 +1,30 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    // because https://github.com/palantir/tslint/issues/4333 & object switch
+    "no-object-literal-type-assertion": false,
+    "interface-name": [true, "never-prefix"],
+    "no-empty-interface": false,
+    "ordered-imports": true,
+    "only-arrow-functions": true,
+    "jsx-no-lambda": [false],
+    "member-access": [true, "no-public"],
+    "max-classes-per-file": false,
+    "file-name-casing": [true, "kebab-case"],
+    "no-implicit-dependencies": [true, ["graphql-tag", "react-testing-library"]],
+    "no-submodule-imports": [true, "uuid"],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ]
+  },
+  "linterOptions": {
+    "exclude": ["**/generated/**", "**/node_modules/**"]
+  }
+}

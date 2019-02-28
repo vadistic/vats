@@ -1,7 +1,7 @@
+import { pathProxy } from '@vats/utils'
 import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
 import { useTranslation } from '../../../i18n'
-import { pathProxy } from '../../../utils'
 import { DisplayTextField } from '../../display'
 import { CandidateValue } from '../host'
 import { UserAvatar } from '../widgets'

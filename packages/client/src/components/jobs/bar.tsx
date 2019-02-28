@@ -1,14 +1,14 @@
+import { SortDirection } from '@vats/utils'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React from 'react'
 import { useTranslation } from '../../i18n'
-import { SortDirection } from '../../utils'
 import { JobsActions, useJobsContext } from './host'
 import { JobsSortBy } from './sort'
 
-export interface IJobsBarProps {}
+export interface JobsBarProps {}
 
 // TODO: sorting menu as Callout component!
-export const JobsBar: React.FC<IJobsBarProps> = () => {
+export const JobsBar: React.FC<JobsBarProps> = () => {
   const { dispatch, state } = useJobsContext()
   const { tp, t } = useTranslation()
 

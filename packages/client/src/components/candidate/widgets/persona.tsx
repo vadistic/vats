@@ -1,11 +1,5 @@
 import { css } from '@emotion/core'
-import {
-  Icon,
-  IPersonaSharedProps,
-  Persona,
-  personaSize,
-  PersonaSize,
-} from 'office-ui-fabric-react'
+import { Icon, IPersonaSharedProps, Persona, PersonaSize } from 'office-ui-fabric-react'
 import React from 'react'
 import { useTranslation } from '../../../i18n'
 import { useTheme } from '../../../styles'
@@ -13,7 +7,7 @@ import { useDayjs } from '../../datetime'
 import { Link, LinkArg } from '../../router'
 import { CandidateValue } from '../host'
 
-export interface ICandidatePersonaProps extends IPersonaSharedProps {
+export interface CandidatePersonaProps extends IPersonaSharedProps {
   candidate: CandidateValue
   linkProps?: {
     name?: LinkArg
@@ -23,7 +17,7 @@ export interface ICandidatePersonaProps extends IPersonaSharedProps {
   }
 }
 
-export const CandidatePersona: React.FC<ICandidatePersonaProps> = ({
+export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
   candidate,
   linkProps = {},
   ...rest

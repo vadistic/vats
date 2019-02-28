@@ -1,6 +1,6 @@
+import { pathProxy } from '@vats/utils'
 import { FormikProvider, useFormik } from 'formik'
 import React from 'react'
-import { pathProxy } from '../../../utils'
 import { FormikCheckbox, FormikToggle } from '../adapters'
 
 export const BooleanPickersFixture: React.FC = () => {

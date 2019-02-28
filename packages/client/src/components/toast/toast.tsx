@@ -4,7 +4,7 @@ import { ToastHostQuery_toasts, ToastType } from '../../generated/queries'
 
 export type ToastItem = ToastHostQuery_toasts
 
-export interface IToastProps {
+export interface ToastProps {
   onDismiss?: IMessageBarProps['onDismiss']
   item: ToastItem
 }
@@ -20,7 +20,7 @@ export const ToastTypeMap = {
   [ToastType.SEVERE_WARNING]: MessageBarType.severeWarning,
 }
 
-export const Toast: React.FC<IToastProps> = ({ item: { message, type }, ...rest }) => {
+export const Toast: React.FC<ToastProps> = ({ item: { message, type }, ...rest }) => {
   const isTruncated = typeof message === 'string' && message.length > 160
 
   return (

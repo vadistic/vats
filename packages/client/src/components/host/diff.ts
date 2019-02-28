@@ -1,6 +1,6 @@
+import { getIn, recursiveTransform, removeElOnIndex, setValueIn, tryGetIn } from '@vats/utils'
 import cloneDeep from 'clone-deep'
 import { applyChange, diff, Diff } from 'deep-diff'
-import { getIn, recursiveTransform, removeElOnIndex, setValueIn, tryGetIn } from '../../utils'
 
 const isScalarValue = (value: any) =>
   typeof value === 'string' ||
@@ -13,18 +13,18 @@ const isNonNested = (path: any[]) => typeof path[0] === 'string' && path.length 
 const isNonNestedElement = (path: any[]) =>
   path.length === 2 && typeof path[0] === 'string' && typeof path[1] === 'number'
 
-export interface IRelationsMap {
+export interface RelationsMap {
   onCreate: 'create' | 'connect'
   onDelete: 'delete' | 'disconnect'
 }
 
-export interface IRelations {
-  [index: string]: IRelationsMap
+export interface Relations {
+  [index: string]: RelationsMap
 }
 
-export type Relations<T> = { [K in keyof T]?: IRelationsMap }
+export type RelationsType<T> = { [K in keyof T]?: RelationsMap }
 
-interface IDiffResult<Value> {
+interface DiffResult<Value> {
   queryData: Partial<Value> | undefined
   updateData: any
 }
@@ -115,7 +115,7 @@ const applyScalarChange = (targetQueryData: any, change: Diff<any, any>) => {
  *  updates and nested relations are tricky and not supported yet...
  */
 
-const isValidRelationChange = (change: Diff<any, any>, map?: Relations<any>) => {
+const isValidRelationChange = (change: Diff<any, any>, map?: RelationsType<any>) => {
   const path = change.path
 
   if (path && map) {
@@ -162,7 +162,7 @@ const applyRelationChange = (
   targetQueryData: any,
   targetUpdateData: any,
   change: Diff<any, any>,
-  map?: Relations<any>,
+  map?: RelationsType<any>,
 ) => {
   const path = change.path
   const queryData = targetQueryData
@@ -462,12 +462,12 @@ const transformRelationsUpdateData = <T extends any>(target: T) =>
     return value
   })
 
-export const diffAutoUpdataData = <Value>(prev: Value, next: Value, map?: Relations<any>) => {
-  const scalars: IDiffResult<Value> = {
+export const diffAutoUpdataData = <Value>(prev: Value, next: Value, map?: RelationsType<any>) => {
+  const scalars: DiffResult<Value> = {
     queryData: undefined,
     updateData: undefined,
   }
-  const relations: IDiffResult<Value> = {
+  const relations: DiffResult<Value> = {
     queryData: undefined,
     updateData: undefined,
   }

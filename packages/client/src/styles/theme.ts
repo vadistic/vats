@@ -9,13 +9,13 @@ import {
   IStyle,
 } from '@uifabric/styling'
 
-interface IWithUnitInput {
+interface WithUnitInput {
   [inxex: string]: number
 }
 
 type WithUnit<T> = { [K in keyof T]: string }
 
-const withUnit = <T extends IWithUnitInput>(unit: string, input: T) =>
+const withUnit = <T extends WithUnitInput>(unit: string, input: T) =>
   Object.entries(input).reduce(
     (acc, [prop, val]) => ({ ...acc, [prop]: val + unit }),
     // tslint:disable-next-line:no-object-literal-type-assertion
@@ -24,7 +24,7 @@ const withUnit = <T extends IWithUnitInput>(unit: string, input: T) =>
 
 const spacingBase = 16
 
-interface ISpacing {
+interface Spacing {
   /** 4px */
   s2: string
   /** 8px */
@@ -41,7 +41,7 @@ interface ISpacing {
   l2: string
 }
 
-const spacing: ISpacing = withUnit('px', {
+const spacing: Spacing = withUnit('px', {
   s2: spacingBase / 4,
   s1: spacingBase / 2,
   ms: spacingBase * 0.75,
@@ -51,7 +51,7 @@ const spacing: ISpacing = withUnit('px', {
   l2: spacingBase * 4,
 })
 
-interface ISizing {
+interface Sizing {
   /** 32px */
   s3: string
   /** 64px */
@@ -70,7 +70,7 @@ interface ISizing {
   l2: string
 }
 
-const sizes: ISizing = withUnit('px', {
+const sizes: Sizing = withUnit('px', {
   s3: spacingBase * 2,
   s2: spacingBase * 4,
   s1: spacingBase * 8,
@@ -81,7 +81,7 @@ const sizes: ISizing = withUnit('px', {
   l2: spacingBase * 64,
 })
 
-interface IFabricTheme {
+interface FabricTheme {
   palette: IPalette
   fonts: IFontStyles
   semanticColors: ISemanticColors
@@ -90,11 +90,11 @@ interface IFabricTheme {
   disableGlobalClassNames: boolean
 }
 
-export interface ITheme extends IFabricTheme {
+export interface Theme extends FabricTheme {
   /** for sizing components (height, width...) */
-  sizes: ISizing
+  sizes: Sizing
   /** for spacing components (padding, margin...) */
-  spacing: ISpacing
+  spacing: Spacing
 }
 
 const fabricTheme: IPartialTheme = {
@@ -125,22 +125,22 @@ const fabricTheme: IPartialTheme = {
   },
 }
 
-export const theme: ITheme = {
+export const theme: Theme = {
   ...createTheme(fabricTheme),
   spacing,
   sizes,
 }
 
-export interface IThemeProps {
-  theme: ITheme
+export interface ThemeProps {
+  theme: Theme
 }
 
-export type CSSProp = SerializedStyles | ((theme: ITheme) => SerializedStyles)
+export type CSSProp = SerializedStyles | ((theme: Theme) => SerializedStyles)
 
-export interface ICSSPropProps {
+export interface CSSPropProps {
   css?: CSSProp
 }
 
-export interface IFabricStyles {
+export interface FabricStyles {
   [index: string]: IStyle
 }

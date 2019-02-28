@@ -1,9 +1,7 @@
+import { tryGetIn } from '@vats/utils'
 import { PivotItem } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 import { useTranslation } from '../../i18n'
-import { tryGetIn } from '../../utils'
-import { Box } from '../box'
-import { DisplayForm } from '../display'
 import { SurfacePivot } from '../surface'
 import { useCandidateContext } from './host'
 import {

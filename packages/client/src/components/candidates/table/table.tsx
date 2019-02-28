@@ -8,11 +8,11 @@ import { getColumns } from './columns'
 
 export type TableItem = Candidate
 
-export interface ITableProps extends RouteComponentProps {}
+export interface TableProps extends RouteComponentProps {}
 
 const tableStyles = css``
 
-export const CandidatesTable: React.FC<ITableProps> = ({ children, navigate }) => {
+export const CandidatesTable: React.FC<TableProps> = ({ children, navigate }) => {
   const { value: candidates } = useCandidatesContext()
 
   const handleInvoke = (item: Candidate) => {

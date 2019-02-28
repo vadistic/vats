@@ -40,26 +40,26 @@ import React, { useEffect } from 'react'
  *
  */
 
-export interface IFieldSpreadProps<V> {
+export interface FieldSpreadProps<V> {
   value: V
   name: string
   onChange: (e: React.ChangeEvent<any>) => void
   onBlur: (e: any) => void
 }
 
-export interface IFieldMetaProps<V> {
+export interface FieldMetaProps<V> {
   value: V
   error?: string | undefined
   touch: boolean
   initialValue?: V
 }
 
-export interface IFieldProps {
+export interface FieldProps {
   name: string
   type?: string
 }
 
-export type UseField<V> = [IFieldSpreadProps<V>, IFieldMetaProps<V>]
+export type UseField<V> = [FieldSpreadProps<V>, FieldMetaProps<V>]
 
 export type FormikContextValue<State> = FormikSharedConfig &
   FormikState<State> &
@@ -141,7 +141,7 @@ export const useFormikTextField = <V extends TextFieldBaseValue = TextFieldBaseV
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikTextField: React.FC<ITextFieldProps & IFieldProps> = ({
+export const FormikTextField: React.FC<ITextFieldProps & FieldProps> = ({
   name,
   type,
   ...rest
@@ -188,7 +188,7 @@ export const useFormikToggle = <V extends ToggleBaseValue = ToggleBaseValue>(
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikToggle: React.FC<IToggleProps & IFieldProps> = ({ name, type, ...rest }) => {
+export const FormikToggle: React.FC<IToggleProps & FieldProps> = ({ name, type, ...rest }) => {
   const { bind } = useFormikToggle(name, type)
   return <Toggle {...bind} {...rest} />
 }
@@ -231,7 +231,7 @@ export const useFormikCheckbox = <V extends ChecboxBaseValue = ChecboxBaseValue>
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikCheckbox: React.FC<ICheckboxProps & IFieldProps> = ({ name, type, ...rest }) => {
+export const FormikCheckbox: React.FC<ICheckboxProps & FieldProps> = ({ name, type, ...rest }) => {
   const { bind } = useFormikCheckbox(name, type)
   return <Checkbox {...bind} {...rest} />
 }
@@ -315,7 +315,7 @@ export const useFormikSpinButton = (props: ISpinButtonProps) => <
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikSpinButton: React.FC<ISpinButtonProps & IFieldProps> = ({
+export const FormikSpinButton: React.FC<ISpinButtonProps & FieldProps> = ({
   name,
   type,
   ...rest
@@ -366,7 +366,7 @@ export const useFormikSlider = <V extends SliderBaseValue = SliderBaseValue>(
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikSlider: React.FC<ISliderProps & IFieldProps> = ({ name, type, ...rest }) => {
+export const FormikSlider: React.FC<ISliderProps & FieldProps> = ({ name, type, ...rest }) => {
   const { bind } = useFormikSlider(name, type)
 
   return <Slider {...bind} {...rest} />
@@ -414,7 +414,7 @@ export const useFormikRating = <V extends RatingBaseValue = RatingBaseValue>(
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikRating: React.FC<IRatingProps & IFieldProps> = ({ name, type, ...rest }) => {
+export const FormikRating: React.FC<IRatingProps & FieldProps> = ({ name, type, ...rest }) => {
   const { bind } = useFormikRating(name, type)
   return <Rating {...bind} {...rest} />
 }
@@ -461,7 +461,7 @@ export const useFormikChoiceGroup = <V extends ChoiceGroupBaseValue = ChoiceGrou
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikChoiceGroup: React.FC<IChoiceGroupProps & IFieldProps> = ({
+export const FormikChoiceGroup: React.FC<IChoiceGroupProps & FieldProps> = ({
   name,
   type,
   ...rest
@@ -547,7 +547,7 @@ export const useFormikDropdown = <V extends DropdownBaseValue = DropdownBaseValu
   return { formik: {}, field: {}, bind: {} }
 }
 
-export const FormikDropdown: React.FC<IDropdownProps & IFieldProps> = ({ name, type, ...rest }) => {
+export const FormikDropdown: React.FC<IDropdownProps & FieldProps> = ({ name, type, ...rest }) => {
   const { bind } = useFormikDropdown(name, type)
   return <Dropdown {...bind} {...rest} />
 }

@@ -1,17 +1,18 @@
 import gql from 'graphql-tag'
+import React from 'react'
 import { SourceFragment } from '../../../generated/fragments'
 import { Source } from '../../../generated/queries'
 import { useTranslation } from '../../../i18n'
 import { DisplayPicker, DisplayPickerI, OnCreateData } from '../../display'
-import { IFieldProps } from '../../formik'
+import { FieldProps } from '../../formik'
 
 export type SourcesValue = Source[]
 
-export interface IDisplaySourcePickerProps extends IFieldProps {}
+export interface DisplaySourcePickerProps extends FieldProps {}
 
 const DisplaySourcePickerBase = DisplayPicker as DisplayPickerI<SourcesValue>
 
-export const DisplaySourcePicker: React.FC<IDisplaySourcePickerProps> = props => {
+export const DisplaySourcePicker: React.FC<DisplaySourcePickerProps> = props => {
   const { tp } = useTranslation()
 
   const handleCreateData: OnCreateData<SourcesValue> = ({ inputValue }) => ({

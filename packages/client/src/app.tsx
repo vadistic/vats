@@ -11,34 +11,33 @@ import { theme, ThemeProvider } from './styles'
 import { StateInspector } from './utils'
 import { DevView } from './views'
 
-export class App extends React.Component {
-  render() {
-    return (
-      <>
-        <ApolloProvider client={client}>
-          <ApolloHooksProvider client={client}>
-            <I18nextProvider i18n={i18next}>
-              <StateInspector name="APP">
-                <ThemeProvider theme={theme}>
-                  <Fabric theme={theme}>
-                    <Layout>
-                      <Router>
-                        <DevView path={routes.dev.path} />
-                        <JobView path={routes.job.path + '/:id'} />
-                        <JobsView path={routes.jobs.path} />
-                        <CandidateView path={routes.candidate.path + '/:id'} />
-                        <CandidatesView path={routes.candidates.path} />
-                      </Router>
-                    </Layout>
-                  </Fabric>
-                </ThemeProvider>
-              </StateInspector>
-            </I18nextProvider>
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </>
-    )
-  }
+// tslint:disable-next-line: no-implicit-dependencies
+import { hot } from 'react-hot-loader'
+
+export const App: React.FC = () => {
+  return (
+    <ApolloProvider client={client}>
+      <ApolloHooksProvider client={client}>
+        <I18nextProvider i18n={i18next}>
+          <StateInspector name="APP">
+            <ThemeProvider theme={theme}>
+              <Fabric theme={theme}>
+                <Layout>
+                  <Router>
+                    <DevView path={routes.dev.path} />
+                    <JobView path={routes.job.path + '/:id'} />
+                    <JobsView path={routes.jobs.path} />
+                    <CandidateView path={routes.candidate.path + '/:id'} />
+                    <CandidatesView path={routes.candidates.path} />
+                  </Router>
+                </Layout>
+              </Fabric>
+            </ThemeProvider>
+          </StateInspector>
+        </I18nextProvider>
+      </ApolloHooksProvider>
+    </ApolloProvider>
+  )
 }
 
-export default App
+export default hot(module)(App)
