@@ -1,3 +1,3 @@
 module.exports = {
-  envConfig: require('./env/env-config'),
+  configure: require('./env/env-config'),
 }

@@ -1,4 +1,4 @@
-require('@vats/config').envConfig()
+require('@vats/scripts').configure()
 
 module.exports = {
   client: {

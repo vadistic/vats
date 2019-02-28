@@ -1,3 +1,4 @@
 declare module '@vats/scripts' {
-  export const envConfig: () => void
+  const configure: () => void
+  export default configure
 }

@@ -14,18 +14,19 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/runtime": "^7.3.4",
+    "@craco/craco": "^3.5.0",
     "@emotion/babel-plugin-jsx-pragmatic": "^0.1.0",
     "@emotion/babel-preset-css-prop": "^10.0.7",
     "@hot-loader/react-dom": "^16.8.3",
-    "babel-changed": "^8.0.0",
     "babel-plugin-emotion": "^10.0.7",
+    "babel-preset-react-app": "^7.0.1",
     "cross-spawn": "^6.0.5",
-    "dotenv": "^6.2.0"
+    "dotenv": "^6.2.0",
+    "react-hot-loader": "^4.7.1",
+    "react-scripts": "^2.1.5"
   },
   "optionalDependencies": {
-    "@craco/craco": "3.5.0",
-    "react-scripts": "^2.1.5",
-    "react-hot-loader": "^4.7.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3"
   }

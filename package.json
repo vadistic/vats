@@ -12,9 +12,10 @@
     "bootstrap": "lerna bootstrap",
     "test": "echo todo",
     "start": "echo todo",
+    "build": "echo todo",
     "prepare": "lerna run prepare",
     "typecheck": "lerna run --parallel typecheck",
-    "build": "echo todo"
+    "now-deploy": "now && now alias && now rm vats --safe --yes"
   },
   "husky": {
     "hooks": {
@@ -49,7 +50,13 @@
     "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/**"
+    ],
+    "nohoist": [
+      "**/babel-preset-react-app",
+      "**/babel-preset-react-app/**"
+    ]
+  }
 }

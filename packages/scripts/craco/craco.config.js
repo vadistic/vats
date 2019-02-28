@@ -1,7 +1,9 @@
 const path = require('path')
 const { getLoader, loaderByName } = require('@craco/craco')
 
-require('@vats/config').envConfig()
+const configure = require('../env/env-config')
+
+configure()
 
 const argv = process.argv
 
@@ -76,7 +78,7 @@ const hotModules = webpackConfig => {
 // it probably mess up with emotion jsx pragma something - better substitute it
 // also I do not want it on production
 const hotModulesNoop = webpackConfig => {
-  webpackConfig.resolve.alias['react-hot-loader'] = '@vats/scripts/noop-hot-loader'
+  webpackConfig.resolve.alias['react-hot-loader'] = '@vats/scripts/craco/noop-hot-loader'
 
   return webpackConfig
 }
@@ -99,8 +101,6 @@ module.exports = {
       } else {
         webpackConfig = hotModulesNoop(webpackConfig)
       }
-
-      console.log(webpackConfig.module.rules[2].oneOf[1].options.presets)
 
       return webpackConfig
     },

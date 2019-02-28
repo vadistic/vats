@@ -19,5 +19,6 @@
     "@vats/scripts": "^0.1.0",
     "clone-deep": "^4.0.1",
     "typescript": "^3.3.3333"
-  }
+  },
+  "dependencies": {}
 }

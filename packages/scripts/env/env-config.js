@@ -2,7 +2,7 @@ const path = require('path')
 
 const envDir = path.resolve(process.cwd(), '../..')
 
-const envConfig = () => {
+const configure = () => {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development'
   }
@@ -26,4 +26,4 @@ const envConfig = () => {
   require('dotenv').config({ path: envDir + '/' + '.env' })
 }
 
-module.exports = envConfig
+module.exports = configure

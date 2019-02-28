@@ -5,10 +5,12 @@
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
+  "homepage": "https://vats.now.sh/cra",
   "scripts": {
     "start": "vats-scripts app-start",
     "build": "vats-scripts app-build",
-    "test": "vats-scripts app-test"
+    "test": "vats-scripts app-test",
+    "now-build": "vats-scripts app-build"
   },
   "browserslist": [
     ">0.2%",
@@ -18,13 +20,13 @@
   ],
   "dependencies": {
     "@emotion/core": "^10.0.7",
+    "@vats/utils": "0.1.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3"
   },
   "devDependencies": {
     "@types/react": "^16.8.5",
     "@types/react-dom": "^16.8.2",
-    "@vats/scripts": "^0.1.0",
-    "react-hot-loader": "^4.7.1"
+    "@vats/scripts": "0.1.0"
   }
 }

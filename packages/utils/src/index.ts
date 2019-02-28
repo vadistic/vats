@@ -1,4 +1,3 @@
-export * from './router'
 export * from './types'
 export * from './path'
 export * from './guards'
