@@ -1,6 +1,6 @@
 import { css } from '@emotion/core'
 import { hasKey } from '@vats/utils'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 // tslint:disable-next-line: no-implicit-dependencies
 import { hot } from 'react-hot-loader'

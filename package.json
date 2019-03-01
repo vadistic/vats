@@ -8,6 +8,7 @@
   "license": "No license",
   "private": true,
   "scripts": {
+    "vscript": "node scripts/cli.js",
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap",
     "test": "echo todo",
@@ -15,7 +16,8 @@
     "build": "echo todo",
     "prepare": "lerna run prepare",
     "typecheck": "lerna run --parallel typecheck",
-    "now-deploy": "now && now alias && now rm vats --safe --yes"
+    "now-deploy": "now && now alias && now rm vats --safe --yes",
+    "update": "lernaupdate --non-interactive --dependency"
   },
   "husky": {
     "hooks": {
@@ -52,6 +54,7 @@
   },
   "workspaces": {
     "packages": [
+      "scripts",
       "packages/*",
       "deployables/*"
     ]

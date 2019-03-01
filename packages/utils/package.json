@@ -8,17 +8,16 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "vats-scripts build --dts",
+    "transpile": "vscripts transpile",
     "clean": "rm -rf dist",
-    "prepare": "yarn clean && yarn build",
-    "test": "vats-scripts test",
+    "prepare": "yarn transpile",
+    "test": "vscripts test",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@martin_hotell/rex-tils": "^2.1.1",
-    "@vats/scripts": "^0.1.0",
+    "@vats/start": "^0.1.0",
     "clone-deep": "^4.0.1",
     "typescript": "^3.3.3333"
-  },
-  "dependencies": {}
+  }
 }

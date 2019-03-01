@@ -18,13 +18,11 @@
     "gen": "yarn gen:client && yarn gen:binding"
   },
   "dependencies": {
-    "@vats/utils": "^0.1.0",
-    "@vats/scripts": "^0.1.0"
+    "@vats/utils": "^0.1.0"
   },
   "devDependencies": {
-    "@types/faker": "^4.1.5",
+    "@types/faker": "4.1.5",
     "@types/ramda": "^0.25.51",
-    "@vats/scripts": "^0.1.0",
     "faker": "^4.1.0",
     "graphql": "^14.1.1",
     "graphql-cli": "^3.0.11",

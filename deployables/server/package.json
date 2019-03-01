@@ -25,7 +25,6 @@
     "now-start": "NODE_ENV=\"development\" node dist/index.js"
   },
   "dependencies": {
-    "@vats/scripts": "^0.1.0",
     "apollo-server": "^2.4.0",
     "aws-sdk": "^2.401.0",
     "dayjs": "^1.8.5",
@@ -42,20 +41,15 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "@types/faker": "^4.1.4",
     "@types/graphql": "^14.0.6",
     "@types/jsonwebtoken": "^8.3.0",
-    "@types/ramda": "^0.25.49",
     "apollo": "^2.4.4",
-    "faker": "^4.1.0",
     "graphql-cli": "^3.0.9",
-    "graphql-code-generator": "^0.16.1",
-    "graphql-codegen-introspection": "^0.16.1",
-    "graphql-codegen-typescript-common": "^0.16.1",
-    "graphql-codegen-typescript-resolvers": "^0.16.1",
-    "graphql-codegen-typescript-server": "^0.16.1",
-    "prisma": "^1.26.4",
-    "ramda": "^0.26.1",
+    "graphql-code-generator": "0.18.0",
+    "graphql-codegen-introspection": "0.18.0",
+    "graphql-codegen-typescript-common": "0.18.0",
+    "graphql-codegen-typescript-resolvers": "0.18.0",
+    "graphql-codegen-typescript-server": "0.18.0",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.3"

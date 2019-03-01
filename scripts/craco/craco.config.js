@@ -1,9 +1,7 @@
 const path = require('path')
 const { getLoader, loaderByName } = require('@craco/craco')
 
-const configure = require('../env/env-config')
-
-configure()
+require(path.resolve(__dirname, '../env/config'))()
 
 const argv = process.argv
 
@@ -58,7 +56,10 @@ const skipTsChecker = webpackConfig => {
 const emotionCssProps = webpackConfig => {
   const { match } = getLoader(webpackConfig, loaderByName('babel-loader'))
 
-  match.loader.options.presets.push(require.resolve('../preset-emotion'))
+  // needs to go after (to be loaded before) react-app-preset
+  // https://github.com/emotion-js/emotion/issues/1123#issuecomment-455767886
+  // TODO: set emotion preset options somewhere without breaking it
+  match.loader.options.presets.push(require.resolve('@emotion/babel-preset-css-prop'))
 
   return webpackConfig
 }
@@ -78,12 +79,37 @@ const hotModules = webpackConfig => {
 // it probably mess up with emotion jsx pragma something - better substitute it
 // also I do not want it on production
 const hotModulesNoop = webpackConfig => {
-  webpackConfig.resolve.alias['react-hot-loader'] = '@vats/scripts/craco/noop-hot-loader'
+  webpackConfig.resolve.alias['react-hot-loader'] = '@vats/start/craco/noop-hot-loader'
 
   return webpackConfig
 }
 
+// force it not to use absolute paths, because it breaks CI deployments
+// https://github.com/facebook/create-react-app/issues/5443#issuecomment-430188464
+const configureReactBabelPreset = babelLoaderOptions => {
+  babelLoaderOptions.presets = babelLoaderOptions.presets.map(preset => {
+    if (typeof preset === 'string' && preset.includes('babel-preset-react-app')) {
+      return [preset, { absoluteRuntime: false }]
+    }
+
+    if (Array.isArray(preset) && preset[0].includes('babel-preset-react-app')) {
+      preset[1].absoluteRuntime = false
+      return [preset[0], preset[1]]
+    }
+
+    return preset
+  })
+
+  return babelLoaderOptions
+}
+
 module.exports = {
+  babel: {
+    loaderOptions: (babelLoaderOptions, { env, paths }) => {
+      babelLoaderOptions = configureReactBabelPreset(babelLoaderOptions)
+      return babelLoaderOptions
+    },
+  },
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
       webpackConfig = emotionCssProps(webpackConfig)
