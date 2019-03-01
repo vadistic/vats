@@ -1,7 +1,7 @@
 {
   "name": "@vats/cra",
   "version": "0.1.0",
-  "description": "vats testing/dev app",
+  "description": "vats setup testing/dev app",
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,

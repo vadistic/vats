@@ -52,11 +52,8 @@
   },
   "workspaces": {
     "packages": [
-      "packages/**"
-    ],
-    "nohoist": [
-      "**/babel-preset-react-app",
-      "**/babel-preset-react-app/**"
+      "packages/*",
+      "deployables/*"
     ]
   }
 }

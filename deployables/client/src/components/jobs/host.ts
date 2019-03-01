@@ -2,6 +2,7 @@ import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import { SortDirection } from '@vats/utils'
 import gql from 'graphql-tag'
 import produce from 'immer'
+import { client } from '../../apollo'
 import { JobFragment } from '../../generated/fragments'
 import {
   JobCreateMutation,
@@ -143,6 +144,7 @@ const jobsHostConfig: HostConfigI<JobsHostTyping> = {
   initVariables: variables => (variables ? variables : {}),
   resetOnInitArgPropChange: true,
   filter: jobsSorter,
+  client,
   graphql: {
     query: JOBS_QUERY,
     queryRoot: 'jobs',

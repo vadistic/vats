@@ -1,6 +1,7 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import { SortDirection } from '@vats/utils'
 import gql from 'graphql-tag'
+import { client } from '../../apollo'
 import { CandidateFragment } from '../../generated/fragments'
 import {
   CandidateCreateMutation,
@@ -147,6 +148,7 @@ const candidatesHostConfig: HostConfigI<CandidatesHostTyping> = {
   initState: candidatesStateInit,
   initVariables: variables => (variables ? variables : {}),
   resetOnInitArgPropChange: true,
+  client,
   graphql: {
     query: CANDIDATES_QUERY,
     queryRoot: 'candidates',

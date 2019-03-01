@@ -1,5 +1,6 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import gql from 'graphql-tag'
+import { client } from '../../apollo'
 import { CandidateFragment } from '../../generated/fragments'
 import {
   CandidateCreateMutation,
@@ -180,6 +181,7 @@ export const candidateHostConfig: HostConfigI<CandidateHostTyping> = {
   initVariables: ({ id }) => ({ where: { id } }),
   resetOnInitArgPropChange: true,
   relations: candidateRelations,
+  client,
   graphql: {
     query: CANDIDATE_QUERY,
     queryRoot: 'candidate',

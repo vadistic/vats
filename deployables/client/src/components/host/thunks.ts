@@ -2,7 +2,6 @@ import { DeepPartial } from '@vats/utils'
 // tslint:disable-next-line: no-implicit-dependencies
 import { DataProxy } from 'apollo-cache'
 import { MutationOptions } from 'apollo-client'
-import { client } from '../../apollo'
 import { diffAutoUpdataData } from './diff'
 import { TGraphqlSingleTyping } from './graphql-types'
 import { HostConfigI, HostStateI, HostTypingI } from './types'
@@ -35,7 +34,7 @@ export const hostThunkHelpers = <
         mutation: config.graphql.createMutation,
       }
 
-      return client.mutate<
+      return config.client.mutate<
         GraphqlTyping['createMutation'],
         GraphqlTyping['createMutationVariables']
       >(mergeOptions(createOptions, options))
@@ -56,7 +55,7 @@ export const hostThunkHelpers = <
         variables: { where: state.variables.where },
       }
 
-      return client.mutate<
+      return config.client.mutate<
         GraphqlTyping['updateMutation'],
         GraphqlTyping['updateMutationVariables']
       >(mergeOptions(updateOptions, options))
@@ -77,7 +76,7 @@ export const hostThunkHelpers = <
         variables: state.variables.where ? { where: state.variables.where } : undefined,
       }
 
-      return client.mutate<
+      return config.client.mutate<
         GraphqlTyping['deleteMutation'],
         GraphqlTyping['deleteMutationVariables']
       >(mergeOptions(deleteOptions, options))
@@ -93,14 +92,14 @@ export const hostThunkHelpers = <
       query: config.graphql.query,
       variables: state.variables,
     }
-    return client.readQuery(mergeOptions(readOptions, options))
+    return config.client.readQuery(mergeOptions(readOptions, options))
   }
 
   type AutoUpdateValue = HostTyping['value']
 
   const autoUpdate = (state: State, value: AutoUpdateValue) => {
     if (config.graphql.updateMutation) {
-      const queryCache: any = client.readQuery({
+      const queryCache: any = config.client.readQuery({
         query: config.graphql.query,
         variables: state.variables,
       })
@@ -115,13 +114,13 @@ export const hostThunkHelpers = <
       const { updateData, queryData } = diffAutoUpdataData(prevValue, value, config.relations)
 
       if (updateData) {
-        client.writeQuery({
+        config.client.writeQuery({
           query: config.graphql.query,
           variables: state.variables,
           data: { [config.graphql.queryRoot]: { ...prevValue, ...queryData } },
         })
 
-        return client.mutate<
+        return config.client.mutate<
           GraphqlTyping['updateMutation'],
           GraphqlTyping['updateMutationVariables']
         >({

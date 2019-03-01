@@ -4,7 +4,7 @@
   "alias": "vats",
   "builds": [
     {
-      "src": "packages/cra/package.json",
+      "src": "deployables/cra/package.json",
       "use": "@now/static-build",
       "config": { "distDir": "build" }
     }
@@ -13,27 +13,27 @@
     {
       "src": "^/cra/static/(.*)",
       "headers": { "cache-control": "s-maxage=31536000,immutable" },
-      "dest": "packages/cra/static/$1"
+      "dest": "deployables/cra/static/$1"
     },
-    { "src": "^/cra/favicon.ico", "dest": "packages/cra/favicon.ico" },
+    { "src": "^/cra/favicon.ico", "dest": "deployables/cra/favicon.ico" },
     {
       "src": "^/cra/asset-manifest.json",
-      "dest": "packages/cra/asset-manifest.json"
+      "dest": "deployables/cra/asset-manifest.json"
     },
-    { "src": "^/cra/manifest.json", "dest": "packages/cra/manifest.json" },
+    { "src": "^/cra/manifest.json", "dest": "deployables/cra/manifest.json" },
     {
       "src": "^/cra/precache-manifest.(.*)",
-      "dest": "packages/cra/precache-manifest.$1"
+      "dest": "deployables/cra/precache-manifest.$1"
     },
     {
       "src": "^/cra/service-worker.js",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "packages/cra/service-worker.js"
+      "dest": "deployables/cra/service-worker.js"
     },
     {
       "src": "^/cra(.*)",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "packages/cra/index.html"
+      "dest": "deployables/cra/index.html"
     }
   ]
 }
