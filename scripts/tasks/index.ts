@@ -1,4 +1,5 @@
 import plugin from '@start/plugin'
+import copy from '@start/plugin-copy'
 import find from '@start/plugin-find'
 import inputFiles from '@start/plugin-input-files'
 import babel from '@start/plugin-lib-babel'
@@ -9,6 +10,9 @@ import spawn from '@start/plugin-spawn'
 import write from '@start/plugin-write'
 import path from 'path'
 
+/*
+ * UTILS
+ */
 const validateCwd = plugin('validate-cwd', () => async () => {
   const { readPkg } = await import('../utils/read-pkg')
   const pkg = await readPkg()
@@ -20,6 +24,24 @@ const validateCwd = plugin('validate-cwd', () => async () => {
   }
 })
 
+/*
+ * CONFIG
+ */
+
+const ignoreGlob = [
+  '!**/tests/**',
+  '!**/__tests__/**',
+  '!**/*.test.{ts,tsx}',
+  '!**/*.jsxfixture.{ts,tsx}',
+]
+
+// semantics: dist dir is for transpiled - build for bundled
+const DIST_DIR = 'dist'
+
+/*
+ * TASKS
+ */
+
 export const transpile = async (args: string[]) => {
   process.env.BABEL_ENV = 'production'
 
@@ -29,7 +51,9 @@ export const transpile = async (args: string[]) => {
   // so semantic variable name...
   const hasEmotion = Object.keys(pkg.dependencies || {}).includes('@emtion/core')
 
-  const hasReact = Object.keys(pkg.dependencies || {})
+  const hasReact = ([] as string[])
+    .concat(Object.keys(pkg.dependencies || {}))
+    .concat(Object.keys(pkg.devDependencies || {}))
     .concat(Object.keys(pkg.peerDependencies || {}))
     .includes('react')
 
@@ -42,23 +66,32 @@ export const transpile = async (args: string[]) => {
     }),
   }
 
-  const ignoreGlob = [
-    '!**/tests/**',
-    '!**/__tests__/**',
-    '!**/*.test.{ts,tsx}',
-    '!**/*.jsxfixture.{ts,tsx}',
-  ]
-
   return sequence(
     validateCwd,
     find(['src/**/*.{ts,tsx}', ...ignoreGlob]),
     read,
     babel(babelConfig),
     rename(file => file.replace(/\.ts$/, '.js')),
-    write('dist/'),
+    write(DIST_DIR),
   )
 }
 
+/**
+ * By extension, should be enough
+ */
+export const copyFiles = async (args: string[]) => {
+  const DEFAULT_EXTNAMES = ['json', 'graphql']
+
+  // accept space separated input and remember to remove dots
+  const extNames =
+    args.length > 0 ? args.map(ext => ext.replace('.', '')).join(',') : DEFAULT_EXTNAMES.join(',')
+
+  return sequence(validateCwd, find([`src/**/*.{${extNames}}`, ...ignoreGlob]), copy(DIST_DIR))
+}
+
+/**
+ * wrapper for craco cli pointing to custom config
+ */
 export const craco = async (args: string[]) => {
   const [script, ...rest] = args
 
@@ -105,6 +138,9 @@ export const craco = async (args: string[]) => {
   })
 }
 
+/**
+ * TODO: serve builds (there's small shizzle with relative paths)
+ */
 export const serve = async (args: string[]) => {
   const BUILD_DIR = 'build'
   const serveArgs = ['serve', '--single', BUILD_DIR, ...args]
@@ -124,4 +160,50 @@ export const serve = async (args: string[]) => {
       stderr: process.stderr,
     }),
   )
+}
+
+/**
+ * run scripts in ts-runtime. Like custom ts-node with babel
+ * TODO: pluginize
+ */
+export const runtime = async (args: string[]) => {
+  const scriptPath = args[0]
+  const scriptExport = args[1] || 'default'
+
+  if (!scriptPath) {
+    throw Error('need script path as arg')
+  }
+
+  const absolutePath = require.resolve(path.resolve(process.cwd(), scriptPath))
+
+  // needs reqister babel for cwd()
+  // @ts-ignore
+  const register = (await import('@babel/register')).default
+
+  register({
+    // this to ensure lerna can run scripts in packages
+    cwd: process.cwd(),
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          targets: {
+            node: 'current',
+          },
+          modules: false,
+        },
+      ],
+      '@babel/preset-typescript',
+    ],
+    plugins: ['@babel/plugin-syntax-dynamic-import'],
+    extensions: ['.ts', '.js'],
+  })
+
+  const script = await import(absolutePath)
+
+  console.log(`running ${scriptExport} from ${scriptPath}`)
+  await script[scriptExport]()
+
+  // noop
+  return sequence(validateCwd)
 }

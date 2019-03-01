@@ -1,0 +1,29 @@
+{
+  "name": "@vats/i18n",
+  "version": "0.1.0",
+  "description": "vats i18n",
+  "author": "Jakub Wadas <vadistic@gmail.com>",
+  "license": "No license",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "transpile": "vscripts transpile",
+    "copy-files": "vscripts copyFiles",
+    "generate": "vscripts runtime ./scripts/gen-json",
+    "clean": "rm -rf dist",
+    "prepare": "yarn transpile && yarn generate && yarn copy-files",
+    "test": "vscripts test",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@vats/utils": "^0.1.0",
+    "i18next": "^15.0.4",
+    "react-i18next": "^10.2.0"
+  },
+  "devDependencies": {
+    "@martin_hotell/rex-tils": "^2.1.1",
+    "@vats/start": "^0.1.0",
+    "typescript": "^3.3.3333"
+  }
+}
