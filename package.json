@@ -17,7 +17,8 @@
     "prepare": "lerna run prepare",
     "typecheck": "lerna run --parallel typecheck",
     "now-deploy": "now && now alias && now rm vats --safe --yes",
-    "update": "lernaupdate --non-interactive --dependency"
+    "update": "lernaupdate --non-interactive --dependency",
+    "postinstall": "patch-package"
   },
   "husky": {
     "hooks": {

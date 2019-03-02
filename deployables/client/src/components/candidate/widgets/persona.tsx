@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
+import { useTranslation } from '@vats/i18n'
 import { Icon, IPersonaSharedProps, Persona, PersonaSize } from 'office-ui-fabric-react'
 import React from 'react'
-import { useTranslation } from '../../../i18n'
 import { useTheme } from '../../../styles'
 import { useDayjs } from '../../datetime'
 import { Link, LinkArg } from '../../router'

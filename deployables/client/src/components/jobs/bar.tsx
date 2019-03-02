@@ -1,7 +1,7 @@
+import { useTranslation } from '@vats/i18n'
 import { SortDirection } from '@vats/utils'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React from 'react'
-import { useTranslation } from '../../i18n'
 import { JobsActions, useJobsContext } from './host'
 import { JobsSortBy } from './sort'
 

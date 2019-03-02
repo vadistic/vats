@@ -2174,6 +2174,15 @@
     make-dir "^2.0.0"
     move-path "^0.1.0"
 
+"@start/plugin-xargs@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@start/plugin-xargs/-/plugin-xargs-0.3.0.tgz#e314a351a392b8c5454b4ded58d9de6d80d0f86c"
+  integrity sha512-CYKs6A6KPTbPYPXh0k4lctwapNWtzWup4DbXKRI5BThNeSZywRc07sVQdGbF72MNDyHxKVgT9JTUDiJ9NwwcMQ==
+  dependencies:
+    "@start/plugin" "^0.3.0"
+    execa "^1.0.0"
+    p-all "^1.0.0"
+
 "@start/plugin@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@start/plugin/-/plugin-0.3.0.tgz#5ab467ffee002bd0d7ddd11297917609da6e2c14"

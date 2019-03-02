@@ -1,3 +1,4 @@
+import { useTranslation } from '@vats/i18n'
 import { mimeTypes } from '@vats/utils'
 import {
   DocumentCard,
@@ -10,7 +11,6 @@ import {
 } from 'office-ui-fabric-react'
 import React from 'react'
 import { File } from '../../generated/queries'
-import { useTranslation } from '../../i18n'
 import { useDayjs } from '../datetime'
 
 export interface ResumeCardProps {

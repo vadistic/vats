@@ -1,12 +1,12 @@
 import { css } from '@emotion/core'
 import { StringMap } from '@martin_hotell/rex-tils'
+import { useTranslation } from '@vats/i18n'
 import { ElementType, filterNull, Omit } from '@vats/utils'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
 import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
-import { useTranslation } from '../../i18n'
 import { Box } from '../box'
 import { useEditableContext } from '../editable'
 import {

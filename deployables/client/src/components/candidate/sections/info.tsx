@@ -1,6 +1,6 @@
+import { useTranslation } from '@vats/i18n'
 import { pathProxy } from '@vats/utils'
 import React from 'react'
-import { useTranslation } from '../../../i18n'
 import { Box } from '../../box'
 import { DisplayTextFieldArray } from '../../display'
 import { CandidateValue } from '../host'

@@ -1,5 +1,5 @@
+import { useTranslation } from '@vats/i18n'
 import React from 'react'
-import { useTranslation } from '../../i18n'
 import { Box } from '../box'
 import { EditableFieldArray } from '../editable'
 import { FieldProps } from '../formik'

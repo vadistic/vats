@@ -26,6 +26,9 @@ const ignoreGlob = [
  *  MIXINS
  */
 
+/*
+ * runs plugin/ sequence without passing output
+ */
 const sub = <In, Out>(fn: StartPlugin<In, Out>) =>
   plugin<In, In>('sub', ({ reporter }) => async input => {
     const pluginRunner = await fn
@@ -35,9 +38,15 @@ const sub = <In, Out>(fn: StartPlugin<In, Out>) =>
     return input
   })
 
-const filter = <In>(fn: (input: In) => In) =>
-  plugin<In, In>('filter', () => async input => fn(input))
+/**
+ * transforms input
+ */
+const filter = <In>(transform: (input: In) => In) =>
+  plugin<In, In>('filter', () => async input => transform(input))
 
+/**
+ * runs plugin/sequence depending on input condition
+ */
 const cond = <In, Out>(condition: (input: In) => boolean, fn: StartPlugin<In, Out>) =>
   plugin<In, In>('cond', ({ reporter, logMessage }) => async input => {
     if (condition(input)) {

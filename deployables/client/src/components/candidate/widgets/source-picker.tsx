@@ -1,8 +1,8 @@
+import { useTranslation } from '@vats/i18n'
 import gql from 'graphql-tag'
 import React from 'react'
 import { SourceFragment } from '../../../generated/fragments'
 import { Source } from '../../../generated/queries'
-import { useTranslation } from '../../../i18n'
 import { DisplayPicker, DisplayPickerI, OnCreateData } from '../../display'
 import { FieldProps } from '../../formik'
 

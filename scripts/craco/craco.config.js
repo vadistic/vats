@@ -58,8 +58,8 @@ const emotionCssProps = webpackConfig => {
 
   // needs to go after (to be loaded before) react-app-preset
   // https://github.com/emotion-js/emotion/issues/1123#issuecomment-455767886
-  // TODO: set emotion preset options somewhere without breaking it
-  match.loader.options.presets.push(require.resolve('@emotion/babel-preset-css-prop'))
+  // added as plugins because react hot loader breaks it :/
+  match.loader.options.presets.push(require('@emotion/babel-preset-css-prop'))
 
   return webpackConfig
 }

@@ -1,5 +1,5 @@
+import { useTranslation } from '@vats/i18n'
 import React from 'react'
-import { useTranslation } from '../../../i18n'
 import { DisplayDateTime, useDayjs } from '../../datetime'
 import { DisplayLabel } from '../../display'
 import { useCandidateContext } from '../host'

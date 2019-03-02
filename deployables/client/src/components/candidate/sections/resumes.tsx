@@ -1,6 +1,6 @@
+import { useTranslation } from '@vats/i18n'
 import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
-import { useTranslation } from '../../../i18n'
 import { useTheme } from '../../../styles'
 import { ResumeCard } from '../../resume'
 import { useCandidateContext } from '../host'
