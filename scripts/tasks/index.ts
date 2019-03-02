@@ -1,32 +1,19 @@
-import plugin from '@start/plugin'
+import plugin, { StartPlugin } from '@start/plugin'
 import copy from '@start/plugin-copy'
 import find from '@start/plugin-find'
-import inputFiles from '@start/plugin-input-files'
 import babel from '@start/plugin-lib-babel'
 import read from '@start/plugin-read'
 import rename from '@start/plugin-rename'
 import sequence from '@start/plugin-sequence'
 import spawn from '@start/plugin-spawn'
 import write from '@start/plugin-write'
+import fs from 'fs-extra'
 import path from 'path'
-
-/*
- * UTILS
- */
-const validateCwd = plugin('validate-cwd', () => async () => {
-  const { readPkg } = await import('../utils/read-pkg')
-  const pkg = await readPkg()
-
-  if (pkg.name.includes('@vats/')) {
-    return
-  } else {
-    throw Error('script called in invalid cwd')
-  }
-})
 
 /*
  * CONFIG
  */
+const CACHE_DIR = path.resolve(process.cwd(), 'node_modules', '.cache', '@vats')
 
 const ignoreGlob = [
   '!**/tests/**',
@@ -35,14 +22,40 @@ const ignoreGlob = [
   '!**/*.jsxfixture.{ts,tsx}',
 ]
 
-// semantics: dist dir is for transpiled - build for bundled
-const DIST_DIR = 'dist'
-
-/*
- * TASKS
+/**
+ *  MIXINS
  */
 
-export const transpile = async (args: string[]) => {
+const sub = <In, Out>(fn: StartPlugin<In, Out>) =>
+  plugin<In, In>('sub', ({ reporter }) => async input => {
+    const pluginRunner = await fn
+
+    await pluginRunner(reporter)(input)
+
+    return input
+  })
+
+const filter = <In>(fn: (input: In) => In) =>
+  plugin<In, In>('filter', () => async input => fn(input))
+
+const cond = <In, Out>(condition: (input: In) => boolean, fn: StartPlugin<In, Out>) =>
+  plugin<In, In>('cond', ({ reporter, logMessage }) => async input => {
+    if (condition(input)) {
+      const pluginRunner = await fn
+
+      await pluginRunner(reporter)(input)
+    } else {
+      logMessage('skipping')
+    }
+
+    return input
+  })
+
+/**
+ *  TRANSPILE
+ */
+
+export const transpile = async () => {
   process.env.BABEL_ENV = 'production'
 
   const { readPkg } = await import('../utils/read-pkg')
@@ -66,13 +79,120 @@ export const transpile = async (args: string[]) => {
     }),
   }
 
+  const getCacheKey = (filepath: string) => {
+    const n = filepath.lastIndexOf('src') || filepath.lastIndexOf('dist')
+
+    return filepath
+      .slice(n)
+      .replace(/^(?:src|dist)\//, '')
+      .replace(/\.tsx*$/, '.js')
+  }
+
+  interface Manifest {
+    // path (relative to package root) => datetime in ms
+    [path: string]: number
+  }
+
   return sequence(
-    validateCwd,
+    // find source files, ignoring tests etc.
     find(['src/**/*.{ts,tsx}', ...ignoreGlob]),
-    read,
-    babel(babelConfig),
-    rename(file => file.replace(/\.ts$/, '.js')),
-    write(DIST_DIR),
+    // load stats data
+    plugin('read-file-stats', () => async input => {
+      const stats = await Promise.all(input.files.map(async file => fs.stat(file.path)))
+
+      return { files: input.files.map((file, i) => ({ ...file, stats: stats[i] })) }
+    }),
+    // load cache manifest and ensure dir
+    plugin('read-cache-manifest', () => async () => {
+      await fs.ensureDir(path.resolve(CACHE_DIR, 'dist'))
+
+      const manifestPath = path.resolve(CACHE_DIR, 'cache-manifest.json')
+
+      let mainfest: Manifest
+
+      try {
+        mainfest = await fs.readJSON(manifestPath)
+      } catch (err) {
+        await fs.ensureFile(manifestPath)
+        await fs.writeJson(manifestPath, {})
+        mainfest = {}
+      }
+
+      return { mainfest }
+    }),
+    // transpile changed sources
+    sub(
+      sequence(
+        // get files with changed mtime
+        filter(input => ({
+          ...input,
+          files: input.files.filter(
+            file => input.mainfest[getCacheKey(file.path)] !== file.stats.mtimeMs,
+          ),
+        })),
+        cond(
+          input => input.files.length > 0,
+          sequence(
+            // update manifest
+            plugin('write-cache-manifest', () => async ({ files, mainfest }) => {
+              const nextManifest = {
+                ...mainfest,
+                ...files.reduce(
+                  (acc, file) => ({ ...acc, [getCacheKey(file.path)]: file.stats.mtimeMs }),
+                  {},
+                ),
+              }
+
+              await fs.writeJSON(path.resolve(CACHE_DIR, 'cache-manifest.json'), nextManifest)
+
+              return { mainfest: nextManifest }
+            }),
+            // read files
+            read,
+            // compile
+            babel(babelConfig),
+            rename(file => file.replace(/\.tsx*$/, '.js')),
+            write('dist'),
+            // write backup to cache
+            write(path.relative(process.cwd(), path.resolve(CACHE_DIR, 'dist'))),
+          ),
+        ),
+      ),
+    ),
+    // copy unchanged sources
+    sub(
+      sequence(
+        filter(input => ({
+          ...input,
+          files: input.files.filter(
+            file => input.mainfest[getCacheKey(file.path)] === file.stats.mtimeMs,
+          ),
+        })),
+        plugin('copy-from-cache', () => async ({ files }) => {
+          // tslint:disable-next-line: no-implicit-dependencies
+          const { default: copie } = await import('copie')
+
+          return {
+            files: await Promise.all(
+              files.map(async file => {
+                const relativePath = getCacheKey(file.path)
+                const target = path.resolve(process.cwd(), 'dist', relativePath)
+                const source = path.resolve(CACHE_DIR, 'dist', relativePath)
+
+                try {
+                  require.resolve(target)
+                } catch (err) {
+                  await fs.ensureDir(path.dirname(target))
+                  await copie(source, target)
+                }
+
+                return file
+              }),
+            ),
+          }
+        }),
+      ),
+    ),
   )
 }
 
@@ -86,7 +206,7 @@ export const copyFiles = async (args: string[]) => {
   const extNames =
     args.length > 0 ? args.map(ext => ext.replace('.', '')).join(',') : DEFAULT_EXTNAMES.join(',')
 
-  return sequence(validateCwd, find([`src/**/*.{${extNames}}`, ...ignoreGlob]), copy(DIST_DIR))
+  return sequence(find([`src/**/*.{${extNames}}`, ...ignoreGlob]), copy('dist'))
 }
 
 /**
@@ -196,14 +316,17 @@ export const runtime = async (args: string[]) => {
       '@babel/preset-typescript',
     ],
     plugins: ['@babel/plugin-syntax-dynamic-import'],
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   })
 
   const script = await import(absolutePath)
 
-  console.log(`running ${scriptExport} from ${scriptPath}`)
   await script[scriptExport]()
 
   // noop
-  return sequence(validateCwd)
+  return sequence(
+    plugin('noop', ({ logMessage }) => async () => {
+      logMessage(`${scriptExport} from ${scriptPath}`)
+    }),
+  )
 }

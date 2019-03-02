@@ -20,7 +20,7 @@ require('@babel/register')({
     '@babel/preset-typescript',
   ],
   plugins: ['@babel/plugin-syntax-dynamic-import'],
-  extensions: ['.ts', '.js'],
+  extensions: ['.ts', '.tsx', '.js', '.jsx'],
 })
 
 const { reporter } = require('./reporter')

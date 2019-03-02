@@ -22,8 +22,11 @@
     "react-i18next": "^10.2.0"
   },
   "devDependencies": {
-    "@martin_hotell/rex-tils": "^2.1.1",
     "@vats/start": "^0.1.0",
     "typescript": "^3.3.3333"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   }
 }

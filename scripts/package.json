@@ -39,6 +39,7 @@
     "@start/plugin-sequence": "^0.3.1",
     "@start/plugin-spawn": "^0.3.0",
     "@start/plugin-write": "^0.3.0",
+    "@start/plugin-xargs": "^0.3.0",
     "@start/reporter-verbose": "^0.2.0",
     "@types/graceful-fs": "^4.1.3",
     "@types/stack-utils": "^1.0.1",
