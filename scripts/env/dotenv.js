@@ -1,6 +1,6 @@
 const path = require('path')
 
-const envConfig = () => {
+const config = () => {
   const envDir = path.resolve(process.cwd(), '../..')
 
   if (!process.env.NODE_ENV) {
@@ -26,4 +26,6 @@ const envConfig = () => {
   require('dotenv').config({ path: envDir + '/' + '.env' })
 }
 
-module.exports = envConfig
+module.exports = {
+  config,
+}
