@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es6",
+    "sourceMap": true,
+    "lib": ["esnext"],
+    // modules
+    "module": "commonjs"
+  },
+  "exclude": [
+    "build",
+    "node_modules",
+    "src/**/*.jsxfixture.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
+}

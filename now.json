@@ -7,7 +7,8 @@
       "src": "deployables/cra/package.json",
       "use": "@now/static-build",
       "config": { "distDir": "build" }
-    }
+    },
+    { "src": "deployables/apollo/src/index.ts", "use": "@now/node-server@canary" }
   ],
   "routes": [
     {
@@ -34,6 +35,7 @@
       "src": "^/cra(.*)",
       "headers": { "cache-control": "s-maxage=0" },
       "dest": "deployables/cra/index.html"
-    }
+    },
+    { "src": "^/apollo(.*)", "dest": "deployables/apollo/src/index.ts" }
   ]
 }

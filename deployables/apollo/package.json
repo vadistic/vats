@@ -1,0 +1,27 @@
+{
+  "name": "@vats/apollo",
+  "version": "0.1.0",
+  "description": "vats setup testing/dev apollo",
+  "author": "Jakub Wadas <vadistic@gmail.com>",
+  "license": "No license",
+  "private": true,
+  "source": "src/index.ts",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "vscripts backpack build",
+    "dev": "vscripts backpack dev",
+    "test": "echo todo",
+    "start": "node build/main.js",
+    "typecheck": "tsc -p . --noEmit",
+    "now-build": "yarn build"
+  },
+  "dependencies": {
+    "@vats/utils": "0.1.0",
+    "apollo-server": "^2.4.8",
+    "graphql": "^14.1.1"
+  },
+  "devDependencies": {
+    "@vats/start": "^0.1.0",
+    "typescript": "^3.3.3333"
+  }
+}

@@ -9,7 +9,7 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "transpile": "vscripts transpile",
-    "copy-files": "vscripts copyFiles",
+    "copy-files": "vscripts copyfiles src/**/*.json",
     "generate": "vscripts runtime ./scripts/gen-json",
     "clean": "rm -rf dist",
     "prepare": "yarn transpile && yarn generate && yarn copy-files",
