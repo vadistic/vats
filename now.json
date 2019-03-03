@@ -3,39 +3,69 @@
   "name": "vats",
   "alias": "vats",
   "builds": [
+    { "src": "deployables/apollo/src/index.ts", "use": "@now/node-server@canary" },
+    { "src": "deployables/server/src/index.ts", "use": "@now/node-server@canary" },
     {
       "src": "deployables/cra/package.json",
       "use": "@now/static-build",
       "config": { "distDir": "build" }
     },
-    { "src": "deployables/apollo/src/index.ts", "use": "@now/node-server@canary" }
+    {
+      "src": "deployables/app/package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    }
   ],
   "routes": [
+    { "src": "^/apollo(.*)", "dest": "deployables/apollo/src/index.ts" },
+    { "src": "^/server(.*)", "dest": "deployables/server/src/index.ts" },
+    { "src": "^/graphql(.*)", "dest": "deployables/server/src/index.ts" },
     {
-      "src": "^/cra/static/(.*)",
+      "src": "^/(?<app>[^/]+)/static/(?<rest>.*)",
       "headers": { "cache-control": "s-maxage=31536000,immutable" },
-      "dest": "deployables/cra/static/$1"
+      "dest": "deployables/$app/static/$rest"
     },
-    { "src": "^/cra/favicon.ico", "dest": "deployables/cra/favicon.ico" },
+    { "src": "^/(?<app>[^/]+)/favicon.ico", "dest": "deployables/$app/favicon.ico" },
     {
-      "src": "^/cra/asset-manifest.json",
-      "dest": "deployables/cra/asset-manifest.json"
+      "src": "^/(?<app>[^/]+)/asset-manifest.json",
+      "dest": "deployables/$app/asset-manifest.json"
     },
-    { "src": "^/cra/manifest.json", "dest": "deployables/cra/manifest.json" },
+    { "src": "^/(?<app>[^/]+)/manifest.json", "dest": "deployables/$app/manifest.json" },
     {
-      "src": "^/cra/precache-manifest.(.*)",
-      "dest": "deployables/cra/precache-manifest.$1"
+      "src": "^/(?<app>[^/]+)/precache-manifest.(.*)",
+      "dest": "deployables/$app/precache-manifest.$1"
     },
     {
-      "src": "^/cra/service-worker.js",
+      "src": "^/(?<app>[^/]+)/service-worker.js",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "deployables/cra/service-worker.js"
+      "dest": "deployables/$app/service-worker.js"
     },
     {
-      "src": "^/cra(.*)",
+      "src": "^/(?<app>[^/]+)(?<rest>.*)",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "deployables/cra/index.html"
-    },
-    { "src": "^/apollo(.*)", "dest": "deployables/apollo/src/index.ts" }
-  ]
+      "dest": "deployables/$app/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+
+    "SKIP_PREFLIGHT_CHECK": "true",
+
+    "ENGINE_SERVICE_NAME": "vats-server1",
+    "ENGINE_API_KEY": "@engine_api_key",
+
+    "APP_PUBLIC_URL": "https://vats.now.sh/app",
+    "APP_REACT_APP_ENDPOINT_GRAPHQL": "https://vats.now.sh/graphql",
+
+    "CRA_PUBLIC_URL": "https://vats.now.sh/cra",
+    "CRA_REACT_APP_ENDPOINT_GRAPHQL": "https://vats.now.sh/apollo",
+
+    "PRISMA_ENDPOINT": "https://eu1.prisma.sh/vadistic",
+    "PRISMA_SERVICE": "vats-prisma",
+    "PRISMA_STAGE": "dev",
+
+    "SERVER_PORT": "5000",
+
+    "APOLLO_PORT": "5001"
+  }
 }

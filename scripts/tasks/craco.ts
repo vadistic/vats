@@ -22,6 +22,7 @@ export const craco = async (args: string[]) => {
     script: require.resolve(`@craco/craco/scripts/${script}`),
   }
 
+  // set node env
   process.env.NODE_ENV = (() => {
     switch (script) {
       case 'build':
@@ -34,6 +35,22 @@ export const craco = async (args: string[]) => {
         return 'development'
     }
   })()
+
+  // load all envs
+  // @ts-ignore
+  const { config } = await import('../env/dotenv')
+  config()
+
+  // set specific cra envs
+  // project prefix is smth like "CLIENT_"
+  // I did it to support multiple cras with different settings
+  const projectPrefix = path.basename(process.cwd()).toUpperCase() + '_'
+
+  Object.keys(process.env).forEach(env => {
+    if (env.startsWith(projectPrefix)) {
+      process.env[env.replace(projectPrefix, '')] = process.env[env]
+    }
+  })
 
   const cliArgs = ['node', cracoPaths.script, '--workspace', '--config', cracoPaths.config, ...rest]
 

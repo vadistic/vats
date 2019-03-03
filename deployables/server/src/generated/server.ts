@@ -3466,6 +3466,8 @@ export interface TaskUpdateManyWithoutOwnersInput {
   
   connect?: Maybe<TaskWhereUniqueInput[]>;
   
+  set?: Maybe<TaskWhereUniqueInput[]>;
+  
   disconnect?: Maybe<TaskWhereUniqueInput[]>;
   
   update?: Maybe<TaskUpdateWithWhereUniqueWithoutOwnersInput[]>;
@@ -3613,6 +3615,8 @@ export interface FileUpdateManyInput {
   delete?: Maybe<FileWhereUniqueInput[]>;
   
   connect?: Maybe<FileWhereUniqueInput[]>;
+  
+  set?: Maybe<FileWhereUniqueInput[]>;
   
   disconnect?: Maybe<FileWhereUniqueInput[]>;
   
@@ -3841,6 +3845,8 @@ export interface TagUpdateManyInput {
   
   connect?: Maybe<TagWhereUniqueInput[]>;
   
+  set?: Maybe<TagWhereUniqueInput[]>;
+  
   disconnect?: Maybe<TagWhereUniqueInput[]>;
   
   deleteMany?: Maybe<TagScalarWhereInput[]>;
@@ -4021,6 +4027,8 @@ export interface SourceUpdateManyInput {
   delete?: Maybe<SourceWhereUniqueInput[]>;
   
   connect?: Maybe<SourceWhereUniqueInput[]>;
+  
+  set?: Maybe<SourceWhereUniqueInput[]>;
   
   disconnect?: Maybe<SourceWhereUniqueInput[]>;
   
@@ -4203,6 +4211,8 @@ export interface FieldInstanceUpdateManyInput {
   
   connect?: Maybe<FieldInstanceWhereUniqueInput[]>;
   
+  set?: Maybe<FieldInstanceWhereUniqueInput[]>;
+  
   disconnect?: Maybe<FieldInstanceWhereUniqueInput[]>;
   
   deleteMany?: Maybe<FieldInstanceScalarWhereInput[]>;
@@ -4377,6 +4387,8 @@ export interface ApplicationUpdateManyWithoutCandidateInput {
   
   connect?: Maybe<ApplicationWhereUniqueInput[]>;
   
+  set?: Maybe<ApplicationWhereUniqueInput[]>;
+  
   disconnect?: Maybe<ApplicationWhereUniqueInput[]>;
   
   update?: Maybe<ApplicationUpdateWithWhereUniqueWithoutCandidateInput[]>;
@@ -4506,6 +4518,8 @@ export interface UserUpdateManyInput {
   delete?: Maybe<UserWhereUniqueInput[]>;
   
   connect?: Maybe<UserWhereUniqueInput[]>;
+  
+  set?: Maybe<UserWhereUniqueInput[]>;
   
   disconnect?: Maybe<UserWhereUniqueInput[]>;
   
@@ -4809,6 +4823,8 @@ export interface CandidateUpdateManyInput {
   
   connect?: Maybe<CandidateWhereUniqueInput[]>;
   
+  set?: Maybe<CandidateWhereUniqueInput[]>;
+  
   disconnect?: Maybe<CandidateWhereUniqueInput[]>;
   
   deleteMany?: Maybe<CandidateScalarWhereInput[]>;
@@ -4872,6 +4888,8 @@ export interface TaskUpdateManyWithoutCandidateInput {
   
   connect?: Maybe<TaskWhereUniqueInput[]>;
   
+  set?: Maybe<TaskWhereUniqueInput[]>;
+  
   disconnect?: Maybe<TaskWhereUniqueInput[]>;
   
   update?: Maybe<TaskUpdateWithWhereUniqueWithoutCandidateInput[]>;
@@ -4908,6 +4926,8 @@ export interface UserUpdateManyWithoutTasksInput {
   delete?: Maybe<UserWhereUniqueInput[]>;
   
   connect?: Maybe<UserWhereUniqueInput[]>;
+  
+  set?: Maybe<UserWhereUniqueInput[]>;
   
   disconnect?: Maybe<UserWhereUniqueInput[]>;
   
@@ -5134,6 +5154,8 @@ export interface CommentUpdateManyInput {
   delete?: Maybe<CommentWhereUniqueInput[]>;
   
   connect?: Maybe<CommentWhereUniqueInput[]>;
+  
+  set?: Maybe<CommentWhereUniqueInput[]>;
   
   disconnect?: Maybe<CommentWhereUniqueInput[]>;
   
@@ -5558,6 +5580,8 @@ export interface WorkflowUpdateManyInput {
   
   connect?: Maybe<WorkflowWhereUniqueInput[]>;
   
+  set?: Maybe<WorkflowWhereUniqueInput[]>;
+  
   disconnect?: Maybe<WorkflowWhereUniqueInput[]>;
   
   deleteMany?: Maybe<WorkflowScalarWhereInput[]>;
@@ -5596,6 +5620,8 @@ export interface StageUpdateManyInput {
   delete?: Maybe<StageWhereUniqueInput[]>;
   
   connect?: Maybe<StageWhereUniqueInput[]>;
+  
+  set?: Maybe<StageWhereUniqueInput[]>;
   
   disconnect?: Maybe<StageWhereUniqueInput[]>;
   
@@ -5781,6 +5807,8 @@ export interface DisqualificationUpdateManyInput {
   
   connect?: Maybe<DisqualificationWhereUniqueInput[]>;
   
+  set?: Maybe<DisqualificationWhereUniqueInput[]>;
+  
   disconnect?: Maybe<DisqualificationWhereUniqueInput[]>;
   
   deleteMany?: Maybe<DisqualificationScalarWhereInput[]>;
@@ -5954,6 +5982,8 @@ export interface FieldUpdateManyInput {
   delete?: Maybe<FieldWhereUniqueInput[]>;
   
   connect?: Maybe<FieldWhereUniqueInput[]>;
+  
+  set?: Maybe<FieldWhereUniqueInput[]>;
   
   disconnect?: Maybe<FieldWhereUniqueInput[]>;
   
@@ -6287,6 +6317,8 @@ export interface InviteUpdateManyInput {
   
   connect?: Maybe<InviteWhereUniqueInput[]>;
   
+  set?: Maybe<InviteWhereUniqueInput[]>;
+  
   disconnect?: Maybe<InviteWhereUniqueInput[]>;
   
   deleteMany?: Maybe<InviteScalarWhereInput[]>;
@@ -6482,6 +6514,8 @@ export interface LocationUpdateManyInput {
   delete?: Maybe<LocationWhereUniqueInput[]>;
   
   connect?: Maybe<LocationWhereUniqueInput[]>;
+  
+  set?: Maybe<LocationWhereUniqueInput[]>;
   
   disconnect?: Maybe<LocationWhereUniqueInput[]>;
   
@@ -6908,6 +6942,11 @@ export interface CandidateUpsertWithoutApplicationsInput {
   create: CandidateCreateWithoutApplicationsInput;
 }
 
+export interface ApplicationUpdateManyMutationInput {
+  
+  type?: Maybe<ApplicationType>;
+}
+
 export interface CandidateUpdateInput {
   
   firstName?: Maybe<string>;
@@ -6947,6 +6986,29 @@ export interface CandidateUpdateInput {
   applications?: Maybe<ApplicationUpdateManyWithoutCandidateInput>;
   
   comments?: Maybe<CommentUpdateManyInput>;
+}
+
+export interface CandidateUpdateManyMutationInput {
+  
+  firstName?: Maybe<string>;
+  
+  lastName?: Maybe<string>;
+  
+  emails?: Maybe<CandidateUpdateemailsInput>;
+  
+  phones?: Maybe<CandidateUpdatephonesInput>;
+  
+  links?: Maybe<CandidateUpdatelinksInput>;
+  
+  company?: Maybe<string>;
+  
+  headline?: Maybe<string>;
+  
+  position?: Maybe<string>;
+  
+  resumesString?: Maybe<CandidateUpdateresumesStringInput>;
+  
+  coverLettersString?: Maybe<CandidateUpdatecoverLettersStringInput>;
 }
 
 export interface JobCreateInput {
@@ -7029,6 +7091,8 @@ export interface ApplicationUpdateManyWithoutJobInput {
   
   connect?: Maybe<ApplicationWhereUniqueInput[]>;
   
+  set?: Maybe<ApplicationWhereUniqueInput[]>;
+  
   disconnect?: Maybe<ApplicationWhereUniqueInput[]>;
   
   update?: Maybe<ApplicationUpdateWithWhereUniqueWithoutJobInput[]>;
@@ -7067,6 +7131,23 @@ export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
   create: ApplicationCreateWithoutJobInput;
 }
 
+export interface JobUpdateManyMutationInput {
+  
+  type?: Maybe<JobType>;
+  
+  department?: Maybe<string>;
+  
+  name?: Maybe<string>;
+  
+  excerpt?: Maybe<string>;
+  
+  companyDescription?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  requirements?: Maybe<string>;
+}
+
 export interface SourceUpdateInput {
   
   label?: Maybe<string>;
@@ -7074,7 +7155,21 @@ export interface SourceUpdateInput {
   description?: Maybe<string>;
 }
 
+export interface SourceUpdateManyMutationInput {
+  
+  label?: Maybe<string>;
+  
+  description?: Maybe<string>;
+}
+
 export interface TagUpdateInput {
+  
+  label?: Maybe<string>;
+  
+  description?: Maybe<string>;
+}
+
+export interface TagUpdateManyMutationInput {
   
   label?: Maybe<string>;
   
@@ -7099,6 +7194,15 @@ export interface TaskUpdateInput {
   owners?: Maybe<UserUpdateManyWithoutTasksInput>;
   
   candidate?: Maybe<CandidateUpdateOneWithoutTasksInput>;
+  
+  title?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  dueAt?: Maybe<DateTime>;
+}
+
+export interface TaskUpdateManyMutationInput {
   
   title?: Maybe<string>;
   
@@ -7447,6 +7551,9 @@ export type DateTime = any;
 
 
 export type Json = any;
+
+
+export type Long = any;
 
 
 
@@ -8066,49 +8173,79 @@ export interface Mutation {
   
   updateApplication?: Maybe<Application>;
   
+  updateManyApplications: BatchPayload;
+  
   upsertApplication: Application;
   
   deleteApplication?: Maybe<Application>;
+  
+  deleteManyApplications: BatchPayload;
   
   createCandidate: Candidate;
   
   updateCandidate?: Maybe<Candidate>;
   
+  updateManyCandidates: BatchPayload;
+  
   upsertCandidate: Candidate;
   
   deleteCandidate?: Maybe<Candidate>;
+  
+  deleteManyCandidates: BatchPayload;
   
   createJob: Job;
   
   updateJob?: Maybe<Job>;
   
+  updateManyJobs: BatchPayload;
+  
   upsertJob: Job;
   
   deleteJob?: Maybe<Job>;
+  
+  deleteManyJobs: BatchPayload;
   
   createSource: Source;
   
   updateSource?: Maybe<Source>;
   
+  updateManySources: BatchPayload;
+  
   upsertSource: Source;
   
   deleteSource?: Maybe<Source>;
+  
+  deleteManySources: BatchPayload;
   
   createTag: Tag;
   
   updateTag?: Maybe<Tag>;
   
+  updateManyTags: BatchPayload;
+  
   upsertTag: Tag;
   
   deleteTag?: Maybe<Tag>;
+  
+  deleteManyTags: BatchPayload;
   
   createTask: Task;
   
   updateTask?: Maybe<Task>;
   
+  updateManyTasks: BatchPayload;
+  
   upsertTask: Task;
   
   deleteTask?: Maybe<Task>;
+  
+  deleteManyTasks: BatchPayload;
+}
+
+
+export interface BatchPayload {
+  
+  count: Long;
 }
 
 
@@ -8729,6 +8866,12 @@ export interface UpdateApplicationMutationArgs {
   
   where: ApplicationWhereUniqueInput;
 }
+export interface UpdateManyApplicationsMutationArgs {
+  
+  data: ApplicationUpdateManyMutationInput;
+  
+  where?: Maybe<ApplicationWhereInput>;
+}
 export interface UpsertApplicationMutationArgs {
   
   where: ApplicationWhereUniqueInput;
@@ -8741,6 +8884,10 @@ export interface DeleteApplicationMutationArgs {
   
   where: ApplicationWhereUniqueInput;
 }
+export interface DeleteManyApplicationsMutationArgs {
+  
+  where?: Maybe<ApplicationWhereInput>;
+}
 export interface CreateCandidateMutationArgs {
   
   data: CandidateCreateInput;
@@ -8750,6 +8897,12 @@ export interface UpdateCandidateMutationArgs {
   data: CandidateUpdateInput;
   
   where: CandidateWhereUniqueInput;
+}
+export interface UpdateManyCandidatesMutationArgs {
+  
+  data: CandidateUpdateManyMutationInput;
+  
+  where?: Maybe<CandidateWhereInput>;
 }
 export interface UpsertCandidateMutationArgs {
   
@@ -8763,6 +8916,10 @@ export interface DeleteCandidateMutationArgs {
   
   where: CandidateWhereUniqueInput;
 }
+export interface DeleteManyCandidatesMutationArgs {
+  
+  where?: Maybe<CandidateWhereInput>;
+}
 export interface CreateJobMutationArgs {
   
   data: JobCreateInput;
@@ -8772,6 +8929,12 @@ export interface UpdateJobMutationArgs {
   data: JobUpdateInput;
   
   where: JobWhereUniqueInput;
+}
+export interface UpdateManyJobsMutationArgs {
+  
+  data: JobUpdateManyMutationInput;
+  
+  where?: Maybe<JobWhereInput>;
 }
 export interface UpsertJobMutationArgs {
   
@@ -8785,6 +8948,10 @@ export interface DeleteJobMutationArgs {
   
   where: JobWhereUniqueInput;
 }
+export interface DeleteManyJobsMutationArgs {
+  
+  where?: Maybe<JobWhereInput>;
+}
 export interface CreateSourceMutationArgs {
   
   data: SourceCreateInput;
@@ -8794,6 +8961,12 @@ export interface UpdateSourceMutationArgs {
   data: SourceUpdateInput;
   
   where: SourceWhereUniqueInput;
+}
+export interface UpdateManySourcesMutationArgs {
+  
+  data: SourceUpdateManyMutationInput;
+  
+  where?: Maybe<SourceWhereInput>;
 }
 export interface UpsertSourceMutationArgs {
   
@@ -8807,6 +8980,10 @@ export interface DeleteSourceMutationArgs {
   
   where: SourceWhereUniqueInput;
 }
+export interface DeleteManySourcesMutationArgs {
+  
+  where?: Maybe<SourceWhereInput>;
+}
 export interface CreateTagMutationArgs {
   
   data: TagCreateInput;
@@ -8816,6 +8993,12 @@ export interface UpdateTagMutationArgs {
   data: TagUpdateInput;
   
   where: TagWhereUniqueInput;
+}
+export interface UpdateManyTagsMutationArgs {
+  
+  data: TagUpdateManyMutationInput;
+  
+  where?: Maybe<TagWhereInput>;
 }
 export interface UpsertTagMutationArgs {
   
@@ -8829,6 +9012,10 @@ export interface DeleteTagMutationArgs {
   
   where: TagWhereUniqueInput;
 }
+export interface DeleteManyTagsMutationArgs {
+  
+  where?: Maybe<TagWhereInput>;
+}
 export interface CreateTaskMutationArgs {
   
   data: TaskCreateInput;
@@ -8838,6 +9025,12 @@ export interface UpdateTaskMutationArgs {
   data: TaskUpdateInput;
   
   where: TaskWhereUniqueInput;
+}
+export interface UpdateManyTasksMutationArgs {
+  
+  data: TaskUpdateManyMutationInput;
+  
+  where?: Maybe<TaskWhereInput>;
 }
 export interface UpsertTaskMutationArgs {
   
@@ -8851,6 +9044,10 @@ export interface DeleteTaskMutationArgs {
   
   where: TaskWhereUniqueInput;
 }
+export interface DeleteManyTasksMutationArgs {
+  
+  where?: Maybe<TaskWhereInput>;
+}
 
 
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
@@ -8859,35 +9056,35 @@ import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from '
 
 
 
-export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
+export type Resolver<Result, Parent = {}, TContext = {}, Args = {}> = (
   parent: Parent,
   args: Args,
-  context: Context,
+  context: TContext,
   info: GraphQLResolveInfo
 ) => Promise<Result> | Result;
 
-export interface ISubscriptionResolverObject<Result, Parent, Context, Args> {
+export interface ISubscriptionResolverObject<Result, Parent, TContext, Args> {
   subscribe<R = Result, P = Parent>(
     parent: P,
     args: Args,
-    context: Context,
+    context: TContext,
     info: GraphQLResolveInfo
   ): AsyncIterator<R | Result> | Promise<AsyncIterator<R | Result>>;
   resolve?<R = Result, P = Parent>(
     parent: P,
     args: Args,
-    context: Context,
+    context: TContext,
     info: GraphQLResolveInfo
   ): R | Result | Promise<R | Result>;
 }
 
-export type SubscriptionResolver<Result, Parent = {}, Context = {}, Args = {}> =
-  | ((...args: any[]) => ISubscriptionResolverObject<Result, Parent, Context, Args>)
-  | ISubscriptionResolverObject<Result, Parent, Context, Args>;
+export type SubscriptionResolver<Result, Parent = {}, TContext = {}, Args = {}> =
+  | ((...args: any[]) => ISubscriptionResolverObject<Result, Parent, TContext, Args>)
+  | ISubscriptionResolverObject<Result, Parent, TContext, Args>;
 
-export type TypeResolveFn<Types, Parent = {}, Context = {}> = (
+export type TypeResolveFn<Types, Parent = {}, TContext = {}> = (
   parent: Parent,
-  context: Context,
+  context: TContext,
   info: GraphQLResolveInfo
 ) => Maybe<Types>;
 
@@ -8903,60 +9100,60 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 
 export namespace QueryResolvers {
-  export interface Resolvers<Context = {}, TypeParent = {}> {
+  export interface Resolvers<TContext = {}, TypeParent = {}> {
     
-    application?: ApplicationResolver<Maybe<Application>, TypeParent, Context>;
+    application?: ApplicationResolver<Maybe<Application>, TypeParent, TContext>;
     
-    applications?: ApplicationsResolver<(Maybe<Application>)[], TypeParent, Context>;
+    applications?: ApplicationsResolver<(Maybe<Application>)[], TypeParent, TContext>;
     
-    applicationsConnection?: ApplicationsConnectionResolver<ApplicationConnection, TypeParent, Context>;
+    applicationsConnection?: ApplicationsConnectionResolver<ApplicationConnection, TypeParent, TContext>;
     
-    candidate?: CandidateResolver<Maybe<Candidate>, TypeParent, Context>;
+    candidate?: CandidateResolver<Maybe<Candidate>, TypeParent, TContext>;
     
-    candidates?: CandidatesResolver<(Maybe<Candidate>)[], TypeParent, Context>;
+    candidates?: CandidatesResolver<(Maybe<Candidate>)[], TypeParent, TContext>;
     
-    candidatesConnection?: CandidatesConnectionResolver<CandidateConnection, TypeParent, Context>;
+    candidatesConnection?: CandidatesConnectionResolver<CandidateConnection, TypeParent, TContext>;
     
-    job?: JobResolver<Maybe<Job>, TypeParent, Context>;
+    job?: JobResolver<Maybe<Job>, TypeParent, TContext>;
     
-    jobs?: JobsResolver<(Maybe<Job>)[], TypeParent, Context>;
+    jobs?: JobsResolver<(Maybe<Job>)[], TypeParent, TContext>;
     
-    jobsConnection?: JobsConnectionResolver<JobConnection, TypeParent, Context>;
+    jobsConnection?: JobsConnectionResolver<JobConnection, TypeParent, TContext>;
     
-    source?: SourceResolver<Maybe<Source>, TypeParent, Context>;
+    source?: SourceResolver<Maybe<Source>, TypeParent, TContext>;
     
-    sources?: SourcesResolver<(Maybe<Source>)[], TypeParent, Context>;
+    sources?: SourcesResolver<(Maybe<Source>)[], TypeParent, TContext>;
     
-    sourcesConnection?: SourcesConnectionResolver<SourceConnection, TypeParent, Context>;
+    sourcesConnection?: SourcesConnectionResolver<SourceConnection, TypeParent, TContext>;
     
-    tag?: TagResolver<Maybe<Tag>, TypeParent, Context>;
+    tag?: TagResolver<Maybe<Tag>, TypeParent, TContext>;
     
-    tags?: TagsResolver<(Maybe<Tag>)[], TypeParent, Context>;
+    tags?: TagsResolver<(Maybe<Tag>)[], TypeParent, TContext>;
     
-    tagsConnection?: TagsConnectionResolver<TagConnection, TypeParent, Context>;
+    tagsConnection?: TagsConnectionResolver<TagConnection, TypeParent, TContext>;
     
-    task?: TaskResolver<Maybe<Task>, TypeParent, Context>;
+    task?: TaskResolver<Maybe<Task>, TypeParent, TContext>;
     
-    tasks?: TasksResolver<(Maybe<Task>)[], TypeParent, Context>;
+    tasks?: TasksResolver<(Maybe<Task>)[], TypeParent, TContext>;
     
-    tasksConnection?: TasksConnectionResolver<TaskConnection, TypeParent, Context>;
+    tasksConnection?: TasksConnectionResolver<TaskConnection, TypeParent, TContext>;
     
-    user?: UserResolver<Maybe<User>, TypeParent, Context>;
+    user?: UserResolver<Maybe<User>, TypeParent, TContext>;
     
-    users?: UsersResolver<(Maybe<User>)[], TypeParent, Context>;
+    users?: UsersResolver<(Maybe<User>)[], TypeParent, TContext>;
     
-    usersConnection?: UsersConnectionResolver<UserConnection, TypeParent, Context>;
+    usersConnection?: UsersConnectionResolver<UserConnection, TypeParent, TContext>;
   }
 
 
-  export type ApplicationResolver<R = Maybe<Application>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, ApplicationArgs>;
+  export type ApplicationResolver<R = Maybe<Application>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, ApplicationArgs>;
   export interface ApplicationArgs {
     
     where: ApplicationWhereUniqueInput;
   }
 
 
-  export type ApplicationsResolver<R = (Maybe<Application>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, ApplicationsArgs>;
+  export type ApplicationsResolver<R = (Maybe<Application>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, ApplicationsArgs>;
   export interface ApplicationsArgs {
     
     where?: Maybe<ApplicationWhereInput>;
@@ -8975,7 +9172,7 @@ export namespace QueryResolvers {
   }
 
 
-  export type ApplicationsConnectionResolver<R = ApplicationConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, ApplicationsConnectionArgs>;
+  export type ApplicationsConnectionResolver<R = ApplicationConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, ApplicationsConnectionArgs>;
   export interface ApplicationsConnectionArgs {
     
     where?: Maybe<ApplicationWhereInput>;
@@ -8994,14 +9191,14 @@ export namespace QueryResolvers {
   }
 
 
-  export type CandidateResolver<R = Maybe<Candidate>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CandidateArgs>;
+  export type CandidateResolver<R = Maybe<Candidate>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CandidateArgs>;
   export interface CandidateArgs {
     
     where: CandidateWhereUniqueInput;
   }
 
 
-  export type CandidatesResolver<R = (Maybe<Candidate>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, CandidatesArgs>;
+  export type CandidatesResolver<R = (Maybe<Candidate>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CandidatesArgs>;
   export interface CandidatesArgs {
     
     where?: Maybe<CandidateWhereInput>;
@@ -9020,7 +9217,7 @@ export namespace QueryResolvers {
   }
 
 
-  export type CandidatesConnectionResolver<R = CandidateConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CandidatesConnectionArgs>;
+  export type CandidatesConnectionResolver<R = CandidateConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CandidatesConnectionArgs>;
   export interface CandidatesConnectionArgs {
     
     where?: Maybe<CandidateWhereInput>;
@@ -9039,14 +9236,14 @@ export namespace QueryResolvers {
   }
 
 
-  export type JobResolver<R = Maybe<Job>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, JobArgs>;
+  export type JobResolver<R = Maybe<Job>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, JobArgs>;
   export interface JobArgs {
     
     where: JobWhereUniqueInput;
   }
 
 
-  export type JobsResolver<R = (Maybe<Job>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, JobsArgs>;
+  export type JobsResolver<R = (Maybe<Job>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, JobsArgs>;
   export interface JobsArgs {
     
     where?: Maybe<JobWhereInput>;
@@ -9065,7 +9262,7 @@ export namespace QueryResolvers {
   }
 
 
-  export type JobsConnectionResolver<R = JobConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, JobsConnectionArgs>;
+  export type JobsConnectionResolver<R = JobConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, JobsConnectionArgs>;
   export interface JobsConnectionArgs {
     
     where?: Maybe<JobWhereInput>;
@@ -9084,14 +9281,14 @@ export namespace QueryResolvers {
   }
 
 
-  export type SourceResolver<R = Maybe<Source>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, SourceArgs>;
+  export type SourceResolver<R = Maybe<Source>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, SourceArgs>;
   export interface SourceArgs {
     
     where: SourceWhereUniqueInput;
   }
 
 
-  export type SourcesResolver<R = (Maybe<Source>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, SourcesArgs>;
+  export type SourcesResolver<R = (Maybe<Source>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, SourcesArgs>;
   export interface SourcesArgs {
     
     where?: Maybe<SourceWhereInput>;
@@ -9110,7 +9307,7 @@ export namespace QueryResolvers {
   }
 
 
-  export type SourcesConnectionResolver<R = SourceConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, SourcesConnectionArgs>;
+  export type SourcesConnectionResolver<R = SourceConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, SourcesConnectionArgs>;
   export interface SourcesConnectionArgs {
     
     where?: Maybe<SourceWhereInput>;
@@ -9129,14 +9326,14 @@ export namespace QueryResolvers {
   }
 
 
-  export type TagResolver<R = Maybe<Tag>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, TagArgs>;
+  export type TagResolver<R = Maybe<Tag>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, TagArgs>;
   export interface TagArgs {
     
     where: TagWhereUniqueInput;
   }
 
 
-  export type TagsResolver<R = (Maybe<Tag>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, TagsArgs>;
+  export type TagsResolver<R = (Maybe<Tag>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, TagsArgs>;
   export interface TagsArgs {
     
     where?: Maybe<TagWhereInput>;
@@ -9155,7 +9352,7 @@ export namespace QueryResolvers {
   }
 
 
-  export type TagsConnectionResolver<R = TagConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, TagsConnectionArgs>;
+  export type TagsConnectionResolver<R = TagConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, TagsConnectionArgs>;
   export interface TagsConnectionArgs {
     
     where?: Maybe<TagWhereInput>;
@@ -9174,14 +9371,14 @@ export namespace QueryResolvers {
   }
 
 
-  export type TaskResolver<R = Maybe<Task>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, TaskArgs>;
+  export type TaskResolver<R = Maybe<Task>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, TaskArgs>;
   export interface TaskArgs {
     
     where: TaskWhereUniqueInput;
   }
 
 
-  export type TasksResolver<R = (Maybe<Task>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, TasksArgs>;
+  export type TasksResolver<R = (Maybe<Task>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, TasksArgs>;
   export interface TasksArgs {
     
     where?: Maybe<TaskWhereInput>;
@@ -9200,7 +9397,7 @@ export namespace QueryResolvers {
   }
 
 
-  export type TasksConnectionResolver<R = TaskConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, TasksConnectionArgs>;
+  export type TasksConnectionResolver<R = TaskConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, TasksConnectionArgs>;
   export interface TasksConnectionArgs {
     
     where?: Maybe<TaskWhereInput>;
@@ -9219,14 +9416,14 @@ export namespace QueryResolvers {
   }
 
 
-  export type UserResolver<R = Maybe<User>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UserArgs>;
+  export type UserResolver<R = Maybe<User>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UserArgs>;
   export interface UserArgs {
     
     where: UserWhereUniqueInput;
   }
 
 
-  export type UsersResolver<R = (Maybe<User>)[], Parent = {}, Context = {}> = Resolver<R, Parent, Context, UsersArgs>;
+  export type UsersResolver<R = (Maybe<User>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UsersArgs>;
   export interface UsersArgs {
     
     where?: Maybe<UserWhereInput>;
@@ -9245,7 +9442,7 @@ export namespace QueryResolvers {
   }
 
 
-  export type UsersConnectionResolver<R = UserConnection, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UsersConnectionArgs>;
+  export type UsersConnectionResolver<R = UserConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UsersConnectionArgs>;
   export interface UsersConnectionArgs {
     
     where?: Maybe<UserWhereInput>;
@@ -9267,119 +9464,119 @@ export namespace QueryResolvers {
 }
 
 export namespace ApplicationResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Application> {
+  export interface Resolvers<TContext = {}, TypeParent = Application> {
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    type?: TypeResolver<ApplicationType, TypeParent, Context>;
+    type?: TypeResolver<ApplicationType, TypeParent, TContext>;
     
-    disqualification?: DisqualificationResolver<Maybe<DisqualificationInstance>, TypeParent, Context>;
+    disqualification?: DisqualificationResolver<Maybe<DisqualificationInstance>, TypeParent, TContext>;
     
-    stage?: StageResolver<Stage, TypeParent, Context>;
+    stage?: StageResolver<Stage, TypeParent, TContext>;
     
-    job?: JobResolver<Job, TypeParent, Context>;
+    job?: JobResolver<Job, TypeParent, TContext>;
     
-    candidate?: CandidateResolver<Candidate, TypeParent, Context>;
+    candidate?: CandidateResolver<Candidate, TypeParent, TContext>;
   }
 
 
-  export type CreatedAtResolver<R = DateTime, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
-  export type IdResolver<R = string, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
-  export type TypeResolver<R = ApplicationType, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
-  export type DisqualificationResolver<R = Maybe<DisqualificationInstance>, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
-  export type StageResolver<R = Stage, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
-  export type JobResolver<R = Job, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
-  export type CandidateResolver<R = Candidate, Parent = Application, Context = {}> = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<R = DateTime, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type IdResolver<R = string, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type TypeResolver<R = ApplicationType, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DisqualificationResolver<R = Maybe<DisqualificationInstance>, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type StageResolver<R = Stage, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type JobResolver<R = Job, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CandidateResolver<R = Candidate, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace DisqualificationInstanceResolvers {
-  export interface Resolvers<Context = {}, TypeParent = DisqualificationInstance> {
+  export interface Resolvers<TContext = {}, TypeParent = DisqualificationInstance> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    disqualification?: DisqualificationResolver<Disqualification, TypeParent, Context>;
+    disqualification?: DisqualificationResolver<Disqualification, TypeParent, TContext>;
     
-    createdBy?: CreatedByResolver<User, TypeParent, Context>;
+    createdBy?: CreatedByResolver<User, TypeParent, TContext>;
     
-    content?: ContentResolver<Maybe<string>, TypeParent, Context>;
+    content?: ContentResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = DisqualificationInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = DisqualificationInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = DisqualificationInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type DisqualificationResolver<R = Disqualification, Parent = DisqualificationInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedByResolver<R = User, Parent = DisqualificationInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type ContentResolver<R = Maybe<string>, Parent = DisqualificationInstance, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DisqualificationResolver<R = Disqualification, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedByResolver<R = User, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ContentResolver<R = Maybe<string>, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace DisqualificationResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Disqualification> {
+  export interface Resolvers<TContext = {}, TypeParent = Disqualification> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Disqualification, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Disqualification, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Disqualification, Context = {}> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = Disqualification, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Disqualification, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Disqualification, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Disqualification, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Disqualification, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type NameResolver<R = string, Parent = Disqualification, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Disqualification, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserResolvers {
-  export interface Resolvers<Context = {}, TypeParent = User> {
+  export interface Resolvers<TContext = {}, TypeParent = User> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    settings?: SettingsResolver<Maybe<Json>, TypeParent, Context>;
+    settings?: SettingsResolver<Maybe<Json>, TypeParent, TContext>;
     
-    tasks?: TasksResolver<Maybe<Task[]>, TypeParent, Context>;
+    tasks?: TasksResolver<Maybe<Task[]>, TypeParent, TContext>;
     
-    firstName?: FirstNameResolver<string, TypeParent, Context>;
+    firstName?: FirstNameResolver<string, TypeParent, TContext>;
     
-    lastName?: LastNameResolver<string, TypeParent, Context>;
+    lastName?: LastNameResolver<string, TypeParent, TContext>;
     
-    email?: EmailResolver<string, TypeParent, Context>;
+    email?: EmailResolver<string, TypeParent, TContext>;
     
-    username?: UsernameResolver<string, TypeParent, Context>;
+    username?: UsernameResolver<string, TypeParent, TContext>;
     
-    lastLogin?: LastLoginResolver<Maybe<DateTime>, TypeParent, Context>;
+    lastLogin?: LastLoginResolver<Maybe<DateTime>, TypeParent, TContext>;
     
-    deletedAt?: DeletedAtResolver<Maybe<DateTime>, TypeParent, Context>;
+    deletedAt?: DeletedAtResolver<Maybe<DateTime>, TypeParent, TContext>;
     
-    position?: PositionResolver<Maybe<string>, TypeParent, Context>;
+    position?: PositionResolver<Maybe<string>, TypeParent, TContext>;
     
-    avatar?: AvatarResolver<Maybe<File>, TypeParent, Context>;
+    avatar?: AvatarResolver<Maybe<File>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type SettingsResolver<R = Maybe<Json>, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type TasksResolver<R = Maybe<Task[]>, Parent = User, Context = {}> = Resolver<R, Parent, Context, TasksArgs>;
+  export type IdResolver<R = string, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type SettingsResolver<R = Maybe<Json>, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type TasksResolver<R = Maybe<Task[]>, Parent = User, TContext = {}> = Resolver<R, Parent, TContext, TasksArgs>;
   export interface TasksArgs {
     
     where?: Maybe<TaskWhereInput>;
@@ -9398,41 +9595,41 @@ export namespace UserResolvers {
   }
 
 
-  export type FirstNameResolver<R = string, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type LastNameResolver<R = string, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type EmailResolver<R = string, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type UsernameResolver<R = string, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type LastLoginResolver<R = Maybe<DateTime>, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type DeletedAtResolver<R = Maybe<DateTime>, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type PositionResolver<R = Maybe<string>, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
-  export type AvatarResolver<R = Maybe<File>, Parent = User, Context = {}> = Resolver<R, Parent, Context>;
+  export type FirstNameResolver<R = string, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LastNameResolver<R = string, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EmailResolver<R = string, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UsernameResolver<R = string, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LastLoginResolver<R = Maybe<DateTime>, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DeletedAtResolver<R = Maybe<DateTime>, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type PositionResolver<R = Maybe<string>, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AvatarResolver<R = Maybe<File>, Parent = User, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace TaskResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Task> {
+  export interface Resolvers<TContext = {}, TypeParent = Task> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    owners?: OwnersResolver<Maybe<User[]>, TypeParent, Context>;
+    owners?: OwnersResolver<Maybe<User[]>, TypeParent, TContext>;
     
-    candidate?: CandidateResolver<Maybe<Candidate>, TypeParent, Context>;
+    candidate?: CandidateResolver<Maybe<Candidate>, TypeParent, TContext>;
     
-    title?: TitleResolver<Maybe<string>, TypeParent, Context>;
+    title?: TitleResolver<Maybe<string>, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
     
-    dueAt?: DueAtResolver<Maybe<DateTime>, TypeParent, Context>;
+    dueAt?: DueAtResolver<Maybe<DateTime>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Task, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Task, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Task, Context = {}> = Resolver<R, Parent, Context>;
-  export type OwnersResolver<R = Maybe<User[]>, Parent = Task, Context = {}> = Resolver<R, Parent, Context, OwnersArgs>;
+  export type IdResolver<R = string, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type OwnersResolver<R = Maybe<User[]>, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext, OwnersArgs>;
   export interface OwnersArgs {
     
     where?: Maybe<UserWhereInput>;
@@ -9451,75 +9648,75 @@ export namespace TaskResolvers {
   }
 
 
-  export type CandidateResolver<R = Maybe<Candidate>, Parent = Task, Context = {}> = Resolver<R, Parent, Context>;
-  export type TitleResolver<R = Maybe<string>, Parent = Task, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Task, Context = {}> = Resolver<R, Parent, Context>;
-  export type DueAtResolver<R = Maybe<DateTime>, Parent = Task, Context = {}> = Resolver<R, Parent, Context>;
+  export type CandidateResolver<R = Maybe<Candidate>, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type TitleResolver<R = Maybe<string>, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DueAtResolver<R = Maybe<DateTime>, Parent = Task, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace CandidateResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Candidate> {
+  export interface Resolvers<TContext = {}, TypeParent = Candidate> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    firstName?: FirstNameResolver<string, TypeParent, Context>;
+    firstName?: FirstNameResolver<string, TypeParent, TContext>;
     
-    lastName?: LastNameResolver<string, TypeParent, Context>;
+    lastName?: LastNameResolver<string, TypeParent, TContext>;
     
-    emails?: EmailsResolver<string[], TypeParent, Context>;
+    emails?: EmailsResolver<string[], TypeParent, TContext>;
     
-    phones?: PhonesResolver<string[], TypeParent, Context>;
+    phones?: PhonesResolver<string[], TypeParent, TContext>;
     
-    links?: LinksResolver<string[], TypeParent, Context>;
+    links?: LinksResolver<string[], TypeParent, TContext>;
     
-    avatar?: AvatarResolver<Maybe<File>, TypeParent, Context>;
+    avatar?: AvatarResolver<Maybe<File>, TypeParent, TContext>;
     
-    company?: CompanyResolver<Maybe<string>, TypeParent, Context>;
+    company?: CompanyResolver<Maybe<string>, TypeParent, TContext>;
     
-    headline?: HeadlineResolver<Maybe<string>, TypeParent, Context>;
+    headline?: HeadlineResolver<Maybe<string>, TypeParent, TContext>;
     
-    position?: PositionResolver<Maybe<string>, TypeParent, Context>;
+    position?: PositionResolver<Maybe<string>, TypeParent, TContext>;
     
-    resumesString?: ResumesStringResolver<string[], TypeParent, Context>;
+    resumesString?: ResumesStringResolver<string[], TypeParent, TContext>;
     
-    resumesFile?: ResumesFileResolver<Maybe<File[]>, TypeParent, Context>;
+    resumesFile?: ResumesFileResolver<Maybe<File[]>, TypeParent, TContext>;
     
-    coverLettersString?: CoverLettersStringResolver<string[], TypeParent, Context>;
+    coverLettersString?: CoverLettersStringResolver<string[], TypeParent, TContext>;
     
-    coverLettersFile?: CoverLettersFileResolver<Maybe<File[]>, TypeParent, Context>;
+    coverLettersFile?: CoverLettersFileResolver<Maybe<File[]>, TypeParent, TContext>;
     
-    tags?: TagsResolver<Maybe<Tag[]>, TypeParent, Context>;
+    tags?: TagsResolver<Maybe<Tag[]>, TypeParent, TContext>;
     
-    sources?: SourcesResolver<Maybe<Source[]>, TypeParent, Context>;
+    sources?: SourcesResolver<Maybe<Source[]>, TypeParent, TContext>;
     
-    fields?: FieldsResolver<Maybe<FieldInstance[]>, TypeParent, Context>;
+    fields?: FieldsResolver<Maybe<FieldInstance[]>, TypeParent, TContext>;
     
-    tasks?: TasksResolver<Maybe<Task[]>, TypeParent, Context>;
+    tasks?: TasksResolver<Maybe<Task[]>, TypeParent, TContext>;
     
-    applications?: ApplicationsResolver<Maybe<Application[]>, TypeParent, Context>;
+    applications?: ApplicationsResolver<Maybe<Application[]>, TypeParent, TContext>;
     
-    comments?: CommentsResolver<Maybe<Comment[]>, TypeParent, Context>;
+    comments?: CommentsResolver<Maybe<Comment[]>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type FirstNameResolver<R = string, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type LastNameResolver<R = string, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type EmailsResolver<R = string[], Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type PhonesResolver<R = string[], Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type LinksResolver<R = string[], Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type AvatarResolver<R = Maybe<File>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type CompanyResolver<R = Maybe<string>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type HeadlineResolver<R = Maybe<string>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type PositionResolver<R = Maybe<string>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type ResumesStringResolver<R = string[], Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type ResumesFileResolver<R = Maybe<File[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, ResumesFileArgs>;
+  export type IdResolver<R = string, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type FirstNameResolver<R = string, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LastNameResolver<R = string, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EmailsResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type PhonesResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LinksResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AvatarResolver<R = Maybe<File>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CompanyResolver<R = Maybe<string>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type HeadlineResolver<R = Maybe<string>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type PositionResolver<R = Maybe<string>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ResumesStringResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ResumesFileResolver<R = Maybe<File[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, ResumesFileArgs>;
   export interface ResumesFileArgs {
     
     where?: Maybe<FileWhereInput>;
@@ -9538,8 +9735,8 @@ export namespace CandidateResolvers {
   }
 
 
-  export type CoverLettersStringResolver<R = string[], Parent = Candidate, Context = {}> = Resolver<R, Parent, Context>;
-  export type CoverLettersFileResolver<R = Maybe<File[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, CoverLettersFileArgs>;
+  export type CoverLettersStringResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CoverLettersFileResolver<R = Maybe<File[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, CoverLettersFileArgs>;
   export interface CoverLettersFileArgs {
     
     where?: Maybe<FileWhereInput>;
@@ -9558,7 +9755,7 @@ export namespace CandidateResolvers {
   }
 
 
-  export type TagsResolver<R = Maybe<Tag[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, TagsArgs>;
+  export type TagsResolver<R = Maybe<Tag[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, TagsArgs>;
   export interface TagsArgs {
     
     where?: Maybe<TagWhereInput>;
@@ -9577,7 +9774,7 @@ export namespace CandidateResolvers {
   }
 
 
-  export type SourcesResolver<R = Maybe<Source[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, SourcesArgs>;
+  export type SourcesResolver<R = Maybe<Source[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, SourcesArgs>;
   export interface SourcesArgs {
     
     where?: Maybe<SourceWhereInput>;
@@ -9596,7 +9793,7 @@ export namespace CandidateResolvers {
   }
 
 
-  export type FieldsResolver<R = Maybe<FieldInstance[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, FieldsArgs>;
+  export type FieldsResolver<R = Maybe<FieldInstance[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, FieldsArgs>;
   export interface FieldsArgs {
     
     where?: Maybe<FieldInstanceWhereInput>;
@@ -9615,7 +9812,7 @@ export namespace CandidateResolvers {
   }
 
 
-  export type TasksResolver<R = Maybe<Task[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, TasksArgs>;
+  export type TasksResolver<R = Maybe<Task[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, TasksArgs>;
   export interface TasksArgs {
     
     where?: Maybe<TaskWhereInput>;
@@ -9634,7 +9831,7 @@ export namespace CandidateResolvers {
   }
 
 
-  export type ApplicationsResolver<R = Maybe<Application[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, ApplicationsArgs>;
+  export type ApplicationsResolver<R = Maybe<Application[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, ApplicationsArgs>;
   export interface ApplicationsArgs {
     
     where?: Maybe<ApplicationWhereInput>;
@@ -9653,7 +9850,7 @@ export namespace CandidateResolvers {
   }
 
 
-  export type CommentsResolver<R = Maybe<Comment[]>, Parent = Candidate, Context = {}> = Resolver<R, Parent, Context, CommentsArgs>;
+  export type CommentsResolver<R = Maybe<Comment[]>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext, CommentsArgs>;
   export interface CommentsArgs {
     
     where?: Maybe<CommentWhereInput>;
@@ -9675,214 +9872,214 @@ export namespace CandidateResolvers {
 }
 
 export namespace FileResolvers {
-  export interface Resolvers<Context = {}, TypeParent = File> {
+  export interface Resolvers<TContext = {}, TypeParent = File> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    size?: SizeResolver<number, TypeParent, Context>;
+    size?: SizeResolver<number, TypeParent, TContext>;
     
-    type?: TypeResolver<string, TypeParent, Context>;
+    type?: TypeResolver<string, TypeParent, TContext>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
     
-    url?: UrlResolver<string, TypeParent, Context>;
+    url?: UrlResolver<string, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = File, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = File, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = File, Context = {}> = Resolver<R, Parent, Context>;
-  export type SizeResolver<R = number, Parent = File, Context = {}> = Resolver<R, Parent, Context>;
-  export type TypeResolver<R = string, Parent = File, Context = {}> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = File, Context = {}> = Resolver<R, Parent, Context>;
-  export type UrlResolver<R = string, Parent = File, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = File, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = File, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = File, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type SizeResolver<R = number, Parent = File, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type TypeResolver<R = string, Parent = File, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type NameResolver<R = string, Parent = File, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UrlResolver<R = string, Parent = File, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace TagResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Tag> {
+  export interface Resolvers<TContext = {}, TypeParent = Tag> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    label?: LabelResolver<string, TypeParent, Context>;
+    label?: LabelResolver<string, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Tag, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Tag, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Tag, Context = {}> = Resolver<R, Parent, Context>;
-  export type LabelResolver<R = string, Parent = Tag, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Tag, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Tag, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Tag, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Tag, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LabelResolver<R = string, Parent = Tag, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Tag, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace SourceResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Source> {
+  export interface Resolvers<TContext = {}, TypeParent = Source> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    label?: LabelResolver<string, TypeParent, Context>;
+    label?: LabelResolver<string, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Source, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Source, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Source, Context = {}> = Resolver<R, Parent, Context>;
-  export type LabelResolver<R = string, Parent = Source, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Source, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Source, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Source, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Source, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LabelResolver<R = string, Parent = Source, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Source, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace FieldInstanceResolvers {
-  export interface Resolvers<Context = {}, TypeParent = FieldInstance> {
+  export interface Resolvers<TContext = {}, TypeParent = FieldInstance> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    field?: FieldResolver<Field, TypeParent, Context>;
+    field?: FieldResolver<Field, TypeParent, TContext>;
     
-    value?: ValueResolver<Maybe<string>, TypeParent, Context>;
+    value?: ValueResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = FieldInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = FieldInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = FieldInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type FieldResolver<R = Field, Parent = FieldInstance, Context = {}> = Resolver<R, Parent, Context>;
-  export type ValueResolver<R = Maybe<string>, Parent = FieldInstance, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type FieldResolver<R = Field, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ValueResolver<R = Maybe<string>, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace FieldResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Field> {
+  export interface Resolvers<TContext = {}, TypeParent = Field> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    type?: TypeResolver<FieldType, TypeParent, Context>;
+    type?: TypeResolver<FieldType, TypeParent, TContext>;
     
-    label?: LabelResolver<string, TypeParent, Context>;
+    label?: LabelResolver<string, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Field, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Field, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Field, Context = {}> = Resolver<R, Parent, Context>;
-  export type TypeResolver<R = FieldType, Parent = Field, Context = {}> = Resolver<R, Parent, Context>;
-  export type LabelResolver<R = string, Parent = Field, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Field, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Field, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Field, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Field, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type TypeResolver<R = FieldType, Parent = Field, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LabelResolver<R = string, Parent = Field, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Field, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace CommentResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Comment> {
+  export interface Resolvers<TContext = {}, TypeParent = Comment> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    createdBy?: CreatedByResolver<User, TypeParent, Context>;
+    createdBy?: CreatedByResolver<User, TypeParent, TContext>;
     
-    parent?: ParentResolver<Maybe<Comment>, TypeParent, Context>;
+    parent?: ParentResolver<Maybe<Comment>, TypeParent, TContext>;
     
-    content?: ContentResolver<string, TypeParent, Context>;
+    content?: ContentResolver<string, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Comment, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Comment, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Comment, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedByResolver<R = User, Parent = Comment, Context = {}> = Resolver<R, Parent, Context>;
-  export type ParentResolver<R = Maybe<Comment>, Parent = Comment, Context = {}> = Resolver<R, Parent, Context>;
-  export type ContentResolver<R = string, Parent = Comment, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Comment, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Comment, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Comment, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedByResolver<R = User, Parent = Comment, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ParentResolver<R = Maybe<Comment>, Parent = Comment, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ContentResolver<R = string, Parent = Comment, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace StageResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Stage> {
+  export interface Resolvers<TContext = {}, TypeParent = Stage> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
     
-    type?: TypeResolver<StageType, TypeParent, Context>;
+    type?: TypeResolver<StageType, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Stage, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Stage, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Stage, Context = {}> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = Stage, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Stage, Context = {}> = Resolver<R, Parent, Context>;
-  export type TypeResolver<R = StageType, Parent = Stage, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type NameResolver<R = string, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type TypeResolver<R = StageType, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace JobResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Job> {
+  export interface Resolvers<TContext = {}, TypeParent = Job> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    workspace?: WorkspaceResolver<Workspace, TypeParent, Context>;
+    workspace?: WorkspaceResolver<Workspace, TypeParent, TContext>;
     
-    applications?: ApplicationsResolver<Maybe<Application[]>, TypeParent, Context>;
+    applications?: ApplicationsResolver<Maybe<Application[]>, TypeParent, TContext>;
     
-    workflow?: WorkflowResolver<Workflow, TypeParent, Context>;
+    workflow?: WorkflowResolver<Workflow, TypeParent, TContext>;
     
-    comments?: CommentsResolver<Maybe<Comment[]>, TypeParent, Context>;
+    comments?: CommentsResolver<Maybe<Comment[]>, TypeParent, TContext>;
     
-    type?: TypeResolver<JobType, TypeParent, Context>;
+    type?: TypeResolver<JobType, TypeParent, TContext>;
     
-    department?: DepartmentResolver<Maybe<string>, TypeParent, Context>;
+    department?: DepartmentResolver<Maybe<string>, TypeParent, TContext>;
     
-    locations?: LocationsResolver<Maybe<Location[]>, TypeParent, Context>;
+    locations?: LocationsResolver<Maybe<Location[]>, TypeParent, TContext>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
     
-    excerpt?: ExcerptResolver<Maybe<string>, TypeParent, Context>;
+    excerpt?: ExcerptResolver<Maybe<string>, TypeParent, TContext>;
     
-    companyDescription?: CompanyDescriptionResolver<Maybe<string>, TypeParent, Context>;
+    companyDescription?: CompanyDescriptionResolver<Maybe<string>, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
     
-    requirements?: RequirementsResolver<Maybe<string>, TypeParent, Context>;
+    requirements?: RequirementsResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type WorkspaceResolver<R = Workspace, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type ApplicationsResolver<R = Maybe<Application[]>, Parent = Job, Context = {}> = Resolver<R, Parent, Context, ApplicationsArgs>;
+  export type IdResolver<R = string, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type WorkspaceResolver<R = Workspace, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ApplicationsResolver<R = Maybe<Application[]>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext, ApplicationsArgs>;
   export interface ApplicationsArgs {
     
     where?: Maybe<ApplicationWhereInput>;
@@ -9901,8 +10098,8 @@ export namespace JobResolvers {
   }
 
 
-  export type WorkflowResolver<R = Workflow, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type CommentsResolver<R = Maybe<Comment[]>, Parent = Job, Context = {}> = Resolver<R, Parent, Context, CommentsArgs>;
+  export type WorkflowResolver<R = Workflow, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CommentsResolver<R = Maybe<Comment[]>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext, CommentsArgs>;
   export interface CommentsArgs {
     
     where?: Maybe<CommentWhereInput>;
@@ -9921,9 +10118,9 @@ export namespace JobResolvers {
   }
 
 
-  export type TypeResolver<R = JobType, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type DepartmentResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type LocationsResolver<R = Maybe<Location[]>, Parent = Job, Context = {}> = Resolver<R, Parent, Context, LocationsArgs>;
+  export type TypeResolver<R = JobType, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DepartmentResolver<R = Maybe<string>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type LocationsResolver<R = Maybe<Location[]>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext, LocationsArgs>;
   export interface LocationsArgs {
     
     where?: Maybe<LocationWhereInput>;
@@ -9942,42 +10139,42 @@ export namespace JobResolvers {
   }
 
 
-  export type NameResolver<R = string, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type ExcerptResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type CompanyDescriptionResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
-  export type RequirementsResolver<R = Maybe<string>, Parent = Job, Context = {}> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ExcerptResolver<R = Maybe<string>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CompanyDescriptionResolver<R = Maybe<string>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type RequirementsResolver<R = Maybe<string>, Parent = Job, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace WorkspaceResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Workspace> {
+  export interface Resolvers<TContext = {}, TypeParent = Workspace> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    users?: UsersResolver<Maybe<User[]>, TypeParent, Context>;
+    users?: UsersResolver<Maybe<User[]>, TypeParent, TContext>;
     
-    jobs?: JobsResolver<Maybe<Job[]>, TypeParent, Context>;
+    jobs?: JobsResolver<Maybe<Job[]>, TypeParent, TContext>;
     
-    candidates?: CandidatesResolver<Maybe<Candidate[]>, TypeParent, Context>;
+    candidates?: CandidatesResolver<Maybe<Candidate[]>, TypeParent, TContext>;
     
-    settings?: SettingsResolver<Maybe<Json>, TypeParent, Context>;
+    settings?: SettingsResolver<Maybe<Json>, TypeParent, TContext>;
     
-    workflows?: WorkflowsResolver<Maybe<Workflow[]>, TypeParent, Context>;
+    workflows?: WorkflowsResolver<Maybe<Workflow[]>, TypeParent, TContext>;
     
-    invites?: InvitesResolver<Maybe<Invite[]>, TypeParent, Context>;
+    invites?: InvitesResolver<Maybe<Invite[]>, TypeParent, TContext>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context>;
-  export type UsersResolver<R = Maybe<User[]>, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context, UsersArgs>;
+  export type IdResolver<R = string, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UsersResolver<R = Maybe<User[]>, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext, UsersArgs>;
   export interface UsersArgs {
     
     where?: Maybe<UserWhereInput>;
@@ -9996,7 +10193,7 @@ export namespace WorkspaceResolvers {
   }
 
 
-  export type JobsResolver<R = Maybe<Job[]>, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context, JobsArgs>;
+  export type JobsResolver<R = Maybe<Job[]>, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext, JobsArgs>;
   export interface JobsArgs {
     
     where?: Maybe<JobWhereInput>;
@@ -10015,7 +10212,7 @@ export namespace WorkspaceResolvers {
   }
 
 
-  export type CandidatesResolver<R = Maybe<Candidate[]>, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context, CandidatesArgs>;
+  export type CandidatesResolver<R = Maybe<Candidate[]>, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext, CandidatesArgs>;
   export interface CandidatesArgs {
     
     where?: Maybe<CandidateWhereInput>;
@@ -10034,8 +10231,8 @@ export namespace WorkspaceResolvers {
   }
 
 
-  export type SettingsResolver<R = Maybe<Json>, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context>;
-  export type WorkflowsResolver<R = Maybe<Workflow[]>, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context, WorkflowsArgs>;
+  export type SettingsResolver<R = Maybe<Json>, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type WorkflowsResolver<R = Maybe<Workflow[]>, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext, WorkflowsArgs>;
   export interface WorkflowsArgs {
     
     where?: Maybe<WorkflowWhereInput>;
@@ -10054,7 +10251,7 @@ export namespace WorkspaceResolvers {
   }
 
 
-  export type InvitesResolver<R = Maybe<Invite[]>, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context, InvitesArgs>;
+  export type InvitesResolver<R = Maybe<Invite[]>, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext, InvitesArgs>;
   export interface InvitesArgs {
     
     where?: Maybe<InviteWhereInput>;
@@ -10073,36 +10270,36 @@ export namespace WorkspaceResolvers {
   }
 
 
-  export type NameResolver<R = string, Parent = Workspace, Context = {}> = Resolver<R, Parent, Context>;
+  export type NameResolver<R = string, Parent = Workspace, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace WorkflowResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Workflow> {
+  export interface Resolvers<TContext = {}, TypeParent = Workflow> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    name?: NameResolver<string, TypeParent, Context>;
+    name?: NameResolver<string, TypeParent, TContext>;
     
-    description?: DescriptionResolver<Maybe<string>, TypeParent, Context>;
+    description?: DescriptionResolver<Maybe<string>, TypeParent, TContext>;
     
-    stages?: StagesResolver<Maybe<Stage[]>, TypeParent, Context>;
+    stages?: StagesResolver<Maybe<Stage[]>, TypeParent, TContext>;
     
-    disqualifications?: DisqualificationsResolver<Maybe<Disqualification[]>, TypeParent, Context>;
+    disqualifications?: DisqualificationsResolver<Maybe<Disqualification[]>, TypeParent, TContext>;
     
-    fields?: FieldsResolver<Maybe<Field[]>, TypeParent, Context>;
+    fields?: FieldsResolver<Maybe<Field[]>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context>;
-  export type NameResolver<R = string, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context>;
-  export type DescriptionResolver<R = Maybe<string>, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context>;
-  export type StagesResolver<R = Maybe<Stage[]>, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context, StagesArgs>;
+  export type IdResolver<R = string, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type NameResolver<R = string, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DescriptionResolver<R = Maybe<string>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type StagesResolver<R = Maybe<Stage[]>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext, StagesArgs>;
   export interface StagesArgs {
     
     where?: Maybe<StageWhereInput>;
@@ -10121,7 +10318,7 @@ export namespace WorkflowResolvers {
   }
 
 
-  export type DisqualificationsResolver<R = Maybe<Disqualification[]>, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context, DisqualificationsArgs>;
+  export type DisqualificationsResolver<R = Maybe<Disqualification[]>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext, DisqualificationsArgs>;
   export interface DisqualificationsArgs {
     
     where?: Maybe<DisqualificationWhereInput>;
@@ -10140,7 +10337,7 @@ export namespace WorkflowResolvers {
   }
 
 
-  export type FieldsResolver<R = Maybe<Field[]>, Parent = Workflow, Context = {}> = Resolver<R, Parent, Context, FieldsArgs>;
+  export type FieldsResolver<R = Maybe<Field[]>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext, FieldsArgs>;
   export interface FieldsArgs {
     
     where?: Maybe<FieldWhereInput>;
@@ -10162,411 +10359,435 @@ export namespace WorkflowResolvers {
 }
 
 export namespace InviteResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Invite> {
+  export interface Resolvers<TContext = {}, TypeParent = Invite> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    email?: EmailResolver<string, TypeParent, Context>;
+    email?: EmailResolver<string, TypeParent, TContext>;
     
-    expireAt?: ExpireAtResolver<DateTime, TypeParent, Context>;
+    expireAt?: ExpireAtResolver<DateTime, TypeParent, TContext>;
     
-    invitedBy?: InvitedByResolver<User, TypeParent, Context>;
+    invitedBy?: InvitedByResolver<User, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Invite, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Invite, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Invite, Context = {}> = Resolver<R, Parent, Context>;
-  export type EmailResolver<R = string, Parent = Invite, Context = {}> = Resolver<R, Parent, Context>;
-  export type ExpireAtResolver<R = DateTime, Parent = Invite, Context = {}> = Resolver<R, Parent, Context>;
-  export type InvitedByResolver<R = User, Parent = Invite, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Invite, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Invite, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Invite, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EmailResolver<R = string, Parent = Invite, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ExpireAtResolver<R = DateTime, Parent = Invite, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type InvitedByResolver<R = User, Parent = Invite, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace LocationResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Location> {
+  export interface Resolvers<TContext = {}, TypeParent = Location> {
     
-    id?: IdResolver<string, TypeParent, Context>;
+    id?: IdResolver<string, TypeParent, TContext>;
     
-    createdAt?: CreatedAtResolver<DateTime, TypeParent, Context>;
+    createdAt?: CreatedAtResolver<DateTime, TypeParent, TContext>;
     
-    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, Context>;
+    updatedAt?: UpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    country?: CountryResolver<string, TypeParent, Context>;
+    country?: CountryResolver<string, TypeParent, TContext>;
     
-    region?: RegionResolver<Maybe<string>, TypeParent, Context>;
+    region?: RegionResolver<Maybe<string>, TypeParent, TContext>;
     
-    city?: CityResolver<string, TypeParent, Context>;
+    city?: CityResolver<string, TypeParent, TContext>;
     
-    zip?: ZipResolver<Maybe<string>, TypeParent, Context>;
+    zip?: ZipResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type IdResolver<R = string, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;
-  export type CreatedAtResolver<R = DateTime, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<R = DateTime, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;
-  export type CountryResolver<R = string, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;
-  export type RegionResolver<R = Maybe<string>, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;
-  export type CityResolver<R = string, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;
-  export type ZipResolver<R = Maybe<string>, Parent = Location, Context = {}> = Resolver<R, Parent, Context>;
+  export type IdResolver<R = string, Parent = Location, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CreatedAtResolver<R = DateTime, Parent = Location, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type UpdatedAtResolver<R = DateTime, Parent = Location, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CountryResolver<R = string, Parent = Location, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type RegionResolver<R = Maybe<string>, Parent = Location, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CityResolver<R = string, Parent = Location, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ZipResolver<R = Maybe<string>, Parent = Location, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace ApplicationConnectionResolvers {
-  export interface Resolvers<Context = {}, TypeParent = ApplicationConnection> {
+  export interface Resolvers<TContext = {}, TypeParent = ApplicationConnection> {
     
-    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, TContext>;
     
-    edges?: EdgesResolver<(Maybe<ApplicationEdge>)[], TypeParent, Context>;
+    edges?: EdgesResolver<(Maybe<ApplicationEdge>)[], TypeParent, TContext>;
     
-    aggregate?: AggregateResolver<AggregateApplication, TypeParent, Context>;
+    aggregate?: AggregateResolver<AggregateApplication, TypeParent, TContext>;
   }
 
 
-  export type PageInfoResolver<R = PageInfo, Parent = ApplicationConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type EdgesResolver<R = (Maybe<ApplicationEdge>)[], Parent = ApplicationConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type AggregateResolver<R = AggregateApplication, Parent = ApplicationConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type PageInfoResolver<R = PageInfo, Parent = ApplicationConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EdgesResolver<R = (Maybe<ApplicationEdge>)[], Parent = ApplicationConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AggregateResolver<R = AggregateApplication, Parent = ApplicationConnection, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace PageInfoResolvers {
-  export interface Resolvers<Context = {}, TypeParent = PageInfo> {
+  export interface Resolvers<TContext = {}, TypeParent = PageInfo> {
     
-    hasNextPage?: HasNextPageResolver<boolean, TypeParent, Context>;
+    hasNextPage?: HasNextPageResolver<boolean, TypeParent, TContext>;
     
-    hasPreviousPage?: HasPreviousPageResolver<boolean, TypeParent, Context>;
+    hasPreviousPage?: HasPreviousPageResolver<boolean, TypeParent, TContext>;
     
-    startCursor?: StartCursorResolver<Maybe<string>, TypeParent, Context>;
+    startCursor?: StartCursorResolver<Maybe<string>, TypeParent, TContext>;
     
-    endCursor?: EndCursorResolver<Maybe<string>, TypeParent, Context>;
+    endCursor?: EndCursorResolver<Maybe<string>, TypeParent, TContext>;
   }
 
 
-  export type HasNextPageResolver<R = boolean, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;
-  export type HasPreviousPageResolver<R = boolean, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;
-  export type StartCursorResolver<R = Maybe<string>, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;
-  export type EndCursorResolver<R = Maybe<string>, Parent = PageInfo, Context = {}> = Resolver<R, Parent, Context>;
+  export type HasNextPageResolver<R = boolean, Parent = PageInfo, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type HasPreviousPageResolver<R = boolean, Parent = PageInfo, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type StartCursorResolver<R = Maybe<string>, Parent = PageInfo, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EndCursorResolver<R = Maybe<string>, Parent = PageInfo, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace ApplicationEdgeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = ApplicationEdge> {
+  export interface Resolvers<TContext = {}, TypeParent = ApplicationEdge> {
     
-    node?: NodeResolver<Application, TypeParent, Context>;
+    node?: NodeResolver<Application, TypeParent, TContext>;
     
-    cursor?: CursorResolver<string, TypeParent, Context>;
+    cursor?: CursorResolver<string, TypeParent, TContext>;
   }
 
 
-  export type NodeResolver<R = Application, Parent = ApplicationEdge, Context = {}> = Resolver<R, Parent, Context>;
-  export type CursorResolver<R = string, Parent = ApplicationEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type NodeResolver<R = Application, Parent = ApplicationEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CursorResolver<R = string, Parent = ApplicationEdge, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AggregateApplicationResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AggregateApplication> {
+  export interface Resolvers<TContext = {}, TypeParent = AggregateApplication> {
     
-    count?: CountResolver<number, TypeParent, Context>;
+    count?: CountResolver<number, TypeParent, TContext>;
   }
 
 
-  export type CountResolver<R = number, Parent = AggregateApplication, Context = {}> = Resolver<R, Parent, Context>;
+  export type CountResolver<R = number, Parent = AggregateApplication, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace CandidateConnectionResolvers {
-  export interface Resolvers<Context = {}, TypeParent = CandidateConnection> {
+  export interface Resolvers<TContext = {}, TypeParent = CandidateConnection> {
     
-    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, TContext>;
     
-    edges?: EdgesResolver<(Maybe<CandidateEdge>)[], TypeParent, Context>;
+    edges?: EdgesResolver<(Maybe<CandidateEdge>)[], TypeParent, TContext>;
     
-    aggregate?: AggregateResolver<AggregateCandidate, TypeParent, Context>;
+    aggregate?: AggregateResolver<AggregateCandidate, TypeParent, TContext>;
   }
 
 
-  export type PageInfoResolver<R = PageInfo, Parent = CandidateConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type EdgesResolver<R = (Maybe<CandidateEdge>)[], Parent = CandidateConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type AggregateResolver<R = AggregateCandidate, Parent = CandidateConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type PageInfoResolver<R = PageInfo, Parent = CandidateConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EdgesResolver<R = (Maybe<CandidateEdge>)[], Parent = CandidateConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AggregateResolver<R = AggregateCandidate, Parent = CandidateConnection, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace CandidateEdgeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = CandidateEdge> {
+  export interface Resolvers<TContext = {}, TypeParent = CandidateEdge> {
     
-    node?: NodeResolver<Candidate, TypeParent, Context>;
+    node?: NodeResolver<Candidate, TypeParent, TContext>;
     
-    cursor?: CursorResolver<string, TypeParent, Context>;
+    cursor?: CursorResolver<string, TypeParent, TContext>;
   }
 
 
-  export type NodeResolver<R = Candidate, Parent = CandidateEdge, Context = {}> = Resolver<R, Parent, Context>;
-  export type CursorResolver<R = string, Parent = CandidateEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type NodeResolver<R = Candidate, Parent = CandidateEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CursorResolver<R = string, Parent = CandidateEdge, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AggregateCandidateResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AggregateCandidate> {
+  export interface Resolvers<TContext = {}, TypeParent = AggregateCandidate> {
     
-    count?: CountResolver<number, TypeParent, Context>;
+    count?: CountResolver<number, TypeParent, TContext>;
   }
 
 
-  export type CountResolver<R = number, Parent = AggregateCandidate, Context = {}> = Resolver<R, Parent, Context>;
+  export type CountResolver<R = number, Parent = AggregateCandidate, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace JobConnectionResolvers {
-  export interface Resolvers<Context = {}, TypeParent = JobConnection> {
+  export interface Resolvers<TContext = {}, TypeParent = JobConnection> {
     
-    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, TContext>;
     
-    edges?: EdgesResolver<(Maybe<JobEdge>)[], TypeParent, Context>;
+    edges?: EdgesResolver<(Maybe<JobEdge>)[], TypeParent, TContext>;
     
-    aggregate?: AggregateResolver<AggregateJob, TypeParent, Context>;
+    aggregate?: AggregateResolver<AggregateJob, TypeParent, TContext>;
   }
 
 
-  export type PageInfoResolver<R = PageInfo, Parent = JobConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type EdgesResolver<R = (Maybe<JobEdge>)[], Parent = JobConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type AggregateResolver<R = AggregateJob, Parent = JobConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type PageInfoResolver<R = PageInfo, Parent = JobConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EdgesResolver<R = (Maybe<JobEdge>)[], Parent = JobConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AggregateResolver<R = AggregateJob, Parent = JobConnection, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace JobEdgeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = JobEdge> {
+  export interface Resolvers<TContext = {}, TypeParent = JobEdge> {
     
-    node?: NodeResolver<Job, TypeParent, Context>;
+    node?: NodeResolver<Job, TypeParent, TContext>;
     
-    cursor?: CursorResolver<string, TypeParent, Context>;
+    cursor?: CursorResolver<string, TypeParent, TContext>;
   }
 
 
-  export type NodeResolver<R = Job, Parent = JobEdge, Context = {}> = Resolver<R, Parent, Context>;
-  export type CursorResolver<R = string, Parent = JobEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type NodeResolver<R = Job, Parent = JobEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CursorResolver<R = string, Parent = JobEdge, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AggregateJobResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AggregateJob> {
+  export interface Resolvers<TContext = {}, TypeParent = AggregateJob> {
     
-    count?: CountResolver<number, TypeParent, Context>;
+    count?: CountResolver<number, TypeParent, TContext>;
   }
 
 
-  export type CountResolver<R = number, Parent = AggregateJob, Context = {}> = Resolver<R, Parent, Context>;
+  export type CountResolver<R = number, Parent = AggregateJob, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace SourceConnectionResolvers {
-  export interface Resolvers<Context = {}, TypeParent = SourceConnection> {
+  export interface Resolvers<TContext = {}, TypeParent = SourceConnection> {
     
-    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, TContext>;
     
-    edges?: EdgesResolver<(Maybe<SourceEdge>)[], TypeParent, Context>;
+    edges?: EdgesResolver<(Maybe<SourceEdge>)[], TypeParent, TContext>;
     
-    aggregate?: AggregateResolver<AggregateSource, TypeParent, Context>;
+    aggregate?: AggregateResolver<AggregateSource, TypeParent, TContext>;
   }
 
 
-  export type PageInfoResolver<R = PageInfo, Parent = SourceConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type EdgesResolver<R = (Maybe<SourceEdge>)[], Parent = SourceConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type AggregateResolver<R = AggregateSource, Parent = SourceConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type PageInfoResolver<R = PageInfo, Parent = SourceConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EdgesResolver<R = (Maybe<SourceEdge>)[], Parent = SourceConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AggregateResolver<R = AggregateSource, Parent = SourceConnection, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace SourceEdgeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = SourceEdge> {
+  export interface Resolvers<TContext = {}, TypeParent = SourceEdge> {
     
-    node?: NodeResolver<Source, TypeParent, Context>;
+    node?: NodeResolver<Source, TypeParent, TContext>;
     
-    cursor?: CursorResolver<string, TypeParent, Context>;
+    cursor?: CursorResolver<string, TypeParent, TContext>;
   }
 
 
-  export type NodeResolver<R = Source, Parent = SourceEdge, Context = {}> = Resolver<R, Parent, Context>;
-  export type CursorResolver<R = string, Parent = SourceEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type NodeResolver<R = Source, Parent = SourceEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CursorResolver<R = string, Parent = SourceEdge, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AggregateSourceResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AggregateSource> {
+  export interface Resolvers<TContext = {}, TypeParent = AggregateSource> {
     
-    count?: CountResolver<number, TypeParent, Context>;
+    count?: CountResolver<number, TypeParent, TContext>;
   }
 
 
-  export type CountResolver<R = number, Parent = AggregateSource, Context = {}> = Resolver<R, Parent, Context>;
+  export type CountResolver<R = number, Parent = AggregateSource, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace TagConnectionResolvers {
-  export interface Resolvers<Context = {}, TypeParent = TagConnection> {
+  export interface Resolvers<TContext = {}, TypeParent = TagConnection> {
     
-    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, TContext>;
     
-    edges?: EdgesResolver<(Maybe<TagEdge>)[], TypeParent, Context>;
+    edges?: EdgesResolver<(Maybe<TagEdge>)[], TypeParent, TContext>;
     
-    aggregate?: AggregateResolver<AggregateTag, TypeParent, Context>;
+    aggregate?: AggregateResolver<AggregateTag, TypeParent, TContext>;
   }
 
 
-  export type PageInfoResolver<R = PageInfo, Parent = TagConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type EdgesResolver<R = (Maybe<TagEdge>)[], Parent = TagConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type AggregateResolver<R = AggregateTag, Parent = TagConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type PageInfoResolver<R = PageInfo, Parent = TagConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EdgesResolver<R = (Maybe<TagEdge>)[], Parent = TagConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AggregateResolver<R = AggregateTag, Parent = TagConnection, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace TagEdgeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = TagEdge> {
+  export interface Resolvers<TContext = {}, TypeParent = TagEdge> {
     
-    node?: NodeResolver<Tag, TypeParent, Context>;
+    node?: NodeResolver<Tag, TypeParent, TContext>;
     
-    cursor?: CursorResolver<string, TypeParent, Context>;
+    cursor?: CursorResolver<string, TypeParent, TContext>;
   }
 
 
-  export type NodeResolver<R = Tag, Parent = TagEdge, Context = {}> = Resolver<R, Parent, Context>;
-  export type CursorResolver<R = string, Parent = TagEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type NodeResolver<R = Tag, Parent = TagEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CursorResolver<R = string, Parent = TagEdge, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AggregateTagResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AggregateTag> {
+  export interface Resolvers<TContext = {}, TypeParent = AggregateTag> {
     
-    count?: CountResolver<number, TypeParent, Context>;
+    count?: CountResolver<number, TypeParent, TContext>;
   }
 
 
-  export type CountResolver<R = number, Parent = AggregateTag, Context = {}> = Resolver<R, Parent, Context>;
+  export type CountResolver<R = number, Parent = AggregateTag, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace TaskConnectionResolvers {
-  export interface Resolvers<Context = {}, TypeParent = TaskConnection> {
+  export interface Resolvers<TContext = {}, TypeParent = TaskConnection> {
     
-    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, TContext>;
     
-    edges?: EdgesResolver<(Maybe<TaskEdge>)[], TypeParent, Context>;
+    edges?: EdgesResolver<(Maybe<TaskEdge>)[], TypeParent, TContext>;
     
-    aggregate?: AggregateResolver<AggregateTask, TypeParent, Context>;
+    aggregate?: AggregateResolver<AggregateTask, TypeParent, TContext>;
   }
 
 
-  export type PageInfoResolver<R = PageInfo, Parent = TaskConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type EdgesResolver<R = (Maybe<TaskEdge>)[], Parent = TaskConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type AggregateResolver<R = AggregateTask, Parent = TaskConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type PageInfoResolver<R = PageInfo, Parent = TaskConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EdgesResolver<R = (Maybe<TaskEdge>)[], Parent = TaskConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AggregateResolver<R = AggregateTask, Parent = TaskConnection, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace TaskEdgeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = TaskEdge> {
+  export interface Resolvers<TContext = {}, TypeParent = TaskEdge> {
     
-    node?: NodeResolver<Task, TypeParent, Context>;
+    node?: NodeResolver<Task, TypeParent, TContext>;
     
-    cursor?: CursorResolver<string, TypeParent, Context>;
+    cursor?: CursorResolver<string, TypeParent, TContext>;
   }
 
 
-  export type NodeResolver<R = Task, Parent = TaskEdge, Context = {}> = Resolver<R, Parent, Context>;
-  export type CursorResolver<R = string, Parent = TaskEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type NodeResolver<R = Task, Parent = TaskEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CursorResolver<R = string, Parent = TaskEdge, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AggregateTaskResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AggregateTask> {
+  export interface Resolvers<TContext = {}, TypeParent = AggregateTask> {
     
-    count?: CountResolver<number, TypeParent, Context>;
+    count?: CountResolver<number, TypeParent, TContext>;
   }
 
 
-  export type CountResolver<R = number, Parent = AggregateTask, Context = {}> = Resolver<R, Parent, Context>;
+  export type CountResolver<R = number, Parent = AggregateTask, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserConnectionResolvers {
-  export interface Resolvers<Context = {}, TypeParent = UserConnection> {
+  export interface Resolvers<TContext = {}, TypeParent = UserConnection> {
     
-    pageInfo?: PageInfoResolver<PageInfo, TypeParent, Context>;
+    pageInfo?: PageInfoResolver<PageInfo, TypeParent, TContext>;
     
-    edges?: EdgesResolver<(Maybe<UserEdge>)[], TypeParent, Context>;
+    edges?: EdgesResolver<(Maybe<UserEdge>)[], TypeParent, TContext>;
     
-    aggregate?: AggregateResolver<AggregateUser, TypeParent, Context>;
+    aggregate?: AggregateResolver<AggregateUser, TypeParent, TContext>;
   }
 
 
-  export type PageInfoResolver<R = PageInfo, Parent = UserConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type EdgesResolver<R = (Maybe<UserEdge>)[], Parent = UserConnection, Context = {}> = Resolver<R, Parent, Context>;
-  export type AggregateResolver<R = AggregateUser, Parent = UserConnection, Context = {}> = Resolver<R, Parent, Context>;
+  export type PageInfoResolver<R = PageInfo, Parent = UserConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type EdgesResolver<R = (Maybe<UserEdge>)[], Parent = UserConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type AggregateResolver<R = AggregateUser, Parent = UserConnection, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace UserEdgeResolvers {
-  export interface Resolvers<Context = {}, TypeParent = UserEdge> {
+  export interface Resolvers<TContext = {}, TypeParent = UserEdge> {
     
-    node?: NodeResolver<User, TypeParent, Context>;
+    node?: NodeResolver<User, TypeParent, TContext>;
     
-    cursor?: CursorResolver<string, TypeParent, Context>;
+    cursor?: CursorResolver<string, TypeParent, TContext>;
   }
 
 
-  export type NodeResolver<R = User, Parent = UserEdge, Context = {}> = Resolver<R, Parent, Context>;
-  export type CursorResolver<R = string, Parent = UserEdge, Context = {}> = Resolver<R, Parent, Context>;
+  export type NodeResolver<R = User, Parent = UserEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CursorResolver<R = string, Parent = UserEdge, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AggregateUserResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AggregateUser> {
+  export interface Resolvers<TContext = {}, TypeParent = AggregateUser> {
     
-    count?: CountResolver<number, TypeParent, Context>;
+    count?: CountResolver<number, TypeParent, TContext>;
   }
 
 
-  export type CountResolver<R = number, Parent = AggregateUser, Context = {}> = Resolver<R, Parent, Context>;
+  export type CountResolver<R = number, Parent = AggregateUser, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace MutationResolvers {
-  export interface Resolvers<Context = {}, TypeParent = {}> {
+  export interface Resolvers<TContext = {}, TypeParent = {}> {
     
-    createApplication?: CreateApplicationResolver<Application, TypeParent, Context>;
+    createApplication?: CreateApplicationResolver<Application, TypeParent, TContext>;
     
-    updateApplication?: UpdateApplicationResolver<Maybe<Application>, TypeParent, Context>;
+    updateApplication?: UpdateApplicationResolver<Maybe<Application>, TypeParent, TContext>;
     
-    upsertApplication?: UpsertApplicationResolver<Application, TypeParent, Context>;
+    updateManyApplications?: UpdateManyApplicationsResolver<BatchPayload, TypeParent, TContext>;
     
-    deleteApplication?: DeleteApplicationResolver<Maybe<Application>, TypeParent, Context>;
+    upsertApplication?: UpsertApplicationResolver<Application, TypeParent, TContext>;
     
-    createCandidate?: CreateCandidateResolver<Candidate, TypeParent, Context>;
+    deleteApplication?: DeleteApplicationResolver<Maybe<Application>, TypeParent, TContext>;
     
-    updateCandidate?: UpdateCandidateResolver<Maybe<Candidate>, TypeParent, Context>;
+    deleteManyApplications?: DeleteManyApplicationsResolver<BatchPayload, TypeParent, TContext>;
     
-    upsertCandidate?: UpsertCandidateResolver<Candidate, TypeParent, Context>;
+    createCandidate?: CreateCandidateResolver<Candidate, TypeParent, TContext>;
     
-    deleteCandidate?: DeleteCandidateResolver<Maybe<Candidate>, TypeParent, Context>;
+    updateCandidate?: UpdateCandidateResolver<Maybe<Candidate>, TypeParent, TContext>;
     
-    createJob?: CreateJobResolver<Job, TypeParent, Context>;
+    updateManyCandidates?: UpdateManyCandidatesResolver<BatchPayload, TypeParent, TContext>;
     
-    updateJob?: UpdateJobResolver<Maybe<Job>, TypeParent, Context>;
+    upsertCandidate?: UpsertCandidateResolver<Candidate, TypeParent, TContext>;
     
-    upsertJob?: UpsertJobResolver<Job, TypeParent, Context>;
+    deleteCandidate?: DeleteCandidateResolver<Maybe<Candidate>, TypeParent, TContext>;
     
-    deleteJob?: DeleteJobResolver<Maybe<Job>, TypeParent, Context>;
+    deleteManyCandidates?: DeleteManyCandidatesResolver<BatchPayload, TypeParent, TContext>;
     
-    createSource?: CreateSourceResolver<Source, TypeParent, Context>;
+    createJob?: CreateJobResolver<Job, TypeParent, TContext>;
     
-    updateSource?: UpdateSourceResolver<Maybe<Source>, TypeParent, Context>;
+    updateJob?: UpdateJobResolver<Maybe<Job>, TypeParent, TContext>;
     
-    upsertSource?: UpsertSourceResolver<Source, TypeParent, Context>;
+    updateManyJobs?: UpdateManyJobsResolver<BatchPayload, TypeParent, TContext>;
     
-    deleteSource?: DeleteSourceResolver<Maybe<Source>, TypeParent, Context>;
+    upsertJob?: UpsertJobResolver<Job, TypeParent, TContext>;
     
-    createTag?: CreateTagResolver<Tag, TypeParent, Context>;
+    deleteJob?: DeleteJobResolver<Maybe<Job>, TypeParent, TContext>;
     
-    updateTag?: UpdateTagResolver<Maybe<Tag>, TypeParent, Context>;
+    deleteManyJobs?: DeleteManyJobsResolver<BatchPayload, TypeParent, TContext>;
     
-    upsertTag?: UpsertTagResolver<Tag, TypeParent, Context>;
+    createSource?: CreateSourceResolver<Source, TypeParent, TContext>;
     
-    deleteTag?: DeleteTagResolver<Maybe<Tag>, TypeParent, Context>;
+    updateSource?: UpdateSourceResolver<Maybe<Source>, TypeParent, TContext>;
     
-    createTask?: CreateTaskResolver<Task, TypeParent, Context>;
+    updateManySources?: UpdateManySourcesResolver<BatchPayload, TypeParent, TContext>;
     
-    updateTask?: UpdateTaskResolver<Maybe<Task>, TypeParent, Context>;
+    upsertSource?: UpsertSourceResolver<Source, TypeParent, TContext>;
     
-    upsertTask?: UpsertTaskResolver<Task, TypeParent, Context>;
+    deleteSource?: DeleteSourceResolver<Maybe<Source>, TypeParent, TContext>;
     
-    deleteTask?: DeleteTaskResolver<Maybe<Task>, TypeParent, Context>;
+    deleteManySources?: DeleteManySourcesResolver<BatchPayload, TypeParent, TContext>;
+    
+    createTag?: CreateTagResolver<Tag, TypeParent, TContext>;
+    
+    updateTag?: UpdateTagResolver<Maybe<Tag>, TypeParent, TContext>;
+    
+    updateManyTags?: UpdateManyTagsResolver<BatchPayload, TypeParent, TContext>;
+    
+    upsertTag?: UpsertTagResolver<Tag, TypeParent, TContext>;
+    
+    deleteTag?: DeleteTagResolver<Maybe<Tag>, TypeParent, TContext>;
+    
+    deleteManyTags?: DeleteManyTagsResolver<BatchPayload, TypeParent, TContext>;
+    
+    createTask?: CreateTaskResolver<Task, TypeParent, TContext>;
+    
+    updateTask?: UpdateTaskResolver<Maybe<Task>, TypeParent, TContext>;
+    
+    updateManyTasks?: UpdateManyTasksResolver<BatchPayload, TypeParent, TContext>;
+    
+    upsertTask?: UpsertTaskResolver<Task, TypeParent, TContext>;
+    
+    deleteTask?: DeleteTaskResolver<Maybe<Task>, TypeParent, TContext>;
+    
+    deleteManyTasks?: DeleteManyTasksResolver<BatchPayload, TypeParent, TContext>;
   }
 
 
-  export type CreateApplicationResolver<R = Application, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CreateApplicationArgs>;
+  export type CreateApplicationResolver<R = Application, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CreateApplicationArgs>;
   export interface CreateApplicationArgs {
     
     data: ApplicationCreateInput;
   }
 
 
-  export type UpdateApplicationResolver<R = Maybe<Application>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpdateApplicationArgs>;
+  export type UpdateApplicationResolver<R = Maybe<Application>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateApplicationArgs>;
   export interface UpdateApplicationArgs {
     
     data: ApplicationUpdateInput;
@@ -10575,7 +10796,16 @@ export namespace MutationResolvers {
   }
 
 
-  export type UpsertApplicationResolver<R = Application, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpsertApplicationArgs>;
+  export type UpdateManyApplicationsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateManyApplicationsArgs>;
+  export interface UpdateManyApplicationsArgs {
+    
+    data: ApplicationUpdateManyMutationInput;
+    
+    where?: Maybe<ApplicationWhereInput>;
+  }
+
+
+  export type UpsertApplicationResolver<R = Application, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpsertApplicationArgs>;
   export interface UpsertApplicationArgs {
     
     where: ApplicationWhereUniqueInput;
@@ -10586,21 +10816,28 @@ export namespace MutationResolvers {
   }
 
 
-  export type DeleteApplicationResolver<R = Maybe<Application>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, DeleteApplicationArgs>;
+  export type DeleteApplicationResolver<R = Maybe<Application>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteApplicationArgs>;
   export interface DeleteApplicationArgs {
     
     where: ApplicationWhereUniqueInput;
   }
 
 
-  export type CreateCandidateResolver<R = Candidate, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CreateCandidateArgs>;
+  export type DeleteManyApplicationsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteManyApplicationsArgs>;
+  export interface DeleteManyApplicationsArgs {
+    
+    where?: Maybe<ApplicationWhereInput>;
+  }
+
+
+  export type CreateCandidateResolver<R = Candidate, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CreateCandidateArgs>;
   export interface CreateCandidateArgs {
     
     data: CandidateCreateInput;
   }
 
 
-  export type UpdateCandidateResolver<R = Maybe<Candidate>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpdateCandidateArgs>;
+  export type UpdateCandidateResolver<R = Maybe<Candidate>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateCandidateArgs>;
   export interface UpdateCandidateArgs {
     
     data: CandidateUpdateInput;
@@ -10609,7 +10846,16 @@ export namespace MutationResolvers {
   }
 
 
-  export type UpsertCandidateResolver<R = Candidate, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpsertCandidateArgs>;
+  export type UpdateManyCandidatesResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateManyCandidatesArgs>;
+  export interface UpdateManyCandidatesArgs {
+    
+    data: CandidateUpdateManyMutationInput;
+    
+    where?: Maybe<CandidateWhereInput>;
+  }
+
+
+  export type UpsertCandidateResolver<R = Candidate, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpsertCandidateArgs>;
   export interface UpsertCandidateArgs {
     
     where: CandidateWhereUniqueInput;
@@ -10620,21 +10866,28 @@ export namespace MutationResolvers {
   }
 
 
-  export type DeleteCandidateResolver<R = Maybe<Candidate>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, DeleteCandidateArgs>;
+  export type DeleteCandidateResolver<R = Maybe<Candidate>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteCandidateArgs>;
   export interface DeleteCandidateArgs {
     
     where: CandidateWhereUniqueInput;
   }
 
 
-  export type CreateJobResolver<R = Job, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CreateJobArgs>;
+  export type DeleteManyCandidatesResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteManyCandidatesArgs>;
+  export interface DeleteManyCandidatesArgs {
+    
+    where?: Maybe<CandidateWhereInput>;
+  }
+
+
+  export type CreateJobResolver<R = Job, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CreateJobArgs>;
   export interface CreateJobArgs {
     
     data: JobCreateInput;
   }
 
 
-  export type UpdateJobResolver<R = Maybe<Job>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpdateJobArgs>;
+  export type UpdateJobResolver<R = Maybe<Job>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateJobArgs>;
   export interface UpdateJobArgs {
     
     data: JobUpdateInput;
@@ -10643,7 +10896,16 @@ export namespace MutationResolvers {
   }
 
 
-  export type UpsertJobResolver<R = Job, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpsertJobArgs>;
+  export type UpdateManyJobsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateManyJobsArgs>;
+  export interface UpdateManyJobsArgs {
+    
+    data: JobUpdateManyMutationInput;
+    
+    where?: Maybe<JobWhereInput>;
+  }
+
+
+  export type UpsertJobResolver<R = Job, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpsertJobArgs>;
   export interface UpsertJobArgs {
     
     where: JobWhereUniqueInput;
@@ -10654,21 +10916,28 @@ export namespace MutationResolvers {
   }
 
 
-  export type DeleteJobResolver<R = Maybe<Job>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, DeleteJobArgs>;
+  export type DeleteJobResolver<R = Maybe<Job>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteJobArgs>;
   export interface DeleteJobArgs {
     
     where: JobWhereUniqueInput;
   }
 
 
-  export type CreateSourceResolver<R = Source, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CreateSourceArgs>;
+  export type DeleteManyJobsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteManyJobsArgs>;
+  export interface DeleteManyJobsArgs {
+    
+    where?: Maybe<JobWhereInput>;
+  }
+
+
+  export type CreateSourceResolver<R = Source, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CreateSourceArgs>;
   export interface CreateSourceArgs {
     
     data: SourceCreateInput;
   }
 
 
-  export type UpdateSourceResolver<R = Maybe<Source>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpdateSourceArgs>;
+  export type UpdateSourceResolver<R = Maybe<Source>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateSourceArgs>;
   export interface UpdateSourceArgs {
     
     data: SourceUpdateInput;
@@ -10677,7 +10946,16 @@ export namespace MutationResolvers {
   }
 
 
-  export type UpsertSourceResolver<R = Source, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpsertSourceArgs>;
+  export type UpdateManySourcesResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateManySourcesArgs>;
+  export interface UpdateManySourcesArgs {
+    
+    data: SourceUpdateManyMutationInput;
+    
+    where?: Maybe<SourceWhereInput>;
+  }
+
+
+  export type UpsertSourceResolver<R = Source, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpsertSourceArgs>;
   export interface UpsertSourceArgs {
     
     where: SourceWhereUniqueInput;
@@ -10688,21 +10966,28 @@ export namespace MutationResolvers {
   }
 
 
-  export type DeleteSourceResolver<R = Maybe<Source>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, DeleteSourceArgs>;
+  export type DeleteSourceResolver<R = Maybe<Source>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteSourceArgs>;
   export interface DeleteSourceArgs {
     
     where: SourceWhereUniqueInput;
   }
 
 
-  export type CreateTagResolver<R = Tag, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CreateTagArgs>;
+  export type DeleteManySourcesResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteManySourcesArgs>;
+  export interface DeleteManySourcesArgs {
+    
+    where?: Maybe<SourceWhereInput>;
+  }
+
+
+  export type CreateTagResolver<R = Tag, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CreateTagArgs>;
   export interface CreateTagArgs {
     
     data: TagCreateInput;
   }
 
 
-  export type UpdateTagResolver<R = Maybe<Tag>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpdateTagArgs>;
+  export type UpdateTagResolver<R = Maybe<Tag>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateTagArgs>;
   export interface UpdateTagArgs {
     
     data: TagUpdateInput;
@@ -10711,7 +10996,16 @@ export namespace MutationResolvers {
   }
 
 
-  export type UpsertTagResolver<R = Tag, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpsertTagArgs>;
+  export type UpdateManyTagsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateManyTagsArgs>;
+  export interface UpdateManyTagsArgs {
+    
+    data: TagUpdateManyMutationInput;
+    
+    where?: Maybe<TagWhereInput>;
+  }
+
+
+  export type UpsertTagResolver<R = Tag, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpsertTagArgs>;
   export interface UpsertTagArgs {
     
     where: TagWhereUniqueInput;
@@ -10722,21 +11016,28 @@ export namespace MutationResolvers {
   }
 
 
-  export type DeleteTagResolver<R = Maybe<Tag>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, DeleteTagArgs>;
+  export type DeleteTagResolver<R = Maybe<Tag>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteTagArgs>;
   export interface DeleteTagArgs {
     
     where: TagWhereUniqueInput;
   }
 
 
-  export type CreateTaskResolver<R = Task, Parent = {}, Context = {}> = Resolver<R, Parent, Context, CreateTaskArgs>;
+  export type DeleteManyTagsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteManyTagsArgs>;
+  export interface DeleteManyTagsArgs {
+    
+    where?: Maybe<TagWhereInput>;
+  }
+
+
+  export type CreateTaskResolver<R = Task, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, CreateTaskArgs>;
   export interface CreateTaskArgs {
     
     data: TaskCreateInput;
   }
 
 
-  export type UpdateTaskResolver<R = Maybe<Task>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpdateTaskArgs>;
+  export type UpdateTaskResolver<R = Maybe<Task>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateTaskArgs>;
   export interface UpdateTaskArgs {
     
     data: TaskUpdateInput;
@@ -10745,7 +11046,16 @@ export namespace MutationResolvers {
   }
 
 
-  export type UpsertTaskResolver<R = Task, Parent = {}, Context = {}> = Resolver<R, Parent, Context, UpsertTaskArgs>;
+  export type UpdateManyTasksResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpdateManyTasksArgs>;
+  export interface UpdateManyTasksArgs {
+    
+    data: TaskUpdateManyMutationInput;
+    
+    where?: Maybe<TaskWhereInput>;
+  }
+
+
+  export type UpsertTaskResolver<R = Task, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, UpsertTaskArgs>;
   export interface UpsertTaskArgs {
     
     where: TaskWhereUniqueInput;
@@ -10756,36 +11066,53 @@ export namespace MutationResolvers {
   }
 
 
-  export type DeleteTaskResolver<R = Maybe<Task>, Parent = {}, Context = {}> = Resolver<R, Parent, Context, DeleteTaskArgs>;
+  export type DeleteTaskResolver<R = Maybe<Task>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteTaskArgs>;
   export interface DeleteTaskArgs {
     
     where: TaskWhereUniqueInput;
   }
 
 
+  export type DeleteManyTasksResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, DeleteManyTasksArgs>;
+  export interface DeleteManyTasksArgs {
+    
+    where?: Maybe<TaskWhereInput>;
+  }
+
+
+}
+
+export namespace BatchPayloadResolvers {
+  export interface Resolvers<TContext = {}, TypeParent = BatchPayload> {
+    
+    count?: CountResolver<Long, TypeParent, TContext>;
+  }
+
+
+  export type CountResolver<R = Long, Parent = BatchPayload, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AuthPayloadResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AuthPayload> {
+  export interface Resolvers<TContext = {}, TypeParent = AuthPayload> {
     
-    token?: TokenResolver<string, TypeParent, Context>;
+    token?: TokenResolver<string, TypeParent, TContext>;
     
-    refresh?: RefreshResolver<string, TypeParent, Context>;
+    refresh?: RefreshResolver<string, TypeParent, TContext>;
   }
 
 
-  export type TokenResolver<R = string, Parent = AuthPayload, Context = {}> = Resolver<R, Parent, Context>;
-  export type RefreshResolver<R = string, Parent = AuthPayload, Context = {}> = Resolver<R, Parent, Context>;
+  export type TokenResolver<R = string, Parent = AuthPayload, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type RefreshResolver<R = string, Parent = AuthPayload, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 export namespace AccessPayloadResolvers {
-  export interface Resolvers<Context = {}, TypeParent = AccessPayload> {
+  export interface Resolvers<TContext = {}, TypeParent = AccessPayload> {
     
-    token?: TokenResolver<string, TypeParent, Context>;
+    token?: TokenResolver<string, TypeParent, TContext>;
   }
 
 
-  export type TokenResolver<R = string, Parent = AccessPayload, Context = {}> = Resolver<R, Parent, Context>;
+  export type TokenResolver<R = string, Parent = AccessPayload, TContext = {}> = Resolver<R, Parent, TContext>;
 }
 
 
@@ -10818,58 +11145,63 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<DateTime, 
 export interface JsonScalarConfig extends GraphQLScalarTypeConfig<Json, any> {
   name: 'Json'
 }
-
-export interface IResolvers<Context = {}> {
-    Query?: QueryResolvers.Resolvers<Context>;
-    Application?: ApplicationResolvers.Resolvers<Context>;
-    DisqualificationInstance?: DisqualificationInstanceResolvers.Resolvers<Context>;
-    Disqualification?: DisqualificationResolvers.Resolvers<Context>;
-    User?: UserResolvers.Resolvers<Context>;
-    Task?: TaskResolvers.Resolvers<Context>;
-    Candidate?: CandidateResolvers.Resolvers<Context>;
-    File?: FileResolvers.Resolvers<Context>;
-    Tag?: TagResolvers.Resolvers<Context>;
-    Source?: SourceResolvers.Resolvers<Context>;
-    FieldInstance?: FieldInstanceResolvers.Resolvers<Context>;
-    Field?: FieldResolvers.Resolvers<Context>;
-    Comment?: CommentResolvers.Resolvers<Context>;
-    Stage?: StageResolvers.Resolvers<Context>;
-    Job?: JobResolvers.Resolvers<Context>;
-    Workspace?: WorkspaceResolvers.Resolvers<Context>;
-    Workflow?: WorkflowResolvers.Resolvers<Context>;
-    Invite?: InviteResolvers.Resolvers<Context>;
-    Location?: LocationResolvers.Resolvers<Context>;
-    ApplicationConnection?: ApplicationConnectionResolvers.Resolvers<Context>;
-    PageInfo?: PageInfoResolvers.Resolvers<Context>;
-    ApplicationEdge?: ApplicationEdgeResolvers.Resolvers<Context>;
-    AggregateApplication?: AggregateApplicationResolvers.Resolvers<Context>;
-    CandidateConnection?: CandidateConnectionResolvers.Resolvers<Context>;
-    CandidateEdge?: CandidateEdgeResolvers.Resolvers<Context>;
-    AggregateCandidate?: AggregateCandidateResolvers.Resolvers<Context>;
-    JobConnection?: JobConnectionResolvers.Resolvers<Context>;
-    JobEdge?: JobEdgeResolvers.Resolvers<Context>;
-    AggregateJob?: AggregateJobResolvers.Resolvers<Context>;
-    SourceConnection?: SourceConnectionResolvers.Resolvers<Context>;
-    SourceEdge?: SourceEdgeResolvers.Resolvers<Context>;
-    AggregateSource?: AggregateSourceResolvers.Resolvers<Context>;
-    TagConnection?: TagConnectionResolvers.Resolvers<Context>;
-    TagEdge?: TagEdgeResolvers.Resolvers<Context>;
-    AggregateTag?: AggregateTagResolvers.Resolvers<Context>;
-    TaskConnection?: TaskConnectionResolvers.Resolvers<Context>;
-    TaskEdge?: TaskEdgeResolvers.Resolvers<Context>;
-    AggregateTask?: AggregateTaskResolvers.Resolvers<Context>;
-    UserConnection?: UserConnectionResolvers.Resolvers<Context>;
-    UserEdge?: UserEdgeResolvers.Resolvers<Context>;
-    AggregateUser?: AggregateUserResolvers.Resolvers<Context>;
-    Mutation?: MutationResolvers.Resolvers<Context>;
-    AuthPayload?: AuthPayloadResolvers.Resolvers<Context>;
-    AccessPayload?: AccessPayloadResolvers.Resolvers<Context>;
-    DateTime?: GraphQLScalarType;
-    Json?: GraphQLScalarType;
+export interface LongScalarConfig extends GraphQLScalarTypeConfig<Long, any> {
+  name: 'Long'
 }
 
-export interface IDirectiveResolvers<Result> {
+export type IResolvers<TContext = {}> = {
+    Query?: QueryResolvers.Resolvers<TContext>;
+    Application?: ApplicationResolvers.Resolvers<TContext>;
+    DisqualificationInstance?: DisqualificationInstanceResolvers.Resolvers<TContext>;
+    Disqualification?: DisqualificationResolvers.Resolvers<TContext>;
+    User?: UserResolvers.Resolvers<TContext>;
+    Task?: TaskResolvers.Resolvers<TContext>;
+    Candidate?: CandidateResolvers.Resolvers<TContext>;
+    File?: FileResolvers.Resolvers<TContext>;
+    Tag?: TagResolvers.Resolvers<TContext>;
+    Source?: SourceResolvers.Resolvers<TContext>;
+    FieldInstance?: FieldInstanceResolvers.Resolvers<TContext>;
+    Field?: FieldResolvers.Resolvers<TContext>;
+    Comment?: CommentResolvers.Resolvers<TContext>;
+    Stage?: StageResolvers.Resolvers<TContext>;
+    Job?: JobResolvers.Resolvers<TContext>;
+    Workspace?: WorkspaceResolvers.Resolvers<TContext>;
+    Workflow?: WorkflowResolvers.Resolvers<TContext>;
+    Invite?: InviteResolvers.Resolvers<TContext>;
+    Location?: LocationResolvers.Resolvers<TContext>;
+    ApplicationConnection?: ApplicationConnectionResolvers.Resolvers<TContext>;
+    PageInfo?: PageInfoResolvers.Resolvers<TContext>;
+    ApplicationEdge?: ApplicationEdgeResolvers.Resolvers<TContext>;
+    AggregateApplication?: AggregateApplicationResolvers.Resolvers<TContext>;
+    CandidateConnection?: CandidateConnectionResolvers.Resolvers<TContext>;
+    CandidateEdge?: CandidateEdgeResolvers.Resolvers<TContext>;
+    AggregateCandidate?: AggregateCandidateResolvers.Resolvers<TContext>;
+    JobConnection?: JobConnectionResolvers.Resolvers<TContext>;
+    JobEdge?: JobEdgeResolvers.Resolvers<TContext>;
+    AggregateJob?: AggregateJobResolvers.Resolvers<TContext>;
+    SourceConnection?: SourceConnectionResolvers.Resolvers<TContext>;
+    SourceEdge?: SourceEdgeResolvers.Resolvers<TContext>;
+    AggregateSource?: AggregateSourceResolvers.Resolvers<TContext>;
+    TagConnection?: TagConnectionResolvers.Resolvers<TContext>;
+    TagEdge?: TagEdgeResolvers.Resolvers<TContext>;
+    AggregateTag?: AggregateTagResolvers.Resolvers<TContext>;
+    TaskConnection?: TaskConnectionResolvers.Resolvers<TContext>;
+    TaskEdge?: TaskEdgeResolvers.Resolvers<TContext>;
+    AggregateTask?: AggregateTaskResolvers.Resolvers<TContext>;
+    UserConnection?: UserConnectionResolvers.Resolvers<TContext>;
+    UserEdge?: UserEdgeResolvers.Resolvers<TContext>;
+    AggregateUser?: AggregateUserResolvers.Resolvers<TContext>;
+    Mutation?: MutationResolvers.Resolvers<TContext>;
+    BatchPayload?: BatchPayloadResolvers.Resolvers<TContext>;
+    AuthPayload?: AuthPayloadResolvers.Resolvers<TContext>;
+    AccessPayload?: AccessPayloadResolvers.Resolvers<TContext>;
+    DateTime?: GraphQLScalarType;
+    Json?: GraphQLScalarType;
+    Long?: GraphQLScalarType;
+} & { [typeName: string] : never };
+
+export type IDirectiveResolvers<Result> = {
     skip?: SkipDirectiveResolver<Result>;
     include?: IncludeDirectiveResolver<Result>;
     deprecated?: DeprecatedDirectiveResolver<Result>;
-}
+} & { [directiveName: string] : never };

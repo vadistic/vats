@@ -173,6 +173,8 @@ const candidateRelations: RelationsType<CandidateValue> = {
   },
 }
 
+console.log('client', client)
+
 export const candidateHostConfig: HostConfigI<CandidateHostTyping> = {
   displayName: 'CANDIDATE',
   type: HostType.Single,
@@ -181,7 +183,6 @@ export const candidateHostConfig: HostConfigI<CandidateHostTyping> = {
   initVariables: ({ id }) => ({ where: { id } }),
   resetOnInitArgPropChange: true,
   relations: candidateRelations,
-  client,
   graphql: {
     query: CANDIDATE_QUERY,
     queryRoot: 'candidate',

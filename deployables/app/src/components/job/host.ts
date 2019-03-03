@@ -1,6 +1,5 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils'
 import gql from 'graphql-tag'
-import { client } from '../../apollo'
 import { JobFragment } from '../../generated/fragments'
 import {
   Job,
@@ -139,7 +138,6 @@ export const jobHostConfig: HostConfigI<JobHostTyping> = {
   initState: jobStateInit,
   initVariables: ({ id }) => ({ where: { id } }),
   resetOnInitArgPropChange: true,
-  client,
   graphql: {
     query: JOB_QUERY,
     queryRoot: 'job',

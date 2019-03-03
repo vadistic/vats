@@ -1,4 +1,16 @@
+import { PrismaClient } from '@vats/prisma'
 import { ApolloServer, gql } from 'apollo-server'
+import { importSchema } from 'graphql-import'
+import path from 'path'
+
+const PRISMA_URL = `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${
+  process.env.PRISMA_STAGE
+}`
+
+const prismaClient = new PrismaClient({
+  endpoint: PRISMA_URL,
+  secret: process.env.PRISMA_SECRET,
+})
 
 const books = [
   { id: 1, title: 'The Trials of Brother Jero', rating: 8, authorId: 1 },
@@ -14,31 +26,6 @@ const authors = [
   { id: 3, firstName: 'Chimamanda', lastName: 'Adichie' },
 ]
 
-const typeDefs = gql`
-  type Author {
-    id: Int!
-    firstName: String!
-    lastName: String!
-    books: [Book]! # the list of books by this author
-  }
-  type Book {
-    id: Int!
-    title: String!
-    rating: Int!
-    author: Author!
-  }
-  # the schema allows the following query
-  type Query {
-    books: [Book!]!
-    book(id: Int!): Book!
-    author(id: Int!): Author!
-  }
-  # this schema allows the following mutation
-  type Mutation {
-    addBook(title: String!, rating: Int!, authorId: Int!): Book!
-  }
-`
-
 let bookId = 5
 
 interface Resolvers {
@@ -52,6 +39,7 @@ const resolvers: Resolvers = {
     books: () => books,
     book: (_, { id }) => books.find(book => book.id === id),
     author: (_, { id }) => authors.find(author => author.id === id),
+    tags: (_, { id }) => prismaClient.tags().then(tags => tags.map(tag => tag.label)),
   },
   Mutation: {
     addBook: (_, { title, rating, authorId }) => {
@@ -76,13 +64,16 @@ const resolvers: Resolvers = {
   },
 }
 
+const typeDefs = gql(importSchema(path.join(__dirname, '/schema.graphql')))
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
   playground: true,
+  debug: process.env.NODE_ENV === 'development',
 })
 
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`)
+server.listen({ port: process.env.APOLLO_PORT }).then(({ url }) => {
+  console.log(`🚀 (apollo) server ready at ${url}`)
 })

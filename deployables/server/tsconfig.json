@@ -3,13 +3,14 @@
   "compilerOptions": {
     "target": "es6",
     "sourceMap": true,
-    "rootDir": "src",
-    "baseUrl": "src",
-    "outDir": "dist",
     "lib": ["esnext"],
-    // modules
     "module": "commonjs"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/node_modules/**"]
+  "exclude": [
+    "build",
+    "node_modules",
+    "src/**/*.jsxfixture.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
 }

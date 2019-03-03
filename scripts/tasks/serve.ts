@@ -7,8 +7,8 @@ export const serve = async (args: string[]) => {
   const BUILD_DIR = 'build'
   const serveArgs = ['serve', BUILD_DIR, ...args]
 
-  const { readPkg } = await import('../utils/read-pkg')
-  const pkg = await readPkg()
+  const { readJson } = await import('./utils')
+  const pkg = await readJson('package.json')
 
   const basepath = (pkg.homepage || '').replace(/.*\.[A-z]+\//, '').replace(/\/$/, '')
 

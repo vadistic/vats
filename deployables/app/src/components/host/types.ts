@@ -49,7 +49,6 @@ export interface HostConfigI<HostTyping extends HostTypingI = HostTypingI> {
     | (() => HostTyping['queryVariables'])
     | ((initArg: HostTyping['initArg']) => HostTyping['queryVariables'])
   resetOnInitArgPropChange?: boolean
-  client: ApolloClient<any>
   graphql: HostTyping['value'] extends any[] ? HostGraphqlMultiConfig : HostGraphqlSingleConfig
   relations?: RelationsType<HostTyping['value']>
 }

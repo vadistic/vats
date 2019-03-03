@@ -1,6 +1,6 @@
 import { css } from '@emotion/core'
 import { IPivotItemProps, IPivotProps, Pivot, PivotItem } from 'office-ui-fabric-react'
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useLayoutEffect } from 'react'
 import { useTheme } from '../../styles'
 
 export interface SurfacePivotProps extends IPivotProps {
@@ -20,17 +20,5 @@ export const SurfacePivot: React.FC<SurfacePivotProps> = ({ items, ...rest }) =>
     </PivotItem>
   ))
 
-  const ref = useRef<any>(null)
-
-  useLayoutEffect(() => {
-    const targetType = (<PivotItem /> as any).type
-
-    console.log(targetType)
-
-    if (ref.current) {
-      console.log(ref.current)
-    }
-  })
-
-  return <Pivot componentRef={ref} {...rest} children={renderItems} />
+  return <Pivot {...rest} children={renderItems} />
 }

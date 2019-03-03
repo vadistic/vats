@@ -5,13 +5,14 @@
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
-  "homepage": "https://vats.now.sh/cra",
+  "source": "src/index.ts",
+  "main": "build/index.html",
   "scripts": {
     "start": "vscripts craco start",
     "build": "vscripts craco build",
+    "now-build": "vscripts craco build",
     "test": "vscripts craco test",
-    "serve": "vscripts serve",
-    "now-build": "vscripts craco build"
+    "serve": "vscripts serve"
   },
   "browserslist": [
     ">0.2%",

@@ -1,8 +1,5 @@
 const path = require('path')
 const { getLoader, loaderByName } = require('@craco/craco')
-
-require('../env/dotenv').config()
-
 const argv = process.argv
 
 const aliasFlagIndex = argv.findIndex(arg => arg === '--alias')

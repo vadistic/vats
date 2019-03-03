@@ -1,3 +1,5 @@
+const config = require('./env/dotenv').config
+
 module.exports = {
-  envConfig: require('../env/env-config'),
+  config,
 }

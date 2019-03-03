@@ -8,10 +8,10 @@
   "main": "index.js",
   "bin": {
     "vscripts": "./cli.js",
-    "env-cmd": "./env/cmd"
+    "env-cmd": "./env/cmd.js"
   },
   "scripts": {
-    "vscript": "node ./cli.js",
+    "vscript": "node ./cli",
     "env-cmd": "node ./env/cmd"
   },
   "dependencies": {

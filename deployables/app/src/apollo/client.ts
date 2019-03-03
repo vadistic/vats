@@ -26,15 +26,17 @@ export interface Context {
 }
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_LIVE_ENDPOINT,
+  uri: process.env.REACT_APP_ENDPOINT_GRAPHQL,
 })
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError, response }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message }) => console.error(`GRAPHQL_ERROR`, message))
   }
   if (networkError) {
-    console.error(`NETWORK_ERROR`, networkError)
+    console.error(`NETWORK_ERROR`)
+    console.error(networkError)
+    console.error(response)
   }
 })
 

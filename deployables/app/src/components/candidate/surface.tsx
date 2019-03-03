@@ -1,5 +1,6 @@
 import { RouteComponentProps } from '@reach/router'
 import React, { Suspense, useRef } from 'react'
+import { client } from '../../apollo'
 import { routes } from '../../routes'
 import { Editable } from '../editable'
 import { FormikContextValue } from '../formik'

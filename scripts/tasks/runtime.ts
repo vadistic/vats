@@ -9,7 +9,6 @@ import path from 'path'
 
 export const runtime = async (args: string[]) => {
   const scriptPathArg = args[0]
-  const scriptExport = args[1] || 'default'
 
   if (!scriptPathArg) {
     throw Error('need script path as arg')
@@ -41,6 +40,10 @@ export const runtime = async (args: string[]) => {
   })
 
   const script = await import(scriptPath)
+
+  const scriptExportsNames = Object.keys(script)
+  const scriptExport =
+    args[1] || (scriptExportsNames.includes('default') && 'default') || scriptExportsNames[0]
 
   await script[scriptExport]()
 
