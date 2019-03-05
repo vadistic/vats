@@ -10,5 +10,5 @@
     "module": "esnext",
     "moduleResolution": "node"
   },
-  "include": ["src"]
+  "exclude": ["build", "node_modules"]
 }

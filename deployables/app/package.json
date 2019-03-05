@@ -14,6 +14,7 @@
     "test": "vscripts craco test",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "serve": "vscripts serve -s",
+    "storybook": "vscripts storybook",
     "env": "node ./scripts/env-cli",
     "gen:server": "graphql get-schema -p server",
     "gen:client:sdl": "yarn ts-node --project './scripts/tsconfig.json' scripts/client-sdl",
@@ -22,8 +23,7 @@
     "gen:client": "yarn gen:client:sdl && yarn gen:client:resolvers && yarn gen:client:frag",
     "gen:queries": "yarn apollo client:codegen src/generated/queries.ts --outputFlat --target typescript",
     "gen:i18n": "ts-node --project './scripts/tsconfig.json' scripts/i18n-json",
-    "gen": "yarn gen:server && yarn gen:client && yarn gen:queries && yarn gen:i18n",
-    "cosmos": "cosmos"
+    "gen": "yarn gen:server && yarn gen:client && yarn gen:queries && yarn gen:i18n"
   },
   "browserslist": [
     ">0.2%",
@@ -36,7 +36,7 @@
     "@martin_hotell/rex-tils": "^2.1.1",
     "@reach/router": "^1.2.1",
     "@uifabric/icons": "^6.4.0",
-    "@uifabric/styling": "6.43.0",
+    "@uifabric/styling": "6.44.1",
     "@vats/i18n": "^0.1.0",
     "@vats/utils": "^0.1.0",
     "apollo-cache-inmemory": "^1.5.0-rc.1",
@@ -55,7 +55,7 @@
     "office-ui-fabric-react": "6.148.0",
     "react": "^16.8.3",
     "react-apollo": "^2.5.0-rc.1",
-    "react-apollo-hooks": "^0.4.1",
+    "react-apollo-hooks": "0.4.3",
     "react-dom": "^16.8.3",
     "react-transition-group": "^2.5.3",
     "uuid": "^3.3.2"
@@ -66,7 +66,7 @@
     "@types/jest": "^24.0.6",
     "@types/node": "11.10.4",
     "@types/reach__router": "^1.2.3",
-    "@types/react": "^16.8.4",
+    "@types/react": "16.8.6",
     "@types/react-dom": "^16.8.2",
     "@types/react-transition-group": "^2.0.16",
     "@types/uuid": "^3.4.4",

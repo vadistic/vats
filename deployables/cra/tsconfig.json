@@ -10,12 +10,5 @@
     "module": "esnext",
     "moduleResolution": "node"
   },
-  "include": ["src"],
-  "exclude": [
-    "build",
-    "node_modules",
-    "src/**/*.jsxfixture.tsx",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx"
-  ]
+  "exclude": ["build", "node_modules"]
 }

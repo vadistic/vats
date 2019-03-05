@@ -27,7 +27,7 @@
     "react-dom": "^16.8.3"
   },
   "devDependencies": {
-    "@types/react": "^16.8.5",
+    "@types/react": "16.8.6",
     "@types/react-dom": "^16.8.2",
     "@vats/start": "^0.1.0"
   }

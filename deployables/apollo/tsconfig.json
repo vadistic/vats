@@ -6,11 +6,5 @@
     "lib": ["esnext"],
     "module": "commonjs"
   },
-  "exclude": [
-    "build",
-    "node_modules",
-    "src/**/*.jsxfixture.tsx",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx"
-  ]
+  "exclude": ["build", "node_modules"]
 }

@@ -13,12 +13,13 @@
     "generate": "vscripts runtime ./scripts/gen-json",
     "clean": "rm -rf dist",
     "prepare": "yarn transpile && yarn generate && yarn copy-files",
+    "storybook": "vscripts storybook",
     "test": "vscripts test",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@vats/utils": "^0.1.0",
-    "i18next": "^15.0.4",
+    "i18next": "15.0.5",
     "react-i18next": "^10.2.0"
   },
   "devDependencies": {

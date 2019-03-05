@@ -14,7 +14,7 @@
     "member-access": [true, "no-public"],
     "max-classes-per-file": false,
     "file-name-casing": [true, "kebab-case"],
-    "no-implicit-dependencies": [true, ["graphql-tag", "react-testing-library"]],
+    "no-implicit-dependencies": [true, ["graphql-tag", "react-testing-library", "@storybook"]],
     "no-submodule-imports": [true, "uuid"],
     "variable-name": [
       true,
