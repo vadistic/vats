@@ -30,6 +30,11 @@ export type StrictlyIndexed<T> = T & StrictIndexSignature
 
 export type Indexed<T> = T & StringIndexSignature
 
+// ! prefer this
+export interface StringMap<V = any> {
+  [index: string]: V
+}
+
 /*
  * Conditional & mapped types
  */

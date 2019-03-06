@@ -1,11 +1,11 @@
 import { css } from '@emotion/core'
+import { theme, ThemeProvider } from '@vats/styling'
 import { Fabric } from 'office-ui-fabric-react'
 import React, { Suspense } from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from '../apollo'
 import { Layout, LoadingSpinner } from '../components'
-import { theme, ThemeProvider } from '../styles'
 
 export const random = (max: number) => Math.round(Math.random() * max)
 

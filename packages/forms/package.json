@@ -1,23 +1,31 @@
 {
-  "name": "@vats/utils",
+  "name": "@vats/forms",
   "version": "0.1.0",
-  "description": "vats shared utils",
+  "description": "vats forms",
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "transpile": "vscripts transpile",
+    "transpile": "vscripts transpile --react",
     "clean": "rm -rf dist",
     "prepare": "yarn transpile",
+    "storybook": "vscripts storybook",
     "test": "vscripts test",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
+  "dependencies": {
+    "@vats/utils": "^0.1.0"
+  },
   "devDependencies": {
-    "@martin_hotell/rex-tils": "^2.1.1",
     "@vats/start": "^0.1.0",
-    "clone-deep": "^4.0.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "typescript": "3.3.3333"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   }
 }
