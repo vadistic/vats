@@ -1,8 +1,8 @@
 import { css } from '@emotion/core'
 import { RouteComponentProps } from '@reach/router'
+import { useTheme } from '@vats/styling'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React from 'react'
-import { useTheme } from '../../../styles'
 import { CandidateCard, CandidateValue } from '../../candidate'
 import { useCandidatesContext } from '../host'
 

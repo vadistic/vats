@@ -1,5 +1,6 @@
 import { css } from '@emotion/core'
 import { useTranslation } from '@vats/i18n'
+import { FabricStyles, useTheme } from '@vats/styling'
 import { sentenceCase } from '@vats/utils'
 import {
   ActionButton,
@@ -10,7 +11,6 @@ import {
   IRenderFunction,
 } from 'office-ui-fabric-react'
 import React from 'react'
-import { FabricStyles, useTheme } from '../../styles'
 import { DisplayDateTime } from '../datetime'
 import { Link } from '../router'
 import { CommentValue } from './comments'

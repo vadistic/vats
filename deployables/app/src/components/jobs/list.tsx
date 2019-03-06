@@ -1,10 +1,10 @@
 import { css } from '@emotion/core'
 import { RouteComponentProps } from '@reach/router'
+import { useTheme } from '@vats/styling'
 import { objSwitch } from '@vats/utils'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React from 'react'
 import { Job, JobType } from '../../generated/queries'
-import { useTheme } from '../../styles'
 import { Link } from '../router'
 import { useJobsContext } from './host'
 

@@ -1,3 +1,4 @@
+import { theme, ThemeProvider } from '@vats/styling'
 import { Fabric } from 'office-ui-fabric-react'
 import React from 'react'
 import { ApolloProvider } from 'react-apollo'
@@ -5,7 +6,6 @@ import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from './apollo'
 import { CandidatesView, CandidateView, JobsView, JobView, Layout, Router } from './components'
 import { routes } from './routes'
-import { theme, ThemeProvider } from './styles'
 import { StateInspector } from './utils'
 import { DevView } from './views'
 

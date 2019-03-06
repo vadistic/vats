@@ -1,8 +1,8 @@
 import { css } from '@emotion/core'
+import { Theme } from '@vats/styling'
 import { FormikProvider, useFormik } from 'formik'
 import { DropdownMenuItemType, IDropdownOption } from 'office-ui-fabric-react'
 import React from 'react'
-import { Theme } from '../../../styles'
 import { FormikDropdown } from '../adapters'
 
 const options: IDropdownOption[] = [

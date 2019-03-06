@@ -1,10 +1,9 @@
+import { css } from '@emotion/core'
 import { Location, navigate } from '@reach/router'
+import { Theme } from '@vats/styling'
 import { INavLink, INavLinkGroup, INavProps, Nav } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
-
-import { css } from '@emotion/core'
 import { routes } from '../../routes'
-import { Theme } from '../../styles'
 
 export interface NavigationProps {
   groups?: INavLinkGroup[]

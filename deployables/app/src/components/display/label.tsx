@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
+import { Theme } from '@vats/styling'
 import { Icon, IIconProps, Label } from 'office-ui-fabric-react'
 import React from 'react'
-import { Theme } from '../../styles'
 
 export interface DisplayLabelProps {
   iconProps?: IIconProps

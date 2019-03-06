@@ -1,9 +1,8 @@
 import { css, Global } from '@emotion/core'
+import { globalStyles, Theme } from '@vats/styling'
 import React, { Suspense } from 'react'
-
-import { Navigation } from '..'
-import { globalStyles, Theme } from '../../styles'
 import { LoadingSpinner } from '../loading'
+import { Navigation } from '../navigation'
 
 const layoutStyles = (theme: Theme) => css`
   min-height: 100vh;

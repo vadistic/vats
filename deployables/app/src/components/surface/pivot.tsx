@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
+import { useTheme } from '@vats/styling'
 import { IPivotItemProps, IPivotProps, Pivot, PivotItem } from 'office-ui-fabric-react'
-import React, { useLayoutEffect } from 'react'
-import { useTheme } from '../../styles'
+import React from 'react'
 
 export interface SurfacePivotProps extends IPivotProps {
   items: IPivotItemProps[]

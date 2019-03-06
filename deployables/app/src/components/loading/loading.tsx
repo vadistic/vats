@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
+import { Theme } from '@vats/styling'
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react'
 import React, { useEffect, useState } from 'react'
-import { Theme } from '../../styles'
 
 export interface LoadingProps {
   label: string

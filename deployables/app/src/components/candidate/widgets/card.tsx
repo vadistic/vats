@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
+import { useTheme } from '@vats/styling'
 import { ActionButton, IButtonProps } from 'office-ui-fabric-react'
 import React from 'react'
-import { useTheme } from '../../../styles'
 import { CandidateValue } from '../host'
 import { CandidatePersona, CandidatePersonaProps } from './persona'
 

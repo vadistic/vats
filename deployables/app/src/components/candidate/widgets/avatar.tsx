@@ -1,8 +1,7 @@
 import { css } from '@emotion/core'
-import { Image, ImageFit, PersonaCoin } from 'office-ui-fabric-react'
+import { Theme, useTheme } from '@vats/styling'
+import { PersonaCoin } from 'office-ui-fabric-react'
 import React from 'react'
-import { Theme, useTheme } from '../../../styles'
-import { Box } from '../../box'
 import { useCandidateContext } from '../host'
 
 export const userAvatarStyles = (theme: Theme) => css`

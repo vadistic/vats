@@ -1,6 +1,6 @@
+import { useTheme } from '@vats/styling'
 import { ActionButton, IButtonProps, IconButton } from 'office-ui-fabric-react'
 import React from 'react'
-import { useTheme } from '../../styles'
 
 export const DisplayActionButton: React.FC<IButtonProps> = props => {
   const theme = useTheme()

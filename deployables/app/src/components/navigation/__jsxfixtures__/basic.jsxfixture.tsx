@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
+import { Theme } from '@vats/styling'
 import { INavLinkGroup } from 'office-ui-fabric-react'
 import React from 'react'
-import { Theme } from '../../../styles'
 import { Navigation } from '../navigation'
 
 const navigationFxtureStyles = (theme: Theme) => css`

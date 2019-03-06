@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
+import { Theme } from '@vats/styling'
 import { ITextFieldProps, TextField } from 'office-ui-fabric-react'
 import React from 'react'
-import { Theme } from '../../styles'
 import { useEditableContext } from '../editable'
 import { FieldProps, useFormikTextField } from '../formik'
 import { DisplayLabel } from './label'
