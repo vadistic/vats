@@ -3,7 +3,319 @@
 import gql from 'graphql-tag'
 
 
-export const ApplicationFragment = gql`fragment Application on Application {
+export const ApplicationNoNestingFragment = gql`
+  fragment ApplicationNoNesting on Application {
+  createdAt
+  id
+  updatedAt
+  type
+}
+`
+
+export const DisqualificationInstanceNoNestingFragment = gql`
+  fragment DisqualificationInstanceNoNesting on DisqualificationInstance {
+  id
+  createdAt
+  updatedAt
+  content
+}
+`
+
+export const DisqualificationNoNestingFragment = gql`
+  fragment DisqualificationNoNesting on Disqualification {
+  id
+  createdAt
+  updatedAt
+  name
+  description
+}
+`
+
+export const UserNoNestingFragment = gql`
+  fragment UserNoNesting on User {
+  id
+  createdAt
+  updatedAt
+  settings
+  firstName
+  lastName
+  email
+  username
+  lastLogin
+  deletedAt
+  position
+}
+`
+
+export const TaskNoNestingFragment = gql`
+  fragment TaskNoNesting on Task {
+  id
+  createdAt
+  updatedAt
+  title
+  description
+  dueAt
+}
+`
+
+export const CandidateNoNestingFragment = gql`
+  fragment CandidateNoNesting on Candidate {
+  id
+  createdAt
+  updatedAt
+  firstName
+  lastName
+  company
+  headline
+  position
+}
+`
+
+export const FileNoNestingFragment = gql`
+  fragment FileNoNesting on File {
+  id
+  createdAt
+  updatedAt
+  size
+  type
+  name
+  url
+}
+`
+
+export const TagNoNestingFragment = gql`
+  fragment TagNoNesting on Tag {
+  id
+  createdAt
+  updatedAt
+  label
+  description
+}
+`
+
+export const SourceNoNestingFragment = gql`
+  fragment SourceNoNesting on Source {
+  id
+  createdAt
+  updatedAt
+  label
+  description
+}
+`
+
+export const FieldInstanceNoNestingFragment = gql`
+  fragment FieldInstanceNoNesting on FieldInstance {
+  id
+  createdAt
+  updatedAt
+  value
+}
+`
+
+export const FieldNoNestingFragment = gql`
+  fragment FieldNoNesting on Field {
+  id
+  createdAt
+  updatedAt
+  type
+  label
+  description
+}
+`
+
+export const CommentNoNestingFragment = gql`
+  fragment CommentNoNesting on Comment {
+  id
+  createdAt
+  updatedAt
+  content
+}
+`
+
+export const StageNoNestingFragment = gql`
+  fragment StageNoNesting on Stage {
+  id
+  createdAt
+  updatedAt
+  name
+  description
+  type
+}
+`
+
+export const JobNoNestingFragment = gql`
+  fragment JobNoNesting on Job {
+  id
+  createdAt
+  updatedAt
+  type
+  department
+  name
+  excerpt
+  companyDescription
+  description
+  requirements
+}
+`
+
+export const WorkspaceNoNestingFragment = gql`
+  fragment WorkspaceNoNesting on Workspace {
+  id
+  createdAt
+  updatedAt
+  settings
+  name
+}
+`
+
+export const WorkflowNoNestingFragment = gql`
+  fragment WorkflowNoNesting on Workflow {
+  id
+  createdAt
+  updatedAt
+  name
+  description
+}
+`
+
+export const InviteNoNestingFragment = gql`
+  fragment InviteNoNesting on Invite {
+  id
+  createdAt
+  updatedAt
+  email
+  expireAt
+}
+`
+
+export const LocationNoNestingFragment = gql`
+  fragment LocationNoNesting on Location {
+  id
+  createdAt
+  updatedAt
+  country
+  region
+  city
+  zip
+}
+`
+
+export const PageInfoNoNestingFragment = gql`
+  fragment PageInfoNoNesting on PageInfo {
+  hasNextPage
+  hasPreviousPage
+  startCursor
+  endCursor
+}
+`
+
+export const ApplicationEdgeNoNestingFragment = gql`
+  fragment ApplicationEdgeNoNesting on ApplicationEdge {
+  cursor
+}
+`
+
+export const AggregateApplicationNoNestingFragment = gql`
+  fragment AggregateApplicationNoNesting on AggregateApplication {
+  count
+}
+`
+
+export const CandidateEdgeNoNestingFragment = gql`
+  fragment CandidateEdgeNoNesting on CandidateEdge {
+  cursor
+}
+`
+
+export const AggregateCandidateNoNestingFragment = gql`
+  fragment AggregateCandidateNoNesting on AggregateCandidate {
+  count
+}
+`
+
+export const JobEdgeNoNestingFragment = gql`
+  fragment JobEdgeNoNesting on JobEdge {
+  cursor
+}
+`
+
+export const AggregateJobNoNestingFragment = gql`
+  fragment AggregateJobNoNesting on AggregateJob {
+  count
+}
+`
+
+export const SourceEdgeNoNestingFragment = gql`
+  fragment SourceEdgeNoNesting on SourceEdge {
+  cursor
+}
+`
+
+export const AggregateSourceNoNestingFragment = gql`
+  fragment AggregateSourceNoNesting on AggregateSource {
+  count
+}
+`
+
+export const TagEdgeNoNestingFragment = gql`
+  fragment TagEdgeNoNesting on TagEdge {
+  cursor
+}
+`
+
+export const AggregateTagNoNestingFragment = gql`
+  fragment AggregateTagNoNesting on AggregateTag {
+  count
+}
+`
+
+export const TaskEdgeNoNestingFragment = gql`
+  fragment TaskEdgeNoNesting on TaskEdge {
+  cursor
+}
+`
+
+export const AggregateTaskNoNestingFragment = gql`
+  fragment AggregateTaskNoNesting on AggregateTask {
+  count
+}
+`
+
+export const UserEdgeNoNestingFragment = gql`
+  fragment UserEdgeNoNesting on UserEdge {
+  cursor
+}
+`
+
+export const AggregateUserNoNestingFragment = gql`
+  fragment AggregateUserNoNesting on AggregateUser {
+  count
+}
+`
+
+export const BatchPayloadNoNestingFragment = gql`
+  fragment BatchPayloadNoNesting on BatchPayload {
+  count
+}
+`
+
+export const AuthPayloadNoNestingFragment = gql`
+  fragment AuthPayloadNoNesting on AuthPayload {
+  token
+  refresh
+}
+`
+
+export const AccessPayloadNoNestingFragment = gql`
+  fragment AccessPayloadNoNesting on AccessPayload {
+  token
+}
+`
+
+
+
+export const ApplicationFragment = gql`
+  fragment Application on Application {
   createdAt
   id
   updatedAt
@@ -20,9 +332,16 @@ export const ApplicationFragment = gql`fragment Application on Application {
   candidate {
     ...CandidateNoNesting
   }
-}`
+}
 
-export const DisqualificationInstanceFragment = gql`fragment DisqualificationInstance on DisqualificationInstance {
+${DisqualificationInstanceNoNestingFragment}
+${StageNoNestingFragment}
+${JobNoNestingFragment}
+${CandidateNoNestingFragment}
+`
+
+export const DisqualificationInstanceFragment = gql`
+  fragment DisqualificationInstance on DisqualificationInstance {
   id
   createdAt
   updatedAt
@@ -33,17 +352,24 @@ export const DisqualificationInstanceFragment = gql`fragment DisqualificationIns
     ...UserNoNesting
   }
   content
-}`
+}
 
-export const DisqualificationFragment = gql`fragment Disqualification on Disqualification {
+${DisqualificationNoNestingFragment}
+${UserNoNestingFragment}
+`
+
+export const DisqualificationFragment = gql`
+  fragment Disqualification on Disqualification {
   id
   createdAt
   updatedAt
   name
   description
-}`
+}
+`
 
-export const UserFragment = gql`fragment User on User {
+export const UserFragment = gql`
+  fragment User on User {
   id
   createdAt
   updatedAt
@@ -61,9 +387,14 @@ export const UserFragment = gql`fragment User on User {
   avatar {
     ...FileNoNesting
   }
-}`
+}
 
-export const TaskFragment = gql`fragment Task on Task {
+${TaskNoNestingFragment}
+${FileNoNestingFragment}
+`
+
+export const TaskFragment = gql`
+  fragment Task on Task {
   id
   createdAt
   updatedAt
@@ -76,9 +407,14 @@ export const TaskFragment = gql`fragment Task on Task {
   title
   description
   dueAt
-}`
+}
 
-export const CandidateFragment = gql`fragment Candidate on Candidate {
+${UserNoNestingFragment}
+${CandidateNoNestingFragment}
+`
+
+export const CandidateFragment = gql`
+  fragment Candidate on Candidate {
   id
   createdAt
   updatedAt
@@ -114,9 +450,21 @@ export const CandidateFragment = gql`fragment Candidate on Candidate {
   comments {
     ...CommentNoNesting
   }
-}`
+}
 
-export const FileFragment = gql`fragment File on File {
+${FileNoNestingFragment}
+${FileNoNestingFragment}
+${FileNoNestingFragment}
+${TagNoNestingFragment}
+${SourceNoNestingFragment}
+${FieldInstanceNoNestingFragment}
+${TaskNoNestingFragment}
+${ApplicationNoNestingFragment}
+${CommentNoNestingFragment}
+`
+
+export const FileFragment = gql`
+  fragment File on File {
   id
   createdAt
   updatedAt
@@ -124,25 +472,31 @@ export const FileFragment = gql`fragment File on File {
   type
   name
   url
-}`
+}
+`
 
-export const TagFragment = gql`fragment Tag on Tag {
+export const TagFragment = gql`
+  fragment Tag on Tag {
   id
   createdAt
   updatedAt
   label
   description
-}`
+}
+`
 
-export const SourceFragment = gql`fragment Source on Source {
+export const SourceFragment = gql`
+  fragment Source on Source {
   id
   createdAt
   updatedAt
   label
   description
-}`
+}
+`
 
-export const FieldInstanceFragment = gql`fragment FieldInstance on FieldInstance {
+export const FieldInstanceFragment = gql`
+  fragment FieldInstance on FieldInstance {
   id
   createdAt
   updatedAt
@@ -150,18 +504,24 @@ export const FieldInstanceFragment = gql`fragment FieldInstance on FieldInstance
     ...FieldNoNesting
   }
   value
-}`
+}
 
-export const FieldFragment = gql`fragment Field on Field {
+${FieldNoNestingFragment}
+`
+
+export const FieldFragment = gql`
+  fragment Field on Field {
   id
   createdAt
   updatedAt
   type
   label
   description
-}`
+}
+`
 
-export const CommentFragment = gql`fragment Comment on Comment {
+export const CommentFragment = gql`
+  fragment Comment on Comment {
   id
   createdAt
   updatedAt
@@ -172,18 +532,25 @@ export const CommentFragment = gql`fragment Comment on Comment {
     ...CommentNoNesting
   }
   content
-}`
+}
 
-export const StageFragment = gql`fragment Stage on Stage {
+${UserNoNestingFragment}
+${CommentNoNestingFragment}
+`
+
+export const StageFragment = gql`
+  fragment Stage on Stage {
   id
   createdAt
   updatedAt
   name
   description
   type
-}`
+}
+`
 
-export const JobFragment = gql`fragment Job on Job {
+export const JobFragment = gql`
+  fragment Job on Job {
   id
   createdAt
   updatedAt
@@ -209,9 +576,17 @@ export const JobFragment = gql`fragment Job on Job {
   companyDescription
   description
   requirements
-}`
+}
 
-export const WorkspaceFragment = gql`fragment Workspace on Workspace {
+${WorkspaceNoNestingFragment}
+${ApplicationNoNestingFragment}
+${WorkflowNoNestingFragment}
+${CommentNoNestingFragment}
+${LocationNoNestingFragment}
+`
+
+export const WorkspaceFragment = gql`
+  fragment Workspace on Workspace {
   id
   createdAt
   updatedAt
@@ -232,9 +607,17 @@ export const WorkspaceFragment = gql`fragment Workspace on Workspace {
     ...InviteNoNesting
   }
   name
-}`
+}
 
-export const WorkflowFragment = gql`fragment Workflow on Workflow {
+${UserNoNestingFragment}
+${JobNoNestingFragment}
+${CandidateNoNestingFragment}
+${WorkflowNoNestingFragment}
+${InviteNoNestingFragment}
+`
+
+export const WorkflowFragment = gql`
+  fragment Workflow on Workflow {
   id
   createdAt
   updatedAt
@@ -249,9 +632,15 @@ export const WorkflowFragment = gql`fragment Workflow on Workflow {
   fields {
     ...FieldNoNesting
   }
-}`
+}
 
-export const InviteFragment = gql`fragment Invite on Invite {
+${StageNoNestingFragment}
+${DisqualificationNoNestingFragment}
+${FieldNoNestingFragment}
+`
+
+export const InviteFragment = gql`
+  fragment Invite on Invite {
   id
   createdAt
   updatedAt
@@ -260,9 +649,13 @@ export const InviteFragment = gql`fragment Invite on Invite {
   invitedBy {
     ...UserNoNesting
   }
-}`
+}
 
-export const LocationFragment = gql`fragment Location on Location {
+${UserNoNestingFragment}
+`
+
+export const LocationFragment = gql`
+  fragment Location on Location {
   id
   createdAt
   updatedAt
@@ -270,9 +663,11 @@ export const LocationFragment = gql`fragment Location on Location {
   region
   city
   zip
-}`
+}
+`
 
-export const ApplicationConnectionFragment = gql`fragment ApplicationConnection on ApplicationConnection {
+export const ApplicationConnectionFragment = gql`
+  fragment ApplicationConnection on ApplicationConnection {
   pageInfo {
     ...PageInfoNoNesting
   }
@@ -282,27 +677,41 @@ export const ApplicationConnectionFragment = gql`fragment ApplicationConnection 
   aggregate {
     ...AggregateApplicationNoNesting
   }
-}`
+}
 
-export const PageInfoFragment = gql`fragment PageInfo on PageInfo {
+${PageInfoNoNestingFragment}
+${ApplicationEdgeNoNestingFragment}
+${AggregateApplicationNoNestingFragment}
+`
+
+export const PageInfoFragment = gql`
+  fragment PageInfo on PageInfo {
   hasNextPage
   hasPreviousPage
   startCursor
   endCursor
-}`
+}
+`
 
-export const ApplicationEdgeFragment = gql`fragment ApplicationEdge on ApplicationEdge {
+export const ApplicationEdgeFragment = gql`
+  fragment ApplicationEdge on ApplicationEdge {
   node {
     ...ApplicationNoNesting
   }
   cursor
-}`
+}
 
-export const AggregateApplicationFragment = gql`fragment AggregateApplication on AggregateApplication {
+${ApplicationNoNestingFragment}
+`
+
+export const AggregateApplicationFragment = gql`
+  fragment AggregateApplication on AggregateApplication {
   count
-}`
+}
+`
 
-export const CandidateConnectionFragment = gql`fragment CandidateConnection on CandidateConnection {
+export const CandidateConnectionFragment = gql`
+  fragment CandidateConnection on CandidateConnection {
   pageInfo {
     ...PageInfoNoNesting
   }
@@ -312,20 +721,32 @@ export const CandidateConnectionFragment = gql`fragment CandidateConnection on C
   aggregate {
     ...AggregateCandidateNoNesting
   }
-}`
+}
 
-export const CandidateEdgeFragment = gql`fragment CandidateEdge on CandidateEdge {
+${PageInfoNoNestingFragment}
+${CandidateEdgeNoNestingFragment}
+${AggregateCandidateNoNestingFragment}
+`
+
+export const CandidateEdgeFragment = gql`
+  fragment CandidateEdge on CandidateEdge {
   node {
     ...CandidateNoNesting
   }
   cursor
-}`
+}
 
-export const AggregateCandidateFragment = gql`fragment AggregateCandidate on AggregateCandidate {
+${CandidateNoNestingFragment}
+`
+
+export const AggregateCandidateFragment = gql`
+  fragment AggregateCandidate on AggregateCandidate {
   count
-}`
+}
+`
 
-export const JobConnectionFragment = gql`fragment JobConnection on JobConnection {
+export const JobConnectionFragment = gql`
+  fragment JobConnection on JobConnection {
   pageInfo {
     ...PageInfoNoNesting
   }
@@ -335,20 +756,32 @@ export const JobConnectionFragment = gql`fragment JobConnection on JobConnection
   aggregate {
     ...AggregateJobNoNesting
   }
-}`
+}
 
-export const JobEdgeFragment = gql`fragment JobEdge on JobEdge {
+${PageInfoNoNestingFragment}
+${JobEdgeNoNestingFragment}
+${AggregateJobNoNestingFragment}
+`
+
+export const JobEdgeFragment = gql`
+  fragment JobEdge on JobEdge {
   node {
     ...JobNoNesting
   }
   cursor
-}`
+}
 
-export const AggregateJobFragment = gql`fragment AggregateJob on AggregateJob {
+${JobNoNestingFragment}
+`
+
+export const AggregateJobFragment = gql`
+  fragment AggregateJob on AggregateJob {
   count
-}`
+}
+`
 
-export const SourceConnectionFragment = gql`fragment SourceConnection on SourceConnection {
+export const SourceConnectionFragment = gql`
+  fragment SourceConnection on SourceConnection {
   pageInfo {
     ...PageInfoNoNesting
   }
@@ -358,20 +791,32 @@ export const SourceConnectionFragment = gql`fragment SourceConnection on SourceC
   aggregate {
     ...AggregateSourceNoNesting
   }
-}`
+}
 
-export const SourceEdgeFragment = gql`fragment SourceEdge on SourceEdge {
+${PageInfoNoNestingFragment}
+${SourceEdgeNoNestingFragment}
+${AggregateSourceNoNestingFragment}
+`
+
+export const SourceEdgeFragment = gql`
+  fragment SourceEdge on SourceEdge {
   node {
     ...SourceNoNesting
   }
   cursor
-}`
+}
 
-export const AggregateSourceFragment = gql`fragment AggregateSource on AggregateSource {
+${SourceNoNestingFragment}
+`
+
+export const AggregateSourceFragment = gql`
+  fragment AggregateSource on AggregateSource {
   count
-}`
+}
+`
 
-export const TagConnectionFragment = gql`fragment TagConnection on TagConnection {
+export const TagConnectionFragment = gql`
+  fragment TagConnection on TagConnection {
   pageInfo {
     ...PageInfoNoNesting
   }
@@ -381,20 +826,32 @@ export const TagConnectionFragment = gql`fragment TagConnection on TagConnection
   aggregate {
     ...AggregateTagNoNesting
   }
-}`
+}
 
-export const TagEdgeFragment = gql`fragment TagEdge on TagEdge {
+${PageInfoNoNestingFragment}
+${TagEdgeNoNestingFragment}
+${AggregateTagNoNestingFragment}
+`
+
+export const TagEdgeFragment = gql`
+  fragment TagEdge on TagEdge {
   node {
     ...TagNoNesting
   }
   cursor
-}`
+}
 
-export const AggregateTagFragment = gql`fragment AggregateTag on AggregateTag {
+${TagNoNestingFragment}
+`
+
+export const AggregateTagFragment = gql`
+  fragment AggregateTag on AggregateTag {
   count
-}`
+}
+`
 
-export const TaskConnectionFragment = gql`fragment TaskConnection on TaskConnection {
+export const TaskConnectionFragment = gql`
+  fragment TaskConnection on TaskConnection {
   pageInfo {
     ...PageInfoNoNesting
   }
@@ -404,20 +861,32 @@ export const TaskConnectionFragment = gql`fragment TaskConnection on TaskConnect
   aggregate {
     ...AggregateTaskNoNesting
   }
-}`
+}
 
-export const TaskEdgeFragment = gql`fragment TaskEdge on TaskEdge {
+${PageInfoNoNestingFragment}
+${TaskEdgeNoNestingFragment}
+${AggregateTaskNoNestingFragment}
+`
+
+export const TaskEdgeFragment = gql`
+  fragment TaskEdge on TaskEdge {
   node {
     ...TaskNoNesting
   }
   cursor
-}`
+}
 
-export const AggregateTaskFragment = gql`fragment AggregateTask on AggregateTask {
+${TaskNoNestingFragment}
+`
+
+export const AggregateTaskFragment = gql`
+  fragment AggregateTask on AggregateTask {
   count
-}`
+}
+`
 
-export const UserConnectionFragment = gql`fragment UserConnection on UserConnection {
+export const UserConnectionFragment = gql`
+  fragment UserConnection on UserConnection {
   pageInfo {
     ...PageInfoNoNesting
   }
@@ -427,268 +896,48 @@ export const UserConnectionFragment = gql`fragment UserConnection on UserConnect
   aggregate {
     ...AggregateUserNoNesting
   }
-}`
+}
 
-export const UserEdgeFragment = gql`fragment UserEdge on UserEdge {
+${PageInfoNoNestingFragment}
+${UserEdgeNoNestingFragment}
+${AggregateUserNoNestingFragment}
+`
+
+export const UserEdgeFragment = gql`
+  fragment UserEdge on UserEdge {
   node {
     ...UserNoNesting
   }
   cursor
-}`
+}
 
-export const AggregateUserFragment = gql`fragment AggregateUser on AggregateUser {
+${UserNoNestingFragment}
+`
+
+export const AggregateUserFragment = gql`
+  fragment AggregateUser on AggregateUser {
   count
-}`
+}
+`
 
-export const BatchPayloadFragment = gql`fragment BatchPayload on BatchPayload {
+export const BatchPayloadFragment = gql`
+  fragment BatchPayload on BatchPayload {
   count
-}`
+}
+`
 
-export const AuthPayloadFragment = gql`fragment AuthPayload on AuthPayload {
+export const AuthPayloadFragment = gql`
+  fragment AuthPayload on AuthPayload {
   token
   refresh
-}`
+}
+`
 
-export const AccessPayloadFragment = gql`fragment AccessPayload on AccessPayload {
+export const AccessPayloadFragment = gql`
+  fragment AccessPayload on AccessPayload {
   token
-}`
+}
+`
 
-
-export const ApplicationNoNestingFragment = gql`fragment ApplicationNoNesting on Application {
-  createdAt
-  id
-  updatedAt
-  type
-}`
-
-export const DisqualificationInstanceNoNestingFragment = gql`fragment DisqualificationInstanceNoNesting on DisqualificationInstance {
-  id
-  createdAt
-  updatedAt
-  content
-}`
-
-export const DisqualificationNoNestingFragment = gql`fragment DisqualificationNoNesting on Disqualification {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-}`
-
-export const UserNoNestingFragment = gql`fragment UserNoNesting on User {
-  id
-  createdAt
-  updatedAt
-  settings
-  firstName
-  lastName
-  email
-  username
-  lastLogin
-  deletedAt
-  position
-}`
-
-export const TaskNoNestingFragment = gql`fragment TaskNoNesting on Task {
-  id
-  createdAt
-  updatedAt
-  title
-  description
-  dueAt
-}`
-
-export const CandidateNoNestingFragment = gql`fragment CandidateNoNesting on Candidate {
-  id
-  createdAt
-  updatedAt
-  firstName
-  lastName
-  company
-  headline
-  position
-}`
-
-export const FileNoNestingFragment = gql`fragment FileNoNesting on File {
-  id
-  createdAt
-  updatedAt
-  size
-  type
-  name
-  url
-}`
-
-export const TagNoNestingFragment = gql`fragment TagNoNesting on Tag {
-  id
-  createdAt
-  updatedAt
-  label
-  description
-}`
-
-export const SourceNoNestingFragment = gql`fragment SourceNoNesting on Source {
-  id
-  createdAt
-  updatedAt
-  label
-  description
-}`
-
-export const FieldInstanceNoNestingFragment = gql`fragment FieldInstanceNoNesting on FieldInstance {
-  id
-  createdAt
-  updatedAt
-  value
-}`
-
-export const FieldNoNestingFragment = gql`fragment FieldNoNesting on Field {
-  id
-  createdAt
-  updatedAt
-  type
-  label
-  description
-}`
-
-export const CommentNoNestingFragment = gql`fragment CommentNoNesting on Comment {
-  id
-  createdAt
-  updatedAt
-  content
-}`
-
-export const StageNoNestingFragment = gql`fragment StageNoNesting on Stage {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-  type
-}`
-
-export const JobNoNestingFragment = gql`fragment JobNoNesting on Job {
-  id
-  createdAt
-  updatedAt
-  type
-  department
-  name
-  excerpt
-  companyDescription
-  description
-  requirements
-}`
-
-export const WorkspaceNoNestingFragment = gql`fragment WorkspaceNoNesting on Workspace {
-  id
-  createdAt
-  updatedAt
-  settings
-  name
-}`
-
-export const WorkflowNoNestingFragment = gql`fragment WorkflowNoNesting on Workflow {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-}`
-
-export const InviteNoNestingFragment = gql`fragment InviteNoNesting on Invite {
-  id
-  createdAt
-  updatedAt
-  email
-  expireAt
-}`
-
-export const LocationNoNestingFragment = gql`fragment LocationNoNesting on Location {
-  id
-  createdAt
-  updatedAt
-  country
-  region
-  city
-  zip
-}`
-
-export const PageInfoNoNestingFragment = gql`fragment PageInfoNoNesting on PageInfo {
-  hasNextPage
-  hasPreviousPage
-  startCursor
-  endCursor
-}`
-
-export const ApplicationEdgeNoNestingFragment = gql`fragment ApplicationEdgeNoNesting on ApplicationEdge {
-  cursor
-}`
-
-export const AggregateApplicationNoNestingFragment = gql`fragment AggregateApplicationNoNesting on AggregateApplication {
-  count
-}`
-
-export const CandidateEdgeNoNestingFragment = gql`fragment CandidateEdgeNoNesting on CandidateEdge {
-  cursor
-}`
-
-export const AggregateCandidateNoNestingFragment = gql`fragment AggregateCandidateNoNesting on AggregateCandidate {
-  count
-}`
-
-export const JobEdgeNoNestingFragment = gql`fragment JobEdgeNoNesting on JobEdge {
-  cursor
-}`
-
-export const AggregateJobNoNestingFragment = gql`fragment AggregateJobNoNesting on AggregateJob {
-  count
-}`
-
-export const SourceEdgeNoNestingFragment = gql`fragment SourceEdgeNoNesting on SourceEdge {
-  cursor
-}`
-
-export const AggregateSourceNoNestingFragment = gql`fragment AggregateSourceNoNesting on AggregateSource {
-  count
-}`
-
-export const TagEdgeNoNestingFragment = gql`fragment TagEdgeNoNesting on TagEdge {
-  cursor
-}`
-
-export const AggregateTagNoNestingFragment = gql`fragment AggregateTagNoNesting on AggregateTag {
-  count
-}`
-
-export const TaskEdgeNoNestingFragment = gql`fragment TaskEdgeNoNesting on TaskEdge {
-  cursor
-}`
-
-export const AggregateTaskNoNestingFragment = gql`fragment AggregateTaskNoNesting on AggregateTask {
-  count
-}`
-
-export const UserEdgeNoNestingFragment = gql`fragment UserEdgeNoNesting on UserEdge {
-  cursor
-}`
-
-export const AggregateUserNoNestingFragment = gql`fragment AggregateUserNoNesting on AggregateUser {
-  count
-}`
-
-export const BatchPayloadNoNestingFragment = gql`fragment BatchPayloadNoNesting on BatchPayload {
-  count
-}`
-
-export const AuthPayloadNoNestingFragment = gql`fragment AuthPayloadNoNesting on AuthPayload {
-  token
-  refresh
-}`
-
-export const AccessPayloadNoNestingFragment = gql`fragment AccessPayloadNoNesting on AccessPayload {
-  token
-}`
 
 
