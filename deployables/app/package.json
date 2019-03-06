@@ -18,7 +18,7 @@
     "env": "node ./scripts/env-cli",
     "gen:sdl": "vscripts runtime scripts/client-sdl",
     "gen:codegen": "gql-gen --config codegen.yml",
-    "gen:frag": "vscripts generateFragments './src/generated/server.graphql'",
+    "gen:frag": "vscripts generateFragments '../server/src/generated/server.graphql'",
     "gen:queries": "yarn apollo client:codegen src/generated/queries.ts --outputFlat --target typescript",
     "gen": "yarn gen:sdl && yarn gen:codegen && yarn gen:frag && yarn gen:queries"
   },

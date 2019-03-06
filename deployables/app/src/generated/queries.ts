@@ -2608,19 +2608,6 @@ export interface BatchPayload {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: AccessPayload
-// ====================================================
-
-export interface AccessPayload {
-  __typename: "AccessPayload";
-  token: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL fragment: AuthPayload
 // ====================================================
 
@@ -2628,6 +2615,19 @@ export interface AuthPayload {
   __typename: "AuthPayload";
   token: string;
   refresh: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AccessPayload
+// ====================================================
+
+export interface AccessPayload {
+  __typename: "AccessPayload";
+  token: string;
 }
 
 /* tslint:disable */
@@ -3169,19 +3169,6 @@ export interface BatchPayloadNoNesting {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: AccessPayloadNoNesting
-// ====================================================
-
-export interface AccessPayloadNoNesting {
-  __typename: "AccessPayload";
-  token: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL fragment: AuthPayloadNoNesting
 // ====================================================
 
@@ -3189,6 +3176,19 @@ export interface AuthPayloadNoNesting {
   __typename: "AuthPayload";
   token: string;
   refresh: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AccessPayloadNoNesting
+// ====================================================
+
+export interface AccessPayloadNoNesting {
+  __typename: "AccessPayload";
+  token: string;
 }
 
 /* tslint:disable */

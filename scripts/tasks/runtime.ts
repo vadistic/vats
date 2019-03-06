@@ -45,7 +45,12 @@ export const runtime = async (args: string[]) => {
   const scriptExport =
     args[1] || (scriptExportsNames.includes('default') && 'default') || scriptExportsNames[0]
 
-  await script[scriptExport]()
+  if (typeof script[scriptExport] !== 'function') {
+    console.warn('Prefer exporting lambda-like functions instead of side-effects scripts')
+    await script[scriptExport]
+  } else {
+    await script[scriptExport]()
+  }
 
   // noop
   return sequence(

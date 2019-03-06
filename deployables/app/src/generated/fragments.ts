@@ -444,13 +444,13 @@ export const BatchPayloadFragment = gql`fragment BatchPayload on BatchPayload {
   count
 }`
 
-export const AccessPayloadFragment = gql`fragment AccessPayload on AccessPayload {
-  token
-}`
-
 export const AuthPayloadFragment = gql`fragment AuthPayload on AuthPayload {
   token
   refresh
+}`
+
+export const AccessPayloadFragment = gql`fragment AccessPayload on AccessPayload {
+  token
 }`
 
 
@@ -682,13 +682,13 @@ export const BatchPayloadNoNestingFragment = gql`fragment BatchPayloadNoNesting 
   count
 }`
 
-export const AccessPayloadNoNestingFragment = gql`fragment AccessPayloadNoNesting on AccessPayload {
-  token
-}`
-
 export const AuthPayloadNoNestingFragment = gql`fragment AuthPayloadNoNesting on AuthPayload {
   token
   refresh
+}`
+
+export const AccessPayloadNoNestingFragment = gql`fragment AccessPayloadNoNesting on AccessPayload {
+  token
 }`
 
 
