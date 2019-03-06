@@ -2,7 +2,7 @@ endpoint: ${env:PRISMA_ENDPOINT}/${env:PRISMA_SERVICE}/${env:PRISMA_STAGE}
 datamodel: ./src/datamodel.graphql
 
 seed:
-  run: yarn ts-node ./seed/seed.ts
+  run: yarn vscripts runtime ./seed/seed.ts
 
 secret: ${env:PRISMA_SECRET}
 

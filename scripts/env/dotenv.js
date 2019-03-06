@@ -1,31 +1,38 @@
 const path = require('path')
+const dotenv = require('dotenv')
 
 const config = () => {
-  const envDir = path.resolve(process.cwd(), '../..')
+  // quite basic, but enough
+  const envDir = file => {
+    // root
+    if (path.basename(process.cwd()) === 'vats') {
+      return file
+    }
+    // package
+    return '../../' + file
+  }
 
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development'
   }
 
   if (process.env.NODE_ENV === 'production') {
-    require('dotenv').config({ path: envDir + '/' + '.env.production.local' })
-    require('dotenv').config({ path: envDir + '/' + '.env.production' })
+    dotenv.config({ path: envDir('.env.production.local') })
+    dotenv.config({ path: envDir('.env.production') })
   }
 
   if (process.env.NODE_ENV === 'development') {
-    require('dotenv').config({ path: envDir + '/' + '.env.development.local' })
-    require('dotenv').config({ path: envDir + '/' + '.env.development' })
+    dotenv.config({ path: '.env.development.local' })
+    dotenv.config({ path: envDir('.env.development') })
   }
 
   if (process.env.NODE_ENV === 'test') {
-    require('dotenv').config({ path: envDir + '/' + '.env.test.local' })
-    require('dotenv').config({ path: envDir + '/' + '.env.test' })
+    dotenv.config({ path: envDir('.env.test.local') })
+    dotenv.config({ path: envDir('.env.test') })
   }
 
-  require('dotenv').config({ path: envDir + '/' + '.env.local' })
-  require('dotenv').config({ path: envDir + '/' + '.env' })
+  dotenv.config({ path: envDir('.env.local') })
+  dotenv.config({ path: envDir('.env') })
 }
 
-module.exports = {
-  config,
-}
+module.exports = config

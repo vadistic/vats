@@ -1,4 +1,6 @@
-require('@vats/scripts').configure()
+const config = require('@vats/start/env/dotenv')
+
+config()
 
 module.exports = {
   client: {

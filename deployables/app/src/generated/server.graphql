@@ -1,6 +1,3 @@
-# source: https://vats-server.now.sh
-# timestamp: Thu Feb 14 2019 05:00:53 GMT+0100 (Central European Standard Time)
-
 type AccessPayload {
   token: String!
 }
@@ -163,6 +160,7 @@ input ApplicationUpdateManyWithoutCandidateInput {
   create: [ApplicationCreateWithoutCandidateInput!]
   delete: [ApplicationWhereUniqueInput!]
   connect: [ApplicationWhereUniqueInput!]
+  set: [ApplicationWhereUniqueInput!]
   disconnect: [ApplicationWhereUniqueInput!]
   update: [ApplicationUpdateWithWhereUniqueWithoutCandidateInput!]
   upsert: [ApplicationUpsertWithWhereUniqueWithoutCandidateInput!]
@@ -174,6 +172,7 @@ input ApplicationUpdateManyWithoutJobInput {
   create: [ApplicationCreateWithoutJobInput!]
   delete: [ApplicationWhereUniqueInput!]
   connect: [ApplicationWhereUniqueInput!]
+  set: [ApplicationWhereUniqueInput!]
   disconnect: [ApplicationWhereUniqueInput!]
   update: [ApplicationUpdateWithWhereUniqueWithoutJobInput!]
   upsert: [ApplicationUpsertWithWhereUniqueWithoutJobInput!]
@@ -293,79 +292,15 @@ type Candidate {
   headline: String
   position: String
   resumesString: [String!]!
-  resumesFile(
-    where: FileWhereInput
-    orderBy: FileOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [File!]
+  resumesFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   coverLettersString: [String!]!
-  coverLettersFile(
-    where: FileWhereInput
-    orderBy: FileOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [File!]
-  tags(
-    where: TagWhereInput
-    orderBy: TagOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Tag!]
-  sources(
-    where: SourceWhereInput
-    orderBy: SourceOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Source!]
-  fields(
-    where: FieldInstanceWhereInput
-    orderBy: FieldInstanceOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [FieldInstance!]
-  tasks(
-    where: TaskWhereInput
-    orderBy: TaskOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Task!]
-  applications(
-    where: ApplicationWhereInput
-    orderBy: ApplicationOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Application!]
-  comments(
-    where: CommentWhereInput
-    orderBy: CommentOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Comment!]
+  coverLettersFile(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  sources(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Source!]
+  fields(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldInstance!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
 }
 
 type CandidateConnection {
@@ -678,6 +613,7 @@ input CandidateUpdateManyInput {
   upsert: [CandidateUpsertWithWhereUniqueNestedInput!]
   delete: [CandidateWhereUniqueInput!]
   connect: [CandidateWhereUniqueInput!]
+  set: [CandidateWhereUniqueInput!]
   disconnect: [CandidateWhereUniqueInput!]
   deleteMany: [CandidateScalarWhereInput!]
   updateMany: [CandidateUpdateManyWithWhereNestedInput!]
@@ -1025,6 +961,7 @@ input CommentUpdateManyInput {
   upsert: [CommentUpsertWithWhereUniqueNestedInput!]
   delete: [CommentWhereUniqueInput!]
   connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
   disconnect: [CommentWhereUniqueInput!]
   deleteMany: [CommentScalarWhereInput!]
   updateMany: [CommentUpdateManyWithWhereNestedInput!]
@@ -1348,6 +1285,7 @@ input DisqualificationUpdateManyInput {
   upsert: [DisqualificationUpsertWithWhereUniqueNestedInput!]
   delete: [DisqualificationWhereUniqueInput!]
   connect: [DisqualificationWhereUniqueInput!]
+  set: [DisqualificationWhereUniqueInput!]
   disconnect: [DisqualificationWhereUniqueInput!]
   deleteMany: [DisqualificationScalarWhereInput!]
   updateMany: [DisqualificationUpdateManyWithWhereNestedInput!]
@@ -1568,6 +1506,7 @@ input FieldInstanceUpdateManyInput {
   upsert: [FieldInstanceUpsertWithWhereUniqueNestedInput!]
   delete: [FieldInstanceWhereUniqueInput!]
   connect: [FieldInstanceWhereUniqueInput!]
+  set: [FieldInstanceWhereUniqueInput!]
   disconnect: [FieldInstanceWhereUniqueInput!]
   deleteMany: [FieldInstanceScalarWhereInput!]
   updateMany: [FieldInstanceUpdateManyWithWhereNestedInput!]
@@ -1754,6 +1693,7 @@ input FieldUpdateManyInput {
   upsert: [FieldUpsertWithWhereUniqueNestedInput!]
   delete: [FieldWhereUniqueInput!]
   connect: [FieldWhereUniqueInput!]
+  set: [FieldWhereUniqueInput!]
   disconnect: [FieldWhereUniqueInput!]
   deleteMany: [FieldScalarWhereInput!]
   updateMany: [FieldUpdateManyWithWhereNestedInput!]
@@ -2009,6 +1949,7 @@ input FileUpdateManyInput {
   upsert: [FileUpsertWithWhereUniqueNestedInput!]
   delete: [FileWhereUniqueInput!]
   connect: [FileWhereUniqueInput!]
+  set: [FileWhereUniqueInput!]
   disconnect: [FileWhereUniqueInput!]
   deleteMany: [FileScalarWhereInput!]
   updateMany: [FileUpdateManyWithWhereNestedInput!]
@@ -2241,6 +2182,7 @@ input InviteUpdateManyInput {
   upsert: [InviteUpsertWithWhereUniqueNestedInput!]
   delete: [InviteWhereUniqueInput!]
   connect: [InviteWhereUniqueInput!]
+  set: [InviteWhereUniqueInput!]
   disconnect: [InviteWhereUniqueInput!]
   deleteMany: [InviteScalarWhereInput!]
   updateMany: [InviteUpdateManyWithWhereNestedInput!]
@@ -2330,36 +2272,12 @@ type Job {
   createdAt: DateTime!
   updatedAt: DateTime!
   workspace: Workspace!
-  applications(
-    where: ApplicationWhereInput
-    orderBy: ApplicationOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Application!]
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application!]
   workflow: Workflow!
-  comments(
-    where: CommentWhereInput
-    orderBy: CommentOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Comment!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   type: JobType!
   department: String
-  locations(
-    where: LocationWhereInput
-    orderBy: LocationOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Location!]
+  locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location!]
   name: String!
   excerpt: String
   companyDescription: String
@@ -2784,6 +2702,7 @@ input LocationUpdateManyInput {
   upsert: [LocationUpsertWithWhereUniqueNestedInput!]
   delete: [LocationWhereUniqueInput!]
   connect: [LocationWhereUniqueInput!]
+  set: [LocationWhereUniqueInput!]
   disconnect: [LocationWhereUniqueInput!]
   deleteMany: [LocationScalarWhereInput!]
   updateMany: [LocationUpdateManyWithWhereNestedInput!]
@@ -2911,28 +2830,14 @@ scalar Long
 type Mutation {
   createApplication(data: ApplicationCreateInput!): Application!
   updateApplication(data: ApplicationUpdateInput!, where: ApplicationWhereUniqueInput!): Application
-  updateManyApplications(
-    data: ApplicationUpdateManyMutationInput!
-    where: ApplicationWhereInput
-  ): BatchPayload!
-  upsertApplication(
-    where: ApplicationWhereUniqueInput!
-    create: ApplicationCreateInput!
-    update: ApplicationUpdateInput!
-  ): Application!
+  updateManyApplications(data: ApplicationUpdateManyMutationInput!, where: ApplicationWhereInput): BatchPayload!
+  upsertApplication(where: ApplicationWhereUniqueInput!, create: ApplicationCreateInput!, update: ApplicationUpdateInput!): Application!
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   deleteManyApplications(where: ApplicationWhereInput): BatchPayload!
   createCandidate(data: CandidateCreateInput!): Candidate!
   updateCandidate(data: CandidateUpdateInput!, where: CandidateWhereUniqueInput!): Candidate
-  updateManyCandidates(
-    data: CandidateUpdateManyMutationInput!
-    where: CandidateWhereInput
-  ): BatchPayload!
-  upsertCandidate(
-    where: CandidateWhereUniqueInput!
-    create: CandidateCreateInput!
-    update: CandidateUpdateInput!
-  ): Candidate!
+  updateManyCandidates(data: CandidateUpdateManyMutationInput!, where: CandidateWhereInput): BatchPayload!
+  upsertCandidate(where: CandidateWhereUniqueInput!, create: CandidateCreateInput!, update: CandidateUpdateInput!): Candidate!
   deleteCandidate(where: CandidateWhereUniqueInput!): Candidate
   deleteManyCandidates(where: CandidateWhereInput): BatchPayload!
   createJob(data: JobCreateInput!): Job!
@@ -2944,11 +2849,7 @@ type Mutation {
   createSource(data: SourceCreateInput!): Source!
   updateSource(data: SourceUpdateInput!, where: SourceWhereUniqueInput!): Source
   updateManySources(data: SourceUpdateManyMutationInput!, where: SourceWhereInput): BatchPayload!
-  upsertSource(
-    where: SourceWhereUniqueInput!
-    create: SourceCreateInput!
-    update: SourceUpdateInput!
-  ): Source!
+  upsertSource(where: SourceWhereUniqueInput!, create: SourceCreateInput!, update: SourceUpdateInput!): Source!
   deleteSource(where: SourceWhereUniqueInput!): Source
   deleteManySources(where: SourceWhereInput): BatchPayload!
   createTag(data: TagCreateInput!): Tag!
@@ -2960,11 +2861,7 @@ type Mutation {
   createTask(data: TaskCreateInput!): Task!
   updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
   updateManyTasks(data: TaskUpdateManyMutationInput!, where: TaskWhereInput): BatchPayload!
-  upsertTask(
-    where: TaskWhereUniqueInput!
-    create: TaskCreateInput!
-    update: TaskUpdateInput!
-  ): Task!
+  upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
   deleteTask(where: TaskWhereUniqueInput!): Task
   deleteManyTasks(where: TaskWhereInput): BatchPayload!
 }
@@ -2978,138 +2875,26 @@ type PageInfo {
 
 type Query {
   application(where: ApplicationWhereUniqueInput!): Application
-  applications(
-    where: ApplicationWhereInput
-    orderBy: ApplicationOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Application]!
-  applicationsConnection(
-    where: ApplicationWhereInput
-    orderBy: ApplicationOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): ApplicationConnection!
+  applications(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Application]!
+  applicationsConnection(where: ApplicationWhereInput, orderBy: ApplicationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApplicationConnection!
   candidate(where: CandidateWhereUniqueInput!): Candidate
-  candidates(
-    where: CandidateWhereInput
-    orderBy: CandidateOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Candidate]!
-  candidatesConnection(
-    where: CandidateWhereInput
-    orderBy: CandidateOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): CandidateConnection!
+  candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate]!
+  candidatesConnection(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CandidateConnection!
   job(where: JobWhereUniqueInput!): Job
-  jobs(
-    where: JobWhereInput
-    orderBy: JobOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Job]!
-  jobsConnection(
-    where: JobWhereInput
-    orderBy: JobOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): JobConnection!
+  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
+  jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
   source(where: SourceWhereUniqueInput!): Source
-  sources(
-    where: SourceWhereInput
-    orderBy: SourceOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Source]!
-  sourcesConnection(
-    where: SourceWhereInput
-    orderBy: SourceOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): SourceConnection!
+  sources(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Source]!
+  sourcesConnection(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SourceConnection!
   tag(where: TagWhereUniqueInput!): Tag
-  tags(
-    where: TagWhereInput
-    orderBy: TagOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Tag]!
-  tagsConnection(
-    where: TagWhereInput
-    orderBy: TagOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): TagConnection!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   task(where: TaskWhereUniqueInput!): Task
-  tasks(
-    where: TaskWhereInput
-    orderBy: TaskOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Task]!
-  tasksConnection(
-    where: TaskWhereInput
-    orderBy: TaskOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): TaskConnection!
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
   user(where: UserWhereUniqueInput!): User
-  users(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User]!
-  usersConnection(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): UserConnection!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 }
 
 input RefreshInput {
@@ -3249,6 +3034,7 @@ input SourceUpdateManyInput {
   upsert: [SourceUpsertWithWhereUniqueNestedInput!]
   delete: [SourceWhereUniqueInput!]
   connect: [SourceWhereUniqueInput!]
+  set: [SourceWhereUniqueInput!]
   disconnect: [SourceWhereUniqueInput!]
   deleteMany: [SourceScalarWhereInput!]
   updateMany: [SourceUpdateManyWithWhereNestedInput!]
@@ -3475,6 +3261,7 @@ input StageUpdateManyInput {
   upsert: [StageUpsertWithWhereUniqueNestedInput!]
   delete: [StageWhereUniqueInput!]
   connect: [StageWhereUniqueInput!]
+  set: [StageWhereUniqueInput!]
   disconnect: [StageWhereUniqueInput!]
   deleteMany: [StageScalarWhereInput!]
   updateMany: [StageUpdateManyWithWhereNestedInput!]
@@ -3707,6 +3494,7 @@ input TagUpdateManyInput {
   upsert: [TagUpsertWithWhereUniqueNestedInput!]
   delete: [TagWhereUniqueInput!]
   connect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
   disconnect: [TagWhereUniqueInput!]
   deleteMany: [TagScalarWhereInput!]
   updateMany: [TagUpdateManyWithWhereNestedInput!]
@@ -3805,15 +3593,7 @@ type Task {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  owners(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User!]
+  owners(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   candidate: Candidate
   title: String
   description: String
@@ -3974,6 +3754,7 @@ input TaskUpdateManyWithoutCandidateInput {
   create: [TaskCreateWithoutCandidateInput!]
   delete: [TaskWhereUniqueInput!]
   connect: [TaskWhereUniqueInput!]
+  set: [TaskWhereUniqueInput!]
   disconnect: [TaskWhereUniqueInput!]
   update: [TaskUpdateWithWhereUniqueWithoutCandidateInput!]
   upsert: [TaskUpsertWithWhereUniqueWithoutCandidateInput!]
@@ -3985,6 +3766,7 @@ input TaskUpdateManyWithoutOwnersInput {
   create: [TaskCreateWithoutOwnersInput!]
   delete: [TaskWhereUniqueInput!]
   connect: [TaskWhereUniqueInput!]
+  set: [TaskWhereUniqueInput!]
   disconnect: [TaskWhereUniqueInput!]
   update: [TaskUpdateWithWhereUniqueWithoutOwnersInput!]
   upsert: [TaskUpsertWithWhereUniqueWithoutOwnersInput!]
@@ -4118,15 +3900,7 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime!
   settings: Json
-  tasks(
-    where: TaskWhereInput
-    orderBy: TaskOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Task!]
+  tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   firstName: String!
   lastName: String!
   email: String!
@@ -4365,6 +4139,7 @@ input UserUpdateManyInput {
   upsert: [UserUpsertWithWhereUniqueNestedInput!]
   delete: [UserWhereUniqueInput!]
   connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   deleteMany: [UserScalarWhereInput!]
   updateMany: [UserUpdateManyWithWhereNestedInput!]
@@ -4374,6 +4149,7 @@ input UserUpdateManyWithoutTasksInput {
   create: [UserCreateWithoutTasksInput!]
   delete: [UserWhereUniqueInput!]
   connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   update: [UserUpdateWithWhereUniqueWithoutTasksInput!]
   upsert: [UserUpsertWithWhereUniqueWithoutTasksInput!]
@@ -4573,33 +4349,9 @@ type Workflow {
   updatedAt: DateTime!
   name: String!
   description: String
-  stages(
-    where: StageWhereInput
-    orderBy: StageOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Stage!]
-  disqualifications(
-    where: DisqualificationWhereInput
-    orderBy: DisqualificationOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Disqualification!]
-  fields(
-    where: FieldWhereInput
-    orderBy: FieldOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Field!]
+  stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
+  disqualifications(where: DisqualificationWhereInput, orderBy: DisqualificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Disqualification!]
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
 }
 
 input WorkflowCreateInput {
@@ -4716,6 +4468,7 @@ input WorkflowUpdateManyInput {
   upsert: [WorkflowUpsertWithWhereUniqueNestedInput!]
   delete: [WorkflowWhereUniqueInput!]
   connect: [WorkflowWhereUniqueInput!]
+  set: [WorkflowWhereUniqueInput!]
   disconnect: [WorkflowWhereUniqueInput!]
   deleteMany: [WorkflowScalarWhereInput!]
   updateMany: [WorkflowUpdateManyWithWhereNestedInput!]
@@ -4830,52 +4583,12 @@ type Workspace {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  users(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User!]
-  jobs(
-    where: JobWhereInput
-    orderBy: JobOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Job!]
-  candidates(
-    where: CandidateWhereInput
-    orderBy: CandidateOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Candidate!]
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job!]
+  candidates(where: CandidateWhereInput, orderBy: CandidateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Candidate!]
   settings: Json
-  workflows(
-    where: WorkflowWhereInput
-    orderBy: WorkflowOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Workflow!]
-  invites(
-    where: InviteWhereInput
-    orderBy: InviteOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Invite!]
+  workflows(where: WorkflowWhereInput, orderBy: WorkflowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workflow!]
+  invites(where: InviteWhereInput, orderBy: InviteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Invite!]
   name: String!
 }
 

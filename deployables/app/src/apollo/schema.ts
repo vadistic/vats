@@ -37,6 +37,3 @@ export const schema = gql`
     ERROR
   }
 `
-
-// for graphql-code-generator
-export default schema

@@ -1,7 +1,9 @@
 overwrite: true
-schema: 'src/generated/server.graphql'
+schema: '../server/src/generated/server.graphql'
 documents: null
 generates:
+  # TODO: somehow load from ts
+  # (cannot get require & loaders to work...)
   src/generated/resolvers.ts:
     schema: 'src/generated/client.graphql'
     config:

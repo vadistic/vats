@@ -38,7 +38,7 @@ export const craco = async (args: string[]) => {
 
   // load all envs
   // @ts-ignore
-  const { config } = await import('../env/dotenv')
+  const config = await import('../env/dotenv')
   config()
 
   // set specific cra envs

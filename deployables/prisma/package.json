@@ -9,30 +9,29 @@
   "source": "src/index.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc -p .",
-    "copyfiles": "vscripts copyfiles src/**/*.{json,graphql}",
+    "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "down": "docker-compose down --env-file=.env",
     "up": "docker-compose up -d --force-recreate --env-file=.env",
     "deploy": "env-cmd prisma deploy",
-    "gen:client": "env-cmd prisma generate",
-    "gen:binding": "env-cmd graphql codegen",
-    "gen": "yarn gen:client && yarn gen:binding",
+    "gen": "env-cmd prisma generate",
     "prepare": "yarn gen && yarn build"
   },
   "dependencies": {
-    "@vats/utils": "^0.1.0"
+    "@vats/utils": "^0.1.0",
+    "graphql": "^14.1.1",
+    "graphql-binding": "^2.5.0",
+    "prisma-binding": "^2.3.4",
+    "prisma-client-lib": "^1.28.0"
   },
   "devDependencies": {
     "@types/faker": "4.1.5",
     "@types/ramda": "^0.25.51",
     "@vats/start": "^0.1.0",
     "faker": "^4.1.0",
-    "graphql": "^14.1.1",
-    "graphql-cli": "^3.0.11",
-    "prisma": "^1.27.3",
+    "prisma": "^1.28.0",
     "ramda": "^0.26.1",
     "ts-node": "^8.0.2",
-    "typescript": "^3.3.3333"
+    "typescript": "3.3.3333"
   }
 }
