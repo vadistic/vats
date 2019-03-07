@@ -9,12 +9,34 @@ import write from '@start/plugin-write'
 import fs from 'fs-extra'
 import path from 'path'
 
-import { config } from '../config'
-import { cond, filter, sub } from './mixins'
+import { cond, filter, sub } from './plugins/mixins'
 
 interface Manifest {
   // path (relative to package root) => datetime in ms
   [path: string]: number
+}
+
+export const config = {
+  ROOT_PATH: process.cwd(),
+  CACHE_PATH: path.resolve(process.cwd(), 'node_modules', '.cache', '@vats'),
+  CACHE_MANIFEST_PATH: path.resolve(
+    process.cwd(),
+    'node_modules',
+    '.cache',
+    '@vats',
+    'cache-manifest.json',
+  ),
+  CACHE_DIST_PATH: path.resolve(process.cwd(), 'node_modules', '.cache', '@vats', 'dist'),
+  BUILD_DIR: 'build',
+  DIST_DIR: 'dist',
+  SOURCE_DIR: 'src',
+  IGNORE_GLOB: [
+    '!**/tests/**',
+    '!**/__tests__/**',
+    '!**/*.test.{ts,tsx}',
+    '!**/*.jsxfixture.{ts,tsx}',
+    '!**/*.stories.{ts,tsx}',
+  ],
 }
 
 export const transpile = async (args: string[]) => {

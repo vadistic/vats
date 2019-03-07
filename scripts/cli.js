@@ -23,7 +23,7 @@ require('@babel/register')({
   extensions: ['.ts', '.tsx', '.js', '.jsx'],
 })
 
-const { reporter } = require('./reporter')
+const { reporter } = require('./tasks/reporter')
 const tasks = require('./tasks')
 
 ;(async () => {
@@ -39,7 +39,7 @@ const tasks = require('./tasks')
 
   if (typeof taskName === 'undefined' || typeof task === 'undefined') {
     console.warn(
-      `One of the following task names is required:\n* ${Object.keys(tasks).join('\n* ')}`,
+      '\n'`One of the following task names is required:\n* ${Object.keys(tasks).join('\n* ')}`,
     )
 
     process.exit(0)

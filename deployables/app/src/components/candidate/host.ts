@@ -173,8 +173,6 @@ const candidateRelations: RelationsType<CandidateValue> = {
   },
 }
 
-console.log('client', client)
-
 export const candidateHostConfig: HostConfigI<CandidateHostTyping> = {
   displayName: 'CANDIDATE',
   type: HostType.Single,

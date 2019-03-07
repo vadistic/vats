@@ -22,6 +22,11 @@ export const storybook = async (args: string[]) => {
     copie(path.resolve(source, file), path.resolve(target, file))
   })
 
+  // set env because why not
+  // @ts-ignore
+  const { default: config } = await import('../env/dotenv')
+  config()
+
   const storybookArgs = ['start-storybook', '-p', '9010']
 
   return sequence(
