@@ -1,6 +1,5 @@
 import { useTranslation } from '@vats/i18n'
 import React from 'react'
-import { Box } from '../box'
 import { EditableFieldArray } from '../editable'
 import { FieldProps } from '../formik'
 import { DisplayActionButton, DisplayIconButton } from './button'
@@ -35,11 +34,7 @@ export const DisplayTextFieldArray: React.FC<DisplayTextFieldArrayProps> = ({
 
         return (
           <>
-            {labelProps && (
-              <Box direction="row">
-                <DisplayLabel {...labelProps} />
-              </Box>
-            )}
+            {labelProps && <DisplayLabel {...labelProps} />}
             {values[name].map((_, i) => (
               <DisplayTextField
                 key={name + '_' + i}

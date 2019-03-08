@@ -8,16 +8,18 @@ import {
   ApplicationType,
   Candidate,
   Comment,
+  Disqualification,
   FileCreateInput,
   Job,
   JobType,
   Location,
   Source,
+  Stage,
   Tag,
   Task,
   User,
   Workflow,
-} from '../src/generated/prisma-binding'
+} from '../src/generated/prisma-client'
 
 import { db } from './setup'
 import {
@@ -267,13 +269,13 @@ const seed = async () => {
       throw Error('Could not query jobs')
     }
 
-    const stage = f.random.arrayElement(job.workflow.stages || [])
+    const stage = f.random.arrayElement<Stage>(job.workflow.stages)
 
     const type = f.random.arrayElement(['QUALIFIED', 'DISQUALIFIED'] as ApplicationType[])
 
     const disqualificationInstance = {
       disqualification: {
-        connect: { id: f.random.arrayElement(job.workflow.disqualifications || []).id },
+        connect: { id: f.random.arrayElement<Disqualification>(job.workflow.disqualifications).id },
       },
       createdBy: { connect: { id: users.random().id } },
     }

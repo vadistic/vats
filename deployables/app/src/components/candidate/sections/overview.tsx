@@ -1,7 +1,7 @@
+import { DisplayLabel } from '@vats/forms'
 import { useTranslation } from '@vats/i18n'
 import React from 'react'
 import { DisplayDateTime, useDayjs } from '../../datetime'
-import { DisplayLabel } from '../../display'
 import { useCandidateContext } from '../host'
 
 export const CandidateOverviewSection: React.FC = () => {

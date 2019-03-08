@@ -1,4 +1,4 @@
-import { StringMap } from '@martin_hotell/rex-tils'
+import { StringMap } from '@vats/utils'
 import {
   FormikComputedProps,
   FormikConfig,

@@ -1,6 +1,6 @@
 import { getInByPath } from '@vats/utils'
 import { useFormikContext } from 'formik'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 
 export interface EditableContextValue<V = any> {
   values: V
@@ -17,6 +17,8 @@ export const EditableContext = React.createContext<EditableContextValue>({
 export const useEditableContext = (name?: string) => {
   const { values: formikValues } = useFormikContext()
   const { values: editableValues, editable } = useContext(EditableContext)
+
+  console.log('from context', formikValues, editableValues)
 
   const values = editable ? formikValues : editableValues
 

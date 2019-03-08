@@ -1,31 +1,36 @@
 import { FormikProvider, useFormik } from 'formik'
-import React, { useContext, useMemo, useState } from 'react'
-import { HostContext, HostContextValue } from '../host'
+import React, { useMemo, useState } from 'react'
 import { EditableContext } from './context'
 import { normaliseFormikInitialValues, normaliseFormikPayload } from './normalise'
 
 export interface EditableProps {
-  context: HostContext<any>
+  values: any
+  editable: boolean
   onSubmit: (values: any) => void
   formikRef?: React.MutableRefObject<any>
 }
 
-export const Editable: React.FC<EditableProps> = ({ context, onSubmit, formikRef, children }) => {
-  const { value, state } = useContext<HostContextValue<any>>(context)
-
-  const editable = state.local.editable || false
-  const safeValues = useMemo(() => normaliseFormikInitialValues(value), [value, state])
+export const Editable: React.FC<EditableProps> = ({
+  values,
+  editable,
+  onSubmit,
+  formikRef,
+  children,
+}) => {
+  const normalisedValues = useMemo(() => normaliseFormikInitialValues(values), [values])
 
   const handleSubmit = (payload: object) => {
     const normalisedPayload = normaliseFormikPayload(payload)
     onSubmit(normalisedPayload)
   }
 
-  const formik = useFormik<any>({ onSubmit: handleSubmit, initialValues: safeValues })
+  const formik = useFormik<any>({ onSubmit: handleSubmit, initialValues: normalisedValues })
 
   if (formikRef) {
     formikRef.current = formik
   }
+
+  console.log('editable', values, normalisedValues)
 
   /*
    * There's a tricky bug when host was left in dirty state and then candidate switched
@@ -42,11 +47,13 @@ export const Editable: React.FC<EditableProps> = ({ context, onSubmit, formikRef
   const [flag, setFlag] = useState(false)
 
   const shouldReset =
-    (value && formik.values && value.id !== formik.values.id) || !value || !formik.values
+    (values && formik.values && 'id' in values && values.id !== formik.values.id) ||
+    !values ||
+    !formik.values
 
   if (shouldReset) {
     if (!flag) {
-      formik.resetForm(safeValues)
+      formik.resetForm(normalisedValues)
       setFlag(true)
     }
 
@@ -54,14 +61,14 @@ export const Editable: React.FC<EditableProps> = ({ context, onSubmit, formikRef
   } else {
     if (flag) {
       // for good measure
-      formik.resetForm(safeValues)
+      formik.resetForm(normalisedValues)
       setFlag(false)
       return null
     }
   }
 
   return (
-    <EditableContext.Provider value={{ values: safeValues, editable }}>
+    <EditableContext.Provider value={{ values: normalisedValues, editable }}>
       <FormikProvider value={editable ? formik : ({} as any)} children={children} />
     </EditableContext.Provider>
   )

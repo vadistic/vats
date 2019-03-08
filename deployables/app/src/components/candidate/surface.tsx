@@ -1,9 +1,7 @@
 import { RouteComponentProps } from '@reach/router'
+import { Editable, FormikContextValue } from '@vats/forms'
 import React, { Suspense, useRef } from 'react'
-import { client } from '../../apollo'
 import { routes } from '../../routes'
-import { Editable } from '../editable'
-import { FormikContextValue } from '../formik'
 import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
 import { Surface } from '../surface'
@@ -26,7 +24,7 @@ export interface CandidateSurfaceProps extends RouteComponentProps {
 const CandidateSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading candidate...'} />
 
 export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
-  const { dispatch } = useCandidateContext()
+  const { value, dispatch, state } = useCandidateContext()
 
   const handleDismiss = () => {
     if (navigate) {
@@ -68,7 +66,12 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
     >
       <Suspense fallback={<CandidateSurfaceFallback />}>
         <HostQuery context={CandidateContext}>
-          <Editable onSubmit={processSubmit} context={CandidateContext} formikRef={formikRef}>
+          <Editable
+            onSubmit={processSubmit}
+            values={value}
+            editable={state.local.editable}
+            formikRef={formikRef}
+          >
             <CandidateProfile />
           </Editable>
         </HostQuery>

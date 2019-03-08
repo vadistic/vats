@@ -78,6 +78,7 @@ const server = new ApolloServer({
   schema: executableSchema,
   context,
   introspection: true,
+  playground: true,
   debug: process.env.NODE_ENV === 'development',
 })
 

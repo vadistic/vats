@@ -1,6 +1,18 @@
 import { css } from '@emotion/core'
 import { StringMap } from '@martin_hotell/rex-tils'
+import {
+  CustomBasePicker,
+  CustomPicker,
+  CustomPickerProps,
+  DisplayActionButton,
+  DisplayLabel,
+  DisplayLabelProps,
+  FieldProps,
+  useEditableContext,
+  useFormikPicker,
+} from '@vats/forms'
 import { useTranslation } from '@vats/i18n'
+import { Theme } from '@vats/styling'
 import { ElementType, filterNull, Omit } from '@vats/utils'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
@@ -8,16 +20,6 @@ import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-r
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { useApolloClient } from 'react-apollo-hooks'
 import { Box } from '../box'
-import { useEditableContext } from '../editable'
-import {
-  CustomBasePicker,
-  CustomPicker,
-  CustomPickerProps,
-  FieldProps,
-  useFormikPicker,
-} from '../formik'
-import { DisplayActionButton } from './button'
-import { DisplayLabel, DisplayLabelProps } from './label'
 
 export interface PoweredPickerOwnProps<V extends any[]> {
   tagItemMap: {
@@ -180,7 +182,7 @@ const PoweredPicker: React.FC<PoweredPickerProps<Array<StringMap<any>>>> = ({
       return (
         <Box
           role="alert"
-          css={({ palette, fonts, sizes }) => ({
+          css={({ palette, fonts, sizes }: Theme) => ({
             fontSize: fonts.small.fontSize,
             color: palette.neutralSecondary,
             height: sizes.s3,

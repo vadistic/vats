@@ -1,8 +1,7 @@
 import { RouteComponentProps } from '@reach/router'
+import { Editable, FormikContextValue } from '@vats/forms'
 import React, { Suspense, useRef } from 'react'
 import { routes } from '../../routes'
-import { Editable } from '../editable'
-import { FormikContextValue } from '../formik'
 import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
 import { Surface } from '../surface'
@@ -18,7 +17,7 @@ export interface JobSurfaceProps extends RouteComponentProps {
 const JobSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading job...'} />
 
 export const JobSurfaceBase: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
-  const { dispatch } = useJobContext()
+  const { dispatch, state, value } = useJobContext()
 
   const handleDismiss = () => {
     if (navigate) {
@@ -37,6 +36,7 @@ export const JobSurfaceBase: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
   }
 
   const formikRef = useRef<FormikContextValue<JobValue>>(null)
+
   const handleSubmit = () => {
     if (formikRef.current) {
       formikRef.current.submitForm()
@@ -60,7 +60,12 @@ export const JobSurfaceBase: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
     >
       <Suspense fallback={<JobSurfaceFallback />}>
         <HostQuery context={JobContext}>
-          <Editable onSubmit={processSubmit} context={JobContext} formikRef={formikRef}>
+          <Editable
+            onSubmit={processSubmit}
+            values={value}
+            editable={state.local.editable}
+            formikRef={formikRef}
+          >
             <JobProfile />
           </Editable>
         </HostQuery>

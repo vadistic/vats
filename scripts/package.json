@@ -23,7 +23,7 @@
     "@babel/register": "^7.0.0",
     "@craco/craco": "3.5.0",
     "@emotion/babel-preset-css-prop": "^10.0.7",
-    "@hot-loader/react-dom": "^16.8.3",
+    "@hot-loader/react-dom": "^16.8.4",
     "@start/plugin": "^0.3.0",
     "@start/plugin-copy": "^0.3.0",
     "@start/plugin-find": "^0.3.0",
@@ -47,7 +47,7 @@
     "@types/storybook__react": "^4.0.1",
     "babel-loader": "^8.0.5",
     "babel-preset-backpack": "^0.8.2",
-    "babel-preset-react-app": "^7.0.1",
+    "babel-preset-react-app": "^7.0.2",
     "backpack-core": "^0.8.3",
     "chalk": "^2.4.2",
     "cross-spawn": "^6.0.5",
@@ -56,14 +56,14 @@
     "fs-extra": "^7.0.1",
     "graphql": "^14.1.1",
     "graphql-import": "^0.7.1",
-    "react-hot-loader": "4.7.2",
-    "react-scripts": "^2.1.5",
+    "react-hot-loader": "4.8.0",
+    "react-scripts": "^2.1.8",
     "serve": "^10.1.2",
     "stack-utils": "^1.0.2",
     "typescript": "3.3.3333"
   },
   "optionalDependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   }
 }

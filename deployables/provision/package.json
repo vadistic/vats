@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "@vats/utils": "^0.1.0",
-    "amazon-cognito-identity-js": "3.0.8",
-    "aws-sdk": "^2.415.0",
+    "amazon-cognito-identity-js": "3.0.9",
+    "aws-sdk": "^2.417.0",
     "cross-fetch": "3.0.1"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.20",
-    "@types/node": "11.10.4",
+    "@types/aws-lambda": "^8.10.21",
+    "@types/node": "11.10.5",
     "@vats/start": "^0.1.0",
     "serverless-webpack": "^5.1.1",
     "source-map-support": "^0.5.6",

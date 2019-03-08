@@ -1,8 +1,8 @@
+import { DisplayTextFieldArray } from '@vats/forms'
 import { useTranslation } from '@vats/i18n'
 import { pathProxy } from '@vats/utils'
 import React from 'react'
 import { Box } from '../../box'
-import { DisplayTextFieldArray } from '../../display'
 import { CandidateValue } from '../host'
 
 export const CandidateInfoSection: React.FC = () => {

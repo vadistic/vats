@@ -19,17 +19,13 @@
   },
   "dependencies": {
     "@vats/utils": "^0.1.0",
-    "i18next": "15.0.5",
-    "react-i18next": "^10.2.1"
+    "i18next": "15.0.6",
+    "react-i18next": "^10.3.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "devDependencies": {
     "@vats/start": "^0.1.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
     "typescript": "3.3.3333"
-  },
-  "peerDependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
   }
 }

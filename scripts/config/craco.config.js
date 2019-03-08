@@ -20,7 +20,7 @@ const aliasWebpack = webpackConfig => {
   const aliasPackageDirname = aliasPackageName.replace(MONOREPO_PREFIX, '')
 
   // build alias
-  const aliasPath = path.resolve(process.cwd(), '..', aliasPackageDirname, 'src')
+  const aliasPath = path.resolve(process.cwd(), '../../packages', aliasPackageDirname, 'src')
 
   const alias = {
     [aliasPackageName]: aliasPath,

@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import * as f from 'faker'
 
-import { WorkflowCreateInput } from '../src/generated/prisma-binding'
+import { WorkflowCreateInput } from '../src/generated/prisma-client'
 
 export interface Workflows {
   [index: string]: WorkflowCreateInput

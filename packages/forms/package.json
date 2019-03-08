@@ -16,25 +16,24 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.7",
+    "@vats/i18n": "^0.1.0",
     "@vats/styling": "^0.1.0",
     "@vats/utils": "^0.1.0",
-    "formik": "^2.0.0-gamma.1",
+    "formik": "vadistic/formik#formik-v2.0.0-gamma.1-gitpkg",
+    "office-ui-fabric-react": "6.152.1",
     "prismjs": "^1.15.0",
-    "slate": "^0.44.10",
-    "slate-plain-serializer": "^0.6.34",
-    "slate-react": "^0.21.16"
+    "react-dom": "^16.8.4",
+    "react": "^16.8.4",
+    "slate-plain-serializer": "^0.6.35",
+    "slate-react": "^0.21.17",
+    "slate": "^0.44.11"
   },
   "devDependencies": {
     "@types/prismjs": "^1.9.1",
     "@types/slate-plain-serializer": "^0.6.1",
     "@types/slate-react": "^0.21.0",
     "@vats/start": "^0.1.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
     "typescript": "3.3.3333"
-  },
-  "peerDependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
   }
 }

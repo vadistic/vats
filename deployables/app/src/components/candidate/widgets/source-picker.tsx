@@ -1,16 +1,14 @@
+import { FieldProps } from '@vats/forms'
 import { useTranslation } from '@vats/i18n'
 import gql from 'graphql-tag'
 import React from 'react'
 import { SourceFragment } from '../../../generated/fragments'
 import { Source } from '../../../generated/queries'
-import { DisplayPicker, DisplayPickerI, OnCreateData } from '../../display'
-import { FieldProps } from '../../formik'
+import { DisplayPicker, OnCreateData } from '../../picker'
 
 export type SourcesValue = Source[]
 
-export interface DisplaySourcePickerProps extends FieldProps {}
-
-const DisplaySourcePickerBase = DisplayPicker as DisplayPickerI<SourcesValue>
+export interface DisplaySourcePickerProps {}
 
 export const DisplaySourcePicker: React.FC<DisplaySourcePickerProps> = props => {
   const { tp } = useTranslation()
@@ -20,7 +18,8 @@ export const DisplaySourcePicker: React.FC<DisplaySourcePickerProps> = props => 
   })
 
   return (
-    <DisplaySourcePickerBase
+    <DisplayPicker
+      name="sources"
       labelProps={{
         iconProps: {
           iconName: 'opensource',

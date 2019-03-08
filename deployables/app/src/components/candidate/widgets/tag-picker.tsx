@@ -3,14 +3,11 @@ import gql from 'graphql-tag'
 import React from 'react'
 import { TagFragment } from '../../../generated/fragments'
 import { Tag } from '../../../generated/queries'
-import { DisplayPicker, DisplayPickerI, OnCreateData } from '../../display'
-import { FieldProps } from '../../formik'
+import { DisplayPicker, OnCreateData } from '../../picker'
 
 export type TagsValue = Tag[]
 
-export interface DisplayTagPickerProps extends FieldProps {}
-
-const DisplayTagPickerBase = DisplayPicker as DisplayPickerI<TagsValue>
+export interface DisplayTagPickerProps {}
 
 export const DisplayTagPicker: React.FC<DisplayTagPickerProps> = props => {
   const { tp } = useTranslation()
@@ -20,7 +17,8 @@ export const DisplayTagPicker: React.FC<DisplayTagPickerProps> = props => {
   })
 
   return (
-    <DisplayTagPickerBase
+    <DisplayPicker
+      name="tags"
       labelProps={{
         iconProps: {
           iconName: 'tag',

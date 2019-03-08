@@ -19,16 +19,12 @@
     "@emotion/core": "^10.0.7",
     "@uifabric/icons": "^6.4.0",
     "@uifabric/styling": "^6.44.1",
-    "@vats/utils": "^0.1.0"
+    "@vats/utils": "^0.1.0",
+    "react-dom": "^16.8.4",
+    "react": "^16.8.4"
   },
   "devDependencies": {
     "@vats/start": "^0.1.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
     "typescript": "3.3.3333"
-  },
-  "peerDependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
   }
 }

@@ -1,8 +1,8 @@
+import { DisplayTextField } from '@vats/forms'
 import { useTranslation } from '@vats/i18n'
 import { pathProxy } from '@vats/utils'
 import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
-import { DisplayTextField } from '../../display'
 import { CandidateValue } from '../host'
 import { UserAvatar } from '../widgets'
 

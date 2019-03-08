@@ -1,6 +1,6 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { Prisma } from 'prisma-binding'
-import { Prisma as PrismaBinding } from '../src/generated/prisma-binding'
+import { Prisma as PrismaBinding } from '../src/prisma-binding'
 
 export const prisma: any = new Prisma({
   typeDefs: 'src/generated/prisma.graphql',
