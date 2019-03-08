@@ -12,7 +12,7 @@
     "dev": "vscripts backpack dev",
     "test": "echo todo",
     "start": "node build/main.js",
-    "typecheck": "tsc -p . --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "apollo:push": "apollo service:push",
     "copyfiles": "vscripts copyfiles src/**/*.{json,graphql}",
     "copy:prisma": "cp ../prisma/src/generated/prisma.graphql ./src/generated",
