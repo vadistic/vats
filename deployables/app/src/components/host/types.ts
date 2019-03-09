@@ -1,5 +1,4 @@
 import { Exact, Omit } from '@vats/utils'
-import ApolloClient from 'apollo-client'
 import { HostActions } from './actions'
 import { Action, AugumentedDispatch } from './augument'
 import { RelationsType } from './diff'

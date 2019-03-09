@@ -1,5 +1,4 @@
 import { css } from '@emotion/core'
-import { StringMap } from '@martin_hotell/rex-tils'
 import {
   CustomBasePicker,
   CustomPicker,
@@ -13,7 +12,7 @@ import {
 } from '@vats/forms'
 import { useTranslation } from '@vats/i18n'
 import { Theme } from '@vats/styling'
-import { ElementType, filterNull, Omit } from '@vats/utils'
+import { ElementType, filterNull, Omit, StringMap } from '@vats/utils'
 import FuzzySearch from 'fuzzy-search'
 import { DocumentNode } from 'graphql'
 import { IPickerItemProps, TagItem, TagItemSuggestion } from 'office-ui-fabric-react'

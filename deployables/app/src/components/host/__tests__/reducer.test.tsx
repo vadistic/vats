@@ -11,13 +11,6 @@ interface State {
   }
 }
 
-interface IncompatibleState {
-  name: number
-  data: {
-    colors: string[]
-  }
-}
-
 const RESET = 'RESET'
 const SET_NAME = 'SET_NAME'
 const ActionsA = {
@@ -129,20 +122,8 @@ describe('reducer', () => {
         return _state.name
       }
 
-      const colorThunk = (color: string) => async (
-        _dispatch: React.Dispatch<ActionsB>,
-        _state: State,
-      ) => {
-        _dispatch(ActionsB.addColor(name))
-        return color
-      }
-
       const setName = () => {
-        const res = augumentedDispatch(nameThunk('Carol'))
-      }
-
-      const addColor = () => {
-        const res = augumentedDispatch(colorThunk('hotpink'))
+        augumentedDispatch(nameThunk('Carol'))
       }
 
       return (

@@ -16,7 +16,7 @@ export const navigationStyles = (theme: Theme) => css`
 export const Navigation: React.FC<NavigationProps> = ({ groups }) => {
   const homeLink: INavLink = routes.home
 
-  const [active, setActive] = useState(homeLink)
+  const [, setActive] = useState(homeLink)
 
   const mainGroup: INavLinkGroup = {
     links: Object.values(routes),

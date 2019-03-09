@@ -1,5 +1,3 @@
-// tslint:disable-next-line: no-implicit-dependencies
-import cloneDeep from 'clone-deep'
 import { recursiveTraverse, tryGetIn } from '../object'
 
 const fixture = {
@@ -13,12 +11,6 @@ const fixture = {
 }
 
 describe('object utils', () => {
-  let copy: typeof fixture
-
-  beforeEach(() => {
-    copy = cloneDeep(fixture)
-  })
-
   it('recursiveTraverse can return undefined', () => {
     const result = recursiveTraverse(fixture, [], (val, path) => {
       if (path.includes('searchElement')) {

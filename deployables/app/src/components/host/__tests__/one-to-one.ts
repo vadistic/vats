@@ -1,5 +1,5 @@
 import cloneDeep from 'clone-deep'
-import { diffAutoUpdataData, Relations, RelationsType } from '../diff'
+import { diffAutoUpdataData, Relations } from '../diff'
 
 const fixtureFields = {
   id: '123',

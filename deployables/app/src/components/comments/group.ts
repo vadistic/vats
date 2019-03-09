@@ -1,4 +1,3 @@
-import { Omit } from '@vats/utils'
 import { IGroup } from 'office-ui-fabric-react'
 import { CommentValue } from './comments'
 
@@ -27,7 +26,7 @@ export const groupComments = (
   comments: CommentValue[],
   options?: GroupCommentsOptions,
 ): GroupComments => {
-  // create hash
+  // create hashmap
   const groupHash: GroupHash = comments.reduce(
     (acc, comment) => {
       if (!comment.parent) {
@@ -36,7 +35,7 @@ export const groupComments = (
           replies: [],
         }
       } else {
-        // only needed temporary because seeding script could possibly deep nested
+        // only needed temporary because seeding script could possibly deep nest
         if (Object.keys(acc).includes(comment.parent.id)) {
           acc[comment.parent.id].replies.push(comment)
         }

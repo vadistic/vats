@@ -82,9 +82,8 @@ stories.add('local state', () => (
 const LocalState: React.FC = () => {
   const {
     state,
-    status,
-    data,
-    dispatchActions: { updateState, updateVariables },
+
+    dispatchActions: { updateState },
   } = useHostQuery(candidateHost, {
     variables: {},
   })
@@ -112,10 +111,9 @@ stories.add('query', () => (
 ))
 const Query: React.FC = () => {
   const {
-    state,
     status,
     data,
-    dispatchActions: { updateState, updateVariables },
+    dispatchActions: { updateVariables },
   } = useHostQuery(candidateHost, {
     variables: {},
   })

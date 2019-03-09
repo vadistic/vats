@@ -145,7 +145,7 @@ const decorateNode: Plugin['decorateNode'] = (node, editor, next) => {
     }
 
     if (typeof token !== 'string') {
-      const { type, alias, content } = token
+      const { type, content } = token
       let level = 0
 
       if (type === 'title' && Array.isArray(content)) {

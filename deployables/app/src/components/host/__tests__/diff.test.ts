@@ -64,7 +64,7 @@ describe('diff scalar changes', () => {
   it('report string to null', () => {
     copy.scalarString = null as any
 
-    const { queryData, scalars } = getData()
+    const { queryData } = getData()
 
     expect(queryData).toEqual({
       scalarString: null,

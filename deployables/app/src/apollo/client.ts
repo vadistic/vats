@@ -1,4 +1,3 @@
-import { StrictlyIndexed } from '@vats/utils'
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
 import { ApolloClient, ApolloClientOptions } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
@@ -44,8 +43,8 @@ export const apolloClientOptions: ApolloClientOptions<NormalizedCacheObject> = {
   connectToDevTools: true,
   link: ApolloLink.from([errorLink, httpLink]),
   typeDefs,
-  // quite typesafe assertions - only adding index signatures
-  resolvers: resolvers as StrictlyIndexed<typeof resolvers>,
+  // should be fixed in next major of gql-gen
+  resolvers: resolvers as any,
   cache,
 }
 

@@ -5,10 +5,10 @@ import React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from './apollo'
-import { CandidatesView, CandidateView, JobsView, JobView, Layout, Router } from './components'
+import { Layout, Router } from './components'
+import { CandidatesView, CandidateView, JobsView, JobView } from './modules'
 import { routes } from './routes'
 import { StateInspector } from './utils'
-import { DevView } from './views'
 
 import { I18nProvider } from '@vats/i18n'
 
@@ -26,7 +26,6 @@ export const App: React.FC = () => {
                 <Fabric theme={theme}>
                   <Layout>
                     <Router>
-                      <DevView path={routes.dev.path} />
                       <JobView path={routes.job.path + '/:id'} />
                       <JobsView path={routes.jobs.path} />
                       <CandidateView path={routes.candidate.path + '/:id'} />

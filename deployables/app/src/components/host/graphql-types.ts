@@ -1,4 +1,4 @@
-import { Exact, Merge, Omit } from '@vats/utils'
+import { Assign, Exact, Omit } from '@vats/utils'
 import { DocumentNode } from 'graphql'
 
 export interface WhereVariables {
@@ -73,9 +73,9 @@ export interface GraphqlMultiMutationTyping<
 }
 
 // for helpers only
-export type TGraphqlSingleTyping = Merge<GraphqlSingleQueryTyping, GraphqlSingleMutationTyping>
+export type TGraphqlSingleTyping = Assign<GraphqlSingleQueryTyping, GraphqlSingleMutationTyping>
 
-export type TGraphqlMultiTyping = Merge<GraphqlMultiQueryTyping, GraphqlMultiMutationTyping>
+export type TGraphqlMultiTyping = Assign<GraphqlMultiQueryTyping, GraphqlMultiMutationTyping>
 
 export type TGraphqlTyping = TGraphqlSingleTyping & TGraphqlMultiTyping
 

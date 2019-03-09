@@ -1,4 +1,4 @@
-import { FocusZone, IconButton, Modal, Panel, PanelType } from 'office-ui-fabric-react'
+import { IconButton, Modal, Panel, PanelType } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 
 interface SurfaceNavigation {

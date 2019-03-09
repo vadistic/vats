@@ -1,8 +1,7 @@
+import { StringMap } from '@vats/utils'
 import React from 'react'
 
-export interface ReducersStringMap {
-  [index: string]: React.Reducer<any, any>
-}
+export type ReducersStringMap = StringMap<React.Reducer<any, any>>
 
 type NoUnion<T> = [T] extends [infer U]
   ? U extends any

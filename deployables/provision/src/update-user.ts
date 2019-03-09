@@ -5,8 +5,6 @@ import 'cross-fetch/polyfill'
 import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda'
 import { CognitoIdentityServiceProvider } from 'aws-sdk'
 
-// tslint:disable: no-console
-
 // For ADMIN_NO_SRP_AUTH: USERNAME (required), SECRET_HASH (if app client is configured with client secret), PASSWORD (required), DEVICE_KEY
 const cognito = new CognitoIdentityServiceProvider({
   region: '',
@@ -28,6 +26,7 @@ const cognito = new CognitoIdentityServiceProvider({
 )
 
 export const create: Handler = (event: APIGatewayEvent, context: Context, cb: Callback) => {
+  console.log(cognito.startTime)
   const response = {
     statusCode: 200,
     body: JSON.stringify({

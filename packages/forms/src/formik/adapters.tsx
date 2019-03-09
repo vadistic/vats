@@ -98,7 +98,7 @@ export const useRegisterFieldEffect = (formik: any, name: string) => {
 
 // ! why hook return type is inferred incorretly when I use variable insted of literal??
 // leaving for documentation
-const formikHookFallback = {
+export const formikHookFallback = {
   formik: {},
   field: {},
   bind: {},
