@@ -1,20 +1,22 @@
 import { Omit } from '@martin_hotell/rex-tils'
-import { NetworkStatus, WatchQueryOptions } from 'apollo-client'
+import { ApolloQueryResult, NetworkStatus, WatchQueryOptions } from 'apollo-client'
 import { useContext, useEffect, useMemo, useRef } from 'react'
-import { Host } from './context'
-import { ApolloContext } from './react-apollo'
-import { HostStatus, HostTypingI } from './types'
+import { useHostContext } from './context'
+import { ActionCallback, ApolloContext } from './react-apollo'
+import { reporter } from './reporter'
+import { Host, HostStatus, HostTypingI } from './types'
 
-export type UseHostOptions<HostTyping extends HostTypingI> = Omit<
+export type UseHostQueryOptions<HostTyping extends HostTypingI> = Omit<
   WatchQueryOptions<HostTyping['variables']>,
   'query'
 >
 
 export const useHostQuery = <HostTyping extends HostTypingI>(
   host: Host<HostTyping>,
-  options: UseHostOptions<HostTyping>,
+  options: UseHostQueryOptions<HostTyping>,
+  cb?: ActionCallback<ApolloQueryResult<HostTyping['data']>>,
 ) => {
-  const ctx = useContext(host.context)
+  const ctx = useHostContext(host)
 
   // useEffect have closure on variables and I do not want to reobserve query on each status
   // useRef (which is tiny proxy I guess) allow getting current values nicely, it's not even a hack
@@ -34,15 +36,24 @@ export const useHostQuery = <HostTyping extends HostTypingI>(
   const client = useContext(ApolloContext)
 
   /*
+   * Validate
+   */
+  const graphqlQuery = config.graphql && config.graphql.query
+
+  if (!graphqlQuery) {
+    throw Error('useHostQuery cannot be used without query')
+  }
+
+  /*
    * Create observable query
    */
   const query = useMemo(() => {
-    if (status !== HostStatus.INIT) {
+    if (status !== HostStatus.START) {
       throw Error('useHostQuery hook can be used only once per host instance')
     }
 
     const watchQueryOptions: WatchQueryOptions<HostTyping['variables']> = {
-      query: config.graphql.query,
+      query: graphqlQuery,
       fetchPolicy: 'cache-and-network',
       ...options,
     }
@@ -60,30 +71,57 @@ export const useHostQuery = <HostTyping extends HostTypingI>(
       /*
        * INIT => LOADING
        */
-      if (res.networkStatus === NetworkStatus.loading && _status === HostStatus.INIT) {
+      if (_status === HostStatus.START) {
+        // tslint:disable-next-line: no-unused-expression
+        cb && cb.onStart && cb.onStart(res)
+        reporter(ctxRef.current, HostStatus.START, res, 'variables', options.variables)
+
         batch(async batchDispatch => {
           batchDispatch(actions.setVariables(options.variables || {}))
           batchDispatch(actions.setStatus(HostStatus.LOADING))
         })
+
+        return
       }
 
       /*
        * UPDATE
        */
 
-      if (res.networkStatus === NetworkStatus.setVariables && _status !== HostStatus.UPDATE) {
-        setStatus(HostStatus.UPDATE)
+      if (
+        (res.networkStatus === NetworkStatus.setVariables ||
+          res.networkStatus === NetworkStatus.refetch) &&
+        _status !== HostStatus.REFETCH
+      ) {
+        // tslint:disable-next-line: no-unused-expression
+        cb && cb.onUpdate && cb.onUpdate(res)
+        reporter(ctxRef.current, HostStatus.REFETCH, res)
+
+        setStatus(HostStatus.REFETCH)
+
+        return
       }
 
       /*
        * READY
        */
 
-      if (res.networkStatus === NetworkStatus.ready && _status !== HostStatus.READY) {
+      if (
+        res.networkStatus === NetworkStatus.ready &&
+        _status !== HostStatus.READY &&
+        // ! let mutations handle it themselves
+        _status !== HostStatus.MUTATE
+      ) {
+        // tslint:disable-next-line: no-unused-expression
+        cb && cb.onReady && cb.onReady(res)
+        reporter(ctxRef.current, HostStatus.READY, res)
+
         batch(async batchDispatch => {
-          batchDispatch(actions.setValue(res.data))
+          batchDispatch(actions.setData(res.data))
           batchDispatch(actions.setStatus(HostStatus.READY))
         })
+
+        return
       }
 
       /*
@@ -91,8 +129,15 @@ export const useHostQuery = <HostTyping extends HostTypingI>(
        */
 
       if (res.networkStatus === NetworkStatus.error && _status !== HostStatus.ERROR) {
+        reporter(ctxRef.current, 'ERROR', res)
+        // tslint:disable-next-line: no-unused-expression
+        cb && cb.onError && cb.onError(res)
         setStatus(HostStatus.ERROR)
+
+        return
       }
+
+      reporter(ctxRef.current, 'PASSED SUBSCRIPTION', res)
     })
 
     return () => {
@@ -103,10 +148,13 @@ export const useHostQuery = <HostTyping extends HostTypingI>(
   /*
    * Refetch on ctx variables changes (except on inital load)
    */
-  useEffect(() => {
+
+  useMemo(() => {
     const _status = ctxRef.current.status
-    if (_status !== 'INIT' && _status !== 'LOADING') {
-      query.refetch(variables)
+    const _variables = ctxRef.current.variables
+
+    if (_status === 'READY' || _status === 'ERROR') {
+      query.refetch(_variables)
     }
   }, [variables])
 

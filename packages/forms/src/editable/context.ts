@@ -18,8 +18,6 @@ export const useEditableContext = (name?: string) => {
   const { values: formikValues } = useFormikContext()
   const { values: editableValues, editable } = useContext(EditableContext)
 
-  console.log('from context', formikValues, editableValues)
-
   const values = editable ? formikValues : editableValues
 
   const value = name ? getInByPath(values, name) : undefined

@@ -30,8 +30,6 @@ export const Editable: React.FC<EditableProps> = ({
     formikRef.current = formik
   }
 
-  console.log('editable', values, normalisedValues)
-
   /*
    * There's a tricky bug when host was left in dirty state and then candidate switched
    * sometimes, after switching to edit formik values would show previous candidate

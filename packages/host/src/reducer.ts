@@ -7,7 +7,7 @@ import { HostState, HostStatus, HostTypingI } from './types'
 export const HostActionsType = Enum(
   'SET',
   'SET_STATUS',
-  'SET_VALUE',
+  'SET_DATA',
   'SET_STATE',
   'SET_VARIABLES',
   'UPDATE_STATE',
@@ -19,8 +19,8 @@ export const HostActions = {
   set: <HostTyping extends HostTypingI>(hostState: HostState<HostTyping>) =>
     createAction(HostActionsType.SET, hostState),
   setStatus: (status: HostStatus) => createAction(HostActionsType.SET_STATUS, status),
-  setValue: <HostTyping extends HostTypingI>(value: HostTyping['value']) =>
-    createAction(HostActionsType.SET_VALUE, value),
+  setData: <HostTyping extends HostTypingI>(data: HostTyping['data']) =>
+    createAction(HostActionsType.SET_DATA, data),
   setState: <HostTyping extends HostTypingI>(state: HostTyping['state']) =>
     createAction(HostActionsType.SET_STATE, state),
   setVariables: <HostTyping extends HostTypingI>(variables: HostTyping['variables']) =>
@@ -38,7 +38,7 @@ export interface DispatchActions<HostTyping extends HostTypingI> {
   set: (hostState: HostState<HostTyping>) => void
   setStatus: (status: HostStatus) => void
   setState: (state: HostTyping['state']) => void
-  setValue: (value: HostTyping['value']) => void
+  setData: (data: HostTyping['data']) => void
   setVariables: (variables: HostTyping['variables']) => void
   updateState: (recipe: (state: HostTyping['state']) => void) => void
   updateVariables: (recipe: (variables: HostTyping['variables']) => void) => void
@@ -76,8 +76,8 @@ const fluxReducer: React.Reducer<HostState<any>, HostActionsU> = (state, action)
       return action.payload
     case HostActionsType.SET_STATUS:
       return { ...state, status: action.payload }
-    case HostActionsType.SET_VALUE:
-      return { ...state, value: action.payload }
+    case HostActionsType.SET_DATA:
+      return { ...state, data: action.payload }
     case HostActionsType.SET_STATE:
       return { ...state, state: action.payload }
     case HostActionsType.SET_VARIABLES:

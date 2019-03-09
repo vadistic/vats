@@ -1,12 +1,20 @@
 import { DisplayLabel } from '@vats/forms'
+import { useHostContext } from '@vats/host'
 import { useTranslation } from '@vats/i18n'
 import React from 'react'
 import { DisplayDateTime, useDayjs } from '../../datetime'
-import { useCandidateContext } from '../host'
+import { candidateHost } from '../host'
 
 export const CandidateOverviewSection: React.FC = () => {
-  const { value: candidate } = useCandidateContext()
+  const {
+    data: { candidate },
+  } = useHostContext(candidateHost)
   const { tp } = useTranslation()
+
+  if (!candidate) {
+    return null
+  }
+
   return (
     <>
       <DisplayLabel text={tp.candidate.createdAt()} />

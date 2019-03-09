@@ -1,6 +1,9 @@
 import { Exact, Merge, Omit } from '@vats/utils'
 import { DocumentNode } from 'graphql'
 
+/*
+ * Variables
+ */
 export interface WhereVariables {
   where?: any
 }
@@ -16,6 +19,10 @@ export type TDeleteVariables = WhereVariables
 export type TUpdateManyVariables = WhereVariables & DataVariables
 export type TDeleteManyVariables = WhereVariables
 
+/*
+ * Helper
+ */
+
 interface GraphqlObject {
   id: string
   __typename: string
@@ -27,6 +34,10 @@ type MultiResponse<T> = { [K in keyof T]: T[K] extends Array<GraphqlObject | nul
 
 // TODO: maybe allow for 'count'
 type GraphqlBatch<T> = { [K in keyof T]: any }
+
+/*
+ * Single query
+ */
 
 export interface GraphqlSingleQueryTyping<
   Query extends SingleResponse<Query> = SingleResponse<any>,
@@ -52,6 +63,15 @@ export interface GraphqlSingleMutationTyping<
   deleteMutationVariables: DeleteMutationVariables
 }
 
+export type TGraphqlSingleTyping = Merge<
+  GraphqlSingleQueryTyping,
+  Partial<GraphqlSingleMutationTyping>
+>
+
+/*
+ * Multi query
+ */
+
 export interface GraphqlMultiQueryTyping<
   Query extends MultiResponse<Query> = MultiResponse<any>,
   QueryVariables extends TQueryVariables = TQueryVariables
@@ -72,12 +92,15 @@ export interface GraphqlMultiMutationTyping<
   deleteManyMutationVariables: DeleteManyMutationVariables
 }
 
-// for helpers only
-export type TGraphqlSingleTyping = Merge<GraphqlSingleQueryTyping, GraphqlSingleMutationTyping>
+export type TGraphqlMultiTyping = Merge<
+  GraphqlMultiQueryTyping,
+  Partial<GraphqlMultiMutationTyping>
+>
 
-export type TGraphqlMultiTyping = Merge<GraphqlMultiQueryTyping, GraphqlMultiMutationTyping>
-
-export type TGraphqlTyping = TGraphqlSingleTyping & TGraphqlMultiTyping
+/*
+ *  Typing creators
+ */
+export type TGraphqlTyping = TGraphqlSingleTyping | TGraphqlMultiTyping
 
 export type GraphqlSingleTypingCreator<
   T extends Exact<T, GraphqlSingleQueryTyping & Partial<GraphqlSingleMutationTyping>>
@@ -89,23 +112,3 @@ export type GraphqlMultiTypingCreator<
     GraphqlMultiQueryTyping & Partial<GraphqlSingleMutationTyping & GraphqlMultiMutationTyping>
   >
 > = T & Omit<GraphqlSingleMutationTyping & GraphqlMultiMutationTyping, keyof T>
-
-export interface HostGraphqlSingleConfig {
-  query: DocumentNode
-  queryRoot: string
-  createMutation?: DocumentNode
-  createMutationRoot?: string
-  updateMutation?: DocumentNode
-  updateMutationRoot?: string
-  deleteMutation?: DocumentNode
-  deleteMutationRoot?: string
-}
-
-export interface HostGraphqlMultiConfig extends HostGraphqlSingleConfig {
-  updateManyMutation: DocumentNode
-  updateManyMutationRoot: string
-  deleteManyMutation: DocumentNode
-  deleteManyMutationRoot: string
-}
-
-export type TGraphqlConfig = HostGraphqlSingleConfig | HostGraphqlMultiConfig

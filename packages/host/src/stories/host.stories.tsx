@@ -41,7 +41,7 @@ const initState = {
   local: 1,
 }
 
-const candidateHost = createHost<any, typeof initState, any>({
+const candidateHost = createHost<typeof initState, any>({
   initState,
   graphql: {
     query: CANDIDATES_QUERY,
@@ -62,13 +62,11 @@ export const apolloClientOptions = {
 
 export const client = new ApolloClient(apolloClientOptions)
 
-const FixtureWrapper: React.FC = () => {
+const FixtureWrapper: React.FC = ({ children }) => {
   return (
     <ApolloContext.Provider value={client}>
       <HostProvider host={candidateHost}>
-        <Suspense fallback={<p>Loading...</p>}>
-          <LocalState />
-        </Suspense>
+        <Suspense fallback={<p>Loading...</p>}>{children}</Suspense>
       </HostProvider>
     </ApolloContext.Provider>
   )
@@ -76,18 +74,20 @@ const FixtureWrapper: React.FC = () => {
 
 const stories = storiesOf('host', module)
 
-stories.add('local state', () => <FixtureWrapper />)
+stories.add('local state', () => (
+  <FixtureWrapper>
+    <LocalState />
+  </FixtureWrapper>
+))
 const LocalState: React.FC = () => {
   const {
     state,
     status,
-    value,
+    data,
     dispatchActions: { updateState, updateVariables },
   } = useHostQuery(candidateHost, {
     variables: {},
   })
-
-  console.log('FixtureInner', status)
 
   const localAction = () => updateState(s => s.local++)
 
@@ -105,18 +105,20 @@ const LocalState: React.FC = () => {
   )
 }
 
-stories.add('query', () => <Query />)
+stories.add('query', () => (
+  <FixtureWrapper>
+    <Query />
+  </FixtureWrapper>
+))
 const Query: React.FC = () => {
   const {
     state,
     status,
-    value,
+    data,
     dispatchActions: { updateState, updateVariables },
   } = useHostQuery(candidateHost, {
     variables: {},
   })
-
-  console.log('FixtureInner', status)
 
   const [field, setField] = useState('10')
 
@@ -153,10 +155,10 @@ const Query: React.FC = () => {
 
       <h3>
         {status === 'READY' &&
-          (value && value.candidates ? value.candidates.length : 'should not happen') + 'results'}
+          (data && data.candidates ? data.candidates.length : 'should not happen') + 'results'}
       </h3>
 
-      <pre>{status === 'READY' && JSON.stringify(value, null, 2)}</pre>
+      <pre>{status === 'READY' && JSON.stringify(data, null, 2)}</pre>
     </div>
   )
 }

@@ -462,7 +462,7 @@ const transformRelationsUpdateData = <T extends any>(target: T) =>
     return value
   })
 
-export const diffAutoUpdataData = <Value>(prev: Value, next: Value, map?: RelationsType<any>) => {
+export const diffQuery = <Value>(prev: Value, next: Value, map?: RelationsType<any>) => {
   const scalars: DiffResult<Value> = {
     queryData: undefined,
     updateData: undefined,

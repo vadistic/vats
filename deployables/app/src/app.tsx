@@ -1,3 +1,4 @@
+import { ApolloContext } from '@vats/host'
 import { theme, ThemeProvider } from '@vats/styling'
 import { Fabric } from 'office-ui-fabric-react'
 import React from 'react'
@@ -16,27 +17,29 @@ import { hot } from 'react-hot-loader'
 
 export const App: React.FC = () => {
   return (
-    <ApolloProvider client={client}>
-      <ApolloHooksProvider client={client}>
-        <I18nProvider>
-          <StateInspector name="APP">
-            <ThemeProvider theme={theme}>
-              <Fabric theme={theme}>
-                <Layout>
-                  <Router>
-                    <DevView path={routes.dev.path} />
-                    <JobView path={routes.job.path + '/:id'} />
-                    <JobsView path={routes.jobs.path} />
-                    <CandidateView path={routes.candidate.path + '/:id'} />
-                    <CandidatesView path={routes.candidates.path} />
-                  </Router>
-                </Layout>
-              </Fabric>
-            </ThemeProvider>
-          </StateInspector>
-        </I18nProvider>
-      </ApolloHooksProvider>
-    </ApolloProvider>
+    <ApolloContext.Provider value={client}>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client}>
+          <I18nProvider>
+            <StateInspector name="APP">
+              <ThemeProvider theme={theme}>
+                <Fabric theme={theme}>
+                  <Layout>
+                    <Router>
+                      <DevView path={routes.dev.path} />
+                      <JobView path={routes.job.path + '/:id'} />
+                      <JobsView path={routes.jobs.path} />
+                      <CandidateView path={routes.candidate.path + '/:id'} />
+                      <CandidatesView path={routes.candidates.path} />
+                    </Router>
+                  </Layout>
+                </Fabric>
+              </ThemeProvider>
+            </StateInspector>
+          </I18nProvider>
+        </ApolloHooksProvider>
+      </ApolloProvider>
+    </ApolloContext.Provider>
   )
 }
 

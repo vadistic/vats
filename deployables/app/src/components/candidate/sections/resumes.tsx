@@ -1,9 +1,10 @@
+import { useHostContext } from '@vats/host'
 import { useTranslation } from '@vats/i18n'
 import { useTheme } from '@vats/styling'
 import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
 import { ResumeCard } from '../../resume'
-import { useCandidateContext } from '../host'
+import { candidateHost } from '../host'
 
 export const UploadCard: React.FC = () => {
   return (
@@ -14,7 +15,14 @@ export const UploadCard: React.FC = () => {
 }
 
 export const CandidateResumesSection: React.FC = () => {
-  const { value: candidate } = useCandidateContext()
+  const {
+    data: { candidate },
+  } = useHostContext(candidateHost)
+
+  if (!candidate) {
+    return null
+  }
+
   const { tp } = useTranslation()
   const theme = useTheme()
 

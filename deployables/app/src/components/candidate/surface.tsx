@@ -1,30 +1,44 @@
 import { RouteComponentProps } from '@reach/router'
 import { Editable, FormikContextValue } from '@vats/forms'
-import React, { Suspense, useRef } from 'react'
+import { ApolloContext, diffQuery, HostProvider, useHostAutoUpdate, useHostQuery } from '@vats/host'
+import React, { useContext, useMemo, useRef } from 'react'
 import { routes } from '../../routes'
-import { HostQuery } from '../host'
 import { LoadingSpinner } from '../loading'
 import { Surface } from '../surface'
-import {
-  CandidateActions,
-  CandidateContext,
-  CandidateHostProvider,
-  CandidateValue,
-  useCandidateContext,
-} from './host'
+import { CANDIDATE_UPDATE_MUTATION, candidateHost, CandidateValue } from './host'
 import { CandidateProfile } from './profile'
-import { updateCandidate } from './thunks'
 
 export interface CandidateSurfaceProps extends RouteComponentProps {
   // injected by router
   id?: string
 }
 
-// TODO: Skeleton?
 const CandidateSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading candidate...'} />
 
 export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
-  const { value, dispatch, state } = useCandidateContext()
+  const {
+    data,
+    variables,
+    state,
+    status,
+    dispatchActions: { updateState, setData, setVariables },
+  } = useHostQuery(candidateHost, {
+    variables: {
+      where: { id },
+    },
+  })
+
+  const autoUpdate = useHostAutoUpdate(candidateHost)
+
+  useMemo(() => {
+    setVariables({
+      where: {
+        id,
+      },
+    })
+  }, [id])
+
+  const client = useContext(ApolloContext)
 
   const handleDismiss = () => {
     if (navigate) {
@@ -46,12 +60,15 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
   }
 
   const handleEdit = () => {
-    dispatch(CandidateActions.setEditable(true))
+    updateState(s => (s.editable = true))
   }
 
-  const processSubmit = (values: CandidateValue) => {
+  const processSubmit = async (values: CandidateValue) => {
+    updateState(s => (s.editable = false))
     if (formikRef.current && formikRef.current.dirty) {
-      dispatch(updateCandidate(values))
+      autoUpdate({
+        candidate: values,
+      })
     }
   }
 
@@ -64,18 +81,18 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
         onExpand: handleExpand,
       }}
     >
-      <Suspense fallback={<CandidateSurfaceFallback />}>
-        <HostQuery context={CandidateContext}>
-          <Editable
-            onSubmit={processSubmit}
-            values={value}
-            editable={state.local.editable}
-            formikRef={formikRef}
-          >
-            <CandidateProfile />
-          </Editable>
-        </HostQuery>
-      </Suspense>
+      {(status === 'READY' || status === 'MUTATE') && data.candidate ? (
+        <Editable
+          onSubmit={processSubmit}
+          values={data.candidate}
+          editable={state.editable}
+          formikRef={formikRef}
+        >
+          <CandidateProfile />
+        </Editable>
+      ) : (
+        <CandidateSurfaceFallback />
+      )}
     </Surface>
   )
 }
@@ -87,8 +104,8 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id
   }
 
   return (
-    <CandidateHostProvider initArg={{ id }}>
+    <HostProvider host={candidateHost}>
       <CandidateSurfaceBase navigate={navigate} id={id} />
-    </CandidateHostProvider>
+    </HostProvider>
   )
 }

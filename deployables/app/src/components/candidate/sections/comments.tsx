@@ -1,15 +1,14 @@
+import { useHostContext } from '@vats/host'
 import gql from 'graphql-tag'
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { CommentFragment, UserFragment } from '../../../generated/fragments'
 import { CandidateCommentsQuery, CandidateCommentsQueryVariables } from '../../../generated/queries'
 import { Comments, suspendComments } from '../../comments'
-import { useCandidateContext } from '../host'
+import { candidateHost } from '../host'
 
 export const CandidateCommentsBase: React.FC = () => {
-  const {
-    state: { variables },
-  } = useCandidateContext()
+  const { variables } = useHostContext(candidateHost)
 
   const res = useQuery<CandidateCommentsQuery, CandidateCommentsQueryVariables>(
     CANDIDATE_COMMENTS_QUERY,

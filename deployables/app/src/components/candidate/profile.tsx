@@ -1,9 +1,10 @@
+import { useHostContext } from '@vats/host'
 import { useTranslation } from '@vats/i18n'
 import { tryGetIn } from '@vats/utils'
 import { PivotItem } from 'office-ui-fabric-react'
 import React, { useState } from 'react'
 import { SurfacePivot } from '../surface'
-import { useCandidateContext } from './host'
+import { candidateHost } from './host'
 import {
   CandidateCommentsSection,
   CandidateInfoSection,
@@ -14,9 +15,15 @@ import {
 } from './sections'
 
 export const CandidateProfile: React.FC = () => {
-  const { value: candidate } = useCandidateContext()
+  const {
+    data: { candidate },
+  } = useHostContext(candidateHost)
   const { tp } = useTranslation()
   const [selectedKey, setSelectedKey] = useState('overview')
+
+  if (!candidate) {
+    return null
+  }
 
   const handleLinkClick = (item?: PivotItem) => {
     if (item && item.props.itemKey) {
