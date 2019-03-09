@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "paths": {
       "@vats/*": ["./packages/*/src"]
-    }
+    },
+    "plugins": [{ "name": "typescript-tslint-plugin" }, { "name": "typescript-styled-plugin" }]
   },
   "exclude": ["**/node_modules/**"]
 }

@@ -1,5 +1,5 @@
 diff --git a/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js b/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js
-index 061fb2b..ba64ab7 100644
+index 061fb2b..2397cc1 100644
 --- a/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js
 +++ b/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js
 @@ -142,7 +142,7 @@ var PivotBase = /** @class */ (function (_super) {

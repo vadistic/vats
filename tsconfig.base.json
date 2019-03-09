@@ -13,7 +13,7 @@
     // strict
     "strict": true,
     // lint
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
     "noUnusedParameters": false
   }

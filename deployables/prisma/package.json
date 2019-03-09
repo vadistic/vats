@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@types/faker": "4.1.5",
-    "@types/ramda": "^0.25.51",
+    "@types/ramda": "^0.26.1",
     "@vats/start": "^0.1.0",
     "faker": "^4.1.0",
     "prisma": "^1.28.1",

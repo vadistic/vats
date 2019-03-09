@@ -21,13 +21,13 @@
     "@vats/styling": "^0.1.0",
     "@vats/utils": "^0.1.0",
     "formik": "vadistic/formik#formik-v2.0.0-gamma.1-gitpkg",
-    "office-ui-fabric-react": "6.152.1",
+    "office-ui-fabric-react": "6.153.0",
     "prismjs": "^1.15.0",
-    "react-dom": "^16.8.4",
     "react": "^16.8.4",
-    "slate-plain-serializer": "^0.6.35",
-    "slate-react": "^0.21.17",
-    "slate": "^0.44.11"
+    "react-dom": "^16.8.4",
+    "slate": "^0.44.12",
+    "slate-plain-serializer": "^0.6.36",
+    "slate-react": "^0.21.18"
   },
   "devDependencies": {
     "@types/prismjs": "^1.9.1",

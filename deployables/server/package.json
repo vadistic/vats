@@ -24,7 +24,7 @@
     "@vats/prisma": "^0.1.0",
     "@vats/utils": "^0.1.0",
     "apollo-server": "2.4.8",
-    "aws-sdk": "^2.417.0",
+    "aws-sdk": "^2.418.0",
     "dayjs": "1.8.9",
     "gql-import": "vadistic/gql-import#gql-import-v0.1.2-gitpkg",
     "graphql": "^14.1.1",
@@ -40,7 +40,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/graphql": "^14.0.6",
-    "@types/jsonwebtoken": "^8.3.1",
+    "@types/jsonwebtoken": "^8.3.2",
     "@vats/start": "^0.1.0",
     "apollo": "2.6.0",
     "graphql-code-generator": "0.18.0",

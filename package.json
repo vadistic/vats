@@ -32,8 +32,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^24.0.9",
-    "@types/node": "^11.10.5",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.11.0",
     "@types/react": "^16.8.7",
     "@types/react-dom": "^16.8.2",
     "apollo": "^2.6.0",
@@ -49,7 +49,9 @@
     "tslint": "^5.13.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "typescript-styled-plugin": "^0.14.0",
+    "typescript-tslint-plugin": "^0.3.1"
   },
   "workspaces": {
     "packages": [
