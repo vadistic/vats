@@ -1,5 +1,4 @@
-import { Exact, Merge, Omit } from '@vats/utils'
-import { DocumentNode } from 'graphql'
+import { Assign, Exact, Omit } from '@vats/utils'
 
 /*
  * Variables
@@ -63,7 +62,7 @@ export interface GraphqlSingleMutationTyping<
   deleteMutationVariables: DeleteMutationVariables
 }
 
-export type TGraphqlSingleTyping = Merge<
+export type TGraphqlSingleTyping = Assign<
   GraphqlSingleQueryTyping,
   Partial<GraphqlSingleMutationTyping>
 >
@@ -92,7 +91,7 @@ export interface GraphqlMultiMutationTyping<
   deleteManyMutationVariables: DeleteManyMutationVariables
 }
 
-export type TGraphqlMultiTyping = Merge<
+export type TGraphqlMultiTyping = Assign<
   GraphqlMultiQueryTyping,
   Partial<GraphqlMultiMutationTyping>
 >

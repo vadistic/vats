@@ -17,20 +17,44 @@ export type Tail<U> = U extends [any]
 /*
  * Index signatures
  */
+export type StringIndex<T = {}> = {
+  [index: string]: unknown
+} & { [K in keyof T]: T[K] }
 
-export interface StrictIndexSignature {
-  [index: string]: never
-}
-
-export interface StringIndexSignature {
+export type LooseStringIndex<T = {}> = {
   [index: string]: any
+} & { [K in keyof T]: T[K] }
+
+export type StrictStringIndex<T = {}> = {
+  [index: string]: never
+} & { [K in keyof T]: T[K] }
+
+// for arrays
+export type StringIndexArrayElements<A = []> = Array<StringIndex<ElementType<A>>>
+
+// helper
+export type DeepStringIndexChildren<C = {}> = C extends any[]
+  ? DeepStringIndexArray<C>
+  : C extends object
+  ? DeepStringIndex<C>
+  : C
+
+// helper for arrays in arrays
+export type DeepStringIndexArray<A = []> = {
+  [index: number]: unknown
+} & { [K in keyof A]: DeepStringIndexChildren<A[K]> }
+
+export type DeepStringIndex<T = {}> = {
+  [index: string]: unknown
+} & {
+  [K in keyof T]: T[K] extends any[]
+    ? Array<DeepStringIndexChildren<ElementType<T[K]>>>
+    : T[K] extends object
+    ? DeepStringIndex<T[K]>
+    : T[K]
 }
 
-export type StrictlyIndexed<T> = T & StrictIndexSignature
-
-export type Indexed<T> = T & StringIndexSignature
-
-// ! prefer this
+// ! prefer just this for simplicity
 export interface StringMap<V = any> {
   [index: string]: V
 }
@@ -59,10 +83,23 @@ export type ElementTypeOr<T> = T extends Array<infer E> ? E : T
 
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
 
-export type Exact<T, S> = { [K in keyof T]: K extends keyof S ? T[K] : never }
+/**
+ * It's basically filter keys but nvm
+ *
+ * Allow to force type T extending S to have only props from S
+ * Or removing index signatures?
+ *
+ * @example
+ * type Strict<T extends Exact<T, Base>> = T
+ */
+export type Exact<T, Base> = { [K in keyof T]: K extends keyof Base ? T[K] : never }
 
-export type Merge<A, B> = {
-  [K in keyof A | keyof B]: K extends keyof A ? A[K] : K extends keyof B ? B[K] : never
+/**
+ * merge types by prop, S to T prefering A;
+ * like Object.assign(target, source)
+ */
+export type Assign<T, S> = {
+  [K in keyof T | keyof S]: K extends keyof S ? S[K] : K extends keyof T ? T[K] : never
 }
 
 export type UnionOnProps<A, B> = {

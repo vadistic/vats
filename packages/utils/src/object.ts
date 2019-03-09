@@ -1,5 +1,5 @@
 import { XNOR } from './guards'
-import { Head, StringIndexSignature, Tail } from './types'
+import { Head, StringIndex, Tail } from './types'
 
 /*
  * GETTERS
@@ -155,7 +155,7 @@ export const recursiveTransformLeafs = (
   } else if (Array.isArray(input)) {
     return input.map((el, index) => recursiveTransformLeafs(el, index, transformFn))
   } else if (typeof input === 'object') {
-    const init: StringIndexSignature = {}
+    const init: StringIndex = {}
 
     return Object.keys(input as object).reduce((acc, key) => {
       acc[key] = recursiveTransformLeafs(input[key], key, transformFn)
@@ -188,7 +188,7 @@ export const recursiveTransform = (
 
     return transformFn(deepArr, path)
   } else if (typeof input === 'object') {
-    const init: StringIndexSignature = {}
+    const init: StringIndex = {}
 
     const deepObj = Object.keys(input as object).reduce((acc, key) => {
       acc[key] = recursiveTransform(input[key], [...path, key], transformFn)

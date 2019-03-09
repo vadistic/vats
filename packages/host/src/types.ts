@@ -1,29 +1,19 @@
 import { Enum } from '@martin_hotell/rex-tils'
+import { DeepStringIndex } from '@vats/utils'
 import { DocumentNode } from 'graphql'
 import { Batch } from './batch'
 import { TQueryVariables } from './graphql-types'
 import { DispatchActions, HostActions, HostActionsU } from './reducer'
-
-export type StringIndex<T = {}> = {
-  [index: string]: unknown
-} & { [K in keyof T]: T[K] }
-
-export type LooseStringIndex<T = {}> = {
-  [index: string]: any
-} & { [K in keyof T]: T[K] }
-
-export type StrictStringIndex<T = {}> = {
-  [index: string]: never
-} & { [K in keyof T]: T[K] }
 
 export interface HostTypingI<
   State = {},
   Data = {},
   Variables extends TQueryVariables = TQueryVariables
 > {
-  data: StringIndex<Data>
-  state: StringIndex<State>
-  variables: Variables
+  // string indexed for convinience
+  data: DeepStringIndex<Data>
+  state: DeepStringIndex<State>
+  variables: DeepStringIndex<Variables>
 }
 
 export interface HostGraphql {
@@ -52,8 +42,21 @@ export interface HostConfig<HostTyping extends HostTypingI> {
   debug?: boolean
 }
 
-// TODO: maybe differentiate between query update and mutation? MUTATE status?
-export const HostStatus = Enum('START', 'LOADING', 'REFETCH', 'MUTATE', 'READY', 'ERROR')
+export const HostStatus = Enum(
+  /** on mount */
+  'START',
+  /** on first fetch */
+  'LOADING',
+  /** on refetch/variable change */
+  'REFETCH',
+  /** on mutation */
+  'MUTATE',
+  /** on success/completed */
+  'READY',
+  /** on error */
+  'ERROR',
+)
+
 export type HostStatus = Enum<typeof HostStatus>
 
 export interface Host<HostTyping extends HostTypingI> {

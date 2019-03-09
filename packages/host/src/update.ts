@@ -5,7 +5,6 @@ import { diffQuery } from './diff'
 import { ActionCallback, ApolloContext } from './react-apollo'
 import { reporter } from './reporter'
 import { Host, HostStatus, HostTypingI } from './types'
-import { useAsyncEffect } from './use-async-effect'
 
 export type UseHostMutationOptions<HostTyping extends HostTypingI> = Omit<
   MutationOptions<HostTyping['variables']>,
@@ -22,7 +21,7 @@ export interface UpdateCallbackArg<HostTyping extends HostTypingI> {
 
 /*
  * Hook for performing auto-update of data
- * TODO: optimsie with batch updates
+ * TODO: optimise with batch updates
  */
 export const useHostAutoUpdate = <HostTyping extends HostTypingI>(
   host: Host<HostTyping>,
@@ -59,19 +58,15 @@ export const useHostAutoUpdate = <HostTyping extends HostTypingI>(
      * config
      */
     const updatePolicy = options.updatePolicy || 'optimistic'
-
     const shouldOptimisticUpdate =
       queryData &&
       (updatePolicy === 'cache-only' ||
         updatePolicy === 'optimistic' ||
         updatePolicy === 'optimistic-and-network')
-
     const shouldResUpdate =
       updatePolicy === 'optimistic-and-network' || updatePolicy === 'network-only'
-
     // in other cases mutation will update cache automatically
     const shouldCacheUpadte = queryData && updatePolicy === 'cache-only'
-
     const shouldMutate = queryData && updatePolicy !== 'cache-only'
 
     const main = async () => {

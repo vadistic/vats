@@ -1,4 +1,4 @@
-import { StringMap } from '@martin_hotell/rex-tils'
+import { StringMap } from './types'
 
 // TODO: autogenerate it?
 export const mimeTypes: StringMap<string> = {
