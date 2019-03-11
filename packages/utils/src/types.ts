@@ -17,6 +17,7 @@ export type Tail<U> = U extends [any]
 /*
  * Index signatures
  */
+
 export type StringIndex<T = {}> = {
   [index: string]: unknown
 } & { [K in keyof T]: T[K] }
@@ -70,6 +71,7 @@ export type DeepPartial<T> = {
     ? ReadonlyArray<DeepPartial<U>>
     : DeepPartial<T[P]>
 }
+
 /*
  * Return type of array element or just the same type
  */
@@ -145,6 +147,29 @@ export type RejectKeys<T, Condition> = { [Key in keyof T]: Key extends Condition
 export type RejectValues<T, Condition> = {
   [Key in keyof T]: T[Key] extends Condition ? never : T[Key]
 }
+
+/*
+ * Prevent extending string union to strings
+ * https://stackoverflow.com/questions/54333982/why-is-typescript-converting-string-literal-union-type-to-string-when-assigning
+ */
+export type Narrowable =
+  | string
+  | number
+  | boolean
+  | symbol
+  | object
+  | null
+  | undefined
+  | void
+  | ((...args: any[]) => any)
+  | {}
+
+export const literally = <
+  T extends V | Array<V | T> | { [k: string]: V | T },
+  V extends Narrowable
+>(
+  input: T,
+) => input
 
 /*
  * Graphql utils

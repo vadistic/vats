@@ -3,12 +3,12 @@ import spawn from '@start/plugin-spawn'
 /**
  * just call backpack because my dev server has some errros :/
  */
-export const backpack = async (args: string[]) => {
+export const test = async (args: string[]) => {
   // todo: copy config?
 
   // @ts-ignore
   const { default: config } = await import('../env/dotenv')
   config()
 
-  return spawn(['backpack', ...args])
+  return spawn(['jest', ...args])
 }

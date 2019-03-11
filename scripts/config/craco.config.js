@@ -129,10 +129,32 @@ module.exports = {
     },
   },
   jest: {
-    configure: {
-      moduleNameMapper: {
+    configure: (jestConfig, { env, paths, resolve, rootDir }) => {
+      jestConfig.moduleNameMapper = Object.assign(jestConfig.moduleNameMapper, {
         'office-ui-fabric-react/lib/(.*)$': 'office-ui-fabric-react/lib-commonjs/$1',
-      },
+        /*
+         * So this is basically a fail... cannot get babel-jest to transform monorepo's esm any other way
+         */
+        '@vats/(forms|host|i18n|styling|utils)(.*)$': path.resolve(
+          process.cwd(),
+          '../../packages/$1/src$2',
+        ),
+      })
+
+      jestConfig.transform = {
+        '^.+\\.(js|jsx|ts|tsx)$': require.resolve('./babelTransform.js'),
+        '^.+\\.css$': require.resolve('react-scripts/config/jest/cssTransform.js'),
+        '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': require.resolve(
+          'react-scripts/config/jest/fileTransform.js',
+        ),
+      }
+
+      jestConfig.transformIgnorePatterns = [
+        '[/\\\\]node_modules[/\\\\](?!vats).+\\.(js|jsx|ts|tsx)$',
+        '^.+\\.module\\.(css|sass|scss)$',
+      ]
+
+      return jestConfig
     },
   },
 }
