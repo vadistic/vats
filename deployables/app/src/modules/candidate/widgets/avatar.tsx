@@ -1,11 +1,11 @@
 import { css } from '@emotion/core'
-import { useHostContext } from '@vats/host'
 import { Theme, useTheme } from '@vats/styling'
+import { observer } from 'mobx-react-lite'
 import { PersonaCoin } from 'office-ui-fabric-react'
-import React from 'react'
-import { candidateHost } from '../host'
+import React, { useContext } from 'react'
+import { CandidateContext } from '../store'
 
-export const userAvatarStyles = (theme: Theme) => css`
+export const candidateAvatarStyles = (theme: Theme) => css`
   width: ${theme.sizes.s1};
   height: ${theme.sizes.s1};
 
@@ -14,18 +14,16 @@ export const userAvatarStyles = (theme: Theme) => css`
   background-color: ${theme.semanticColors.disabledBackground};
 `
 
-export const UserAvatar: React.FC = () => {
-  const {
-    data: { candidate },
-  } = useHostContext(candidateHost)
+export const CandidateAvatarBase: React.FC = () => {
+  const store = useContext(CandidateContext)
 
-  if (!candidate) {
+  if (!store.data.candidate) {
     return null
   }
 
   const theme = useTheme()
 
-  const { avatar, firstName, lastName } = candidate
+  const { avatar, firstName, lastName } = store.data.candidate
 
   return (
     <PersonaCoin
@@ -35,3 +33,5 @@ export const UserAvatar: React.FC = () => {
     />
   )
 }
+
+export const CandidateAvatar = observer(CandidateAvatarBase)

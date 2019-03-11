@@ -1,10 +1,11 @@
-import { useHostContext } from '@vats/host'
 import { useTranslation } from '@vats/i18n'
 import { useTheme } from '@vats/styling'
+import { toJS } from 'mobx'
+import { observer } from 'mobx-react-lite'
 import { Stack } from 'office-ui-fabric-react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { ResumeCard } from '../../../components'
-import { candidateHost } from '../host'
+import { CandidateContext } from '../store'
 
 export const UploadCard: React.FC = () => {
   return (
@@ -14,19 +15,17 @@ export const UploadCard: React.FC = () => {
   )
 }
 
-export const CandidateResumesSection: React.FC = () => {
-  const {
-    data: { candidate },
-  } = useHostContext(candidateHost)
+export const CandidateResumesSectionBase: React.FC = () => {
+  const store = useContext(CandidateContext)
 
-  if (!candidate) {
+  if (!store.data.candidate) {
     return null
   }
 
   const { tp } = useTranslation()
   const theme = useTheme()
 
-  const { resumesFile } = candidate
+  const resumesFile = toJS(store.data.candidate.resumesFile)
 
   if (!resumesFile) {
     return (
@@ -45,3 +44,5 @@ export const CandidateResumesSection: React.FC = () => {
     </Stack>
   )
 }
+
+export const CandidateResumesSection = observer(CandidateResumesSectionBase)

@@ -1,10 +1,9 @@
-import { useHostContext } from '@vats/host'
 import { useTranslation } from '@vats/i18n'
 import { tryGetIn } from '@vats/utils'
+import { observer } from 'mobx-react-lite'
 import { PivotItem } from 'office-ui-fabric-react'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { SurfacePivot } from '../../components'
-import { candidateHost } from './host'
 import {
   CandidateCommentsSection,
   CandidateInfoSection,
@@ -13,15 +12,14 @@ import {
   CandidateResumesSection,
   CandidateTopSection,
 } from './sections'
+import { CandidateContext } from './store'
 
-export const CandidateProfile: React.FC = () => {
-  const {
-    data: { candidate },
-  } = useHostContext(candidateHost)
+export const CandidateProfile: React.FC = observer(() => {
+  const store = useContext(CandidateContext)
   const { tp } = useTranslation()
   const [selectedKey, setSelectedKey] = useState('overview')
 
-  if (!candidate) {
+  if (!store.data.candidate) {
     return null
   }
 
@@ -32,12 +30,12 @@ export const CandidateProfile: React.FC = () => {
   }
 
   const resumesCount =
-    (tryGetIn(candidate, 'resumesFile') || []).length +
-    (tryGetIn(candidate, 'resumesString') || []).length +
-    (tryGetIn(candidate, 'coverLettersFile') || []).length +
-    (tryGetIn(candidate, 'coverLettersString') || []).length
+    (tryGetIn(store.data.candidate, 'resumesFile') || []).length +
+    (tryGetIn(store.data.candidate, 'resumesString') || []).length +
+    (tryGetIn(store.data.candidate, 'coverLettersFile') || []).length +
+    (tryGetIn(store.data.candidate, 'coverLettersString') || []).length
 
-  const commentsCount = (tryGetIn(candidate, 'comments') || []).length
+  const commentsCount = (tryGetIn(store.data.candidate, 'comments') || []).length
 
   return (
     <>
@@ -88,4 +86,4 @@ export const CandidateProfile: React.FC = () => {
       />
     </>
   )
-}
+})

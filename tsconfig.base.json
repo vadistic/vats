@@ -10,6 +10,7 @@
     "skipDefaultLibCheck": true,
     "downlevelIteration": true,
     "jsx": "preserve",
+    "experimentalDecorators": true,
     // strict
     "strict": true,
     // lint

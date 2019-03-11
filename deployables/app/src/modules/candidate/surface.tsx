@@ -1,11 +1,14 @@
 import { RouteComponentProps } from '@reach/router'
 import { Editable, FormikContextValue } from '@vats/forms'
-import { HostProvider, useHostAutoUpdate, useHostQuery } from '@vats/host'
-import React, { useMemo, useRef } from 'react'
+import { toJS } from 'mobx'
+import { useObserver } from 'mobx-react-lite'
+import React, { useContext, useMemo, useRef } from 'react'
 import { LoadingSpinner, Surface } from '../../components'
 import { routes } from '../../routes'
-import { candidateHost, CandidateValue } from './host'
+import { StoreProvider, StoreStatus } from '../../store'
+import { CandidateValue } from './host'
 import { CandidateProfile } from './profile'
+import { CandidateContext, createCandidateStore } from './store'
 
 export interface CandidateSurfaceProps extends RouteComponentProps {
   // injected by router
@@ -15,26 +18,7 @@ export interface CandidateSurfaceProps extends RouteComponentProps {
 const CandidateSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading candidate...'} />
 
 export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
-  const {
-    data,
-    state,
-    status,
-    dispatchActions: { updateState, setVariables },
-  } = useHostQuery(candidateHost, {
-    variables: {
-      where: { id },
-    },
-  })
-
-  const autoUpdate = useHostAutoUpdate(candidateHost)
-
-  useMemo(() => {
-    setVariables({
-      where: {
-        id,
-      },
-    })
-  }, [id])
+  const store = useContext(CandidateContext)
 
   const handleDismiss = () => {
     if (navigate) {
@@ -49,6 +33,7 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
   }
 
   const formikRef = useRef<FormikContextValue<CandidateValue>>(null)
+
   const handleSubmit = () => {
     if (formikRef.current) {
       formikRef.current.submitForm()
@@ -56,19 +41,29 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
   }
 
   const handleEdit = () => {
-    updateState(s => (s.editable = true))
+    store.state.editable = true
   }
 
-  const processSubmit = async (values: CandidateValue) => {
-    updateState(s => (s.editable = false))
+  const processSubmit = (values: CandidateValue) => {
+    store.state.editable = false
     if (formikRef.current && formikRef.current.dirty) {
-      autoUpdate({
+      store.autoUpdate({
         candidate: values,
       })
     }
   }
 
-  return (
+  // refetch
+  useMemo(() => {
+    if (
+      (!store.data.candidate && store.meta.status !== StoreStatus.init) ||
+      (store.data.candidate && id !== store.data.candidate.id)
+    ) {
+      store.refetch({ where: { id } })
+    }
+  }, [id])
+
+  return useObserver(() => (
     <Surface
       navitationProps={{
         onDismiss: handleDismiss,
@@ -77,11 +72,11 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
         onExpand: handleExpand,
       }}
     >
-      {(status === 'READY' || status === 'MUTATE') && data.candidate ? (
+      {store.meta.status === StoreStatus.ready ? (
         <Editable
           onSubmit={processSubmit}
-          values={data.candidate}
-          editable={state.editable}
+          values={toJS(store.data.candidate)}
+          editable={store.state.editable}
           formikRef={formikRef}
         >
           <CandidateProfile />
@@ -90,7 +85,7 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
         <CandidateSurfaceFallback />
       )}
     </Surface>
-  )
+  ))
 }
 
 export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
@@ -100,8 +95,12 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id
   }
 
   return (
-    <HostProvider host={candidateHost}>
+    <StoreProvider
+      createStoreProps={{ id }}
+      createStore={createCandidateStore}
+      context={CandidateContext}
+    >
       <CandidateSurfaceBase navigate={navigate} id={id} />
-    </HostProvider>
+    </StoreProvider>
   )
 }

@@ -95,7 +95,7 @@ export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
 export type Exact<T, Base> = { [K in keyof T]: K extends keyof Base ? T[K] : never }
 
 /**
- * merge types by prop, S to T prefering A;
+ * merge types by prop, S to T prefering S;
  * like Object.assign(target, source)
  */
 export type Assign<T, S> = {

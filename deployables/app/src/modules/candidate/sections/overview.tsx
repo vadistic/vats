@@ -1,27 +1,27 @@
 import { DisplayLabel } from '@vats/forms'
-import { useHostContext } from '@vats/host'
 import { useTranslation } from '@vats/i18n'
-import React from 'react'
+import { observer } from 'mobx-react-lite'
+import React, { useContext } from 'react'
 import { DisplayDateTime } from '../../../components'
-import { candidateHost } from '../host'
+import { CandidateContext } from '../store'
 
-export const CandidateOverviewSection: React.FC = () => {
-  const {
-    data: { candidate },
-  } = useHostContext(candidateHost)
+const CandidateOverviewSectionBase: React.FC = () => {
+  const store = useContext(CandidateContext)
   const { tp } = useTranslation()
 
-  if (!candidate) {
+  if (!store.data.candidate) {
     return null
   }
 
   return (
     <>
       <DisplayLabel text={tp.candidate.createdAt()} />
-      <DisplayDateTime isoDate={candidate.createdAt} />
+      <DisplayDateTime isoDate={store.data.candidate.createdAt} />
       <DisplayLabel text={tp.candidate.updatedAt()} />
-      <DisplayDateTime isoDate={candidate.updatedAt} />
+      <DisplayDateTime isoDate={store.data.candidate.updatedAt} />
       <p>TODO: Display activity feed & tasks here</p>
     </>
   )
 }
+
+export const CandidateOverviewSection = observer(CandidateOverviewSectionBase)

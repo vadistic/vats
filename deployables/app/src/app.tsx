@@ -1,10 +1,9 @@
-import { ApolloContext } from '@vats/host'
 import { theme, ThemeProvider } from '@vats/styling'
 import { Fabric } from 'office-ui-fabric-react'
 import React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
-import { client } from './apollo'
+import { ApolloContext, client } from './apollo'
 import { Layout, Router } from './components'
 import { CandidatesView, CandidateView, JobsView, JobView } from './modules'
 import { routes } from './routes'
@@ -13,7 +12,15 @@ import { StateInspector } from './utils'
 import { I18nProvider } from '@vats/i18n'
 
 // tslint:disable-next-line: no-implicit-dependencies
+import DevTools, { configureDevtool } from 'mobx-react-devtools'
+// tslint:disable-next-line: no-implicit-dependencies
 import { hot } from 'react-hot-loader'
+
+configureDevtool({
+  logEnabled: true,
+  updatesEnabled: true,
+  graphEnabled: true,
+})
 
 export const App: React.FC = () => {
   return (
@@ -31,6 +38,7 @@ export const App: React.FC = () => {
                       <CandidateView path={routes.candidate.path + '/:id'} />
                       <CandidatesView path={routes.candidates.path} />
                     </Router>
+                    <DevTools />
                   </Layout>
                 </Fabric>
               </ThemeProvider>

@@ -1,5 +1,5 @@
 {
-  "defaultSeverity": "error",
+  "defaultSeverity": "warning",
   "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
   "rules": {
     "no-console": false,
@@ -12,6 +12,7 @@
     "only-arrow-functions": true,
     "jsx-no-lambda": [false],
     "member-access": [true, "no-public"],
+    "member-ordering": false,
     "max-classes-per-file": false,
     "file-name-casing": [true, "kebab-case"],
     "no-implicit-dependencies": [true, ["graphql-tag", "react-testing-library", "@storybook"]],

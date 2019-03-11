@@ -51,7 +51,7 @@ const candidateHost = createHost<typeof initState, any>({
 const cache = new InMemoryCache()
 
 const httpLink = new HttpLink({
-  uri: process.env.STORYBOOK_GRAPHQL_ENDPOINT,
+  uri: process.env.STORYBOOK_ENDPOINT_GRAPHQL,
 })
 
 export const apolloClientOptions = {

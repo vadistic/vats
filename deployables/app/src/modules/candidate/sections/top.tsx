@@ -4,7 +4,7 @@ import { pathProxy } from '@vats/utils'
 import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
 import { CandidateValue } from '../host'
-import { UserAvatar } from '../widgets'
+import { CandidateAvatar } from '../widgets'
 
 export const CandidateTopSection: React.FC = () => {
   const p = pathProxy<CandidateValue>()
@@ -40,7 +40,7 @@ export const CandidateTopSection: React.FC = () => {
         />
       </Stack>
       <Stack verticalAlign="center">
-        <UserAvatar />
+        <CandidateAvatar />
       </Stack>
     </Stack>
   )
