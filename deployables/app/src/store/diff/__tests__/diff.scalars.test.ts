@@ -1,5 +1,6 @@
+import { literally } from '@vats/utils'
 import cloneDeep from 'clone-deep'
-import { diffAutoUpdataData, Relations } from '../diff'
+import { updateDiff, UpdateDiffOptions } from '..'
 
 const fixtureFields = {
   __typename: '',
@@ -52,16 +53,16 @@ const fixture = {
   ],
 }
 
-describe('diff scalar changes', () => {
+describe('diff scalar updates', () => {
   let copy: typeof fixture
 
   beforeEach(() => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: Relations) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (opts?: UpdateDiffOptions) => updateDiff(fixture, copy, opts)
 
-  it('report string to null', () => {
+  it('string to null', () => {
     copy.scalarString = null as any
 
     const { queryData } = getData()
@@ -71,7 +72,7 @@ describe('diff scalar changes', () => {
     })
   })
 
-  it('report null to string', () => {
+  it('null to string', () => {
     copy.scalarNull = 'hello' as any
 
     const { queryData, updateData } = getData()
@@ -83,7 +84,7 @@ describe('diff scalar changes', () => {
     expect(queryData).toEqual(updateData)
   })
 
-  it('report single array element change', () => {
+  it('single array element change', () => {
     copy.scalarArrayNumbers = [1, 2, 4]
 
     const { queryData, updateData } = getData()
@@ -97,7 +98,7 @@ describe('diff scalar changes', () => {
     })
   })
 
-  it('report multiple array element changes', () => {
+  it('multiple array element changes', () => {
     copy.scalarArrayNumbers = [2, 2, 1, 3, 2, 3]
     copy.scalarArrayStrings = ['world']
 
@@ -114,67 +115,64 @@ describe('diff scalar changes', () => {
     })
   })
 
-  it('does not diff system fields & return undefinded on no changes', () => {
-    copy.createdAt = 'newType'
-    copy.updatedAt = 'newType'
-
-    const { queryData, updateData } = getData()
-    expect(queryData).toBeUndefined()
-    expect(updateData).toBeUndefined()
-  })
-
-  it('report scalar undefined on when only relations change', () => {
+  it('scalar undefined when only relations change', () => {
     copy.oneToOne = null as any
 
-    const {
-      scalars: { queryData, updateData },
-    } = getData({
+    const map = literally({
       oneToOne: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
 
+    const {
+      scalars: { queryData, updateData },
+    } = getData({ map })
+
     expect(queryData).toBeUndefined()
     expect(updateData).toBeUndefined()
   })
 })
 
-describe('diff relation changes', () => {
+describe('diff relations reporting', () => {
   let copy = cloneDeep(fixture)
 
   beforeEach(() => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: Relations) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (opts?: UpdateDiffOptions) => updateDiff(fixture, copy, opts)
 
-  it('report relations undefined on when only scalars change', () => {
+  it('report relations undefined when only scalars change', () => {
     copy.scalarString = '213223'
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       scalarString: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
 
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
+
     expect(queryData).toBeUndefined()
     expect(updateData).toBeUndefined()
   })
 
-  // comment for clean console
-
   it('report relations undefined without map', () => {
     copy.oneToMany = [copy.oneToMany[0]]
+
+    // supress console
+    console.warn = jest.fn()
 
     const {
       relations: { queryData, updateData },
     } = getData()
-    console.warn('IGNORE PREVIOUS WARNING!')
+
     expect(queryData).toBeUndefined()
     expect(updateData).toBeUndefined()
+    expect(console.warn).toBeCalled()
   })
 })

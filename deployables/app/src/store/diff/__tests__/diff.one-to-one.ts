@@ -1,5 +1,6 @@
+import { literally } from '@vats/utils'
 import cloneDeep from 'clone-deep'
-import { diffAutoUpdataData, Relations } from '../diff'
+import { updateDiff, UpdateDiffOptions } from '..'
 
 const fixtureFields = {
   id: '123',
@@ -58,19 +59,21 @@ describe('OneToOne', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: Relations) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (opts?: UpdateDiffOptions) => updateDiff(fixture, copy, opts)
 
   it('non-nested oneToOne connect', () => {
     copy.empty = fixture.oneToOne as any
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       empty: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
+
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
 
     expect(queryData).toEqual({
       empty: fixture.oneToOne,
@@ -87,14 +90,16 @@ describe('OneToOne', () => {
   it('non-nested oneToOne delete', () => {
     copy.oneToOne = null as any
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       oneToOne: {
         onCreate: 'connect',
         onDelete: 'delete',
       },
     })
+
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
 
     expect(queryData).toEqual({
       oneToOne: null,
@@ -115,14 +120,16 @@ describe('OneToOne', () => {
       id: 'new',
     }
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       oneToOne: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
+
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
 
     expect(queryData).toEqual({
       oneToOne: {

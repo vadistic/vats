@@ -2,7 +2,7 @@ import { ApolloQueryResult, ObservableQuery } from 'apollo-client'
 import { diff, PreFilterFunction } from 'deep-diff'
 import { GraphQLError } from 'graphql'
 import { action, observable, reaction, runInAction, toJS } from 'mobx'
-import { applyDiff } from './apply-diff'
+import { applyDiff, updateDiff } from './diff'
 import { getGraphqlRoots } from './graphql'
 import {
   GraphqlTyping,
@@ -12,7 +12,6 @@ import {
   StoreProps,
   TQueryVariables,
 } from './types'
-import { updateDiff } from './update-diff'
 
 export enum StoreStatus {
   init = 'INIT',
@@ -219,10 +218,10 @@ export const createStore = <State, Data, Variables extends TQueryVariables = TQu
     }
   }
 
-  // idea is to allow storing some local data, like temporary index
   // TODO: test what happen on delete etc.
+  const omitFields = ['local', 'createdAt', 'updatedAt']
   const dataPrefilter: PreFilterFunction = (path, key) => {
-    return key === 'local'
+    return omitFields.includes(key)
   }
 
   return { ...store, client, query, fetch, refetch, update, autoUpdate, init, dispose }

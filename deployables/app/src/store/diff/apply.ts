@@ -2,7 +2,7 @@ import { cloneDeep } from 'apollo-utilities'
 import { applyChange, diff, PreFilterFunction } from 'deep-diff'
 
 /**
- * if any, mutate apply structural changes to target and return changes array
+ * if present, mutate-apply structural changes to target and return changes array
  */
 export const applyDiff = (target: any, source: any, prefilter?: PreFilterFunction) => {
   // source undefined/ null

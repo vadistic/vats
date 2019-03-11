@@ -1,6 +1,6 @@
-import { insertElOnIndex } from '@vats/utils'
+import { insertElOnIndex, literally } from '@vats/utils'
 import cloneDeep from 'clone-deep'
-import { diffAutoUpdataData, RelationsType } from '../diff'
+import { updateDiff, UpdateDiffOptions } from '..'
 
 const fixtureFields = {
   id: '123',
@@ -59,7 +59,7 @@ describe('oneToMany', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (map?: RelationsType<any>) => diffAutoUpdataData(fixture, copy, map)
+  const getData = (opts?: UpdateDiffOptions) => updateDiff(fixture, copy, opts)
 
   it('append', () => {
     const element = {
@@ -70,14 +70,16 @@ describe('oneToMany', () => {
 
     copy.oneToMany.push(element)
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       oneToMany: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
+
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
 
     expect(queryData).toEqual({
       oneToMany: [...fixture.oneToMany, element],
@@ -103,14 +105,16 @@ describe('oneToMany', () => {
 
     copy.oneToMany = insertElOnIndex(copy.oneToMany, 0, element)
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       oneToMany: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
+
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
 
     expect(queryData).toEqual({
       oneToMany: [element, ...fixture.oneToMany],
@@ -130,14 +134,16 @@ describe('oneToMany', () => {
   it('sort', () => {
     copy.oneToMany = copy.oneToMany.reverse()
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       oneToMany: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
+
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
 
     expect(queryData).toEqual({
       oneToMany: fixture.oneToMany.reverse(),
@@ -161,14 +167,16 @@ describe('oneToMany', () => {
       },
     ]
 
-    const {
-      relations: { queryData, updateData },
-    } = getData({
+    const map = literally({
       oneToMany: {
         onCreate: 'connect',
         onDelete: 'disconnect',
       },
     })
+
+    const {
+      relations: { queryData, updateData },
+    } = getData({ map })
 
     expect(queryData).toEqual({
       oneToMany: [
