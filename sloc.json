@@ -1,0 +1,552 @@
+{
+  "name": "Source lines of code report",
+  "date": "2019-03-12T01:35:47.588Z",
+  "total": {
+    "total": 13778,
+    "source": 10862,
+    "comment": 927,
+    "single": 440,
+    "block": 487,
+    "mixed": 16,
+    "empty": 2005,
+    "todo": 41,
+    "blockEmpty": 0,
+    "generated": 125026
+  },
+  "extnames": {
+    "js": {
+      "total": 235,
+      "source": 176,
+      "comment": 20,
+      "single": 20,
+      "block": 0,
+      "mixed": 0,
+      "empty": 39,
+      "todo": 0,
+      "blockEmpty": 0
+    },
+    "ts": {
+      "total": 7973,
+      "source": 6121,
+      "comment": 728,
+      "single": 344,
+      "block": 384,
+      "mixed": 11,
+      "empty": 1135,
+      "todo": 21,
+      "blockEmpty": 0,
+      "generated": 91628
+    },
+    "tsx": {
+      "total": 5263,
+      "source": 4315,
+      "comment": 179,
+      "single": 76,
+      "block": 103,
+      "mixed": 5,
+      "empty": 774,
+      "todo": 20,
+      "blockEmpty": 0
+    },
+    "graphql": {
+      "total": 307,
+      "source": 250,
+      "comment": 0,
+      "single": 0,
+      "block": 0,
+      "mixed": 0,
+      "empty": 57,
+      "todo": 0,
+      "blockEmpty": 0,
+      "generated": 33398
+    }
+  },
+  "projects": {
+    "packages/forms": {
+      "total": {
+        "total": 1793,
+        "source": 1417,
+        "comment": 110,
+        "single": 30,
+        "block": 80,
+        "mixed": 2,
+        "empty": 268,
+        "todo": 4,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 3,
+        "source": 3,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 107,
+        "source": 76,
+        "comment": 13,
+        "single": 7,
+        "block": 6,
+        "mixed": 0,
+        "empty": 18,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "tsx": {
+        "total": 1683,
+        "source": 1338,
+        "comment": 97,
+        "single": 23,
+        "block": 74,
+        "mixed": 2,
+        "empty": 250,
+        "todo": 4,
+        "blockEmpty": 0
+      }
+    },
+    "packages/host": {
+      "total": {
+        "total": 1546,
+        "source": 1143,
+        "comment": 169,
+        "single": 57,
+        "block": 112,
+        "mixed": 0,
+        "empty": 234,
+        "todo": 3,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 3,
+        "source": 3,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 1299,
+        "source": 942,
+        "comment": 159,
+        "single": 57,
+        "block": 102,
+        "mixed": 0,
+        "empty": 198,
+        "todo": 3,
+        "blockEmpty": 0
+      },
+      "tsx": {
+        "total": 244,
+        "source": 198,
+        "comment": 10,
+        "single": 0,
+        "block": 10,
+        "mixed": 0,
+        "empty": 36,
+        "todo": 0,
+        "blockEmpty": 0
+      }
+    },
+    "packages/i18n": {
+      "total": {
+        "total": 345,
+        "source": 284,
+        "comment": 14,
+        "single": 14,
+        "block": 0,
+        "mixed": 0,
+        "empty": 47,
+        "todo": 1,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 3,
+        "source": 3,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 311,
+        "source": 258,
+        "comment": 12,
+        "single": 12,
+        "block": 0,
+        "mixed": 0,
+        "empty": 41,
+        "todo": 1,
+        "blockEmpty": 0
+      },
+      "tsx": {
+        "total": 31,
+        "source": 23,
+        "comment": 2,
+        "single": 2,
+        "block": 0,
+        "mixed": 0,
+        "empty": 6,
+        "todo": 0,
+        "blockEmpty": 0
+      }
+    },
+    "packages/styling": {
+      "total": {
+        "total": 187,
+        "source": 147,
+        "comment": 20,
+        "single": 3,
+        "block": 17,
+        "mixed": 1,
+        "empty": 21,
+        "todo": 1,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 3,
+        "source": 3,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "tsx": {
+        "total": 14,
+        "source": 10,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 4,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 170,
+        "source": 134,
+        "comment": 20,
+        "single": 3,
+        "block": 17,
+        "mixed": 1,
+        "empty": 17,
+        "todo": 1,
+        "blockEmpty": 0
+      }
+    },
+    "packages/utils": {
+      "total": {
+        "total": 667,
+        "source": 435,
+        "comment": 116,
+        "single": 13,
+        "block": 103,
+        "mixed": 1,
+        "empty": 117,
+        "todo": 2,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 3,
+        "source": 3,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 664,
+        "source": 432,
+        "comment": 116,
+        "single": 13,
+        "block": 103,
+        "mixed": 1,
+        "empty": 117,
+        "todo": 2,
+        "blockEmpty": 0
+      }
+    },
+    "deployables/apollo": {
+      "total": {
+        "total": 145,
+        "source": 120,
+        "comment": 3,
+        "single": 3,
+        "block": 0,
+        "mixed": 0,
+        "empty": 22,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 43,
+        "source": 30,
+        "comment": 3,
+        "single": 3,
+        "block": 0,
+        "mixed": 0,
+        "empty": 10,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 79,
+        "source": 67,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 12,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "graphql": {
+        "total": 23,
+        "source": 23,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      }
+    },
+    "deployables/app": {
+      "total": {
+        "total": 7189,
+        "source": 5767,
+        "comment": 393,
+        "single": 218,
+        "block": 175,
+        "mixed": 5,
+        "empty": 1034,
+        "todo": 26,
+        "blockEmpty": 0,
+        "generated": 39372
+      },
+      "js": {
+        "total": 82,
+        "source": 55,
+        "comment": 13,
+        "single": 13,
+        "block": 0,
+        "mixed": 0,
+        "empty": 14,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 3911,
+        "source": 3041,
+        "comment": 314,
+        "single": 158,
+        "block": 156,
+        "mixed": 2,
+        "empty": 558,
+        "todo": 10,
+        "blockEmpty": 0,
+        "generated": 39302
+      },
+      "tsx": {
+        "total": 3196,
+        "source": 2671,
+        "comment": 66,
+        "single": 47,
+        "block": 19,
+        "mixed": 3,
+        "empty": 462,
+        "todo": 16,
+        "blockEmpty": 0
+      },
+      "graphql": {
+        "generated": 70
+      }
+    },
+    "deployables/cra": {
+      "total": {
+        "total": 238,
+        "source": 173,
+        "comment": 38,
+        "single": 38,
+        "block": 0,
+        "mixed": 2,
+        "empty": 29,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 3,
+        "source": 3,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "tsx": {
+        "total": 95,
+        "source": 75,
+        "comment": 4,
+        "single": 4,
+        "block": 0,
+        "mixed": 0,
+        "empty": 16,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 140,
+        "source": 95,
+        "comment": 34,
+        "single": 34,
+        "block": 0,
+        "mixed": 2,
+        "empty": 13,
+        "todo": 0,
+        "blockEmpty": 0
+      }
+    },
+    "deployables/prisma": {
+      "total": {
+        "total": 922,
+        "source": 794,
+        "comment": 19,
+        "single": 19,
+        "block": 0,
+        "mixed": 3,
+        "empty": 112,
+        "todo": 1,
+        "blockEmpty": 0,
+        "generated": 41553
+      },
+      "js": {
+        "total": 3,
+        "source": 3,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 0,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 635,
+        "source": 564,
+        "comment": 19,
+        "single": 19,
+        "block": 0,
+        "mixed": 3,
+        "empty": 55,
+        "todo": 1,
+        "blockEmpty": 0,
+        "generated": 29897
+      },
+      "graphql": {
+        "total": 284,
+        "source": 227,
+        "comment": 0,
+        "single": 0,
+        "block": 0,
+        "mixed": 0,
+        "empty": 57,
+        "todo": 0,
+        "blockEmpty": 0,
+        "generated": 11656
+      }
+    },
+    "deployables/provision": {
+      "total": {
+        "total": 98,
+        "source": 82,
+        "comment": 5,
+        "single": 5,
+        "block": 0,
+        "mixed": 0,
+        "empty": 11,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "js": {
+        "total": 33,
+        "source": 29,
+        "comment": 1,
+        "single": 1,
+        "block": 0,
+        "mixed": 0,
+        "empty": 3,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 65,
+        "source": 53,
+        "comment": 4,
+        "single": 4,
+        "block": 0,
+        "mixed": 0,
+        "empty": 8,
+        "todo": 0,
+        "blockEmpty": 0
+      }
+    },
+    "deployables/server": {
+      "total": {
+        "total": 648,
+        "source": 500,
+        "comment": 40,
+        "single": 40,
+        "block": 0,
+        "mixed": 2,
+        "empty": 110,
+        "todo": 3,
+        "blockEmpty": 0,
+        "generated": 44101
+      },
+      "js": {
+        "total": 56,
+        "source": 41,
+        "comment": 3,
+        "single": 3,
+        "block": 0,
+        "mixed": 0,
+        "empty": 12,
+        "todo": 0,
+        "blockEmpty": 0
+      },
+      "ts": {
+        "total": 592,
+        "source": 459,
+        "comment": 37,
+        "single": 37,
+        "block": 0,
+        "mixed": 2,
+        "empty": 98,
+        "todo": 3,
+        "blockEmpty": 0,
+        "generated": 22429
+      },
+      "graphql": {
+        "generated": 21672
+      }
+    }
+  }
+}

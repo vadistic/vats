@@ -64,6 +64,7 @@
     "react-hot-loader": "4.8.0",
     "react-scripts": "^2.1.8",
     "serve": "^10.1.2",
+    "sloc": "^0.2.1",
     "stack-utils": "^1.0.2",
     "typescript": "3.3.3333"
   },

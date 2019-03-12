@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "lib": ["esnext"],
     "rootDirs": ["tasks", "."],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
