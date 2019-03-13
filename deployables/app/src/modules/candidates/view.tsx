@@ -1,5 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
-import { StoreProvider } from '@vats/store'
+import { useStore } from '@vats/store'
 import React from 'react'
 import { Router } from '../../components'
 import { routes } from '../../routes'
@@ -23,8 +23,10 @@ const CandidatesViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate })
 export interface CandidatesViewProps extends RouteComponentProps {}
 
 export const CandidatesView: React.FC<CandidatesViewProps> = () => {
+  const store = useStore(createCandidatesStore, {}, [])
+
   return (
-    <StoreProvider createStore={createCandidatesStore} context={CandidatesContext}>
+    <CandidatesContext.Provider value={store}>
       <Router basepath={routes.candidates.basepath} primary={false}>
         <CandidatesViewDefaultRoute default={true} />
         <CandidatesTable path={routes.candidates.children.table.basepath}>
@@ -34,6 +36,6 @@ export const CandidatesView: React.FC<CandidatesViewProps> = () => {
           <CandidateSurface path={routes.candidates.children.list.children.surface.basepath} />
         </CandidatesList>
       </Router>
-    </StoreProvider>
+    </CandidatesContext.Provider>
   )
 }

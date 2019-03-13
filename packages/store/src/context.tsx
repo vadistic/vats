@@ -11,8 +11,9 @@ export interface StoreProviderProps {
   createStoreProps?: any
   children: React.ReactNode
 }
+
 /*
- * Observer here seem unnecesary and increase init time ~3x
+ * ! Depreciated in favour of useState hook
  */
 export const StoreProvider = ({
   context: Context,
@@ -21,15 +22,6 @@ export const StoreProvider = ({
   children,
 }: StoreProviderProps) => {
   const client = useContext(ApolloContext)
-
-  /*
-   * theoretically useMemo() may be unstable in future
-   * but it seems the best hooks to keep store instace,
-   * because ref as auto-call function run on every render
-   * and I want to keep store init in action
-   *
-   * also, garbage collection would not hurt, should be fine
-   */
 
   let instance = useMemo<StoreValue>(() => {
     return runInAction(`StoreProvider: ${createStore.name}`, () => {

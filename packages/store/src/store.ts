@@ -45,7 +45,6 @@ export const createStore = <
 
   const defaultConfig: Partial<StoreConfig> & { graphqlRoots: StoreGraphqlRoots } = {
     autoFetch: true,
-    restartOnInitChange: false,
     graphqlRoots,
   }
 
@@ -102,6 +101,8 @@ export const createStore = <
     runInAction(`${config.name}: fetch`, () => {
       meta.status = StoreStatus.loading
     })
+
+    console.log('FETCH', variables.where && variables.where.id)
 
     if (!query) {
       query = client.watchQuery<SafeData<Data>, Variables>({

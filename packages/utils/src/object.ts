@@ -243,13 +243,68 @@ export const recursiveTraverse = (
   }
 }
 
-/*
- * For creating fresh react references on not immutable functions products
+/**
+ * For creating fresh references on not immutable products
  */
-
-export const cloneShallow = <T extends any>(input: T) =>
+export const shallowClone = <T extends any>(input: T) =>
   (Array.isArray(input)
     ? [...(input as any[])]
     : typeof input === 'object' && input !== null
     ? { ...input }
     : input) as T
+
+/**
+ * Standard shallow equal implementation
+ */
+export const shallowEqual = <T>(objA: T, objB: T) => {
+  if (objA === objB) {
+    return true
+  }
+
+  if (!objA || !objB) {
+    return false
+  }
+
+  // arrays
+  if (Array.isArray(objA) && Array.isArray(objB)) {
+    // length
+    if (objA.length !== objB.length) {
+      return false
+    }
+
+    const length = objA.length
+
+    for (let i = 0; i < length; i++) {
+      if (objA[i] !== objB[i]) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  // ! nulls are checked above
+  if (typeof objA === 'object' && typeof objA === 'object') {
+    // length
+    const aKeys = Object.keys(objA)
+    const bKeys = Object.keys(objB)
+
+    if (aKeys.length !== bKeys.length) {
+      return false
+    }
+
+    const length = aKeys.length
+
+    for (let i = 0; i < length; i++) {
+      const key = aKeys[i]
+
+      if ((objA as any)[key] !== (objB as any)[key]) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  return false
+}

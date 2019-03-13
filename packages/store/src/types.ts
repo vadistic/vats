@@ -63,7 +63,6 @@ export type StoreGraphqlRoots = { [K in keyof StoreGraphqlConfig]: string }
 export interface StoreConfig {
   name: string
   autoFetch?: boolean
-  restartOnInitChange?: boolean
   graphql: StoreGraphqlConfig
   relations?: any
   debug?: boolean

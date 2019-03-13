@@ -1,8 +1,8 @@
 import { RouteComponentProps } from '@reach/router'
 import { Editable, FormikContextValue } from '@vats/forms'
-import { StoreProvider, StoreStatus } from '@vats/store'
+import { StoreStatus, useStore } from '@vats/store'
 import { useObserver } from 'mobx-react-lite'
-import React, { useContext, useMemo, useRef } from 'react'
+import React, { useRef } from 'react'
 import { LoadingSpinner, Surface } from '../../components'
 import { routes } from '../../routes'
 import { CandidateProfile } from './profile'
@@ -12,10 +12,14 @@ export interface CandidateSurfaceProps extends RouteComponentProps {
   id?: string
 }
 
-const CandidateSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading candidate...'} />
+export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id = '' }) => {
+  if (!id) {
+    console.error('CandidateSurface: No id provided')
+    return null
+  }
 
-export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
-  const store = useContext(SingleCandidateContext)
+  const store = useStore(createSingleCandidateStore, { id }, [id])
+  const formikRef = useRef<FormikContextValue<SingleCandidateValue>>(null)
 
   const handleDismiss = () => {
     if (navigate) {
@@ -28,8 +32,6 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
       navigate('/' + routes.candidate.basepath + '/' + id)
     }
   }
-
-  const formikRef = useRef<FormikContextValue<SingleCandidateValue>>(null)
 
   const handleSubmit = () => {
     if (formikRef.current) {
@@ -48,18 +50,8 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
     }
   }
 
-  // refetch
-  useMemo(() => {
-    if (
-      (!store.data.candidate && store.meta.status !== StoreStatus.init) ||
-      (store.data.candidate && store.data.candidate.id !== id)
-    ) {
-      store.refetch({ where: { id } })
-    }
-  }, [id])
-
-  return useObserver(
-    () => (
+  return (
+    <SingleCandidateContext.Provider value={store}>
       <Surface
         navitationProps={{
           onDismiss: handleDismiss,
@@ -68,37 +60,41 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
           onExpand: handleExpand,
         }}
       >
-        {store.meta.status === StoreStatus.ready ? (
-          <Editable
-            onSubmit={processSubmit}
-            values={store.data.candidate}
-            editable={store.state.editable}
-            formikRef={formikRef}
-          >
-            <CandidateProfile />
-          </Editable>
-        ) : (
-          <CandidateSurfaceFallback />
-        )}
+        {useObserver(() => {
+          // render ready
+          if (store.meta.status === StoreStatus.ready && store.data.candidate) {
+            return (
+              <Editable
+                onSubmit={processSubmit}
+                values={store.data.candidate}
+                editable={store.state.editable}
+                formikRef={formikRef}
+              >
+                <CandidateProfile />
+              </Editable>
+            )
+          }
+
+          // render loading
+          if (
+            store.meta.status === StoreStatus.init ||
+            store.meta.status === StoreStatus.loading ||
+            store.meta.status === StoreStatus.refetch
+          ) {
+            return <LoadingSpinner label={'Loading candidate...'} />
+          }
+
+          // render not found
+          if (store.meta.status === StoreStatus.ready && !store.data.candidate) {
+            return <p>Candidate not found :(</p>
+          }
+
+          // render error
+          if (store.meta.status === StoreStatus.error) {
+            return <p>Error occured</p>
+          }
+        }, 'CandidateSurface')}
       </Surface>
-    ),
-    'CandidateSurfaceBase',
-  )
-}
-
-export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
-  if (!id) {
-    console.error('CandidateSurface: No id provided')
-    return null
-  }
-
-  return (
-    <StoreProvider
-      createStoreProps={{ id }}
-      createStore={createSingleCandidateStore}
-      context={SingleCandidateContext}
-    >
-      <CandidateSurfaceBase navigate={navigate} id={id} />
-    </StoreProvider>
+    </SingleCandidateContext.Provider>
   )
 }
