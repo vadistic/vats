@@ -3,7 +3,7 @@ import { Theme, useTheme } from '@vats/styling'
 import { observer } from 'mobx-react-lite'
 import { PersonaCoin } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
-import { CandidateContext } from '../store'
+import { SingleCandidateContext } from '../store'
 
 export const candidateAvatarStyles = (theme: Theme) => css`
   width: ${theme.sizes.s1};
@@ -15,7 +15,7 @@ export const candidateAvatarStyles = (theme: Theme) => css`
 `
 
 export const CandidateAvatarBase: React.FC = () => {
-  const store = useContext(CandidateContext)
+  const store = useContext(SingleCandidateContext)
 
   if (!store.data.candidate) {
     return null

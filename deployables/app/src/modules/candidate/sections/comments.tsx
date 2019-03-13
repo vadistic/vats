@@ -1,28 +1,28 @@
 import gql from 'graphql-tag'
 import { toJS } from 'mobx'
+import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { useQuery } from 'react-apollo-hooks'
-import { Comments, suspendComments } from '../../../components'
+import { Comments } from '../../../components'
 import { CommentFragment, UserFragment } from '../../../generated/fragments'
 import { CandidateCommentsQuery, CandidateCommentsQueryVariables } from '../../../generated/queries'
-import { CandidateContext } from '../store'
+import { SingleCandidateContext } from '../store'
 
-export const CandidateCommentsBase: React.FC = () => {
-  const store = useContext(CandidateContext)
+const CandidateCommentsSectionBase: React.FC = () => {
+  const store = useContext(SingleCandidateContext)
 
   const res = useQuery<CandidateCommentsQuery, CandidateCommentsQueryVariables>(
     CANDIDATE_COMMENTS_QUERY,
     {
       variables: toJS(store.variables),
-      suspend: true,
     },
   )
 
-  if (!res || !res.data || !res.data.candidate) {
-    return null
+  if (res.loading) {
+    return <p>Loading commnets...</p>
   }
 
-  const comments = res.data.candidate.comments
+  const comments = res.data && res.data.candidate && res.data.candidate.comments
 
   if (comments) {
     return <Comments comments={comments} />
@@ -31,7 +31,7 @@ export const CandidateCommentsBase: React.FC = () => {
   return null
 }
 
-export const CandidateCommentsSection = suspendComments(CandidateCommentsBase)
+export const CandidateCommentsSection = observer(CandidateCommentsSectionBase)
 
 const CANDIDATE_COMMENTS_QUERY = gql`
   query CandidateCommentsQuery($where: CandidateWhereUniqueInput!) {

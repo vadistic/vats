@@ -1,33 +1,35 @@
 import { useTranslation } from '@vats/i18n'
 import { SortDirection } from '@vats/utils'
+import { observer } from 'mobx-react-lite'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
-import React from 'react'
-import { JobsActions, useJobsContext } from './host'
+import React, { useContext } from 'react'
 import { JobsSortBy } from './sort'
+import { JobsContext } from './store'
 
 export interface JobsBarProps {}
 
-// TODO: sorting menu as Callout component!
-export const JobsBar: React.FC<JobsBarProps> = () => {
-  const { dispatch, state } = useJobsContext()
+const JobsBarBase: React.FC<JobsBarProps> = () => {
+  const store = useContext(JobsContext)
   const { tp } = useTranslation()
 
-  const getSortSubmenuItem = (enumValue: JobsSortBy) => ({
-    text: tp.job[enumValue](),
-    key: 'sort-by-' + enumValue,
-    onClick: () => dispatch(JobsActions.sortBy(enumValue)),
+  const getSortSubmenuItem = (sortBy: JobsSortBy) => ({
+    text: tp.job[sortBy](),
+    key: 'sort-by-' + sortBy,
+    onClick: () => {
+      store.state.sortBy = sortBy
+    },
   })
 
   const items: ICommandBarItemProps[] = [
     {
-      text: `Sort: ${tp.job[state.local.sortBy]().toLocaleLowerCase()}`,
+      text: `Sort: ${tp.job[store.state.sortBy]().toLocaleLowerCase()}`,
       key: 'sort',
       split: true,
       iconProps: {
-        iconName: state.local.sortDirection === SortDirection.ASCENDING ? 'SortUp' : 'SortDown',
+        iconName: store.state.sortDirection === SortDirection.ASCENDING ? 'SortUp' : 'SortDown',
       },
       onClick: () => {
-        dispatch(JobsActions.sortDirection(state.local.sortDirection * -1))
+        store.state.sortDirection = store.state.sortDirection * -1
       },
       subMenuProps: {
         items: Object.values(JobsSortBy).map(enumValue => getSortSubmenuItem(enumValue)),
@@ -44,3 +46,5 @@ export const JobsBar: React.FC<JobsBarProps> = () => {
     </>
   )
 }
+
+export const JobsBar = observer(JobsBarBase)

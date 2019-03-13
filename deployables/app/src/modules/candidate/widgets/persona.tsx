@@ -4,10 +4,10 @@ import { useTheme } from '@vats/styling'
 import { Icon, IPersonaSharedProps, Persona, PersonaSize } from 'office-ui-fabric-react'
 import React from 'react'
 import { Link, LinkArg, useDayjs } from '../../../components'
-import { CandidateValue } from '../host'
+import { SingleCandidateValue } from '../store'
 
 export interface CandidatePersonaProps extends IPersonaSharedProps {
-  candidate: CandidateValue
+  candidate: SingleCandidateValue
   linkProps?: {
     name?: LinkArg
     date?: LinkArg

@@ -2,11 +2,11 @@ import { DisplayTextField } from '@vats/forms'
 import { useTranslation } from '@vats/i18n'
 import { pathProxy } from '@vats/utils'
 import React from 'react'
-import { JobValue } from './host'
+import { SingleJobValue } from './store'
 
 export const JobProfile: React.FC = () => {
   const { tp } = useTranslation()
-  const p = pathProxy<JobValue>()
+  const p = pathProxy<SingleJobValue>()
 
   const contentPlaceholder = tp.common.empty()
 

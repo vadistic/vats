@@ -1,7 +1,6 @@
 import { RouteComponentProps } from '@reach/router'
-import React, { Suspense } from 'react'
-import { HostQuery, LoadingSpinner } from '../../components'
-import { JobContext, JobHostProvider } from './host'
+import React from 'react'
+import { LoadingSpinner } from '../../components'
 
 export interface JobViewProps extends RouteComponentProps {
   id?: string
@@ -14,13 +13,5 @@ export const JobView: React.FC<JobViewProps> = ({ id }) => {
     console.error(`CandidateView: No id provided`)
     return null
   }
-  return (
-    <Suspense fallback={JobViewFallback}>
-      <JobHostProvider initArg={{ id }}>
-        <HostQuery context={JobContext}>
-          <p>Single job view</p>
-        </HostQuery>
-      </JobHostProvider>
-    </Suspense>
-  )
+  return <p>Single job view</p>
 }

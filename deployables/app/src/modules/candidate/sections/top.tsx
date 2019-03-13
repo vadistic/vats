@@ -3,11 +3,11 @@ import { useTranslation } from '@vats/i18n'
 import { pathProxy } from '@vats/utils'
 import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
-import { CandidateValue } from '../host'
+import { SingleCandidateValue } from '../store'
 import { CandidateAvatar } from '../widgets'
 
 export const CandidateTopSection: React.FC = () => {
-  const p = pathProxy<CandidateValue>()
+  const p = pathProxy<SingleCandidateValue>()
   const { tp } = useTranslation()
 
   return (

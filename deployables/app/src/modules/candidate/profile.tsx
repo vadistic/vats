@@ -12,14 +12,14 @@ import {
   CandidateResumesSection,
   CandidateTopSection,
 } from './sections'
-import { CandidateContext } from './store'
+import { SingleCandidateContext } from './store'
 
-export const CandidateProfile: React.FC = observer(() => {
-  const store = useContext(CandidateContext)
+export const CandidateProfileBase: React.FC = () => {
+  const { data } = useContext(SingleCandidateContext)
   const { tp } = useTranslation()
   const [selectedKey, setSelectedKey] = useState('overview')
 
-  if (!store.data.candidate) {
+  if (!data.candidate) {
     return null
   }
 
@@ -30,12 +30,12 @@ export const CandidateProfile: React.FC = observer(() => {
   }
 
   const resumesCount =
-    (tryGetIn(store.data.candidate, 'resumesFile') || []).length +
-    (tryGetIn(store.data.candidate, 'resumesString') || []).length +
-    (tryGetIn(store.data.candidate, 'coverLettersFile') || []).length +
-    (tryGetIn(store.data.candidate, 'coverLettersString') || []).length
+    (tryGetIn(data.candidate, 'resumesFile') || []).length +
+    (tryGetIn(data.candidate, 'resumesString') || []).length +
+    (tryGetIn(data.candidate, 'coverLettersFile') || []).length +
+    (tryGetIn(data.candidate, 'coverLettersString') || []).length
 
-  const commentsCount = (tryGetIn(store.data.candidate, 'comments') || []).length
+  const commentsCount = (tryGetIn(data.candidate, 'comments') || []).length
 
   return (
     <>
@@ -86,4 +86,6 @@ export const CandidateProfile: React.FC = observer(() => {
       />
     </>
   )
-})
+}
+
+export const CandidateProfile = observer(CandidateProfileBase)

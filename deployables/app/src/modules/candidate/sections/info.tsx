@@ -3,11 +3,11 @@ import { useTranslation } from '@vats/i18n'
 import { pathProxy } from '@vats/utils'
 import React from 'react'
 import { Box } from '../../../components'
-import { CandidateValue } from '../host'
+import { SingleCandidateValue } from '../store'
 
 export const CandidateInfoSection: React.FC = () => {
   const { tp } = useTranslation()
-  const p = pathProxy<CandidateValue>()
+  const p = pathProxy<SingleCandidateValue>()
 
   return (
     <Box css={theme => ({ width: theme.sizes.ml })}>

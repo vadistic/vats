@@ -3,10 +3,10 @@ import { useTranslation } from '@vats/i18n'
 import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { DisplayDateTime } from '../../../components'
-import { CandidateContext } from '../store'
+import { SingleCandidateContext } from '../store'
 
 const CandidateOverviewSectionBase: React.FC = () => {
-  const store = useContext(CandidateContext)
+  const store = useContext(SingleCandidateContext)
   const { tp } = useTranslation()
 
   if (!store.data.candidate) {

@@ -1,12 +1,12 @@
 import { storiesOf } from '@storybook/react'
+import { StoreProvider } from '@vats/store'
+import { observer } from 'mobx-react-lite'
+import { useContext } from 'react'
+import { createSingleCandidateStore, SingleCandidateContext } from '../modules/candidate'
+import { StoriesFixture } from './fixture.stories'
 
 // tslint:disable-next-line: no-implicit-dependencies
 import DevTools, { configureDevtool } from 'mobx-react-devtools'
-import { observer, useObserver } from 'mobx-react-lite'
-import { useContext } from 'react'
-import { StoreProvider } from '../../../store'
-import { StoriesFixture } from '../../../stories/fixture.stories'
-import { CandidateContext, createCandidateStore } from '../store'
 
 configureDevtool({
   logEnabled: true,
@@ -18,8 +18,8 @@ const MobxFixture: React.FC = ({ children }) => (
   <StoriesFixture>
     <StoreProvider
       createStoreProps={{ id: 'cjsds1qxe56e70b64a4q69swa' }}
-      createStore={createCandidateStore}
-      context={CandidateContext}
+      createStore={createSingleCandidateStore}
+      context={SingleCandidateContext}
     >
       {children}
     </StoreProvider>
@@ -31,7 +31,6 @@ storiesOf('candidate store', module)
   .add('basic', () => (
     <MobxFixture>
       <Basic />
-      <Another />
     </MobxFixture>
   ))
   .add('query', () => (
@@ -42,18 +41,10 @@ storiesOf('candidate store', module)
   ))
 
 const Basic: React.FC = observer(() => {
-  const { state } = useContext(CandidateContext)
-
-  const toogleField = () => {
-    state.field = !state.field
-  }
+  const { state } = useContext(SingleCandidateContext)
 
   const toogleEditable = () => {
     state.editable = !state.editable
-  }
-
-  const setNumber = () => {
-    state.num += 1
   }
 
   console.log('Basic rerendered')
@@ -61,43 +52,15 @@ const Basic: React.FC = observer(() => {
   return (
     <div>
       <p>Editable {state.editable ? 'TRUE' : 'FALSE'}</p>
-      <p>Field {state.field ? 'TRUE' : 'FALSE'}</p>
       <div>
-        <button onClick={setNumber}>Increment</button>
-        <button onClick={toogleField}>toogleField</button>
         <button onClick={toogleEditable}>toogleEditable</button>
       </div>
     </div>
   )
 })
 
-const Another: React.FC = () => {
-  const { state } = useContext(CandidateContext)
-
-  const toogleField = () => {
-    state.field = !state.field
-  }
-
-  const setNumber = () => {
-    state.num += 1
-  }
-
-  console.log('Another rerendered')
-
-  return useObserver(() => (
-    <div>
-      <p>Num {state.num}</p>
-      <p>Field {state.field ? 'TRUE' : 'FALSE'}</p>
-      <div>
-        <button onClick={toogleField}>toogleField</button>
-        <button onClick={setNumber}>Increment</button>
-      </div>
-    </div>
-  ))
-}
-
 const Powered = observer(() => {
-  const store = useContext(CandidateContext)
+  const store = useContext(SingleCandidateContext)
 
   console.log('Powered rerendered')
 
@@ -109,7 +72,7 @@ const Powered = observer(() => {
 })
 
 const Query = observer(() => {
-  const store = useContext(CandidateContext)
+  const store = useContext(SingleCandidateContext)
 
   const fetch = () => {
     store.fetch()

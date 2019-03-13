@@ -1,4 +1,5 @@
 import { I18nProvider } from '@vats/i18n'
+import { ApolloContext } from '@vats/store'
 import { theme, ThemeProvider } from '@vats/styling'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import ApolloClient from 'apollo-client'
@@ -6,7 +7,6 @@ import { ApolloLink } from 'apollo-link'
 import { onError } from 'apollo-link-error'
 import { HttpLink } from 'apollo-link-http'
 import { Fabric } from 'office-ui-fabric-react'
-import { ApolloContext } from '../apollo'
 
 const cache = new InMemoryCache()
 

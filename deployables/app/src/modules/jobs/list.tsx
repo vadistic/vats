@@ -2,11 +2,13 @@ import { css } from '@emotion/core'
 import { RouteComponentProps } from '@reach/router'
 import { useTheme } from '@vats/styling'
 import { objSwitch } from '@vats/utils'
+import { toJS } from 'mobx'
+import { observer, useObserver } from 'mobx-react-lite'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from '../../components'
 import { Job, JobType } from '../../generated/queries'
-import { useJobsContext } from './host'
+import { JobsContext } from './store'
 
 export interface JobListItem {
   job: Job
@@ -50,23 +52,34 @@ export const JobListItem: React.FC<JobListItem> = ({ job }) => {
   )
 }
 
-export interface JobsListProps extends RouteComponentProps {}
+export interface JobsListProps extends RouteComponentProps {
+  children: React.ReactElement
+}
 
-export const JobsList: React.FC<JobsListProps> = ({ children }) => {
-  const { value: jobs } = useJobsContext()
+const JobsListBase: React.FC<JobsListProps> = ({ children }) => {
+  const store = useContext(JobsContext)
 
   const renderCell = (nestingDepth?: number, job?: Job, index?: number) => {
     if (job) {
-      return <JobListItem job={job} key={job.id} />
+      return <JobListItem job={toJS(job)} key={job.id} />
     }
+
     return null
   }
 
-  return (
-    <FocusZone direction={FocusZoneDirection.vertical}>
-      {/* children necessary for reach router */}
-      {children}
-      <GroupedList items={jobs} onRenderCell={renderCell} />
-    </FocusZone>
-  )
+  return useObserver(() => {
+    if (store.data.jobs.length === 0) {
+      return null
+    }
+
+    return (
+      <FocusZone direction={FocusZoneDirection.vertical}>
+        {/* children necessary for reach router */}
+        {children}
+        <GroupedList items={store.data.jobs} onRenderCell={renderCell} />
+      </FocusZone>
+    )
+  })
 }
+
+export const JobsList = observer(JobsListBase)

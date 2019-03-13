@@ -1,10 +1,11 @@
 import { RouteComponentProps } from '@reach/router'
+import { StoreProvider } from '@vats/store'
 import React from 'react'
-import { HostQuery, Router } from '../../components'
+import { Router } from '../../components'
 import { routes } from '../../routes'
 import { CandidateSurface } from '../candidate/surface'
-import { CandidatesContext, CandidatesHostProvider } from './host'
 import { CandidatesList } from './list'
+import { CandidatesContext, createCandidatesStore } from './store'
 import { CandidatesTable } from './table'
 
 const CandidatesViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
@@ -23,18 +24,16 @@ export interface CandidatesViewProps extends RouteComponentProps {}
 
 export const CandidatesView: React.FC<CandidatesViewProps> = () => {
   return (
-    <CandidatesHostProvider>
-      <HostQuery context={CandidatesContext}>
-        <Router basepath={routes.candidates.basepath} primary={false}>
-          <CandidatesViewDefaultRoute default={true} />
-          <CandidatesTable path={routes.candidates.children.table.basepath}>
-            <CandidateSurface path={routes.candidates.children.table.children.surface.basepath} />
-          </CandidatesTable>
-          <CandidatesList path={routes.candidates.children.list.basepath}>
-            <CandidateSurface path={routes.candidates.children.list.children.surface.basepath} />
-          </CandidatesList>
-        </Router>
-      </HostQuery>
-    </CandidatesHostProvider>
+    <StoreProvider createStore={createCandidatesStore} context={CandidatesContext}>
+      <Router basepath={routes.candidates.basepath} primary={false}>
+        <CandidatesViewDefaultRoute default={true} />
+        <CandidatesTable path={routes.candidates.children.table.basepath}>
+          <CandidateSurface path={routes.candidates.children.table.children.surface.basepath} />
+        </CandidatesTable>
+        <CandidatesList path={routes.candidates.children.list.basepath}>
+          <CandidateSurface path={routes.candidates.children.list.children.surface.basepath} />
+        </CandidatesList>
+      </Router>
+    </StoreProvider>
   )
 }

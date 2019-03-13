@@ -1,13 +1,4 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "declaration": true,
-    "jsx": "preserve",
-    "rootDir": "src",
-    "outDir": "dist"
-  },
   "exclude": ["node_modules", "dist"]
 }

@@ -1,30 +1,36 @@
+import { createStore, StoreConfig, StoreProps } from '@vats/store'
 import React from 'react'
-import { CandidateQuery, CandidateQueryVariables } from '../../generated/queries'
-import { createStore, StoreConfig, StoreProps } from '../../store'
+import {
+  CandidateQuery,
+  CandidateQuery_candidate,
+  CandidateQueryVariables,
+} from '../../generated/queries'
 import {
   CANDIDATE_CREATE_MUTATION,
   CANDIDATE_DELETE_MUTATION,
   CANDIDATE_QUERY,
   CANDIDATE_UPDATE_MUTATION,
-} from './host'
+} from './graphql'
 
-export const CandidateContext = React.createContext<ReturnType<typeof createCandidateStore>>(
-  {} as any,
-)
+export type SingleCandidateValue = CandidateQuery_candidate
 
-export interface CandidateStoreProps extends StoreProps {
+export type SingleCandidateStore = ReturnType<typeof createSingleCandidateStore>
+
+export const SingleCandidateContext = React.createContext<SingleCandidateStore>({} as any)
+
+export interface SingleCandidateStoreProps extends StoreProps {
   id: string
 }
 
-export const createCandidateStore = (props: CandidateStoreProps) => {
-  const state = { editable: false, field: true, num: 123 }
+export const createSingleCandidateStore = (props: SingleCandidateStoreProps) => {
+  const state = { editable: false }
 
   const variables: CandidateQueryVariables = { where: { id: props.id } }
 
   const data: CandidateQuery = { candidate: null }
 
   const config: StoreConfig = {
-    name: 'CandidateStore',
+    name: 'SingleCandidateStore',
     autoFetch: true,
     debug: true,
     graphql: {

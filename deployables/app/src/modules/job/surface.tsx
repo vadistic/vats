@@ -1,11 +1,12 @@
 import { RouteComponentProps } from '@reach/router'
 import { Editable, FormikContextValue } from '@vats/forms'
-import React, { Suspense, useRef } from 'react'
-import { HostQuery, LoadingSpinner, Surface } from '../../components'
+import { StoreProvider, StoreStatus } from '@vats/store'
+import { useObserver } from 'mobx-react-lite'
+import React, { useContext, useMemo, useRef } from 'react'
+import { LoadingSpinner, Surface } from '../../components'
 import { routes } from '../../routes'
-import { JobActions, JobContext, JobHostProvider, JobValue, useJobContext } from './host'
 import { JobProfile } from './profile'
-import { updateJob } from './thunks'
+import { createSingleJobStore, SingleJobContext, SingleJobValue } from './store'
 
 export interface JobSurfaceProps extends RouteComponentProps {
   // injected by router
@@ -15,7 +16,7 @@ export interface JobSurfaceProps extends RouteComponentProps {
 const JobSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading job...'} />
 
 export const JobSurfaceBase: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
-  const { dispatch, state, value } = useJobContext()
+  const store = useContext(SingleJobContext)
 
   const handleDismiss = () => {
     if (navigate) {
@@ -30,10 +31,10 @@ export const JobSurfaceBase: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
   }
 
   const handleEdit = () => {
-    dispatch(JobActions.setEditable(true))
+    store.state.editable = true
   }
 
-  const formikRef = useRef<FormikContextValue<JobValue>>(null)
+  const formikRef = useRef<FormikContextValue<SingleJobValue>>(null)
 
   const handleSubmit = () => {
     if (formikRef.current) {
@@ -41,34 +42,48 @@ export const JobSurfaceBase: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
     }
   }
 
-  const processSubmit = () => (values: JobValue) => {
+  const processSubmit = () => (values: SingleJobValue) => {
+    store.state.editable = false
     if (formikRef.current && formikRef.current.dirty) {
-      dispatch(updateJob(values))
+      store.autoUpdate(values)
     }
   }
 
-  return (
-    <Surface
-      navitationProps={{
-        onDismiss: handleDismiss,
-        onEdit: handleEdit,
-        onSubmit: handleSubmit,
-        onExpand: handleExpand,
-      }}
-    >
-      <Suspense fallback={<JobSurfaceFallback />}>
-        <HostQuery context={JobContext}>
+  // refetch
+  useMemo(() => {
+    if (
+      (!store.data.job && store.meta.status !== StoreStatus.init) ||
+      (store.data.job && store.data.job.id !== id)
+    ) {
+      store.refetch({ where: { id } })
+    }
+  }, [id])
+
+  return useObserver(
+    () => (
+      <Surface
+        navitationProps={{
+          onDismiss: handleDismiss,
+          onEdit: handleEdit,
+          onSubmit: handleSubmit,
+          onExpand: handleExpand,
+        }}
+      >
+        {store.data.job && store.meta.status === StoreStatus.ready ? (
           <Editable
             onSubmit={processSubmit}
-            values={value}
-            editable={state.local.editable}
+            values={store.data.job}
+            editable={store.state.editable}
             formikRef={formikRef}
           >
             <JobProfile />
           </Editable>
-        </HostQuery>
-      </Suspense>
-    </Surface>
+        ) : (
+          <JobSurfaceFallback />
+        )}
+      </Surface>
+    ),
+    'JobSurfaceBase',
   )
 }
 
@@ -79,8 +94,12 @@ export const JobSurface: React.FC<JobSurfaceProps> = ({ id, navigate }) => {
   }
 
   return (
-    <JobHostProvider initArg={{ id }}>
+    <StoreProvider
+      createStoreProps={{ id }}
+      createStore={createSingleJobStore}
+      context={SingleJobContext}
+    >
       <JobSurfaceBase id={id} navigate={navigate} />
-    </JobHostProvider>
+    </StoreProvider>
   )
 }

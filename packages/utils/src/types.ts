@@ -85,6 +85,8 @@ export type ElementTypeOr<T> = T extends Array<infer E> ? E : T
 
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
 
+export type AnyFunction = (...args: any[]) => any
+
 /**
  * It's basically filter keys but nvm
  *

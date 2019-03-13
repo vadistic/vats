@@ -1,15 +1,14 @@
+import { I18nProvider } from '@vats/i18n'
+import { ApolloContext } from '@vats/store'
 import { theme, ThemeProvider } from '@vats/styling'
 import { Fabric } from 'office-ui-fabric-react'
 import React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
-import { ApolloContext, client } from './apollo'
+import { client } from './apollo'
 import { Layout, Router } from './components'
 import { CandidatesView, CandidateView, JobsView, JobView } from './modules'
 import { routes } from './routes'
-import { StateInspector } from './utils'
-
-import { I18nProvider } from '@vats/i18n'
 
 // tslint:disable-next-line: no-implicit-dependencies
 import DevTools, { configureDevtool } from 'mobx-react-devtools'
@@ -28,21 +27,19 @@ export const App: React.FC = () => {
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client}>
           <I18nProvider>
-            <StateInspector name="APP">
-              <ThemeProvider theme={theme}>
-                <Fabric theme={theme}>
-                  <Layout>
-                    <Router>
-                      <JobView path={routes.job.path + '/:id'} />
-                      <JobsView path={routes.jobs.path} />
-                      <CandidateView path={routes.candidate.path + '/:id'} />
-                      <CandidatesView path={routes.candidates.path} />
-                    </Router>
-                    <DevTools />
-                  </Layout>
-                </Fabric>
-              </ThemeProvider>
-            </StateInspector>
+            <ThemeProvider theme={theme}>
+              <Fabric theme={theme}>
+                <Layout>
+                  <Router>
+                    <JobView path={routes.job.path + '/:id'} />
+                    <JobsView path={routes.jobs.path} />
+                    <CandidateView path={routes.candidate.path + '/:id'} />
+                    <CandidatesView path={routes.candidates.path} />
+                  </Router>
+                  <DevTools />
+                </Layout>
+              </Fabric>
+            </ThemeProvider>
           </I18nProvider>
         </ApolloHooksProvider>
       </ApolloProvider>

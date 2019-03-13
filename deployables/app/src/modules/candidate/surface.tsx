@@ -1,24 +1,21 @@
 import { RouteComponentProps } from '@reach/router'
 import { Editable, FormikContextValue } from '@vats/forms'
-import { toJS } from 'mobx'
+import { StoreProvider, StoreStatus } from '@vats/store'
 import { useObserver } from 'mobx-react-lite'
 import React, { useContext, useMemo, useRef } from 'react'
 import { LoadingSpinner, Surface } from '../../components'
 import { routes } from '../../routes'
-import { StoreProvider, StoreStatus } from '../../store'
-import { CandidateValue } from './host'
 import { CandidateProfile } from './profile'
-import { CandidateContext, createCandidateStore } from './store'
+import { createSingleCandidateStore, SingleCandidateContext, SingleCandidateValue } from './store'
 
 export interface CandidateSurfaceProps extends RouteComponentProps {
-  // injected by router
   id?: string
 }
 
 const CandidateSurfaceFallback: React.FC = () => <LoadingSpinner label={'Loading candidate...'} />
 
 export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
-  const store = useContext(CandidateContext)
+  const store = useContext(SingleCandidateContext)
 
   const handleDismiss = () => {
     if (navigate) {
@@ -32,7 +29,7 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
     }
   }
 
-  const formikRef = useRef<FormikContextValue<CandidateValue>>(null)
+  const formikRef = useRef<FormikContextValue<SingleCandidateValue>>(null)
 
   const handleSubmit = () => {
     if (formikRef.current) {
@@ -44,12 +41,10 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
     store.state.editable = true
   }
 
-  const processSubmit = (values: CandidateValue) => {
+  const processSubmit = (values: SingleCandidateValue) => {
     store.state.editable = false
     if (formikRef.current && formikRef.current.dirty) {
-      store.autoUpdate({
-        candidate: values,
-      })
+      store.autoUpdate(values)
     }
   }
 
@@ -57,35 +52,38 @@ export const CandidateSurfaceBase: React.FC<CandidateSurfaceProps> = ({ navigate
   useMemo(() => {
     if (
       (!store.data.candidate && store.meta.status !== StoreStatus.init) ||
-      (store.data.candidate && id !== store.data.candidate.id)
+      (store.data.candidate && store.data.candidate.id !== id)
     ) {
       store.refetch({ where: { id } })
     }
   }, [id])
 
-  return useObserver(() => (
-    <Surface
-      navitationProps={{
-        onDismiss: handleDismiss,
-        onEdit: handleEdit,
-        onSubmit: handleSubmit,
-        onExpand: handleExpand,
-      }}
-    >
-      {store.meta.status === StoreStatus.ready ? (
-        <Editable
-          onSubmit={processSubmit}
-          values={toJS(store.data.candidate)}
-          editable={store.state.editable}
-          formikRef={formikRef}
-        >
-          <CandidateProfile />
-        </Editable>
-      ) : (
-        <CandidateSurfaceFallback />
-      )}
-    </Surface>
-  ))
+  return useObserver(
+    () => (
+      <Surface
+        navitationProps={{
+          onDismiss: handleDismiss,
+          onEdit: handleEdit,
+          onSubmit: handleSubmit,
+          onExpand: handleExpand,
+        }}
+      >
+        {store.meta.status === StoreStatus.ready ? (
+          <Editable
+            onSubmit={processSubmit}
+            values={store.data.candidate}
+            editable={store.state.editable}
+            formikRef={formikRef}
+          >
+            <CandidateProfile />
+          </Editable>
+        ) : (
+          <CandidateSurfaceFallback />
+        )}
+      </Surface>
+    ),
+    'CandidateSurfaceBase',
+  )
 }
 
 export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id }) => {
@@ -97,8 +95,8 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id
   return (
     <StoreProvider
       createStoreProps={{ id }}
-      createStore={createCandidateStore}
-      context={CandidateContext}
+      createStore={createSingleCandidateStore}
+      context={SingleCandidateContext}
     >
       <CandidateSurfaceBase navigate={navigate} id={id} />
     </StoreProvider>

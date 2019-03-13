@@ -7,7 +7,7 @@ import {
   IRenderFunction,
   SelectionMode,
 } from 'office-ui-fabric-react'
-import React, { Suspense, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { CandidateCommentsQuery } from '../../generated/queries'
 import { CommentFooter, ParentComment, Reply } from './comment'
 import { groupComments, GroupCommentsOptions } from './group'
@@ -75,16 +75,4 @@ export const Comments: React.FC<CommentsProps> = ({ comments }) => {
       }}
     />
   )
-}
-
-export const suspendComments = (component: React.ComponentType<any>) => {
-  const Component = component
-  const SuspendedComment: React.FC = props => (
-    // TODO: fallback skeleton
-    <Suspense fallback={<p>Loading comments...</p>}>
-      <Component {...props} />
-    </Suspense>
-  )
-
-  return SuspendedComment
 }

@@ -2,11 +2,11 @@ import { css } from '@emotion/core'
 import { useTheme } from '@vats/styling'
 import { ActionButton, IButtonProps } from 'office-ui-fabric-react'
 import React from 'react'
-import { CandidateValue } from '../host'
+import { SingleCandidateValue } from '../store'
 import { CandidatePersona, CandidatePersonaProps } from './persona'
 
 export interface CandidateCardProps {
-  candidate: CandidateValue
+  candidate: SingleCandidateValue
   linkProps?: CandidatePersonaProps['linkProps']
   actions?: IButtonProps[]
 }

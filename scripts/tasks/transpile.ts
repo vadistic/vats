@@ -109,7 +109,11 @@ export const transpile = async (args: string[]) => {
                 ),
               }
 
-              await fs.writeJSON(config.CACHE_MANIFEST_PATH, nextManifest)
+              await fs.writeJSON(config.CACHE_MANIFEST_PATH, nextManifest, {
+                encoding: 'utf-8',
+                spaces: 2,
+                EOL: '\n',
+              })
 
               return { manifest: nextManifest }
             }),
