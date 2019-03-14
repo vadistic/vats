@@ -7,7 +7,7 @@ module.exports = target => {
   }
 
   const setupTestsFile = fs.existsSync(path.resolve(process.cwd(), 'src/setup-tests.ts'))
-    ? `<rootDir>/src/setup-tests.ts`
+    ? [`<rootDir>/src/setup-tests.ts`]
     : undefined
 
   // to alias paths of monorepo packages for live-reloading and babel transforming
@@ -21,7 +21,7 @@ module.exports = target => {
 
     coverageDirectory: 'coverage',
 
-    setupFilesAfterEnv: [setupTestsFile],
+    setupFilesAfterEnv: setupTestsFile,
 
     moduleNameMapper: {
       // alias monorepo packages

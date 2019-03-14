@@ -13,7 +13,7 @@ export interface RootStore {
 }
 
 /*
- * TODO: maek sure it's not copying while tree
+ * TODO: make sure it's not copying whole tree
  */
 export const RootStoreContext = React.createContext({} as RootStore)
 

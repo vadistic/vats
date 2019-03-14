@@ -3,6 +3,7 @@ import { diff, PreFilterFunction } from 'deep-diff'
 import { GraphQLError } from 'graphql'
 import { action, computed, observable, reaction, runInAction, set, toJS } from 'mobx'
 import { updateDiff } from './diff'
+import { applyShallowOrdered } from './diff/ordered'
 import { getGraphqlRoots } from './graphql'
 import {
   GraphqlTyping,
@@ -101,8 +102,6 @@ export const createStore = <
     runInAction(`${config.name}: fetch`, () => {
       meta.status = StoreStatus.loading
     })
-
-    console.log('FETCH', variables.where && variables.where.id)
 
     if (!query) {
       query = client.watchQuery<SafeData<Data>, Variables>({
@@ -217,8 +216,7 @@ export const createStore = <
       }
 
       if (res.data) {
-        // TODO: applyOrdered to keep local ordering
-        set(data, graphqlRoots.query, res.data[graphqlRoots.query])
+        applyShallowOrdered(data, res.data)
       }
 
       if (res.errors) {

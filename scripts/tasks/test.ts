@@ -6,10 +6,11 @@ export const test = async (args: string[]) => {
 
   const pkg = await readJson('package.json')
 
+  const { run } = await import('jest-cli')
+
   const target =
     args.includes('--react') || Object.keys(pkg.dependencies).includes('react') ? 'react' : 'node'
 
-  const { run } = await import('jest-cli')
   // @ts-ignore
   const { default: createConfig } = await import('../config/jest.config')
 
