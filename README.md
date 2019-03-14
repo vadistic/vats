@@ -2,19 +2,19 @@
 
 > Applications Tracking System built with cool tech [🚧wip]
 
-As I'm (ex-) recruiter this is an obvious choice for pet project^^. It's mostly playground for utils and architecture patterns, that kind of grew to ~20k of source LOC and few packages (despite my honest efforts to trim it).
+As I'm (ex-) recruiter this is an obvious choice for pet project^^. It's mostly playground for utils and architecture patterns - I'm trying to keep features limited for quick refactors.
 
-I'm trying to come up with an architecture that strongly couple client with server, but redirects implementation to a few abstract modules - so I can have keep adding arbitrary data-models and APIs without having to maintain most of them (and the rest should be strongly typed with graphql-ts code generation for quick fix-ability).
+My goal is to strongly couple client with server, but redirect implementation to a few abstract/ semi-automated modules - so I can have keep adding arbitrary data-models and APIs without having to maintain most of them (and the rest should be strongly typed with graphql-ts code generation for quick refactors).
 
-To achieve it - I plan on reusing auto-generated Prisma API and writing set of adapters on each step (form public API, through creating auto-updates to level of fabric components) - so most features can be generalised as some new module/middleware. I'm thinking I'm halfway there, the next step would be actually try to finish some parts of this app :)
+To achieve it - I plan on reusing tons of auto-generated code and writing set of adapters on each step (form public API, through creating auto-updates to level of fabric components) - so most features can be generalised as some new module/middleware. I'm thinking I'm halfway there, the next step would be actually try to finish some parts of this app :)
 
-## Client/ app
+## App / client
 
-[**README** 📃](./packages/client/README.md)
+[**SOURCE**](./deployables/app)
 
-[**Favourite component** ⭐](./packages/client/src/components/host/README.md)
+[**README** 📃](./deployables/app/README.md)
 
-[TODO:LIVE]
+[**LIVE**](https://vats.now.sh/app)
 
 ### Tech
 
@@ -26,9 +26,11 @@ To achieve it - I plan on reusing auto-generated Prisma API and writing set of a
 
 ## Server/ API
 
-[**SOURCE** ](./packages/server/)
+[**SOURCE** ](./deployables/server/)
 
-[**ENDPOINT** ](https://vats-server.now.sh)
+[**README** 📃](./deployables/server/README.md)
+
+[**ENDPOINT**](https://vats.now.sh/server)
 
 ### Tech
 

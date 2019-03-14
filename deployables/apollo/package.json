@@ -22,7 +22,7 @@
     "graphql-import": "^0.7.1"
   },
   "devDependencies": {
-    "@vats/start": "^0.1.0",
+    "@vats/scripts": "^0.1.0",
     "typescript": "3.3.3333"
   }
 }

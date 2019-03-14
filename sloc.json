@@ -1,6 +1,6 @@
 {
   "name": "Source lines of code report",
-  "date": "2019-03-14T13:28:55.667Z",
+  "date": "2019-03-14T13:39:19.121Z",
   "total": {
     "total": 10874,
     "source": 8640,
@@ -131,17 +131,6 @@
         "todo": 0,
         "blockEmpty": 0
       },
-      "tsx": {
-        "total": 31,
-        "source": 23,
-        "comment": 2,
-        "single": 2,
-        "block": 0,
-        "mixed": 0,
-        "empty": 6,
-        "todo": 0,
-        "blockEmpty": 0
-      },
       "ts": {
         "total": 311,
         "source": 258,
@@ -151,6 +140,17 @@
         "mixed": 0,
         "empty": 41,
         "todo": 1,
+        "blockEmpty": 0
+      },
+      "tsx": {
+        "total": 31,
+        "source": 23,
+        "comment": 2,
+        "single": 2,
+        "block": 0,
+        "mixed": 0,
+        "empty": 6,
+        "todo": 0,
         "blockEmpty": 0
       }
     },

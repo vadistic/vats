@@ -16,15 +16,15 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.7",
+    "@emotion/core": "^10.0.9",
     "@uifabric/icons": "^6.4.0",
-    "@uifabric/styling": "^6.44.1",
+    "@uifabric/styling": "^6.45.0",
     "@vats/utils": "^0.1.0",
-    "react-dom": "^16.8.4",
-    "react": "^16.8.4"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "devDependencies": {
-    "@vats/start": "^0.1.0",
+    "@vats/scripts": "^0.1.0",
     "typescript": "3.3.3333"
   }
 }

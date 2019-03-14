@@ -11,6 +11,7 @@
     "vscript": "node scripts/cli.js",
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap",
+    "lines": "vscripts lines",
     "test": "echo todo",
     "start": "echo todo",
     "build": "echo todo",
@@ -20,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn typecheck && lint-staged"
+      "pre-commit": "yarn typecheck && lint-staged && yarn lines && git add sloc.json"
     }
   },
   "lint-staged": {
@@ -33,10 +34,10 @@
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^24.0.11",
-    "@types/node": "^11.11.0",
-    "@types/react": "^16.8.7",
+    "@types/node": "^11.11.3",
+    "@types/react": "^16.8.8",
     "@types/react-dom": "^16.8.2",
-    "apollo": "^2.6.0",
+    "apollo": "^2.6.1",
     "husky": "^1.3.1",
     "lerna": "^3.13.1",
     "lerna-update-wizard": "^0.11.1",
@@ -46,7 +47,7 @@
     "postinstall": "^0.4.2",
     "prettier": "^1.16.4",
     "pretty-quick": "^1.10.0",
-    "tslint": "^5.13.0",
+    "tslint": "^5.14.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0",
     "typescript": "^3.3.3333",
