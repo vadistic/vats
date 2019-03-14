@@ -1,4 +1,6 @@
-require('@vats/start').config()
+require('@vats/scripts').config()
+
+const babelNode = require('./babel.config.node')
 
 module.exports = {
   webpack: (config, options, webpack) => {
@@ -12,13 +14,8 @@ module.exports = {
 
     babelLoader.test = /\.(js|jsx|ts|tsx)$/
 
-    babelLoader.options.presets.push(require.resolve('@babel/preset-typescript'))
-
-    if (!babelLoader.options.plugins) {
-      babelLoader.options.plugins = []
-    }
-
-    babelLoader.options.plugins.push(require.resolve('@babel/plugin-syntax-dynamic-import'))
+    babelLoader.options.presets = babelNode.presets
+    babelLoader.options.plugins = babelNode.plugins
 
     if (options.env === 'production') {
       // allow bundling graphql

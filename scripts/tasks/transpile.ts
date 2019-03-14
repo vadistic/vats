@@ -10,6 +10,7 @@ import fs from 'fs-extra'
 import path from 'path'
 
 import { cond, filter, sub } from './plugins/mixins'
+import { readJson } from './plugins/utils'
 
 interface Manifest {
   // path (relative to package root) => datetime in ms
@@ -30,6 +31,7 @@ export const config = {
   BUILD_DIR: 'build',
   DIST_DIR: 'dist',
   SOURCE_DIR: 'src',
+  SOURCE_GLOB: ['**/*.{ts,tsx}'],
   IGNORE_GLOB: [
     '!**/tests/**',
     '!**/__tests__/**',
@@ -41,8 +43,9 @@ export const config = {
 
 export const transpile = async (args: string[]) => {
   process.env.BABEL_ENV = 'production'
+  const pkg = await readJson('package.json')
 
-  const react = args.includes('--react')
+  const react = args.includes('--react') || Object.keys(pkg.dependencies).includes('react')
 
   const babelConfig = (react
     ? // ...
@@ -64,7 +67,10 @@ export const transpile = async (args: string[]) => {
 
   return sequence(
     // find source files, ignoring tests etc.
-    find([`${config.SOURCE_DIR}/**/*.{ts,tsx}`, ...config.IGNORE_GLOB]),
+    find([
+      ...config.SOURCE_GLOB.map(globPath => `${config.SOURCE_DIR}/${globPath}`),
+      ...config.IGNORE_GLOB,
+    ]),
     // load stats data
     plugin('read-file-stats', () => async input => {
       const stats = await Promise.all(input.files.map(async file => fs.stat(file.path)))

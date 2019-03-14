@@ -217,7 +217,8 @@ export const createStore = <
       }
 
       if (res.data) {
-        set(data, res.data)
+        // TODO: applyOrdered to keep local ordering
+        set(data, graphqlRoots.query, res.data[graphqlRoots.query])
       }
 
       if (res.errors) {

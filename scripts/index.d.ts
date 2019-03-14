@@ -1,3 +1,3 @@
-declare module '@vats/start' {
+declare module '@vats/scripts' {
   export const config: () => void
 }

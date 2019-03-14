@@ -76,7 +76,7 @@ const hotModules = webpackConfig => {
 // it probably mess up with emotion jsx pragma something - better substitute it
 // also I do not want it on production
 const hotModulesNoop = webpackConfig => {
-  webpackConfig.resolve.alias['react-hot-loader'] = '@vats/start/config/noop-hot-loader'
+  webpackConfig.resolve.alias['react-hot-loader'] = '@vats/scripts/config/noop-hot-loader'
 
   return webpackConfig
 }

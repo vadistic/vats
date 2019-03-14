@@ -1,4 +1,4 @@
-require('@vats/start').config()
+require('@vats/scripts').config()
 
 process.env.PORT = 1234
 module.exports = {

@@ -1,4 +1,4 @@
-require('@vats/start').config()
+require('@vats/scripts').config()
 
 module.exports = {
   webpack: (config, options, webpack) => {

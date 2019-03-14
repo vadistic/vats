@@ -6,7 +6,7 @@ export const readJson = async (filename: string) => {
   try {
     json = await fs.readJSON(path.resolve(process.cwd(), filename))
   } catch (err) {
-    throw Error(`package.json not found`)
+    throw Error(`${filename} not found`)
   }
 
   return json

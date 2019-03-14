@@ -1,4 +1,4 @@
-const config = require('@vats/start/env/dotenv')
+const config = require('@vats/scripts/env/dotenv')
 
 config()
 

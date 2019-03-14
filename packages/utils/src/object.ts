@@ -76,15 +76,22 @@ export const mutableSetValueIn = <
 ) => {
   const [head, ...tail] = path
 
+  if (state === null) {
+    console.log('null in value set ', state, value, path)
+  }
+
   if (tail.length > 0) {
-    // handle obj <=> array conversion
     const isHeadArray = Array.isArray(state[head])
     const shouldHeadBeArray = typeof tail[0] === 'number'
-    const nextState = XNOR(shouldHeadBeArray, isHeadArray)
-      ? state[head]
-      : shouldHeadBeArray
-      ? []
-      : {}
+    // handle nulls & type obj <=> array conversion
+    const nextState =
+      state[head] !== null &&
+      typeof state[head] === 'object' &&
+      XNOR(shouldHeadBeArray, isHeadArray)
+        ? state[head]
+        : shouldHeadBeArray
+        ? []
+        : {}
 
     state[head] = mutableSetValueIn(nextState, value, tail)
   }
@@ -204,7 +211,7 @@ export const recursiveTransform = (
 export type CallbackFn = (value: any, path: Array<string | number>) => any
 
 /*
- * just traversing
+ * just traversing, callback on parent before children!
  */
 export const recursiveTraverse = (
   input: any,
