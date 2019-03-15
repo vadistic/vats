@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useTranslation as useOriginalTranslation } from 'react-i18next'
 import { i18next } from './i18n'
 import { Translation, TranslationOptions, TranslationTypingConfig } from './types'
@@ -8,9 +9,7 @@ export type TranslationProxy<S> = S extends (TranslationTypingConfig | string)
   ? TranslationProxyFunction
   : { [K in keyof S]: TranslationProxy<S[K]> }
 
-export const useTranslation = () => {
-  const { t, i18n } = useOriginalTranslation()
-
+const getTranslationProxy = (t: i18next.TFunction) => {
   const translationProxy = (new Proxy(t, {
     get(target: i18next.TFunction, key: any) {
       return _translationProxy(key)
@@ -30,5 +29,14 @@ export const useTranslation = () => {
       },
     })
 
-  return { i18n, t, tp: translationProxy }
+  return translationProxy
+}
+
+export const useTranslation = () => {
+  const { t, i18n } = useOriginalTranslation()
+
+  // ! put i18n.language to deps if memo freeze t function on language change
+  const tp = useMemo(() => getTranslationProxy(t), [])
+
+  return { i18n, t, tp }
 }

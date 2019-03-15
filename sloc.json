@@ -1,14 +1,14 @@
 {
   "name": "Source lines of code report",
-  "date": "2019-03-14T18:55:59.673Z",
+  "date": "2019-03-15T13:25:20.851Z",
   "total": {
-    "total": 11314,
-    "source": 8990,
-    "comment": 705,
-    "single": 337,
-    "block": 368,
+    "total": 11624,
+    "source": 9248,
+    "comment": 712,
+    "single": 338,
+    "block": 374,
     "mixed": 16,
-    "empty": 1635,
+    "empty": 1680,
     "todo": 28,
     "blockEmpty": 0,
     "generated": 125026
@@ -26,25 +26,25 @@
       "blockEmpty": 0
     },
     "ts": {
-      "total": 6084,
-      "source": 4687,
-      "comment": 547,
-      "single": 263,
-      "block": 284,
+      "total": 6283,
+      "source": 4854,
+      "comment": 554,
+      "single": 264,
+      "block": 290,
       "mixed": 11,
-      "empty": 861,
+      "empty": 886,
       "todo": 13,
       "blockEmpty": 0,
       "generated": 91628
     },
     "tsx": {
-      "total": 4752,
-      "source": 3916,
+      "total": 4863,
+      "source": 4007,
       "comment": 151,
       "single": 67,
       "block": 84,
       "mixed": 5,
-      "empty": 690,
+      "empty": 710,
       "todo": 15,
       "blockEmpty": 0
     },
@@ -110,13 +110,13 @@
     },
     "packages/i18n": {
       "total": {
-        "total": 345,
-        "source": 284,
-        "comment": 14,
-        "single": 14,
+        "total": 353,
+        "source": 289,
+        "comment": 15,
+        "single": 15,
         "block": 0,
         "mixed": 0,
-        "empty": 47,
+        "empty": 49,
         "todo": 1,
         "blockEmpty": 0
       },
@@ -132,13 +132,13 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 311,
-        "source": 258,
-        "comment": 12,
-        "single": 12,
+        "total": 319,
+        "source": 263,
+        "comment": 13,
+        "single": 13,
         "block": 0,
         "mixed": 0,
-        "empty": 41,
+        "empty": 43,
         "todo": 1,
         "blockEmpty": 0
       },
@@ -156,13 +156,13 @@
     },
     "packages/store": {
       "total": {
-        "total": 2145,
-        "source": 1613,
-        "comment": 219,
+        "total": 2174,
+        "source": 1638,
+        "comment": 222,
         "single": 85,
-        "block": 134,
+        "block": 137,
         "mixed": 0,
-        "empty": 313,
+        "empty": 314,
         "todo": 4,
         "blockEmpty": 0
       },
@@ -189,13 +189,13 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 2048,
-        "source": 1539,
-        "comment": 212,
+        "total": 2077,
+        "source": 1564,
+        "comment": 215,
         "single": 84,
-        "block": 128,
+        "block": 131,
         "mixed": 0,
-        "empty": 297,
+        "empty": 298,
         "todo": 3,
         "blockEmpty": 0
       }
@@ -248,13 +248,13 @@
     },
     "packages/utils": {
       "total": {
-        "total": 882,
-        "source": 595,
+        "total": 887,
+        "source": 598,
         "comment": 123,
         "single": 14,
         "block": 109,
         "mixed": 1,
-        "empty": 165,
+        "empty": 167,
         "todo": 2,
         "blockEmpty": 0
       },
@@ -270,13 +270,13 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 879,
-        "source": 592,
+        "total": 884,
+        "source": 595,
         "comment": 123,
         "single": 14,
         "block": 109,
         "mixed": 1,
-        "empty": 165,
+        "empty": 167,
         "todo": 2,
         "blockEmpty": 0
       }
@@ -329,13 +329,13 @@
     },
     "deployables/app": {
       "total": {
-        "total": 3911,
-        "source": 3265,
-        "comment": 114,
+        "total": 4179,
+        "source": 3490,
+        "comment": 117,
         "single": 86,
-        "block": 28,
+        "block": 31,
         "mixed": 5,
-        "empty": 537,
+        "empty": 577,
         "todo": 12,
         "blockEmpty": 0,
         "generated": 39372
@@ -352,25 +352,25 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 1058,
-        "source": 850,
-        "comment": 73,
+        "total": 1215,
+        "source": 984,
+        "comment": 76,
         "single": 49,
-        "block": 24,
+        "block": 27,
         "mixed": 2,
-        "empty": 137,
+        "empty": 157,
         "todo": 2,
         "blockEmpty": 0,
         "generated": 39302
       },
       "tsx": {
-        "total": 2835,
-        "source": 2399,
+        "total": 2946,
+        "source": 2490,
         "comment": 41,
         "single": 37,
         "block": 4,
         "mixed": 3,
-        "empty": 398,
+        "empty": 418,
         "todo": 10,
         "blockEmpty": 0
       },
