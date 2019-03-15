@@ -4,18 +4,18 @@ import { SortDirection } from '@vats/utils'
 import { observer } from 'mobx-react-lite'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
-import { JobsSortBy, jobsSortByLabels } from './reactions'
-import { JobsContext } from './store'
+import { CandidatesSortBy, candidatesSortByLabels } from './reactions'
+import { CandidatesContext } from './store'
 
-export interface JobsBarProps {}
+export interface CandidatesBarProps {}
 
-const JobsBarBase: React.FC<JobsBarProps> = () => {
-  const store = useContext(JobsContext)
+const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
+  const store = useContext(CandidatesContext)
   const { tp } = useTranslation()
 
-  const sortByLabelMap = useMemo(() => jobsSortByLabels(tp), [])
+  const sortByLabelMap = useMemo(() => candidatesSortByLabels(tp), [])
 
-  const sortByAction = useStoreAction(store, `sortBy dispatch`)((sortBy: JobsSortBy) => {
+  const sortByAction = useStoreAction(store, `sortBy dispatch`)((sortBy: CandidatesSortBy) => {
     store.state.sortBy = sortBy
   })
 
@@ -25,7 +25,7 @@ const JobsBarBase: React.FC<JobsBarProps> = () => {
     },
   )
 
-  const getSubmenuItem = (sortBy: JobsSortBy) => ({
+  const getSubmenuItem = (sortBy: CandidatesSortBy) => ({
     text: sortByLabelMap[sortBy],
     key: 'sort-by-' + sortBy,
     onClick: () => {
@@ -45,7 +45,7 @@ const JobsBarBase: React.FC<JobsBarProps> = () => {
         sortDirectionAction()
       },
       subMenuProps: {
-        items: Object.values(JobsSortBy).map(value => getSubmenuItem(value)),
+        items: Object.values(CandidatesSortBy).map(value => getSubmenuItem(value)),
       },
     },
   ]
@@ -53,4 +53,4 @@ const JobsBarBase: React.FC<JobsBarProps> = () => {
   return <CommandBar items={items} />
 }
 
-export const JobsBar = observer(JobsBarBase)
+export const CandidatesBar = observer(CandidatesBarBase)

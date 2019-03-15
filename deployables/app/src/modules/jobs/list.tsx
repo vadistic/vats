@@ -3,15 +3,16 @@ import { RouteComponentProps } from '@reach/router'
 import { useTheme } from '@vats/styling'
 import { objSwitch } from '@vats/utils'
 import { toJS } from 'mobx'
-import { observer, useObserver } from 'mobx-react-lite'
+import { useObserver } from 'mobx-react-lite'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
 import { Link } from '../../components'
-import { Job, JobType } from '../../generated/queries'
+import { JobType } from '../../generated/queries'
+import { SingleJobValue } from '../job/store'
 import { JobsContext } from './store'
 
 export interface JobListItem {
-  job: Job
+  job: SingleJobValue
 }
 
 export const JobListItemCard: React.FC<JobListItem> = ({ job, ...rest }) => {
@@ -56,10 +57,10 @@ export interface JobsListProps extends RouteComponentProps {
   children: React.ReactElement
 }
 
-const JobsListBase: React.FC<JobsListProps> = ({ children }) => {
+export const JobsList: React.FC<JobsListProps> = ({ children }) => {
   const store = useContext(JobsContext)
 
-  const renderCell = (nestingDepth?: number, job?: Job, index?: number) => {
+  const renderCell = (nestingDepth?: number, job?: SingleJobValue, index?: number) => {
     if (job) {
       return <JobListItem job={toJS(job)} key={job.id} />
     }
@@ -79,7 +80,5 @@ const JobsListBase: React.FC<JobsListProps> = ({ children }) => {
         <GroupedList items={store.data.jobs} onRenderCell={renderCell} />
       </FocusZone>
     )
-  })
+  }, 'JobsList')
 }
-
-export const JobsList = observer(JobsListBase)

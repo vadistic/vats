@@ -5,6 +5,7 @@ import { Router } from '../../components'
 import { routes } from '../../routes'
 import { CandidateSurface } from '../candidate/surface'
 import { CandidatesList } from './list'
+import { useCandidatesReactions } from './reactions'
 import { CandidatesContext, createCandidatesStore } from './store'
 import { CandidatesTable } from './table'
 
@@ -24,6 +25,7 @@ export interface CandidatesViewProps extends RouteComponentProps {}
 
 export const CandidatesView: React.FC<CandidatesViewProps> = () => {
   const store = useStore(createCandidatesStore, {}, [])
+  useCandidatesReactions(store)
 
   return (
     <CandidatesContext.Provider value={store}>

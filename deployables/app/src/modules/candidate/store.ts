@@ -11,6 +11,7 @@ import {
   CANDIDATE_QUERY,
   CANDIDATE_UPDATE_MUTATION,
 } from './graphql'
+import { CandidateProfileTab } from './profile'
 
 export type SingleCandidateValue = CandidateQuery_candidate
 
@@ -23,7 +24,7 @@ export interface SingleCandidateStoreProps extends StoreProps {
 }
 
 export const createSingleCandidateStore = (props: SingleCandidateStoreProps) => {
-  const state = { editable: false }
+  const state = { editable: false, surfaceTab: CandidateProfileTab.overview }
 
   const variables: CandidateQueryVariables = { where: { id: props.id } }
 

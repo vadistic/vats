@@ -4,7 +4,7 @@ import React from 'react'
 import { JobsQuery, JobsQuery_jobs, JobsQueryVariables } from '../../generated/queries'
 import { JOB_CREATE_MUTATION, JOB_DELETE_MUTATION, JOB_UPDATE_MUTATION } from '../job/graphql'
 import { JOBS_DELETE_MANY_MUTATION, JOBS_QUERY, JOBS_UPDATE_MANY_MUTATION } from './graphql'
-import { JobsSortBy } from './sort'
+import { JobsSortBy } from './reactions'
 
 export type JobsValue = JobsQuery_jobs[]
 
@@ -56,14 +56,12 @@ export const createJobsStore = (props: JobsStoreProps) => {
     relations: {},
   }
 
-  const storeProps = createStore({
+  const store = createStore({
     config,
     state,
     variables,
     data,
   })(props)
 
-  return {
-    ...storeProps,
-  }
+  return store
 }

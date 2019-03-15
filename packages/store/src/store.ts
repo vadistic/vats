@@ -279,5 +279,16 @@ export const createStore = <
     return omitFields.includes(key)
   }
 
-  return { ...observables, value, client, query, fetch, refetch, update, autoUpdate, init, dispose }
+  return {
+    ...observables,
+    value,
+    client,
+    query,
+    fetch,
+    refetch,
+    update,
+    autoUpdate,
+    init,
+    dispose,
+  }
 }

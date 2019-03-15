@@ -15,3 +15,8 @@ export const mutableSortByGetter = <T>(
   direction: SortDirection,
   getter: (element: T) => string | number | null,
 ) => arr.sort((elA, elB) => direction * compareFn(getter(elA), getter(elB)))
+
+export type SortGetter<T> = (job: T) => string | number | null
+
+export const sortByGetter = <T>(arr: T[], direction: SortDirection, getter: SortGetter<T>) =>
+  arr.slice().sort((elA, elB) => direction * compareFn(getter(elA), getter(elB)))

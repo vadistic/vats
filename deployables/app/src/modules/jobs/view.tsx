@@ -1,11 +1,13 @@
 import { RouteComponentProps } from '@reach/router'
 import { useStore } from '@vats/store'
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Router } from '../../components'
 import { routes } from '../../routes'
 import { JobSurface } from '../job'
 import { JobsBar } from './bar'
 import { JobsList } from './list'
+import { useJobsReactions } from './reactions'
 import { createJobsStore, JobsContext } from './store'
 
 const JobsViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
@@ -22,8 +24,10 @@ const JobsViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
 
 export interface JobsViewProps extends RouteComponentProps {}
 
-export const JobsView: React.FC<JobsViewProps> = () => {
+export const JobsViewBase: React.FC<JobsViewProps> = () => {
   const store = useStore(createJobsStore, {}, [])
+
+  useJobsReactions(store)
 
   return (
     <JobsContext.Provider value={store}>
@@ -37,3 +41,5 @@ export const JobsView: React.FC<JobsViewProps> = () => {
     </JobsContext.Provider>
   )
 }
+
+export const JobsView = observer(JobsViewBase)

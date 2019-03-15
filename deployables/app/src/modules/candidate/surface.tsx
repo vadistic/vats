@@ -1,18 +1,23 @@
 import { RouteComponentProps } from '@reach/router'
 import { Editable, FormikContextValue } from '@vats/forms'
-import { StoreStatus, useStore } from '@vats/store'
+import { StoreStatus, useStore, useStoreAction } from '@vats/store'
 import { useObserver } from 'mobx-react-lite'
 import React, { useRef } from 'react'
 import { LoadingSpinner, Surface } from '../../components'
 import { routes } from '../../routes'
-import { CandidateProfile } from './profile'
+import { useDerived } from '../../utils'
+import { CandidateProfile, CandidateProfileTab } from './profile'
 import { createSingleCandidateStore, SingleCandidateContext, SingleCandidateValue } from './store'
 
 export interface CandidateSurfaceProps extends RouteComponentProps {
   id?: string
 }
 
-export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id = '' }) => {
+export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({
+  navigate,
+  id = '',
+  location,
+}) => {
   if (!id) {
     console.error('CandidateSurface: No id provided')
     return null
@@ -20,6 +25,22 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({ navigate, id
 
   const store = useStore(createSingleCandidateStore, { id }, [id])
   const formikRef = useRef<FormikContextValue<SingleCandidateValue>>(null)
+
+  const locationTabAction = useStoreAction(store, `location tab change`)(
+    (tab: CandidateProfileTab) => {
+      store.state.surfaceTab = tab
+    },
+  )
+
+  if (location) {
+    console.log(location.state.tab)
+  }
+
+  useDerived(() => {
+    if (location && location.state.tab) {
+      locationTabAction(location.state.tab)
+    }
+  }, [location && location.state.tab])
 
   const handleDismiss = () => {
     if (navigate) {

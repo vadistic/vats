@@ -16,7 +16,7 @@ import {
   CANDIDATES_QUERY,
   CANDIDATES_UPDATE_MANY_MUTATION,
 } from './graphql'
-import { CandidatesSortBy } from './sort'
+import { CandidatesSortBy } from './reactions'
 
 export type CandidatesValue = CandidatesQuery_candidates[]
 
