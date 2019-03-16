@@ -32,10 +32,6 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({
     },
   )
 
-  if (location) {
-    console.log(location.state.tab)
-  }
-
   useDerived(() => {
     if (location && location.state.tab) {
       locationTabAction(location.state.tab)

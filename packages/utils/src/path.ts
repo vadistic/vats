@@ -1,5 +1,5 @@
 import { getIn } from './object'
-import { Head, Tail } from './types'
+import { ElementType, Head, Tail } from './types'
 
 /*
  * util for safely building nested properties paths (ie for formik)
@@ -21,7 +21,7 @@ export type CheckLeafPath<State extends any, Paths extends any[]> = Head<Paths> 
   : void
 
 /**
- * validate type path and transform to lodash.style
+ * build lodash paths (no type validation)
  */
 export const buildLoPath = (paths: Array<string | number>) => {
   const loPath = paths.reduce((acc, el, i) => {
@@ -33,6 +33,9 @@ export const buildLoPath = (paths: Array<string | number>) => {
   return loPath
 }
 
+/**
+ * validate type path and transform to lodash.style
+ */
 export const getLoPath = <S, P extends string[]>(state: S, ...paths: P) =>
   (buildLoPath(paths) as unknown) as CheckPath<S, P>
 
@@ -45,21 +48,41 @@ export const getLoLeafPath = <S, P extends Array<string | number>>(state: S, ...
 /**
  *  and now reversing lodash style paths :/
  */
-export const getInByPath = (state: any, path: string) =>
-  getIn(state, ...path.split(/\.|(?:\[|\])/).filter(el => !!el))
+export const getInByPath = (state: any, path: string) => getIn(state, ...reverseLoPath(path))
+
+/**
+ * reverse lodash path, converts array accesors back to numbers
+ */
+export const reverseLoPath = (path: string) =>
+  path
+    .split(/\.|(?:\[|\])/)
+    .filter(el => el !== '')
+    .map(el => (isNaN(+el) ? el : +el))
 
 /*
  * Different approach
  * https://github.com/jaredpalmer/formik/issues/1334
  */
 
+// path getter
 export interface FieldPath {
   PATH: string
 }
 
-export type PathProxy<S> = FieldPath & { [K in keyof S]: PathProxyValue<S[K]> }
+type PathProxyObject<S extends object> = { [K in keyof S]: PathProxy<S[K]> } & FieldPath
 
-type PathProxyValue<S> = S extends object ? PathProxy<S> : FieldPath
+// ! does not support arrays-in-arrays
+// this somehow breaks typescript by creating cycle - there need to be type left off
+type PathProxyArray<S extends any[]> = (ElementType<S> extends object
+  ? Array<PathProxyObject<ElementType<S>>>
+  : FieldPath[]) &
+  FieldPath
+
+export type PathProxy<S> = S extends any[]
+  ? PathProxyArray<S>
+  : S extends object
+  ? PathProxyObject<S>
+  : FieldPath
 
 const idPath = { PATH: '' } as FieldPath
 
@@ -70,7 +93,9 @@ export const pathProxy = <S>(parent: FieldPath = idPath as any): PathProxy<S> =>
         return target[key]
       }
       return pathProxy<any>({
-        PATH: `${parent.PATH ? parent.PATH + '.' : idPath.PATH}${key}`,
+        // proxy get keys as strings
+        // so !isNan(+key) is just smarter typeof key === 'number'
+        PATH: parent.PATH + (!isNaN(+key) ? `[${key}]` : parent.PATH === '' ? key : '.' + key),
       } as any)
     },
   })

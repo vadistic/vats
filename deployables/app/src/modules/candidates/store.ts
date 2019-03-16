@@ -16,8 +16,18 @@ import {
   CANDIDATES_QUERY,
   CANDIDATES_UPDATE_MANY_MUTATION,
 } from './graphql'
+import { ColumnsConfig } from './table'
 
 export type CandidatesValue = CandidatesQuery_candidates[]
+export type CandidatesElement = CandidatesQuery_candidates
+
+export interface CandidatesProps {
+  candidates: CandidatesValue
+}
+
+export interface CandidatesElementProps {
+  candidate: CandidatesElement
+}
 
 export type CandidatesStore = ReturnType<typeof createCandidatesStore>
 
@@ -29,6 +39,9 @@ export const createCandidatesStore = (props: CandidatesStoreProps) => {
   const state = {
     sortBy: 'updatedAt',
     sortDirection: SortDirection.DESCENDING,
+    table: {
+      columns: undefined as ColumnsConfig | undefined,
+    },
   }
 
   const variables: CandidatesQueryVariables = { where: null }
@@ -49,14 +62,12 @@ export const createCandidatesStore = (props: CandidatesStoreProps) => {
     },
   }
 
-  const storeProps = createStore({
+  const store = createStore({
     config,
     state,
     variables,
     data,
   })(props)
 
-  return {
-    ...storeProps,
-  }
+  return store
 }

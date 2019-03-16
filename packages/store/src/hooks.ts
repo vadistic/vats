@@ -1,6 +1,14 @@
-import { IReactionDisposer, IReactionOptions, IReactionPublic, reaction, runInAction } from 'mobx'
+import {
+  computed,
+  IComputedValueOptions,
+  IReactionDisposer,
+  IReactionOptions,
+  IReactionPublic,
+  reaction,
+  runInAction,
+} from 'mobx'
 import { useDisposable } from 'mobx-react-lite'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { StoreValue } from './types'
 
 /*
@@ -41,3 +49,12 @@ export type UseReaction = <T>(
 
 export const useReaction: UseReaction = (name, expression, effect, deps = [], opts) =>
   useDisposable(() => reaction(expression, effect, { name, ...opts }), deps)
+
+// my own hook because provided is quite useless
+// https://github.com/mobxjs/mobx-react-lite/issues/38
+export const useComputed = <T>(
+  name: string,
+  func: () => T,
+  deps: ReadonlyArray<any> = [],
+  opts: IComputedValueOptions<T> = {},
+) => useMemo(() => computed(func, { name, ...opts }), deps)

@@ -1,29 +1,30 @@
 import { Translation, TranslationProxy, useTranslation } from '@vats/i18n'
 import { useStoreAction } from '@vats/store'
-import { SortDirection, stringIndex } from '@vats/utils'
+import { ElementTypeOr, pathProxy, SortDirection } from '@vats/utils'
 import { observer } from 'mobx-react-lite'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
-import { CandidatesContext } from './store'
+import { CandidatesContext, CandidatesValue } from './store'
 
 export interface CandidatesBarProps {}
 
-export const candidatesSortByLabels = (tp: TranslationProxy<Translation>) => ({
-  firstName: tp.candidate.firstName(),
-  lastName: tp.candidate.lastName(),
-  createdAt: tp.job.createdAt(),
-  applications: tp.job.applications({ count: 10 }),
-  comments: tp.candidate.comment({ count: 10 }),
+const p = pathProxy<ElementTypeOr<CandidatesValue>>()
+
+export const candidatesSortByMap = (tp: TranslationProxy<Translation>) => ({
+  [p.firstName.PATH]: tp.candidate.firstName(),
+  [p.lastName.PATH]: tp.candidate.lastName(),
+  [p.createdAt.PATH]: tp.job.createdAt(),
+  [p.applications.PATH]: tp.job.applications({ count: 10 }),
+  [p.comments.PATH]: tp.candidate.comment({ count: 10 }),
 })
-export type CandidatesBarSortKey = keyof ReturnType<typeof candidatesSortByLabels>
 
 const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
   const store = useContext(CandidatesContext)
   const { tp } = useTranslation()
 
-  const sortByMap = useMemo(() => candidatesSortByLabels(tp), [])
+  const sortByMap = useMemo(() => candidatesSortByMap(tp), [])
 
-  const sortByAction = useStoreAction(store, `sortBy dispatch`)((sortBy: CandidatesBarSortKey) => {
+  const sortByAction = useStoreAction(store, `sortBy dispatch`)((sortBy: string) => {
     store.state.sortBy = sortBy
   })
 
@@ -33,7 +34,7 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
     },
   )
 
-  const getSubmenuItem = (sortBy: CandidatesBarSortKey) => ({
+  const getSubmenuItem = (sortBy: string) => ({
     text: sortByMap[sortBy],
     key: 'sort-by-' + sortBy,
     onClick: () => {
@@ -43,9 +44,7 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
 
   const items: ICommandBarItemProps[] = [
     {
-      text: store.state.sortBy
-        ? `Sort: ${stringIndex(sortByMap)[store.state.sortBy]}`
-        : 'No storing',
+      text: store.state.sortBy ? `Sort: ${sortByMap[store.state.sortBy]}` : 'No storing',
       key: 'sort',
       split: true,
       iconProps: {
@@ -55,7 +54,7 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
         sortDirectionAction()
       },
       subMenuProps: {
-        items: Object.keys(sortByMap).map(key => getSubmenuItem(key as CandidatesBarSortKey)),
+        items: Object.keys(sortByMap).map(key => getSubmenuItem(key)),
       },
     },
   ]

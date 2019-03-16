@@ -1,17 +1,17 @@
 {
   "name": "Source lines of code report",
-  "date": "2019-03-16T01:40:21.910Z",
+  "date": "2019-03-16T20:10:42.386Z",
   "total": {
-    "total": 11810,
-    "source": 9392,
-    "comment": 723,
-    "single": 346,
-    "block": 377,
+    "total": 12139,
+    "source": 9659,
+    "comment": 742,
+    "single": 362,
+    "block": 380,
     "mixed": 16,
-    "empty": 1711,
+    "empty": 1754,
     "todo": 27,
     "blockEmpty": 0,
-    "generated": 125784
+    "generated": 125798
   },
   "extnames": {
     "js": {
@@ -26,25 +26,25 @@
       "blockEmpty": 0
     },
     "ts": {
-      "total": 6394,
-      "source": 4925,
-      "comment": 566,
-      "single": 273,
-      "block": 293,
+      "total": 6554,
+      "source": 5048,
+      "comment": 581,
+      "single": 285,
+      "block": 296,
       "mixed": 11,
-      "empty": 914,
+      "empty": 936,
       "todo": 13,
       "blockEmpty": 0,
-      "generated": 92386
+      "generated": 92400
     },
     "tsx": {
-      "total": 4938,
-      "source": 4080,
-      "comment": 150,
-      "single": 66,
+      "total": 5107,
+      "source": 4224,
+      "comment": 154,
+      "single": 70,
       "block": 84,
       "mixed": 5,
-      "empty": 713,
+      "empty": 734,
       "todo": 14,
       "blockEmpty": 0
     },
@@ -156,13 +156,13 @@
     },
     "packages/store": {
       "total": {
-        "total": 2307,
-        "source": 1736,
+        "total": 2350,
+        "source": 1773,
         "comment": 233,
-        "single": 93,
-        "block": 140,
+        "single": 96,
+        "block": 137,
         "mixed": 0,
-        "empty": 338,
+        "empty": 344,
         "todo": 4,
         "blockEmpty": 0
       },
@@ -189,13 +189,13 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 2210,
-        "source": 1662,
+        "total": 2253,
+        "source": 1699,
         "comment": 226,
-        "single": 92,
-        "block": 134,
+        "single": 95,
+        "block": 131,
         "mixed": 0,
-        "empty": 322,
+        "empty": 328,
         "todo": 3,
         "blockEmpty": 0
       }
@@ -248,13 +248,13 @@
     },
     "packages/utils": {
       "total": {
-        "total": 897,
-        "source": 604,
-        "comment": 124,
-        "single": 15,
-        "block": 109,
+        "total": 996,
+        "source": 674,
+        "comment": 139,
+        "single": 24,
+        "block": 115,
         "mixed": 1,
-        "empty": 170,
+        "empty": 184,
         "todo": 2,
         "blockEmpty": 0
       },
@@ -270,13 +270,13 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 894,
-        "source": 601,
-        "comment": 124,
-        "single": 15,
-        "block": 109,
+        "total": 993,
+        "source": 671,
+        "comment": 139,
+        "single": 24,
+        "block": 115,
         "mixed": 1,
-        "empty": 170,
+        "empty": 184,
         "todo": 2,
         "blockEmpty": 0
       }
@@ -329,16 +329,16 @@
     },
     "deployables/app": {
       "total": {
-        "total": 4222,
-        "source": 3530,
-        "comment": 116,
-        "single": 85,
+        "total": 4409,
+        "source": 3690,
+        "comment": 120,
+        "single": 89,
         "block": 31,
         "mixed": 5,
-        "empty": 581,
+        "empty": 604,
         "todo": 11,
         "blockEmpty": 0,
-        "generated": 40130
+        "generated": 40144
       },
       "js": {
         "total": 18,
@@ -352,25 +352,25 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 1183,
-        "source": 951,
+        "total": 1201,
+        "source": 967,
         "comment": 76,
         "single": 49,
         "block": 27,
         "mixed": 2,
-        "empty": 158,
+        "empty": 160,
         "todo": 2,
         "blockEmpty": 0,
-        "generated": 40060
+        "generated": 40074
       },
       "tsx": {
-        "total": 3021,
-        "source": 2563,
-        "comment": 40,
-        "single": 36,
+        "total": 3190,
+        "source": 2707,
+        "comment": 44,
+        "single": 40,
         "block": 4,
         "mixed": 3,
-        "empty": 421,
+        "empty": 442,
         "todo": 9,
         "blockEmpty": 0
       },

@@ -30,7 +30,7 @@ export interface JobsStoreProps extends StoreProps {}
 
 export const createJobsStore = (props: JobsStoreProps) => {
   const state = {
-    sortBy: 'custom' as 'custom',
+    sortBy: 'custom',
   }
 
   const variables: JobsQueryVariables = { where: null }

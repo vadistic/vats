@@ -1,4 +1,11 @@
-import { ElementTypeOr, sortByGetter, SortDirection, StringIndex, tuplify } from '@vats/utils'
+import {
+  reverseLoPath,
+  sortByGetter,
+  SortDirection,
+  StringIndex,
+  tryGetIn,
+  tuplify,
+} from '@vats/utils'
 import { reaction, set } from 'mobx'
 import { StoreConfig, StoreGraphqlRoots } from './types'
 
@@ -8,15 +15,8 @@ interface RootsProps {
 
 interface SortProps {
   sortDirection: SortDirection
-  sortBy: any
+  sortBy: unknown
 }
-
-/*
- * merges provided state sortBy value with automatic key sorts
- */
-export type SortByUnion<State, Data> =
-  | (State extends { sortBy: infer V } ? V : never)
-  | keyof NonNullable<ElementTypeOr<StringIndex<Data>[keyof Data]>>
 
 export interface StoreSortProps<State, Data, Config> {
   state: State
@@ -25,31 +25,51 @@ export interface StoreSortProps<State, Data, Config> {
 }
 
 const getSortedValue = (value: any, sortBy: string, sortDirection: SortDirection) => {
-  if (
-    // sorting off
-    !sortBy ||
-    // invalid/custom sortBy
-    !(sortBy in value[0])
-  ) {
+  const sortByPath = reverseLoPath(sortBy)
+
+  // skip on non-nested sortBy strings that does not match value shape
+  if (sortByPath[0] === sortBy && !(sortBy in value[0])) {
     return
   }
 
-  // now tricky part... I cannot know what kind of value prop has
+  // now the tricky part... I cannot know what kind of value prop has
+  // I'll loop over data till some value is not null/ undefined to check
   let getterType: undefined | 'count' | 'value'
 
   for (const el of value) {
-    if (el[sortBy] !== null) {
-      getterType = Array.isArray(el[sortBy]) ? 'count' : 'value'
-      break
+    const select = tryGetIn(el, ...sortByPath)
+
+    if (select) {
+      if (Array.isArray(select)) {
+        getterType = 'count'
+        break
+      }
+
+      // todo add date?
+      if (typeof select === 'number' || typeof select === 'boolean' || typeof select === 'string') {
+        getterType = 'value'
+        break
+      }
+
+      console.error('invalid sortBy value')
+      return
     }
   }
 
-  // something wrong with sortBy by or all elements has null prop value
-  if (!getterType) {
-    return
-  }
+  // geter return value / length or null
+  const getter = (item: any) => {
+    const select = tryGetIn(item, ...sortByPath)
 
-  const getter = (item: any) => (getterType === 'value' ? item[sortBy] : item[sortBy].length)
+    if (select && getterType === 'value') {
+      return select
+    }
+
+    if (select && Array.isArray(select) && getterType === 'count') {
+      return select.length
+    }
+
+    return null
+  }
 
   return sortByGetter(value, sortDirection, getter)
 }
@@ -69,7 +89,7 @@ export const storeSortReaction = <
     ([sortBy, sortDirection]) => {
       const value = data[config.graphqlRoots.query] as any[]
 
-      if (!value || !Array.isArray(value)) {
+      if (!value || !Array.isArray(value) || typeof sortBy !== 'string') {
         return
       }
 
@@ -88,7 +108,7 @@ export const storeSortReaction = <
     () => {
       const value = data[config.graphqlRoots.query] as any[]
 
-      if (!value || !Array.isArray(value)) {
+      if (!value || !Array.isArray(value) || typeof state.sortBy !== 'string') {
         return
       }
 

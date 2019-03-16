@@ -12,6 +12,10 @@ export const CANDIDATES_QUERY = gql`
       ...Candidate
 
       applications {
+        job {
+          id
+          name
+        }
         stage {
           id
           name

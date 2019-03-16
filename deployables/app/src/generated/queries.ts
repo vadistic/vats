@@ -1130,6 +1130,12 @@ export interface CandidatesQuery_candidates_tasks {
   dueAt: any | null;
 }
 
+export interface CandidatesQuery_candidates_applications_job {
+  __typename: "Job";
+  id: string;
+  name: string;
+}
+
 export interface CandidatesQuery_candidates_applications_stage {
   __typename: "Stage";
   id: string;
@@ -1144,6 +1150,7 @@ export interface CandidatesQuery_candidates_applications {
   id: string;
   updatedAt: any;
   type: ApplicationType;
+  job: CandidatesQuery_candidates_applications_job;
   stage: CandidatesQuery_candidates_applications_stage;
 }
 

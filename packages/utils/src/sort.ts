@@ -1,7 +1,34 @@
 import { ElementTypeOr } from './types'
 
-// TODO: think about how ascending/descending should work on different types
-const compareFn = <T extends string | number | null>(a: T, b: T) => (a < b ? -1 : b < a ? 1 : 0)
+// let's hope it's not slow
+const dateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-\.](.{2,6})$/
+
+// universal compare fn for string, numbers & dates, accepting nulls
+// TODO: optimise/benchmark, I'm esspecially afraid of this date regex
+const compareFn = <T extends string | number | null>(a: T, b: T) => {
+  // normalise values
+  let normA: any = a
+  let normB: any = b
+
+  if (dateRegex.test('' + a) || dateRegex.test('' + b)) {
+    if (typeof a === 'string') {
+      normA = new Date(a)
+    }
+    if (typeof b === 'string') {
+      normA = new Date(b)
+    }
+  } else {
+    if (typeof a === 'string') {
+      normA = a.toLowerCase()
+    }
+
+    if (typeof b === 'string') {
+      normB = b.toLowerCase()
+    }
+  }
+
+  return normA < normB ? -1 : normB < normA ? 1 : 0
+}
 
 export enum SortDirection {
   ASCENDING = 1,

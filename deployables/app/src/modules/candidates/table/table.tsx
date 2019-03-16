@@ -1,49 +1,55 @@
 import { RouteComponentProps } from '@reach/router'
-import { toJS } from 'mobx'
+import { useStoreAction } from '@vats/store'
+import { ElementType } from '@vats/utils'
+import { set } from 'mobx'
 import { useObserver } from 'mobx-react-lite'
-import { DetailsList, DetailsListLayoutMode, IColumn } from 'office-ui-fabric-react'
+import { DetailsList, DetailsListLayoutMode, IColumnDragDropDetails } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
-import { SingleCandidateValue } from '../../candidate/store'
-import { CandidatesContext } from '../store'
+import { CandidatesContext, CandidatesValue } from '../store'
+import { useCandidatesTableColumns } from './columns'
 
 export interface TableProps extends RouteComponentProps {}
 
 export const CandidatesTable: React.FC<TableProps> = ({ children, navigate }) => {
   const store = useContext(CandidatesContext)
 
-  const handleInvoke = (item: SingleCandidateValue) => {
+  const handleInvoke = (item: ElementType<CandidatesValue>) => {
     if (navigate) {
       navigate(item.id)
     }
   }
 
-  const columns: IColumn[] = [
-    {
-      name: 'Fist Name',
-      fieldName: 'firstName',
+  const columns = useCandidatesTableColumns()
+
+  const columnReorderAction = useStoreAction(store, 'column reorder')(
+    (dragDropDetails: IColumnDragDropDetails) => {
+      if (!store.state.table.columns) {
+        return
+      }
+
+      // remove
+      const [col] = store.state.table.columns.splice(dragDropDetails.draggedIndex, 1)
+      // insert at target
+      store.state.table.columns.splice(dragDropDetails.targetIndex, 0, col)
+
+      // trigger render
+      set(columns, columns)
     },
-    {
-      name: 'Last Name',
-      fieldName: 'lastName',
-    },
-    {
-      name: 'Company',
-      fieldName: 'company',
-    },
-  ].map(col => ({ ...col, key: col.fieldName, isResizable: true, minWidth: 100 }))
+  )
 
   return useObserver(
     () => (
       <div>
         {children}
         <DetailsList
-          items={toJS(store.data.candidates)}
+          items={store.data.candidates.slice()}
           onItemInvoked={handleInvoke}
           compact={true}
-          columns={columns}
+          columns={columns.get()}
           setKey="id"
-          layoutMode={DetailsListLayoutMode.justified}
+          layoutMode={DetailsListLayoutMode.fixedColumns}
           isHeaderVisible={true}
+          columnReorderOptions={{ onColumnDrop: columnReorderAction }}
           enterModalSelectionOnTouch={true}
         />
       </div>
