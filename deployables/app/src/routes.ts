@@ -37,6 +37,14 @@ const routesConfig: RoutesConfigMap = {
           },
         },
       },
+      board: {
+        path: 'board',
+        children: {
+          surface: {
+            path: ':id',
+          },
+        },
+      },
     },
   },
   job: {

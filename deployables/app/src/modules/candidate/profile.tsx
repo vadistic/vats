@@ -80,14 +80,14 @@ export const CandidateProfileBase: React.FC = () => {
           {
             headerText: tp.candidate.review({ count: 3 }),
             itemKey: CandidateProfileTab.reviews,
-            itemIcon: 'textdocument',
+            itemIcon: 'favoritelist',
             itemCount: 0,
             children: <p>Review content</p>,
           },
           {
             headerText: tp.candidate.resume({ count: 3 }),
             itemKey: CandidateProfileTab.resumes,
-            itemIcon: 'favoritelist',
+            itemIcon: 'textdocument',
             itemCount: resumesCount,
             children: <CandidateResumesSection />,
           },

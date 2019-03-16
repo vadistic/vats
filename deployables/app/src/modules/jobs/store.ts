@@ -1,10 +1,8 @@
 import { createStore, StoreConfig, StoreProps } from '@vats/store'
-import { SortDirection } from '@vats/utils'
 import React from 'react'
 import { JobsQuery, JobsQuery_jobs, JobsQueryVariables } from '../../generated/queries'
 import { JOB_CREATE_MUTATION, JOB_DELETE_MUTATION, JOB_UPDATE_MUTATION } from '../job/graphql'
 import { JOBS_DELETE_MANY_MUTATION, JOBS_QUERY, JOBS_UPDATE_MANY_MUTATION } from './graphql'
-import { JobsSortBy } from './reactions'
 
 export type JobsValue = JobsQuery_jobs[]
 
@@ -32,8 +30,7 @@ export interface JobsStoreProps extends StoreProps {}
 
 export const createJobsStore = (props: JobsStoreProps) => {
   const state = {
-    sortBy: JobsSortBy.createdAt,
-    sortDirection: SortDirection.ASCENDING,
+    sortBy: 'custom' as 'custom',
   }
 
   const variables: JobsQueryVariables = { where: null }

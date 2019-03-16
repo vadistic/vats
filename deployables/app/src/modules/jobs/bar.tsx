@@ -1,21 +1,30 @@
-import { useTranslation } from '@vats/i18n'
+import { Translation, TranslationProxy, useTranslation } from '@vats/i18n'
 import { useStoreAction } from '@vats/store'
-import { SortDirection } from '@vats/utils'
+import { SortDirection, stringIndex } from '@vats/utils'
 import { observer } from 'mobx-react-lite'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
-import { JobsSortBy, jobsSortByLabels } from './reactions'
 import { JobsContext } from './store'
 
 export interface JobsBarProps {}
+
+export const jobsSortByLabels = (tp: TranslationProxy<Translation>) => ({
+  name: tp.job.name(),
+  createdAt: tp.job.createdAt(),
+  applications: tp.job.applications({ count: 10 }),
+  type: tp.job.type(),
+  department: tp.job.department(),
+})
+
+export type JobsBarSortKey = keyof ReturnType<typeof jobsSortByLabels>
 
 const JobsBarBase: React.FC<JobsBarProps> = () => {
   const store = useContext(JobsContext)
   const { tp } = useTranslation()
 
-  const sortByLabelMap = useMemo(() => jobsSortByLabels(tp), [])
+  const sortByMap = useMemo(() => jobsSortByLabels(tp), [])
 
-  const sortByAction = useStoreAction(store, `sortBy dispatch`)((sortBy: JobsSortBy) => {
+  const sortByAction = useStoreAction(store, `sortBy dispatch`)((sortBy: JobsBarSortKey) => {
     store.state.sortBy = sortBy
   })
 
@@ -25,8 +34,8 @@ const JobsBarBase: React.FC<JobsBarProps> = () => {
     },
   )
 
-  const getSubmenuItem = (sortBy: JobsSortBy) => ({
-    text: sortByLabelMap[sortBy],
+  const getSubmenuItem = (sortBy: JobsBarSortKey) => ({
+    text: sortByMap[sortBy],
     key: 'sort-by-' + sortBy,
     onClick: () => {
       sortByAction(sortBy)
@@ -35,7 +44,9 @@ const JobsBarBase: React.FC<JobsBarProps> = () => {
 
   const items: ICommandBarItemProps[] = [
     {
-      text: `Sort: ${sortByLabelMap[store.state.sortBy]}`,
+      text: store.state.sortBy
+        ? `Sort: ${stringIndex(sortByMap)[store.state.sortBy]}`
+        : `No sorting`,
       key: 'sort',
       split: true,
       iconProps: {
@@ -45,7 +56,7 @@ const JobsBarBase: React.FC<JobsBarProps> = () => {
         sortDirectionAction()
       },
       subMenuProps: {
-        items: Object.values(JobsSortBy).map(value => getSubmenuItem(value)),
+        items: Object.keys(sortByMap).map(key => getSubmenuItem(key as JobsBarSortKey)),
       },
     },
   ]

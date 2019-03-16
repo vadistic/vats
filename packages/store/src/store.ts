@@ -1,3 +1,4 @@
+import { Omit, SortDirection } from '@vats/utils'
 import { ApolloQueryResult, ObservableQuery } from 'apollo-client'
 import { diff, PreFilterFunction } from 'deep-diff'
 import { GraphQLError } from 'graphql'
@@ -5,6 +6,7 @@ import { action, computed, observable, reaction, runInAction, set, toJS } from '
 import { updateDiff } from './diff'
 import { applyShallowOrdered } from './diff/ordered'
 import { getGraphqlRoots } from './graphql'
+import { SortByUnion, storeSortReaction } from './sort'
 import {
   GraphqlTyping,
   SafeData,
@@ -49,6 +51,11 @@ export const createStore = <
     graphqlRoots,
   }
 
+  const defaultState = {
+    sortDirection: SortDirection.ASCENDING,
+    sortBy: undefined as SortByUnion<State, Data> | undefined,
+  }
+
   /* Separate observables for safe destructuring
    * and better control over shallowness
    *
@@ -59,10 +66,10 @@ export const createStore = <
   const getName = (name: string) => _config.name + '.' + name
   const isSingleQuery = !Array.isArray(((_data as unknown) as SafeData<Data>)[graphqlRoots.query])
 
-  const state = observable(_state, undefined, {
+  const state = (observable({ ...defaultState, ..._state }, undefined, {
     name: getName('state'),
     defaultDecorator: observable.deep,
-  })
+  }) as unknown) as Omit<State, keyof typeof defaultState> & typeof defaultState
 
   const meta = observable(_meta, undefined, {
     name: getName('meta'),
@@ -93,6 +100,9 @@ export const createStore = <
   }
 
   const value = computed(() => data[graphqlRoots.query] as Value, { name: getName('value') })
+
+  // sorting reaction only on 'multi' stores
+  const sortReaction = !isSingleQuery && storeSortReaction({ config, data, state })
 
   let query: ObservableQuery<SafeData<Data>, Variables> = undefined as any
 
@@ -270,6 +280,10 @@ export const createStore = <
 
     if (variablesChange) {
       variablesChange.dispose()
+    }
+
+    if (sortReaction) {
+      sortReaction.dispose()
     }
   }
 

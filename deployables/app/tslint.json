@@ -1,4 +1,5 @@
 {
+  "defaultSeverity": "warning",
   "extends": "../../tslint.json",
   "linterOptions": {
     "exclude": ["**/node_modules/**", "**/generated/**"]

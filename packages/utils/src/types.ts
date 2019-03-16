@@ -55,6 +55,9 @@ export type DeepStringIndex<T = {}> = {
     : T[K]
 }
 
+// for quick literals
+export const stringIndex = <T>(input: T): StringIndex<T> => input
+
 // ! prefer just this for simplicity
 export interface StringMap<V = any> {
   [index: string]: V
@@ -165,6 +168,11 @@ export type Narrowable =
   | void
   | ((...args: any[]) => any)
   | {}
+
+export type Literally<
+  T extends V | Array<V | T> | { [k: string]: V | T },
+  V extends Narrowable = Narrowable
+> = T
 
 export const literally = <
   T extends V | Array<V | T> | { [k: string]: V | T },

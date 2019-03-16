@@ -16,7 +16,6 @@ import {
   CANDIDATES_QUERY,
   CANDIDATES_UPDATE_MANY_MUTATION,
 } from './graphql'
-import { CandidatesSortBy } from './reactions'
 
 export type CandidatesValue = CandidatesQuery_candidates[]
 
@@ -28,8 +27,8 @@ export interface CandidatesStoreProps extends StoreProps {}
 
 export const createCandidatesStore = (props: CandidatesStoreProps) => {
   const state = {
-    sortBy: CandidatesSortBy.createdAt,
-    sortDirection: SortDirection.ASCENDING,
+    sortBy: 'updatedAt',
+    sortDirection: SortDirection.DESCENDING,
   }
 
   const variables: CandidatesQueryVariables = { where: null }
@@ -47,16 +46,6 @@ export const createCandidatesStore = (props: CandidatesStoreProps) => {
       deleteMutation: CANDIDATE_DELETE_MUTATION,
       updateManyMutation: CANDIDATES_UPDATE_MANY_MUTATION,
       deleteManyMutation: CANDIDATES_DELETE_MANY_MUTATION,
-    },
-    relations: {
-      tags: {
-        onCreate: 'connect',
-        onDelete: 'disconnect',
-      },
-      sources: {
-        onCreate: 'connect',
-        onDelete: 'disconnect',
-      },
     },
   }
 

@@ -1,5 +1,4 @@
 {
-  "defaultSeverity": "warn",
   "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
   "rules": {
     "no-console": false,

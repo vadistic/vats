@@ -7,7 +7,6 @@ import { routes } from '../../routes'
 import { JobSurface } from '../job'
 import { JobsBar } from './bar'
 import { JobsList } from './list'
-import { useJobsReactions } from './reactions'
 import { createJobsStore, JobsContext } from './store'
 
 const JobsViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
@@ -26,8 +25,6 @@ export interface JobsViewProps extends RouteComponentProps {}
 
 export const JobsViewBase: React.FC<JobsViewProps> = () => {
   const store = useStore(createJobsStore, {}, [])
-
-  useJobsReactions(store)
 
   return (
     <JobsContext.Provider value={store}>

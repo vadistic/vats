@@ -10,6 +10,15 @@ export const CANDIDATES_QUERY = gql`
       resumesString
       coverLettersString
       ...Candidate
+
+      applications {
+        stage {
+          id
+          name
+          type
+          description
+        }
+      }
     }
   }
 

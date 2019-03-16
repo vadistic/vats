@@ -23,6 +23,382 @@ export interface ToastsQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ToastHostFixtureMutation
+// ====================================================
+
+export interface ToastHostFixtureMutation_createToast {
+  __typename: "Toast";
+  id: string;
+  createdAt: any;
+  message: string;
+  type: ToastType;
+}
+
+export interface ToastHostFixtureMutation {
+  createToast: ToastHostFixtureMutation_createToast;
+}
+
+export interface ToastHostFixtureMutationVariables {
+  data: ToastInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: ToastHostQuery
+// ====================================================
+
+export interface ToastHostQuery_toasts {
+  __typename: "Toast";
+  id: string;
+  createdAt: any;
+  message: string;
+  type: ToastType;
+}
+
+export interface ToastHostQuery {
+  toasts: ToastHostQuery_toasts[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: ApplicationsQuery
+// ====================================================
+
+export interface ApplicationsQuery_applications_disqualification {
+  __typename: "DisqualificationInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  content: string | null;
+}
+
+export interface ApplicationsQuery_applications_stage {
+  __typename: "Stage";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  type: StageType;
+}
+
+export interface ApplicationsQuery_applications_job {
+  __typename: "Job";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: JobType;
+  department: string | null;
+  name: string;
+  excerpt: string | null;
+  companyDescription: string | null;
+  description: string | null;
+  requirements: string | null;
+}
+
+export interface ApplicationsQuery_applications_candidate {
+  __typename: "Candidate";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  firstName: string;
+  lastName: string;
+  company: string | null;
+  headline: string | null;
+  position: string | null;
+}
+
+export interface ApplicationsQuery_applications {
+  __typename: "Application";
+  createdAt: any;
+  id: string;
+  updatedAt: any;
+  type: ApplicationType;
+  disqualification: ApplicationsQuery_applications_disqualification | null;
+  stage: ApplicationsQuery_applications_stage;
+  job: ApplicationsQuery_applications_job;
+  candidate: ApplicationsQuery_applications_candidate;
+}
+
+export interface ApplicationsQuery {
+  applications: (ApplicationsQuery_applications | null)[];
+}
+
+export interface ApplicationsQueryVariables {
+  where?: ApplicationWhereInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ApplicationCreateMutation
+// ====================================================
+
+export interface ApplicationCreateMutation_createApplication_disqualification {
+  __typename: "DisqualificationInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  content: string | null;
+}
+
+export interface ApplicationCreateMutation_createApplication_stage {
+  __typename: "Stage";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  type: StageType;
+}
+
+export interface ApplicationCreateMutation_createApplication_job {
+  __typename: "Job";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: JobType;
+  department: string | null;
+  name: string;
+  excerpt: string | null;
+  companyDescription: string | null;
+  description: string | null;
+  requirements: string | null;
+}
+
+export interface ApplicationCreateMutation_createApplication_candidate {
+  __typename: "Candidate";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  firstName: string;
+  lastName: string;
+  company: string | null;
+  headline: string | null;
+  position: string | null;
+}
+
+export interface ApplicationCreateMutation_createApplication {
+  __typename: "Application";
+  createdAt: any;
+  id: string;
+  updatedAt: any;
+  type: ApplicationType;
+  disqualification: ApplicationCreateMutation_createApplication_disqualification | null;
+  stage: ApplicationCreateMutation_createApplication_stage;
+  job: ApplicationCreateMutation_createApplication_job;
+  candidate: ApplicationCreateMutation_createApplication_candidate;
+}
+
+export interface ApplicationCreateMutation {
+  createApplication: ApplicationCreateMutation_createApplication;
+}
+
+export interface ApplicationCreateMutationVariables {
+  data: ApplicationCreateInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ApplicationUpdateMutation
+// ====================================================
+
+export interface ApplicationUpdateMutation_updateApplication_disqualification {
+  __typename: "DisqualificationInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  content: string | null;
+}
+
+export interface ApplicationUpdateMutation_updateApplication_stage {
+  __typename: "Stage";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  type: StageType;
+}
+
+export interface ApplicationUpdateMutation_updateApplication_job {
+  __typename: "Job";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: JobType;
+  department: string | null;
+  name: string;
+  excerpt: string | null;
+  companyDescription: string | null;
+  description: string | null;
+  requirements: string | null;
+}
+
+export interface ApplicationUpdateMutation_updateApplication_candidate {
+  __typename: "Candidate";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  firstName: string;
+  lastName: string;
+  company: string | null;
+  headline: string | null;
+  position: string | null;
+}
+
+export interface ApplicationUpdateMutation_updateApplication {
+  __typename: "Application";
+  createdAt: any;
+  id: string;
+  updatedAt: any;
+  type: ApplicationType;
+  disqualification: ApplicationUpdateMutation_updateApplication_disqualification | null;
+  stage: ApplicationUpdateMutation_updateApplication_stage;
+  job: ApplicationUpdateMutation_updateApplication_job;
+  candidate: ApplicationUpdateMutation_updateApplication_candidate;
+}
+
+export interface ApplicationUpdateMutation {
+  updateApplication: ApplicationUpdateMutation_updateApplication | null;
+}
+
+export interface ApplicationUpdateMutationVariables {
+  data: ApplicationUpdateInput;
+  where: ApplicationWhereUniqueInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ApplicationDeleteMutation
+// ====================================================
+
+export interface ApplicationDeleteMutation_deleteApplication_disqualification {
+  __typename: "DisqualificationInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  content: string | null;
+}
+
+export interface ApplicationDeleteMutation_deleteApplication_stage {
+  __typename: "Stage";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  type: StageType;
+}
+
+export interface ApplicationDeleteMutation_deleteApplication_job {
+  __typename: "Job";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: JobType;
+  department: string | null;
+  name: string;
+  excerpt: string | null;
+  companyDescription: string | null;
+  description: string | null;
+  requirements: string | null;
+}
+
+export interface ApplicationDeleteMutation_deleteApplication_candidate {
+  __typename: "Candidate";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  firstName: string;
+  lastName: string;
+  company: string | null;
+  headline: string | null;
+  position: string | null;
+}
+
+export interface ApplicationDeleteMutation_deleteApplication {
+  __typename: "Application";
+  createdAt: any;
+  id: string;
+  updatedAt: any;
+  type: ApplicationType;
+  disqualification: ApplicationDeleteMutation_deleteApplication_disqualification | null;
+  stage: ApplicationDeleteMutation_deleteApplication_stage;
+  job: ApplicationDeleteMutation_deleteApplication_job;
+  candidate: ApplicationDeleteMutation_deleteApplication_candidate;
+}
+
+export interface ApplicationDeleteMutation {
+  deleteApplication: ApplicationDeleteMutation_deleteApplication | null;
+}
+
+export interface ApplicationDeleteMutationVariables {
+  where: ApplicationWhereUniqueInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ApplicationsUpdateManyMutation
+// ====================================================
+
+export interface ApplicationsUpdateManyMutation_updateManyApplications {
+  __typename: "BatchPayload";
+  count: any;
+}
+
+export interface ApplicationsUpdateManyMutation {
+  updateManyApplications: ApplicationsUpdateManyMutation_updateManyApplications;
+}
+
+export interface ApplicationsUpdateManyMutationVariables {
+  where: ApplicationWhereInput;
+  data: ApplicationUpdateManyMutationInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ApplicationsDeleteManyMutation
+// ====================================================
+
+export interface ApplicationsDeleteManyMutation_deleteManyApplications {
+  __typename: "BatchPayload";
+  count: any;
+}
+
+export interface ApplicationsDeleteManyMutation {
+  deleteManyApplications: ApplicationsDeleteManyMutation_deleteManyApplications;
+}
+
+export interface ApplicationsDeleteManyMutationVariables {
+  where: ApplicationWhereInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CandidateQuery
 // ====================================================
 
@@ -754,12 +1130,21 @@ export interface CandidatesQuery_candidates_tasks {
   dueAt: any | null;
 }
 
+export interface CandidatesQuery_candidates_applications_stage {
+  __typename: "Stage";
+  id: string;
+  name: string;
+  type: StageType;
+  description: string | null;
+}
+
 export interface CandidatesQuery_candidates_applications {
   __typename: "Application";
   createdAt: any;
   id: string;
   updatedAt: any;
   type: ApplicationType;
+  stage: CandidatesQuery_candidates_applications_stage;
 }
 
 export interface CandidatesQuery_candidates_comments {
@@ -1297,23 +1682,15 @@ export interface JobsDeleteManyMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: ToastHostFixtureMutation
+// GraphQL fragment: ApplicationNoNesting
 // ====================================================
 
-export interface ToastHostFixtureMutation_createToast {
-  __typename: "Toast";
-  id: string;
+export interface ApplicationNoNesting {
+  __typename: "Application";
   createdAt: any;
-  message: string;
-  type: ToastType;
-}
-
-export interface ToastHostFixtureMutation {
-  createToast: ToastHostFixtureMutation_createToast;
-}
-
-export interface ToastHostFixtureMutationVariables {
-  data: ToastInput;
+  id: string;
+  updatedAt: any;
+  type: ApplicationType;
 }
 
 /* tslint:disable */
@@ -1321,19 +1698,544 @@ export interface ToastHostFixtureMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ToastHostQuery
+// GraphQL fragment: DisqualificationInstanceNoNesting
 // ====================================================
 
-export interface ToastHostQuery_toasts {
-  __typename: "Toast";
+export interface DisqualificationInstanceNoNesting {
+  __typename: "DisqualificationInstance";
   id: string;
   createdAt: any;
-  message: string;
-  type: ToastType;
+  updatedAt: any;
+  content: string | null;
 }
 
-export interface ToastHostQuery {
-  toasts: ToastHostQuery_toasts[];
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: DisqualificationNoNesting
+// ====================================================
+
+export interface DisqualificationNoNesting {
+  __typename: "Disqualification";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: UserNoNesting
+// ====================================================
+
+export interface UserNoNesting {
+  __typename: "User";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  settings: any | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  lastLogin: any | null;
+  deletedAt: any | null;
+  position: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TaskNoNesting
+// ====================================================
+
+export interface TaskNoNesting {
+  __typename: "Task";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  title: string | null;
+  description: string | null;
+  dueAt: any | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CandidateNoNesting
+// ====================================================
+
+export interface CandidateNoNesting {
+  __typename: "Candidate";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  firstName: string;
+  lastName: string;
+  company: string | null;
+  headline: string | null;
+  position: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FileNoNesting
+// ====================================================
+
+export interface FileNoNesting {
+  __typename: "File";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  size: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TagNoNesting
+// ====================================================
+
+export interface TagNoNesting {
+  __typename: "Tag";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  label: string;
+  description: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: SourceNoNesting
+// ====================================================
+
+export interface SourceNoNesting {
+  __typename: "Source";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  label: string;
+  description: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FieldInstanceNoNesting
+// ====================================================
+
+export interface FieldInstanceNoNesting {
+  __typename: "FieldInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  value: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: FieldNoNesting
+// ====================================================
+
+export interface FieldNoNesting {
+  __typename: "Field";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: FieldType;
+  label: string;
+  description: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CommentNoNesting
+// ====================================================
+
+export interface CommentNoNesting {
+  __typename: "Comment";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  content: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: StageNoNesting
+// ====================================================
+
+export interface StageNoNesting {
+  __typename: "Stage";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  type: StageType;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: JobNoNesting
+// ====================================================
+
+export interface JobNoNesting {
+  __typename: "Job";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: JobType;
+  department: string | null;
+  name: string;
+  excerpt: string | null;
+  companyDescription: string | null;
+  description: string | null;
+  requirements: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: WorkspaceNoNesting
+// ====================================================
+
+export interface WorkspaceNoNesting {
+  __typename: "Workspace";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  settings: any | null;
+  name: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: WorkflowNoNesting
+// ====================================================
+
+export interface WorkflowNoNesting {
+  __typename: "Workflow";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: InviteNoNesting
+// ====================================================
+
+export interface InviteNoNesting {
+  __typename: "Invite";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  email: string;
+  expireAt: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: LocationNoNesting
+// ====================================================
+
+export interface LocationNoNesting {
+  __typename: "Location";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  country: string;
+  region: string | null;
+  city: string;
+  zip: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: PageInfoNoNesting
+// ====================================================
+
+export interface PageInfoNoNesting {
+  __typename: "PageInfo";
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+  endCursor: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ApplicationEdgeNoNesting
+// ====================================================
+
+export interface ApplicationEdgeNoNesting {
+  __typename: "ApplicationEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateApplicationNoNesting
+// ====================================================
+
+export interface AggregateApplicationNoNesting {
+  __typename: "AggregateApplication";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: CandidateEdgeNoNesting
+// ====================================================
+
+export interface CandidateEdgeNoNesting {
+  __typename: "CandidateEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateCandidateNoNesting
+// ====================================================
+
+export interface AggregateCandidateNoNesting {
+  __typename: "AggregateCandidate";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: JobEdgeNoNesting
+// ====================================================
+
+export interface JobEdgeNoNesting {
+  __typename: "JobEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateJobNoNesting
+// ====================================================
+
+export interface AggregateJobNoNesting {
+  __typename: "AggregateJob";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: SourceEdgeNoNesting
+// ====================================================
+
+export interface SourceEdgeNoNesting {
+  __typename: "SourceEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateSourceNoNesting
+// ====================================================
+
+export interface AggregateSourceNoNesting {
+  __typename: "AggregateSource";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TagEdgeNoNesting
+// ====================================================
+
+export interface TagEdgeNoNesting {
+  __typename: "TagEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateTagNoNesting
+// ====================================================
+
+export interface AggregateTagNoNesting {
+  __typename: "AggregateTag";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TaskEdgeNoNesting
+// ====================================================
+
+export interface TaskEdgeNoNesting {
+  __typename: "TaskEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateTaskNoNesting
+// ====================================================
+
+export interface AggregateTaskNoNesting {
+  __typename: "AggregateTask";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: UserEdgeNoNesting
+// ====================================================
+
+export interface UserEdgeNoNesting {
+  __typename: "UserEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateUserNoNesting
+// ====================================================
+
+export interface AggregateUserNoNesting {
+  __typename: "AggregateUser";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: BatchPayloadNoNesting
+// ====================================================
+
+export interface BatchPayloadNoNesting {
+  __typename: "BatchPayload";
+  count: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AuthPayloadNoNesting
+// ====================================================
+
+export interface AuthPayloadNoNesting {
+  __typename: "AuthPayload";
+  token: string;
+  refresh: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AccessPayloadNoNesting
+// ====================================================
+
+export interface AccessPayloadNoNesting {
+  __typename: "AccessPayload";
+  token: string;
 }
 
 /* tslint:disable */
@@ -2634,567 +3536,6 @@ export interface AccessPayload {
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-// ====================================================
-// GraphQL fragment: ApplicationNoNesting
-// ====================================================
-
-export interface ApplicationNoNesting {
-  __typename: "Application";
-  createdAt: any;
-  id: string;
-  updatedAt: any;
-  type: ApplicationType;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: DisqualificationInstanceNoNesting
-// ====================================================
-
-export interface DisqualificationInstanceNoNesting {
-  __typename: "DisqualificationInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: DisqualificationNoNesting
-// ====================================================
-
-export interface DisqualificationNoNesting {
-  __typename: "Disqualification";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: UserNoNesting
-// ====================================================
-
-export interface UserNoNesting {
-  __typename: "User";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  settings: any | null;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  lastLogin: any | null;
-  deletedAt: any | null;
-  position: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: TaskNoNesting
-// ====================================================
-
-export interface TaskNoNesting {
-  __typename: "Task";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  title: string | null;
-  description: string | null;
-  dueAt: any | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: CandidateNoNesting
-// ====================================================
-
-export interface CandidateNoNesting {
-  __typename: "Candidate";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  firstName: string;
-  lastName: string;
-  company: string | null;
-  headline: string | null;
-  position: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FileNoNesting
-// ====================================================
-
-export interface FileNoNesting {
-  __typename: "File";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  size: number;
-  type: string;
-  name: string;
-  url: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: TagNoNesting
-// ====================================================
-
-export interface TagNoNesting {
-  __typename: "Tag";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  label: string;
-  description: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: SourceNoNesting
-// ====================================================
-
-export interface SourceNoNesting {
-  __typename: "Source";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  label: string;
-  description: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FieldInstanceNoNesting
-// ====================================================
-
-export interface FieldInstanceNoNesting {
-  __typename: "FieldInstance";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  value: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: FieldNoNesting
-// ====================================================
-
-export interface FieldNoNesting {
-  __typename: "Field";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: FieldType;
-  label: string;
-  description: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: CommentNoNesting
-// ====================================================
-
-export interface CommentNoNesting {
-  __typename: "Comment";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  content: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: StageNoNesting
-// ====================================================
-
-export interface StageNoNesting {
-  __typename: "Stage";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-  type: StageType;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: JobNoNesting
-// ====================================================
-
-export interface JobNoNesting {
-  __typename: "Job";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: JobType;
-  department: string | null;
-  name: string;
-  excerpt: string | null;
-  companyDescription: string | null;
-  description: string | null;
-  requirements: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: WorkspaceNoNesting
-// ====================================================
-
-export interface WorkspaceNoNesting {
-  __typename: "Workspace";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  settings: any | null;
-  name: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: WorkflowNoNesting
-// ====================================================
-
-export interface WorkflowNoNesting {
-  __typename: "Workflow";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  name: string;
-  description: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: InviteNoNesting
-// ====================================================
-
-export interface InviteNoNesting {
-  __typename: "Invite";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  email: string;
-  expireAt: any;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: LocationNoNesting
-// ====================================================
-
-export interface LocationNoNesting {
-  __typename: "Location";
-  id: string;
-  createdAt: any;
-  updatedAt: any;
-  country: string;
-  region: string | null;
-  city: string;
-  zip: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: PageInfoNoNesting
-// ====================================================
-
-export interface PageInfoNoNesting {
-  __typename: "PageInfo";
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: string | null;
-  endCursor: string | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: ApplicationEdgeNoNesting
-// ====================================================
-
-export interface ApplicationEdgeNoNesting {
-  __typename: "ApplicationEdge";
-  cursor: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AggregateApplicationNoNesting
-// ====================================================
-
-export interface AggregateApplicationNoNesting {
-  __typename: "AggregateApplication";
-  count: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: CandidateEdgeNoNesting
-// ====================================================
-
-export interface CandidateEdgeNoNesting {
-  __typename: "CandidateEdge";
-  cursor: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AggregateCandidateNoNesting
-// ====================================================
-
-export interface AggregateCandidateNoNesting {
-  __typename: "AggregateCandidate";
-  count: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: JobEdgeNoNesting
-// ====================================================
-
-export interface JobEdgeNoNesting {
-  __typename: "JobEdge";
-  cursor: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AggregateJobNoNesting
-// ====================================================
-
-export interface AggregateJobNoNesting {
-  __typename: "AggregateJob";
-  count: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: SourceEdgeNoNesting
-// ====================================================
-
-export interface SourceEdgeNoNesting {
-  __typename: "SourceEdge";
-  cursor: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AggregateSourceNoNesting
-// ====================================================
-
-export interface AggregateSourceNoNesting {
-  __typename: "AggregateSource";
-  count: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: TagEdgeNoNesting
-// ====================================================
-
-export interface TagEdgeNoNesting {
-  __typename: "TagEdge";
-  cursor: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AggregateTagNoNesting
-// ====================================================
-
-export interface AggregateTagNoNesting {
-  __typename: "AggregateTag";
-  count: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: TaskEdgeNoNesting
-// ====================================================
-
-export interface TaskEdgeNoNesting {
-  __typename: "TaskEdge";
-  cursor: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AggregateTaskNoNesting
-// ====================================================
-
-export interface AggregateTaskNoNesting {
-  __typename: "AggregateTask";
-  count: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: UserEdgeNoNesting
-// ====================================================
-
-export interface UserEdgeNoNesting {
-  __typename: "UserEdge";
-  cursor: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AggregateUserNoNesting
-// ====================================================
-
-export interface AggregateUserNoNesting {
-  __typename: "AggregateUser";
-  count: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: BatchPayloadNoNesting
-// ====================================================
-
-export interface BatchPayloadNoNesting {
-  __typename: "BatchPayload";
-  count: any;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AuthPayloadNoNesting
-// ====================================================
-
-export interface AuthPayloadNoNesting {
-  __typename: "AuthPayload";
-  token: string;
-  refresh: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: AccessPayloadNoNesting
-// ====================================================
-
-export interface AccessPayloadNoNesting {
-  __typename: "AccessPayload";
-  token: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// This file was automatically generated and should not be edited.
-
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
@@ -3255,6 +3596,14 @@ export enum ToastType {
   SEVERE_WARNING = "SEVERE_WARNING",
   SUCCESS = "SUCCESS",
   WARNING = "WARNING",
+}
+
+export interface ApplicationCreateInput {
+  type: ApplicationType;
+  disqualification?: DisqualificationInstanceCreateOneInput | null;
+  stage: StageCreateOneInput;
+  job: JobCreateOneWithoutApplicationsInput;
+  candidate: CandidateCreateOneWithoutApplicationsInput;
 }
 
 export interface ApplicationCreateManyWithoutCandidateInput {
@@ -3321,7 +3670,19 @@ export interface ApplicationScalarWhereInput {
   NOT?: ApplicationScalarWhereInput[] | null;
 }
 
+export interface ApplicationUpdateInput {
+  type?: ApplicationType | null;
+  disqualification?: DisqualificationInstanceUpdateOneInput | null;
+  stage?: StageUpdateOneRequiredInput | null;
+  job?: JobUpdateOneRequiredWithoutApplicationsInput | null;
+  candidate?: CandidateUpdateOneRequiredWithoutApplicationsInput | null;
+}
+
 export interface ApplicationUpdateManyDataInput {
+  type?: ApplicationType | null;
+}
+
+export interface ApplicationUpdateManyMutationInput {
   type?: ApplicationType | null;
 }
 

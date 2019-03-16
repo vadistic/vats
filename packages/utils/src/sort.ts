@@ -1,3 +1,5 @@
+import { ElementTypeOr } from './types'
+
 // TODO: think about how ascending/descending should work on different types
 const compareFn = <T extends string | number | null>(a: T, b: T) => (a < b ? -1 : b < a ? 1 : 0)
 
@@ -16,7 +18,7 @@ export const mutableSortByGetter = <T>(
   getter: (element: T) => string | number | null,
 ) => arr.sort((elA, elB) => direction * compareFn(getter(elA), getter(elB)))
 
-export type SortGetter<T> = (job: T) => string | number | null
+export type SortGetter<T> = (job: ElementTypeOr<T>) => string | number | null
 
-export const sortByGetter = <T>(arr: T[], direction: SortDirection, getter: SortGetter<T>) =>
+export const sortByGetter = <T>(arr: T[], direction: SortDirection, getter: SortGetter<T[]>) =>
   arr.slice().sort((elA, elB) => direction * compareFn(getter(elA), getter(elB)))
