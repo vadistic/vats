@@ -2,7 +2,7 @@ import { shallowEqual } from '@vats/utils'
 import { useRef } from 'react'
 
 /**
- * Like useMemo but with guaranted ref value
+ * Like useMemo but with guaranteed ref value
  */
 export const useDerived = <T>(input: () => T, deps: any[] = []) => {
   const ref = useRef<T | null>(null)

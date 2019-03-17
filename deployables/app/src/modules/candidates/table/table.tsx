@@ -1,10 +1,12 @@
 import { RouteComponentProps } from '@reach/router'
 import { useStoreAction } from '@vats/store'
 import { ElementType } from '@vats/utils'
-import { set } from 'mobx'
+import { toJS } from 'mobx'
 import { useObserver } from 'mobx-react-lite'
 import { DetailsList, DetailsListLayoutMode, IColumnDragDropDetails } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
+import { useDerived } from '../../../utils'
+import { CandidatesBar } from '../bar'
 import { CandidatesContext, CandidatesValue } from '../store'
 import { useCandidatesTableColumns } from './columns'
 
@@ -15,7 +17,7 @@ export const CandidatesTable: React.FC<TableProps> = ({ children, navigate }) =>
 
   const handleInvoke = (item: ElementType<CandidatesValue>) => {
     if (navigate) {
-      navigate(item.id)
+      navigate(`candidate/` + item.id)
     }
   }
 
@@ -23,26 +25,25 @@ export const CandidatesTable: React.FC<TableProps> = ({ children, navigate }) =>
 
   const columnReorderAction = useStoreAction(store, 'column reorder')(
     (dragDropDetails: IColumnDragDropDetails) => {
-      if (!store.state.table.columns) {
-        return
-      }
-
       // remove
       const [col] = store.state.table.columns.splice(dragDropDetails.draggedIndex, 1)
       // insert at target
       store.state.table.columns.splice(dragDropDetails.targetIndex, 0, col)
-
-      // trigger render
-      set(columns, columns)
     },
   )
+
+  useDerived(() => {
+    store.state.selection.instance.setItems(store.data.candidates.slice() as any, true)
+  }, [store.data.candidates])
 
   return useObserver(
     () => (
       <div>
+        <CandidatesBar navigate={navigate} />
         {children}
         <DetailsList
-          items={store.data.candidates.slice()}
+          selection={store.state.selection.instance}
+          items={toJS(store.data.candidates)}
           onItemInvoked={handleInvoke}
           compact={true}
           columns={columns.get()}

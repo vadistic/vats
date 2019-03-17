@@ -69,7 +69,11 @@ const common = {
   error: 'Error',
   content: 'Content',
   empty: 'Empty',
+  unsorted: 'Unsorted',
   noResult: 'No results found',
+  table: 'Table',
+  board: 'Board',
+  list: 'List',
 }
 
 const action = {
@@ -77,6 +81,10 @@ const action = {
   added: 'Added',
   create: 'Create',
   created: 'Created',
+  copy: 'Copy',
+  copied: 'Copied',
+  duplicate: 'Duplicate',
+  duplicated: 'Duplicated',
   remove: 'Remove',
   removed: 'Removed',
   edit: 'Edit',

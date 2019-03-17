@@ -1,36 +1,56 @@
-import { createStore, StoreConfig, StoreProps } from '@vats/store'
+import { createStore, GraphqlTypingCreator, StoreConfig, StoreProps } from '@vats/store'
+import { SortDirection } from '@vats/utils'
 import React from 'react'
-import { JobsQuery, JobsQuery_jobs, JobsQueryVariables } from '../../generated/queries'
+import {
+  JobCreateMutation,
+  JobCreateMutationVariables,
+  JobDeleteMutation,
+  JobDeleteMutationVariables,
+  JobsDeleteManyMutation,
+  JobsDeleteManyMutationVariables,
+  JobsQuery,
+  JobsQuery_jobs,
+  JobsQueryVariables,
+  JobsUpdateManyMutation,
+  JobsUpdateManyMutationVariables,
+  JobUpdateMutation,
+  JobUpdateMutationVariables,
+} from '../../generated/queries'
 import { JOB_CREATE_MUTATION, JOB_DELETE_MUTATION, JOB_UPDATE_MUTATION } from '../job/graphql'
 import { JOBS_DELETE_MANY_MUTATION, JOBS_QUERY, JOBS_UPDATE_MANY_MUTATION } from './graphql'
 
 export type JobsValue = JobsQuery_jobs[]
+export type JobsElement = JobsQuery_jobs
+
+export interface JobsValueProps {
+  jobs: JobsValue
+}
+export interface JobsElementProps {
+  job: JobsElement
+}
 
 export type JobsStore = ReturnType<typeof createJobsStore>
+export interface JobsStoreProps extends StoreProps {}
 
-/* export type JobsGraphqlTyping = GraphqlMultiTypingCreator<{
-  query: JobsQuery
-  queryVariables: JobsQueryVariables
+export type JobsGraphqlTyping = GraphqlTypingCreator<{
   createMutation: JobCreateMutation
-  createMutationVariables: JobCreateMutationVariables
+  createVariables: JobCreateMutationVariables
   updateMutation: JobUpdateMutation
-  updateMutationVariables: JobUpdateMutationVariables
+  updateVariables: JobUpdateMutationVariables
   deleteMutation: JobDeleteMutation
-  deleteMutationVariables: JobDeleteMutationVariables
+  deleteVariables: JobDeleteMutationVariables
   updateManyMutation: JobsUpdateManyMutation
-  updateManyMutationVariables: JobsUpdateManyMutationVariables
+  updateManyVariables: JobsUpdateManyMutationVariables
   deleteManyMutation: JobsDeleteManyMutation
-  deleteManyMutationVariables: JobsDeleteManyMutationVariables
+  deleteManyVariables: JobsDeleteManyMutationVariables
 }>
- */
 
 export const JobsContext = React.createContext<JobsStore>({} as any)
 
-export interface JobsStoreProps extends StoreProps {}
-
 export const createJobsStore = (props: JobsStoreProps) => {
   const state = {
-    sortBy: 'custom',
+    sortBy: 'updatedAt',
+    sortDirection: SortDirection.ASCENDING,
   }
 
   const variables: JobsQueryVariables = { where: null }
@@ -58,7 +78,7 @@ export const createJobsStore = (props: JobsStoreProps) => {
     state,
     variables,
     data,
-  })(props)
+  })<JobsGraphqlTyping>(props)
 
   return store
 }

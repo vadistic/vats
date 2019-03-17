@@ -1,24 +1,30 @@
+import { NavigateFn } from '@reach/router'
 import { Translation, TranslationProxy, useTranslation } from '@vats/i18n'
-import { useStoreAction } from '@vats/store'
-import { ElementTypeOr, pathProxy, SortDirection } from '@vats/utils'
+import { StoreSortDirection, useStoreAction } from '@vats/store'
+import { ElementTypeOr, pathProxy } from '@vats/utils'
 import { observer } from 'mobx-react-lite'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
 import { CandidatesContext, CandidatesValue } from './store'
 
-export interface CandidatesBarProps {}
+export interface CandidatesBarProps {
+  navigate?: NavigateFn
+}
 
 const p = pathProxy<ElementTypeOr<CandidatesValue>>()
 
 export const candidatesSortByMap = (tp: TranslationProxy<Translation>) => ({
+  [p.createdAt.PATH]: tp.candidate.createdAt(),
+  [p.updatedAt.PATH]: tp.candidate.updatedAt(),
   [p.firstName.PATH]: tp.candidate.firstName(),
   [p.lastName.PATH]: tp.candidate.lastName(),
-  [p.createdAt.PATH]: tp.job.createdAt(),
-  [p.applications.PATH]: tp.job.applications({ count: 10 }),
+  [p.company.PATH]: tp.candidate.company(),
+  [p.position.PATH]: tp.candidate.position(),
+  [p.applications.PATH]: tp.candidate.applications({ count: 10 }),
   [p.comments.PATH]: tp.candidate.comment({ count: 10 }),
 })
 
-const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
+const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
   const store = useContext(CandidatesContext)
   const { tp } = useTranslation()
 
@@ -29,10 +35,28 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
   })
 
   const sortDirectionAction = useStoreAction(store, `sortDirection dispatch`)(
-    (sortDirection?: SortDirection) => {
+    (sortDirection?: StoreSortDirection) => {
       store.state.sortDirection = sortDirection || store.state.sortDirection * -1
     },
   )
+
+  const createAction = useStoreAction(store, 'create candidate')(async () => {
+    const res: any = await store.create({ firstName: 'New', lastName: 'New' })
+    if (res.data && navigate) {
+      navigate('candidate/' + res.data.createCandidate.id)
+    }
+  })
+
+  const deleteAction = useStoreAction(store, 'delete candidate')(async () => {
+    const indicies = store.state.selection.indicies
+    if (indicies.length !== 1) {
+      return
+    }
+
+    store.state.selection.instance.setAllSelected(false)
+
+    store.delete({ index: indicies[0] })
+  })
 
   const getSubmenuItem = (sortBy: string) => ({
     text: sortByMap[sortBy],
@@ -44,17 +68,54 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = () => {
 
   const items: ICommandBarItemProps[] = [
     {
-      text: store.state.sortBy ? `Sort: ${sortByMap[store.state.sortBy]}` : 'No storing',
+      text: !!store.state.sortBy
+        ? `${tp.action.sort()}: ${sortByMap[store.state.sortBy]}`
+        : tp.common.unsorted(),
       key: 'sort',
       split: true,
       iconProps: {
-        iconName: store.state.sortDirection === SortDirection.ASCENDING ? 'SortUp' : 'SortDown',
+        iconName:
+          store.state.sortDirection === StoreSortDirection.ascending ? 'sortup' : 'sortdown',
       },
       onClick: () => {
         sortDirectionAction()
       },
       subMenuProps: {
         items: Object.keys(sortByMap).map(key => getSubmenuItem(key)),
+      },
+    },
+    {
+      text: tp.action.create(),
+      key: 'create',
+      iconProps: {
+        iconName: 'circleaddition',
+      },
+      onClick: () => {
+        createAction()
+      },
+    },
+    {
+      text: tp.action.copy(),
+      key: 'copy',
+      iconProps: {
+        iconName: 'copy',
+      },
+      disabled: store.state.selection.indicies.length !== 1,
+      onClick: () => {
+        if (store.state.selection) {
+          console.warn('TODO')
+        }
+      },
+    },
+    {
+      text: tp.action.remove(),
+      key: 'delete',
+      iconProps: {
+        iconName: 'delete',
+      },
+      disabled: store.state.selection.indicies.length !== 1,
+      onClick: () => {
+        deleteAction()
       },
     },
   ]

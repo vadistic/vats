@@ -346,8 +346,8 @@ type Candidate {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
@@ -382,8 +382,8 @@ input CandidateCreateemailsInput {
 }
 
 input CandidateCreateInput {
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -431,8 +431,8 @@ input CandidateCreateresumesStringInput {
 }
 
 input CandidateCreateWithoutApplicationsInput {
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -452,8 +452,8 @@ input CandidateCreateWithoutApplicationsInput {
 }
 
 input CandidateCreateWithoutTasksInput {
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -500,8 +500,8 @@ type CandidatePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: [String!]!
   phones: [String!]!
   links: [String!]!

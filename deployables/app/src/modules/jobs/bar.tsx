@@ -11,8 +11,9 @@ export interface JobsBarProps {}
 const p = pathProxy<ElementTypeOr<JobsValue>>()
 
 export const jobsSortByLabels = (tp: TranslationProxy<Translation>) => ({
-  [p.name.PATH]: tp.job.name(),
   [p.createdAt.PATH]: tp.job.createdAt(),
+  [p.updatedAt.PATH]: tp.job.updatedAt(),
+  [p.name.PATH]: tp.job.name(),
   [p.applications.PATH]: tp.job.applications({ count: 10 }),
   [p.type.PATH]: tp.job.type(),
   [p.department.PATH]: tp.job.department(),
@@ -44,7 +45,9 @@ const JobsBarBase: React.FC<JobsBarProps> = () => {
 
   const items: ICommandBarItemProps[] = [
     {
-      text: store.state.sortBy ? `Sort: ${sortByMap[store.state.sortBy]}` : `No sorting`,
+      text: !!store.state.sortBy
+        ? `${tp.action.sort()}: ${sortByMap[store.state.sortBy]}`
+        : tp.common.unsorted(),
       key: 'sort',
       split: true,
       iconProps: {

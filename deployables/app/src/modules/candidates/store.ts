@@ -1,10 +1,27 @@
-import { createStore, StoreConfig, StoreProps } from '@vats/store'
-import { SortDirection } from '@vats/utils'
+import {
+  createStore,
+  GraphqlTypingCreator,
+  StoreConfig,
+  StoreProps,
+  StoreSortDirection,
+} from '@vats/store'
+import { action } from 'mobx'
+import { Selection, SelectionMode } from 'office-ui-fabric-react'
 import React from 'react'
 import {
+  CandidateCreateMutation,
+  CandidateCreateMutationVariables,
+  CandidateDeleteMutation,
+  CandidateDeleteMutationVariables,
+  CandidatesDeleteManyMutation,
+  CandidatesDeleteManyMutationVariables,
   CandidatesQuery,
   CandidatesQuery_candidates,
   CandidatesQueryVariables,
+  CandidatesUpdateManyMutation,
+  CandidatesUpdateManyMutationVariables,
+  CandidateUpdateMutation,
+  CandidateUpdateMutationVariables,
 } from '../../generated/queries'
 import {
   CANDIDATE_CREATE_MUTATION,
@@ -21,26 +38,45 @@ import { ColumnsConfig } from './table'
 export type CandidatesValue = CandidatesQuery_candidates[]
 export type CandidatesElement = CandidatesQuery_candidates
 
-export interface CandidatesProps {
+export interface CandidatesValueProps {
   candidates: CandidatesValue
 }
-
 export interface CandidatesElementProps {
   candidate: CandidatesElement
 }
 
 export type CandidatesStore = ReturnType<typeof createCandidatesStore>
+export interface CandidatesStoreProps extends StoreProps {}
+
+export type CandidatesGraphqlTyping = GraphqlTypingCreator<{
+  createMutation: CandidateCreateMutation
+  createVariables: CandidateCreateMutationVariables
+  updateMutation: CandidateUpdateMutation
+  updateVariables: CandidateUpdateMutationVariables
+  deleteMutation: CandidateDeleteMutation
+  deleteVariables: CandidateDeleteMutationVariables
+  updateManyMutation: CandidatesUpdateManyMutation
+  updateManyVariables: CandidatesUpdateManyMutationVariables
+  deleteManyMutation: CandidatesDeleteManyMutation
+  deleteManyVariables: CandidatesDeleteManyMutationVariables
+}>
 
 export const CandidatesContext = React.createContext<CandidatesStore>({} as any)
-
-export interface CandidatesStoreProps extends StoreProps {}
 
 export const createCandidatesStore = (props: CandidatesStoreProps) => {
   const state = {
     sortBy: 'updatedAt',
-    sortDirection: SortDirection.DESCENDING,
+    sortDirection: StoreSortDirection.descending,
     table: {
-      columns: undefined as ColumnsConfig | undefined,
+      columns: [] as ColumnsConfig,
+    },
+    selection: {
+      instance: new Selection({
+        getKey: (item: any) => item.id,
+        selectionMode: SelectionMode.multiple,
+        onSelectionChanged: () => handleSelection(),
+      }),
+      indicies: [] as number[],
     },
   }
 
@@ -67,7 +103,11 @@ export const createCandidatesStore = (props: CandidatesStoreProps) => {
     state,
     variables,
     data,
-  })(props)
+  })<CandidatesGraphqlTyping>(props)
+
+  const handleSelection = action(`selection change`, () => {
+    store.state.selection.indicies = store.state.selection.instance.getSelectedIndices()
+  })
 
   return store
 }

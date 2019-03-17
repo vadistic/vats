@@ -1,8 +1,8 @@
 import { css } from '@emotion/core'
 import { useTranslation } from '@vats/i18n'
-import { useComputed, useStoreAction } from '@vats/store'
+import { StoreSortDirection, useComputed, useStoreAction } from '@vats/store'
 import { Theme } from '@vats/styling'
-import { ElementType, pathProxy, SortDirection } from '@vats/utils'
+import { ElementType, pathProxy } from '@vats/utils'
 import {
   IColumn,
   IPersonaCoinProps,
@@ -92,7 +92,7 @@ export const useCandidatesTableColumns = () => {
   }, [])
 
   useDerived(() => {
-    if (!store.state.table.columns) {
+    if (store.state.table.columns.length === 0) {
       store.state.table.columns = getColumnsConfig(columns)
     }
   }, [])
@@ -108,7 +108,7 @@ export const useCandidatesTableColumns = () => {
           ...columns.find(col => col.key === el.key),
           ...el,
           isSorted: store.state.sortBy === el.key,
-          isSortedDescending: store.state.sortDirection === SortDirection.DESCENDING,
+          isSortedDescending: store.state.sortDirection === StoreSortDirection.descending,
         } as IColumn),
     )
   })
@@ -130,7 +130,7 @@ const ColumnApplications: React.FC<CandidatesElementProps> = ({ candidate }) =>
   candidate.applications && (
     <div css={columnApplicationsStyles}>
       {candidate.applications.map(app => (
-        <span>{`${app.job.name} (${app.stage.name})`}</span>
+        <span key={app.id}>{`${app.job.name} (${app.stage.name})`}</span>
       ))}
     </div>
   )

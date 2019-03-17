@@ -4,7 +4,6 @@ import { StoreStatus, useStore } from '@vats/store'
 import { useObserver } from 'mobx-react-lite'
 import React, { useRef } from 'react'
 import { LoadingSpinner, Surface } from '../../components'
-import { routes } from '../../routes'
 import { JobProfile } from './profile'
 import { createSingleJobStore, SingleJobValue } from './store'
 
@@ -30,7 +29,7 @@ export const JobSurface: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
 
   const handleExpand = () => {
     if (navigate) {
-      navigate('/' + routes.job.basepath + '/' + id)
+      navigate('/job/' + id)
     }
   }
 

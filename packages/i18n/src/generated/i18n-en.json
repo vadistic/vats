@@ -3,13 +3,21 @@
     "error": "Error",
     "content": "Content",
     "empty": "Empty",
-    "noResult": "No results found"
+    "unsorted": "Unsorted",
+    "noResult": "No results found",
+    "table": "Table",
+    "board": "Board",
+    "list": "List"
   },
   "action": {
     "add": "Add",
     "added": "Added",
     "create": "Create",
     "created": "Created",
+    "copy": "Copy",
+    "copied": "Copied",
+    "duplicate": "Duplicate",
+    "duplicated": "Duplicated",
     "remove": "Remove",
     "removed": "Removed",
     "edit": "Edit",

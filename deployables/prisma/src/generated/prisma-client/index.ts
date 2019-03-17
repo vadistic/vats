@@ -2666,8 +2666,8 @@ export interface CandidateCreateOneWithoutTasksInput {
 }
 
 export interface CandidateCreateWithoutTasksInput {
-  firstName: String;
-  lastName: String;
+  firstName?: String;
+  lastName?: String;
   emails?: CandidateCreateemailsInput;
   phones?: CandidateCreatephonesInput;
   links?: CandidateCreatelinksInput;
@@ -2833,8 +2833,8 @@ export interface CandidateCreateManyInput {
 }
 
 export interface CandidateCreateInput {
-  firstName: String;
-  lastName: String;
+  firstName?: String;
+  lastName?: String;
   emails?: CandidateCreateemailsInput;
   phones?: CandidateCreatephonesInput;
   links?: CandidateCreatelinksInput;
@@ -2963,8 +2963,8 @@ export interface CandidateCreateOneWithoutApplicationsInput {
 }
 
 export interface CandidateCreateWithoutApplicationsInput {
-  firstName: String;
-  lastName: String;
+  firstName?: String;
+  lastName?: String;
   emails?: CandidateCreateemailsInput;
   phones?: CandidateCreatephonesInput;
   links?: CandidateCreatelinksInput;
@@ -6078,8 +6078,8 @@ export interface Candidate {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  firstName: String;
-  lastName: String;
+  firstName?: String;
+  lastName?: String;
   emails: String[];
   phones: String[];
   links: String[];
@@ -8005,8 +8005,8 @@ export interface CandidatePreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  firstName: String;
-  lastName: String;
+  firstName?: String;
+  lastName?: String;
   emails: String[];
   phones: String[];
   links: String[];

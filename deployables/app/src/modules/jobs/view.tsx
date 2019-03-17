@@ -3,7 +3,6 @@ import { useStore } from '@vats/store'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Router } from '../../components'
-import { routes } from '../../routes'
 import { JobSurface } from '../job'
 import { JobsBar } from './bar'
 import { JobsList } from './list'
@@ -12,7 +11,8 @@ import { createJobsStore, JobsContext } from './store'
 const JobsViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
   // TODO: from settings/ last state
 
-  const defaultUrl = routes.jobs.children.list.basepath
+  const defaultUrl = `list`
+
   if (navigate) {
     console.warn(`JobsView: Default route, redirecting to /${defaultUrl}`)
     navigate(defaultUrl, { replace: true })
@@ -29,11 +29,11 @@ export const JobsViewBase: React.FC<JobsViewProps> = () => {
   return (
     <JobsContext.Provider value={store}>
       <JobsBar />
-      <Router basepath={routes.jobs.basepath} primary={false}>
-        <JobsList path={routes.jobs.children.list.basepath}>
-          <JobSurface path={routes.jobs.children.list.children.surface.basepath} />
-        </JobsList>
+      <Router basepath={`/jobs`} primary={false}>
         <JobsViewDefaultRoute default={true} />
+        <JobsList path={`list`}>
+          <JobSurface path={`/job/:id`} />
+        </JobsList>
       </Router>
     </JobsContext.Provider>
   )

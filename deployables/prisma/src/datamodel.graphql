@@ -86,7 +86,7 @@ type Application {
 
   # connections
   job: Job!
-  candidate: Candidate!
+  candidate: Candidate! @relation(name: "CandidateApplications")
 }
 
 enum ApplicationType {
@@ -100,8 +100,8 @@ type Candidate {
   updatedAt: DateTime!
 
   # info
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
@@ -124,7 +124,7 @@ type Candidate {
 
   # conections
   tasks: [Task!]!
-  applications: [Application!]!
+  applications: [Application!]! @relation(name: "CandidateApplications", onDelete: CASCADE)
   comments: [Comment!]!
 }
 
