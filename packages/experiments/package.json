@@ -1,0 +1,28 @@
+{
+  "name": "@vats/experiments",
+  "version": "0.1.0",
+  "description": "vats experimental utils",
+  "author": "Jakub Wadas <vadistic@gmail.com>",
+  "license": "No license",
+  "private": true,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "transpile": "vscripts transpile --react",
+    "copy-files": "vscripts copyfiles src/**/*.json",
+    "generate": "vscripts runtime ./scripts/gen-json",
+    "clean": "rm -rf dist",
+    "prepare": "yarn transpile && yarn generate && yarn copy-files",
+    "storybook": "vscripts storybook",
+    "test": "vscripts test",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  },
+  "devDependencies": {
+    "@vats/scripts": "^0.1.0",
+    "typescript": "3.3.3333"
+  }
+}

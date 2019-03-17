@@ -1,9 +1,9 @@
 import { css } from '@emotion/core'
 import { Location, navigate } from '@reach/router'
+import { useTranslation } from '@vats/i18n'
 import { Theme } from '@vats/styling'
-import { INavLink, INavLinkGroup, INavProps, Nav } from 'office-ui-fabric-react'
-import React, { useState } from 'react'
-import { routes } from '../../routes'
+import { INavLinkGroup, INavProps, Nav } from 'office-ui-fabric-react'
+import React from 'react'
 
 export interface NavigationProps {
   groups?: INavLinkGroup[]
@@ -14,12 +14,47 @@ export const navigationStyles = (theme: Theme) => css`
 `
 
 export const Navigation: React.FC<NavigationProps> = ({ groups }) => {
-  const homeLink: INavLink = routes.home
-
-  const [, setActive] = useState(homeLink)
+  const { tp } = useTranslation()
 
   const mainGroup: INavLinkGroup = {
-    links: Object.values(routes),
+    links: [
+      {
+        name: tp.candidate.label({ count: 10 }),
+        url: `/candidates`,
+        key: '/candidates',
+        isExpanded: true,
+
+        iconProps: { iconName: 'people' },
+        links: [
+          {
+            name: tp.common.list(),
+            url: `/candidates/list`,
+            key: `/candidates/list`,
+            icon: 'list',
+          },
+          {
+            name: tp.common.table(),
+            url: `/candidates/table`,
+            key: `/candidates/table`,
+            icon: 'table',
+          },
+        ],
+      },
+      {
+        name: tp.job.label({ count: 10 }),
+        url: `/jobs`,
+        key: '/jobs',
+        isExpanded: true,
+        links: [
+          {
+            name: tp.common.list(),
+            url: `/jobs/list`,
+            key: `/jobs/list`,
+            icon: 'list',
+          },
+        ],
+      },
+    ],
   }
 
   const onLinkClick: INavProps['onLinkClick'] = (ev, link) => {
@@ -27,7 +62,6 @@ export const Navigation: React.FC<NavigationProps> = ({ groups }) => {
       ev.preventDefault()
     }
     if (link) {
-      setActive(link)
       navigate(link.url)
     }
   }
@@ -35,8 +69,8 @@ export const Navigation: React.FC<NavigationProps> = ({ groups }) => {
   return (
     <Location>
       {({ location }) => {
-        // TODO: what about nested?
-        const keyRegex = /\/[a-z]+/g
+        // matches 1 or 2 segments of url as key
+        const keyRegex = /^\/[a-z]+(?:\/[a-z]+)?/g
         const match = keyRegex.exec(location.pathname)
 
         return (

@@ -4,7 +4,6 @@ import { StoreStatus, useStore, useStoreAction } from '@vats/store'
 import { useObserver } from 'mobx-react-lite'
 import React, { useRef } from 'react'
 import { LoadingSpinner, Surface } from '../../components'
-import { routes } from '../../routes'
 import { useDerived } from '../../utils'
 import { CandidateProfile, CandidateProfileTab } from './profile'
 import { createSingleCandidateStore, SingleCandidateContext, SingleCandidateValue } from './store'
@@ -33,20 +32,20 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({
   )
 
   useDerived(() => {
-    if (location && location.state.tab) {
+    if (location && location.state && location.state.tab) {
       locationTabAction(location.state.tab)
     }
-  }, [location && location.state.tab])
+  }, [location && location.state && location.state.tab])
 
   const handleDismiss = () => {
     if (navigate) {
-      navigate('..')
+      navigate('../..')
     }
   }
 
   const handleExpand = () => {
     if (navigate) {
-      navigate('/' + routes.candidate.basepath + '/' + id)
+      navigate('/candidate/' + id)
     }
   }
 
