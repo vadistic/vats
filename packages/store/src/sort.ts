@@ -1,30 +1,38 @@
-import {
-  reverseLoPath,
-  sortByGetter,
-  SortDirection,
-  StringIndex,
-  tryGetIn,
-  tuplify,
-} from '@vats/utils'
-import { reaction, set } from 'mobx'
-import { StoreConfig, StoreGraphqlRoots } from './types'
+import { reverseLoPath, tryGetIn } from '@vats/utils'
 
-interface RootsProps {
-  graphqlRoots: StoreGraphqlRoots
+export enum StoreSortDirection {
+  ascending = 1,
+  descending = -1,
 }
 
-interface SortProps {
-  sortDirection: SortDirection
-  sortBy: unknown
+const dateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-\.](.{2,6})$/
+
+const compareAb = (a: any, b: any) => (a < b ? -1 : b < a ? 1 : 0)
+
+/*
+ * universal compare fn for string, numbers & dates
+ * ! does not handle nulls
+ */
+const compareFn = <T extends string | number>(a: T, b: T) => {
+  // compare ISO Date strings
+  if (dateRegex.test('' + a)) {
+    return compareAb(new Date(a), new Date(b))
+  }
+
+  // normalize to lowercase
+  if (typeof a === 'string' && typeof b === 'string') {
+    return compareAb(a.toLowerCase(), b.toLowerCase())
+  }
+
+  // compare nums & booleans
+  if (typeof a === 'number' || typeof a === 'boolean') {
+    return compareAb(a, b)
+  }
+
+  throw Error(`compareFn invalid input: ${a}, ${b}`)
 }
 
-export interface StoreSortProps<State, Data, Config> {
-  state: State
-  data: Data
-  config: Config
-}
-
-const getSortedValue = (value: any, sortBy: string, sortDirection: SortDirection) => {
+export const sortValue = (value: any[], sortBy: string, sortDirection: StoreSortDirection) => {
   const sortByPath = reverseLoPath(sortBy)
 
   // skip on non-nested sortBy strings that does not match value shape
@@ -32,107 +40,34 @@ const getSortedValue = (value: any, sortBy: string, sortDirection: SortDirection
     return
   }
 
-  // now the tricky part... I cannot know what kind of value prop has
-  // I'll loop over data till some value is not null/ undefined to check
-  let getterType: undefined | 'count' | 'value'
+  // split array into sortable part and nulls
+  const truthy: any[] = []
+  const falsely: any[] = []
 
   for (const el of value) {
     const select = tryGetIn(el, ...sortByPath)
 
-    if (select) {
-      if (Array.isArray(select)) {
-        getterType = 'count'
-        break
-      }
-
-      // todo add date?
-      if (typeof select === 'number' || typeof select === 'boolean' || typeof select === 'string') {
-        getterType = 'value'
-        break
-      }
-
-      console.error('invalid sortBy value')
-      return
+    if (select !== null && select !== undefined) {
+      truthy.push(el)
+    } else {
+      falsely.push(el)
     }
   }
 
-  // geter return value / length or null
+  // not checking for arrays & nulls because it was done before
   const getter = (item: any) => {
     const select = tryGetIn(item, ...sortByPath)
-
-    if (select && getterType === 'value') {
+    if (Array.isArray(select)) {
+      return select.length
+    } else {
       return select
     }
-
-    if (select && Array.isArray(select) && getterType === 'count') {
-      return select.length
-    }
-
-    return null
   }
 
-  return sortByGetter(value, sortDirection, getter)
-}
+  const sorted = truthy.sort((elA, elB) => sortDirection * compareFn(getter(elA), getter(elB)))
 
-export const storeSortReaction = <
-  State extends SortProps,
-  Data extends StringIndex<Data>,
-  Config extends StoreConfig & RootsProps
->({
-  state,
-  data,
-  config,
-}: StoreSortProps<State, Data, Config>) => {
-  const sortByReaction = reaction(
-    // on data, sortBy or sortDirection change
-    () => tuplify([state.sortBy, state.sortDirection]),
-    ([sortBy, sortDirection]) => {
-      const value = data[config.graphqlRoots.query] as any[]
-
-      if (!value || !Array.isArray(value) || typeof sortBy !== 'string') {
-        return
-      }
-
-      const sortedValue = getSortedValue(value, sortBy, sortDirection)
-
-      if (sortedValue) {
-        set(data, config.graphqlRoots.query, sortedValue)
-      }
-    },
-    { name: `${config.name}: sort change` },
-  )
-
-  const sortDataReaction = reaction(
-    // on data, sortBy or sortDirection change
-    () => data.length,
-    () => {
-      const value = data[config.graphqlRoots.query] as any[]
-
-      if (!value || !Array.isArray(value) || typeof state.sortBy !== 'string') {
-        return
-      }
-
-      const sortedValue = getSortedValue(value, state.sortBy, state.sortDirection)
-
-      if (!sortedValue) {
-        return
-      }
-
-      // set data only if elements changed
-      for (let i = 0; i < sortedValue.length; i++) {
-        if (sortedValue[i] !== value[i]) {
-          set(data, config.graphqlRoots.query, sortedValue)
-          break
-        }
-      }
-    },
-    { name: `${config.name}: sort data` },
-  )
-
-  const dispose = () => {
-    sortByReaction()
-    sortDataReaction()
-  }
-
-  return { dispose }
+  // nulls first on descending
+  return sortDirection === StoreSortDirection.ascending
+    ? [...sorted, ...falsely]
+    : [...falsely, ...sorted]
 }

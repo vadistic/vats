@@ -1,12 +1,12 @@
-import { SortDirection } from '@vats/utils'
 import { ApolloQueryResult, ObservableQuery } from 'apollo-client'
 import { diff, PreFilterFunction } from 'deep-diff'
 import { GraphQLError } from 'graphql'
 import { action, computed, observable, reaction, runInAction, set, toJS } from 'mobx'
 import { updateDiff } from './diff'
-import { applyShallowOrdered } from './diff/ordered'
 import { getGraphqlRoots } from './graphql'
-import { storeSortReaction } from './sort'
+import { applyOrdered } from './ordered'
+import { StoreSortDirection } from './sort'
+import { storeSortReaction } from './sort-reaction'
 import {
   GraphqlTyping,
   SafeData,
@@ -52,7 +52,7 @@ export const createStore = <
   }
 
   const defaultState = {
-    sortDirection: SortDirection.ASCENDING,
+    sortDirection: StoreSortDirection.ascending,
     sortBy: undefined as string | undefined,
   }
 
@@ -64,7 +64,7 @@ export const createStore = <
    */
 
   const getName = (name: string) => _config.name + '.' + name
-  const isSingleQuery = !Array.isArray(((_data as unknown) as SafeData<Data>)[graphqlRoots.query])
+  const isSingle = !Array.isArray(((_data as unknown) as SafeData<Data>)[graphqlRoots.query])
 
   const state = observable({ ...defaultState, ..._state }, undefined, {
     name: getName('state'),
@@ -88,7 +88,7 @@ export const createStore = <
 
   const data = observable((_data as unknown) as SafeData<Data>, undefined, {
     name: getName('data'),
-    defaultDecorator: isSingleQuery ? observable.ref : observable.shallow,
+    defaultDecorator: isSingle ? observable.ref : observable.shallow,
   })
 
   const observables = {
@@ -103,11 +103,11 @@ export const createStore = <
 
   // sorting reaction only on 'multi' stores
   const sortReaction =
-    !isSingleQuery &&
+    !isSingle &&
     storeSortReaction({
       config,
       data,
-      state: state as typeof defaultState,
+      state: (state as unknown) as typeof defaultState,
     })
 
   let query: ObservableQuery<SafeData<Data>, Variables> = undefined as any
@@ -132,12 +132,12 @@ export const createStore = <
   }
 
   /**
-   * Refetch in background, possibly with deepCompare of variables
+   * refetch
+   * in background, with deepCompare of variables
    */
   const refetch = action(
     `${config.name}: refetch execute`,
     (nextVariables?: Variables, compare?: boolean) => {
-      //
       if (nextVariables) {
         // will be handled by variables reaction + response reaction
         set(variables, nextVariables)
@@ -149,11 +149,50 @@ export const createStore = <
   )
 
   /**
-   * Run update mutation
+   * run create mutation
    */
-  const update = action(
-    `${config.name}: update`,
-    (updateData: Graphql['updateData'], optimistic?: Partial<Value>) => {
+  const createMutation = action(
+    `${config.name}: create mutation`,
+    async (
+      createVariablesData: Graphql['createVariables']['data'],
+      optimistic?: Partial<Value>,
+    ) => {
+      if (!config.graphql.createMutation) {
+        throw Error(`${name}: createMutation is missing`)
+      }
+
+      if (optimistic) {
+        set(data, graphqlRoots.query, { ...value.get(), ...optimistic })
+      }
+
+      const res = await client.mutate<Graphql['createMutation'], Graphql['createVariables']>({
+        variables: { data: createVariablesData },
+        mutation: config.graphql.createMutation,
+      })
+
+      if (res.data) {
+        if (!isSingle) {
+          refetch()
+        }
+        return res.data
+      }
+
+      if (res.errors) {
+        meta.status = StoreStatus.error
+        meta.errors = [...res.errors]
+      }
+    },
+  )
+
+  /**
+   * run update mutation
+   */
+  const updateMutation = action(
+    `${config.name}: update mutation`,
+    async (
+      updateVariablesData: Graphql['updateVariables']['data'],
+      optimistic?: Partial<Value>,
+    ) => {
       if (!config.graphql.updateMutation) {
         throw Error(`${name}: updateMutation is missing`)
       }
@@ -162,15 +201,82 @@ export const createStore = <
         set(data, graphqlRoots.query, { ...value.get(), ...optimistic })
       }
 
-      return client.mutate({
-        variables: { where: toJS(variables.where), data: updateData },
+      const res = await client.mutate<Graphql['updateMutation'], Graphql['updateVariables']>({
+        variables: { where: toJS(variables.where), data: updateVariablesData },
         mutation: config.graphql.updateMutation,
       })
+
+      if (res.data) {
+        if (!isSingle) {
+          refetch()
+        }
+        return res.data
+      }
+
+      if (res.errors) {
+        meta.status = StoreStatus.error
+        meta.errors = [...res.errors]
+      }
     },
   )
 
   /**
-   * Run update mutation by providing new query data value
+   * run delete mutation
+   * single type deletes itself, multi query needs variables!
+   */
+  const deleteMutation = action(
+    `${config.name}: delete mutation`,
+    async (deleteVariablesWhere?: { id: string } | { index: number }) => {
+      if (!config.graphql.deleteMutation) {
+        throw Error(`${config.name}: deleteMutation is missing`)
+      }
+
+      let id: string | undefined
+
+      // determine id
+
+      if (isSingle) {
+        id = variables.where.id
+      }
+
+      if (!isSingle && deleteVariablesWhere && 'id' in deleteVariablesWhere) {
+        id = deleteVariablesWhere.id
+      }
+
+      if (!isSingle && deleteVariablesWhere && 'index' in deleteVariablesWhere) {
+        id = (value.get() as any)[deleteVariablesWhere.index].id
+      }
+
+      if (!id) {
+        throw Error(`${config.name} deleteMutation is missing id`)
+      }
+
+      // optimistic
+      if (!isSingle) {
+        data[graphqlRoots.query] = (data[graphqlRoots.query] as any[]).filter(
+          node => node.id !== id,
+        )
+      }
+
+      const res = await client.mutate<Graphql['deleteMutation'], Graphql['deleteVariables']>({
+        variables: { where: { id } },
+        mutation: config.graphql.deleteMutation,
+      })
+
+      if (res.data) {
+        return res.data
+      }
+
+      if (res.errors) {
+        console.log(res.errors)
+        meta.status = StoreStatus.error
+        meta.errors = [...res.errors]
+      }
+    },
+  )
+
+  /**
+   * run update mutation by providing new query data value
    */
   const autoUpdate = action(`${config.name}: auto update`, (nextValue: Partial<Value>) => {
     if (!config.graphql.updateMutation) {
@@ -232,12 +338,11 @@ export const createStore = <
       }
 
       if (res.data) {
-        applyShallowOrdered(data, res.data)
+        applyOrdered(data, res.data)
       }
 
-      if (res.errors) {
-        meta.errors = [...res.errors]
-      }
+      // ! resets errors - maybe it should not
+      meta.errors = res.errors ? [...res.errors] : []
     },
   )
 
@@ -306,7 +411,9 @@ export const createStore = <
     query,
     fetch,
     refetch,
-    update,
+    create: createMutation,
+    update: updateMutation,
+    delete: deleteMutation,
     autoUpdate,
     init,
     dispose,

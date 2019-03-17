@@ -1,7 +1,7 @@
 import { Omit, shallowEqual } from '@vats/utils'
 import { runInAction } from 'mobx'
 import { useContext, useEffect, useRef } from 'react'
-import { ApolloContext } from './react-apollo'
+import { ApolloContext } from './apollo-context'
 import { StoreProps, StoreValue } from './types'
 /**
  * Create store instance, reinitialised on deps change

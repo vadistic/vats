@@ -3,45 +3,62 @@ import ApolloClient from 'apollo-client'
 import { DocumentNode } from 'graphql'
 import { createStore } from './store'
 
-export interface TQueryVariables {
+export interface WhereVariables {
   where?: any
 }
 
-export interface TUpdateVariables {
+export interface DataVariables {
   data: any
-  where: any
 }
 
-/*
- * Remove null from data:{key: (null|Type)[] } since it never appears
- *
- * And make elements/object readonly - corresponding to shallownes of observable
+export type TQueryVariables = WhereVariables
+export type TUpdateVariables = WhereVariables & DataVariables
+export type TCreateVariables = DataVariables
+export type TDeleteVariables = WhereVariables
+
+/**
+ * - remove null from data:{key: (null|Type)[] } since it never appears
+ * - make elements/object readonly - corresponding to shallownes of observable
  */
 type NonNullableImmutableProps<T> = {
   [K in keyof T]: T[K] extends Array<infer E | null> ? Array<Readonly<E>> : Readonly<T[K]>
 }
 
-/*
- * And add string index signatures since graphql res objects are always string indexed
+/**
+ * add to NonNullableImmutableProps string index signatures
+ * since graphql response is always string indexed
  */
 export type SafeData<Data> = DeepStringIndex<NonNullableImmutableProps<Data>>
 
 export interface GraphqlTyping<
-  CreateData = {},
-  CreateVariables = {},
-  UpdateData = {},
+  CreateMutation = {},
+  CreateVariables extends TCreateVariables = TCreateVariables,
+  UpdateMutation = {},
   UpdateVariables extends TUpdateVariables = TUpdateVariables,
-  DeleteData = {},
-  DeleteVariables = {}
+  DeleteMutation = {},
+  DeleteVariables extends TDeleteVariables = TDeleteVariables
 > {
-  createData: CreateData
+  createMutation: CreateMutation
   createVariables: CreateVariables
-  updateData: UpdateData
+  updateMutation: UpdateMutation
   updateVariables: UpdateVariables
-  deleteData: DeleteData
+  deleteMutation: DeleteMutation
   deleteVariables: DeleteVariables
+  updateManyMutation: UpdateMutation
+  updateManyVariables: UpdateVariables
+  deleteManyMutation: DeleteMutation
+  deleteManyVariables: DeleteVariables
+}
+/**
+ * utility to create strict graphql typing using only partial
+ */
+export type GraphqlTypingCreator<P extends Partial<GraphqlTyping>> = {
+  [K in keyof GraphqlTyping]: K extends keyof P ? NonNullable<P[K]> : GraphqlTyping[K]
 }
 
+/**
+ * graphql operation definitinos
+ */
 export interface StoreGraphqlConfig {
   query: DocumentNode
   createMutation?: DocumentNode
@@ -49,13 +66,6 @@ export interface StoreGraphqlConfig {
   deleteMutation?: DocumentNode
   updateManyMutation?: DocumentNode
   deleteManyMutation?: DocumentNode
-}
-
-/*
- * TODO: something cleaner
- */
-export type StoreTypingCreator<P extends Partial<GraphqlTyping>> = {
-  [K in keyof GraphqlTyping]: K extends keyof P ? NonNullable<P[K]> : GraphqlTyping[K]
 }
 
 export type StoreGraphqlRoots = { [K in keyof StoreGraphqlConfig]: string }

@@ -1,4 +1,4 @@
-import { applyShallowOrdered, compareEqOrId, orderedCopyArr, orderedCopyObject } from '../ordered'
+import { applyOrdered, compareEqOrId, orderedCopyArr, orderedCopyObject } from '../ordered'
 
 describe('ordered', () => {
   it('compare literals', () => {
@@ -135,7 +135,7 @@ describe('applyShallowOrdered', () => {
       },
     }
 
-    applyShallowOrdered(target, source)
+    applyOrdered(target, source)
 
     expect(target).toEqual(result)
   })
@@ -163,7 +163,7 @@ describe('applyShallowOrdered', () => {
       ],
     }
 
-    applyShallowOrdered(targetArr, sourceArr)
+    applyOrdered(targetArr, sourceArr)
 
     // delete elements and reorder array
     expect(targetArr).toEqual({
@@ -205,7 +205,7 @@ describe('applyShallowOrdered', () => {
       ],
     }
 
-    applyShallowOrdered(targetArr, sourceArr)
+    applyOrdered(targetArr, sourceArr)
 
     // result ok
     expect(targetArr).toEqual({
@@ -235,7 +235,7 @@ describe('applyShallowOrdered', () => {
       },
     }
 
-    applyShallowOrdered(targetObj, sourceObj)
+    applyOrdered(targetObj, sourceObj)
 
     expect(targetObj).toEqual({
       data: {

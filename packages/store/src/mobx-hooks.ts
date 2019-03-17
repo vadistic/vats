@@ -1,7 +1,6 @@
 import {
   computed,
   IComputedValueOptions,
-  IReactionDisposer,
   IReactionOptions,
   IReactionPublic,
   reaction,
@@ -11,10 +10,9 @@ import { useDisposable } from 'mobx-react-lite'
 import { useCallback, useMemo } from 'react'
 import { StoreValue } from './types'
 
-/*
+/**
  * shortcut action creator with useCallback
  */
-
 export type UseAction<A extends any[], T> = (...args: A) => T
 
 export const useAction = <A extends any[], T>(
@@ -36,22 +34,35 @@ export const useStoreAction = (store: StoreValue, name: string) => <A extends an
     [store, ...deps],
   ) as UseAction<A, T>
 
-/*
+/**
  * shortcut disposable reaction with rewired naming arg
  */
-export type UseReaction = <T>(
+export const useReaction = <T>(
   name: string,
   expression: (r: IReactionPublic) => T,
   effect: (arg: T, r: IReactionPublic) => void,
-  deps?: any[],
-  opts?: IReactionOptions,
-) => IReactionDisposer
+  deps: any[] = [],
+  opts: IReactionOptions = {},
+) => useDisposable(() => reaction(expression, effect, { name, ...opts }), deps)
 
-export const useReaction: UseReaction = (name, expression, effect, deps = [], opts) =>
-  useDisposable(() => reaction(expression, effect, { name, ...opts }), deps)
+/**
+ * same as useReaction but using useStoreAction syntax??
+ */
+export const useStoreReaction = (store: StoreValue, name: string) => <T>(
+  expression: (r: IReactionPublic) => T,
+  effect: (arg: T, r: IReactionPublic) => void,
+  deps: any[] = [],
+  opts: IReactionOptions = {},
+) =>
+  useDisposable(
+    () => reaction(expression, effect, { name: `${store.config.name}: ${name}`, ...opts }),
+    deps,
+  )
 
-// my own hook because provided is quite useless
-// https://github.com/mobxjs/mobx-react-lite/issues/38
+/**
+ * custom computed value hook - original could not be observed
+ * https://github.com/mobxjs/mobx-react-lite/issues/38
+ */
 export const useComputed = <T>(
   name: string,
   func: () => T,

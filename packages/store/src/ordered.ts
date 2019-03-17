@@ -66,7 +66,7 @@ export const orderedCopyObject = (target: any, source: any) => {
  *  - arrays will have objects with sorted sorted props that are arrays (update only when deepEqual changes)
  */
 
-export const applyShallowOrdered = <T extends StringMap<any>>(target: T, source: T) => {
+export const applyOrdered = <T extends StringMap<any>>(target: T, source: T) => {
   // shouldSkip apllying ordered object
   const shouldSkip = (a: any, b: any) =>
     // for various nulls
