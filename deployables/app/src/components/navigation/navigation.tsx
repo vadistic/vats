@@ -23,8 +23,6 @@ export const Navigation: React.FC<NavigationProps> = ({ groups }) => {
         url: `/candidates`,
         key: '/candidates',
         isExpanded: true,
-
-        iconProps: { iconName: 'people' },
         links: [
           {
             name: tp.common.list(),

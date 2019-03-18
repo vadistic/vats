@@ -68,6 +68,27 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
 
   const items: ICommandBarItemProps[] = [
     {
+      text: tp.action.create(),
+      key: 'create',
+      iconProps: {
+        iconName: 'circleaddition',
+      },
+      onClick: () => {
+        createAction()
+      },
+    },
+    {
+      text: tp.action.remove(),
+      key: 'delete',
+      iconProps: {
+        iconName: 'delete',
+      },
+      disabled: store.state.selection.indicies.length !== 1,
+      onClick: () => {
+        deleteAction()
+      },
+    },
+    {
       text: !!store.state.sortBy
         ? `${tp.action.sort()}: ${sortByMap[store.state.sortBy]}`
         : tp.common.unsorted(),
@@ -82,40 +103,6 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
       },
       subMenuProps: {
         items: Object.keys(sortByMap).map(key => getSubmenuItem(key)),
-      },
-    },
-    {
-      text: tp.action.create(),
-      key: 'create',
-      iconProps: {
-        iconName: 'circleaddition',
-      },
-      onClick: () => {
-        createAction()
-      },
-    },
-    {
-      text: tp.action.copy(),
-      key: 'copy',
-      iconProps: {
-        iconName: 'copy',
-      },
-      disabled: store.state.selection.indicies.length !== 1,
-      onClick: () => {
-        if (store.state.selection) {
-          console.warn('TODO')
-        }
-      },
-    },
-    {
-      text: tp.action.remove(),
-      key: 'delete',
-      iconProps: {
-        iconName: 'delete',
-      },
-      disabled: store.state.selection.indicies.length !== 1,
-      onClick: () => {
-        deleteAction()
       },
     },
   ]

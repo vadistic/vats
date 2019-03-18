@@ -1,15 +1,15 @@
 {
   "name": "Source lines of code report",
-  "date": "2019-03-17T18:22:45.066Z",
+  "date": "2019-03-18T01:29:48.388Z",
   "total": {
-    "total": 12633,
-    "source": 10109,
+    "total": 12833,
+    "source": 10276,
     "comment": 755,
     "single": 365,
     "block": 390,
     "mixed": 16,
-    "empty": 1785,
-    "todo": 26,
+    "empty": 1818,
+    "todo": 25,
     "blockEmpty": 0,
     "generated": 125798
   },
@@ -26,8 +26,8 @@
       "blockEmpty": 0
     },
     "ts": {
-      "total": 6945,
-      "source": 5400,
+      "total": 6946,
+      "source": 5401,
       "comment": 593,
       "single": 287,
       "block": 306,
@@ -38,14 +38,14 @@
       "generated": 92400
     },
     "tsx": {
-      "total": 5207,
-      "source": 4319,
+      "total": 5406,
+      "source": 4485,
       "comment": 155,
       "single": 71,
       "block": 84,
       "mixed": 5,
-      "empty": 738,
-      "todo": 14,
+      "empty": 771,
+      "todo": 13,
       "blockEmpty": 0
     },
     "graphql": {
@@ -364,14 +364,14 @@
     },
     "deployables/app": {
       "total": {
-        "total": 4436,
-        "source": 3754,
+        "total": 4636,
+        "source": 3921,
         "comment": 94,
         "single": 87,
         "block": 7,
         "mixed": 5,
-        "empty": 593,
-        "todo": 11,
+        "empty": 626,
+        "todo": 10,
         "blockEmpty": 0,
         "generated": 40144
       },
@@ -387,8 +387,8 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 1134,
-        "source": 939,
+        "total": 1135,
+        "source": 940,
         "comment": 51,
         "single": 48,
         "block": 3,
@@ -399,14 +399,14 @@
         "generated": 40074
       },
       "tsx": {
-        "total": 3284,
-        "source": 2799,
+        "total": 3483,
+        "source": 2965,
         "comment": 43,
         "single": 39,
         "block": 4,
         "mixed": 3,
-        "empty": 445,
-        "todo": 9,
+        "empty": 478,
+        "todo": 8,
         "blockEmpty": 0
       },
       "graphql": {
