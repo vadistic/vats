@@ -13,17 +13,17 @@ import {
   Relations,
 } from './utils'
 
-export interface AutoUpdateOptions {
+export interface AutoMutationOptions {
   map?: Relations
   prefilter?: PreFilterFunction
 }
 
-export interface AutoUpdateResult<Data> {
+export interface AutoMutationResult<Data> {
   queryData: Data
   updateData: any | undefined
 }
 
-export interface AutoUpdateHandlerProps {
+export interface AutoMutationHandlerProps {
   prevProp: any
   nextProp: any
   prevPropRaw: any
@@ -36,7 +36,7 @@ export interface AutoUpdateHandlerProps {
 }
 
 export type AutoUpdateHandler = (
-  props: AutoUpdateHandlerProps,
+  props: AutoMutationHandlerProps,
 ) =>
   | {
       propQueryData: any
@@ -44,16 +44,16 @@ export type AutoUpdateHandler = (
     }
   | undefined
 
-export const autoUpdate = <Value extends StringMap>(
+export const autoMutation = <Value extends StringMap>(
   // prev can be superset or subset of next, so no typing
   prev: any,
   next: Value,
-  options: AutoUpdateOptions = {},
+  options: AutoMutationOptions = {},
   rootPath: Array<string | number> = [],
   // flat flag seems necessary for recursive use with onUpdate flat
   // alternative would be to refactor scalar props and use them in loop instead but this seems easier
   flatUpdate: boolean = false,
-): AutoUpdateResult<Value> => {
+): AutoMutationResult<Value> => {
   // double destructuring - this is new for me^^
   const { map, prefilter } = { ...options, prefilter: defaultPrefilter }
 
@@ -163,7 +163,7 @@ export const autoUpdate = <Value extends StringMap>(
 
     if (oneToManyRelation(prevProp, nextProp)) {
       /*
-       * same - no res means unsuported relation
+       * same - no res means unsupported relation
        * - it would be bothersome to provide all relations for, ever for equal props
        * - for supported relations unshifted element would end up last - this keeps input ordering intact
        *   (if I would want to mimic API response - the results would need to be sorted by id field anyway)

@@ -1,4 +1,4 @@
-import { autoUpdate } from '..'
+import { autoMutation } from '..'
 
 const fixtureFields = {
   id: '123',
@@ -14,7 +14,7 @@ const fixtureFields = {
 
 describe('auto create', () => {
   it('handle creating simple createData', () => {
-    const { queryData, updateData } = autoUpdate({}, fixtureFields, {})
+    const { queryData, updateData } = autoMutation({}, fixtureFields, {})
 
     expect(queryData).toEqual({
       id: '123',

@@ -1,5 +1,5 @@
 import { deepEqual, StringMap } from '@vats/utils'
-import { autoUpdate, AutoUpdateHandler } from './auto'
+import { autoMutation, AutoUpdateHandler } from './auto'
 import { getNestedRelations, getRelation } from './utils'
 
 export const handleOneToMany: AutoUpdateHandler = ({
@@ -74,7 +74,7 @@ export const handleOneToMany: AutoUpdateHandler = ({
         // - created element is raw because prefilter did not check fields of arraay elements
         // - autoUpdate's queryData copy all fields so it should not be partial (except for unsupported nested relations, so ok)
         // - does not need withoutId becasue 'id' field is filtered in autoUpdate scalar update data and should be present in query data
-        const data = autoUpdate({}, createdEl, { prefilter, map: getNestedRelations(map, key) }, [
+        const data = autoMutation({}, createdEl, { prefilter, map: getNestedRelations(map, key) }, [
           ...rootPath,
           key,
           index,
@@ -101,7 +101,7 @@ export const handleOneToMany: AutoUpdateHandler = ({
       // it's an update since id must match
       // this equlity here is not on prefilterd fileds so e.g. createdAt could trigger it but it's checked in recursion
       if (!deepEqual(prevElement, nextElement)) {
-        const data = autoUpdate(
+        const data = autoMutation(
           prevElement,
           nextElement,
           { prefilter, map: getNestedRelations(map, key) },

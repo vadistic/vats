@@ -1,6 +1,6 @@
 import { literally } from '@vats/utils'
 import { cloneDeep } from 'apollo-utilities'
-import { autoUpdate, AutoUpdateOptions } from '..'
+import { autoMutation, AutoMutationOptions } from '..'
 
 const fixtureFields = {
   id: '123',
@@ -57,7 +57,7 @@ describe('autoUpdate OneToOne', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (opts?: AutoUpdateOptions) => autoUpdate(fixture, copy, opts)
+  const getData = (opts?: AutoMutationOptions) => autoMutation(fixture, copy, opts)
 
   it('non-nested oneToOne connect', () => {
     copy.empty = fixture.oneToOne as any

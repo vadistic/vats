@@ -2,6 +2,7 @@ import { ElementType } from '@vats/utils'
 import { ApolloClient } from 'apollo-client'
 import { FetchResult } from 'apollo-link'
 import { action, runInAction } from 'mobx'
+import { autoMutation } from '../auto'
 import { StoreTyping } from './create'
 import { GraphqlTyping } from './graphql-types'
 import { StoreHelper } from './helper'
@@ -110,10 +111,10 @@ export const createMultiStoreMutations = <
       if (res.data) {
         runInAction(helper.actionName('create mutation response'), () => {
           if (optimistic) {
-            helper.removeElementById('TEMP')
+            helper.setElementById('TEMP', res.data![root])
+          } else {
+            helper.pushElement(res.data![root])
           }
-
-          helper.pushElement(res.data![root])
         })
 
         return res.data
@@ -273,14 +274,16 @@ export const createMultiStoreMutations = <
   )
 
   /**
-   * run update many mutation
-   * for now: need optimistic, because there is no useful response to update store
+   * run delete many mutation
+   *
+   * the cascade is not supported yet in deleteMany so it'll run a loop
+   * https://github.com/prisma/prisma/issues/1936
    */
   const deleteManyMutation = action(
     helper.actionName('delete many mutation'),
     async (select: MultiMutationSelector) => {
-      const graphql = observables.config.graphql.deleteManyMutation
-      const root = observables.config.roots.deleteManyMutation
+      const graphql = observables.config.graphql.deleteMutation
+      const root = observables.config.roots.deleteMutation
 
       if (!root || !graphql) {
         throw Error(helper.actionName('delete mutation missing'))
@@ -290,30 +293,128 @@ export const createMultiStoreMutations = <
 
       const prev = indicies.map(index => helper.getElementByIndex(index))
 
+      // by id because indicies could be all over the place - maybe implement remove many elements?
       runInAction(helper.actionName('delete mutation optimistic'), () => {
         ids.forEach(id => {
           helper.removeElementById(id)
         })
       })
 
-      const res = await client.mutate<
-        Graphql['deleteManyMutation'],
-        Graphql['deleteManyVariables']
-      >({
-        variables: { where: { id_in: ids } },
+      // needs some cache invalidation
+      client.cache.writeQuery({
+        query: observables.config.graphql.query,
+        variables: observables.variables,
+        data: {
+          [observables.config.roots.query]: observables.value.get(),
+        },
+      })
+
+      const promises = ids.map(id =>
+        client.mutate<Graphql['deleteMutation'], Graphql['deleteVariables']>({
+          variables: { where: { id } },
+          mutation: graphql,
+          errorPolicy: 'all',
+        }),
+      )
+
+      const res = await Promise.all(promises)
+
+      const errorRes = res.find(el => !!el.errors)
+
+      if (errorRes) {
+        runInAction(helper.actionName('update mutation error'), () => {
+          ids.forEach((id, i) => {
+            helper.pushElement(prev[i])
+          })
+        })
+
+        handleErrors(errorRes)
+      }
+    },
+  )
+
+  /**
+   * run create mutation by providing next value
+   */
+  const autoCreate = action(
+    helper.actionName('auto create mutation'),
+    async (next: Typing['value']) => {
+      const root = observables.config.roots.createMutation
+      const graphql = observables.config.graphql.createMutation
+
+      if (!root || !graphql) {
+        throw Error(helper.actionName('create mutation missing'))
+      }
+
+      const { updateData, queryData } = autoMutation({}, next, {
+        map: observables.config.relations,
+      })
+
+      if (!updateData) {
+        return
+      }
+
+      helper.pushElement({ ...queryData, id: 'TEMP' })
+
+      const res = await client.mutate({
+        variables: { data: updateData },
         mutation: graphql,
         errorPolicy: 'all',
       })
 
       if (res.data) {
-        return res.data
+        runInAction(helper.actionName('create mutation response'), () => {
+          helper.setElementById('TEMP', res.data![root])
+        })
       }
 
       if (res.errors) {
-        runInAction(helper.actionName('update mutation error'), () => {
-          ids.forEach((id, i) => {
-            helper.pushElement(prev[i])
-          })
+        runInAction(helper.actionName('auto update mutation error'), () => {
+          helper.removeElementById('TEMP')
+        })
+
+        handleErrors(res)
+      }
+    },
+  )
+
+  /**
+   * run update mutation by providing partial of next query value
+   */
+  const autoUpdate = action(
+    helper.actionName('auto update mutation'),
+    async (select: SingleMutationSelector, next: Partial<Typing['value']>) => {
+      const root = observables.config.roots.updateMutation
+      const graphql = observables.config.graphql.updateMutation
+
+      if (!root || !graphql) {
+        throw Error(helper.actionName('update mutation missing'))
+      }
+
+      const { id, index } = singleSelector(select)
+
+      const prev = helper.getElementByIndex(index)
+
+      const { updateData, queryData } = autoMutation(prev, next, {
+        map: observables.config.relations,
+      })
+
+      if (!updateData) {
+        return
+      }
+
+      // optimistic
+      helper.setElementByIndex(index, { ...prev, ...queryData })
+
+      const res = await client.mutate({
+        variables: { where: { id }, data: updateData },
+        mutation: graphql,
+        errorPolicy: 'all',
+      })
+
+      if (res.errors) {
+        runInAction(helper.actionName('auto update mutation error'), () => {
+          helper.setElementById(id, prev)
         })
 
         handleErrors(res)
@@ -322,11 +423,13 @@ export const createMultiStoreMutations = <
   )
 
   const props = {
-    update: updateMutation,
     create: createMutation,
+    update: updateMutation,
     delete: deleteMutation,
     updateMany: updateManyMutation,
     deleteMany: deleteManyMutation,
+    autoCreate,
+    autoUpdate,
   }
 
   return {

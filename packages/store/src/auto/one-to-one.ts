@@ -1,5 +1,5 @@
 import { StringMap } from '@vats/utils'
-import { autoUpdate, AutoUpdateHandler } from './auto'
+import { autoMutation, AutoUpdateHandler } from './auto'
 import { getNestedRelations, getRelation, withoutId } from './utils'
 
 export const handleOneToOne: AutoUpdateHandler = ({
@@ -29,7 +29,7 @@ export const handleOneToOne: AutoUpdateHandler = ({
 
     if (relation === 'create') {
       // some recursion
-      const data = autoUpdate(
+      const data = autoMutation(
         {},
         withoutId(nextProp),
         { prefilter, map: getNestedRelations(map, key) },
@@ -56,7 +56,7 @@ export const handleOneToOne: AutoUpdateHandler = ({
       // flat flag seems necessary for recursive use
       const flat = getRelation(map, key, 'onUpdate') === 'flat'
 
-      const data = autoUpdate(
+      const data = autoMutation(
         prevProp,
         nextProp,
         { prefilter, map: getNestedRelations(map, key) },
@@ -90,7 +90,7 @@ export const handleOneToOne: AutoUpdateHandler = ({
       }
 
       if (createRelation === 'create') {
-        const data = autoUpdate({}, withoutId(nextProp), { prefilter }, [...rootPath, key])
+        const data = autoMutation({}, withoutId(nextProp), { prefilter }, [...rootPath, key])
 
         propUpdateData.create = data.updateData
       }

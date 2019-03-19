@@ -1,7 +1,7 @@
 import { insertElOnIndex, literally } from '@vats/utils'
 import { cloneDeep } from 'apollo-utilities'
-import { autoUpdate } from '..'
-import { AutoUpdateOptions } from '../auto'
+import { autoMutation } from '..'
+import { AutoMutationOptions } from '../auto'
 
 const fixtureFields = {
   id: '123',
@@ -58,7 +58,7 @@ describe('autoUpdate oneToMany', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (opts?: AutoUpdateOptions) => autoUpdate(fixture, copy, opts)
+  const getData = (opts?: AutoMutationOptions) => autoMutation(fixture, copy, opts)
 
   it('append', () => {
     const element = {

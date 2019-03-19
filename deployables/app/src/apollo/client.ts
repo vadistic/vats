@@ -41,6 +41,7 @@ const errorLink = onError(({ graphQLErrors, networkError, response }) => {
 
 export const apolloClientOptions: ApolloClientOptions<NormalizedCacheObject> = {
   connectToDevTools: true,
+
   link: ApolloLink.from([errorLink, httpLink]),
   typeDefs,
   // should be fixed in next major of gql-gen

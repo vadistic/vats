@@ -1,5 +1,5 @@
 import { cloneDeep } from 'apollo-utilities'
-import { autoUpdate, AutoUpdateOptions } from '..'
+import { autoMutation, AutoMutationOptions } from '..'
 
 const fixtureFields = {
   __typename: '',
@@ -57,7 +57,7 @@ describe('autoUpdate scalar updates', () => {
     copy = cloneDeep(fixture)
   })
 
-  const getData = (opts?: AutoUpdateOptions) => autoUpdate(fixture, copy, opts)
+  const getData = (opts?: AutoMutationOptions) => autoMutation(fixture, copy, opts)
 
   it('string to null', () => {
     copy.scalarString = null as any

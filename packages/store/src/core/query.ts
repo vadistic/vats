@@ -78,11 +78,14 @@ export const createStoreQuery = <Typing extends StoreTyping>({
       }
 
       if (res.data) {
+        console.log('RES', res.data)
         orderedApply(observables.data, res.data)
       }
 
       // ! resets errors - maybe it should not
-      observables.meta.errors = res.errors ? [...res.errors] : []
+      if (res.errors || observables.meta.errors.length !== 0) {
+        observables.meta.errors = res.errors ? [...res.errors] : []
+      }
     },
   )
 
@@ -102,8 +105,6 @@ export const createStoreQuery = <Typing extends StoreTyping>({
       }
 
       const shouldRefetch = !deepEqual(nextVariables, query.variables)
-
-      console.log('shouldRefetch', shouldRefetch)
 
       if (shouldRefetch) {
         observables.meta.status = StoreStatus.refetch

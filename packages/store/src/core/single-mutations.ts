@@ -1,8 +1,7 @@
 import { ApolloClient } from 'apollo-client'
 import { FetchResult } from 'apollo-link'
-import { PreFilterFunction } from 'deep-diff'
-import { action, runInAction, toJS } from 'mobx'
-import { updateDiff } from '../diff'
+import { action, runInAction } from 'mobx'
+import { autoMutation } from '../auto'
 import { StoreTyping } from './create'
 import { GraphqlTyping } from './graphql-types'
 import { StoreHelper } from './helper'
@@ -107,6 +106,7 @@ export const createSingleStoreMutations = <
       const res = await client.mutate<Graphql['updateMutation'], Graphql['updateVariables']>({
         variables: { where: { id }, data: updateVariablesData },
         mutation: graphql,
+        errorPolicy: 'all',
       })
 
       if (res.data) {
@@ -139,11 +139,12 @@ export const createSingleStoreMutations = <
       throw Error(helper.actionName('delete mutation missing'))
     }
 
-    // TODO: no optimistic?
+    const id = observables.variables.where.id
 
     const res = await client.mutate<Graphql['deleteMutation'], Graphql['deleteVariables']>({
-      variables: { where: toJS(observables.variables.where) },
+      variables: { where: { id } },
       mutation: graphql,
+      errorPolicy: 'all',
     })
 
     if (res.data) {
@@ -173,18 +174,16 @@ export const createSingleStoreMutations = <
       return
     }
 
-    // optimistic
-    helper.setValue({ ...next, id: 'new' })
-
-    // TODO: test if diff's working with empty source
-    const { updateData } = updateDiff({}, next, {
+    const { updateData, queryData } = autoMutation({}, next, {
       map: observables.config.relations,
-      prefilter: dataPrefilter,
     })
+
+    helper.setValue({ ...queryData, id: 'new' })
 
     const res = await client.mutate({
       variables: { data: updateData },
       mutation: graphql,
+      errorPolicy: 'all',
     })
 
     if (res.data) {
@@ -214,17 +213,10 @@ export const createSingleStoreMutations = <
 
       const prev = observables.value.get()
 
-      // get nextValue keys from prevValue
-      const prevPartial = Object.keys(next).reduce(
-        (acc, key) => ({ ...acc, [key]: (prev as any)[key] }),
-        {},
-      )
-
       const id = observables.variables.where.id
 
-      const { updateData } = updateDiff(prevPartial, next, {
+      const { updateData, queryData } = autoMutation(prev, next, {
         map: observables.config.relations,
-        prefilter: dataPrefilter,
       })
 
       if (!updateData) {
@@ -232,11 +224,12 @@ export const createSingleStoreMutations = <
       }
 
       // optimistic
-      helper.setValue({ ...prev, ...next })
+      helper.setValue({ ...prev, ...queryData })
 
       const res = await client.mutate({
         variables: { where: { id }, data: updateData },
         mutation: graphql,
+        errorPolicy: 'all',
       })
 
       if (res.errors) {
@@ -248,12 +241,6 @@ export const createSingleStoreMutations = <
       }
     },
   )
-
-  // omits system fields form diff
-  const omitFields = ['id', '__typename', 'createdAt', 'updatedAt']
-  const dataPrefilter: PreFilterFunction = (path, key) => {
-    return omitFields.includes(key)
-  }
 
   const props = {
     update: updateMutation,
