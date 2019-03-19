@@ -8,7 +8,7 @@ import {
 } from 'mobx'
 import { useDisposable } from 'mobx-react-lite'
 import { useCallback, useMemo } from 'react'
-import { StoreValue } from './types'
+import { Store } from '../core'
 
 /**
  * shortcut action creator with useCallback
@@ -25,7 +25,7 @@ export const useAction = <A extends any[], T>(
 /**
  * Same as useAction, but with automatic store in deps, name prefix and half-curried for nicer formatting^^
  */
-export const useStoreAction = (store: StoreValue, name: string) => <A extends any[], T>(
+export const useStoreAction = <S extends Store>(store: S, name: string) => <A extends any[], T>(
   cb: (...args: A) => T,
   deps: any[] = [],
 ) =>
@@ -48,7 +48,7 @@ export const useReaction = <T>(
 /**
  * same as useReaction but using useStoreAction syntax??
  */
-export const useStoreReaction = (store: StoreValue, name: string) => <T>(
+export const useStoreReaction = (store: Store, name: string) => <T>(
   expression: (r: IReactionPublic) => T,
   effect: (arg: T, r: IReactionPublic) => void,
   deps: any[] = [],

@@ -1,6 +1,6 @@
 import { css } from '@emotion/core'
-import { StoreSortDirection } from '@vats/store'
 import { useTheme } from '@vats/styling'
+import { SortDirection } from '@vats/utils'
 import { DefaultButton, Icon } from 'office-ui-fabric-react'
 import React from 'react'
 
@@ -14,7 +14,7 @@ export type OnSortChanged = ({ sortBy, sortDirection }: SortCalloutSortProps) =>
 
 export interface SortCalloutSortProps {
   sortBy: string
-  sortDirection: StoreSortDirection
+  sortDirection: SortDirection
 }
 
 export interface SortCalloutProps extends SortCalloutSortProps {
@@ -45,7 +45,7 @@ export const SortCallout: React.FC<SortCalloutProps> = ({
     a: JSX.Element | string,
     z: JSX.Element | string,
     item: SortCalloutItem,
-    direction: StoreSortDirection,
+    direction: SortDirection,
   ) => (
     <DefaultButton
       css={buttonstyles}

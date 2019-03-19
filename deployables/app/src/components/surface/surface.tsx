@@ -6,7 +6,7 @@ interface SurfaceNavigation {
   onExpand: () => void
   onEdit: () => void
   onSubmit: () => void
-  editable?: boolean
+  editable: boolean
 }
 
 const SurfaceNavigation: React.FC<SurfaceNavigation> = ({
@@ -14,12 +14,16 @@ const SurfaceNavigation: React.FC<SurfaceNavigation> = ({
   onExpand,
   onEdit,
   onSubmit,
+  editable,
 }) => (
   <div>
     <IconButton onClick={onDismiss} iconProps={{ iconName: 'chromeclose' }} />
     <IconButton onClick={onExpand} iconProps={{ iconName: 'fullscreen' }} />
-    <IconButton onClick={onEdit} iconProps={{ iconName: 'edit' }} />
-    <IconButton onClick={onSubmit} iconProps={{ iconName: 'save' }} />
+    {editable ? (
+      <IconButton onClick={onSubmit} iconProps={{ iconName: 'save' }} />
+    ) : (
+      <IconButton onClick={onEdit} iconProps={{ iconName: 'edit' }} />
+    )}
   </div>
 )
 
@@ -36,7 +40,7 @@ export interface SurfaceProps {
 export const Surface: React.FC<SurfaceProps> = ({
   children,
   type = SurfaceType.Panel,
-  navitationProps: { onDismiss: onDismissed, onEdit, onExpand, onSubmit },
+  navitationProps: { onDismiss: onDismissed, ...rest },
 }) => {
   const [open, setOpen] = useState(true)
 
@@ -52,14 +56,7 @@ export const Surface: React.FC<SurfaceProps> = ({
     </Modal>
   )
 
-  const renderNavigation = () => (
-    <SurfaceNavigation
-      onDismiss={handleDissmiss}
-      onEdit={onEdit}
-      onSubmit={onSubmit}
-      onExpand={onExpand}
-    />
-  )
+  const renderNavigation = () => <SurfaceNavigation onDismiss={handleDissmiss} {...rest} />
 
   const renderPanel = () => (
     <Panel

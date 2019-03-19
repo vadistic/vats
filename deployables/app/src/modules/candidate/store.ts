@@ -1,9 +1,15 @@
-import { createStore, StoreConfig, StoreProps } from '@vats/store'
+import { createSingleStore, GraphqlTypingCreator, StoreConfig, StoreProps } from '@vats/store'
 import React from 'react'
 import {
+  CandidateCreateMutation,
+  CandidateCreateMutationVariables,
+  CandidateDeleteMutation,
+  CandidateDeleteMutationVariables,
   CandidateQuery,
   CandidateQuery_candidate,
   CandidateQueryVariables,
+  CandidateUpdateMutation,
+  CandidateUpdateMutationVariables,
 } from '../../generated/queries'
 import {
   CANDIDATE_CREATE_MUTATION,
@@ -15,13 +21,21 @@ import { CandidateProfileTab } from './profile'
 
 export type SingleCandidateValue = CandidateQuery_candidate
 
-export type SingleCandidateStore = ReturnType<typeof createSingleCandidateStore>
+export type SingleCandidateGraphqlTyping = GraphqlTypingCreator<{
+  createMutation: CandidateCreateMutation
+  createVariables: CandidateCreateMutationVariables
+  updateMutation: CandidateUpdateMutation
+  updateVariables: CandidateUpdateMutationVariables
+  deleteMutation: CandidateDeleteMutation
+  deleteVariables: CandidateDeleteMutationVariables
+}>
 
-export const SingleCandidateContext = React.createContext<SingleCandidateStore>({} as any)
+export type SingleCandidateStore = ReturnType<typeof createSingleCandidateStore>
 
 export interface SingleCandidateStoreProps extends StoreProps {
   id: string
 }
+export const SingleCandidateContext = React.createContext<SingleCandidateStore>({} as any)
 
 export const createSingleCandidateStore = (props: SingleCandidateStoreProps) => {
   const state = { editable: false, surfaceTab: CandidateProfileTab.overview }
@@ -32,8 +46,6 @@ export const createSingleCandidateStore = (props: SingleCandidateStoreProps) => 
 
   const config: StoreConfig = {
     name: 'SingleCandidateStore',
-    autoFetch: true,
-    debug: true,
     graphql: {
       query: CANDIDATE_QUERY,
       createMutation: CANDIDATE_CREATE_MUTATION,
@@ -52,14 +64,12 @@ export const createSingleCandidateStore = (props: SingleCandidateStoreProps) => 
     },
   }
 
-  const storeProps = createStore({
+  const store = createSingleStore({
     config,
     state,
     variables,
     data,
   })(props)
 
-  return {
-    ...storeProps,
-  }
+  return store
 }

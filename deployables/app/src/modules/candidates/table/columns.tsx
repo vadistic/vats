@@ -1,8 +1,8 @@
 import { css } from '@emotion/core'
 import { useTranslation } from '@vats/i18n'
-import { StoreSortDirection, useComputed, useStoreAction } from '@vats/store'
+import { useComputed, useStoreAction } from '@vats/store'
 import { Theme } from '@vats/styling'
-import { ElementType, pathProxy } from '@vats/utils'
+import { pathProxy, SortDirection } from '@vats/utils'
 import {
   IColumn,
   IPersonaCoinProps,
@@ -12,14 +12,14 @@ import {
 } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
 import { useDerived } from '../../../utils'
-import { CandidatesContext, CandidatesElementProps, CandidatesValue } from '../store'
+import { CandidatesContext, CandidatesElement, CandidatesElementProps } from '../store'
 
 export type ColumnsConfig = Array<{
   key: string
   minWidth: number
 }>
 
-const p = pathProxy<ElementType<CandidatesValue>>()
+const p = pathProxy<CandidatesElement>()
 
 // basically a serialiser
 export const getColumnsConfig = (columns: IColumn[]): ColumnsConfig =>
@@ -66,6 +66,11 @@ export const useCandidatesTableColumns = () => {
         onColumnClick: columnSortAction,
       },
       {
+        name: tp.candidate.headline(),
+        key: p.headline.PATH,
+        onColumnClick: columnSortAction,
+      },
+      {
         name: tp.candidate.tag({ count: 10 }),
         key: p.tags.PATH,
         isMultiline: true,
@@ -108,7 +113,7 @@ export const useCandidatesTableColumns = () => {
           ...columns.find(col => col.key === el.key),
           ...el,
           isSorted: store.state.sortBy === el.key,
-          isSortedDescending: store.state.sortDirection === StoreSortDirection.descending,
+          isSortedDescending: store.state.sortDirection === SortDirection.DESCENDING,
         } as IColumn),
     )
   })

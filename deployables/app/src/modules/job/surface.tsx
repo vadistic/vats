@@ -50,44 +50,50 @@ export const JobSurface: React.FC<JobSurfaceProps> = ({ navigate, id }) => {
     }
   }
 
-  return (
-    <Surface
-      navitationProps={{
-        onDismiss: handleDismiss,
-        onEdit: handleEdit,
-        onSubmit: handleSubmit,
-        onExpand: handleExpand,
-      }}
-    >
-      {useObserver(() => {
-        // ready
-        if (store.meta.status === StoreStatus.ready && store.data.job) {
-          return (
-            <Editable
-              onSubmit={processSubmit}
-              values={store.data.job}
-              editable={store.state.editable}
-              formikRef={formikRef}
-            >
-              <JobProfile />
-            </Editable>
-          )
-        }
+  const innerFragment = useObserver(() => {
+    // ready
+    if (store.meta.status === StoreStatus.ready && store.data.job) {
+      return (
+        <Editable
+          onSubmit={processSubmit}
+          values={store.data.job}
+          editable={store.state.editable}
+          formikRef={formikRef}
+        >
+          <JobProfile />
+        </Editable>
+      )
+    }
 
-        // not found
-        if (store.meta.status === StoreStatus.ready && !store.data.job) {
-          return <p>Job not found</p>
-        }
+    // not found
+    if (store.meta.status === StoreStatus.ready && !store.data.job) {
+      return <p>Job not found</p>
+    }
 
-        // loading
-        if (
-          store.meta.status === StoreStatus.init ||
-          store.meta.status === StoreStatus.loading ||
-          store.meta.status === StoreStatus.refetch
-        ) {
-          return <LoadingSpinner label={'Loading job...'} />
-        }
-      }, 'JobSurface')}
-    </Surface>
+    // loading
+    if (
+      store.meta.status === StoreStatus.init ||
+      store.meta.status === StoreStatus.loading ||
+      store.meta.status === StoreStatus.refetch
+    ) {
+      return <LoadingSpinner label={'Loading job...'} />
+    }
+  }, 'JobSurfaceInner')
+
+  return useObserver(
+    () => (
+      <Surface
+        navitationProps={{
+          editable: store.state.editable,
+          onDismiss: handleDismiss,
+          onEdit: handleEdit,
+          onSubmit: handleSubmit,
+          onExpand: handleExpand,
+        }}
+      >
+        {innerFragment}
+      </Surface>
+    ),
+    'JobSurface',
   )
 }

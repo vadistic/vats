@@ -1,4 +1,4 @@
-import { createStore, StoreConfig, StoreProps } from '@vats/store'
+import { createMultiStore, StoreConfig, StoreProps } from '@vats/store'
 import {
   APPLICATION_CREATE_MUTATION,
   APPLICATION_DELETE_MUTATION,
@@ -31,7 +31,7 @@ export const createAplicationsStore = (props: ApplicationsStoreProps) => {
     },
   }
 
-  const storeProps = createStore({
+  const storeProps = createMultiStore({
     config,
     state,
     variables,

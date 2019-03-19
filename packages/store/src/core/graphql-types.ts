@@ -1,7 +1,5 @@
-import { DeepStringIndex } from '@vats/utils'
-import ApolloClient from 'apollo-client'
+import { StringMap } from '@vats/utils'
 import { DocumentNode } from 'graphql'
-import { createStore } from './store'
 
 export interface WhereVariables {
   where?: any
@@ -16,26 +14,12 @@ export type TUpdateVariables = WhereVariables & DataVariables
 export type TCreateVariables = DataVariables
 export type TDeleteVariables = WhereVariables
 
-/**
- * - remove null from data:{key: (null|Type)[] } since it never appears
- * - make elements/object readonly - corresponding to shallownes of observable
- */
-type NonNullableImmutableProps<T> = {
-  [K in keyof T]: T[K] extends Array<infer E | null> ? Array<Readonly<E>> : Readonly<T[K]>
-}
-
-/**
- * add to NonNullableImmutableProps string index signatures
- * since graphql response is always string indexed
- */
-export type SafeData<Data> = DeepStringIndex<NonNullableImmutableProps<Data>>
-
 export interface GraphqlTyping<
-  CreateMutation = {},
+  CreateMutation = StringMap<any>,
   CreateVariables extends TCreateVariables = TCreateVariables,
-  UpdateMutation = {},
+  UpdateMutation = StringMap<any>,
   UpdateVariables extends TUpdateVariables = TUpdateVariables,
-  DeleteMutation = {},
+  DeleteMutation = StringMap<any>,
   DeleteVariables extends TDeleteVariables = TDeleteVariables
 > {
   createMutation: CreateMutation
@@ -49,6 +33,7 @@ export interface GraphqlTyping<
   deleteManyMutation: DeleteMutation
   deleteManyVariables: DeleteVariables
 }
+
 /**
  * utility to create strict graphql typing using only partial
  */
@@ -67,26 +52,3 @@ export interface StoreGraphqlConfig {
   updateManyMutation?: DocumentNode
   deleteManyMutation?: DocumentNode
 }
-
-export type StoreGraphqlRoots = { [K in keyof StoreGraphqlConfig]: string }
-
-export interface StoreConfig {
-  name: string
-  autoFetch?: boolean
-  graphql: StoreGraphqlConfig
-  relations?: any
-  debug?: boolean
-}
-
-export interface StoreProps {
-  client: ApolloClient<any>
-}
-
-export interface StoreObservables<State, Data, Variables> {
-  state: State
-  variables: Variables
-  data: Data
-  config: StoreConfig
-}
-
-export type StoreValue = ReturnType<ReturnType<typeof createStore>>

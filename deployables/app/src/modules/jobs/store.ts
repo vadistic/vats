@@ -1,4 +1,4 @@
-import { createStore, GraphqlTypingCreator, StoreConfig, StoreProps } from '@vats/store'
+import { createMultiStore, GraphqlTypingCreator, StoreConfig, StoreProps } from '@vats/store'
 import { SortDirection } from '@vats/utils'
 import React from 'react'
 import {
@@ -73,12 +73,12 @@ export const createJobsStore = (props: JobsStoreProps) => {
     relations: {},
   }
 
-  const store = createStore({
+  const store = createMultiStore({
     config,
     state,
     variables,
     data,
-  })<JobsGraphqlTyping>(props)
+  })<JobsValue, JobsGraphqlTyping>(props)
 
   return store
 }

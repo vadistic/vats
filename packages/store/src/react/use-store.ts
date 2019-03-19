@@ -1,22 +1,25 @@
 import { Omit, shallowEqual } from '@vats/utils'
 import { runInAction } from 'mobx'
 import { useContext, useEffect, useRef } from 'react'
+import { Store, StoreProps } from '../core'
 import { ApolloContext } from './apollo-context'
-import { StoreProps, StoreValue } from './types'
 /**
  * Create store instance, reinitialised on deps change
  * DO NOT USE INSIDE OBSERVER (or action will be hidden in UI observer reaction)
  */
-export const useStore = <Store extends StoreValue, Args extends StoreProps>(
-  factory: (args: Args) => Store,
+export const useStore = <S extends Store, Args extends StoreProps>(
+  factory: (args: Args) => S,
   args: Omit<Args, 'client'>,
   deps: any[] = [],
-): Store => {
+) => {
   const prevDepsRef = useRef<any[]>([])
-  const storeRef = useRef<Store | null>(null)
+  const storeRef = useRef<S | null>(null)
   const client = useContext(ApolloContext)
 
-  if (!storeRef.current || !shallowEqual(prevDepsRef.current, deps)) {
+  if (
+    !storeRef.current ||
+    (storeRef.current.config.autoRestart && !shallowEqual(prevDepsRef.current, deps))
+  ) {
     // dispose on reinit
     if (storeRef.current) {
       storeRef.current.dispose()
@@ -45,5 +48,5 @@ export const useStore = <Store extends StoreValue, Args extends StoreProps>(
     [],
   )
 
-  return storeRef.current as Store
+  return storeRef.current as S
 }

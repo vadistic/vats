@@ -2,9 +2,8 @@ import { RouteComponentProps } from '@reach/router'
 import { Editable, FormikContextValue } from '@vats/forms'
 import { StoreStatus, useStore, useStoreAction } from '@vats/store'
 import { useObserver } from 'mobx-react-lite'
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { LoadingSpinner, Surface } from '../../components'
-import { useDerived } from '../../utils'
 import { CandidateProfile, CandidateProfileTab } from './profile'
 import { createSingleCandidateStore, SingleCandidateContext, SingleCandidateValue } from './store'
 
@@ -31,11 +30,20 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({
     },
   )
 
-  useDerived(() => {
+  useMemo(() => {
     if (location && location.state && location.state.tab) {
       locationTabAction(location.state.tab)
     }
   }, [location && location.state && location.state.tab])
+
+  useMemo(() => {
+    console.log('derived render')
+    if (store.meta.status === StoreStatus.ready) {
+      // dialog for dirty state here
+      store.state.editable = false
+      store.refetch({ where: { id } })
+    }
+  }, [id])
 
   const handleDismiss = () => {
     if (navigate) {
@@ -66,51 +74,57 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({
     }
   }
 
-  return (
-    <SingleCandidateContext.Provider value={store}>
-      <Surface
-        navitationProps={{
-          onDismiss: handleDismiss,
-          onEdit: handleEdit,
-          onSubmit: handleSubmit,
-          onExpand: handleExpand,
-        }}
-      >
-        {useObserver(() => {
-          // render ready
-          if (store.meta.status === StoreStatus.ready && store.data.candidate) {
-            return (
-              <Editable
-                onSubmit={processSubmit}
-                values={store.data.candidate}
-                editable={store.state.editable}
-                formikRef={formikRef}
-              >
-                <CandidateProfile />
-              </Editable>
-            )
-          }
+  const innerFragment = useObserver(() => {
+    // render ready
+    if (store.meta.status === StoreStatus.ready && store.data.candidate) {
+      return (
+        <Editable
+          onSubmit={processSubmit}
+          values={store.data.candidate}
+          editable={store.state.editable}
+          formikRef={formikRef}
+        >
+          <CandidateProfile />
+        </Editable>
+      )
+    }
 
-          // render loading
-          if (
-            store.meta.status === StoreStatus.init ||
-            store.meta.status === StoreStatus.loading ||
-            store.meta.status === StoreStatus.refetch
-          ) {
-            return <LoadingSpinner label={'Loading candidate...'} />
-          }
+    // render loading
+    if (
+      store.meta.status === StoreStatus.init ||
+      store.meta.status === StoreStatus.loading ||
+      store.meta.status === StoreStatus.refetch
+    ) {
+      return <LoadingSpinner label={'Loading candidate...'} />
+    }
 
-          // render not found
-          if (store.meta.status === StoreStatus.ready && !store.data.candidate) {
-            return <p>Candidate not found :(</p>
-          }
+    // render not found
+    if (store.meta.status === StoreStatus.ready && !store.data.candidate) {
+      return <p>Candidate not found :(</p>
+    }
 
-          // render error
-          if (store.meta.status === StoreStatus.error) {
-            return <p>Error occured</p>
-          }
-        }, 'CandidateSurface')}
-      </Surface>
-    </SingleCandidateContext.Provider>
+    // render error
+    if (store.meta.status === StoreStatus.error) {
+      return <p>Error occured</p>
+    }
+  }, 'CandidateSurfaceInner')
+
+  return useObserver(
+    () => (
+      <SingleCandidateContext.Provider value={store}>
+        <Surface
+          navitationProps={{
+            editable: store.state.editable,
+            onDismiss: handleDismiss,
+            onEdit: handleEdit,
+            onSubmit: handleSubmit,
+            onExpand: handleExpand,
+          }}
+        >
+          {innerFragment}
+        </Surface>
+      </SingleCandidateContext.Provider>
+    ),
+    'CandidateSurface',
   )
 }

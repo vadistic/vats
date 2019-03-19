@@ -3,7 +3,7 @@ import { deepEqual, StringMap } from '@vats/utils'
 /**
  * copare equality or id prop value
  */
-export const compareEqOrId = (elA: any, elB: any) => {
+const compareEqOrId = (elA: any, elB: any) => {
   if (elA === null || elB === null) {
     return elA === elB
   }
@@ -66,7 +66,7 @@ export const orderedCopyObject = (target: any, source: any) => {
  *  - arrays will have objects with sorted sorted props that are arrays (update only when deepEqual changes)
  */
 
-export const applyOrdered = <T extends StringMap<any>>(target: T, source: T) => {
+export const orderedApply = <T extends StringMap<any>>(target: T, source: T) => {
   // shouldSkip apllying ordered object
   const shouldSkip = (a: any, b: any) =>
     // for various nulls

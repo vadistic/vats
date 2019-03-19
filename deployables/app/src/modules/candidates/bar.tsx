@@ -1,7 +1,7 @@
 import { NavigateFn } from '@reach/router'
 import { Translation, TranslationProxy, useTranslation } from '@vats/i18n'
-import { StoreSortDirection, useStoreAction } from '@vats/store'
-import { ElementTypeOr, pathProxy } from '@vats/utils'
+import { useStoreAction } from '@vats/store'
+import { ElementTypeOr, pathProxy, SortDirection } from '@vats/utils'
 import { observer } from 'mobx-react-lite'
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
@@ -35,7 +35,7 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
   })
 
   const sortDirectionAction = useStoreAction(store, `sortDirection dispatch`)(
-    (sortDirection?: StoreSortDirection) => {
+    (sortDirection?: SortDirection) => {
       store.state.sortDirection = sortDirection || store.state.sortDirection * -1
     },
   )
@@ -49,13 +49,15 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
 
   const deleteAction = useStoreAction(store, 'delete candidate')(async () => {
     const indicies = store.state.selection.indicies
-    if (indicies.length !== 1) {
-      return
-    }
 
     store.state.selection.instance.setAllSelected(false)
 
-    store.delete({ index: indicies[0] })
+    store.deleteMany({ indicies })
+  })
+  const updateAction = useStoreAction(store, 'test many update candidate')(async () => {
+    const indicies = store.state.selection.indicies
+
+    store.updateMany({ indicies }, { headline: 'ABC' }, { headline: 'ABC' })
   })
 
   const getSubmenuItem = (sortBy: string) => ({
@@ -83,9 +85,20 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
       iconProps: {
         iconName: 'delete',
       },
-      disabled: store.state.selection.indicies.length !== 1,
+      disabled: store.state.selection.indicies.length < 1,
       onClick: () => {
         deleteAction()
+      },
+    },
+    {
+      text: 'TEST',
+      key: 'test',
+      iconProps: {
+        iconName: 'warning',
+      },
+      disabled: store.state.selection.indicies.length < 1,
+      onClick: () => {
+        updateAction()
       },
     },
     {
@@ -95,8 +108,7 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
       key: 'sort',
       split: true,
       iconProps: {
-        iconName:
-          store.state.sortDirection === StoreSortDirection.ascending ? 'sortup' : 'sortdown',
+        iconName: store.state.sortDirection === SortDirection.ASCENDING ? 'sortup' : 'sortdown',
       },
       onClick: () => {
         sortDirectionAction()

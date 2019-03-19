@@ -1,10 +1,5 @@
-import {
-  createStore,
-  GraphqlTypingCreator,
-  StoreConfig,
-  StoreProps,
-  StoreSortDirection,
-} from '@vats/store'
+import { createMultiStore, GraphqlTypingCreator, StoreConfig, StoreProps } from '@vats/store'
+import { SortDirection } from '@vats/utils'
 import { action } from 'mobx'
 import { Selection, SelectionMode } from 'office-ui-fabric-react'
 import React from 'react'
@@ -45,9 +40,6 @@ export interface CandidatesElementProps {
   candidate: CandidatesElement
 }
 
-export type CandidatesStore = ReturnType<typeof createCandidatesStore>
-export interface CandidatesStoreProps extends StoreProps {}
-
 export type CandidatesGraphqlTyping = GraphqlTypingCreator<{
   createMutation: CandidateCreateMutation
   createVariables: CandidateCreateMutationVariables
@@ -61,12 +53,15 @@ export type CandidatesGraphqlTyping = GraphqlTypingCreator<{
   deleteManyVariables: CandidatesDeleteManyMutationVariables
 }>
 
+export type CandidatesStore = ReturnType<typeof createCandidatesStore>
+export interface CandidatesStoreProps extends StoreProps {}
+
 export const CandidatesContext = React.createContext<CandidatesStore>({} as any)
 
 export const createCandidatesStore = (props: CandidatesStoreProps) => {
   const state = {
     sortBy: 'updatedAt',
-    sortDirection: StoreSortDirection.descending,
+    sortDirection: SortDirection.DESCENDING,
     table: {
       columns: [] as ColumnsConfig,
     },
@@ -98,12 +93,12 @@ export const createCandidatesStore = (props: CandidatesStoreProps) => {
     },
   }
 
-  const store = createStore({
+  const store = createMultiStore({
     config,
     state,
     variables,
     data,
-  })<CandidatesGraphqlTyping>(props)
+  })<CandidatesValue, CandidatesGraphqlTyping>(props)
 
   const handleSelection = action(`selection change`, () => {
     store.state.selection.indicies = store.state.selection.instance.getSelectedIndices()

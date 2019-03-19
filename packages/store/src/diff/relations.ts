@@ -140,49 +140,55 @@ export const applyRelationChange = (
 
   if (path && options.map) {
     const actionsMap = tryGetIn(options.map, ...path)
-    if (actionsMap) {
-      // OneToMany - handle array elements add/delete
-      if (change.kind === 'A') {
-        // it's create
-        if (change.item.kind === 'N' && actionsMap.onCreate) {
-          handleOneToMany(actionsMap.onCreate, path, change.item.rhs)
-        }
 
-        // it's delete
-        if (change.item.kind === 'D' && actionsMap.onDelete) {
-          handleOneToMany(actionsMap.onDelete, path, change.item.lhs)
-        }
-
-        // it's replace or sort
-        if (change.item.kind === 'E' && actionsMap.onCreate && actionsMap.onDelete) {
-          handleOneToMany(actionsMap.onDelete, path, change.item.lhs)
-          handleOneToMany(actionsMap.onCreate, path, change.item.rhs)
-        }
-
-        applyChange(queryData, undefined, { ...change.item, path: [...path, change.index] })
-      } else {
-        if (change.kind === 'E' && isNonNested(path)) {
-          // it's create
-          if (change.lhs === null && change.rhs !== null) {
-            handleOneToOne(actionsMap.onCreate, path, change.rhs)
-          }
-
-          // it's delete
-          if (change.lhs !== null && change.rhs === null) {
-            handleOneToOne(actionsMap.onDelete, path, change.lhs)
-          }
-
-          // it's replace
-          if (change.lhs !== null && change.rhs !== null) {
-            handleOneToOne(actionsMap.onDelete, path, change.lhs)
-            handleOneToOne(actionsMap.onCreate, path, change.rhs)
-          }
-        } else {
-          console.log('TODO:', change)
-        }
-
-        applyChange(queryData, undefined, change)
+    if (!actionsMap) {
+      return {
+        queryData,
+        updateData,
       }
+    }
+
+    // OneToMany - handle array elements add/delete
+    if (change.kind === 'A') {
+      // it's create
+      if (change.item.kind === 'N' && actionsMap.onCreate) {
+        handleOneToMany(actionsMap.onCreate, path, change.item.rhs)
+      }
+
+      // it's delete
+      if (change.item.kind === 'D' && actionsMap.onDelete) {
+        handleOneToMany(actionsMap.onDelete, path, change.item.lhs)
+      }
+
+      // it's replace or sort
+      if (change.item.kind === 'E' && actionsMap.onCreate && actionsMap.onDelete) {
+        handleOneToMany(actionsMap.onDelete, path, change.item.lhs)
+        handleOneToMany(actionsMap.onCreate, path, change.item.rhs)
+      }
+
+      applyChange(queryData, undefined, { ...change.item, path: [...path, change.index] })
+    }
+
+    if (change.kind === 'E' && isNonNested(path)) {
+      // it's create
+      if (change.lhs === null && change.rhs !== null) {
+        handleOneToOne(actionsMap.onCreate, path, change.rhs)
+      }
+
+      // it's delete
+      if (change.lhs !== null && change.rhs === null) {
+        handleOneToOne(actionsMap.onDelete, path, change.lhs)
+      }
+
+      // it's replace
+      if (change.lhs !== null && change.rhs !== null) {
+        handleOneToOne(actionsMap.onDelete, path, change.lhs)
+        handleOneToOne(actionsMap.onCreate, path, change.rhs)
+      }
+    }
+
+    if (change.kind === 'D' || change.kind === 'N') {
+      applyChange(queryData, undefined, change)
     }
   }
 

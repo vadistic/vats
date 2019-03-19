@@ -1,14 +1,14 @@
 import { getMainDefinition } from 'apollo-utilities'
-import { StoreGraphqlConfig, StoreGraphqlRoots } from './types'
+import { GraphqlRoots, StoreGraphqlConfig } from '../core'
 
 export const getGraphqlRoots = (graphqlConfig: StoreGraphqlConfig) => {
-  const roots: StoreGraphqlRoots = {} as any
+  const roots: GraphqlRoots = {} as any
 
   Object.entries(graphqlConfig).forEach(([key, value]) => {
     const mainField = getMainDefinition(value).selectionSet.selections[0]
 
     if (mainField.kind === 'Field') {
-      roots[key as keyof StoreGraphqlRoots] = mainField.name.value
+      roots[key as keyof GraphqlRoots] = mainField.name.value
     }
   })
 

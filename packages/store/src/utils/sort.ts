@@ -1,9 +1,4 @@
-import { reverseLoPath, tryGetIn } from '@vats/utils'
-
-export enum StoreSortDirection {
-  ascending = 1,
-  descending = -1,
-}
+import { reverseLoPath, SortDirection, tryGetIn } from '@vats/utils'
 
 const dateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})[+-\.](.{2,6})$/
 
@@ -32,7 +27,7 @@ const compareFn = <T extends string | number>(a: T, b: T) => {
   throw Error(`compareFn invalid input: ${a}, ${b}`)
 }
 
-export const sortValue = (value: any[], sortBy: string, sortDirection: StoreSortDirection) => {
+export const sortValue = (value: any[], sortBy: string, sortDirection: SortDirection) => {
   const sortByPath = reverseLoPath(sortBy)
 
   // skip on non-nested sortBy strings that does not match value shape
@@ -67,7 +62,36 @@ export const sortValue = (value: any[], sortBy: string, sortDirection: StoreSort
   const sorted = truthy.sort((elA, elB) => sortDirection * compareFn(getter(elA), getter(elB)))
 
   // nulls first on descending
-  return sortDirection === StoreSortDirection.ascending
+  return sortDirection === SortDirection.ASCENDING
     ? [...sorted, ...falsely]
     : [...falsely, ...sorted]
+}
+
+/**
+ * apply sorting to targetProp in target if there are any changes in order
+ */
+export const sortApply = (
+  target: any,
+  targetProp: string,
+  sortBy: string,
+  sortDirection: SortDirection,
+) => {
+  const value = target[targetProp]
+
+  if (!value) {
+    return
+  }
+
+  const sortedValue = sortValue(value, sortBy, sortDirection)
+
+  if (!sortedValue) {
+    return
+  }
+
+  for (let i = 0; i < sortedValue.length; i++) {
+    if (sortedValue[i] !== value[i]) {
+      target[targetProp] = sortedValue
+      break
+    }
+  }
 }

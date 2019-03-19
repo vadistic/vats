@@ -2,14 +2,14 @@ import { StringMap } from '@vats/utils'
 import { runInAction } from 'mobx'
 import { observer, useObservable } from 'mobx-react-lite'
 import React from 'react'
-import { StoreValue } from './types'
+import { Store } from '../core'
 
-type StoresMap = StringMap<StoreValue>
+type StoresMap = StringMap<Store>
 
 export interface RootStore {
   stores: StoresMap
-  register: <S extends StoreValue>(store: S) => void
-  unregister: <S extends StoreValue>(store: S) => void
+  register: <S extends Store>(store: S) => void
+  unregister: <S extends Store>(store: S) => void
 }
 
 /*

@@ -138,7 +138,6 @@ export const fillEmptyArrayElements = <T extends object | any[]>(target: T, sour
  * Transforms query data to mutation data value
  * just `{set:[...content]}` for all arrays
  */
-
 export const transformScalarsQueryDataToUpdateData = <T extends any>(target: T) =>
   recursiveTransform(target, [], value => {
     if (Array.isArray(value)) {
@@ -152,17 +151,17 @@ export const transformScalarsQueryDataToUpdateData = <T extends any>(target: T) 
  * Previous apply relations diff fn returns connect/disconnect data
  * for reordered array elements- mostly because it's not easy
  * to check if there would be more changes with the same node
- * while processing each chnage separatly
+ * while processing each change separately
  *
- * Prisma api does not allow reordering nodes deleting and then creating them
- * and throws an error on same id for multiple operations
+ * Prisma api does not allow reordering nodes by deleting and then creating them
+ * and throws on same node id for multiple operations
  *
  * This funtion removes actions that operate on non-unique ids
  * (this probably can be done way less costly in apply/squash
  * but it gets really complicated considering the need
  * to preserve diffs apply order etc.)
  *
- * Also, maybe there would be use case when this daata will prove useful
+ * Also, maybe I'll find a use case when this data will prove useful^^
  */
 
 // actions that require payload data to have unique id

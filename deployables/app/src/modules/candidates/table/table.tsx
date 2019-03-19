@@ -4,8 +4,7 @@ import { ElementType } from '@vats/utils'
 import { toJS } from 'mobx'
 import { useObserver } from 'mobx-react-lite'
 import { DetailsList, DetailsListLayoutMode, IColumnDragDropDetails } from 'office-ui-fabric-react'
-import React, { useContext } from 'react'
-import { useDerived } from '../../../utils'
+import React, { useContext, useMemo } from 'react'
 import { CandidatesBar } from '../bar'
 import { CandidatesContext, CandidatesValue } from '../store'
 import { useCandidatesTableColumns } from './columns'
@@ -32,13 +31,18 @@ export const CandidatesTable: React.FC<TableProps> = ({ children, navigate }) =>
     },
   )
 
-  useDerived(() => {
-    store.state.selection.instance.setItems(store.data.candidates.slice() as any, true)
-  }, [store.data.candidates])
+  useMemo(
+    () =>
+      store.value.observe(change => {
+        store.state.selection.instance.setItems(change.newValue as any[], true)
+      }),
+    [store],
+  )
 
   return useObserver(
     () => (
       <div>
+        {store.meta.errors.length > 0 && JSON.stringify(store.meta.errors, null, 2)}
         <CandidatesBar navigate={navigate} />
         {children}
         <DetailsList

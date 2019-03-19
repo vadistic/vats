@@ -1,6 +1,16 @@
-import { createStore, StoreConfig, StoreProps } from '@vats/store'
+import { createSingleStore, GraphqlTypingCreator, StoreConfig, StoreProps } from '@vats/store'
 import React from 'react'
-import { JobQuery, JobQuery_job, JobQueryVariables } from '../../generated/queries'
+import {
+  JobCreateMutation,
+  JobCreateMutationVariables,
+  JobDeleteMutation,
+  JobDeleteMutationVariables,
+  JobQuery,
+  JobQuery_job,
+  JobQueryVariables,
+  JobUpdateMutation,
+  JobUpdateMutationVariables,
+} from '../../generated/queries'
 import { JOB_CREATE_MUTATION, JOB_DELETE_MUTATION, JOB_QUERY, JOB_UPDATE_MUTATION } from './graphql'
 
 export type SingleJobValue = JobQuery_job
@@ -13,6 +23,15 @@ export interface SingleJobStoreProps extends StoreProps {
   id: string
 }
 
+export type SingleJobGraphqlTyping = GraphqlTypingCreator<{
+  createMutation: JobCreateMutation
+  createVariables: JobCreateMutationVariables
+  updateMutation: JobUpdateMutation
+  updateVariables: JobUpdateMutationVariables
+  deleteMutation: JobDeleteMutation
+  deleteVariables: JobDeleteMutationVariables
+}>
+
 export const createSingleJobStore = (props: SingleJobStoreProps) => {
   const state = { editable: false }
 
@@ -22,25 +41,20 @@ export const createSingleJobStore = (props: SingleJobStoreProps) => {
 
   const config: StoreConfig = {
     name: 'SingleJobStore',
-    autoFetch: true,
-    debug: true,
     graphql: {
       query: JOB_QUERY,
       createMutation: JOB_CREATE_MUTATION,
       updateMutation: JOB_UPDATE_MUTATION,
       deleteMutation: JOB_DELETE_MUTATION,
     },
-    relations: {},
   }
 
-  const storeProps = createStore({
+  const store = createSingleStore({
     config,
     state,
     variables,
     data,
-  })(props)
+  })<SingleJobValue, SingleJobGraphqlTyping>(props)
 
-  return {
-    ...storeProps,
-  }
+  return store
 }

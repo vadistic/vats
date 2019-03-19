@@ -1,4 +1,5 @@
-import { sortValue, StoreSortDirection } from '../sort'
+import { SortDirection } from '@vats/utils'
+import { sortValue } from '../sort'
 
 describe('sortValue', () => {
   const fixture = [
@@ -35,11 +36,11 @@ describe('sortValue', () => {
   ]
 
   it('returns undefined of invalid sortBy', () => {
-    expect(sortValue(fixture, 'random', StoreSortDirection.ascending)).toBeUndefined()
+    expect(sortValue(fixture, 'random', SortDirection.ASCENDING)).toBeUndefined()
   })
 
   it('sorts by non-nested, nullable string (normalize to lowercase, then uppercase second?!)', () => {
-    const sortedAsc = sortValue(fixture, 'string', StoreSortDirection.ascending)
+    const sortedAsc = sortValue(fixture, 'string', SortDirection.ASCENDING)
 
     expect(sortedAsc).toEqual([
       {
@@ -76,7 +77,7 @@ describe('sortValue', () => {
   })
 
   it('puts nulls first when sorting by value in the descending order', () => {
-    const sortedDesc = sortValue(fixture, 'string', StoreSortDirection.descending)
+    const sortedDesc = sortValue(fixture, 'string', SortDirection.DESCENDING)
 
     expect(sortedDesc).toEqual([
       {
@@ -148,11 +149,7 @@ describe('sortValue', () => {
       },
     ]
 
-    const sortedAsc = sortValue(
-      nestedfixture,
-      'nested.moreNested.number',
-      StoreSortDirection.ascending,
-    )
+    const sortedAsc = sortValue(nestedfixture, 'nested.moreNested.number', SortDirection.ASCENDING)
 
     expect(sortedAsc).toEqual([
       {
