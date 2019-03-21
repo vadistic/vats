@@ -54,11 +54,6 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
 
     store.deleteMany({ indicies })
   })
-  const updateAction = useStoreAction(store, 'test many update candidate')(async () => {
-    const indicies = store.state.selection.indicies
-
-    store.updateMany({ indicies }, { headline: 'ABC' }, { headline: 'ABC' })
-  })
 
   const getSubmenuItem = (sortBy: string) => ({
     text: sortByMap[sortBy],
@@ -88,17 +83,6 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
       disabled: store.state.selection.indicies.length < 1,
       onClick: () => {
         deleteAction()
-      },
-    },
-    {
-      text: 'TEST',
-      key: 'test',
-      iconProps: {
-        iconName: 'warning',
-      },
-      disabled: store.state.selection.indicies.length < 1,
-      onClick: () => {
-        updateAction()
       },
     },
     {

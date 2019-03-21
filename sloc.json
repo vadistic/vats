@@ -1,16 +1,16 @@
 {
   "name": "Source lines of code report",
-  "date": "2019-03-19T23:43:49.243Z",
+  "date": "2019-03-21T23:29:16.184Z",
   "total": {
-    "total": 13653,
-    "source": 10909,
-    "comment": 786,
-    "single": 367,
-    "block": 419,
+    "total": 14289,
+    "source": 11385,
+    "comment": 868,
+    "single": 380,
+    "block": 488,
     "mixed": 16,
-    "empty": 1974,
-    "todo": 25,
-    "blockEmpty": 0,
+    "empty": 2064,
+    "todo": 30,
+    "blockEmpty": 12,
     "generated": 125798
   },
   "extnames": {
@@ -26,26 +26,26 @@
       "blockEmpty": 0
     },
     "ts": {
-      "total": 7722,
-      "source": 5995,
-      "comment": 623,
-      "single": 288,
-      "block": 335,
+      "total": 7885,
+      "source": 6063,
+      "comment": 701,
+      "single": 297,
+      "block": 404,
       "mixed": 11,
-      "empty": 1115,
+      "empty": 1144,
       "todo": 12,
-      "blockEmpty": 0,
+      "blockEmpty": 12,
       "generated": 92400
     },
     "tsx": {
-      "total": 5450,
-      "source": 4524,
-      "comment": 156,
-      "single": 72,
+      "total": 5923,
+      "source": 4932,
+      "comment": 160,
+      "single": 76,
       "block": 84,
       "mixed": 5,
-      "empty": 775,
-      "todo": 13,
+      "empty": 836,
+      "todo": 18,
       "blockEmpty": 0
     },
     "graphql": {
@@ -191,13 +191,13 @@
     },
     "packages/store": {
       "total": {
-        "total": 3446,
-        "source": 2634,
-        "comment": 288,
-        "single": 101,
+        "total": 3491,
+        "source": 2672,
+        "comment": 289,
+        "single": 102,
         "block": 187,
         "mixed": 0,
-        "empty": 524,
+        "empty": 530,
         "todo": 3,
         "blockEmpty": 0
       },
@@ -213,13 +213,13 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 3337,
-        "source": 2551,
-        "comment": 279,
-        "single": 98,
+        "total": 3382,
+        "source": 2589,
+        "comment": 280,
+        "single": 99,
         "block": 181,
         "mixed": 0,
-        "empty": 507,
+        "empty": 513,
         "todo": 2,
         "blockEmpty": 0
       },
@@ -283,15 +283,15 @@
     },
     "packages/utils": {
       "total": {
-        "total": 996,
-        "source": 674,
-        "comment": 139,
-        "single": 24,
-        "block": 115,
+        "total": 1113,
+        "source": 703,
+        "comment": 216,
+        "single": 32,
+        "block": 184,
         "mixed": 1,
-        "empty": 184,
+        "empty": 207,
         "todo": 2,
-        "blockEmpty": 0
+        "blockEmpty": 12
       },
       "js": {
         "total": 3,
@@ -305,15 +305,15 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 993,
-        "source": 671,
-        "comment": 139,
-        "single": 24,
-        "block": 115,
+        "total": 1110,
+        "source": 700,
+        "comment": 216,
+        "single": 32,
+        "block": 184,
         "mixed": 1,
-        "empty": 184,
+        "empty": 207,
         "todo": 2,
-        "blockEmpty": 0
+        "blockEmpty": 12
       }
     },
     "deployables/apollo": {
@@ -364,14 +364,14 @@
     },
     "deployables/app": {
       "total": {
-        "total": 4703,
-        "source": 3980,
-        "comment": 96,
-        "single": 88,
+        "total": 5177,
+        "source": 4389,
+        "comment": 100,
+        "single": 92,
         "block": 8,
         "mixed": 5,
-        "empty": 632,
-        "todo": 10,
+        "empty": 693,
+        "todo": 15,
         "blockEmpty": 0,
         "generated": 40144
       },
@@ -387,8 +387,8 @@
         "blockEmpty": 0
       },
       "ts": {
-        "total": 1164,
-        "source": 966,
+        "total": 1165,
+        "source": 967,
         "comment": 52,
         "single": 48,
         "block": 4,
@@ -399,14 +399,14 @@
         "generated": 40074
       },
       "tsx": {
-        "total": 3521,
-        "source": 2998,
-        "comment": 44,
-        "single": 40,
+        "total": 3994,
+        "source": 3406,
+        "comment": 48,
+        "single": 44,
         "block": 4,
         "mixed": 3,
-        "empty": 482,
-        "todo": 8,
+        "empty": 543,
+        "todo": 13,
         "blockEmpty": 0
       },
       "graphql": {

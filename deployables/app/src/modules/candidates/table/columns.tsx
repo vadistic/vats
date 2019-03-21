@@ -1,6 +1,6 @@
 import { css } from '@emotion/core'
 import { useTranslation } from '@vats/i18n'
-import { useComputed, useStoreAction } from '@vats/store'
+import { useComputed } from '@vats/store'
 import { Theme } from '@vats/styling'
 import { pathProxy, SortDirection } from '@vats/utils'
 import {
@@ -11,7 +11,6 @@ import {
   TagItem,
 } from 'office-ui-fabric-react'
 import React, { useContext, useMemo } from 'react'
-import { useDerived } from '../../../utils'
 import { CandidatesContext, CandidatesElement, CandidatesElementProps } from '../store'
 
 export type ColumnsConfig = Array<{
@@ -28,14 +27,6 @@ export const getColumnsConfig = (columns: IColumn[]): ColumnsConfig =>
 export const useCandidatesTableColumns = () => {
   const { tp } = useTranslation()
   const store = useContext(CandidatesContext)
-
-  const columnSortAction = useStoreAction(store, 'column sort')((ev: any, column: IColumn) => {
-    if (column.key !== store.state.sortBy) {
-      store.state.sortBy = column.key
-    } else {
-      store.state.sortDirection = store.state.sortDirection * -1
-    }
-  })
 
   const columns = useMemo(() => {
     const partial: Array<Partial<IColumn>> = [
@@ -96,9 +87,19 @@ export const useCandidatesTableColumns = () => {
     })) as IColumn[]
   }, [])
 
-  useDerived(() => {
+  const columnSortAction = store.action('column sort', (ev: any, column: IColumn) => {
+    if (column.key !== store.state.sortBy) {
+      store.state.sortBy = column.key
+    } else {
+      store.state.sortDirection = store.state.sortDirection * -1
+    }
+  })
+
+  useMemo(() => {
     if (store.state.table.columns.length === 0) {
-      store.state.table.columns = getColumnsConfig(columns)
+      store.run('inital columns', () => {
+        store.state.table.columns = getColumnsConfig(columns)
+      })
     }
   }, [])
 

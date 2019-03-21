@@ -1,5 +1,4 @@
 import { RouteComponentProps } from '@reach/router'
-import { useStoreAction } from '@vats/store'
 import { ElementType } from '@vats/utils'
 import { toJS } from 'mobx'
 import { useObserver } from 'mobx-react-lite'
@@ -22,7 +21,8 @@ export const CandidatesTable: React.FC<TableProps> = ({ children, navigate }) =>
 
   const columns = useCandidatesTableColumns()
 
-  const columnReorderAction = useStoreAction(store, 'column reorder')(
+  const columnReorderAction = store.action(
+    'column reorder',
     (dragDropDetails: IColumnDragDropDetails) => {
       // remove
       const [col] = store.state.table.columns.splice(dragDropDetails.draggedIndex, 1)
@@ -42,7 +42,6 @@ export const CandidatesTable: React.FC<TableProps> = ({ children, navigate }) =>
   return useObserver(
     () => (
       <div>
-        {store.meta.errors.length > 0 && JSON.stringify(store.meta.errors, null, 2)}
         <CandidatesBar navigate={navigate} />
         {children}
         <DetailsList

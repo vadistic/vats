@@ -1,5 +1,6 @@
 import { StringMap } from '@vats/utils'
 import ApolloClient from 'apollo-client'
+import { createStoreAction } from './action'
 import { GraphqlTyping, StoreGraphqlConfig, TQueryVariables } from './graphql-types'
 import { createStoreHelper } from './helper'
 import { createMultiStoreMutations } from './multi-mutations'
@@ -84,6 +85,8 @@ export const createSingleStore = <
 
   const mutations = createSingleStoreMutations<Typing, Graphql>({ client, helper, observables })
 
+  const action = createStoreAction<Typing>({ helper, observables })
+
   const init = () => {
     query.init()
   }
@@ -92,7 +95,15 @@ export const createSingleStore = <
     query.dispose()
   }
 
-  return { ...observables, ...query.props, ...mutations.props, helper, init, dispose }
+  return {
+    ...observables,
+    ...query.props,
+    ...mutations.props,
+    ...action.props,
+    helper,
+    init,
+    dispose,
+  }
 }
 
 export const createMultiStore = <
@@ -113,6 +124,8 @@ export const createMultiStore = <
 
   const mutations = createMultiStoreMutations<Typing, Graphql>({ client, helper, observables })
 
+  const action = createStoreAction<Typing>({ helper, observables })
+
   const sort = createStoreSort<Typing>({ observables, helper })
 
   const init = () => {
@@ -129,6 +142,7 @@ export const createMultiStore = <
     ...observables,
     ...query.props,
     ...mutations.props,
+    ...action.props,
     ...sort.props,
     helper,
     init,
