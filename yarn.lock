@@ -3022,6 +3022,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-beautiful-dnd@^10.1.1":
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/@types/react-beautiful-dnd/-/react-beautiful-dnd-10.1.1.tgz#7afae39a4247f30c13b8bbb726ccd1b8cda9d4a5"
+  integrity sha512-75XELhEIWKTkyd1GdVZFvS1MtJwDs9tM37BbIat8mevcw+uH5dcJzZiwESHIWAzySHawS48nkKCQk/bEDp13Mw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^16.8.2":
   version "16.8.2"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.8.2.tgz#9bd7d33f908b243ff0692846ef36c81d4941ad12"
@@ -9771,7 +9778,7 @@ graphql-upload@^8.0.0, graphql-upload@^8.0.2:
     http-errors "^1.7.1"
     object-path "^0.11.4"
 
-"graphql@^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0", graphql@^14.0.2, graphql@^14.1.1:
+graphql@14.1.1, "graphql@^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0", graphql@^14.0.2, graphql@^14.1.1:
   version "14.1.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.1.1.tgz#d5d77df4b19ef41538d7215d1e7a28834619fac0"
   integrity sha512-C5zDzLqvfPAgTtP8AUPIt9keDabrdRAqSWjj2OPRKrKxI9Fb65I36s1uCs1UUBFnSWTdO7hyHi7z1ZbwKMKF6Q==
@@ -16251,7 +16258,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@>=15.6.0, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -16891,6 +16898,14 @@ react-selector-hooks@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-selector-hooks/-/react-selector-hooks-0.1.0.tgz#cb3d5c734ccbc2d5ce7dc8431f905fc76d855304"
   integrity sha512-QH675BXXNwAPJfi8iuwwjJvdk3O/rfBDZSUNTm0XaiKhMnKXRY0e79sIFXvKGnzEOIOuH4I/7MROpmu9J6l4zQ==
+
+react-smooth-dnd@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/react-smooth-dnd/-/react-smooth-dnd-0.7.4.tgz#4f1f5a2fd1430c4ec4c9fdfa7256a6dcf4a0f3c2"
+  integrity sha512-E2RVs3NC0dsNfcqxotzL7KeHtg71ATsQPmkDTFEcIxBbgy5oGpJmYfeUHUUop+uKhnwn9egUU0tTctrhCA5s5g==
+  dependencies:
+    prop-types ">=15.6.0"
+    smooth-dnd "0.8.8"
 
 react-spring@^8.0.15:
   version "8.0.15"
@@ -18274,6 +18289,11 @@ smart-buffer@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/smart-buffer/-/smart-buffer-4.0.2.tgz#5207858c3815cc69110703c6b94e46c15634395d"
   integrity sha512-JDhEpTKzXusOqXZ0BUIdH+CjFdO/CR3tLlf5CN34IypI+xMmXW1uB16OOY8z3cICbJlDAVJzNbwBhNO0wt9OAw==
+
+smooth-dnd@0.8.8, smooth-dnd@^0.8.8:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/smooth-dnd/-/smooth-dnd-0.8.8.tgz#1b9b09c474ea9d3ba6a4ff982b0fa7f777da8717"
+  integrity sha512-kIf5r32j1pX3lk09FkSXXoq/K/xMdfdm9C8ODR0tFXbyLL28gDg7//qR1xUY9clWRx3HMJGOghePOVIJc69fjQ==
 
 snake-case@^2.1.0:
   version "2.1.0"

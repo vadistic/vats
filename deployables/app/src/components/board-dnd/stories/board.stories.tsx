@@ -2,14 +2,15 @@ import { storiesOf } from '@storybook/react'
 import { mutableMoveElement } from '@vats/utils'
 import { runInAction, set, toJS } from 'mobx'
 import { useObservable, useObserver } from 'mobx-react-lite'
-import { IGroup, Selection, SelectionMode } from 'office-ui-fabric-react'
-import { useMemo, useRef } from 'react'
+import { IGroup } from 'office-ui-fabric-react'
+import { useMemo } from 'react'
+import { DragDropContextProvider } from 'react-dnd'
+import backend from 'react-dnd-html5-backend'
 import { StoriesFixture } from '../../../stories/fixture.stories'
-import { Board, BoardProps } from '../board'
+import { Board, DraggableValue } from '../board'
 
 // tslint:disable-next-line: no-implicit-dependencies
 import * as R from 'ramda'
-import { BoardOnDropProps } from '../context'
 
 const ITEMS = [
   {
@@ -67,31 +68,20 @@ interface Item {
 
 const BoardFixture: React.FC = () => {
   const items = useObservable(ITEMS as Item[])
-  const selection = useRef(
-    new Selection({
-      getKey: (item: any) => item.id,
-      onSelectionChanged: () => {
-        console.log('secection changed', selection.current.getSelection())
-      },
-      selectionMode: SelectionMode.multiple,
-    }),
-  )
 
   const groupProp = 'type'
 
   const sortByType = R.sortBy(R.prop(groupProp))
 
-  // inital
+  // inital sort
   useMemo(() => {
     set(items, sortByType(items))
-
-    selection.current.setItems(items as any)
   }, [])
 
   const getGroups = (_items: Item[]) => {
     const groupMap = R.groupBy<Item>(R.prop(groupProp), _items)
 
-    const nextGroups = Object.entries(groupMap).reduce(
+    return Object.entries(groupMap).reduce(
       (acc, [key, groupItems], i) => [
         ...acc,
         {
@@ -103,10 +93,6 @@ const BoardFixture: React.FC = () => {
       ],
       [] as IGroup[],
     )
-
-    console.log('nextGroups', nextGroups)
-
-    return nextGroups
   }
 
   const renderItem = (item: Item) => (
@@ -116,38 +102,29 @@ const BoardFixture: React.FC = () => {
     </div>
   )
 
-  const onDragEnd = ({ item, source, target }: BoardOnDropProps) => {
+  const onDrop = (item: Item, target: DraggableValue, source: DraggableValue) => {
     runInAction('drop update', () => {
-      items[source.index][groupProp] = target.group.key as any
-      mutableMoveElement(items, source.index, target.index)
+      mutableMoveElement(items, source.pointer.index, target.pointer.index)
+      items[target.pointer.index][groupProp] = target.group.key as any
     })
   }
 
-  const renderHeader: BoardProps['onRenderHeader'] = (group, groupItems) => (
-    <div css={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <h3>{group.name}</h3>
-      <span>{groupItems.length}</span>
+  return useObserver(() => (
+    <div>
+      <Board
+        groups={getGroups(toJS(items))}
+        items={toJS(items)}
+        onRenderItem={renderItem}
+        onDrop={onDrop}
+      />
     </div>
-  )
-
-  return useObserver(() => {
-    const groups = getGroups(toJS(items))
-
-    return (
-      <div>
-        <Board
-          onRenderHeader={renderHeader}
-          selection={selection.current}
-          groups={groups}
-          items={toJS(items)}
-          onRenderItem={renderItem}
-          onDrop={onDragEnd}
-        />
-      </div>
-    )
-  })
+  ))
 }
 
-storiesOf('board react-smooth-dnd', module)
-  .addDecorator(story => <StoriesFixture>{story()}</StoriesFixture>)
+storiesOf('board react-dnd', module)
+  .addDecorator(story => (
+    <DragDropContextProvider backend={backend}>
+      <StoriesFixture>{story()}</StoriesFixture>
+    </DragDropContextProvider>
+  ))
   .add('basic', () => <BoardFixture />)

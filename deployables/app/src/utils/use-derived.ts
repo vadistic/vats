@@ -17,7 +17,6 @@ export const useDerived = <T extends Exclude<any, null | undefined>>(
     ref.current === null ||
     !shallowEqual(prevDepsRef.current, deps)
   ) {
-    console.log(ref.current)
     prevDepsRef.current = deps
     ref.current = input()
   }

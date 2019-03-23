@@ -1,172 +1,76 @@
 import { css } from '@emotion/core'
-import { moveElement } from '@vats/utils'
-import { produce } from 'immer'
-import { IGroup } from 'office-ui-fabric-react'
-import React, { useMemo, useState } from 'react'
-import { BoardGroup } from './group'
-
-export interface DraggablePointer {
-  groupIndex: number
-  index: number
-}
-
-export interface DraggableValue {
-  pointer: DraggablePointer
-  group: IGroup
-  groups: IGroup[]
-  items: any[]
-}
-
-export enum DarggableType {
-  CARD = 'CARD',
-}
-
-export interface DraggableItem {
-  pointer: DraggablePointer
-  type: DarggableType
-}
-
-export interface DraggableVector {
-  from: DraggablePointer
-  to: DraggablePointer
-}
-
-export interface DraggableProps {
-  moveDraggable: (to: DraggablePointer) => void
-  getDraggable: (pointer: DraggablePointer) => DraggablePointer
-  onDragStart: (pointer: DraggablePointer) => void
-  onDrop: (item: DraggableItem) => void
-}
+import { Theme } from '@vats/styling'
+import { IGroup, Selection } from 'office-ui-fabric-react'
+import React from 'react'
+import { Container } from 'react-smooth-dnd'
+import {
+  BoardCardPointer,
+  boardClassNames,
+  BoardContext,
+  BoardOnDragProps,
+  BoardOnDropProps,
+  createBoardContext,
+} from './context'
+import { BoardLane } from './lane'
 
 export interface BoardProps {
   groups: IGroup[]
   items: any[]
-  onRenderItem: (item: any) => JSX.Element
-  onDragStart?: (item: any, source: DraggableValue) => void
-  onDrop: (item: any, target: DraggableValue, source: DraggableValue) => void
+  selection: Selection
+  onRenderItem: (item: any, pointer: BoardCardPointer) => JSX.Element
+  onInvokeItem?: (item: any, pointer: BoardCardPointer) => void
+  onRenderHeader?: (group: IGroup, items: any[]) => void
+  onRenderFooter?: (group: IGroup, items: any[]) => void
+  onDragStart?: (props: BoardOnDragProps) => void
+  onDragUpdate?: (props: BoardOnDragProps) => void
+  onDrop: (props: BoardOnDropProps) => void
 }
 
-export const Board = ({ groups, items, onRenderItem, onDragStart, onDrop }: BoardProps) => {
-  const [vector, setVector] = useState<DraggableVector | undefined>(undefined)
+const styles = (theme: Theme) => css`
+  display: flex;
 
-  useMemo(() => {
-    console.log('reset vector')
-    setVector(undefined)
-  }, [items, groups])
+  background-color: ${theme.palette.themeLight};
 
-  const adjutedItems = vector ? moveElement(items, vector.from.index, vector.to.index) : items
-
-  const adjustedGroups = useMemo(() => {
-    if (!vector) {
-      return groups
-    }
-    const { from, to } = vector
-
-    const min = Math.min(from.groupIndex, to.groupIndex)
-    const max = Math.max(from.groupIndex, to.groupIndex)
-
-    return produce(groups, draftGroups => {
-      if (to.groupIndex !== from.groupIndex) {
-        draftGroups[to.groupIndex].count = draftGroups[to.groupIndex].count + 1
-        draftGroups[from.groupIndex].count = draftGroups[from.groupIndex].count - 1
-
-        draftGroups.forEach((group, groupIndex) => {
-          if (min < groupIndex && groupIndex <= max) {
-            draftGroups[groupIndex].startIndex += from.groupIndex < to.groupIndex ? -1 : 1
-          }
-        })
-      }
-    })
-  }, [items, groups, vector])
-
-  const moveDraggable = (to: DraggablePointer) => {
-    if (vector) {
-      setVector({
-        from: vector.from,
-        to,
-      })
-    }
+  /* smooth-dnd-draggable-wrapper */
+  & > div {
+    display: flex !important;
   }
 
-  const getDraggable = (pointer: DraggablePointer) => {
-    if (vector && pointer.index === vector.from.index) {
-      return vector.to
-    }
-
-    return pointer
+  .${boardClassNames.lane} {
+    margin: 0 ${theme.spacing.ms};
   }
+`
 
-  const handleDrop = () => {
-    if (!vector) {
-      return
-    }
+export const Board = (props: BoardProps) => {
+  const ctx = createBoardContext(props)
 
-    if (vector.from.index === vector.to.index) {
-      return
+  const handleEmptyClick = (ev: React.MouseEvent) => {
+    if (ev.target && `${(ev.target as any).className}`.includes(boardClassNames.lane)) {
+      ctx.clearSelection()
     }
-
-    if (onDrop) {
-      onDrop(
-        items[vector.from.index],
-        {
-          group: groups[vector.to.groupIndex],
-          groups: adjustedGroups,
-          items: adjutedItems,
-          pointer: vector.to,
-        },
-        {
-          group: groups[vector.from.groupIndex],
-          groups,
-          items,
-          pointer: vector.from,
-        },
-      )
-    }
-    // not reseting vector here to prevent jumping if onDrop is async
   }
-
-  const handleDragStart = (pointer: DraggablePointer) => {
-    if (onDragStart) {
-      onDragStart(items[pointer.index], {
-        group: groups[pointer.groupIndex],
-        groups,
-        items,
-        pointer,
-      })
-    }
-
-    setVector({
-      from: pointer,
-      to: pointer,
-    })
-  }
-
-  const styles = css`
-    border: 1px dashed gray;
-    padding: 1rem;
-    background-color: lightgray;
-    display: flex;
-  `
 
   return (
-    <div>
-      Board
-      <div css={styles}>
-        {adjustedGroups.map((group, i) => (
-          <BoardGroup
-            group={group}
-            groupIndex={i}
-            key={group.key}
-            items={adjutedItems.slice(group.startIndex, group.startIndex + group.count)}
-            onRenderItem={onRenderItem}
-            onDrop={handleDrop}
-            moveDraggable={moveDraggable}
-            getDraggable={getDraggable}
-            onDragStart={handleDragStart}
-            vector={vector}
-          />
-        ))}
+    <BoardContext.Provider value={ctx}>
+      <div css={styles} onClick={handleEmptyClick} className={boardClassNames.board}>
+        <Container
+          orientation="horizontal"
+          groupName="board-lanes"
+          behaviour="move"
+          lockAxis="x"
+          onDragStart={ctx.handleLaneDragStart}
+          onDrop={ctx.handleLaneDrop}
+        >
+          {ctx.groups.map((group, i) => (
+            <BoardLane
+              key={group.key}
+              groupIndex={i}
+              group={group}
+              items={ctx.items.slice(group.startIndex, group.startIndex + group.count)}
+            />
+          ))}
+        </Container>
       </div>
-    </div>
+    </BoardContext.Provider>
   )
 }

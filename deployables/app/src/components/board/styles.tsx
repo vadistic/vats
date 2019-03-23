@@ -1,9 +1,9 @@
-import { css, SerializedStyles } from '@emotion/core'
+import { css } from '@emotion/core'
 import { Theme } from '@vats/styling'
 import React from 'react'
 
 interface RefProps {
-  componentRef?: React.RefObject<any>
+  componentRef?: React.Ref<any>
 }
 
 const boardStyles = css``
@@ -30,35 +30,8 @@ const boardCardStyles = (theme: Theme) => css`
   cursor: move;
 `
 
-export interface BoardCardBaseProps extends RefProps {
-  isDragging: boolean
-}
+export interface BoardCardBaseProps {}
 
-console.log(boardCardStyles)
-
-const cssx = (
-  ...styles: Array<SerializedStyles | ((theme: Theme) => SerializedStyles) | undefined | false>
-) => (theme: Theme) =>
-  css(...styles.map(style => (style instanceof Function ? style(theme) : style)).filter(Boolean))
-
-console.log(cssx(boardCardStyles))
-
-export const BoardCardBase: React.FC<BoardCardBaseProps> = ({
-  children,
-  componentRef,
-  isDragging,
-}) => {
-  const draggingStyles = css`
-    opacity: 0.25;
-  `
-
-  if (isDragging) {
-    console.log('dragging')
-  }
-
-  return (
-    <div ref={componentRef} css={boardCardStyles} style={{ opacity: isDragging ? 0.25 : 1 }}>
-      {children}
-    </div>
-  )
+export const BoardCardBase: React.FC<BoardCardBaseProps> = ({ children }) => {
+  return <div css={boardCardStyles}>{children}</div>
 }

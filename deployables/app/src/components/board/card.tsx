@@ -1,48 +1,105 @@
-import React from 'react'
-import { __EXPERIMENTAL_DND_HOOKS_THAT_MAY_CHANGE_AND_BREAK_MY_BUILD__ } from 'react-dnd'
-import { DarggableType, DraggableItem, DraggablePointer, DraggableProps } from './board'
-import { BoardCardBase } from './styles'
+import { css } from '@emotion/core'
+import { cx, Theme } from '@vats/styling'
+import React, { memo, useContext } from 'react'
+import { Draggable } from 'react-smooth-dnd'
+import { useDoubleClickSensor } from '../../utils'
+import { BoardCardPointer, boardClassNames, BoardContext } from './context'
 
-const { useDrag, useDrop } = __EXPERIMENTAL_DND_HOOKS_THAT_MAY_CHANGE_AND_BREAK_MY_BUILD__
-
-export interface BoardCardProps extends DraggableProps {
-  pointer: DraggablePointer
+export interface BoardCardProps {
+  index: number
+  localIndex: number
+  groupIndex: number
+  isSelected: boolean
+  isModal: boolean
+  item: any
 }
 
-export const BoardCard: React.FC<BoardCardProps> = ({
-  pointer,
-  moveDraggable,
-  getDraggable,
-  onDragStart,
-  children,
-}) => {
-  const [{ isDragging }, ref] = useDrag({
-    item: { type: DarggableType.CARD, pointer },
-    begin: monitor => {
-      onDragStart(pointer)
+const styles = (theme: Theme) => css`
+  padding: ${theme.spacing.s1} ${theme.spacing.m};
 
-      return undefined
-    },
-    collect: monitor => ({
-      isDragging: monitor.isDragging(),
-    }),
-  })
+  cursor: move;
 
-  useDrop({
-    ref,
-    accept: DarggableType.CARD,
-    canDrop: () => false,
-    hover({ pointer: current }: DraggableItem, monitor) {
-      const dragged = getDraggable(current)
-      if (monitor.isOver({ shallow: true }) && dragged.index !== pointer.index) {
-        moveDraggable(pointer)
+  border: 1px solid;
+  border-color: ${theme.palette.neutralLight};
+  background-color: ${theme.palette.white};
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${theme.semanticColors.listItemBackgroundHovered};
+  }
+
+  &:focus {
+    background-color: ${theme.semanticColors.listItemBackgroundHovered};
+    border-color: ${theme.semanticColors.focusBorder};
+  }
+
+  transition: transform 0.25s ease-in-out;
+
+  &.dragging {
+    box-shadow: 2px 2px 4px ${theme.palette.neutralLight};
+    transform: rotate(5deg);
+  }
+
+  &.dropping {
+    transform: rotate(0deg);
+  }
+
+  &.selected.modal {
+    border-color: ${theme.palette.themePrimary};
+  }
+`
+
+export const BoardCard: React.FC<BoardCardProps> = memo(
+  ({ index, localIndex, groupIndex, item, isSelected, isModal }) => {
+    const pointer: BoardCardPointer = { index, groupIndex, localIndex }
+
+    const ctx = useContext(BoardContext)
+
+    const ref = ctx.cardRefs[pointer.index]
+
+    const isDoubleClick = useDoubleClickSensor()
+
+    const handleKeydown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+      ctx.handleCardKeydownSelection(pointer)(ev)
+      ctx.handleCardFocusNavigation(pointer)(ev)
+    }
+
+    // ! mouseUp to do not deselect on dragStart
+    const handleClick = (ev: React.MouseEvent<HTMLDivElement>) => {
+      const double = isDoubleClick(ev)
+
+      console.log(pointer)
+
+      if (double) {
+        ctx.handleCardDoubleClick({
+          crtlKey: ev.ctrlKey,
+          shiftKey: ev.shiftKey,
+          pointer,
+        })
+      } else {
+        ctx.handleCardClick({
+          crtlKey: ev.ctrlKey,
+          shiftKey: ev.shiftKey,
+          pointer,
+        })
       }
-    },
-  })
+    }
 
-  return (
-    <BoardCardBase componentRef={ref} isDragging={isDragging}>
-      {children}
-    </BoardCardBase>
-  )
-}
+    return (
+      <Draggable>
+        <div
+          ref={ref}
+          onFocus={ctx.handleCardFocus(pointer)}
+          onBlur={ctx.handleCardBlur(pointer)}
+          css={styles}
+          className={cx(boardClassNames.card, isSelected && 'selected', isModal && 'modal')}
+          onKeyDown={handleKeydown}
+          onMouseUp={handleClick}
+          data-is-focusable={true}
+        >
+          {ctx.onRenderItem(item, pointer)}
+        </div>
+      </Draggable>
+    )
+  },
+)
