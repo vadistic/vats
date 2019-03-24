@@ -1,14 +1,14 @@
 {
-  "name": "Source lines of code report",
-  "date": "2019-03-23T20:20:45.290Z",
+  "name": "Source Lines of Code",
+  "date": "2019-03-24T21:56:36.749Z",
   "total": {
-    "total": 15351,
-    "source": 12209,
-    "comment": 933,
-    "single": 418,
-    "block": 515,
+    "total": 15411,
+    "source": 12246,
+    "comment": 943,
+    "single": 425,
+    "block": 518,
     "mixed": 16,
-    "empty": 2237,
+    "empty": 2250,
     "todo": 36,
     "blockEmpty": 12,
     "generated": 125798
@@ -38,13 +38,13 @@
       "generated": 92400
     },
     "tsx": {
-      "total": 6838,
-      "source": 5643,
-      "comment": 217,
-      "single": 113,
-      "block": 104,
+      "total": 6898,
+      "source": 5680,
+      "comment": 227,
+      "single": 120,
+      "block": 107,
       "mixed": 5,
-      "empty": 983,
+      "empty": 996,
       "todo": 24,
       "blockEmpty": 0
     },
@@ -364,13 +364,13 @@
     },
     "deployables/app": {
       "total": {
-        "total": 6221,
-        "source": 5204,
-        "comment": 158,
-        "single": 130,
-        "block": 28,
+        "total": 6281,
+        "source": 5241,
+        "comment": 168,
+        "single": 137,
+        "block": 31,
         "mixed": 5,
-        "empty": 864,
+        "empty": 877,
         "todo": 21,
         "blockEmpty": 0,
         "generated": 40144
@@ -399,13 +399,13 @@
         "generated": 40074
       },
       "tsx": {
-        "total": 4909,
-        "source": 4117,
-        "comment": 105,
-        "single": 81,
-        "block": 24,
+        "total": 4969,
+        "source": 4154,
+        "comment": 115,
+        "single": 88,
+        "block": 27,
         "mixed": 3,
-        "empty": 690,
+        "empty": 703,
         "todo": 19,
         "blockEmpty": 0
       },

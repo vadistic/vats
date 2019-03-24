@@ -108,7 +108,7 @@ export const lines = async (args: string[]) => {
       fs.writeJson(
         path.resolve(process.cwd(), 'sloc.json'),
         {
-          name: 'Source lines of code report',
+          name: 'Source Lines of Code',
           date: new Date().toISOString(),
           total,
           extnames,

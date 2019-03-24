@@ -47,6 +47,7 @@ export const Board = (props: BoardProps) => {
   const handleEmptyClick = (ev: React.MouseEvent) => {
     if (ev.target && `${(ev.target as any).className}`.includes(boardClassNames.lane)) {
       ctx.clearSelection()
+      ctx.clearCardFocus()
     }
   }
 

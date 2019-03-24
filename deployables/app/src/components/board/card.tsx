@@ -1,6 +1,6 @@
 import { css } from '@emotion/core'
 import { cx, Theme } from '@vats/styling'
-import React, { memo, useContext } from 'react'
+import React, { memo, useContext, useEffect } from 'react'
 import { Draggable } from 'react-smooth-dnd'
 import { useDoubleClickSensor } from '../../utils'
 import { BoardCardPointer, boardClassNames, BoardContext } from './context'
@@ -57,6 +57,14 @@ export const BoardCard: React.FC<BoardCardProps> = memo(
 
     const ref = ctx.cardRefs[pointer.index]
 
+    // focus on each render
+    useEffect(() => {
+      if (ctx.focusRef.current === index && ref.current) {
+        console.log('focus effect', ref.current, ctx.focusRef.current)
+        ref.current.focus()
+      }
+    })
+
     const isDoubleClick = useDoubleClickSensor()
 
     const handleKeydown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
@@ -67,8 +75,6 @@ export const BoardCard: React.FC<BoardCardProps> = memo(
     // ! mouseUp to do not deselect on dragStart
     const handleClick = (ev: React.MouseEvent<HTMLDivElement>) => {
       const double = isDoubleClick(ev)
-
-      console.log(pointer)
 
       if (double) {
         ctx.handleCardDoubleClick({
@@ -88,9 +94,9 @@ export const BoardCard: React.FC<BoardCardProps> = memo(
     return (
       <Draggable>
         <div
+          tabIndex={index}
           ref={ref}
           onFocus={ctx.handleCardFocus(pointer)}
-          onBlur={ctx.handleCardBlur(pointer)}
           css={styles}
           className={cx(boardClassNames.card, isSelected && 'selected', isModal && 'modal')}
           onKeyDown={handleKeydown}

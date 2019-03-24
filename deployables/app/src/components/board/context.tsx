@@ -1,7 +1,6 @@
 import { IGroup } from 'office-ui-fabric-react'
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { DropResult } from 'smooth-dnd'
-import { useDerived } from '../../utils'
 import { BoardProps } from './board'
 
 export interface BoardContextProps extends BoardProps {}
@@ -14,7 +13,6 @@ export interface BoardCardPointer {
 
 export interface BoardEventDetails extends BoardCardPointer {
   group: IGroup
-  selectedIndicies: number[]
 }
 
 export interface BoardOnDropProps {
@@ -50,44 +48,55 @@ export const boardClassNames = {
 
 export const createBoardContext = (props: BoardContextProps) => {
   const { selection, groups, items } = props
-
-  const [selectedIndicies, setSelectedIndicies] = useState<number[]>([])
+  // just for forceRefresh
+  const [, setSelectedIndicies] = useState<number[]>([])
 
   /*
    * card focus
    */
-  const focus = useRef<number | undefined>(undefined)
+  const focusRef = useRef<number | null>(null)
 
-  const cardRefs = useDerived(() => items.map(() => React.createRef<HTMLDivElement>()), [items])
+  const cardRefs = useMemo(() => items.map(() => React.createRef<HTMLDivElement>()), [
+    items,
+    groups,
+  ])
 
+  // !!! BUG: outdated props values in drag-drop callbacks
+  // it's memoized somewhere - no idea why...
+  // I'll hack it with ref-proxy
+  // as a bonus - it'll allow to not update ctx in cards callbacks
+  const groupsRef = useRef(groups)
+  groupsRef.current = groups
+
+  // update ref pointer onFocus
   const handleCardFocus = (pointer: BoardCardPointer) => () => {
-    if (pointer.index !== focus.current) {
-      focus.current = pointer.index
+    if (pointer.index !== focusRef.current) {
+      focusRef.current = pointer.index
     }
   }
 
-  const handleCardBlur = (pointer: BoardCardPointer) => () => {
-    // to not fire on focus change to avoid weird race conditions
-    setTimeout(() => {
-      if (pointer.index === focus.current) {
-        focus.current = undefined
-      }
-    }, 100)
+  // should happen on click outside anmd basically it?
+  const clearCardFocus = () => {
+    if (clearCardFocus !== null) {
+      focusRef.current = null
+    }
   }
 
+  // enable focus arrow navigation
   const handleCardFocusNavigation = (pointer: BoardCardPointer) => (
     ev: React.KeyboardEvent<HTMLDivElement>,
   ) => {
     if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
       const dir = ev.key === 'ArrowRight' ? 1 : -1
-      const nextGroupIndex = (groups.length + pointer.groupIndex + dir) % groups.length
+      const nextGroupIndex =
+        (groupsRef.current.length + pointer.groupIndex + dir) % groupsRef.current.length
 
       const nextLocalIndex =
-        groups[nextGroupIndex].count > pointer.localIndex
+        groupsRef.current[nextGroupIndex].count > pointer.localIndex
           ? pointer.localIndex
-          : groups[nextGroupIndex].count - 1
+          : groupsRef.current[nextGroupIndex].count - 1
 
-      const targetRef = cardRefs[groups[nextGroupIndex].startIndex + nextLocalIndex]
+      const targetRef = cardRefs[groupsRef.current[nextGroupIndex].startIndex + nextLocalIndex]
 
       if (targetRef.current) {
         targetRef.current.focus()
@@ -96,7 +105,11 @@ export const createBoardContext = (props: BoardContextProps) => {
   }
 
   /*
-   * now a bit of an edge case
+   * selection
+   */
+
+  /*
+   * bit of an edge case
    * if there is modal change 2 => 1:
    * - selection should exit modal
    * - but focus shuld jump to the other element
@@ -117,73 +130,117 @@ export const createBoardContext = (props: BoardContextProps) => {
   }
 
   /*
-   * selection
+   * using this fn because selection is an observable and less updates is better
    */
-
-  const clearSelection = (next?: number) => {
-    if (selection.count !== 0) {
-      selection.setAllSelected(false)
-    }
+  const ensureSelectionIsOnly = (index: number) => {
+    const indicies = selection.getSelectedIndices()
 
     if (selection.isModal()) {
       selection.setModal(false)
     }
 
-    if (next) {
-      selection.setIndexSelected(next, true, true)
-      setSelectedIndicies([next])
-      return
+    if (indicies.length === 0) {
+      selection.setIndexSelected(index, true, true)
+      return false
     }
 
-    if (selectedIndicies.length !== 0) {
-      setSelectedIndicies([])
-      return
+    if (indicies.length === 1 && indicies[0] === index) {
+      return true
     }
+
+    if (indicies.length === 2) {
+      let addTarget = true
+
+      for (const i of indicies) {
+        if (i !== index) {
+          selection.setIndexSelected(i, false, false)
+          continue
+        }
+
+        if (i === index) {
+          addTarget = false
+        }
+      }
+
+      if (addTarget) {
+        selection.setIndexSelected(index, true, true)
+      }
+
+      return false
+    }
+
+    selection.setAllSelected(false)
+    selection.setIndexSelected(index, true, true)
+    return false
   }
 
+  // force-refresh fror selection rendering styles
   const refreshSelection = () => {
     // cleanup here maybe?
 
     setSelectedIndicies(selection.getSelectedIndices())
   }
 
+  // clears selection
+  const clearSelection = () => {
+    let flag = false
+
+    if (selection.isModal()) {
+      selection.setModal(false)
+      flag = true
+    }
+
+    if (selection.count !== 0) {
+      selection.setAllSelected(false)
+      flag = true
+    }
+
+    if (flag) {
+      refreshSelection()
+    }
+  }
+
+  // handle keyboard clicks
   const handleCardKeydownSelection = (pointer: BoardCardPointer) => (
     ev: React.KeyboardEvent<HTMLDivElement>,
   ) => {
+    const isModal = selection.isModal()
+
     // enter modal on crtl/shift + enter
-    if (ev.key === 'Enter' && (ev.ctrlKey || ev.shiftKey) && !selection.isModal()) {
-      // cleanup to avoid "trailing"
-      selection.setAllSelected(false)
+    if (!isModal && ev.key === 'Enter' && (ev.ctrlKey || ev.shiftKey)) {
+      // cleanup to avoid "trailing" on anchored selection
+      ensureSelectionIsOnly(pointer.index)
       selection.setModal(true)
-      selection.setIndexSelected(pointer.index, true, true)
 
       refreshSelection()
       return
     }
 
     // shift somewhere here
-    if (ev.key === 'Enter' && ev.shiftKey && selection.isModal()) {
-      // TODO: with clear selection
+    if (isModal && ev.key === 'Enter' && ev.shiftKey) {
+      // TODO: allow clearing
       selection.selectToIndex(pointer.index, false)
 
       refreshSelection()
       return
     }
 
-    if (ev.key === 'Enter' && selection.isModal()) {
+    if (isModal && ev.key === 'Enter') {
       selection.toggleIndexSelected(pointer.index)
 
       refreshSelection()
       return
     }
 
-    // deselect on esc
+    // deslect/ and clear focus pointer on esc
     if (ev.key === 'Escape') {
+      clearCardFocus()
       clearSelection()
       return
     }
   }
 
+  // handle mouse clicks (onMouseUp to separate keyboard actions)
   const handleCardClick = ({
     crtlKey,
     shiftKey,
@@ -193,18 +250,19 @@ export const createBoardContext = (props: BoardContextProps) => {
     crtlKey: boolean
     shiftKey: boolean
   }) => {
-    // enter modal range on shift with some selection
-    if (!selection.isModal() && shiftKey && selection.count !== 0) {
-      selection.setModal(true)
+    const isModal = selection.isModal()
 
+    // enter modal range on shift (with some selection other than el)
+    if (!isModal && shiftKey && selection.getSelectedIndices()[0] !== pointer.index) {
       selection.selectToIndex(pointer.index)
+      selection.setModal(true)
 
       refreshSelection()
       return
     }
 
-    // enter modal on crtl
-    if (!selection.isModal() && crtlKey) {
+    // enter modal on crtl (with some selection other than el)
+    if (!isModal && crtlKey && selection.getSelectedIndices()[0] !== pointer.index) {
       selection.setModal(true)
       selection.setIndexSelected(pointer.index, true, true)
 
@@ -213,24 +271,15 @@ export const createBoardContext = (props: BoardContextProps) => {
     }
 
     // set single selection without refresh on non-modal clicks
-    if (!selection.isModal()) {
-      if (selection.count !== 0) {
-        selection.setAllSelected(false)
-      }
-
-      selection.setIndexSelected(pointer.index, true, true)
+    if (!isModal) {
+      ensureSelectionIsOnly(pointer.index)
 
       return
     }
 
-    // toggle range on modal shift
-    if (shiftKey && selection.isModal()) {
+    // toogle range on modal + shift
+    if (isModal && shiftKey) {
       selection.selectToIndex(pointer.index, true)
-
-      // select to index cleans modal for some reason :/
-      if (!selection.isModal()) {
-        selection.setModal(true)
-      }
 
       if (selection.count === 1) {
         handleModalExitFocus()
@@ -241,7 +290,7 @@ export const createBoardContext = (props: BoardContextProps) => {
     }
 
     // toggle cards when modal (with ctrl or without)
-    if (selection.isModal()) {
+    if (isModal) {
       selection.toggleIndexSelected(pointer.index)
 
       if (selection.count === 1) {
@@ -265,26 +314,22 @@ export const createBoardContext = (props: BoardContextProps) => {
     // invoke when not modal
     if (!selection.isModal() && props.onInvokeItem) {
       props.onInvokeItem(items[pointer.index], pointer)
+
       return
     }
 
     // exit modal, clear selection and set only one element
     if (selection.isModal()) {
-      clearSelection(pointer.index)
+      ensureSelectionIsOnly(pointer.index)
+
+      refreshSelection()
+      return
     }
   }
 
   /*
    * Drag & drop
    */
-  // !!! BUG: outdated props values here in drag-drop callbacks
-  // it's memoized somewhere - no idea why...
-
-  // I'll hack it with ref-proxy
-  const groupsRef = useRef(groups)
-  groupsRef.current = groups
-
-  // card payload is a source
 
   const getCardPayload = (sourceGroupIndex: number) => (
     sourceLocalIndex: number,
@@ -292,26 +337,36 @@ export const createBoardContext = (props: BoardContextProps) => {
     return {
       groupIndex: sourceGroupIndex,
       localIndex: sourceLocalIndex,
-      index: groupsRef.current[sourceGroupIndex].startIndex + sourceGroupIndex,
+      index: groupsRef.current[sourceGroupIndex].startIndex + sourceLocalIndex,
     }
   }
 
   const handleCardDragStart = (info: BoardDragInfo<BoardCardPointer>) => {
     // handle only callback in source
     if (info.isSource && info.payload) {
-      // !!! DRAGING UNSELECTED CARD BASICALLY ADDS IT TO SELECTION
-      // If selection would be on crtl+click not bare click:
-      // - here, I would clear other selected cards on drag of previously unselected card
+      const sourceGroup = groupsRef.current[info.payload.groupIndex]
+
+      // focus if not focused
+      if (focusRef.current !== info.payload.index) {
+        focusRef.current = info.payload.index
+      }
+
+      // select if not modal
+      if (!selection.isModal()) {
+        ensureSelectionIsOnly(info.payload.index)
+      }
+
+      // deselect all except dragged when modal & dragged element is not selected
+      if (selection.isModal() && !selection.getSelectedIndices().includes(info.payload.index)) {
+        ensureSelectionIsOnly(info.payload.index)
+
+        refreshSelection()
+      }
 
       if (props.onDragStart) {
-        const sourceGroup = groupsRef.current[info.payload.groupIndex]
-
         const source: BoardEventDetails = {
-          groupIndex: info.payload.groupIndex,
+          ...info.payload,
           group: sourceGroup,
-          index: sourceGroup.startIndex + info.payload.localIndex,
-          localIndex: info.payload.localIndex,
-          selectedIndicies: selection.getSelectedIndices(),
         }
 
         props.onDragStart({ item: items[source.index], source })
@@ -325,21 +380,18 @@ export const createBoardContext = (props: BoardContextProps) => {
     result: BoardDropResult<BoardCardPointer>,
   ) => {
     if (
-      // drops is called for each container/lane - handling only a target
+      // drop is called for each container/lane - handling only a target
       result.addedIndex !== null &&
       // checking if drop was not in the same place
       result.addedIndex !== result.removedIndex &&
-      // typeguard
+      // undef typeguard
       result.payload
     ) {
       const sourceGroup = groupsRef.current[result.payload.groupIndex]
 
       const source: BoardEventDetails = {
-        index: sourceGroup.startIndex + result.payload.localIndex,
-        localIndex: result.payload.localIndex,
-        groupIndex: result.payload.groupIndex,
+        ...result.payload,
         group: sourceGroup,
-        selectedIndicies: selection.getSelectedIndices(),
       }
 
       const targetGroup = groupsRef.current[targetGroupIndex]
@@ -349,7 +401,6 @@ export const createBoardContext = (props: BoardContextProps) => {
         localIndex: result.addedIndex,
         groupIndex: targetGroupIndex,
         group: targetGroup,
-        selectedIndicies: [],
       }
 
       // adjust for shuffle
@@ -358,10 +409,12 @@ export const createBoardContext = (props: BoardContextProps) => {
         target.group.startIndex += -1
       }
 
-      // adjust selection
+      // adjust focus pointer
+      focusRef.current = target.index
+
+      // adjust single selection
       if (selection.getSelectedCount() === 1) {
-        selection.setIndexSelected(source.index, false, false)
-        selection.setIndexSelected(target.index, true, false)
+        ensureSelectionIsOnly(target.index)
       }
 
       // and complex selection case
@@ -392,6 +445,7 @@ export const createBoardContext = (props: BoardContextProps) => {
         })
       }
 
+      // execute cb
       props.onDrop({ item: items[source.index], source, target })
     }
   }
@@ -413,9 +467,10 @@ export const createBoardContext = (props: BoardContextProps) => {
   return {
     ...props,
     cardRefs,
+    focusRef,
     handleCardFocus,
     handleCardFocusNavigation,
-    handleCardBlur,
+    clearCardFocus,
     handleCardClick,
     handleCardDoubleClick,
     handleCardKeydownSelection,
