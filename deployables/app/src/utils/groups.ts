@@ -24,23 +24,27 @@ export const adjustGroups = (groups: IGroup[], from: GroupItemPointer, to: Group
 
 export const getGroups = <T>(items: T[], groupBy: (item: T) => string | string[]) => {
   const groupMap: StringMap<T[]> = {}
+  const reversedGroupMap: StringMap<number[]> = {}
 
-  const push = (item: T, key: string) => {
+  const push = (item: T, itemIndex: number, key: string) => {
     if (!groupMap[key]) {
       groupMap[key] = []
+      reversedGroupMap[key] = []
     }
     groupMap[key].push(item)
+    reversedGroupMap[key].push(itemIndex)
   }
 
-  for (const item of items) {
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i]
     const key = groupBy(item)
 
     if (Array.isArray(key)) {
       key.forEach(k => {
-        push(item, k)
+        push(item, i, k)
       })
     } else {
-      push(item, key)
+      push(item, i, key)
     }
   }
 
@@ -60,5 +64,9 @@ export const getGroups = <T>(items: T[], groupBy: (item: T) => string | string[]
 
   const groupedItems = Object.values(groupMap).flat(1)
 
-  return { groups, groupedItems }
+  const reversedGroups = Object.values(reversedGroupMap)
+
+  const reversedItems = reversedGroups.flat(1)
+
+  return { groups, groupMap, items: groupedItems, reversedItems, reversedGroups, reversedGroupMap }
 }

@@ -16,13 +16,11 @@ export interface BoardEventDetails extends BoardCardPointer {
 }
 
 export interface BoardOnDropProps {
-  item: any
   source: BoardEventDetails
   target: BoardEventDetails
 }
 
 export interface BoardOnDragProps {
-  item: any
   source: BoardEventDetails
 }
 
@@ -63,10 +61,14 @@ export const createBoardContext = (props: BoardContextProps) => {
 
   // !!! BUG: outdated props values in drag-drop callbacks
   // it's memoized somewhere - no idea why...
+
   // I'll hack it with ref-proxy
-  // as a bonus - it'll allow to not update ctx in cards callbacks
+  // as a bonus - it'll allow to not update ctx fns in cards callbacks
   const groupsRef = useRef(groups)
   groupsRef.current = groups
+
+  const itemsRef = useRef(items)
+  itemsRef.current = items
 
   // update ref pointer onFocus
   const handleCardFocus = (pointer: BoardCardPointer) => () => {
@@ -313,7 +315,7 @@ export const createBoardContext = (props: BoardContextProps) => {
   }) => {
     // invoke when not modal
     if (!selection.isModal() && props.onInvokeItem) {
-      props.onInvokeItem(items[pointer.index], pointer)
+      props.onInvokeItem(itemsRef.current[pointer.index], pointer)
 
       return
     }
@@ -344,8 +346,6 @@ export const createBoardContext = (props: BoardContextProps) => {
   const handleCardDragStart = (info: BoardDragInfo<BoardCardPointer>) => {
     // handle only callback in source
     if (info.isSource && info.payload) {
-      const sourceGroup = groupsRef.current[info.payload.groupIndex]
-
       // focus if not focused
       if (focusRef.current !== info.payload.index) {
         focusRef.current = info.payload.index
@@ -366,10 +366,10 @@ export const createBoardContext = (props: BoardContextProps) => {
       if (props.onDragStart) {
         const source: BoardEventDetails = {
           ...info.payload,
-          group: sourceGroup,
+          group: groupsRef.current[info.payload.groupIndex],
         }
 
-        props.onDragStart({ item: items[source.index], source })
+        props.onDragStart({ source })
       }
     }
 
@@ -388,13 +388,12 @@ export const createBoardContext = (props: BoardContextProps) => {
       result.payload
     ) {
       const sourceGroup = groupsRef.current[result.payload.groupIndex]
+      const targetGroup = groupsRef.current[targetGroupIndex]
 
       const source: BoardEventDetails = {
         ...result.payload,
         group: sourceGroup,
       }
-
-      const targetGroup = groupsRef.current[targetGroupIndex]
 
       const target: BoardEventDetails = {
         index: targetGroup.startIndex + result.addedIndex,
@@ -403,50 +402,12 @@ export const createBoardContext = (props: BoardContextProps) => {
         group: targetGroup,
       }
 
-      // adjust for shuffle
-      if (source.groupIndex < target.groupIndex) {
-        target.index += -1
-        target.group.startIndex += -1
-      }
-
       // adjust focus pointer
-      focusRef.current = target.index
-
-      // adjust single selection
-      if (selection.getSelectedCount() === 1) {
-        ensureSelectionIsOnly(target.index)
-      }
-
-      // and complex selection case
-      if (selection.getSelectedCount() > 1) {
-        const indicies = selection.getSelectedIndices()
-        selection.setAllSelected(false)
-        selection.setModal(true)
-
-        selection.setIndexSelected(target.index, true, true)
-
-        indicies.forEach(i => {
-          // forward direction shuffle
-          if (source.index < i && i <= target.index) {
-            selection.setIndexSelected(i - 1, true, false)
-            return
-          }
-
-          // and backward
-          if (target.index <= i && i < source.index) {
-            selection.setIndexSelected(i + 1, true, false)
-            return
-          }
-
-          if (i !== source.index) {
-            selection.setIndexSelected(i, true, false)
-            return
-          }
-        })
-      }
+      focusRef.current =
+        result.payload.groupIndex < targetGroupIndex ? target.index - 1 : target.index
 
       // execute cb
-      props.onDrop({ item: items[source.index], source, target })
+      props.onDrop({ source, target })
     }
   }
 

@@ -41,3 +41,24 @@ export const moveElement = (arr: any[], from: number, to: number) => {
 
 export const mutableMoveElement = (arr: any[], from: number, to: number) =>
   arr.splice(to, 0, arr.splice(from, 1)[0])
+
+export const mutableMoveElements = (arr: any[], from: number[], to: number[]) => {
+  const history: Array<[number, number]> = []
+
+  const adjust = (index: number) => {
+    return (
+      index +
+      history.reduce(
+        (acc, [_from, _to]) =>
+          // without <= equality SO on consecutive targeting of same index will replace prev
+          acc + _from < index && index < _to ? -1 : _to < index && index < _from ? 1 : 0,
+        0,
+      )
+    )
+  }
+
+  for (let i = 0; i < from.length; i++) {
+    mutableMoveElement(arr, adjust(from[i]), adjust(to[i]))
+    history.push([from[i], to[i]])
+  }
+}

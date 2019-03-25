@@ -15,37 +15,39 @@ export interface BoardCardProps {
 }
 
 const styles = (theme: Theme) => css`
-  padding: ${theme.spacing.s1} ${theme.spacing.m};
-
   cursor: move;
 
-  border: 1px solid;
-  border-color: ${theme.palette.neutralLight};
-  background-color: ${theme.palette.white};
-  border-radius: 4px;
+  & > div {
+    padding: ${theme.spacing.s1} ${theme.spacing.m};
 
-  &:hover {
-    background-color: ${theme.semanticColors.listItemBackgroundHovered};
-  }
+    border: 1px solid;
+    border-color: ${theme.palette.neutralLight};
+    background-color: ${theme.palette.white};
+    border-radius: 4px;
 
-  &:focus {
-    background-color: ${theme.semanticColors.listItemBackgroundHovered};
-    border-color: ${theme.semanticColors.focusBorder};
-  }
+    transition: transform 0.25s ease-in-out;
 
-  transition: transform 0.25s ease-in-out;
+    &:hover {
+      background-color: ${theme.palette.neutralLighterAlt};
+    }
 
-  &.dragging {
-    box-shadow: 2px 2px 4px ${theme.palette.neutralLight};
-    transform: rotate(5deg);
-  }
+    &:focus {
+      border: 1px solid;
+      border-color: ${theme.semanticColors.focusBorder};
+    }
 
-  &.dropping {
-    transform: rotate(0deg);
-  }
+    &.dragging {
+      box-shadow: 2px 2px 4px ${theme.palette.neutralLight};
+      transform: rotate(5deg);
+    }
 
-  &.selected.modal {
-    border-color: ${theme.palette.themePrimary};
+    &.dropping {
+      transform: rotate(0deg);
+    }
+
+    &.selected.modal {
+      border-color: ${theme.palette.themePrimary};
+    }
   }
 `
 
@@ -60,7 +62,6 @@ export const BoardCard: React.FC<BoardCardProps> = memo(
     // focus on each render
     useEffect(() => {
       if (ctx.focusRef.current === index && ref.current) {
-        console.log('focus effect', ref.current, ctx.focusRef.current)
         ref.current.focus()
       }
     })
@@ -92,13 +93,12 @@ export const BoardCard: React.FC<BoardCardProps> = memo(
     }
 
     return (
-      <Draggable>
+      <Draggable css={styles} className={boardClassNames.card}>
         <div
+          className={cx(isSelected && 'selected', isModal && 'modal')}
           tabIndex={index}
           ref={ref}
           onFocus={ctx.handleCardFocus(pointer)}
-          css={styles}
-          className={cx(boardClassNames.card, isSelected && 'selected', isModal && 'modal')}
           onKeyDown={handleKeydown}
           onMouseUp={handleClick}
           data-is-focusable={true}

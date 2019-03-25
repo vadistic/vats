@@ -1,4 +1,4 @@
-import { moveElement } from '../array'
+import { moveElement, mutableMoveElement, mutableMoveElements } from '../array'
 
 describe('array utils', () => {
   it('moveElement', () => {
@@ -92,5 +92,30 @@ describe('array utils', () => {
       console.log('complex: splice', tSplice1 - tSplice0)
       console.log('complex: slice', tSlice1 - tSlice0)
     }) */
+  })
+
+  it('moveElements', () => {
+    const fixture = [1, 2, 3, 4, 5, 6]
+    const copy1 = [...fixture]
+    const copy2 = [...fixture]
+
+    const from = [2, 3]
+    const to = [4, 4]
+
+    const secondElSource = copy2[from[1]]
+    const secondElTarget = copy2[to[1]]
+
+    mutableMoveElement(copy2, from[0], to[0])
+
+    const sencondFrom = copy2.indexOf(secondElSource)
+    const secondTo = copy2.indexOf(secondElTarget)
+
+    mutableMoveElement(copy2, sencondFrom, secondTo)
+
+    mutableMoveElements(copy1, from, to)
+
+    console.log(copy1)
+
+    expect(copy1).toEqual(copy2)
   })
 })

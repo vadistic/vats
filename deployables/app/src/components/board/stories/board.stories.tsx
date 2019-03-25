@@ -1,14 +1,12 @@
 import { storiesOf } from '@storybook/react'
-import { mutableMoveElement } from '@vats/utils'
-import { runInAction, set, toJS } from 'mobx'
+import { useComputed, useReaction } from '@vats/store'
+import { runInAction, toJS } from 'mobx'
 import { useObservable, useObserver } from 'mobx-react-lite'
-import { IGroup, Selection, SelectionMode } from 'office-ui-fabric-react'
+import { Selection, SelectionMode } from 'office-ui-fabric-react'
 import { useMemo, useRef } from 'react'
 import { StoriesFixture } from '../../../stories/fixture.stories'
+import { getGroups } from '../../../utils'
 import { Board, BoardProps } from '../board'
-
-// tslint:disable-next-line: no-implicit-dependencies
-import * as R from 'ramda'
 import { BoardOnDropProps } from '../context'
 
 const ITEMS = [
@@ -67,6 +65,7 @@ interface Item {
 
 const BoardFixture: React.FC = () => {
   const items = useObservable(ITEMS as Item[])
+
   const selection = useRef(
     new Selection({
       getKey: (item: any) => item.id,
@@ -77,37 +76,19 @@ const BoardFixture: React.FC = () => {
     }),
   )
 
-  const groupProp = 'type'
+  const grouped = useComputed('grouped', () => getGroups(toJS(items), item => item.type))
 
-  const sortByType = R.sortBy(R.prop(groupProp))
+  useReaction(
+    'selection items',
+    () => items.length,
+    () => {
+      selection.current.setItems(grouped.get().items as any, true)
+    },
+  )
 
-  // inital
   useMemo(() => {
-    set(items, sortByType(items))
-
-    selection.current.setItems(items as any)
+    selection.current.setItems(grouped.get().items as any)
   }, [])
-
-  const getGroups = (_items: Item[]) => {
-    const groupMap = R.groupBy<Item>(R.prop(groupProp), _items)
-
-    const nextGroups = Object.entries(groupMap).reduce(
-      (acc, [key, groupItems], i) => [
-        ...acc,
-        {
-          key,
-          name: key,
-          startIndex: R.last(acc) ? R.last(acc)!.startIndex + R.last(acc)!.count : 0,
-          count: groupItems.length,
-        },
-      ],
-      [] as IGroup[],
-    )
-
-    console.log('nextGroups', nextGroups)
-
-    return nextGroups
-  }
 
   const renderItem = (item: Item) => (
     <div>
@@ -116,10 +97,61 @@ const BoardFixture: React.FC = () => {
     </div>
   )
 
-  const onDragEnd = ({ item, source, target }: BoardOnDropProps) => {
+  const onDragEnd = ({ source, target }: BoardOnDropProps) => {
     runInAction('drop update', () => {
-      items[source.index][groupProp] = target.group.key as any
-      mutableMoveElement(items, source.index, target.index)
+      /*
+       * Tricky as hell, but without ANY searches:
+       * - if drop is appended to group (isAppended):
+       *    - target item is the last item of this group (not target index)
+       *    - splice should land AFTER this element (+1 increment)
+       * - if group is shuffled (same group, descending vector)
+       *    - target item goes up, so the splice should land AFTER (+1 increment)
+       * - for each item spliced before adjusted target (index < targetItemIndex + shift)
+       *    => shift pointer (of actual target index) moves to the begining (-1 decrement)
+       */
+
+      // prepare
+      const selectedIndicies = selection.current.getSelectedIndices()
+      const realSelectedIndicies = selectedIndicies.map(index => grouped.get().reversedItems[index])
+
+      const isAppended = target.localIndex === target.group.count
+      const isShuffle =
+        target.groupIndex === source.groupIndex && target.localIndex > source.localIndex
+
+      const targetItemIndex = isAppended
+        ? grouped.get().reversedItems[target.group.startIndex + target.group.count - 1]
+        : grouped.get().reversedItems[target.index]
+
+      // edit
+      realSelectedIndicies.forEach(i => {
+        items[i].type = target.group.key as any
+      })
+
+      // cut
+      const movedItems: Item[] = []
+      let shift = 0
+
+      realSelectedIndicies
+        .sort()
+        .reverse()
+        .forEach(index => {
+          movedItems.push(...items.splice(index, 1))
+
+          if (index < targetItemIndex + shift) {
+            shift += -1
+          }
+        })
+
+      // paste
+      const realTargetIndex = targetItemIndex + shift + (isAppended || isShuffle ? 1 : 0)
+      items.splice(realTargetIndex, 0, ...movedItems)
+
+      // deselect
+      selection.current.setItems(grouped.get().items as any, true)
+      selection.current.setAllSelected(false)
+
+      // reselect
+      // TODO
     })
   }
 
@@ -131,15 +163,13 @@ const BoardFixture: React.FC = () => {
   )
 
   return useObserver(() => {
-    const groups = getGroups(toJS(items))
-
     return (
       <div>
         <Board
           onRenderHeader={renderHeader}
           selection={selection.current}
-          groups={groups}
-          items={toJS(items)}
+          groups={grouped.get().groups}
+          items={grouped.get().items}
           onRenderItem={renderItem}
           onDrop={onDragEnd}
         />
