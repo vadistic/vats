@@ -53,6 +53,7 @@ export const createBoardContext = (props: BoardContextProps) => {
    * card focus
    */
   const focusRef = useRef<number | null>(null)
+  const draggingRef = useRef<boolean>(false)
 
   const cardRefs = useMemo(() => items.map(() => React.createRef<HTMLDivElement>()), [
     items,
@@ -173,6 +174,7 @@ export const createBoardContext = (props: BoardContextProps) => {
 
     selection.setAllSelected(false)
     selection.setIndexSelected(index, true, true)
+
     return false
   }
 
@@ -252,6 +254,10 @@ export const createBoardContext = (props: BoardContextProps) => {
     crtlKey: boolean
     shiftKey: boolean
   }) => {
+    if (draggingRef.current) {
+      return
+    }
+
     const isModal = selection.isModal()
 
     // enter modal range on shift (with some selection other than el)
@@ -313,6 +319,10 @@ export const createBoardContext = (props: BoardContextProps) => {
     crtlKey: boolean
     shiftKey: boolean
   }) => {
+    if (draggingRef.current) {
+      return
+    }
+
     // invoke when not modal
     if (!selection.isModal() && props.onInvokeItem) {
       props.onInvokeItem(itemsRef.current[pointer.index], pointer)
@@ -343,7 +353,19 @@ export const createBoardContext = (props: BoardContextProps) => {
     }
   }
 
+  const handleCardDragEnd = (info: BoardDragInfo<BoardCardPointer>) => {
+    // update dragging ref
+    if (draggingRef.current) {
+      draggingRef.current = false
+    }
+  }
+
   const handleCardDragStart = (info: BoardDragInfo<BoardCardPointer>) => {
+    // update dragging ref
+    if (!draggingRef.current) {
+      draggingRef.current = true
+    }
+
     // handle only callback in source
     if (info.isSource && info.payload) {
       // focus if not focused
@@ -429,6 +451,7 @@ export const createBoardContext = (props: BoardContextProps) => {
     ...props,
     cardRefs,
     focusRef,
+    draggingRef,
     handleCardFocus,
     handleCardFocusNavigation,
     clearCardFocus,
@@ -439,6 +462,7 @@ export const createBoardContext = (props: BoardContextProps) => {
     refreshSelection,
     getCardPayload,
     handleCardDragStart,
+    handleCardDragEnd,
     handleCardDrop,
     handleLaneDragStart,
     handleLaneDrop,

@@ -7,7 +7,7 @@ import { useMemo, useRef } from 'react'
 import { StoriesFixture } from '../../../stories/fixture.stories'
 import { getGroups } from '../../../utils'
 import { Board, BoardProps } from '../board'
-import { BoardOnDropProps } from '../context'
+import { BoardCardPointer, BoardOnDropProps } from '../context'
 
 const ITEMS = [
   {
@@ -78,11 +78,15 @@ const BoardFixture: React.FC = () => {
 
   const grouped = useComputed('grouped', () => getGroups(toJS(items), item => item.type))
 
+  const actionRef = useRef(false)
+
   useReaction(
     'selection items',
     () => items.length,
     () => {
-      selection.current.setItems(grouped.get().items as any, true)
+      if (!actionRef.current) {
+        selection.current.setItems(grouped.get().items as any, true)
+      }
     },
   )
 
@@ -90,17 +94,24 @@ const BoardFixture: React.FC = () => {
     selection.current.setItems(grouped.get().items as any)
   }, [])
 
-  const renderItem = (item: Item) => (
+  const renderItem = (item: Item, pointer: BoardCardPointer) => (
     <div>
       <p>{item.text}</p>
+      <code>GroupedIndex: {pointer.index}</code>
+      <br />
+      <code>RealIndex: {grouped.get().reversedItems[pointer.index]}</code>
+      <br />
       <small>{item.type}</small>
     </div>
   )
 
   const onDragEnd = ({ source, target }: BoardOnDropProps) => {
     runInAction('drop update', () => {
+      actionRef.current = true
       /*
-       * Tricky as hell, but without ANY searches:
+       * Tricky as hell, but without any array searches (saved this 5 ms^^)
+       *
+       * targetItemIndex is adjusted with:
        * - if drop is appended to group (isAppended):
        *    - target item is the last item of this group (not target index)
        *    - splice should land AFTER this element (+1 increment)
@@ -111,16 +122,18 @@ const BoardFixture: React.FC = () => {
        */
 
       // prepare
+      const reverseIndicies = grouped.get().reversedItems
+
       const selectedIndicies = selection.current.getSelectedIndices()
-      const realSelectedIndicies = selectedIndicies.map(index => grouped.get().reversedItems[index])
+      const realSelectedIndicies = selectedIndicies.map(index => reverseIndicies[index])
 
       const isAppended = target.localIndex === target.group.count
       const isShuffle =
         target.groupIndex === source.groupIndex && target.localIndex > source.localIndex
 
       const targetItemIndex = isAppended
-        ? grouped.get().reversedItems[target.group.startIndex + target.group.count - 1]
-        : grouped.get().reversedItems[target.index]
+        ? reverseIndicies[target.group.startIndex + target.group.count - 1] + 1
+        : reverseIndicies[target.index] + (isShuffle ? 1 : 0)
 
       // edit
       realSelectedIndicies.forEach(i => {
@@ -143,7 +156,7 @@ const BoardFixture: React.FC = () => {
         })
 
       // paste
-      const realTargetIndex = targetItemIndex + shift + (isAppended || isShuffle ? 1 : 0)
+      const realTargetIndex = targetItemIndex + shift
       items.splice(realTargetIndex, 0, ...movedItems)
 
       // deselect
@@ -151,7 +164,22 @@ const BoardFixture: React.FC = () => {
       selection.current.setAllSelected(false)
 
       // reselect
-      // TODO
+      if (movedItems.length > 1) {
+        // really starting to regretting this idea to use only indexes
+        const selectionShift = selectedIndicies.reduce(
+          (acc, index) => (index < target.index ? acc - 1 : acc),
+          0,
+        )
+
+        console.log(selectedIndicies, target.index, selectionShift)
+
+        selection.current.setModal(true)
+        selection.current.toggleRangeSelected(target.index + selectionShift, movedItems.length)
+      } else {
+        selection.current.setIndexSelected(target.index, true, true)
+      }
+
+      actionRef.current = false
     })
   }
 

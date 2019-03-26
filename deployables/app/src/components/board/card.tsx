@@ -99,6 +99,8 @@ export const BoardCard: React.FC<BoardCardProps> = memo(
           tabIndex={index}
           ref={ref}
           onFocus={ctx.handleCardFocus(pointer)}
+          onDragStart={() => console.log('onDragStart')}
+          onDragEnd={() => console.log('onDragEnd')}
           onKeyDown={handleKeydown}
           onMouseUp={handleClick}
           data-is-focusable={true}

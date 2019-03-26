@@ -4,7 +4,7 @@ import { FocusZone, FocusZoneDirection, IGroup } from 'office-ui-fabric-react'
 import React, { useContext, useRef, useState } from 'react'
 import { Container, Draggable } from 'react-smooth-dnd'
 import { BoardCard } from './card'
-import { boardClassNames, BoardContext } from './context'
+import { BoardCardPointer, boardClassNames, BoardContext, BoardDragInfo } from './context'
 
 export interface BoardLaneProps {
   group: IGroup
@@ -70,7 +70,9 @@ export const BoardLane = ({ items, group, groupIndex }: BoardLaneProps) => {
     }
   }
 
-  const handleDragEnd = () => {
+  const handleDragEnd = (info: BoardDragInfo<BoardCardPointer>) => {
+    ctx.handleCardDragEnd(info)
+
     if (isOverRef.current !== false) {
       setOver(false)
     }

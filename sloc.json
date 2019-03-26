@@ -1,15 +1,15 @@
 {
   "name": "Source Lines of Code",
-  "date": "2019-03-25T18:42:11.390Z",
+  "date": "2019-03-26T00:15:23.699Z",
   "total": {
-    "total": 15524,
-    "source": 12322,
-    "comment": 957,
-    "single": 428,
-    "block": 529,
+    "total": 15580,
+    "source": 12363,
+    "comment": 961,
+    "single": 430,
+    "block": 531,
     "mixed": 16,
-    "empty": 2273,
-    "todo": 37,
+    "empty": 2284,
+    "todo": 36,
     "blockEmpty": 12,
     "generated": 125798
   },
@@ -38,14 +38,14 @@
       "generated": 92400
     },
     "tsx": {
-      "total": 6956,
-      "source": 5716,
-      "comment": 240,
-      "single": 122,
-      "block": 118,
+      "total": 7012,
+      "source": 5757,
+      "comment": 244,
+      "single": 124,
+      "block": 120,
       "mixed": 5,
-      "empty": 1005,
-      "todo": 25,
+      "empty": 1016,
+      "todo": 24,
       "blockEmpty": 0
     },
     "graphql": {
@@ -364,14 +364,14 @@
     },
     "deployables/app": {
       "total": {
-        "total": 6348,
-        "source": 5284,
-        "comment": 181,
-        "single": 139,
-        "block": 42,
+        "total": 6404,
+        "source": 5325,
+        "comment": 185,
+        "single": 141,
+        "block": 44,
         "mixed": 5,
-        "empty": 888,
-        "todo": 22,
+        "empty": 899,
+        "todo": 21,
         "blockEmpty": 0,
         "generated": 40144
       },
@@ -399,14 +399,14 @@
         "generated": 40074
       },
       "tsx": {
-        "total": 5027,
-        "source": 4190,
-        "comment": 128,
-        "single": 90,
-        "block": 38,
+        "total": 5083,
+        "source": 4231,
+        "comment": 132,
+        "single": 92,
+        "block": 40,
         "mixed": 3,
-        "empty": 712,
-        "todo": 20,
+        "empty": 723,
+        "todo": 19,
         "blockEmpty": 0
       },
       "graphql": {
