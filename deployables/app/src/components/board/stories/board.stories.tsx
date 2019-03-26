@@ -5,7 +5,8 @@ import { useObservable, useObserver } from 'mobx-react-lite'
 import { Selection, SelectionMode } from 'office-ui-fabric-react'
 import { useMemo, useRef } from 'react'
 import { StoriesFixture } from '../../../stories/fixture.stories'
-import { getGroups } from '../../../utils'
+import { getGrouped } from '../../../utils'
+import { boardUpdateAction } from '../action'
 import { Board, BoardProps } from '../board'
 import { BoardCardPointer, BoardOnDropProps } from '../context'
 
@@ -60,7 +61,7 @@ const ITEMS = [
 interface Item {
   id: string
   text: string
-  type: 'TODO' | 'DONE'
+  type: 'TODO' | 'DONE' | 'CUT'
 }
 
 const BoardFixture: React.FC = () => {
@@ -69,25 +70,31 @@ const BoardFixture: React.FC = () => {
   const selection = useRef(
     new Selection({
       getKey: (item: any) => item.id,
-      onSelectionChanged: () => {
-        console.log('secection changed', selection.current.getSelection())
-      },
       selectionMode: SelectionMode.multiple,
     }),
   )
 
-  const grouped = useComputed('grouped', () => getGroups(toJS(items), item => item.type))
+  const template = [
+    {
+      key: 'TODO',
+    },
+    {
+      key: 'DONE',
+    },
+    {
+      key: 'CUT',
+    },
+  ]
 
-  const actionRef = useRef(false)
+  const grouped = useComputed('grouped', () => getGrouped(template, toJS(items), item => item.type))
 
   useReaction(
     'selection items',
     () => items.length,
     () => {
-      if (!actionRef.current) {
-        selection.current.setItems(grouped.get().items as any, true)
-      }
+      selection.current.setItems(grouped.get().items as any, true)
     },
+    [],
   )
 
   useMemo(() => {
@@ -105,81 +112,17 @@ const BoardFixture: React.FC = () => {
     </div>
   )
 
-  const onDragEnd = ({ source, target }: BoardOnDropProps) => {
+  const onDragEnd = (props: BoardOnDropProps) => {
     runInAction('drop update', () => {
-      actionRef.current = true
-      /*
-       * Tricky as hell, but without any array searches (saved this 5 ms^^)
-       *
-       * targetItemIndex is adjusted with:
-       * - if drop is appended to group (isAppended):
-       *    - target item is the last item of this group (not target index)
-       *    - splice should land AFTER this element (+1 increment)
-       * - if group is shuffled (same group, descending vector)
-       *    - target item goes up, so the splice should land AFTER (+1 increment)
-       * - for each item spliced before adjusted target (index < targetItemIndex + shift)
-       *    => shift pointer (of actual target index) moves to the begining (-1 decrement)
-       */
-
-      // prepare
-      const reverseIndicies = grouped.get().reversedItems
-
-      const selectedIndicies = selection.current.getSelectedIndices()
-      const realSelectedIndicies = selectedIndicies.map(index => reverseIndicies[index])
-
-      const isAppended = target.localIndex === target.group.count
-      const isShuffle =
-        target.groupIndex === source.groupIndex && target.localIndex > source.localIndex
-
-      const targetItemIndex = isAppended
-        ? reverseIndicies[target.group.startIndex + target.group.count - 1] + 1
-        : reverseIndicies[target.index] + (isShuffle ? 1 : 0)
-
-      // edit
-      realSelectedIndicies.forEach(i => {
-        items[i].type = target.group.key as any
-      })
-
-      // cut
-      const movedItems: Item[] = []
-      let shift = 0
-
-      realSelectedIndicies
-        .sort()
-        .reverse()
-        .forEach(index => {
-          movedItems.push(...items.splice(index, 1))
-
-          if (index < targetItemIndex + shift) {
-            shift += -1
-          }
-        })
-
-      // paste
-      const realTargetIndex = targetItemIndex + shift
-      items.splice(realTargetIndex, 0, ...movedItems)
-
-      // deselect
-      selection.current.setItems(grouped.get().items as any, true)
-      selection.current.setAllSelected(false)
-
-      // reselect
-      if (movedItems.length > 1) {
-        // really starting to regretting this idea to use only indexes
-        const selectionShift = selectedIndicies.reduce(
-          (acc, index) => (index < target.index ? acc - 1 : acc),
-          0,
-        )
-
-        console.log(selectedIndicies, target.index, selectionShift)
-
-        selection.current.setModal(true)
-        selection.current.toggleRangeSelected(target.index + selectionShift, movedItems.length)
-      } else {
-        selection.current.setIndexSelected(target.index, true, true)
-      }
-
-      actionRef.current = false
+      boardUpdateAction({
+        grouped: grouped.get(),
+        items,
+        selection: selection.current,
+        update: (selectedItems, { group }) =>
+          selectedItems.forEach(item => {
+            item.type = group.key as any
+          }),
+      })(props)
     })
   }
 

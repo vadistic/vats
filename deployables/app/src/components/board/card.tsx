@@ -73,8 +73,15 @@ export const BoardCard: React.FC<BoardCardProps> = memo(
       ctx.handleCardFocusNavigation(pointer)(ev)
     }
 
-    // ! mouseUp to do not deselect on dragStart
+    // bit hacky but seems ok
+    // - mouseUp to not reselect on dragStart (it's done separately)
+    // - draggingRef check to not reselect onDragEnd
+    //  (needs to be done with flag because Draggable does not propagate events)
     const handleClick = (ev: React.MouseEvent<HTMLDivElement>) => {
+      if (ctx.draggingRef.current) {
+        return
+      }
+
       const double = isDoubleClick(ev)
 
       if (double) {

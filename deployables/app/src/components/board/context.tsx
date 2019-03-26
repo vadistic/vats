@@ -254,10 +254,6 @@ export const createBoardContext = (props: BoardContextProps) => {
     crtlKey: boolean
     shiftKey: boolean
   }) => {
-    if (draggingRef.current) {
-      return
-    }
-
     const isModal = selection.isModal()
 
     // enter modal range on shift (with some selection other than el)
@@ -319,10 +315,6 @@ export const createBoardContext = (props: BoardContextProps) => {
     crtlKey: boolean
     shiftKey: boolean
   }) => {
-    if (draggingRef.current) {
-      return
-    }
-
     // invoke when not modal
     if (!selection.isModal() && props.onInvokeItem) {
       props.onInvokeItem(itemsRef.current[pointer.index], pointer)

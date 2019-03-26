@@ -1,43 +1,39 @@
 import { StringMap } from '@vats/utils'
 import { IGroup } from 'office-ui-fabric-react'
 
-export interface GroupItemPointer {
-  index: number
-  groupIndex: number
+export type PartialGroup = Partial<IGroup> & {
+  key: string
 }
 
-export const adjustGroups = (groups: IGroup[], from: GroupItemPointer, to: GroupItemPointer) => {
-  const min = Math.min(from.groupIndex, to.groupIndex)
-  const max = Math.max(from.groupIndex, to.groupIndex)
+export type Grouped = ReturnType<typeof getGrouped>
 
-  if (to.groupIndex !== from.groupIndex) {
-    groups[to.groupIndex].count = groups[to.groupIndex].count + 1
-    groups[from.groupIndex].count = groups[from.groupIndex].count - 1
+export const getGrouped = <T>(
+  template: PartialGroup[],
+  items: T[],
+  getter: (item: T) => string | string[],
+) => {
+  const groupMap = template.reduce(
+    (acc, group, i) => ({ ...acc, [group.key || '' + i]: [] }),
+    {} as StringMap<T[]>,
+  )
 
-    groups.forEach((group, groupIndex) => {
-      if (min < groupIndex && groupIndex <= max) {
-        groups[groupIndex].startIndex += from.groupIndex < to.groupIndex ? -1 : 1
-      }
-    })
-  }
-}
-
-export const getGroups = <T>(items: T[], groupBy: (item: T) => string | string[]) => {
-  const groupMap: StringMap<T[]> = {}
-  const reversedGroupMap: StringMap<number[]> = {}
+  const reversedGroupMap = template.reduce(
+    (acc, group, i) => ({ ...acc, [group.key || '' + i]: [] }),
+    {} as StringMap<number[]>,
+  )
 
   const push = (item: T, itemIndex: number, key: string) => {
     if (!groupMap[key]) {
-      groupMap[key] = []
-      reversedGroupMap[key] = []
+      return
     }
+
     groupMap[key].push(item)
     reversedGroupMap[key].push(itemIndex)
   }
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i]
-    const key = groupBy(item)
+    const key = getter(item)
 
     if (Array.isArray(key)) {
       key.forEach(k => {
