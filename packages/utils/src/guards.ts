@@ -17,6 +17,9 @@ export const tuplify = <T extends [any] | any[]>(tuple: T): T => tuple
 export const XOR = (a: boolean, b: boolean) => (a && !b) || (!a && b)
 export const XNOR = (a: boolean, b: boolean) => (a && b) || !(a || b)
 
+export const nullableFn = <T, R>(input: T, fn: (nonullable: NonNullable<T>) => R) =>
+  (input === null ? input : fn(input as NonNullable<T>)) as T extends null ? R | null : R
+
 /**
  * for index stringatures in object switch
  */

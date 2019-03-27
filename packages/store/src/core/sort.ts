@@ -37,19 +37,26 @@ export const createStoreSort = <Typing extends StoreTyping>({
       tuplify([
         observables.state.sortBy,
         observables.state.sortDirection,
+        observables.state.keepSorted,
         (observables.data[observables.config.roots.query] as any[]).length,
       ]),
-    ([sortBy, sortDirection]) => {
-      executeSort({ sortBy, sortDirection })
+    ([sortBy, sortDirection, keepSorted, length]) => {
+      if (!keepSorted || length === 0) {
+        return
+      }
+
+      executeSort({ sortBy, sortDirection, keepSorted })
     },
     { name: helper.actionName('sort change') },
   )
 
   const sort = action(helper.actionName('sort'), (by?: Partial<SortProps>) => {
-    if (!by) {
+    const keepSorted = observables.state.keepSorted
+    if (!by || !keepSorted) {
       executeSort({
         sortBy: observables.state.sortBy,
         sortDirection: observables.state.sortDirection,
+        keepSorted,
       })
       return
     }

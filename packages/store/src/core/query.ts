@@ -78,7 +78,6 @@ export const createStoreQuery = <Typing extends StoreTyping>({
       }
 
       if (res.data) {
-        console.log('RES', res.data)
         orderedApply(observables.data, res.data)
       }
 

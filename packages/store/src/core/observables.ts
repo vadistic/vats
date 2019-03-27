@@ -44,6 +44,7 @@ export type SafeData<Data> = DeepStringIndex<
 export interface SortProps {
   sortBy: string | undefined
   sortDirection: SortDirection
+  keepSorted: boolean
 }
 
 export type GraphqlRoots = { [K in keyof StoreGraphqlConfig]: string }
@@ -85,6 +86,7 @@ export const createStoreObservables = <Typing extends StoreTyping, Type extends 
     ...(type === 'multi' && {
       sortDirection: SortDirection.ASCENDING,
       sortBy: undefined as string | undefined,
+      keepSorted: false,
     }),
     ...initObservables.state,
   } as Typing['state'] & IObservableObject & (Type extends 'multi' ? SortProps : {})
