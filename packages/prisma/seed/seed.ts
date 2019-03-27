@@ -13,6 +13,7 @@ import {
   Job,
   JobType,
   Location,
+  ReviewInstanceCreateInput,
   Source,
   Stage,
   Tag,
@@ -262,7 +263,7 @@ const seed = async () => {
     const job = await attempt(
       db.query.job,
       { where: { id: jobs.random().id } },
-      `{ id, workflow { stages { id, type }, disqualifications { id }}}`,
+      `{ id, workflow { stages { id, type }, disqualifications { id }, reviews {id, name, fields {id, label, type}}}}`,
     )
 
     if (!job) {
@@ -273,12 +274,30 @@ const seed = async () => {
 
     const type = f.random.arrayElement(['QUALIFIED', 'DISQUALIFIED'] as ApplicationType[])
 
-    const disqualificationInstance = {
-      disqualification: {
+    const reviewInstances = {
+      prototype: {
         connect: { id: f.random.arrayElement<Disqualification>(job.workflow.disqualifications).id },
       },
       createdBy: { connect: { id: users.random().id } },
     }
+
+    const reviewInstanceCreate: ReviewInstanceCreateInput[] = []
+
+    R.times(() => {
+      const reviewTemplate = f.random.arrayElement<any>(job.workflow.reviews)
+
+      // workflow without review templates
+      if (!reviewTemplate) {
+        return
+      }
+
+      reviewInstanceCreate.push({
+        createdBy: { connect: { id: users.random().id } },
+        rating: f.random.number(5),
+        content: f.lorem.paragraph(),
+        prototype: { connect: { id: reviewTemplate.id } },
+      })
+    }, f.random.number(3))
 
     applications.arr[i] = await attempt(db.mutation.createApplication, {
       data: {
@@ -286,8 +305,8 @@ const seed = async () => {
         job: { connect: { id: job.id } },
         stage: { connect: { id: stage.id } },
         type,
-        disqualification:
-          type === 'DISQUALIFIED' ? { create: disqualificationInstance } : undefined,
+        reviews: { create: reviewInstanceCreate },
+        disqualification: type === 'DISQUALIFIED' ? { create: reviewInstances } : undefined,
       },
     })
   }

@@ -83,6 +83,7 @@ type Application {
   type: ApplicationType!
   disqualification: DisqualificationInstance
   stage: Stage!
+  reviews: [ReviewInstance!]!
 
   # connections
   job: Job!
@@ -164,6 +165,7 @@ type Workflow {
   stages: [Stage!]!
   disqualifications: [Disqualification!]!
   fields: [Field!]!
+  reviews: [Review!]!
 }
 
 type Disqualification {
@@ -180,7 +182,7 @@ type DisqualificationInstance {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  disqualification: Disqualification!
+  prototype: Disqualification!
   createdBy: User!
   content: String
 }
@@ -212,6 +214,28 @@ type Comment {
 
   # info
   content: String!
+}
+
+type Review {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  fields: [Field!]!
+}
+
+type ReviewInstance {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  prototype: Review
+  fields: [FieldInstance!]!
+  createdBy: User!
+
+  rating: Int
+  content: String
 }
 
 # SYSTEM TYPES
@@ -250,7 +274,7 @@ type FieldInstance {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  field: Field!
+  prototype: Field!
   value: String
 }
 

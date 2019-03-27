@@ -62,6 +62,20 @@ export const workflowsData: Workflows = {
         },
       ],
     },
+    reviews: {
+      create: [
+        {
+          name: 'Quick review',
+          fields: { create: [{ label: 'General impression', type: 'TEXT' }] },
+        },
+        {
+          name: 'Post interview',
+          fields: {
+            create: [{ label: 'Task', type: 'PARAGRAPH' }, { label: 'Duration', type: 'INT' }],
+          },
+        },
+      ],
+    },
   },
   custom: {
     name: 'In situ workflow',

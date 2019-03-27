@@ -9,13 +9,14 @@
   "source": "src/index.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc -p tsconfig.json",
+    "transpile": "vscripts transpile",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "down": "docker-compose down --env-file=.env",
     "up": "docker-compose up -d --force-recreate --env-file=.env",
     "deploy": "env-cmd prisma deploy",
+    "seed": "yarn env-cmd prisma reset && yarn env-cmd prisma seed",
     "gen": "env-cmd prisma generate",
-    "prepare": "yarn gen && yarn build"
+    "prepare": "yarn gen && yarn transpile"
   },
   "dependencies": {
     "@vats/utils": "^0.1.0",

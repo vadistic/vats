@@ -42,6 +42,14 @@ type AggregateLocation {
   count: Int!
 }
 
+type AggregateReview {
+  count: Int!
+}
+
+type AggregateReviewInstance {
+  count: Int!
+}
+
 type AggregateSource {
   count: Int!
 }
@@ -77,6 +85,7 @@ type Application {
   type: ApplicationType!
   disqualification: DisqualificationInstance
   stage: Stage!
+  reviews(where: ReviewInstanceWhereInput, orderBy: ReviewInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewInstance!]
   job: Job!
   candidate: Candidate!
 }
@@ -91,6 +100,7 @@ input ApplicationCreateInput {
   type: ApplicationType!
   disqualification: DisqualificationInstanceCreateOneInput
   stage: StageCreateOneInput!
+  reviews: ReviewInstanceCreateManyInput
   job: JobCreateOneWithoutApplicationsInput!
   candidate: CandidateCreateOneWithoutApplicationsInput!
 }
@@ -109,6 +119,7 @@ input ApplicationCreateWithoutCandidateInput {
   type: ApplicationType!
   disqualification: DisqualificationInstanceCreateOneInput
   stage: StageCreateOneInput!
+  reviews: ReviewInstanceCreateManyInput
   job: JobCreateOneWithoutApplicationsInput!
 }
 
@@ -116,6 +127,7 @@ input ApplicationCreateWithoutJobInput {
   type: ApplicationType!
   disqualification: DisqualificationInstanceCreateOneInput
   stage: StageCreateOneInput!
+  reviews: ReviewInstanceCreateManyInput
   candidate: CandidateCreateOneWithoutApplicationsInput!
 }
 
@@ -209,6 +221,7 @@ input ApplicationUpdateInput {
   type: ApplicationType
   disqualification: DisqualificationInstanceUpdateOneInput
   stage: StageUpdateOneRequiredInput
+  reviews: ReviewInstanceUpdateManyInput
   job: JobUpdateOneRequiredWithoutApplicationsInput
   candidate: CandidateUpdateOneRequiredWithoutApplicationsInput
 }
@@ -254,6 +267,7 @@ input ApplicationUpdateWithoutCandidateDataInput {
   type: ApplicationType
   disqualification: DisqualificationInstanceUpdateOneInput
   stage: StageUpdateOneRequiredInput
+  reviews: ReviewInstanceUpdateManyInput
   job: JobUpdateOneRequiredWithoutApplicationsInput
 }
 
@@ -261,6 +275,7 @@ input ApplicationUpdateWithoutJobDataInput {
   type: ApplicationType
   disqualification: DisqualificationInstanceUpdateOneInput
   stage: StageUpdateOneRequiredInput
+  reviews: ReviewInstanceUpdateManyInput
   candidate: CandidateUpdateOneRequiredWithoutApplicationsInput
 }
 
@@ -323,6 +338,9 @@ input ApplicationWhereInput {
   type_not_in: [ApplicationType!]
   disqualification: DisqualificationInstanceWhereInput
   stage: StageWhereInput
+  reviews_every: ReviewInstanceWhereInput
+  reviews_some: ReviewInstanceWhereInput
+  reviews_none: ReviewInstanceWhereInput
   job: JobWhereInput
   candidate: CandidateWhereInput
   AND: [ApplicationWhereInput!]
@@ -342,8 +360,8 @@ type Candidate {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
@@ -378,8 +396,8 @@ input CandidateCreateemailsInput {
 }
 
 input CandidateCreateInput {
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -427,8 +445,8 @@ input CandidateCreateresumesStringInput {
 }
 
 input CandidateCreateWithoutApplicationsInput {
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -448,8 +466,8 @@ input CandidateCreateWithoutApplicationsInput {
 }
 
 input CandidateCreateWithoutTasksInput {
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: CandidateCreateemailsInput
   phones: CandidateCreatephonesInput
   links: CandidateCreatelinksInput
@@ -496,8 +514,8 @@ type CandidatePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   emails: [String!]!
   phones: [String!]!
   links: [String!]!
@@ -1233,7 +1251,7 @@ type DisqualificationInstance {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  disqualification: Disqualification!
+  prototype: Disqualification!
   createdBy: User!
   content: String
 }
@@ -1245,7 +1263,7 @@ type DisqualificationInstanceConnection {
 }
 
 input DisqualificationInstanceCreateInput {
-  disqualification: DisqualificationCreateOneInput!
+  prototype: DisqualificationCreateOneInput!
   createdBy: UserCreateOneInput!
   content: String
 }
@@ -1297,13 +1315,13 @@ input DisqualificationInstanceSubscriptionWhereInput {
 }
 
 input DisqualificationInstanceUpdateDataInput {
-  disqualification: DisqualificationUpdateOneRequiredInput
+  prototype: DisqualificationUpdateOneRequiredInput
   createdBy: UserUpdateOneRequiredInput
   content: String
 }
 
 input DisqualificationInstanceUpdateInput {
-  disqualification: DisqualificationUpdateOneRequiredInput
+  prototype: DisqualificationUpdateOneRequiredInput
   createdBy: UserUpdateOneRequiredInput
   content: String
 }
@@ -1357,7 +1375,7 @@ input DisqualificationInstanceWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  disqualification: DisqualificationWhereInput
+  prototype: DisqualificationWhereInput
   createdBy: UserWhereInput
   content: String
   content_not: String
@@ -1653,7 +1671,7 @@ type FieldInstance {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  field: Field!
+  prototype: Field!
   value: String
 }
 
@@ -1664,7 +1682,7 @@ type FieldInstanceConnection {
 }
 
 input FieldInstanceCreateInput {
-  field: FieldCreateOneInput!
+  prototype: FieldCreateOneInput!
   value: String
 }
 
@@ -1765,12 +1783,12 @@ input FieldInstanceSubscriptionWhereInput {
 }
 
 input FieldInstanceUpdateDataInput {
-  field: FieldUpdateOneRequiredInput
+  prototype: FieldUpdateOneRequiredInput
   value: String
 }
 
 input FieldInstanceUpdateInput {
-  field: FieldUpdateOneRequiredInput
+  prototype: FieldUpdateOneRequiredInput
   value: String
 }
 
@@ -1841,7 +1859,7 @@ input FieldInstanceWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  field: FieldWhereInput
+  prototype: FieldWhereInput
   value: String
   value_not: String
   value_in: [String!]
@@ -3592,6 +3610,18 @@ type Mutation {
   upsertLocation(where: LocationWhereUniqueInput!, create: LocationCreateInput!, update: LocationUpdateInput!): Location!
   deleteLocation(where: LocationWhereUniqueInput!): Location
   deleteManyLocations(where: LocationWhereInput): BatchPayload!
+  createReview(data: ReviewCreateInput!): Review!
+  updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
+  updateManyReviews(data: ReviewUpdateManyMutationInput!, where: ReviewWhereInput): BatchPayload!
+  upsertReview(where: ReviewWhereUniqueInput!, create: ReviewCreateInput!, update: ReviewUpdateInput!): Review!
+  deleteReview(where: ReviewWhereUniqueInput!): Review
+  deleteManyReviews(where: ReviewWhereInput): BatchPayload!
+  createReviewInstance(data: ReviewInstanceCreateInput!): ReviewInstance!
+  updateReviewInstance(data: ReviewInstanceUpdateInput!, where: ReviewInstanceWhereUniqueInput!): ReviewInstance
+  updateManyReviewInstances(data: ReviewInstanceUpdateManyMutationInput!, where: ReviewInstanceWhereInput): BatchPayload!
+  upsertReviewInstance(where: ReviewInstanceWhereUniqueInput!, create: ReviewInstanceCreateInput!, update: ReviewInstanceUpdateInput!): ReviewInstance!
+  deleteReviewInstance(where: ReviewInstanceWhereUniqueInput!): ReviewInstance
+  deleteManyReviewInstances(where: ReviewInstanceWhereInput): BatchPayload!
   createSource(data: SourceCreateInput!): Source!
   updateSource(data: SourceUpdateInput!, where: SourceWhereUniqueInput!): Source
   updateManySources(data: SourceUpdateManyMutationInput!, where: SourceWhereInput): BatchPayload!
@@ -3687,6 +3717,12 @@ type Query {
   location(where: LocationWhereUniqueInput!): Location
   locations(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Location]!
   locationsConnection(where: LocationWhereInput, orderBy: LocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationConnection!
+  review(where: ReviewWhereUniqueInput!): Review
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review]!
+  reviewsConnection(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewConnection!
+  reviewInstance(where: ReviewInstanceWhereUniqueInput!): ReviewInstance
+  reviewInstances(where: ReviewInstanceWhereInput, orderBy: ReviewInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ReviewInstance]!
+  reviewInstancesConnection(where: ReviewInstanceWhereInput, orderBy: ReviewInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewInstanceConnection!
   source(where: SourceWhereUniqueInput!): Source
   sources(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Source]!
   sourcesConnection(where: SourceWhereInput, orderBy: SourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SourceConnection!
@@ -3709,6 +3745,496 @@ type Query {
   workspaces(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Workspace]!
   workspacesConnection(where: WorkspaceWhereInput, orderBy: WorkspaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WorkspaceConnection!
   node(id: ID!): Node
+}
+
+type Review {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
+}
+
+type ReviewConnection {
+  pageInfo: PageInfo!
+  edges: [ReviewEdge]!
+  aggregate: AggregateReview!
+}
+
+input ReviewCreateInput {
+  name: String!
+  fields: FieldCreateManyInput
+}
+
+input ReviewCreateManyInput {
+  create: [ReviewCreateInput!]
+  connect: [ReviewWhereUniqueInput!]
+}
+
+input ReviewCreateOneInput {
+  create: ReviewCreateInput
+  connect: ReviewWhereUniqueInput
+}
+
+type ReviewEdge {
+  node: Review!
+  cursor: String!
+}
+
+type ReviewInstance {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  prototype: Review
+  fields(where: FieldInstanceWhereInput, orderBy: FieldInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldInstance!]
+  createdBy: User!
+  rating: Int
+  content: String
+}
+
+type ReviewInstanceConnection {
+  pageInfo: PageInfo!
+  edges: [ReviewInstanceEdge]!
+  aggregate: AggregateReviewInstance!
+}
+
+input ReviewInstanceCreateInput {
+  prototype: ReviewCreateOneInput
+  fields: FieldInstanceCreateManyInput
+  createdBy: UserCreateOneInput!
+  rating: Int
+  content: String
+}
+
+input ReviewInstanceCreateManyInput {
+  create: [ReviewInstanceCreateInput!]
+  connect: [ReviewInstanceWhereUniqueInput!]
+}
+
+type ReviewInstanceEdge {
+  node: ReviewInstance!
+  cursor: String!
+}
+
+enum ReviewInstanceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  rating_ASC
+  rating_DESC
+  content_ASC
+  content_DESC
+}
+
+type ReviewInstancePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  rating: Int
+  content: String
+}
+
+input ReviewInstanceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  rating: Int
+  rating_not: Int
+  rating_in: [Int!]
+  rating_not_in: [Int!]
+  rating_lt: Int
+  rating_lte: Int
+  rating_gt: Int
+  rating_gte: Int
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  AND: [ReviewInstanceScalarWhereInput!]
+  OR: [ReviewInstanceScalarWhereInput!]
+  NOT: [ReviewInstanceScalarWhereInput!]
+}
+
+type ReviewInstanceSubscriptionPayload {
+  mutation: MutationType!
+  node: ReviewInstance
+  updatedFields: [String!]
+  previousValues: ReviewInstancePreviousValues
+}
+
+input ReviewInstanceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ReviewInstanceWhereInput
+  AND: [ReviewInstanceSubscriptionWhereInput!]
+  OR: [ReviewInstanceSubscriptionWhereInput!]
+  NOT: [ReviewInstanceSubscriptionWhereInput!]
+}
+
+input ReviewInstanceUpdateDataInput {
+  prototype: ReviewUpdateOneInput
+  fields: FieldInstanceUpdateManyInput
+  createdBy: UserUpdateOneRequiredInput
+  rating: Int
+  content: String
+}
+
+input ReviewInstanceUpdateInput {
+  prototype: ReviewUpdateOneInput
+  fields: FieldInstanceUpdateManyInput
+  createdBy: UserUpdateOneRequiredInput
+  rating: Int
+  content: String
+}
+
+input ReviewInstanceUpdateManyDataInput {
+  rating: Int
+  content: String
+}
+
+input ReviewInstanceUpdateManyInput {
+  create: [ReviewInstanceCreateInput!]
+  update: [ReviewInstanceUpdateWithWhereUniqueNestedInput!]
+  upsert: [ReviewInstanceUpsertWithWhereUniqueNestedInput!]
+  delete: [ReviewInstanceWhereUniqueInput!]
+  connect: [ReviewInstanceWhereUniqueInput!]
+  set: [ReviewInstanceWhereUniqueInput!]
+  disconnect: [ReviewInstanceWhereUniqueInput!]
+  deleteMany: [ReviewInstanceScalarWhereInput!]
+  updateMany: [ReviewInstanceUpdateManyWithWhereNestedInput!]
+}
+
+input ReviewInstanceUpdateManyMutationInput {
+  rating: Int
+  content: String
+}
+
+input ReviewInstanceUpdateManyWithWhereNestedInput {
+  where: ReviewInstanceScalarWhereInput!
+  data: ReviewInstanceUpdateManyDataInput!
+}
+
+input ReviewInstanceUpdateWithWhereUniqueNestedInput {
+  where: ReviewInstanceWhereUniqueInput!
+  data: ReviewInstanceUpdateDataInput!
+}
+
+input ReviewInstanceUpsertWithWhereUniqueNestedInput {
+  where: ReviewInstanceWhereUniqueInput!
+  update: ReviewInstanceUpdateDataInput!
+  create: ReviewInstanceCreateInput!
+}
+
+input ReviewInstanceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  prototype: ReviewWhereInput
+  fields_every: FieldInstanceWhereInput
+  fields_some: FieldInstanceWhereInput
+  fields_none: FieldInstanceWhereInput
+  createdBy: UserWhereInput
+  rating: Int
+  rating_not: Int
+  rating_in: [Int!]
+  rating_not_in: [Int!]
+  rating_lt: Int
+  rating_lte: Int
+  rating_gt: Int
+  rating_gte: Int
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  AND: [ReviewInstanceWhereInput!]
+  OR: [ReviewInstanceWhereInput!]
+  NOT: [ReviewInstanceWhereInput!]
+}
+
+input ReviewInstanceWhereUniqueInput {
+  id: ID
+}
+
+enum ReviewOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type ReviewPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+input ReviewScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ReviewScalarWhereInput!]
+  OR: [ReviewScalarWhereInput!]
+  NOT: [ReviewScalarWhereInput!]
+}
+
+type ReviewSubscriptionPayload {
+  mutation: MutationType!
+  node: Review
+  updatedFields: [String!]
+  previousValues: ReviewPreviousValues
+}
+
+input ReviewSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ReviewWhereInput
+  AND: [ReviewSubscriptionWhereInput!]
+  OR: [ReviewSubscriptionWhereInput!]
+  NOT: [ReviewSubscriptionWhereInput!]
+}
+
+input ReviewUpdateDataInput {
+  name: String
+  fields: FieldUpdateManyInput
+}
+
+input ReviewUpdateInput {
+  name: String
+  fields: FieldUpdateManyInput
+}
+
+input ReviewUpdateManyDataInput {
+  name: String
+}
+
+input ReviewUpdateManyInput {
+  create: [ReviewCreateInput!]
+  update: [ReviewUpdateWithWhereUniqueNestedInput!]
+  upsert: [ReviewUpsertWithWhereUniqueNestedInput!]
+  delete: [ReviewWhereUniqueInput!]
+  connect: [ReviewWhereUniqueInput!]
+  set: [ReviewWhereUniqueInput!]
+  disconnect: [ReviewWhereUniqueInput!]
+  deleteMany: [ReviewScalarWhereInput!]
+  updateMany: [ReviewUpdateManyWithWhereNestedInput!]
+}
+
+input ReviewUpdateManyMutationInput {
+  name: String
+}
+
+input ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput!
+  data: ReviewUpdateManyDataInput!
+}
+
+input ReviewUpdateOneInput {
+  create: ReviewCreateInput
+  update: ReviewUpdateDataInput
+  upsert: ReviewUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ReviewWhereUniqueInput
+}
+
+input ReviewUpdateWithWhereUniqueNestedInput {
+  where: ReviewWhereUniqueInput!
+  data: ReviewUpdateDataInput!
+}
+
+input ReviewUpsertNestedInput {
+  update: ReviewUpdateDataInput!
+  create: ReviewCreateInput!
+}
+
+input ReviewUpsertWithWhereUniqueNestedInput {
+  where: ReviewWhereUniqueInput!
+  update: ReviewUpdateDataInput!
+  create: ReviewCreateInput!
+}
+
+input ReviewWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  fields_every: FieldWhereInput
+  fields_some: FieldWhereInput
+  fields_none: FieldWhereInput
+  AND: [ReviewWhereInput!]
+  OR: [ReviewWhereInput!]
+  NOT: [ReviewWhereInput!]
+}
+
+input ReviewWhereUniqueInput {
+  id: ID
 }
 
 type Source {
@@ -4259,6 +4785,8 @@ type Subscription {
   invite(where: InviteSubscriptionWhereInput): InviteSubscriptionPayload
   job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
   location(where: LocationSubscriptionWhereInput): LocationSubscriptionPayload
+  review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
+  reviewInstance(where: ReviewInstanceSubscriptionWhereInput): ReviewInstanceSubscriptionPayload
   source(where: SourceSubscriptionWhereInput): SourceSubscriptionPayload
   stage(where: StageSubscriptionWhereInput): StageSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
@@ -5358,6 +5886,7 @@ type Workflow {
   stages(where: StageWhereInput, orderBy: StageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stage!]
   disqualifications(where: DisqualificationWhereInput, orderBy: DisqualificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Disqualification!]
   fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
 }
 
 type WorkflowConnection {
@@ -5372,6 +5901,7 @@ input WorkflowCreateInput {
   stages: StageCreateManyInput
   disqualifications: DisqualificationCreateManyInput
   fields: FieldCreateManyInput
+  reviews: ReviewCreateManyInput
 }
 
 input WorkflowCreateManyInput {
@@ -5498,6 +6028,7 @@ input WorkflowUpdateDataInput {
   stages: StageUpdateManyInput
   disqualifications: DisqualificationUpdateManyInput
   fields: FieldUpdateManyInput
+  reviews: ReviewUpdateManyInput
 }
 
 input WorkflowUpdateInput {
@@ -5506,6 +6037,7 @@ input WorkflowUpdateInput {
   stages: StageUpdateManyInput
   disqualifications: DisqualificationUpdateManyInput
   fields: FieldUpdateManyInput
+  reviews: ReviewUpdateManyInput
 }
 
 input WorkflowUpdateManyDataInput {
@@ -5626,6 +6158,9 @@ input WorkflowWhereInput {
   fields_every: FieldWhereInput
   fields_some: FieldWhereInput
   fields_none: FieldWhereInput
+  reviews_every: ReviewWhereInput
+  reviews_some: ReviewWhereInput
+  reviews_none: ReviewWhereInput
   AND: [WorkflowWhereInput!]
   OR: [WorkflowWhereInput!]
   NOT: [WorkflowWhereInput!]

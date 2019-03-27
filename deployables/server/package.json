@@ -14,11 +14,11 @@
     "start": "node build/main.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "apollo:push": "apollo service:push",
-    "copyfiles": "vscripts copyfiles src/**/*.{json,graphql}",
-    "copy:prisma": "cp ../prisma/src/generated/prisma.graphql ./src/generated",
+    "copyfiles": "vscripts copyfiles src/generated/server.graphql",
+    "copyprisma": "cp ../../packages/prisma/src/generated/prisma.graphql ./src/generated",
     "gen:sdl": "vscripts runtime scripts/server-sdl",
     "gen:ts": "gql-gen --config codegen.yml",
-    "gen": "yarn gen:sdl && yarn gen:ts"
+    "gen": "yarn copyprisma && yarn gen:sdl && yarn gen:ts"
   },
   "dependencies": {
     "@vats/prisma": "^0.1.0",
