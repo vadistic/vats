@@ -1,6 +1,6 @@
 module.exports = {
-  presets: [require.resolve('babel-preset-backpack'), require.resolve('@babel/preset-typescript')],
-  plugins: [require.resolve('@babel/plugin-syntax-dynamic-import')],
+  presets: [require.resolve('./babel-preset.node')],
+  plugins: [],
   babelrc: false,
   configFile: false,
 }

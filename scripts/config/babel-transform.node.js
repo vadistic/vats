@@ -1,11 +1,8 @@
 // https://github.com/facebook/jest/issues/6229
 const babelJest = require('babel-jest')
 
-const babelNode = require('./babel.config.node')
-
 const config = {
-  presets: babelNode.presets,
-  plugins: babelNode.plugins,
+  presets: require.resolve('./babel-preset.node'),
   babelrc: false,
   configFile: false,
 }
