@@ -1,4 +1,13 @@
 import { createMultiStore, StoreConfig, StoreProps } from '@vats/store'
+import { SortDirection } from '@vats/utils'
+import { action } from 'mobx'
+import { Selection, SelectionMode } from 'office-ui-fabric-react'
+import React from 'react'
+import {
+  ApplicationsQuery,
+  ApplicationsQuery_applications,
+  ApplicationsQueryVariables,
+} from '../../generated/queries'
 import {
   APPLICATION_CREATE_MUTATION,
   APPLICATION_DELETE_MUTATION,
@@ -8,14 +17,38 @@ import {
   APPLICATIONS_UPDATE_MANY_MUTATION,
 } from './graphql'
 
+export type ApplicationsValue = ApplicationsQuery_applications[]
+export type ApplicationsElement = ApplicationsQuery_applications
+
+export interface ApplicationsValueProps {
+  applications: ApplicationsValue
+}
+export interface ApplicationsElementProps {
+  application: ApplicationsElement
+}
+
+export type ApplicationsStore = ReturnType<typeof createAplicationsStore>
 export interface ApplicationsStoreProps extends StoreProps {}
 
+export const ApplicationsContext = React.createContext<ApplicationsStore>({} as any)
+
 export const createAplicationsStore = (props: ApplicationsStoreProps) => {
-  const state = {}
+  const state = {
+    sortBy: 'updatedAt',
+    sortDirection: SortDirection.DESCENDING,
+    selection: {
+      instance: new Selection({
+        getKey: (item: any) => item.id,
+        selectionMode: SelectionMode.multiple,
+        onSelectionChanged: () => handleSelection(),
+      }),
+      indicies: [] as number[],
+    },
+  }
 
-  const variables = { where: null }
+  const variables: ApplicationsQueryVariables = { where: null }
 
-  const data = { candidates: [] }
+  const data: ApplicationsQuery = { applications: [] }
 
   const config: StoreConfig = {
     name: 'ApplicationsStore',
@@ -31,14 +64,16 @@ export const createAplicationsStore = (props: ApplicationsStoreProps) => {
     },
   }
 
-  const storeProps = createMultiStore({
+  const store = createMultiStore({
     config,
     state,
     variables,
     data,
   })(props)
 
-  return {
-    ...storeProps,
-  }
+  const handleSelection = action(`selection change`, () => {
+    store.state.selection.indicies = store.state.selection.instance.getSelectedIndices()
+  })
+
+  return store
 }

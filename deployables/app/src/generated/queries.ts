@@ -102,6 +102,21 @@ export interface ApplicationsQuery_applications_job {
   requirements: string | null;
 }
 
+export interface ApplicationsQuery_applications_candidate_avatar {
+  __typename: "File";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: string;
+  name: string;
+  url: string;
+}
+
+export interface ApplicationsQuery_applications_candidate_comments {
+  __typename: "Comment";
+  id: string;
+}
+
 export interface ApplicationsQuery_applications_candidate {
   __typename: "Candidate";
   id: string;
@@ -112,6 +127,8 @@ export interface ApplicationsQuery_applications_candidate {
   company: string | null;
   headline: string | null;
   position: string | null;
+  avatar: ApplicationsQuery_applications_candidate_avatar | null;
+  comments: ApplicationsQuery_applications_candidate_comments[] | null;
 }
 
 export interface ApplicationsQuery_applications {

@@ -7,7 +7,7 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { client } from './apollo'
 import { Layout, Router } from './components'
-import { CandidatesView, CandidateView, JobsView, JobView } from './modules'
+import { ApplicationsView, CandidatesView, CandidateView, JobsView, JobView } from './modules'
 
 // tslint:disable-next-line: no-implicit-dependencies
 import DevTools, { configureDevtool } from 'mobx-react-devtools'
@@ -34,6 +34,7 @@ export const App: React.FC = () => {
                     <JobsView path={`jobs/*`} />
                     <CandidateView path={`candidate/:id`} />
                     <CandidatesView path={`candidates/*`} />
+                    <ApplicationsView path={`applications/*`} />
                   </Router>
                   <DevTools />
                 </Layout>

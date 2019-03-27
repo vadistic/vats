@@ -1,11 +1,12 @@
 import { css } from '@emotion/core'
 import { RouteComponentProps } from '@reach/router'
+import { usePartialSelector } from '@vats/store'
 import { useTheme } from '@vats/styling'
 import { useObserver } from 'mobx-react-lite'
 import { FocusZone, FocusZoneDirection, GroupedList } from 'office-ui-fabric-react'
 import React, { useContext } from 'react'
-import { CandidateCard, CandidateProfileTab, SingleCandidateValue } from '../../candidate'
-import { CandidatesContext } from '../store'
+import { CandidateCard, CandidateProfileTab, personaCandidateSelector } from '../../candidate'
+import { CandidatesContext, CandidatesElement, CandidatesElementProps } from '../store'
 
 export interface CandidatesListProps extends RouteComponentProps {}
 
@@ -19,22 +20,10 @@ export const CandidatesList: React.FC<CandidatesListProps> = ({ children, naviga
     }
   `
 
-  const renderCell = (nestingDepth?: number, candidate?: SingleCandidateValue, index?: number) => {
+  const renderCell = (nestingDepth?: number, candidate?: CandidatesElement, index?: number) => {
     if (candidate) {
-      return (
-        <CandidateCard
-          candidate={candidate}
-          key={candidate.id}
-          linkProps={{
-            name: { to: `./${candidate.id}`, state: { tab: CandidateProfileTab.info } },
-            date: { to: `./${candidate.id}`, state: { tab: CandidateProfileTab.overview } },
-            review: { to: `./${candidate.id}`, state: { tab: CandidateProfileTab.reviews } },
-            comments: { to: `./${candidate.id}`, state: { tab: CandidateProfileTab.comments } },
-          }}
-        />
-      )
+      return <CandidateListCell candidate={candidate} />
     }
-    return null
   }
 
   return useObserver(() => {
@@ -50,4 +39,33 @@ export const CandidatesList: React.FC<CandidatesListProps> = ({ children, naviga
       </FocusZone>
     )
   }, 'CandidatesList')
+}
+
+const CandidateListCell: React.FC<CandidatesElementProps> = ({ candidate }) => {
+  const personaCandidate = usePartialSelector(personaCandidateSelector)(candidate)
+
+  return (
+    <CandidateCard
+      candidate={personaCandidate}
+      key={candidate.id}
+      linkProps={{
+        name: {
+          to: `./${candidate.id}`,
+          options: { state: { tab: CandidateProfileTab.info } },
+        },
+        date: {
+          to: `./${candidate.id}`,
+          options: { state: { tab: CandidateProfileTab.overview } },
+        },
+        review: {
+          to: `./${candidate.id}`,
+          options: { state: { tab: CandidateProfileTab.reviews } },
+        },
+        comments: {
+          to: `./${candidate.id}`,
+          options: { state: { tab: CandidateProfileTab.comments } },
+        },
+      }}
+    />
+  )
 }

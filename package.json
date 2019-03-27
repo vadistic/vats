@@ -16,7 +16,7 @@
     "start": "echo todo",
     "build": "echo todo",
     "typecheck": "lerna run --parallel typecheck",
-    "now-deploy": "now && now alias && now rm vats --safe --yes",
+    "now-deploy": "now --target production && now rm vats --safe --yes",
     "postinstall": "patch-package"
   },
   "husky": {

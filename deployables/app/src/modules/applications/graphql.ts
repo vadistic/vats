@@ -5,6 +5,19 @@ export const APPLICATIONS_QUERY = gql`
   query ApplicationsQuery($where: ApplicationWhereInput) {
     applications(where: $where) {
       ...Application
+      candidate {
+        avatar {
+          id
+          createdAt
+          updatedAt
+          type
+          name
+          url
+        }
+        comments {
+          id
+        }
+      }
     }
   }
 

@@ -10,7 +10,7 @@
   "scripts": {
     "start": "vscripts craco start",
     "build": "vscripts craco build",
-    "now-build": "vscripts craco build",
+    "now-build": "vscripts craco build --skip",
     "test": "vscripts test",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "serve": "vscripts serve -s",

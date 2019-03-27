@@ -1,13 +1,36 @@
 import { css } from '@emotion/core'
 import { useTranslation } from '@vats/i18n'
+import { createPartialSelector } from '@vats/store'
 import { useTheme } from '@vats/styling'
 import { Icon, IPersonaSharedProps, Persona, PersonaSize } from 'office-ui-fabric-react'
 import React from 'react'
 import { Link, LinkArg, useDayjs } from '../../../components'
 import { SingleCandidateValue } from '../store'
 
+export const personaCandidateSelector = createPartialSelector(
+  (candidate: SingleCandidateValue) => ({
+    firstName: candidate.firstName,
+    lastName: candidate.lastName,
+    avatar: candidate.avatar
+      ? {
+          url: candidate.avatar.url,
+        }
+      : null,
+    position: candidate.position,
+    company: candidate.company,
+    updatedAt: candidate.updatedAt,
+    comments: candidate.comments ? candidate.comments.map(val => ({ id: val.id })) : null,
+  }),
+  ({ comments, firstName, lastName }) => ({
+    commentsCount: comments ? comments.length : 0,
+    fullName: [firstName, lastName].join(' '),
+  }),
+)
+
+type PersonaCandidate = ReturnType<typeof personaCandidateSelector>
+
 export interface CandidatePersonaProps extends IPersonaSharedProps {
-  candidate: SingleCandidateValue
+  candidate: PersonaCandidate
   linkProps?: {
     name?: LinkArg
     date?: LinkArg
@@ -25,7 +48,16 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
   const { tp } = useTranslation()
   const { dayjs, shortDateFormat } = useDayjs(candidate.updatedAt)
 
-  const { avatar, firstName, lastName, position, company, comments } = candidate
+  const {
+    avatar,
+    firstName,
+    lastName,
+    position,
+    company,
+    comments,
+    fullName,
+    commentsCount,
+  } = candidate
 
   const statusStyles = css`
     & > * {
@@ -34,7 +66,9 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
   `
 
   const renderName = () => (
-    <Link plain={true} to={linkProps.name}>{`${firstName} ${lastName}`}</Link>
+    <Link plain={true} to={linkProps.name}>
+      {fullName}
+    </Link>
   )
 
   const renderStatus = () => {
@@ -48,8 +82,6 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
         <Icon iconName="clock" /> {dayjs.fromNow(true)}
       </Link>
     )
-
-    const commentsCount = (comments && comments.length) || 0
 
     const renderComments = (
       <Link
