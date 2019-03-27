@@ -5,8 +5,8 @@
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
-  "main": "dist/index.js",
   "source": "src/index.ts",
+  "main": "dist/cjs/index.js",
   "scripts": {
     "clean": "rm -rf dist",
     "transpile": "vscripts transpile",

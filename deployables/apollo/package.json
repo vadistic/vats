@@ -6,7 +6,6 @@
   "license": "No license",
   "private": true,
   "source": "src/index.ts",
-  "main": "build/index.js",
   "scripts": {
     "build": "vscripts backpack build",
     "dev": "vscripts backpack dev",

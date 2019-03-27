@@ -45,7 +45,7 @@ module.exports = target => {
     verbose: false,
   }
 
-  if (target === 'react') {
+  if (target === 'browser') {
     config.moduleNameMapper = Object.assign(config.moduleNameMapper, {
       // alias fabric commonjs build
       'office-ui-fabric-react/lib/(.*)$': 'office-ui-fabric-react/lib-commonjs/$1',
@@ -59,7 +59,7 @@ module.exports = target => {
 
     config.testURL = 'http://localhost'
 
-    config.transform = { '^.+\\.(js|jsx|ts|tsx)$': require.resolve('./babel-transform.react.js') }
+    config.transform = { '^.+\\.(js|jsx|ts|tsx)$': require.resolve('./babel-transform.browser.js') }
   }
 
   if (target === 'node') {

@@ -9,7 +9,9 @@ export const test = async (args: string[]) => {
   const { run } = await import('jest-cli')
 
   const target =
-    args.includes('--react') || Object.keys(pkg.dependencies).includes('react') ? 'react' : 'node'
+    args.includes('--browser') || Object.keys(pkg.dependencies).includes('react')
+      ? 'browser'
+      : 'node'
 
   // @ts-ignore
   const { default: createConfig } = await import('../config/jest.config')
@@ -19,7 +21,7 @@ export const test = async (args: string[]) => {
     process.cwd(),
     '--config',
     JSON.stringify(createConfig(target)),
-    ...args.filter(arg => arg !== '--react'),
+    ...args.filter(arg => arg !== '--browser'),
   ]
 
   return plugin('jest', () => async () => {

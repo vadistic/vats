@@ -72,7 +72,7 @@ const hotModules = webpackConfig => {
   return webpackConfig
 }
 
-// for some reason using hot loader without babel result in few issues
+// for some reason just having hot loader without it's babel loader result in few issues
 // it probably mess up with emotion jsx pragma something - better substitute it
 // also I do not want it on production
 const hotModulesNoop = webpackConfig => {

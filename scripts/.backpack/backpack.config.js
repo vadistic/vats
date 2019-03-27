@@ -1,7 +1,5 @@
 require('@vats/scripts').config()
 
-const babelConfig = require('@vats/scripts/config/babel.config.node')
-
 module.exports = {
   webpack: (config, options, webpack) => {
     config.entry.main = ['./src/index.ts']
@@ -14,8 +12,9 @@ module.exports = {
 
     babelLoader.test = /\.(js|jsx|ts|tsx)$/
 
-    babelLoader.options.presets = babelConfig.presets
-    babelLoader.options.plugins = babelConfig.plugins
+    babelLoader.options.presets = [require.resolve('@vats/scripts/config/babel-preset.node')]
+    babelLoader.options.plugins = []
+
     babelLoader.options.babelrc = false
 
     if (options.env === 'production') {

@@ -5,7 +5,6 @@
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
-  "main": "build/index.js",
   "source": "src/index.ts",
   "scripts": {
     "build": "vscripts backpack build",

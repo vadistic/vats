@@ -18,8 +18,6 @@ module.exports = {
     babelLoader.options.plugins = babelConfig.plugins
     babelLoader.options.babelrc = false
 
-    console.log(config.module.rules)
-
     if (options.env === 'production') {
       // allow bundling graphql
       // https://github.com/graphql/graphql-js/issues/1272

@@ -5,15 +5,15 @@
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "No license",
   "private": true,
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "module": "dist/esm/index.mjs",
   "scripts": {
-    "transpile": "vscripts transpile --react",
     "clean": "rm -rf dist",
+    "transpile": "vscripts transpile",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepare": "yarn transpile",
     "storybook": "vscripts storybook",
-    "test": "vscripts test",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "test": "vscripts test"
   },
   "dependencies": {
     "react": "^16.8.5",

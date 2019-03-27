@@ -2,7 +2,7 @@
 const babelJest = require('babel-jest')
 
 const config = {
-  presets: require.resolve('./babel-preset.node'),
+  presets: [require.resolve('./babel-preset.node')],
   babelrc: false,
   configFile: false,
 }
