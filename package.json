@@ -49,7 +49,7 @@
     "pretty-quick": "^1.10.0",
     "tslint": "^5.14.0",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^3.6.0",
+    "tslint-react": "^4.0.0",
     "typescript": "^3.3.3333",
     "typescript-styled-plugin": "^0.14.0",
     "typescript-tslint-plugin": "^0.3.1"

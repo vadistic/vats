@@ -1,11 +1,11 @@
 diff --git a/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js b/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js
-index 061fb2b..2397cc1 100644
+index 7fb0e88..57d0dfd 100644
 --- a/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js
 +++ b/node_modules/office-ui-fabric-react/lib/components/Pivot/Pivot.base.js
-@@ -142,7 +142,7 @@ var PivotBase = /** @class */ (function (_super) {
-             keyToTabIdMapping: {}
-         };
-         React.Children.map(props.children, function (child, index) {
+@@ -146,7 +146,7 @@ var PivotBase = /** @class */ (function (_super) {
+             if (!child) {
+                 return;
+             }
 -            if (typeof child === 'object' && child.type === PivotItemType) {
 +            if (typeof child === 'object') {
                  var pivotItem = child;

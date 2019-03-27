@@ -22,10 +22,10 @@
     "@vats/utils": "^0.1.0",
     "formik": "vadistic/formik#formik-v2.0.0-gamma.1-gitpkg",
     "immutable": "^4.0.0-rc.12",
-    "office-ui-fabric-react": "6.156.0",
+    "office-ui-fabric-react": "^6.161.0",
     "prismjs": "^1.15.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
     "slate": "^0.44.12",
     "slate-plain-serializer": "^0.6.36",
     "slate-react": "^0.21.18"
@@ -35,6 +35,6 @@
     "@types/slate-plain-serializer": "^0.6.1",
     "@types/slate-react": "^0.21.1",
     "@vats/scripts": "^0.1.0",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.4000"
   }
 }

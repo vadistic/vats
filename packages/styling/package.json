@@ -20,11 +20,11 @@
     "@uifabric/icons": "^6.4.0",
     "@uifabric/styling": "^6.45.0",
     "@vats/utils": "^0.1.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   },
   "devDependencies": {
     "@vats/scripts": "^0.1.0",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.4000"
   }
 }

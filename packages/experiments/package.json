@@ -9,20 +9,18 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "transpile": "vscripts transpile --react",
-    "copy-files": "vscripts copyfiles src/**/*.json",
-    "generate": "vscripts runtime ./scripts/gen-json",
     "clean": "rm -rf dist",
-    "prepare": "yarn transpile && yarn generate && yarn copy-files",
+    "prepare": "yarn transpile",
     "storybook": "vscripts storybook",
     "test": "vscripts test",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   },
   "devDependencies": {
     "@vats/scripts": "^0.1.0",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.4000"
   }
 }

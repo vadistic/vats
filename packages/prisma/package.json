@@ -22,7 +22,7 @@
     "@vats/utils": "^0.1.0",
     "graphql": "^14.1.1",
     "graphql-binding": "^2.5.1",
-    "prisma-binding": "^2.3.7",
+    "prisma-binding": "^2.3.10",
     "prisma-client-lib": "^1.28.3"
   },
   "devDependencies": {
@@ -32,7 +32,6 @@
     "faker": "^4.1.0",
     "prisma": "^1.28.3",
     "ramda": "^0.26.1",
-    "ts-node": "^8.0.3",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.4000"
   }
 }

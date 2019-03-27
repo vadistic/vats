@@ -20,12 +20,12 @@
   "dependencies": {
     "@vats/utils": "^0.1.0",
     "i18next": "15.0.7",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
     "react-i18next": "^10.5.0"
   },
   "devDependencies": {
     "@vats/scripts": "^0.1.0",
-    "typescript": "3.3.3333"
+    "typescript": "3.3.4000"
   }
 }
