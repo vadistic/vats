@@ -32,41 +32,53 @@ export const createStoreSort = <Typing extends StoreTyping>({
     sortApply(observables.data, observables.config.roots.query, sortBy, sortDirection)
   }
 
-  const sortReaction = reaction(
-    () =>
-      tuplify([
-        observables.state.sortBy,
-        observables.state.sortDirection,
-        observables.state.keepSorted,
-        (observables.data[observables.config.roots.query] as any[]).length,
-      ]),
-    ([sortBy, sortDirection, keepSorted, length]) => {
-      if (!keepSorted || length === 0) {
+  const sortChangeReaction = reaction(
+    () => tuplify([observables.state.sortBy, observables.state.sortDirection]),
+    ([sortBy, sortDirection]) => {
+      if (helper.getValue().length === 0) {
         return
       }
 
-      executeSort({ sortBy, sortDirection, keepSorted })
+      executeSort({ sortBy, sortDirection, keepSorted: observables.state.keepSorted })
     },
     { name: helper.actionName('sort change') },
   )
 
+  const sortDataReaction = reaction(
+    () => tuplify([observables.state.keepSorted, helper.getValue().length]),
+    ([keepSorted, length]) => {
+      if (!keepSorted || length === 0) {
+        return
+      }
+
+      executeSort({
+        sortBy: observables.state.sortBy,
+        sortDirection: observables.state.sortDirection,
+        keepSorted,
+      })
+    },
+    { name: helper.actionName('sort data') },
+  )
+
   const sort = action(helper.actionName('sort'), (by?: Partial<SortProps>) => {
-    const keepSorted = observables.state.keepSorted
-    if (!by || !keepSorted) {
+    if (by) {
+      if (by.sortBy) {
+        observables.state.sortBy = by.sortBy
+      }
+      if (by.sortDirection) {
+        observables.state.sortDirection = by.sortDirection
+      }
+      // reaction will handle the rest
+    }
+
+    if (!by) {
+      const keepSorted = observables.state.keepSorted
       executeSort({
         sortBy: observables.state.sortBy,
         sortDirection: observables.state.sortDirection,
         keepSorted,
       })
       return
-    }
-
-    // reaction will handle the rest
-    if (by.sortBy) {
-      observables.state.sortBy = by.sortBy
-    }
-    if (by.sortDirection) {
-      observables.state.sortDirection = by.sortDirection
     }
   })
 
@@ -75,7 +87,8 @@ export const createStoreSort = <Typing extends StoreTyping>({
   }
 
   const dispose = () => {
-    sortReaction()
+    sortChangeReaction()
+    sortDataReaction()
   }
 
   const props = {

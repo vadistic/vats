@@ -19,7 +19,7 @@ export interface StoreInitObservables<Typing extends StoreTyping = StoreTyping> 
 export enum StoreStatus {
   init = 'INIT',
   // dirty state with disabled fetching
-  new = 'NEW',
+  dirty = 'DIRTY',
   loading = 'LOADING',
   refetch = 'REFETCH',
   ready = 'READY',
@@ -129,10 +129,17 @@ export const createStoreObservables = <Typing extends StoreTyping, Type extends 
     defaultDecorator: observable.ref,
   })
 
-  const data = observable(initalData, undefined, {
-    name: observableName('data'),
-    defaultDecorator: type === 'single' ? observable.ref : observable.shallow,
-  })
+  const data = observable(
+    initalData,
+    {
+      // main fields shallow for multi (each item as top level ref observable)
+      [config.roots.query]: type === 'single' ? observable.ref : observable.shallow,
+    } as any,
+    {
+      name: observableName('data'),
+      defaultDecorator: observable.ref,
+    },
+  )
 
   // slice it to remove observables?
   const value = computed(() => data[config.roots.query] as Typing['value'], {

@@ -30,6 +30,10 @@ export type MultiMutationSelector =
       indicies: number[]
     }
 
+export interface MutationOptions {
+  noResponse?: boolean
+}
+
 export const createMultiStoreMutations = <
   Typing extends StoreTyping,
   Graphql extends GraphqlTyping
@@ -140,6 +144,7 @@ export const createMultiStoreMutations = <
       select: SingleMutationSelector,
       updateVariablesData: Graphql['updateVariables']['data'],
       optimistic?: Partial<ElementType<Typing['value']>>,
+      options: MutationOptions = {},
     ) => {
       const graphql = observables.config.graphql.updateMutation
       const root = observables.config.roots.updateMutation
@@ -158,17 +163,26 @@ export const createMultiStoreMutations = <
         })
       }
 
+      if (options.noResponse) {
+        observables.meta.status = StoreStatus.dirty
+      }
+
       const res = await client.mutate<Graphql['updateMutation'], Graphql['updateVariables']>({
         variables: { where: { id }, data: updateVariablesData },
         mutation: graphql,
         errorPolicy: 'all',
       })
 
-      if (res.data) {
+      if (res.data && !options.noResponse) {
         runInAction(helper.actionName('update mutation response'), () => {
           helper.setElementById(id, res.data![root])
         })
 
+        return res.data
+      }
+
+      if (res.data && options.noResponse) {
+        observables.meta.status = StoreStatus.ready
         return res.data
       }
 
@@ -227,14 +241,14 @@ export const createMultiStoreMutations = <
     helper.actionName('update many mutation'),
     async (
       select: MultiMutationSelector,
-      updateVariablesData: Graphql['updateVariables']['data'],
+      updateVariablesData: Graphql['updateManyVariables']['data'],
       optimistic: Partial<ElementType<Typing['value']>>,
     ) => {
       const graphql = observables.config.graphql.updateManyMutation
       const root = observables.config.roots.updateManyMutation
 
       if (!root || !graphql) {
-        throw Error(helper.actionName('update mutation missing'))
+        throw Error(helper.actionName('update many mutation missing'))
       }
 
       const { ids, indicies } = multiSelector(select)
@@ -242,7 +256,7 @@ export const createMultiStoreMutations = <
       const prev = indicies.map(index => helper.getElementByIndex(index))
 
       if (optimistic) {
-        runInAction(helper.actionName('update mutation optimistic'), () => {
+        runInAction(helper.actionName('update many mutation optimistic'), () => {
           indicies.forEach((index, i) => {
             helper.setElementByIndex(index, { ...prev[i], ...optimistic })
           })
@@ -263,7 +277,7 @@ export const createMultiStoreMutations = <
       }
 
       if (res.errors) {
-        runInAction(helper.actionName('update mutation error'), () => {
+        runInAction(helper.actionName('update many mutation error'), () => {
           ids.forEach((id, i) => {
             helper.setElementById(id, { ...prev[i], ...optimistic })
           })
@@ -274,12 +288,77 @@ export const createMultiStoreMutations = <
   )
 
   /**
+   * run looped update mutation
+   * because update many does not support relations...
+   */
+  const loopUpdateManyMutation = action(
+    helper.actionName('loop update many mutation'),
+    async (
+      select: MultiMutationSelector,
+      updateVariablesData: Graphql['updateVariables']['data'],
+      optimistic?: Partial<ElementType<Typing['value']>>,
+    ) => {
+      const graphql = observables.config.graphql.updateMutation
+      const root = observables.config.roots.updateMutation
+
+      if (!root || !graphql) {
+        throw Error(helper.actionName('update mutation missing'))
+      }
+
+      const { ids, indicies } = multiSelector(select)
+
+      const prev = indicies.map(index => helper.getElementByIndex(index))
+
+      if (optimistic) {
+        runInAction(helper.actionName('update mutation optimistic'), () => {
+          indicies.forEach((index, i) => {
+            helper.setElementByIndex(index, { ...prev[i], ...optimistic })
+          })
+        })
+      }
+
+      observables.meta.status = StoreStatus.dirty
+
+      const promises = ids.map(id =>
+        client.mutate<Graphql['updateMutation'], Graphql['updateVariables']>({
+          variables: { where: { id }, data: updateVariablesData },
+          mutation: graphql,
+          errorPolicy: 'all',
+        }),
+      )
+
+      const res = await Promise.all(promises)
+
+      const errorRes = res.find(el => !!el.errors)
+
+      if (errorRes) {
+        if (optimistic) {
+          runInAction(helper.actionName('loop update many mutation error'), () => {
+            ids.forEach((id, i) => {
+              helper.pushElement(prev[i])
+            })
+          })
+        }
+
+        handleErrors(errorRes)
+      } else {
+        runInAction(helper.actionName('loop update many mutation response'), () => {
+          /* noop */
+          observables.meta.status = StoreStatus.ready
+        })
+      }
+
+      // TODO: errors
+    },
+  )
+
+  /**
    * run delete many mutation
    *
    * the cascade is not supported yet in deleteMany so it'll run a loop
    * https://github.com/prisma/prisma/issues/1936
    */
-  const deleteManyMutation = action(
+  const loopDeleteManyMutation = action(
     helper.actionName('delete many mutation'),
     async (select: MultiMutationSelector) => {
       const graphql = observables.config.graphql.deleteMutation
@@ -294,7 +373,7 @@ export const createMultiStoreMutations = <
       const prev = indicies.map(index => helper.getElementByIndex(index))
 
       // by id because indicies could be all over the place - maybe implement remove many elements?
-      runInAction(helper.actionName('delete mutation optimistic'), () => {
+      runInAction(helper.actionName('delete many mutation optimistic'), () => {
         ids.forEach(id => {
           helper.removeElementById(id)
         })
@@ -322,7 +401,7 @@ export const createMultiStoreMutations = <
       const errorRes = res.find(el => !!el.errors)
 
       if (errorRes) {
-        runInAction(helper.actionName('update mutation error'), () => {
+        runInAction(helper.actionName('loop delete many mutation error'), () => {
           ids.forEach((id, i) => {
             helper.pushElement(prev[i])
           })
@@ -427,7 +506,8 @@ export const createMultiStoreMutations = <
     update: updateMutation,
     delete: deleteMutation,
     updateMany: updateManyMutation,
-    deleteMany: deleteManyMutation,
+    loopUpdateMany: loopUpdateManyMutation,
+    loopDeleteMany: loopDeleteManyMutation,
     autoCreate,
     autoUpdate,
   }

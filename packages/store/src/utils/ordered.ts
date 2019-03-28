@@ -79,7 +79,9 @@ export const orderedApply = <T extends StringMap<any>>(target: T, source: T) => 
     typeof b !== 'object' ||
     // for empty arrays
     (Array.isArray(a) && a.length === 0) ||
-    (Array.isArray(b) && b.length === 0)
+    (Array.isArray(b) && b.length === 0) ||
+    // updating lot's of observables is super slow so
+    (Array.isArray(a) && Array.isArray(b) && Math.abs(a.length - b.length) > 2)
 
   for (const key of Object.keys(source)) {
     const targetProp = target[key]
@@ -88,13 +90,13 @@ export const orderedApply = <T extends StringMap<any>>(target: T, source: T) => 
     // shortcircut
     if (shouldSkip(targetProp, sourceProp)) {
       target[key] = sourceProp
-      return
+      continue
     }
 
     // handle object value
     if (!Array.isArray(targetProp) && !Array.isArray(sourceProp)) {
       target[key] = orderedCopyObject(targetProp, sourceProp)
-      return
+      continue
     }
 
     // handle array value
@@ -121,7 +123,7 @@ export const orderedApply = <T extends StringMap<any>>(target: T, source: T) => 
         }
       }
 
-      return
+      continue
     }
   }
 }

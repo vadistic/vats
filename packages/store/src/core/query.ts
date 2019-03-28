@@ -73,12 +73,17 @@ export const createStoreQuery = <Typing extends StoreTyping>({
         8: StoreStatus.error,
       }
 
-      if (observables.meta.status !== statusMap[res.networkStatus]) {
-        observables.meta.status = statusMap[res.networkStatus]
+      // disabled state
+      if (observables.meta.status === StoreStatus.dirty) {
+        return
       }
 
       if (res.data) {
         orderedApply(observables.data, res.data)
+      }
+
+      if (observables.meta.status !== statusMap[res.networkStatus]) {
+        observables.meta.status = statusMap[res.networkStatus]
       }
 
       // ! resets errors - maybe it should not
@@ -97,7 +102,7 @@ export const createStoreQuery = <Typing extends StoreTyping>({
     nextVariables => {
       if (
         observables.meta.status === StoreStatus.init ||
-        observables.meta.status === StoreStatus.new ||
+        observables.meta.status === StoreStatus.dirty ||
         !query
       ) {
         return

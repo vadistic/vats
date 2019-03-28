@@ -33,6 +33,7 @@ export const isAnyArray = (val: any): val is any[] => Array.isArray(val)
 
 export interface StoreHelper<Typing extends StoreTyping> {
   actionName: (name: string) => string
+  getValue: () => Typing['value']
   setValue: (val: Typing['value']) => void
   setElementByIndex: (index: number, val: ElementType<Typing['value']>) => void
   setElementById: (id: string, val: ElementType<Typing['value']>) => void
@@ -48,13 +49,14 @@ export const createStoreHelper = <Typing extends StoreTyping>({
 }: CreateStoreHelperProps<Typing>) => {
   const actionName = (name: string) => observables.config.name + ': ' + name
 
-  const setValue = (val: Typing['value']) => {
-    observables.data[observables.config.roots.query] = val
-  }
-
   /*
    * Those dead simple getters/setters are mainly to not fight with typings in mutations
    */
+  const getValue = () => observables.data[observables.config.roots.query] as Typing['value']
+
+  const setValue = (val: Typing['value']) => {
+    observables.data[observables.config.roots.query] = val
+  }
 
   const setElementByIndex = (index: number, val: ElementType<Typing['value']>) => {
     const value = observables.data[observables.config.roots.query] as any[]
@@ -97,6 +99,7 @@ export const createStoreHelper = <Typing extends StoreTyping>({
 
   return {
     actionName,
+    getValue,
     setValue,
     setElementByIndex,
     setElementById,
