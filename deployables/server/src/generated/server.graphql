@@ -1333,6 +1333,15 @@ type Workflow {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  jobs(
+    where: JobWhereInput
+    orderBy: JobOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [Job!]
   name: String!
   description: String
   stages(
@@ -1408,6 +1417,9 @@ input WorkflowWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
+  jobs_every: JobWhereInput
+  jobs_some: JobWhereInput
+  jobs_none: JobWhereInput
   name: String
   name_not: String
   name_in: [String!]
@@ -1558,7 +1570,7 @@ input CandidateUpdateManyMutationInput {
 input JobCreateInput {
   workspace: WorkspaceCreateOneWithoutJobsInput!
   applications: ApplicationCreateManyWithoutJobInput
-  workflow: WorkflowCreateOneInput!
+  workflow: WorkflowCreateOneWithoutJobsInput!
   comments: CommentCreateManyInput
   type: JobType!
   department: String
@@ -1573,7 +1585,7 @@ input JobCreateInput {
 input JobUpdateInput {
   workspace: WorkspaceUpdateOneRequiredWithoutJobsInput
   applications: ApplicationUpdateManyWithoutJobInput
-  workflow: WorkflowUpdateOneRequiredInput
+  workflow: WorkflowUpdateOneRequiredWithoutJobsInput
   comments: CommentUpdateManyInput
   type: JobType
   department: String
@@ -1648,6 +1660,7 @@ input TaskUpdateManyMutationInput {
 }
 
 input WorkflowCreateInput {
+  jobs: JobCreateManyWithoutWorkflowInput
   name: String!
   description: String
   stages: StageCreateManyInput
@@ -1657,6 +1670,7 @@ input WorkflowCreateInput {
 }
 
 input WorkflowUpdateInput {
+  jobs: JobUpdateManyWithoutWorkflowInput
   name: String
   description: String
   stages: StageUpdateManyInput
@@ -3013,8 +3027,8 @@ input ApplicationCreateManyWithoutJobInput {
   connect: [ApplicationWhereUniqueInput!]
 }
 
-input WorkflowCreateOneInput {
-  create: WorkflowCreateInput
+input WorkflowCreateOneWithoutJobsInput {
+  create: WorkflowCreateWithoutJobsInput
   connect: WorkflowWhereUniqueInput
 }
 
@@ -3042,10 +3056,10 @@ input ApplicationUpdateManyWithoutJobInput {
   updateMany: [ApplicationUpdateManyWithWhereNestedInput!]
 }
 
-input WorkflowUpdateOneRequiredInput {
-  create: WorkflowCreateInput
-  update: WorkflowUpdateDataInput
-  upsert: WorkflowUpsertNestedInput
+input WorkflowUpdateOneRequiredWithoutJobsInput {
+  create: WorkflowCreateWithoutJobsInput
+  update: WorkflowUpdateWithoutJobsDataInput
+  upsert: WorkflowUpsertWithoutJobsInput
   connect: WorkflowWhereUniqueInput
 }
 
@@ -3092,6 +3106,11 @@ input CandidateUpdateOneWithoutTasksInput {
   connect: CandidateWhereUniqueInput
 }
 
+input JobCreateManyWithoutWorkflowInput {
+  create: [JobCreateWithoutWorkflowInput!]
+  connect: [JobWhereUniqueInput!]
+}
+
 input StageCreateManyInput {
   create: [StageCreateInput!]
   connect: [StageWhereUniqueInput!]
@@ -3110,6 +3129,18 @@ input FieldCreateManyInput {
 input ReviewCreateManyInput {
   create: [ReviewCreateInput!]
   connect: [ReviewWhereUniqueInput!]
+}
+
+input JobUpdateManyWithoutWorkflowInput {
+  create: [JobCreateWithoutWorkflowInput!]
+  delete: [JobWhereUniqueInput!]
+  connect: [JobWhereUniqueInput!]
+  set: [JobWhereUniqueInput!]
+  disconnect: [JobWhereUniqueInput!]
+  update: [JobUpdateWithWhereUniqueWithoutWorkflowInput!]
+  upsert: [JobUpsertWithWhereUniqueWithoutWorkflowInput!]
+  deleteMany: [JobScalarWhereInput!]
+  updateMany: [JobUpdateManyWithWhereNestedInput!]
 }
 
 input StageUpdateManyInput {
@@ -3290,7 +3321,7 @@ input ReviewInstanceWhereUniqueInput {
 
 input JobCreateWithoutApplicationsInput {
   workspace: WorkspaceCreateOneWithoutJobsInput!
-  workflow: WorkflowCreateOneInput!
+  workflow: WorkflowCreateOneWithoutJobsInput!
   comments: CommentCreateManyInput
   type: JobType!
   department: String
@@ -3421,7 +3452,7 @@ input ReviewInstanceUpdateManyWithWhereNestedInput {
 
 input JobUpdateWithoutApplicationsDataInput {
   workspace: WorkspaceUpdateOneRequiredWithoutJobsInput
-  workflow: WorkflowUpdateOneRequiredInput
+  workflow: WorkflowUpdateOneRequiredWithoutJobsInput
   comments: CommentUpdateManyInput
   type: JobType
   department: String
@@ -4081,6 +4112,15 @@ input ApplicationCreateWithoutJobInput {
   candidate: CandidateCreateOneWithoutApplicationsInput!
 }
 
+input WorkflowCreateWithoutJobsInput {
+  name: String!
+  description: String
+  stages: StageCreateManyInput
+  disqualifications: DisqualificationCreateManyInput
+  fields: FieldCreateManyInput
+  reviews: ReviewCreateManyInput
+}
+
 input LocationCreateInput {
   country: String!
   region: String
@@ -4117,7 +4157,7 @@ input ApplicationUpsertWithWhereUniqueWithoutJobInput {
   create: ApplicationCreateWithoutJobInput!
 }
 
-input WorkflowUpdateDataInput {
+input WorkflowUpdateWithoutJobsDataInput {
   name: String
   description: String
   stages: StageUpdateManyInput
@@ -4126,9 +4166,9 @@ input WorkflowUpdateDataInput {
   reviews: ReviewUpdateManyInput
 }
 
-input WorkflowUpsertNestedInput {
-  update: WorkflowUpdateDataInput!
-  create: WorkflowCreateInput!
+input WorkflowUpsertWithoutJobsInput {
+  update: WorkflowUpdateWithoutJobsDataInput!
+  create: WorkflowCreateWithoutJobsInput!
 }
 
 input LocationUpdateWithWhereUniqueNestedInput {
@@ -4436,6 +4476,20 @@ input CandidateUpsertWithoutTasksInput {
   create: CandidateCreateWithoutTasksInput!
 }
 
+input JobCreateWithoutWorkflowInput {
+  workspace: WorkspaceCreateOneWithoutJobsInput!
+  applications: ApplicationCreateManyWithoutJobInput
+  comments: CommentCreateManyInput
+  type: JobType!
+  department: String
+  locations: LocationCreateManyInput
+  name: String!
+  excerpt: String
+  companyDescription: String
+  description: String
+  requirements: String
+}
+
 input DisqualificationCreateInput {
   name: String!
   description: String
@@ -4462,6 +4516,146 @@ input ReviewCreateInput {
 
 input ReviewWhereUniqueInput {
   id: ID
+}
+
+input JobUpdateWithWhereUniqueWithoutWorkflowInput {
+  where: JobWhereUniqueInput!
+  data: JobUpdateWithoutWorkflowDataInput!
+}
+
+input JobUpsertWithWhereUniqueWithoutWorkflowInput {
+  where: JobWhereUniqueInput!
+  update: JobUpdateWithoutWorkflowDataInput!
+  create: JobCreateWithoutWorkflowInput!
+}
+
+input JobScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  type: JobType
+  type_not: JobType
+  type_in: [JobType!]
+  type_not_in: [JobType!]
+  department: String
+  department_not: String
+  department_in: [String!]
+  department_not_in: [String!]
+  department_lt: String
+  department_lte: String
+  department_gt: String
+  department_gte: String
+  department_contains: String
+  department_not_contains: String
+  department_starts_with: String
+  department_not_starts_with: String
+  department_ends_with: String
+  department_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  excerpt: String
+  excerpt_not: String
+  excerpt_in: [String!]
+  excerpt_not_in: [String!]
+  excerpt_lt: String
+  excerpt_lte: String
+  excerpt_gt: String
+  excerpt_gte: String
+  excerpt_contains: String
+  excerpt_not_contains: String
+  excerpt_starts_with: String
+  excerpt_not_starts_with: String
+  excerpt_ends_with: String
+  excerpt_not_ends_with: String
+  companyDescription: String
+  companyDescription_not: String
+  companyDescription_in: [String!]
+  companyDescription_not_in: [String!]
+  companyDescription_lt: String
+  companyDescription_lte: String
+  companyDescription_gt: String
+  companyDescription_gte: String
+  companyDescription_contains: String
+  companyDescription_not_contains: String
+  companyDescription_starts_with: String
+  companyDescription_not_starts_with: String
+  companyDescription_ends_with: String
+  companyDescription_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  requirements: String
+  requirements_not: String
+  requirements_in: [String!]
+  requirements_not_in: [String!]
+  requirements_lt: String
+  requirements_lte: String
+  requirements_gt: String
+  requirements_gte: String
+  requirements_contains: String
+  requirements_not_contains: String
+  requirements_starts_with: String
+  requirements_not_starts_with: String
+  requirements_ends_with: String
+  requirements_not_ends_with: String
+  AND: [JobScalarWhereInput!]
+  OR: [JobScalarWhereInput!]
+  NOT: [JobScalarWhereInput!]
+}
+
+input JobUpdateManyWithWhereNestedInput {
+  where: JobScalarWhereInput!
+  data: JobUpdateManyDataInput!
 }
 
 input StageUpdateWithWhereUniqueNestedInput {
@@ -5014,6 +5208,30 @@ input UserUpdateManyDataInput {
   position: String
 }
 
+input JobUpdateWithoutWorkflowDataInput {
+  workspace: WorkspaceUpdateOneRequiredWithoutJobsInput
+  applications: ApplicationUpdateManyWithoutJobInput
+  comments: CommentUpdateManyInput
+  type: JobType
+  department: String
+  locations: LocationUpdateManyInput
+  name: String
+  excerpt: String
+  companyDescription: String
+  description: String
+  requirements: String
+}
+
+input JobUpdateManyDataInput {
+  type: JobType
+  department: String
+  name: String
+  excerpt: String
+  companyDescription: String
+  description: String
+  requirements: String
+}
+
 input StageUpdateManyDataInput {
   name: String
   description: String
@@ -5468,6 +5686,16 @@ input CandidateUpdateManyDataInput {
   position: String
   resumesString: CandidateUpdateresumesStringInput
   coverLettersString: CandidateUpdatecoverLettersStringInput
+}
+
+input WorkflowUpdateDataInput {
+  jobs: JobUpdateManyWithoutWorkflowInput
+  name: String
+  description: String
+  stages: StageUpdateManyInput
+  disqualifications: DisqualificationUpdateManyInput
+  fields: FieldUpdateManyInput
+  reviews: ReviewUpdateManyInput
 }
 
 input WorkflowUpdateManyDataInput {

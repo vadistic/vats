@@ -43,7 +43,7 @@ export const buildSchemaConfig = (
   const objectifyFieldConfig = (fieldConfig: SchemaFieldConfig | boolean) => {
     const objFieldConfig: Partial<Indexed<ObjSchemaFieldConfig>> = {}
 
-    const falsedFieldConfig: ObjSchemaFieldConfig = {
+    const falsifiedFieldConfig: ObjSchemaFieldConfig = {
       query: {
         single: false,
         multi: false,
@@ -64,7 +64,7 @@ export const buildSchemaConfig = (
     }
 
     if (fieldConfig === false) {
-      return falsedFieldConfig
+      return falsifiedFieldConfig
     }
 
     Object.keys(fieldConfig).forEach(field => {
@@ -76,17 +76,11 @@ export const buildSchemaConfig = (
         objFieldConfig[_field] = defaultFieldConfig[_field]
       }
       if (fieldValue === false) {
-        objFieldConfig[_field] = falsedFieldConfig[_field]
+        objFieldConfig[_field] = falsifiedFieldConfig[_field]
       }
-      if (typeof fieldValue !== 'boolean') {
-        // handle detailed object
-        Object.keys(defaultFieldConfig[_field]).forEach(subfield => {
-          const _subfield = subfield as keyof (SchemaQueryFieldConfig | SchemaMutationFieldConfig)
-          const configVal = fieldValue[_subfield]
-          // undefined to false
-          objFieldConfig[_field] = {}
-          objFieldConfig[field][subfield] = !!configVal
-        })
+      // handle detailed object => it's whitelisting!
+      if (typeof fieldValue === 'object') {
+        objFieldConfig[_field] = { ...falsifiedFieldConfig[_field], ...fieldValue }
       }
     })
 

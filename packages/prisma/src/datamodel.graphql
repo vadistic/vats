@@ -160,6 +160,8 @@ type Workflow {
   createdAt: DateTime!
   updatedAt: DateTime!
 
+  jobs: [Job!]!
+
   name: String!
   description: String
   stages: [Stage!]!
@@ -195,6 +197,8 @@ type Stage {
   name: String!
   description: String
   type: StageType!
+
+  index: Int!
 }
 
 enum StageType {

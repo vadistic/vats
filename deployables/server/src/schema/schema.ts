@@ -52,6 +52,8 @@ const defaultFieldConfig: ObjSchemaFieldConfig = {
 
 export const { queryList, mutationList } = buildSchemaConfig(schemaConfig, defaultFieldConfig)
 
+console.log('mutationList', mutationList)
+
 export const getTypeDefs = () => {
   const Query = gql`
     type Query {
