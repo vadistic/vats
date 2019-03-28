@@ -35,6 +35,7 @@ export type SingleCandidateStore = ReturnType<typeof createSingleCandidateStore>
 export interface SingleCandidateStoreProps extends StoreProps {
   id: string
 }
+
 export const SingleCandidateContext = React.createContext<SingleCandidateStore>({} as any)
 
 export const createSingleCandidateStore = (props: SingleCandidateStoreProps) => {

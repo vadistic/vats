@@ -88,6 +88,20 @@ export interface ApplicationsQuery_applications_stage {
   type: StageType;
 }
 
+export interface ApplicationsQuery_applications_reviews {
+  __typename: "ReviewInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  rating: number | null;
+  content: string | null;
+}
+
+export interface ApplicationsQuery_applications_job_workflow {
+  __typename: "Workflow";
+  id: string;
+}
+
 export interface ApplicationsQuery_applications_job {
   __typename: "Job";
   id: string;
@@ -100,15 +114,12 @@ export interface ApplicationsQuery_applications_job {
   companyDescription: string | null;
   description: string | null;
   requirements: string | null;
+  workflow: ApplicationsQuery_applications_job_workflow;
 }
 
 export interface ApplicationsQuery_applications_candidate_avatar {
   __typename: "File";
   id: string;
-  createdAt: any;
-  updatedAt: any;
-  type: string;
-  name: string;
   url: string;
 }
 
@@ -122,8 +133,8 @@ export interface ApplicationsQuery_applications_candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -139,12 +150,34 @@ export interface ApplicationsQuery_applications {
   type: ApplicationType;
   disqualification: ApplicationsQuery_applications_disqualification | null;
   stage: ApplicationsQuery_applications_stage;
+  reviews: ApplicationsQuery_applications_reviews[] | null;
   job: ApplicationsQuery_applications_job;
   candidate: ApplicationsQuery_applications_candidate;
 }
 
+export interface ApplicationsQuery_workflows_stages {
+  __typename: "Stage";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  type: StageType;
+}
+
+export interface ApplicationsQuery_workflows {
+  __typename: "Workflow";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+  stages: ApplicationsQuery_workflows_stages[] | null;
+}
+
 export interface ApplicationsQuery {
   applications: (ApplicationsQuery_applications | null)[];
+  workflows: (ApplicationsQuery_workflows | null)[];
 }
 
 export interface ApplicationsQueryVariables {
@@ -177,6 +210,15 @@ export interface ApplicationCreateMutation_createApplication_stage {
   type: StageType;
 }
 
+export interface ApplicationCreateMutation_createApplication_reviews {
+  __typename: "ReviewInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  rating: number | null;
+  content: string | null;
+}
+
 export interface ApplicationCreateMutation_createApplication_job {
   __typename: "Job";
   id: string;
@@ -196,8 +238,8 @@ export interface ApplicationCreateMutation_createApplication_candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -211,6 +253,7 @@ export interface ApplicationCreateMutation_createApplication {
   type: ApplicationType;
   disqualification: ApplicationCreateMutation_createApplication_disqualification | null;
   stage: ApplicationCreateMutation_createApplication_stage;
+  reviews: ApplicationCreateMutation_createApplication_reviews[] | null;
   job: ApplicationCreateMutation_createApplication_job;
   candidate: ApplicationCreateMutation_createApplication_candidate;
 }
@@ -249,6 +292,15 @@ export interface ApplicationUpdateMutation_updateApplication_stage {
   type: StageType;
 }
 
+export interface ApplicationUpdateMutation_updateApplication_reviews {
+  __typename: "ReviewInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  rating: number | null;
+  content: string | null;
+}
+
 export interface ApplicationUpdateMutation_updateApplication_job {
   __typename: "Job";
   id: string;
@@ -268,8 +320,8 @@ export interface ApplicationUpdateMutation_updateApplication_candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -283,6 +335,7 @@ export interface ApplicationUpdateMutation_updateApplication {
   type: ApplicationType;
   disqualification: ApplicationUpdateMutation_updateApplication_disqualification | null;
   stage: ApplicationUpdateMutation_updateApplication_stage;
+  reviews: ApplicationUpdateMutation_updateApplication_reviews[] | null;
   job: ApplicationUpdateMutation_updateApplication_job;
   candidate: ApplicationUpdateMutation_updateApplication_candidate;
 }
@@ -322,6 +375,15 @@ export interface ApplicationDeleteMutation_deleteApplication_stage {
   type: StageType;
 }
 
+export interface ApplicationDeleteMutation_deleteApplication_reviews {
+  __typename: "ReviewInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  rating: number | null;
+  content: string | null;
+}
+
 export interface ApplicationDeleteMutation_deleteApplication_job {
   __typename: "Job";
   id: string;
@@ -341,8 +403,8 @@ export interface ApplicationDeleteMutation_deleteApplication_candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -356,6 +418,7 @@ export interface ApplicationDeleteMutation_deleteApplication {
   type: ApplicationType;
   disqualification: ApplicationDeleteMutation_deleteApplication_disqualification | null;
   stage: ApplicationDeleteMutation_deleteApplication_stage;
+  reviews: ApplicationDeleteMutation_deleteApplication_reviews[] | null;
   job: ApplicationDeleteMutation_deleteApplication_job;
   candidate: ApplicationDeleteMutation_deleteApplication_candidate;
 }
@@ -514,8 +577,8 @@ export interface CandidateQuery_candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   avatar: CandidateQuery_candidate_avatar | null;
   company: string | null;
   headline: string | null;
@@ -640,8 +703,8 @@ export interface CandidateCreateMutation_createCandidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   avatar: CandidateCreateMutation_createCandidate_avatar | null;
   company: string | null;
   headline: string | null;
@@ -766,8 +829,8 @@ export interface CandidateUpdateMutation_updateCandidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   avatar: CandidateUpdateMutation_updateCandidate_avatar | null;
   company: string | null;
   headline: string | null;
@@ -893,8 +956,8 @@ export interface CandidateDeleteMutation_deleteCandidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   avatar: CandidateDeleteMutation_deleteCandidate_avatar | null;
   company: string | null;
   headline: string | null;
@@ -1189,8 +1252,8 @@ export interface CandidatesQuery_candidates {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   avatar: CandidatesQuery_candidates_avatar | null;
   company: string | null;
   headline: string | null;
@@ -1706,6 +1769,60 @@ export interface JobsDeleteManyMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: UserQuery
+// ====================================================
+
+export interface UserQuery_user_tasks {
+  __typename: "Task";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  title: string | null;
+  description: string | null;
+  dueAt: any | null;
+}
+
+export interface UserQuery_user_avatar {
+  __typename: "File";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  size: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
+export interface UserQuery_user {
+  __typename: "User";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  settings: any | null;
+  tasks: UserQuery_user_tasks[] | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  lastLogin: any | null;
+  deletedAt: any | null;
+  position: string | null;
+  avatar: UserQuery_user_avatar | null;
+}
+
+export interface UserQuery {
+  user: UserQuery_user | null;
+}
+
+export interface UserQueryVariables {
+  where: UserWhereUniqueInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: ApplicationNoNesting
 // ====================================================
 
@@ -1804,8 +1921,8 @@ export interface CandidateNoNesting {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -1930,6 +2047,39 @@ export interface StageNoNesting {
   name: string;
   description: string | null;
   type: StageType;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ReviewInstanceNoNesting
+// ====================================================
+
+export interface ReviewInstanceNoNesting {
+  __typename: "ReviewInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  rating: number | null;
+  content: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ReviewNoNesting
+// ====================================================
+
+export interface ReviewNoNesting {
+  __typename: "Review";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
 }
 
 /* tslint:disable */
@@ -2227,6 +2377,32 @@ export interface AggregateUserNoNesting {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: WorkflowEdgeNoNesting
+// ====================================================
+
+export interface WorkflowEdgeNoNesting {
+  __typename: "WorkflowEdge";
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateWorkflowNoNesting
+// ====================================================
+
+export interface AggregateWorkflowNoNesting {
+  __typename: "AggregateWorkflow";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: BatchPayloadNoNesting
 // ====================================================
 
@@ -2288,6 +2464,15 @@ export interface Application_stage {
   type: StageType;
 }
 
+export interface Application_reviews {
+  __typename: "ReviewInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  rating: number | null;
+  content: string | null;
+}
+
 export interface Application_job {
   __typename: "Job";
   id: string;
@@ -2307,8 +2492,8 @@ export interface Application_candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -2322,6 +2507,7 @@ export interface Application {
   type: ApplicationType;
   disqualification: Application_disqualification | null;
   stage: Application_stage;
+  reviews: Application_reviews[] | null;
   job: Application_job;
   candidate: Application_candidate;
 }
@@ -2334,7 +2520,7 @@ export interface Application {
 // GraphQL fragment: DisqualificationInstance
 // ====================================================
 
-export interface DisqualificationInstance_disqualification {
+export interface DisqualificationInstance_prototype {
   __typename: "Disqualification";
   id: string;
   createdAt: any;
@@ -2363,7 +2549,7 @@ export interface DisqualificationInstance {
   id: string;
   createdAt: any;
   updatedAt: any;
-  disqualification: DisqualificationInstance_disqualification;
+  prototype: DisqualificationInstance_prototype;
   createdBy: DisqualificationInstance_createdBy;
   content: string | null;
 }
@@ -2459,8 +2645,8 @@ export interface Task_candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -2576,8 +2762,8 @@ export interface Candidate {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   avatar: Candidate_avatar | null;
   company: string | null;
   headline: string | null;
@@ -2653,7 +2839,7 @@ export interface Source {
 // GraphQL fragment: FieldInstance
 // ====================================================
 
-export interface FieldInstance_field {
+export interface FieldInstance_prototype {
   __typename: "Field";
   id: string;
   createdAt: any;
@@ -2668,7 +2854,7 @@ export interface FieldInstance {
   id: string;
   createdAt: any;
   updatedAt: any;
-  field: FieldInstance_field;
+  prototype: FieldInstance_prototype;
   value: string | null;
 }
 
@@ -2747,6 +2933,84 @@ export interface Stage {
   name: string;
   description: string | null;
   type: StageType;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ReviewInstance
+// ====================================================
+
+export interface ReviewInstance_prototype {
+  __typename: "Review";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
+export interface ReviewInstance_fields {
+  __typename: "FieldInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  value: string | null;
+}
+
+export interface ReviewInstance_createdBy {
+  __typename: "User";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  settings: any | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  lastLogin: any | null;
+  deletedAt: any | null;
+  position: string | null;
+}
+
+export interface ReviewInstance {
+  __typename: "ReviewInstance";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  prototype: ReviewInstance_prototype | null;
+  fields: ReviewInstance_fields[] | null;
+  createdBy: ReviewInstance_createdBy;
+  rating: number | null;
+  content: string | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Review
+// ====================================================
+
+export interface Review_fields {
+  __typename: "Field";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: FieldType;
+  label: string;
+  description: string | null;
+}
+
+export interface Review {
+  __typename: "Review";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  fields: Review_fields[] | null;
 }
 
 /* tslint:disable */
@@ -2863,8 +3127,8 @@ export interface Workspace_candidates {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -2910,6 +3174,20 @@ export interface Workspace {
 // GraphQL fragment: Workflow
 // ====================================================
 
+export interface Workflow_jobs {
+  __typename: "Job";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  type: JobType;
+  department: string | null;
+  name: string;
+  excerpt: string | null;
+  companyDescription: string | null;
+  description: string | null;
+  requirements: string | null;
+}
+
 export interface Workflow_stages {
   __typename: "Stage";
   id: string;
@@ -2939,16 +3217,26 @@ export interface Workflow_fields {
   description: string | null;
 }
 
+export interface Workflow_reviews {
+  __typename: "Review";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+}
+
 export interface Workflow {
   __typename: "Workflow";
   id: string;
   createdAt: any;
   updatedAt: any;
+  jobs: Workflow_jobs[] | null;
   name: string;
   description: string | null;
   stages: Workflow_stages[] | null;
   disqualifications: Workflow_disqualifications[] | null;
   fields: Workflow_fields[] | null;
+  reviews: Workflow_reviews[] | null;
 }
 
 /* tslint:disable */
@@ -3133,8 +3421,8 @@ export interface CandidateEdge_node {
   id: string;
   createdAt: any;
   updatedAt: any;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   company: string | null;
   headline: string | null;
   position: string | null;
@@ -3521,6 +3809,75 @@ export interface AggregateUser {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: WorkflowConnection
+// ====================================================
+
+export interface WorkflowConnection_pageInfo {
+  __typename: "PageInfo";
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+  endCursor: string | null;
+}
+
+export interface WorkflowConnection_edges {
+  __typename: "WorkflowEdge";
+  cursor: string;
+}
+
+export interface WorkflowConnection_aggregate {
+  __typename: "AggregateWorkflow";
+  count: number;
+}
+
+export interface WorkflowConnection {
+  __typename: "WorkflowConnection";
+  pageInfo: WorkflowConnection_pageInfo;
+  edges: (WorkflowConnection_edges | null)[];
+  aggregate: WorkflowConnection_aggregate;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: WorkflowEdge
+// ====================================================
+
+export interface WorkflowEdge_node {
+  __typename: "Workflow";
+  id: string;
+  createdAt: any;
+  updatedAt: any;
+  name: string;
+  description: string | null;
+}
+
+export interface WorkflowEdge {
+  __typename: "WorkflowEdge";
+  node: WorkflowEdge_node;
+  cursor: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AggregateWorkflow
+// ====================================================
+
+export interface AggregateWorkflow {
+  __typename: "AggregateWorkflow";
+  count: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: BatchPayload
 // ====================================================
 
@@ -3626,6 +3983,7 @@ export interface ApplicationCreateInput {
   type: ApplicationType;
   disqualification?: DisqualificationInstanceCreateOneInput | null;
   stage: StageCreateOneInput;
+  reviews?: ReviewInstanceCreateManyInput | null;
   job: JobCreateOneWithoutApplicationsInput;
   candidate: CandidateCreateOneWithoutApplicationsInput;
 }
@@ -3644,6 +4002,7 @@ export interface ApplicationCreateWithoutCandidateInput {
   type: ApplicationType;
   disqualification?: DisqualificationInstanceCreateOneInput | null;
   stage: StageCreateOneInput;
+  reviews?: ReviewInstanceCreateManyInput | null;
   job: JobCreateOneWithoutApplicationsInput;
 }
 
@@ -3651,6 +4010,7 @@ export interface ApplicationCreateWithoutJobInput {
   type: ApplicationType;
   disqualification?: DisqualificationInstanceCreateOneInput | null;
   stage: StageCreateOneInput;
+  reviews?: ReviewInstanceCreateManyInput | null;
   candidate: CandidateCreateOneWithoutApplicationsInput;
 }
 
@@ -3698,6 +4058,7 @@ export interface ApplicationUpdateInput {
   type?: ApplicationType | null;
   disqualification?: DisqualificationInstanceUpdateOneInput | null;
   stage?: StageUpdateOneRequiredInput | null;
+  reviews?: ReviewInstanceUpdateManyInput | null;
   job?: JobUpdateOneRequiredWithoutApplicationsInput | null;
   candidate?: CandidateUpdateOneRequiredWithoutApplicationsInput | null;
 }
@@ -3719,6 +4080,7 @@ export interface ApplicationUpdateManyWithoutCandidateInput {
   create?: ApplicationCreateWithoutCandidateInput[] | null;
   delete?: ApplicationWhereUniqueInput[] | null;
   connect?: ApplicationWhereUniqueInput[] | null;
+  set?: ApplicationWhereUniqueInput[] | null;
   disconnect?: ApplicationWhereUniqueInput[] | null;
   update?: ApplicationUpdateWithWhereUniqueWithoutCandidateInput[] | null;
   upsert?: ApplicationUpsertWithWhereUniqueWithoutCandidateInput[] | null;
@@ -3730,6 +4092,7 @@ export interface ApplicationUpdateManyWithoutJobInput {
   create?: ApplicationCreateWithoutJobInput[] | null;
   delete?: ApplicationWhereUniqueInput[] | null;
   connect?: ApplicationWhereUniqueInput[] | null;
+  set?: ApplicationWhereUniqueInput[] | null;
   disconnect?: ApplicationWhereUniqueInput[] | null;
   update?: ApplicationUpdateWithWhereUniqueWithoutJobInput[] | null;
   upsert?: ApplicationUpsertWithWhereUniqueWithoutJobInput[] | null;
@@ -3751,6 +4114,7 @@ export interface ApplicationUpdateWithoutCandidateDataInput {
   type?: ApplicationType | null;
   disqualification?: DisqualificationInstanceUpdateOneInput | null;
   stage?: StageUpdateOneRequiredInput | null;
+  reviews?: ReviewInstanceUpdateManyInput | null;
   job?: JobUpdateOneRequiredWithoutApplicationsInput | null;
 }
 
@@ -3758,6 +4122,7 @@ export interface ApplicationUpdateWithoutJobDataInput {
   type?: ApplicationType | null;
   disqualification?: DisqualificationInstanceUpdateOneInput | null;
   stage?: StageUpdateOneRequiredInput | null;
+  reviews?: ReviewInstanceUpdateManyInput | null;
   candidate?: CandidateUpdateOneRequiredWithoutApplicationsInput | null;
 }
 
@@ -3810,6 +4175,9 @@ export interface ApplicationWhereInput {
   type_not_in?: ApplicationType[] | null;
   disqualification?: DisqualificationInstanceWhereInput | null;
   stage?: StageWhereInput | null;
+  reviews_every?: ReviewInstanceWhereInput | null;
+  reviews_some?: ReviewInstanceWhereInput | null;
+  reviews_none?: ReviewInstanceWhereInput | null;
   job?: JobWhereInput | null;
   candidate?: CandidateWhereInput | null;
   AND?: ApplicationWhereInput[] | null;
@@ -3822,8 +4190,8 @@ export interface ApplicationWhereUniqueInput {
 }
 
 export interface CandidateCreateInput {
-  firstName: string;
-  lastName: string;
+  firstName?: string | null;
+  lastName?: string | null;
   emails?: CandidateCreateemailsInput | null;
   phones?: CandidateCreatephonesInput | null;
   links?: CandidateCreatelinksInput | null;
@@ -3859,8 +4227,8 @@ export interface CandidateCreateOneWithoutTasksInput {
 }
 
 export interface CandidateCreateWithoutApplicationsInput {
-  firstName: string;
-  lastName: string;
+  firstName?: string | null;
+  lastName?: string | null;
   emails?: CandidateCreateemailsInput | null;
   phones?: CandidateCreatephonesInput | null;
   links?: CandidateCreatelinksInput | null;
@@ -3880,8 +4248,8 @@ export interface CandidateCreateWithoutApplicationsInput {
 }
 
 export interface CandidateCreateWithoutTasksInput {
-  firstName: string;
-  lastName: string;
+  firstName?: string | null;
+  lastName?: string | null;
   emails?: CandidateCreateemailsInput | null;
   phones?: CandidateCreatephonesInput | null;
   links?: CandidateCreatelinksInput | null;
@@ -4089,6 +4457,7 @@ export interface CandidateUpdateManyInput {
   upsert?: CandidateUpsertWithWhereUniqueNestedInput[] | null;
   delete?: CandidateWhereUniqueInput[] | null;
   connect?: CandidateWhereUniqueInput[] | null;
+  set?: CandidateWhereUniqueInput[] | null;
   disconnect?: CandidateWhereUniqueInput[] | null;
   deleteMany?: CandidateScalarWhereInput[] | null;
   updateMany?: CandidateUpdateManyWithWhereNestedInput[] | null;
@@ -4428,6 +4797,7 @@ export interface CommentUpdateManyInput {
   upsert?: CommentUpsertWithWhereUniqueNestedInput[] | null;
   delete?: CommentWhereUniqueInput[] | null;
   connect?: CommentWhereUniqueInput[] | null;
+  set?: CommentWhereUniqueInput[] | null;
   disconnect?: CommentWhereUniqueInput[] | null;
   deleteMany?: CommentScalarWhereInput[] | null;
   updateMany?: CommentUpdateManyWithWhereNestedInput[] | null;
@@ -4535,7 +4905,7 @@ export interface DisqualificationCreateOneInput {
 }
 
 export interface DisqualificationInstanceCreateInput {
-  disqualification: DisqualificationCreateOneInput;
+  prototype: DisqualificationCreateOneInput;
   createdBy: UserCreateOneInput;
   content?: string | null;
 }
@@ -4546,7 +4916,7 @@ export interface DisqualificationInstanceCreateOneInput {
 }
 
 export interface DisqualificationInstanceUpdateDataInput {
-  disqualification?: DisqualificationUpdateOneRequiredInput | null;
+  prototype?: DisqualificationUpdateOneRequiredInput | null;
   createdBy?: UserUpdateOneRequiredInput | null;
   content?: string | null;
 }
@@ -4596,7 +4966,7 @@ export interface DisqualificationInstanceWhereInput {
   updatedAt_lte?: any | null;
   updatedAt_gt?: any | null;
   updatedAt_gte?: any | null;
-  disqualification?: DisqualificationWhereInput | null;
+  prototype?: DisqualificationWhereInput | null;
   createdBy?: UserWhereInput | null;
   content?: string | null;
   content_not?: string | null;
@@ -4701,6 +5071,7 @@ export interface DisqualificationUpdateManyInput {
   upsert?: DisqualificationUpsertWithWhereUniqueNestedInput[] | null;
   delete?: DisqualificationWhereUniqueInput[] | null;
   connect?: DisqualificationWhereUniqueInput[] | null;
+  set?: DisqualificationWhereUniqueInput[] | null;
   disconnect?: DisqualificationWhereUniqueInput[] | null;
   deleteMany?: DisqualificationScalarWhereInput[] | null;
   updateMany?: DisqualificationUpdateManyWithWhereNestedInput[] | null;
@@ -4819,7 +5190,7 @@ export interface FieldCreateOneInput {
 }
 
 export interface FieldInstanceCreateInput {
-  field: FieldCreateOneInput;
+  prototype: FieldCreateOneInput;
   value?: string | null;
 }
 
@@ -4879,7 +5250,7 @@ export interface FieldInstanceScalarWhereInput {
 }
 
 export interface FieldInstanceUpdateDataInput {
-  field?: FieldUpdateOneRequiredInput | null;
+  prototype?: FieldUpdateOneRequiredInput | null;
   value?: string | null;
 }
 
@@ -4893,6 +5264,7 @@ export interface FieldInstanceUpdateManyInput {
   upsert?: FieldInstanceUpsertWithWhereUniqueNestedInput[] | null;
   delete?: FieldInstanceWhereUniqueInput[] | null;
   connect?: FieldInstanceWhereUniqueInput[] | null;
+  set?: FieldInstanceWhereUniqueInput[] | null;
   disconnect?: FieldInstanceWhereUniqueInput[] | null;
   deleteMany?: FieldInstanceScalarWhereInput[] | null;
   updateMany?: FieldInstanceUpdateManyWithWhereNestedInput[] | null;
@@ -4945,7 +5317,7 @@ export interface FieldInstanceWhereInput {
   updatedAt_lte?: any | null;
   updatedAt_gt?: any | null;
   updatedAt_gte?: any | null;
-  field?: FieldWhereInput | null;
+  prototype?: FieldWhereInput | null;
   value?: string | null;
   value_not?: string | null;
   value_in?: string[] | null;
@@ -5055,6 +5427,7 @@ export interface FieldUpdateManyInput {
   upsert?: FieldUpsertWithWhereUniqueNestedInput[] | null;
   delete?: FieldWhereUniqueInput[] | null;
   connect?: FieldWhereUniqueInput[] | null;
+  set?: FieldWhereUniqueInput[] | null;
   disconnect?: FieldWhereUniqueInput[] | null;
   deleteMany?: FieldScalarWhereInput[] | null;
   updateMany?: FieldUpdateManyWithWhereNestedInput[] | null;
@@ -5283,6 +5656,7 @@ export interface FileUpdateManyInput {
   upsert?: FileUpsertWithWhereUniqueNestedInput[] | null;
   delete?: FileWhereUniqueInput[] | null;
   connect?: FileWhereUniqueInput[] | null;
+  set?: FileWhereUniqueInput[] | null;
   disconnect?: FileWhereUniqueInput[] | null;
   deleteMany?: FileScalarWhereInput[] | null;
   updateMany?: FileUpdateManyWithWhereNestedInput[] | null;
@@ -5493,6 +5867,7 @@ export interface InviteUpdateManyInput {
   upsert?: InviteUpsertWithWhereUniqueNestedInput[] | null;
   delete?: InviteWhereUniqueInput[] | null;
   connect?: InviteWhereUniqueInput[] | null;
+  set?: InviteWhereUniqueInput[] | null;
   disconnect?: InviteWhereUniqueInput[] | null;
   deleteMany?: InviteScalarWhereInput[] | null;
   updateMany?: InviteUpdateManyWithWhereNestedInput[] | null;
@@ -5580,7 +5955,7 @@ export interface InviteWhereUniqueInput {
 export interface JobCreateInput {
   workspace: WorkspaceCreateOneWithoutJobsInput;
   applications?: ApplicationCreateManyWithoutJobInput | null;
-  workflow: WorkflowCreateOneInput;
+  workflow: WorkflowCreateOneWithoutJobsInput;
   comments?: CommentCreateManyInput | null;
   type: JobType;
   department?: string | null;
@@ -5590,6 +5965,11 @@ export interface JobCreateInput {
   companyDescription?: string | null;
   description?: string | null;
   requirements?: string | null;
+}
+
+export interface JobCreateManyWithoutWorkflowInput {
+  create?: JobCreateWithoutWorkflowInput[] | null;
+  connect?: JobWhereUniqueInput[] | null;
 }
 
 export interface JobCreateOneWithoutApplicationsInput {
@@ -5599,7 +5979,7 @@ export interface JobCreateOneWithoutApplicationsInput {
 
 export interface JobCreateWithoutApplicationsInput {
   workspace: WorkspaceCreateOneWithoutJobsInput;
-  workflow: WorkflowCreateOneInput;
+  workflow: WorkflowCreateOneWithoutJobsInput;
   comments?: CommentCreateManyInput | null;
   type: JobType;
   department?: string | null;
@@ -5611,14 +5991,162 @@ export interface JobCreateWithoutApplicationsInput {
   requirements?: string | null;
 }
 
+export interface JobCreateWithoutWorkflowInput {
+  workspace: WorkspaceCreateOneWithoutJobsInput;
+  applications?: ApplicationCreateManyWithoutJobInput | null;
+  comments?: CommentCreateManyInput | null;
+  type: JobType;
+  department?: string | null;
+  locations?: LocationCreateManyInput | null;
+  name: string;
+  excerpt?: string | null;
+  companyDescription?: string | null;
+  description?: string | null;
+  requirements?: string | null;
+}
+
+export interface JobScalarWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  updatedAt?: any | null;
+  updatedAt_not?: any | null;
+  updatedAt_in?: any[] | null;
+  updatedAt_not_in?: any[] | null;
+  updatedAt_lt?: any | null;
+  updatedAt_lte?: any | null;
+  updatedAt_gt?: any | null;
+  updatedAt_gte?: any | null;
+  type?: JobType | null;
+  type_not?: JobType | null;
+  type_in?: JobType[] | null;
+  type_not_in?: JobType[] | null;
+  department?: string | null;
+  department_not?: string | null;
+  department_in?: string[] | null;
+  department_not_in?: string[] | null;
+  department_lt?: string | null;
+  department_lte?: string | null;
+  department_gt?: string | null;
+  department_gte?: string | null;
+  department_contains?: string | null;
+  department_not_contains?: string | null;
+  department_starts_with?: string | null;
+  department_not_starts_with?: string | null;
+  department_ends_with?: string | null;
+  department_not_ends_with?: string | null;
+  name?: string | null;
+  name_not?: string | null;
+  name_in?: string[] | null;
+  name_not_in?: string[] | null;
+  name_lt?: string | null;
+  name_lte?: string | null;
+  name_gt?: string | null;
+  name_gte?: string | null;
+  name_contains?: string | null;
+  name_not_contains?: string | null;
+  name_starts_with?: string | null;
+  name_not_starts_with?: string | null;
+  name_ends_with?: string | null;
+  name_not_ends_with?: string | null;
+  excerpt?: string | null;
+  excerpt_not?: string | null;
+  excerpt_in?: string[] | null;
+  excerpt_not_in?: string[] | null;
+  excerpt_lt?: string | null;
+  excerpt_lte?: string | null;
+  excerpt_gt?: string | null;
+  excerpt_gte?: string | null;
+  excerpt_contains?: string | null;
+  excerpt_not_contains?: string | null;
+  excerpt_starts_with?: string | null;
+  excerpt_not_starts_with?: string | null;
+  excerpt_ends_with?: string | null;
+  excerpt_not_ends_with?: string | null;
+  companyDescription?: string | null;
+  companyDescription_not?: string | null;
+  companyDescription_in?: string[] | null;
+  companyDescription_not_in?: string[] | null;
+  companyDescription_lt?: string | null;
+  companyDescription_lte?: string | null;
+  companyDescription_gt?: string | null;
+  companyDescription_gte?: string | null;
+  companyDescription_contains?: string | null;
+  companyDescription_not_contains?: string | null;
+  companyDescription_starts_with?: string | null;
+  companyDescription_not_starts_with?: string | null;
+  companyDescription_ends_with?: string | null;
+  companyDescription_not_ends_with?: string | null;
+  description?: string | null;
+  description_not?: string | null;
+  description_in?: string[] | null;
+  description_not_in?: string[] | null;
+  description_lt?: string | null;
+  description_lte?: string | null;
+  description_gt?: string | null;
+  description_gte?: string | null;
+  description_contains?: string | null;
+  description_not_contains?: string | null;
+  description_starts_with?: string | null;
+  description_not_starts_with?: string | null;
+  description_ends_with?: string | null;
+  description_not_ends_with?: string | null;
+  requirements?: string | null;
+  requirements_not?: string | null;
+  requirements_in?: string[] | null;
+  requirements_not_in?: string[] | null;
+  requirements_lt?: string | null;
+  requirements_lte?: string | null;
+  requirements_gt?: string | null;
+  requirements_gte?: string | null;
+  requirements_contains?: string | null;
+  requirements_not_contains?: string | null;
+  requirements_starts_with?: string | null;
+  requirements_not_starts_with?: string | null;
+  requirements_ends_with?: string | null;
+  requirements_not_ends_with?: string | null;
+  AND?: JobScalarWhereInput[] | null;
+  OR?: JobScalarWhereInput[] | null;
+  NOT?: JobScalarWhereInput[] | null;
+}
+
 export interface JobUpdateInput {
   workspace?: WorkspaceUpdateOneRequiredWithoutJobsInput | null;
   applications?: ApplicationUpdateManyWithoutJobInput | null;
-  workflow?: WorkflowUpdateOneRequiredInput | null;
+  workflow?: WorkflowUpdateOneRequiredWithoutJobsInput | null;
   comments?: CommentUpdateManyInput | null;
   type?: JobType | null;
   department?: string | null;
   locations?: LocationUpdateManyInput | null;
+  name?: string | null;
+  excerpt?: string | null;
+  companyDescription?: string | null;
+  description?: string | null;
+  requirements?: string | null;
+}
+
+export interface JobUpdateManyDataInput {
+  type?: JobType | null;
+  department?: string | null;
   name?: string | null;
   excerpt?: string | null;
   companyDescription?: string | null;
@@ -5636,6 +6164,23 @@ export interface JobUpdateManyMutationInput {
   requirements?: string | null;
 }
 
+export interface JobUpdateManyWithWhereNestedInput {
+  where: JobScalarWhereInput;
+  data: JobUpdateManyDataInput;
+}
+
+export interface JobUpdateManyWithoutWorkflowInput {
+  create?: JobCreateWithoutWorkflowInput[] | null;
+  delete?: JobWhereUniqueInput[] | null;
+  connect?: JobWhereUniqueInput[] | null;
+  set?: JobWhereUniqueInput[] | null;
+  disconnect?: JobWhereUniqueInput[] | null;
+  update?: JobUpdateWithWhereUniqueWithoutWorkflowInput[] | null;
+  upsert?: JobUpsertWithWhereUniqueWithoutWorkflowInput[] | null;
+  deleteMany?: JobScalarWhereInput[] | null;
+  updateMany?: JobUpdateManyWithWhereNestedInput[] | null;
+}
+
 export interface JobUpdateOneRequiredWithoutApplicationsInput {
   create?: JobCreateWithoutApplicationsInput | null;
   update?: JobUpdateWithoutApplicationsDataInput | null;
@@ -5643,9 +6188,14 @@ export interface JobUpdateOneRequiredWithoutApplicationsInput {
   connect?: JobWhereUniqueInput | null;
 }
 
+export interface JobUpdateWithWhereUniqueWithoutWorkflowInput {
+  where: JobWhereUniqueInput;
+  data: JobUpdateWithoutWorkflowDataInput;
+}
+
 export interface JobUpdateWithoutApplicationsDataInput {
   workspace?: WorkspaceUpdateOneRequiredWithoutJobsInput | null;
-  workflow?: WorkflowUpdateOneRequiredInput | null;
+  workflow?: WorkflowUpdateOneRequiredWithoutJobsInput | null;
   comments?: CommentUpdateManyInput | null;
   type?: JobType | null;
   department?: string | null;
@@ -5655,6 +6205,26 @@ export interface JobUpdateWithoutApplicationsDataInput {
   companyDescription?: string | null;
   description?: string | null;
   requirements?: string | null;
+}
+
+export interface JobUpdateWithoutWorkflowDataInput {
+  workspace?: WorkspaceUpdateOneRequiredWithoutJobsInput | null;
+  applications?: ApplicationUpdateManyWithoutJobInput | null;
+  comments?: CommentUpdateManyInput | null;
+  type?: JobType | null;
+  department?: string | null;
+  locations?: LocationUpdateManyInput | null;
+  name?: string | null;
+  excerpt?: string | null;
+  companyDescription?: string | null;
+  description?: string | null;
+  requirements?: string | null;
+}
+
+export interface JobUpsertWithWhereUniqueWithoutWorkflowInput {
+  where: JobWhereUniqueInput;
+  update: JobUpdateWithoutWorkflowDataInput;
+  create: JobCreateWithoutWorkflowInput;
 }
 
 export interface JobUpsertWithoutApplicationsInput {
@@ -5925,6 +6495,7 @@ export interface LocationUpdateManyInput {
   upsert?: LocationUpsertWithWhereUniqueNestedInput[] | null;
   delete?: LocationWhereUniqueInput[] | null;
   connect?: LocationWhereUniqueInput[] | null;
+  set?: LocationWhereUniqueInput[] | null;
   disconnect?: LocationWhereUniqueInput[] | null;
   deleteMany?: LocationScalarWhereInput[] | null;
   updateMany?: LocationUpdateManyWithWhereNestedInput[] | null;
@@ -6042,6 +6613,358 @@ export interface LocationWhereUniqueInput {
   id?: string | null;
 }
 
+export interface ReviewCreateInput {
+  name: string;
+  fields?: FieldCreateManyInput | null;
+}
+
+export interface ReviewCreateManyInput {
+  create?: ReviewCreateInput[] | null;
+  connect?: ReviewWhereUniqueInput[] | null;
+}
+
+export interface ReviewCreateOneInput {
+  create?: ReviewCreateInput | null;
+  connect?: ReviewWhereUniqueInput | null;
+}
+
+export interface ReviewInstanceCreateInput {
+  prototype?: ReviewCreateOneInput | null;
+  fields?: FieldInstanceCreateManyInput | null;
+  createdBy: UserCreateOneInput;
+  rating?: number | null;
+  content?: string | null;
+}
+
+export interface ReviewInstanceCreateManyInput {
+  create?: ReviewInstanceCreateInput[] | null;
+  connect?: ReviewInstanceWhereUniqueInput[] | null;
+}
+
+export interface ReviewInstanceScalarWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  updatedAt?: any | null;
+  updatedAt_not?: any | null;
+  updatedAt_in?: any[] | null;
+  updatedAt_not_in?: any[] | null;
+  updatedAt_lt?: any | null;
+  updatedAt_lte?: any | null;
+  updatedAt_gt?: any | null;
+  updatedAt_gte?: any | null;
+  rating?: number | null;
+  rating_not?: number | null;
+  rating_in?: number[] | null;
+  rating_not_in?: number[] | null;
+  rating_lt?: number | null;
+  rating_lte?: number | null;
+  rating_gt?: number | null;
+  rating_gte?: number | null;
+  content?: string | null;
+  content_not?: string | null;
+  content_in?: string[] | null;
+  content_not_in?: string[] | null;
+  content_lt?: string | null;
+  content_lte?: string | null;
+  content_gt?: string | null;
+  content_gte?: string | null;
+  content_contains?: string | null;
+  content_not_contains?: string | null;
+  content_starts_with?: string | null;
+  content_not_starts_with?: string | null;
+  content_ends_with?: string | null;
+  content_not_ends_with?: string | null;
+  AND?: ReviewInstanceScalarWhereInput[] | null;
+  OR?: ReviewInstanceScalarWhereInput[] | null;
+  NOT?: ReviewInstanceScalarWhereInput[] | null;
+}
+
+export interface ReviewInstanceUpdateDataInput {
+  prototype?: ReviewUpdateOneInput | null;
+  fields?: FieldInstanceUpdateManyInput | null;
+  createdBy?: UserUpdateOneRequiredInput | null;
+  rating?: number | null;
+  content?: string | null;
+}
+
+export interface ReviewInstanceUpdateManyDataInput {
+  rating?: number | null;
+  content?: string | null;
+}
+
+export interface ReviewInstanceUpdateManyInput {
+  create?: ReviewInstanceCreateInput[] | null;
+  update?: ReviewInstanceUpdateWithWhereUniqueNestedInput[] | null;
+  upsert?: ReviewInstanceUpsertWithWhereUniqueNestedInput[] | null;
+  delete?: ReviewInstanceWhereUniqueInput[] | null;
+  connect?: ReviewInstanceWhereUniqueInput[] | null;
+  set?: ReviewInstanceWhereUniqueInput[] | null;
+  disconnect?: ReviewInstanceWhereUniqueInput[] | null;
+  deleteMany?: ReviewInstanceScalarWhereInput[] | null;
+  updateMany?: ReviewInstanceUpdateManyWithWhereNestedInput[] | null;
+}
+
+export interface ReviewInstanceUpdateManyWithWhereNestedInput {
+  where: ReviewInstanceScalarWhereInput;
+  data: ReviewInstanceUpdateManyDataInput;
+}
+
+export interface ReviewInstanceUpdateWithWhereUniqueNestedInput {
+  where: ReviewInstanceWhereUniqueInput;
+  data: ReviewInstanceUpdateDataInput;
+}
+
+export interface ReviewInstanceUpsertWithWhereUniqueNestedInput {
+  where: ReviewInstanceWhereUniqueInput;
+  update: ReviewInstanceUpdateDataInput;
+  create: ReviewInstanceCreateInput;
+}
+
+export interface ReviewInstanceWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  updatedAt?: any | null;
+  updatedAt_not?: any | null;
+  updatedAt_in?: any[] | null;
+  updatedAt_not_in?: any[] | null;
+  updatedAt_lt?: any | null;
+  updatedAt_lte?: any | null;
+  updatedAt_gt?: any | null;
+  updatedAt_gte?: any | null;
+  prototype?: ReviewWhereInput | null;
+  fields_every?: FieldInstanceWhereInput | null;
+  fields_some?: FieldInstanceWhereInput | null;
+  fields_none?: FieldInstanceWhereInput | null;
+  createdBy?: UserWhereInput | null;
+  rating?: number | null;
+  rating_not?: number | null;
+  rating_in?: number[] | null;
+  rating_not_in?: number[] | null;
+  rating_lt?: number | null;
+  rating_lte?: number | null;
+  rating_gt?: number | null;
+  rating_gte?: number | null;
+  content?: string | null;
+  content_not?: string | null;
+  content_in?: string[] | null;
+  content_not_in?: string[] | null;
+  content_lt?: string | null;
+  content_lte?: string | null;
+  content_gt?: string | null;
+  content_gte?: string | null;
+  content_contains?: string | null;
+  content_not_contains?: string | null;
+  content_starts_with?: string | null;
+  content_not_starts_with?: string | null;
+  content_ends_with?: string | null;
+  content_not_ends_with?: string | null;
+  AND?: ReviewInstanceWhereInput[] | null;
+  OR?: ReviewInstanceWhereInput[] | null;
+  NOT?: ReviewInstanceWhereInput[] | null;
+}
+
+export interface ReviewInstanceWhereUniqueInput {
+  id?: string | null;
+}
+
+export interface ReviewScalarWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  updatedAt?: any | null;
+  updatedAt_not?: any | null;
+  updatedAt_in?: any[] | null;
+  updatedAt_not_in?: any[] | null;
+  updatedAt_lt?: any | null;
+  updatedAt_lte?: any | null;
+  updatedAt_gt?: any | null;
+  updatedAt_gte?: any | null;
+  name?: string | null;
+  name_not?: string | null;
+  name_in?: string[] | null;
+  name_not_in?: string[] | null;
+  name_lt?: string | null;
+  name_lte?: string | null;
+  name_gt?: string | null;
+  name_gte?: string | null;
+  name_contains?: string | null;
+  name_not_contains?: string | null;
+  name_starts_with?: string | null;
+  name_not_starts_with?: string | null;
+  name_ends_with?: string | null;
+  name_not_ends_with?: string | null;
+  AND?: ReviewScalarWhereInput[] | null;
+  OR?: ReviewScalarWhereInput[] | null;
+  NOT?: ReviewScalarWhereInput[] | null;
+}
+
+export interface ReviewUpdateDataInput {
+  name?: string | null;
+  fields?: FieldUpdateManyInput | null;
+}
+
+export interface ReviewUpdateManyDataInput {
+  name?: string | null;
+}
+
+export interface ReviewUpdateManyInput {
+  create?: ReviewCreateInput[] | null;
+  update?: ReviewUpdateWithWhereUniqueNestedInput[] | null;
+  upsert?: ReviewUpsertWithWhereUniqueNestedInput[] | null;
+  delete?: ReviewWhereUniqueInput[] | null;
+  connect?: ReviewWhereUniqueInput[] | null;
+  set?: ReviewWhereUniqueInput[] | null;
+  disconnect?: ReviewWhereUniqueInput[] | null;
+  deleteMany?: ReviewScalarWhereInput[] | null;
+  updateMany?: ReviewUpdateManyWithWhereNestedInput[] | null;
+}
+
+export interface ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput;
+  data: ReviewUpdateManyDataInput;
+}
+
+export interface ReviewUpdateOneInput {
+  create?: ReviewCreateInput | null;
+  update?: ReviewUpdateDataInput | null;
+  upsert?: ReviewUpsertNestedInput | null;
+  delete?: boolean | null;
+  disconnect?: boolean | null;
+  connect?: ReviewWhereUniqueInput | null;
+}
+
+export interface ReviewUpdateWithWhereUniqueNestedInput {
+  where: ReviewWhereUniqueInput;
+  data: ReviewUpdateDataInput;
+}
+
+export interface ReviewUpsertNestedInput {
+  update: ReviewUpdateDataInput;
+  create: ReviewCreateInput;
+}
+
+export interface ReviewUpsertWithWhereUniqueNestedInput {
+  where: ReviewWhereUniqueInput;
+  update: ReviewUpdateDataInput;
+  create: ReviewCreateInput;
+}
+
+export interface ReviewWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  updatedAt?: any | null;
+  updatedAt_not?: any | null;
+  updatedAt_in?: any[] | null;
+  updatedAt_not_in?: any[] | null;
+  updatedAt_lt?: any | null;
+  updatedAt_lte?: any | null;
+  updatedAt_gt?: any | null;
+  updatedAt_gte?: any | null;
+  name?: string | null;
+  name_not?: string | null;
+  name_in?: string[] | null;
+  name_not_in?: string[] | null;
+  name_lt?: string | null;
+  name_lte?: string | null;
+  name_gt?: string | null;
+  name_gte?: string | null;
+  name_contains?: string | null;
+  name_not_contains?: string | null;
+  name_starts_with?: string | null;
+  name_not_starts_with?: string | null;
+  name_ends_with?: string | null;
+  name_not_ends_with?: string | null;
+  fields_every?: FieldWhereInput | null;
+  fields_some?: FieldWhereInput | null;
+  fields_none?: FieldWhereInput | null;
+  AND?: ReviewWhereInput[] | null;
+  OR?: ReviewWhereInput[] | null;
+  NOT?: ReviewWhereInput[] | null;
+}
+
+export interface ReviewWhereUniqueInput {
+  id?: string | null;
+}
+
 export interface SourceCreateInput {
   label: string;
   description?: string | null;
@@ -6132,6 +7055,7 @@ export interface SourceUpdateManyInput {
   upsert?: SourceUpsertWithWhereUniqueNestedInput[] | null;
   delete?: SourceWhereUniqueInput[] | null;
   connect?: SourceWhereUniqueInput[] | null;
+  set?: SourceWhereUniqueInput[] | null;
   disconnect?: SourceWhereUniqueInput[] | null;
   deleteMany?: SourceScalarWhereInput[] | null;
   updateMany?: SourceUpdateManyWithWhereNestedInput[] | null;
@@ -6323,6 +7247,7 @@ export interface StageUpdateManyInput {
   upsert?: StageUpsertWithWhereUniqueNestedInput[] | null;
   delete?: StageWhereUniqueInput[] | null;
   connect?: StageWhereUniqueInput[] | null;
+  set?: StageWhereUniqueInput[] | null;
   disconnect?: StageWhereUniqueInput[] | null;
   deleteMany?: StageScalarWhereInput[] | null;
   updateMany?: StageUpdateManyWithWhereNestedInput[] | null;
@@ -6518,6 +7443,7 @@ export interface TagUpdateManyInput {
   upsert?: TagUpsertWithWhereUniqueNestedInput[] | null;
   delete?: TagWhereUniqueInput[] | null;
   connect?: TagWhereUniqueInput[] | null;
+  set?: TagWhereUniqueInput[] | null;
   disconnect?: TagWhereUniqueInput[] | null;
   deleteMany?: TagScalarWhereInput[] | null;
   updateMany?: TagUpdateManyWithWhereNestedInput[] | null;
@@ -6718,6 +7644,7 @@ export interface TaskUpdateManyWithoutCandidateInput {
   create?: TaskCreateWithoutCandidateInput[] | null;
   delete?: TaskWhereUniqueInput[] | null;
   connect?: TaskWhereUniqueInput[] | null;
+  set?: TaskWhereUniqueInput[] | null;
   disconnect?: TaskWhereUniqueInput[] | null;
   update?: TaskUpdateWithWhereUniqueWithoutCandidateInput[] | null;
   upsert?: TaskUpsertWithWhereUniqueWithoutCandidateInput[] | null;
@@ -6729,6 +7656,7 @@ export interface TaskUpdateManyWithoutOwnersInput {
   create?: TaskCreateWithoutOwnersInput[] | null;
   delete?: TaskWhereUniqueInput[] | null;
   connect?: TaskWhereUniqueInput[] | null;
+  set?: TaskWhereUniqueInput[] | null;
   disconnect?: TaskWhereUniqueInput[] | null;
   update?: TaskUpdateWithWhereUniqueWithoutOwnersInput[] | null;
   upsert?: TaskUpsertWithWhereUniqueWithoutOwnersInput[] | null;
@@ -7049,6 +7977,7 @@ export interface UserUpdateManyInput {
   upsert?: UserUpsertWithWhereUniqueNestedInput[] | null;
   delete?: UserWhereUniqueInput[] | null;
   connect?: UserWhereUniqueInput[] | null;
+  set?: UserWhereUniqueInput[] | null;
   disconnect?: UserWhereUniqueInput[] | null;
   deleteMany?: UserScalarWhereInput[] | null;
   updateMany?: UserUpdateManyWithWhereNestedInput[] | null;
@@ -7063,6 +7992,7 @@ export interface UserUpdateManyWithoutTasksInput {
   create?: UserCreateWithoutTasksInput[] | null;
   delete?: UserWhereUniqueInput[] | null;
   connect?: UserWhereUniqueInput[] | null;
+  set?: UserWhereUniqueInput[] | null;
   disconnect?: UserWhereUniqueInput[] | null;
   update?: UserUpdateWithWhereUniqueWithoutTasksInput[] | null;
   upsert?: UserUpsertWithWhereUniqueWithoutTasksInput[] | null;
@@ -7248,11 +8178,13 @@ export interface UserWhereUniqueInput {
 }
 
 export interface WorkflowCreateInput {
+  jobs?: JobCreateManyWithoutWorkflowInput | null;
   name: string;
   description?: string | null;
   stages?: StageCreateManyInput | null;
   disqualifications?: DisqualificationCreateManyInput | null;
   fields?: FieldCreateManyInput | null;
+  reviews?: ReviewCreateManyInput | null;
 }
 
 export interface WorkflowCreateManyInput {
@@ -7260,9 +8192,18 @@ export interface WorkflowCreateManyInput {
   connect?: WorkflowWhereUniqueInput[] | null;
 }
 
-export interface WorkflowCreateOneInput {
-  create?: WorkflowCreateInput | null;
+export interface WorkflowCreateOneWithoutJobsInput {
+  create?: WorkflowCreateWithoutJobsInput | null;
   connect?: WorkflowWhereUniqueInput | null;
+}
+
+export interface WorkflowCreateWithoutJobsInput {
+  name: string;
+  description?: string | null;
+  stages?: StageCreateManyInput | null;
+  disqualifications?: DisqualificationCreateManyInput | null;
+  fields?: FieldCreateManyInput | null;
+  reviews?: ReviewCreateManyInput | null;
 }
 
 export interface WorkflowScalarWhereInput {
@@ -7330,11 +8271,13 @@ export interface WorkflowScalarWhereInput {
 }
 
 export interface WorkflowUpdateDataInput {
+  jobs?: JobUpdateManyWithoutWorkflowInput | null;
   name?: string | null;
   description?: string | null;
   stages?: StageUpdateManyInput | null;
   disqualifications?: DisqualificationUpdateManyInput | null;
   fields?: FieldUpdateManyInput | null;
+  reviews?: ReviewUpdateManyInput | null;
 }
 
 export interface WorkflowUpdateManyDataInput {
@@ -7348,6 +8291,7 @@ export interface WorkflowUpdateManyInput {
   upsert?: WorkflowUpsertWithWhereUniqueNestedInput[] | null;
   delete?: WorkflowWhereUniqueInput[] | null;
   connect?: WorkflowWhereUniqueInput[] | null;
+  set?: WorkflowWhereUniqueInput[] | null;
   disconnect?: WorkflowWhereUniqueInput[] | null;
   deleteMany?: WorkflowScalarWhereInput[] | null;
   updateMany?: WorkflowUpdateManyWithWhereNestedInput[] | null;
@@ -7358,10 +8302,10 @@ export interface WorkflowUpdateManyWithWhereNestedInput {
   data: WorkflowUpdateManyDataInput;
 }
 
-export interface WorkflowUpdateOneRequiredInput {
-  create?: WorkflowCreateInput | null;
-  update?: WorkflowUpdateDataInput | null;
-  upsert?: WorkflowUpsertNestedInput | null;
+export interface WorkflowUpdateOneRequiredWithoutJobsInput {
+  create?: WorkflowCreateWithoutJobsInput | null;
+  update?: WorkflowUpdateWithoutJobsDataInput | null;
+  upsert?: WorkflowUpsertWithoutJobsInput | null;
   connect?: WorkflowWhereUniqueInput | null;
 }
 
@@ -7370,15 +8314,24 @@ export interface WorkflowUpdateWithWhereUniqueNestedInput {
   data: WorkflowUpdateDataInput;
 }
 
-export interface WorkflowUpsertNestedInput {
-  update: WorkflowUpdateDataInput;
-  create: WorkflowCreateInput;
+export interface WorkflowUpdateWithoutJobsDataInput {
+  name?: string | null;
+  description?: string | null;
+  stages?: StageUpdateManyInput | null;
+  disqualifications?: DisqualificationUpdateManyInput | null;
+  fields?: FieldUpdateManyInput | null;
+  reviews?: ReviewUpdateManyInput | null;
 }
 
 export interface WorkflowUpsertWithWhereUniqueNestedInput {
   where: WorkflowWhereUniqueInput;
   update: WorkflowUpdateDataInput;
   create: WorkflowCreateInput;
+}
+
+export interface WorkflowUpsertWithoutJobsInput {
+  update: WorkflowUpdateWithoutJobsDataInput;
+  create: WorkflowCreateWithoutJobsInput;
 }
 
 export interface WorkflowWhereInput {
@@ -7412,6 +8365,9 @@ export interface WorkflowWhereInput {
   updatedAt_lte?: any | null;
   updatedAt_gt?: any | null;
   updatedAt_gte?: any | null;
+  jobs_every?: JobWhereInput | null;
+  jobs_some?: JobWhereInput | null;
+  jobs_none?: JobWhereInput | null;
   name?: string | null;
   name_not?: string | null;
   name_in?: string[] | null;
@@ -7449,6 +8405,9 @@ export interface WorkflowWhereInput {
   fields_every?: FieldWhereInput | null;
   fields_some?: FieldWhereInput | null;
   fields_none?: FieldWhereInput | null;
+  reviews_every?: ReviewWhereInput | null;
+  reviews_some?: ReviewWhereInput | null;
+  reviews_none?: ReviewWhereInput | null;
   AND?: WorkflowWhereInput[] | null;
   OR?: WorkflowWhereInput[] | null;
   NOT?: WorkflowWhereInput[] | null;

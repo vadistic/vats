@@ -143,6 +143,25 @@ export const StageNoNestingFragment = gql`
 }
 `
 
+export const ReviewInstanceNoNestingFragment = gql`
+  fragment ReviewInstanceNoNesting on ReviewInstance {
+  id
+  createdAt
+  updatedAt
+  rating
+  content
+}
+`
+
+export const ReviewNoNestingFragment = gql`
+  fragment ReviewNoNesting on Review {
+  id
+  createdAt
+  updatedAt
+  name
+}
+`
+
 export const JobNoNestingFragment = gql`
   fragment JobNoNesting on Job {
   id
@@ -293,6 +312,18 @@ export const AggregateUserNoNestingFragment = gql`
 }
 `
 
+export const WorkflowEdgeNoNestingFragment = gql`
+  fragment WorkflowEdgeNoNesting on WorkflowEdge {
+  cursor
+}
+`
+
+export const AggregateWorkflowNoNestingFragment = gql`
+  fragment AggregateWorkflowNoNesting on AggregateWorkflow {
+  count
+}
+`
+
 export const BatchPayloadNoNestingFragment = gql`
   fragment BatchPayloadNoNesting on BatchPayload {
   count
@@ -326,6 +357,9 @@ export const ApplicationFragment = gql`
   stage {
     ...StageNoNesting
   }
+  reviews {
+    ...ReviewInstanceNoNesting
+  }
   job {
     ...JobNoNesting
   }
@@ -336,6 +370,7 @@ export const ApplicationFragment = gql`
 
 ${DisqualificationInstanceNoNestingFragment}
 ${StageNoNestingFragment}
+${ReviewInstanceNoNestingFragment}
 ${JobNoNestingFragment}
 ${CandidateNoNestingFragment}
 `
@@ -345,7 +380,7 @@ export const DisqualificationInstanceFragment = gql`
   id
   createdAt
   updatedAt
-  disqualification {
+  prototype {
     ...DisqualificationNoNesting
   }
   createdBy {
@@ -500,7 +535,7 @@ export const FieldInstanceFragment = gql`
   id
   createdAt
   updatedAt
-  field {
+  prototype {
     ...FieldNoNesting
   }
   value
@@ -547,6 +582,43 @@ export const StageFragment = gql`
   description
   type
 }
+`
+
+export const ReviewInstanceFragment = gql`
+  fragment ReviewInstance on ReviewInstance {
+  id
+  createdAt
+  updatedAt
+  prototype {
+    ...ReviewNoNesting
+  }
+  fields {
+    ...FieldInstanceNoNesting
+  }
+  createdBy {
+    ...UserNoNesting
+  }
+  rating
+  content
+}
+
+${ReviewNoNestingFragment}
+${FieldInstanceNoNestingFragment}
+${UserNoNestingFragment}
+`
+
+export const ReviewFragment = gql`
+  fragment Review on Review {
+  id
+  createdAt
+  updatedAt
+  name
+  fields {
+    ...FieldNoNesting
+  }
+}
+
+${FieldNoNestingFragment}
 `
 
 export const JobFragment = gql`
@@ -621,6 +693,9 @@ export const WorkflowFragment = gql`
   id
   createdAt
   updatedAt
+  jobs {
+    ...JobNoNesting
+  }
   name
   description
   stages {
@@ -632,11 +707,16 @@ export const WorkflowFragment = gql`
   fields {
     ...FieldNoNesting
   }
+  reviews {
+    ...ReviewNoNesting
+  }
 }
 
+${JobNoNestingFragment}
 ${StageNoNestingFragment}
 ${DisqualificationNoNestingFragment}
 ${FieldNoNestingFragment}
+${ReviewNoNestingFragment}
 `
 
 export const InviteFragment = gql`
@@ -916,6 +996,41 @@ ${UserNoNestingFragment}
 
 export const AggregateUserFragment = gql`
   fragment AggregateUser on AggregateUser {
+  count
+}
+`
+
+export const WorkflowConnectionFragment = gql`
+  fragment WorkflowConnection on WorkflowConnection {
+  pageInfo {
+    ...PageInfoNoNesting
+  }
+  edges {
+    ...WorkflowEdgeNoNesting
+  }
+  aggregate {
+    ...AggregateWorkflowNoNesting
+  }
+}
+
+${PageInfoNoNestingFragment}
+${WorkflowEdgeNoNestingFragment}
+${AggregateWorkflowNoNestingFragment}
+`
+
+export const WorkflowEdgeFragment = gql`
+  fragment WorkflowEdge on WorkflowEdge {
+  node {
+    ...WorkflowNoNesting
+  }
+  cursor
+}
+
+${WorkflowNoNestingFragment}
+`
+
+export const AggregateWorkflowFragment = gql`
+  fragment AggregateWorkflow on AggregateWorkflow {
   count
 }
 `

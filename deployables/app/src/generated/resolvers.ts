@@ -1144,7 +1144,7 @@ export interface FieldInstanceWhereInput {
   
   updatedAt_gte?: Maybe<DateTime>;
   
-  field?: Maybe<FieldWhereInput>;
+  prototype?: Maybe<FieldWhereInput>;
   
   value?: Maybe<string>;
   
@@ -1388,6 +1388,12 @@ export interface ApplicationWhereInput {
   
   stage?: Maybe<StageWhereInput>;
   
+  reviews_every?: Maybe<ReviewInstanceWhereInput>;
+  
+  reviews_some?: Maybe<ReviewInstanceWhereInput>;
+  
+  reviews_none?: Maybe<ReviewInstanceWhereInput>;
+  
   job?: Maybe<JobWhereInput>;
   
   candidate?: Maybe<CandidateWhereInput>;
@@ -1461,7 +1467,7 @@ export interface DisqualificationInstanceWhereInput {
   
   updatedAt_gte?: Maybe<DateTime>;
   
-  disqualification?: Maybe<DisqualificationWhereInput>;
+  prototype?: Maybe<DisqualificationWhereInput>;
   
   createdBy?: Maybe<UserWhereInput>;
   
@@ -1756,6 +1762,232 @@ export interface StageWhereInput {
   OR?: Maybe<StageWhereInput[]>;
   
   NOT?: Maybe<StageWhereInput[]>;
+}
+
+export interface ReviewInstanceWhereInput {
+  
+  id?: Maybe<string>;
+  
+  id_not?: Maybe<string>;
+  
+  id_in?: Maybe<string[]>;
+  
+  id_not_in?: Maybe<string[]>;
+  
+  id_lt?: Maybe<string>;
+  
+  id_lte?: Maybe<string>;
+  
+  id_gt?: Maybe<string>;
+  
+  id_gte?: Maybe<string>;
+  
+  id_contains?: Maybe<string>;
+  
+  id_not_contains?: Maybe<string>;
+  
+  id_starts_with?: Maybe<string>;
+  
+  id_not_starts_with?: Maybe<string>;
+  
+  id_ends_with?: Maybe<string>;
+  
+  id_not_ends_with?: Maybe<string>;
+  
+  createdAt?: Maybe<DateTime>;
+  
+  createdAt_not?: Maybe<DateTime>;
+  
+  createdAt_in?: Maybe<DateTime[]>;
+  
+  createdAt_not_in?: Maybe<DateTime[]>;
+  
+  createdAt_lt?: Maybe<DateTime>;
+  
+  createdAt_lte?: Maybe<DateTime>;
+  
+  createdAt_gt?: Maybe<DateTime>;
+  
+  createdAt_gte?: Maybe<DateTime>;
+  
+  updatedAt?: Maybe<DateTime>;
+  
+  updatedAt_not?: Maybe<DateTime>;
+  
+  updatedAt_in?: Maybe<DateTime[]>;
+  
+  updatedAt_not_in?: Maybe<DateTime[]>;
+  
+  updatedAt_lt?: Maybe<DateTime>;
+  
+  updatedAt_lte?: Maybe<DateTime>;
+  
+  updatedAt_gt?: Maybe<DateTime>;
+  
+  updatedAt_gte?: Maybe<DateTime>;
+  
+  prototype?: Maybe<ReviewWhereInput>;
+  
+  fields_every?: Maybe<FieldInstanceWhereInput>;
+  
+  fields_some?: Maybe<FieldInstanceWhereInput>;
+  
+  fields_none?: Maybe<FieldInstanceWhereInput>;
+  
+  createdBy?: Maybe<UserWhereInput>;
+  
+  rating?: Maybe<number>;
+  
+  rating_not?: Maybe<number>;
+  
+  rating_in?: Maybe<number[]>;
+  
+  rating_not_in?: Maybe<number[]>;
+  
+  rating_lt?: Maybe<number>;
+  
+  rating_lte?: Maybe<number>;
+  
+  rating_gt?: Maybe<number>;
+  
+  rating_gte?: Maybe<number>;
+  
+  content?: Maybe<string>;
+  
+  content_not?: Maybe<string>;
+  
+  content_in?: Maybe<string[]>;
+  
+  content_not_in?: Maybe<string[]>;
+  
+  content_lt?: Maybe<string>;
+  
+  content_lte?: Maybe<string>;
+  
+  content_gt?: Maybe<string>;
+  
+  content_gte?: Maybe<string>;
+  
+  content_contains?: Maybe<string>;
+  
+  content_not_contains?: Maybe<string>;
+  
+  content_starts_with?: Maybe<string>;
+  
+  content_not_starts_with?: Maybe<string>;
+  
+  content_ends_with?: Maybe<string>;
+  
+  content_not_ends_with?: Maybe<string>;
+  
+  AND?: Maybe<ReviewInstanceWhereInput[]>;
+  
+  OR?: Maybe<ReviewInstanceWhereInput[]>;
+  
+  NOT?: Maybe<ReviewInstanceWhereInput[]>;
+}
+
+export interface ReviewWhereInput {
+  
+  id?: Maybe<string>;
+  
+  id_not?: Maybe<string>;
+  
+  id_in?: Maybe<string[]>;
+  
+  id_not_in?: Maybe<string[]>;
+  
+  id_lt?: Maybe<string>;
+  
+  id_lte?: Maybe<string>;
+  
+  id_gt?: Maybe<string>;
+  
+  id_gte?: Maybe<string>;
+  
+  id_contains?: Maybe<string>;
+  
+  id_not_contains?: Maybe<string>;
+  
+  id_starts_with?: Maybe<string>;
+  
+  id_not_starts_with?: Maybe<string>;
+  
+  id_ends_with?: Maybe<string>;
+  
+  id_not_ends_with?: Maybe<string>;
+  
+  createdAt?: Maybe<DateTime>;
+  
+  createdAt_not?: Maybe<DateTime>;
+  
+  createdAt_in?: Maybe<DateTime[]>;
+  
+  createdAt_not_in?: Maybe<DateTime[]>;
+  
+  createdAt_lt?: Maybe<DateTime>;
+  
+  createdAt_lte?: Maybe<DateTime>;
+  
+  createdAt_gt?: Maybe<DateTime>;
+  
+  createdAt_gte?: Maybe<DateTime>;
+  
+  updatedAt?: Maybe<DateTime>;
+  
+  updatedAt_not?: Maybe<DateTime>;
+  
+  updatedAt_in?: Maybe<DateTime[]>;
+  
+  updatedAt_not_in?: Maybe<DateTime[]>;
+  
+  updatedAt_lt?: Maybe<DateTime>;
+  
+  updatedAt_lte?: Maybe<DateTime>;
+  
+  updatedAt_gt?: Maybe<DateTime>;
+  
+  updatedAt_gte?: Maybe<DateTime>;
+  
+  name?: Maybe<string>;
+  
+  name_not?: Maybe<string>;
+  
+  name_in?: Maybe<string[]>;
+  
+  name_not_in?: Maybe<string[]>;
+  
+  name_lt?: Maybe<string>;
+  
+  name_lte?: Maybe<string>;
+  
+  name_gt?: Maybe<string>;
+  
+  name_gte?: Maybe<string>;
+  
+  name_contains?: Maybe<string>;
+  
+  name_not_contains?: Maybe<string>;
+  
+  name_starts_with?: Maybe<string>;
+  
+  name_not_starts_with?: Maybe<string>;
+  
+  name_ends_with?: Maybe<string>;
+  
+  name_not_ends_with?: Maybe<string>;
+  
+  fields_every?: Maybe<FieldWhereInput>;
+  
+  fields_some?: Maybe<FieldWhereInput>;
+  
+  fields_none?: Maybe<FieldWhereInput>;
+  
+  AND?: Maybe<ReviewWhereInput[]>;
+  
+  OR?: Maybe<ReviewWhereInput[]>;
+  
+  NOT?: Maybe<ReviewWhereInput[]>;
 }
 
 export interface JobWhereInput {
@@ -2214,6 +2446,12 @@ export interface WorkflowWhereInput {
   
   updatedAt_gte?: Maybe<DateTime>;
   
+  jobs_every?: Maybe<JobWhereInput>;
+  
+  jobs_some?: Maybe<JobWhereInput>;
+  
+  jobs_none?: Maybe<JobWhereInput>;
+  
   name?: Maybe<string>;
   
   name_not?: Maybe<string>;
@@ -2287,6 +2525,12 @@ export interface WorkflowWhereInput {
   fields_some?: Maybe<FieldWhereInput>;
   
   fields_none?: Maybe<FieldWhereInput>;
+  
+  reviews_every?: Maybe<ReviewWhereInput>;
+  
+  reviews_some?: Maybe<ReviewWhereInput>;
+  
+  reviews_none?: Maybe<ReviewWhereInput>;
   
   AND?: Maybe<WorkflowWhereInput[]>;
   
@@ -2724,6 +2968,11 @@ export interface UserWhereUniqueInput {
   email?: Maybe<string>;
 }
 
+export interface WorkflowWhereUniqueInput {
+  
+  id?: Maybe<string>;
+}
+
 export interface ApplicationCreateInput {
   
   type: ApplicationType;
@@ -2731,6 +2980,8 @@ export interface ApplicationCreateInput {
   disqualification?: Maybe<DisqualificationInstanceCreateOneInput>;
   
   stage: StageCreateOneInput;
+  
+  reviews?: Maybe<ReviewInstanceCreateManyInput>;
   
   job: JobCreateOneWithoutApplicationsInput;
   
@@ -2746,7 +2997,7 @@ export interface DisqualificationInstanceCreateOneInput {
 
 export interface DisqualificationInstanceCreateInput {
   
-  disqualification: DisqualificationCreateOneInput;
+  prototype: DisqualificationCreateOneInput;
   
   createdBy: UserCreateOneInput;
   
@@ -2829,9 +3080,9 @@ export interface CandidateCreateOneWithoutTasksInput {
 
 export interface CandidateCreateWithoutTasksInput {
   
-  firstName: string;
+  firstName?: Maybe<string>;
   
-  lastName: string;
+  lastName?: Maybe<string>;
   
   emails?: Maybe<CandidateCreateemailsInput>;
   
@@ -2960,7 +3211,7 @@ export interface FieldInstanceCreateManyInput {
 
 export interface FieldInstanceCreateInput {
   
-  field: FieldCreateOneInput;
+  prototype: FieldCreateOneInput;
   
   value?: Maybe<string>;
 }
@@ -3006,6 +3257,8 @@ export interface ApplicationCreateWithoutCandidateInput {
   
   stage: StageCreateOneInput;
   
+  reviews?: Maybe<ReviewInstanceCreateManyInput>;
+  
   job: JobCreateOneWithoutApplicationsInput;
 }
 
@@ -3030,6 +3283,57 @@ export interface StageWhereUniqueInput {
   id?: Maybe<string>;
 }
 
+export interface ReviewInstanceCreateManyInput {
+  
+  create?: Maybe<ReviewInstanceCreateInput[]>;
+  
+  connect?: Maybe<ReviewInstanceWhereUniqueInput[]>;
+}
+
+export interface ReviewInstanceCreateInput {
+  
+  prototype?: Maybe<ReviewCreateOneInput>;
+  
+  fields?: Maybe<FieldInstanceCreateManyInput>;
+  
+  createdBy: UserCreateOneInput;
+  
+  rating?: Maybe<number>;
+  
+  content?: Maybe<string>;
+}
+
+export interface ReviewCreateOneInput {
+  
+  create?: Maybe<ReviewCreateInput>;
+  
+  connect?: Maybe<ReviewWhereUniqueInput>;
+}
+
+export interface ReviewCreateInput {
+  
+  name: string;
+  
+  fields?: Maybe<FieldCreateManyInput>;
+}
+
+export interface FieldCreateManyInput {
+  
+  create?: Maybe<FieldCreateInput[]>;
+  
+  connect?: Maybe<FieldWhereUniqueInput[]>;
+}
+
+export interface ReviewWhereUniqueInput {
+  
+  id?: Maybe<string>;
+}
+
+export interface ReviewInstanceWhereUniqueInput {
+  
+  id?: Maybe<string>;
+}
+
 export interface JobCreateOneWithoutApplicationsInput {
   
   create?: Maybe<JobCreateWithoutApplicationsInput>;
@@ -3041,7 +3345,7 @@ export interface JobCreateWithoutApplicationsInput {
   
   workspace: WorkspaceCreateOneWithoutJobsInput;
   
-  workflow: WorkflowCreateOneInput;
+  workflow: WorkflowCreateOneWithoutJobsInput;
   
   comments?: Maybe<CommentCreateManyInput>;
   
@@ -3100,9 +3404,9 @@ export interface CandidateCreateManyInput {
 
 export interface CandidateCreateInput {
   
-  firstName: string;
+  firstName?: Maybe<string>;
   
-  lastName: string;
+  lastName?: Maybe<string>;
   
   emails?: Maybe<CandidateCreateemailsInput>;
   
@@ -3222,6 +3526,8 @@ export interface WorkflowCreateManyInput {
 
 export interface WorkflowCreateInput {
   
+  jobs?: Maybe<JobCreateManyWithoutWorkflowInput>;
+  
   name: string;
   
   description?: Maybe<string>;
@@ -3231,89 +3537,60 @@ export interface WorkflowCreateInput {
   disqualifications?: Maybe<DisqualificationCreateManyInput>;
   
   fields?: Maybe<FieldCreateManyInput>;
+  
+  reviews?: Maybe<ReviewCreateManyInput>;
 }
 
-export interface StageCreateManyInput {
+export interface JobCreateManyWithoutWorkflowInput {
   
-  create?: Maybe<StageCreateInput[]>;
+  create?: Maybe<JobCreateWithoutWorkflowInput[]>;
   
-  connect?: Maybe<StageWhereUniqueInput[]>;
+  connect?: Maybe<JobWhereUniqueInput[]>;
 }
 
-export interface DisqualificationCreateManyInput {
+export interface JobCreateWithoutWorkflowInput {
   
-  create?: Maybe<DisqualificationCreateInput[]>;
+  workspace: WorkspaceCreateOneWithoutJobsInput;
   
-  connect?: Maybe<DisqualificationWhereUniqueInput[]>;
+  applications?: Maybe<ApplicationCreateManyWithoutJobInput>;
+  
+  comments?: Maybe<CommentCreateManyInput>;
+  
+  type: JobType;
+  
+  department?: Maybe<string>;
+  
+  locations?: Maybe<LocationCreateManyInput>;
+  
+  name: string;
+  
+  excerpt?: Maybe<string>;
+  
+  companyDescription?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  requirements?: Maybe<string>;
 }
 
-export interface FieldCreateManyInput {
+export interface ApplicationCreateManyWithoutJobInput {
   
-  create?: Maybe<FieldCreateInput[]>;
+  create?: Maybe<ApplicationCreateWithoutJobInput[]>;
   
-  connect?: Maybe<FieldWhereUniqueInput[]>;
+  connect?: Maybe<ApplicationWhereUniqueInput[]>;
 }
 
-export interface WorkflowWhereUniqueInput {
+export interface ApplicationCreateWithoutJobInput {
   
-  id?: Maybe<string>;
-}
-
-export interface InviteCreateManyInput {
+  type: ApplicationType;
   
-  create?: Maybe<InviteCreateInput[]>;
+  disqualification?: Maybe<DisqualificationInstanceCreateOneInput>;
   
-  connect?: Maybe<InviteWhereUniqueInput[]>;
-}
-
-export interface InviteCreateInput {
+  stage: StageCreateOneInput;
   
-  email: string;
-}
-
-export interface InviteWhereUniqueInput {
+  reviews?: Maybe<ReviewInstanceCreateManyInput>;
   
-  id?: Maybe<string>;
-}
-
-export interface WorkspaceWhereUniqueInput {
-  
-  id?: Maybe<string>;
-}
-
-export interface WorkflowCreateOneInput {
-  
-  create?: Maybe<WorkflowCreateInput>;
-  
-  connect?: Maybe<WorkflowWhereUniqueInput>;
-}
-
-export interface LocationCreateManyInput {
-  
-  create?: Maybe<LocationCreateInput[]>;
-  
-  connect?: Maybe<LocationWhereUniqueInput[]>;
-}
-
-export interface LocationCreateInput {
-  
-  country: string;
-  
-  region?: Maybe<string>;
-  
-  city: string;
-  
-  zip?: Maybe<string>;
-}
-
-export interface LocationWhereUniqueInput {
-  
-  id?: Maybe<string>;
-}
-
-export interface DisqualificationInstanceWhereUniqueInput {
-  
-  id?: Maybe<string>;
+  candidate: CandidateCreateOneWithoutApplicationsInput;
 }
 
 export interface CandidateCreateOneWithoutApplicationsInput {
@@ -3325,9 +3602,9 @@ export interface CandidateCreateOneWithoutApplicationsInput {
 
 export interface CandidateCreateWithoutApplicationsInput {
   
-  firstName: string;
+  firstName?: Maybe<string>;
   
-  lastName: string;
+  lastName?: Maybe<string>;
   
   emails?: Maybe<CandidateCreateemailsInput>;
   
@@ -3362,6 +3639,99 @@ export interface CandidateCreateWithoutApplicationsInput {
   comments?: Maybe<CommentCreateManyInput>;
 }
 
+export interface LocationCreateManyInput {
+  
+  create?: Maybe<LocationCreateInput[]>;
+  
+  connect?: Maybe<LocationWhereUniqueInput[]>;
+}
+
+export interface LocationCreateInput {
+  
+  country: string;
+  
+  region?: Maybe<string>;
+  
+  city: string;
+  
+  zip?: Maybe<string>;
+}
+
+export interface LocationWhereUniqueInput {
+  
+  id?: Maybe<string>;
+}
+
+export interface StageCreateManyInput {
+  
+  create?: Maybe<StageCreateInput[]>;
+  
+  connect?: Maybe<StageWhereUniqueInput[]>;
+}
+
+export interface DisqualificationCreateManyInput {
+  
+  create?: Maybe<DisqualificationCreateInput[]>;
+  
+  connect?: Maybe<DisqualificationWhereUniqueInput[]>;
+}
+
+export interface ReviewCreateManyInput {
+  
+  create?: Maybe<ReviewCreateInput[]>;
+  
+  connect?: Maybe<ReviewWhereUniqueInput[]>;
+}
+
+export interface InviteCreateManyInput {
+  
+  create?: Maybe<InviteCreateInput[]>;
+  
+  connect?: Maybe<InviteWhereUniqueInput[]>;
+}
+
+export interface InviteCreateInput {
+  
+  email: string;
+}
+
+export interface InviteWhereUniqueInput {
+  
+  id?: Maybe<string>;
+}
+
+export interface WorkspaceWhereUniqueInput {
+  
+  id?: Maybe<string>;
+}
+
+export interface WorkflowCreateOneWithoutJobsInput {
+  
+  create?: Maybe<WorkflowCreateWithoutJobsInput>;
+  
+  connect?: Maybe<WorkflowWhereUniqueInput>;
+}
+
+export interface WorkflowCreateWithoutJobsInput {
+  
+  name: string;
+  
+  description?: Maybe<string>;
+  
+  stages?: Maybe<StageCreateManyInput>;
+  
+  disqualifications?: Maybe<DisqualificationCreateManyInput>;
+  
+  fields?: Maybe<FieldCreateManyInput>;
+  
+  reviews?: Maybe<ReviewCreateManyInput>;
+}
+
+export interface DisqualificationInstanceWhereUniqueInput {
+  
+  id?: Maybe<string>;
+}
+
 export interface ApplicationUpdateInput {
   
   type?: Maybe<ApplicationType>;
@@ -3369,6 +3739,8 @@ export interface ApplicationUpdateInput {
   disqualification?: Maybe<DisqualificationInstanceUpdateOneInput>;
   
   stage?: Maybe<StageUpdateOneRequiredInput>;
+  
+  reviews?: Maybe<ReviewInstanceUpdateManyInput>;
   
   job?: Maybe<JobUpdateOneRequiredWithoutApplicationsInput>;
   
@@ -3392,7 +3764,7 @@ export interface DisqualificationInstanceUpdateOneInput {
 
 export interface DisqualificationInstanceUpdateDataInput {
   
-  disqualification?: Maybe<DisqualificationUpdateOneRequiredInput>;
+  prototype?: Maybe<DisqualificationUpdateOneRequiredInput>;
   
   createdBy?: Maybe<UserUpdateOneRequiredInput>;
   
@@ -4229,7 +4601,7 @@ export interface FieldInstanceUpdateWithWhereUniqueNestedInput {
 
 export interface FieldInstanceUpdateDataInput {
   
-  field?: Maybe<FieldUpdateOneRequiredInput>;
+  prototype?: Maybe<FieldUpdateOneRequiredInput>;
   
   value?: Maybe<string>;
 }
@@ -4415,6 +4787,8 @@ export interface ApplicationUpdateWithoutCandidateDataInput {
   
   stage?: Maybe<StageUpdateOneRequiredInput>;
   
+  reviews?: Maybe<ReviewInstanceUpdateManyInput>;
+  
   job?: Maybe<JobUpdateOneRequiredWithoutApplicationsInput>;
 }
 
@@ -4445,6 +4819,398 @@ export interface StageUpsertNestedInput {
   create: StageCreateInput;
 }
 
+export interface ReviewInstanceUpdateManyInput {
+  
+  create?: Maybe<ReviewInstanceCreateInput[]>;
+  
+  update?: Maybe<ReviewInstanceUpdateWithWhereUniqueNestedInput[]>;
+  
+  upsert?: Maybe<ReviewInstanceUpsertWithWhereUniqueNestedInput[]>;
+  
+  delete?: Maybe<ReviewInstanceWhereUniqueInput[]>;
+  
+  connect?: Maybe<ReviewInstanceWhereUniqueInput[]>;
+  
+  set?: Maybe<ReviewInstanceWhereUniqueInput[]>;
+  
+  disconnect?: Maybe<ReviewInstanceWhereUniqueInput[]>;
+  
+  deleteMany?: Maybe<ReviewInstanceScalarWhereInput[]>;
+  
+  updateMany?: Maybe<ReviewInstanceUpdateManyWithWhereNestedInput[]>;
+}
+
+export interface ReviewInstanceUpdateWithWhereUniqueNestedInput {
+  
+  where: ReviewInstanceWhereUniqueInput;
+  
+  data: ReviewInstanceUpdateDataInput;
+}
+
+export interface ReviewInstanceUpdateDataInput {
+  
+  prototype?: Maybe<ReviewUpdateOneInput>;
+  
+  fields?: Maybe<FieldInstanceUpdateManyInput>;
+  
+  createdBy?: Maybe<UserUpdateOneRequiredInput>;
+  
+  rating?: Maybe<number>;
+  
+  content?: Maybe<string>;
+}
+
+export interface ReviewUpdateOneInput {
+  
+  create?: Maybe<ReviewCreateInput>;
+  
+  update?: Maybe<ReviewUpdateDataInput>;
+  
+  upsert?: Maybe<ReviewUpsertNestedInput>;
+  
+  delete?: Maybe<boolean>;
+  
+  disconnect?: Maybe<boolean>;
+  
+  connect?: Maybe<ReviewWhereUniqueInput>;
+}
+
+export interface ReviewUpdateDataInput {
+  
+  name?: Maybe<string>;
+  
+  fields?: Maybe<FieldUpdateManyInput>;
+}
+
+export interface FieldUpdateManyInput {
+  
+  create?: Maybe<FieldCreateInput[]>;
+  
+  update?: Maybe<FieldUpdateWithWhereUniqueNestedInput[]>;
+  
+  upsert?: Maybe<FieldUpsertWithWhereUniqueNestedInput[]>;
+  
+  delete?: Maybe<FieldWhereUniqueInput[]>;
+  
+  connect?: Maybe<FieldWhereUniqueInput[]>;
+  
+  set?: Maybe<FieldWhereUniqueInput[]>;
+  
+  disconnect?: Maybe<FieldWhereUniqueInput[]>;
+  
+  deleteMany?: Maybe<FieldScalarWhereInput[]>;
+  
+  updateMany?: Maybe<FieldUpdateManyWithWhereNestedInput[]>;
+}
+
+export interface FieldUpdateWithWhereUniqueNestedInput {
+  
+  where: FieldWhereUniqueInput;
+  
+  data: FieldUpdateDataInput;
+}
+
+export interface FieldUpsertWithWhereUniqueNestedInput {
+  
+  where: FieldWhereUniqueInput;
+  
+  update: FieldUpdateDataInput;
+  
+  create: FieldCreateInput;
+}
+
+export interface FieldScalarWhereInput {
+  
+  id?: Maybe<string>;
+  
+  id_not?: Maybe<string>;
+  
+  id_in?: Maybe<string[]>;
+  
+  id_not_in?: Maybe<string[]>;
+  
+  id_lt?: Maybe<string>;
+  
+  id_lte?: Maybe<string>;
+  
+  id_gt?: Maybe<string>;
+  
+  id_gte?: Maybe<string>;
+  
+  id_contains?: Maybe<string>;
+  
+  id_not_contains?: Maybe<string>;
+  
+  id_starts_with?: Maybe<string>;
+  
+  id_not_starts_with?: Maybe<string>;
+  
+  id_ends_with?: Maybe<string>;
+  
+  id_not_ends_with?: Maybe<string>;
+  
+  createdAt?: Maybe<DateTime>;
+  
+  createdAt_not?: Maybe<DateTime>;
+  
+  createdAt_in?: Maybe<DateTime[]>;
+  
+  createdAt_not_in?: Maybe<DateTime[]>;
+  
+  createdAt_lt?: Maybe<DateTime>;
+  
+  createdAt_lte?: Maybe<DateTime>;
+  
+  createdAt_gt?: Maybe<DateTime>;
+  
+  createdAt_gte?: Maybe<DateTime>;
+  
+  updatedAt?: Maybe<DateTime>;
+  
+  updatedAt_not?: Maybe<DateTime>;
+  
+  updatedAt_in?: Maybe<DateTime[]>;
+  
+  updatedAt_not_in?: Maybe<DateTime[]>;
+  
+  updatedAt_lt?: Maybe<DateTime>;
+  
+  updatedAt_lte?: Maybe<DateTime>;
+  
+  updatedAt_gt?: Maybe<DateTime>;
+  
+  updatedAt_gte?: Maybe<DateTime>;
+  
+  type?: Maybe<FieldType>;
+  
+  type_not?: Maybe<FieldType>;
+  
+  type_in?: Maybe<FieldType[]>;
+  
+  type_not_in?: Maybe<FieldType[]>;
+  
+  label?: Maybe<string>;
+  
+  label_not?: Maybe<string>;
+  
+  label_in?: Maybe<string[]>;
+  
+  label_not_in?: Maybe<string[]>;
+  
+  label_lt?: Maybe<string>;
+  
+  label_lte?: Maybe<string>;
+  
+  label_gt?: Maybe<string>;
+  
+  label_gte?: Maybe<string>;
+  
+  label_contains?: Maybe<string>;
+  
+  label_not_contains?: Maybe<string>;
+  
+  label_starts_with?: Maybe<string>;
+  
+  label_not_starts_with?: Maybe<string>;
+  
+  label_ends_with?: Maybe<string>;
+  
+  label_not_ends_with?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  description_not?: Maybe<string>;
+  
+  description_in?: Maybe<string[]>;
+  
+  description_not_in?: Maybe<string[]>;
+  
+  description_lt?: Maybe<string>;
+  
+  description_lte?: Maybe<string>;
+  
+  description_gt?: Maybe<string>;
+  
+  description_gte?: Maybe<string>;
+  
+  description_contains?: Maybe<string>;
+  
+  description_not_contains?: Maybe<string>;
+  
+  description_starts_with?: Maybe<string>;
+  
+  description_not_starts_with?: Maybe<string>;
+  
+  description_ends_with?: Maybe<string>;
+  
+  description_not_ends_with?: Maybe<string>;
+  
+  AND?: Maybe<FieldScalarWhereInput[]>;
+  
+  OR?: Maybe<FieldScalarWhereInput[]>;
+  
+  NOT?: Maybe<FieldScalarWhereInput[]>;
+}
+
+export interface FieldUpdateManyWithWhereNestedInput {
+  
+  where: FieldScalarWhereInput;
+  
+  data: FieldUpdateManyDataInput;
+}
+
+export interface FieldUpdateManyDataInput {
+  
+  type?: Maybe<FieldType>;
+  
+  label?: Maybe<string>;
+  
+  description?: Maybe<string>;
+}
+
+export interface ReviewUpsertNestedInput {
+  
+  update: ReviewUpdateDataInput;
+  
+  create: ReviewCreateInput;
+}
+
+export interface ReviewInstanceUpsertWithWhereUniqueNestedInput {
+  
+  where: ReviewInstanceWhereUniqueInput;
+  
+  update: ReviewInstanceUpdateDataInput;
+  
+  create: ReviewInstanceCreateInput;
+}
+
+export interface ReviewInstanceScalarWhereInput {
+  
+  id?: Maybe<string>;
+  
+  id_not?: Maybe<string>;
+  
+  id_in?: Maybe<string[]>;
+  
+  id_not_in?: Maybe<string[]>;
+  
+  id_lt?: Maybe<string>;
+  
+  id_lte?: Maybe<string>;
+  
+  id_gt?: Maybe<string>;
+  
+  id_gte?: Maybe<string>;
+  
+  id_contains?: Maybe<string>;
+  
+  id_not_contains?: Maybe<string>;
+  
+  id_starts_with?: Maybe<string>;
+  
+  id_not_starts_with?: Maybe<string>;
+  
+  id_ends_with?: Maybe<string>;
+  
+  id_not_ends_with?: Maybe<string>;
+  
+  createdAt?: Maybe<DateTime>;
+  
+  createdAt_not?: Maybe<DateTime>;
+  
+  createdAt_in?: Maybe<DateTime[]>;
+  
+  createdAt_not_in?: Maybe<DateTime[]>;
+  
+  createdAt_lt?: Maybe<DateTime>;
+  
+  createdAt_lte?: Maybe<DateTime>;
+  
+  createdAt_gt?: Maybe<DateTime>;
+  
+  createdAt_gte?: Maybe<DateTime>;
+  
+  updatedAt?: Maybe<DateTime>;
+  
+  updatedAt_not?: Maybe<DateTime>;
+  
+  updatedAt_in?: Maybe<DateTime[]>;
+  
+  updatedAt_not_in?: Maybe<DateTime[]>;
+  
+  updatedAt_lt?: Maybe<DateTime>;
+  
+  updatedAt_lte?: Maybe<DateTime>;
+  
+  updatedAt_gt?: Maybe<DateTime>;
+  
+  updatedAt_gte?: Maybe<DateTime>;
+  
+  rating?: Maybe<number>;
+  
+  rating_not?: Maybe<number>;
+  
+  rating_in?: Maybe<number[]>;
+  
+  rating_not_in?: Maybe<number[]>;
+  
+  rating_lt?: Maybe<number>;
+  
+  rating_lte?: Maybe<number>;
+  
+  rating_gt?: Maybe<number>;
+  
+  rating_gte?: Maybe<number>;
+  
+  content?: Maybe<string>;
+  
+  content_not?: Maybe<string>;
+  
+  content_in?: Maybe<string[]>;
+  
+  content_not_in?: Maybe<string[]>;
+  
+  content_lt?: Maybe<string>;
+  
+  content_lte?: Maybe<string>;
+  
+  content_gt?: Maybe<string>;
+  
+  content_gte?: Maybe<string>;
+  
+  content_contains?: Maybe<string>;
+  
+  content_not_contains?: Maybe<string>;
+  
+  content_starts_with?: Maybe<string>;
+  
+  content_not_starts_with?: Maybe<string>;
+  
+  content_ends_with?: Maybe<string>;
+  
+  content_not_ends_with?: Maybe<string>;
+  
+  AND?: Maybe<ReviewInstanceScalarWhereInput[]>;
+  
+  OR?: Maybe<ReviewInstanceScalarWhereInput[]>;
+  
+  NOT?: Maybe<ReviewInstanceScalarWhereInput[]>;
+}
+
+export interface ReviewInstanceUpdateManyWithWhereNestedInput {
+  
+  where: ReviewInstanceScalarWhereInput;
+  
+  data: ReviewInstanceUpdateManyDataInput;
+}
+
+export interface ReviewInstanceUpdateManyDataInput {
+  
+  rating?: Maybe<number>;
+  
+  content?: Maybe<string>;
+}
+
 export interface JobUpdateOneRequiredWithoutApplicationsInput {
   
   create?: Maybe<JobCreateWithoutApplicationsInput>;
@@ -4460,7 +5226,7 @@ export interface JobUpdateWithoutApplicationsDataInput {
   
   workspace?: Maybe<WorkspaceUpdateOneRequiredWithoutJobsInput>;
   
-  workflow?: Maybe<WorkflowUpdateOneRequiredInput>;
+  workflow?: Maybe<WorkflowUpdateOneRequiredWithoutJobsInput>;
   
   comments?: Maybe<CommentUpdateManyInput>;
   
@@ -5598,6 +6364,8 @@ export interface WorkflowUpdateWithWhereUniqueNestedInput {
 
 export interface WorkflowUpdateDataInput {
   
+  jobs?: Maybe<JobUpdateManyWithoutWorkflowInput>;
+  
   name?: Maybe<string>;
   
   description?: Maybe<string>;
@@ -5607,6 +6375,782 @@ export interface WorkflowUpdateDataInput {
   disqualifications?: Maybe<DisqualificationUpdateManyInput>;
   
   fields?: Maybe<FieldUpdateManyInput>;
+  
+  reviews?: Maybe<ReviewUpdateManyInput>;
+}
+
+export interface JobUpdateManyWithoutWorkflowInput {
+  
+  create?: Maybe<JobCreateWithoutWorkflowInput[]>;
+  
+  delete?: Maybe<JobWhereUniqueInput[]>;
+  
+  connect?: Maybe<JobWhereUniqueInput[]>;
+  
+  set?: Maybe<JobWhereUniqueInput[]>;
+  
+  disconnect?: Maybe<JobWhereUniqueInput[]>;
+  
+  update?: Maybe<JobUpdateWithWhereUniqueWithoutWorkflowInput[]>;
+  
+  upsert?: Maybe<JobUpsertWithWhereUniqueWithoutWorkflowInput[]>;
+  
+  deleteMany?: Maybe<JobScalarWhereInput[]>;
+  
+  updateMany?: Maybe<JobUpdateManyWithWhereNestedInput[]>;
+}
+
+export interface JobUpdateWithWhereUniqueWithoutWorkflowInput {
+  
+  where: JobWhereUniqueInput;
+  
+  data: JobUpdateWithoutWorkflowDataInput;
+}
+
+export interface JobUpdateWithoutWorkflowDataInput {
+  
+  workspace?: Maybe<WorkspaceUpdateOneRequiredWithoutJobsInput>;
+  
+  applications?: Maybe<ApplicationUpdateManyWithoutJobInput>;
+  
+  comments?: Maybe<CommentUpdateManyInput>;
+  
+  type?: Maybe<JobType>;
+  
+  department?: Maybe<string>;
+  
+  locations?: Maybe<LocationUpdateManyInput>;
+  
+  name?: Maybe<string>;
+  
+  excerpt?: Maybe<string>;
+  
+  companyDescription?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  requirements?: Maybe<string>;
+}
+
+export interface ApplicationUpdateManyWithoutJobInput {
+  
+  create?: Maybe<ApplicationCreateWithoutJobInput[]>;
+  
+  delete?: Maybe<ApplicationWhereUniqueInput[]>;
+  
+  connect?: Maybe<ApplicationWhereUniqueInput[]>;
+  
+  set?: Maybe<ApplicationWhereUniqueInput[]>;
+  
+  disconnect?: Maybe<ApplicationWhereUniqueInput[]>;
+  
+  update?: Maybe<ApplicationUpdateWithWhereUniqueWithoutJobInput[]>;
+  
+  upsert?: Maybe<ApplicationUpsertWithWhereUniqueWithoutJobInput[]>;
+  
+  deleteMany?: Maybe<ApplicationScalarWhereInput[]>;
+  
+  updateMany?: Maybe<ApplicationUpdateManyWithWhereNestedInput[]>;
+}
+
+export interface ApplicationUpdateWithWhereUniqueWithoutJobInput {
+  
+  where: ApplicationWhereUniqueInput;
+  
+  data: ApplicationUpdateWithoutJobDataInput;
+}
+
+export interface ApplicationUpdateWithoutJobDataInput {
+  
+  type?: Maybe<ApplicationType>;
+  
+  disqualification?: Maybe<DisqualificationInstanceUpdateOneInput>;
+  
+  stage?: Maybe<StageUpdateOneRequiredInput>;
+  
+  reviews?: Maybe<ReviewInstanceUpdateManyInput>;
+  
+  candidate?: Maybe<CandidateUpdateOneRequiredWithoutApplicationsInput>;
+}
+
+export interface CandidateUpdateOneRequiredWithoutApplicationsInput {
+  
+  create?: Maybe<CandidateCreateWithoutApplicationsInput>;
+  
+  update?: Maybe<CandidateUpdateWithoutApplicationsDataInput>;
+  
+  upsert?: Maybe<CandidateUpsertWithoutApplicationsInput>;
+  
+  connect?: Maybe<CandidateWhereUniqueInput>;
+}
+
+export interface CandidateUpdateWithoutApplicationsDataInput {
+  
+  firstName?: Maybe<string>;
+  
+  lastName?: Maybe<string>;
+  
+  emails?: Maybe<CandidateUpdateemailsInput>;
+  
+  phones?: Maybe<CandidateUpdatephonesInput>;
+  
+  links?: Maybe<CandidateUpdatelinksInput>;
+  
+  avatar?: Maybe<FileUpdateOneInput>;
+  
+  company?: Maybe<string>;
+  
+  headline?: Maybe<string>;
+  
+  position?: Maybe<string>;
+  
+  resumesString?: Maybe<CandidateUpdateresumesStringInput>;
+  
+  resumesFile?: Maybe<FileUpdateManyInput>;
+  
+  coverLettersString?: Maybe<CandidateUpdatecoverLettersStringInput>;
+  
+  coverLettersFile?: Maybe<FileUpdateManyInput>;
+  
+  tags?: Maybe<TagUpdateManyInput>;
+  
+  sources?: Maybe<SourceUpdateManyInput>;
+  
+  fields?: Maybe<FieldInstanceUpdateManyInput>;
+  
+  tasks?: Maybe<TaskUpdateManyWithoutCandidateInput>;
+  
+  comments?: Maybe<CommentUpdateManyInput>;
+}
+
+export interface CandidateUpsertWithoutApplicationsInput {
+  
+  update: CandidateUpdateWithoutApplicationsDataInput;
+  
+  create: CandidateCreateWithoutApplicationsInput;
+}
+
+export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
+  
+  where: ApplicationWhereUniqueInput;
+  
+  update: ApplicationUpdateWithoutJobDataInput;
+  
+  create: ApplicationCreateWithoutJobInput;
+}
+
+export interface ApplicationScalarWhereInput {
+  
+  createdAt?: Maybe<DateTime>;
+  
+  createdAt_not?: Maybe<DateTime>;
+  
+  createdAt_in?: Maybe<DateTime[]>;
+  
+  createdAt_not_in?: Maybe<DateTime[]>;
+  
+  createdAt_lt?: Maybe<DateTime>;
+  
+  createdAt_lte?: Maybe<DateTime>;
+  
+  createdAt_gt?: Maybe<DateTime>;
+  
+  createdAt_gte?: Maybe<DateTime>;
+  
+  id?: Maybe<string>;
+  
+  id_not?: Maybe<string>;
+  
+  id_in?: Maybe<string[]>;
+  
+  id_not_in?: Maybe<string[]>;
+  
+  id_lt?: Maybe<string>;
+  
+  id_lte?: Maybe<string>;
+  
+  id_gt?: Maybe<string>;
+  
+  id_gte?: Maybe<string>;
+  
+  id_contains?: Maybe<string>;
+  
+  id_not_contains?: Maybe<string>;
+  
+  id_starts_with?: Maybe<string>;
+  
+  id_not_starts_with?: Maybe<string>;
+  
+  id_ends_with?: Maybe<string>;
+  
+  id_not_ends_with?: Maybe<string>;
+  
+  updatedAt?: Maybe<DateTime>;
+  
+  updatedAt_not?: Maybe<DateTime>;
+  
+  updatedAt_in?: Maybe<DateTime[]>;
+  
+  updatedAt_not_in?: Maybe<DateTime[]>;
+  
+  updatedAt_lt?: Maybe<DateTime>;
+  
+  updatedAt_lte?: Maybe<DateTime>;
+  
+  updatedAt_gt?: Maybe<DateTime>;
+  
+  updatedAt_gte?: Maybe<DateTime>;
+  
+  type?: Maybe<ApplicationType>;
+  
+  type_not?: Maybe<ApplicationType>;
+  
+  type_in?: Maybe<ApplicationType[]>;
+  
+  type_not_in?: Maybe<ApplicationType[]>;
+  
+  AND?: Maybe<ApplicationScalarWhereInput[]>;
+  
+  OR?: Maybe<ApplicationScalarWhereInput[]>;
+  
+  NOT?: Maybe<ApplicationScalarWhereInput[]>;
+}
+
+export interface ApplicationUpdateManyWithWhereNestedInput {
+  
+  where: ApplicationScalarWhereInput;
+  
+  data: ApplicationUpdateManyDataInput;
+}
+
+export interface ApplicationUpdateManyDataInput {
+  
+  type?: Maybe<ApplicationType>;
+}
+
+export interface LocationUpdateManyInput {
+  
+  create?: Maybe<LocationCreateInput[]>;
+  
+  update?: Maybe<LocationUpdateWithWhereUniqueNestedInput[]>;
+  
+  upsert?: Maybe<LocationUpsertWithWhereUniqueNestedInput[]>;
+  
+  delete?: Maybe<LocationWhereUniqueInput[]>;
+  
+  connect?: Maybe<LocationWhereUniqueInput[]>;
+  
+  set?: Maybe<LocationWhereUniqueInput[]>;
+  
+  disconnect?: Maybe<LocationWhereUniqueInput[]>;
+  
+  deleteMany?: Maybe<LocationScalarWhereInput[]>;
+  
+  updateMany?: Maybe<LocationUpdateManyWithWhereNestedInput[]>;
+}
+
+export interface LocationUpdateWithWhereUniqueNestedInput {
+  
+  where: LocationWhereUniqueInput;
+  
+  data: LocationUpdateDataInput;
+}
+
+export interface LocationUpdateDataInput {
+  
+  country?: Maybe<string>;
+  
+  region?: Maybe<string>;
+  
+  city?: Maybe<string>;
+  
+  zip?: Maybe<string>;
+}
+
+export interface LocationUpsertWithWhereUniqueNestedInput {
+  
+  where: LocationWhereUniqueInput;
+  
+  update: LocationUpdateDataInput;
+  
+  create: LocationCreateInput;
+}
+
+export interface LocationScalarWhereInput {
+  
+  id?: Maybe<string>;
+  
+  id_not?: Maybe<string>;
+  
+  id_in?: Maybe<string[]>;
+  
+  id_not_in?: Maybe<string[]>;
+  
+  id_lt?: Maybe<string>;
+  
+  id_lte?: Maybe<string>;
+  
+  id_gt?: Maybe<string>;
+  
+  id_gte?: Maybe<string>;
+  
+  id_contains?: Maybe<string>;
+  
+  id_not_contains?: Maybe<string>;
+  
+  id_starts_with?: Maybe<string>;
+  
+  id_not_starts_with?: Maybe<string>;
+  
+  id_ends_with?: Maybe<string>;
+  
+  id_not_ends_with?: Maybe<string>;
+  
+  createdAt?: Maybe<DateTime>;
+  
+  createdAt_not?: Maybe<DateTime>;
+  
+  createdAt_in?: Maybe<DateTime[]>;
+  
+  createdAt_not_in?: Maybe<DateTime[]>;
+  
+  createdAt_lt?: Maybe<DateTime>;
+  
+  createdAt_lte?: Maybe<DateTime>;
+  
+  createdAt_gt?: Maybe<DateTime>;
+  
+  createdAt_gte?: Maybe<DateTime>;
+  
+  updatedAt?: Maybe<DateTime>;
+  
+  updatedAt_not?: Maybe<DateTime>;
+  
+  updatedAt_in?: Maybe<DateTime[]>;
+  
+  updatedAt_not_in?: Maybe<DateTime[]>;
+  
+  updatedAt_lt?: Maybe<DateTime>;
+  
+  updatedAt_lte?: Maybe<DateTime>;
+  
+  updatedAt_gt?: Maybe<DateTime>;
+  
+  updatedAt_gte?: Maybe<DateTime>;
+  
+  country?: Maybe<string>;
+  
+  country_not?: Maybe<string>;
+  
+  country_in?: Maybe<string[]>;
+  
+  country_not_in?: Maybe<string[]>;
+  
+  country_lt?: Maybe<string>;
+  
+  country_lte?: Maybe<string>;
+  
+  country_gt?: Maybe<string>;
+  
+  country_gte?: Maybe<string>;
+  
+  country_contains?: Maybe<string>;
+  
+  country_not_contains?: Maybe<string>;
+  
+  country_starts_with?: Maybe<string>;
+  
+  country_not_starts_with?: Maybe<string>;
+  
+  country_ends_with?: Maybe<string>;
+  
+  country_not_ends_with?: Maybe<string>;
+  
+  region?: Maybe<string>;
+  
+  region_not?: Maybe<string>;
+  
+  region_in?: Maybe<string[]>;
+  
+  region_not_in?: Maybe<string[]>;
+  
+  region_lt?: Maybe<string>;
+  
+  region_lte?: Maybe<string>;
+  
+  region_gt?: Maybe<string>;
+  
+  region_gte?: Maybe<string>;
+  
+  region_contains?: Maybe<string>;
+  
+  region_not_contains?: Maybe<string>;
+  
+  region_starts_with?: Maybe<string>;
+  
+  region_not_starts_with?: Maybe<string>;
+  
+  region_ends_with?: Maybe<string>;
+  
+  region_not_ends_with?: Maybe<string>;
+  
+  city?: Maybe<string>;
+  
+  city_not?: Maybe<string>;
+  
+  city_in?: Maybe<string[]>;
+  
+  city_not_in?: Maybe<string[]>;
+  
+  city_lt?: Maybe<string>;
+  
+  city_lte?: Maybe<string>;
+  
+  city_gt?: Maybe<string>;
+  
+  city_gte?: Maybe<string>;
+  
+  city_contains?: Maybe<string>;
+  
+  city_not_contains?: Maybe<string>;
+  
+  city_starts_with?: Maybe<string>;
+  
+  city_not_starts_with?: Maybe<string>;
+  
+  city_ends_with?: Maybe<string>;
+  
+  city_not_ends_with?: Maybe<string>;
+  
+  zip?: Maybe<string>;
+  
+  zip_not?: Maybe<string>;
+  
+  zip_in?: Maybe<string[]>;
+  
+  zip_not_in?: Maybe<string[]>;
+  
+  zip_lt?: Maybe<string>;
+  
+  zip_lte?: Maybe<string>;
+  
+  zip_gt?: Maybe<string>;
+  
+  zip_gte?: Maybe<string>;
+  
+  zip_contains?: Maybe<string>;
+  
+  zip_not_contains?: Maybe<string>;
+  
+  zip_starts_with?: Maybe<string>;
+  
+  zip_not_starts_with?: Maybe<string>;
+  
+  zip_ends_with?: Maybe<string>;
+  
+  zip_not_ends_with?: Maybe<string>;
+  
+  AND?: Maybe<LocationScalarWhereInput[]>;
+  
+  OR?: Maybe<LocationScalarWhereInput[]>;
+  
+  NOT?: Maybe<LocationScalarWhereInput[]>;
+}
+
+export interface LocationUpdateManyWithWhereNestedInput {
+  
+  where: LocationScalarWhereInput;
+  
+  data: LocationUpdateManyDataInput;
+}
+
+export interface LocationUpdateManyDataInput {
+  
+  country?: Maybe<string>;
+  
+  region?: Maybe<string>;
+  
+  city?: Maybe<string>;
+  
+  zip?: Maybe<string>;
+}
+
+export interface JobUpsertWithWhereUniqueWithoutWorkflowInput {
+  
+  where: JobWhereUniqueInput;
+  
+  update: JobUpdateWithoutWorkflowDataInput;
+  
+  create: JobCreateWithoutWorkflowInput;
+}
+
+export interface JobScalarWhereInput {
+  
+  id?: Maybe<string>;
+  
+  id_not?: Maybe<string>;
+  
+  id_in?: Maybe<string[]>;
+  
+  id_not_in?: Maybe<string[]>;
+  
+  id_lt?: Maybe<string>;
+  
+  id_lte?: Maybe<string>;
+  
+  id_gt?: Maybe<string>;
+  
+  id_gte?: Maybe<string>;
+  
+  id_contains?: Maybe<string>;
+  
+  id_not_contains?: Maybe<string>;
+  
+  id_starts_with?: Maybe<string>;
+  
+  id_not_starts_with?: Maybe<string>;
+  
+  id_ends_with?: Maybe<string>;
+  
+  id_not_ends_with?: Maybe<string>;
+  
+  createdAt?: Maybe<DateTime>;
+  
+  createdAt_not?: Maybe<DateTime>;
+  
+  createdAt_in?: Maybe<DateTime[]>;
+  
+  createdAt_not_in?: Maybe<DateTime[]>;
+  
+  createdAt_lt?: Maybe<DateTime>;
+  
+  createdAt_lte?: Maybe<DateTime>;
+  
+  createdAt_gt?: Maybe<DateTime>;
+  
+  createdAt_gte?: Maybe<DateTime>;
+  
+  updatedAt?: Maybe<DateTime>;
+  
+  updatedAt_not?: Maybe<DateTime>;
+  
+  updatedAt_in?: Maybe<DateTime[]>;
+  
+  updatedAt_not_in?: Maybe<DateTime[]>;
+  
+  updatedAt_lt?: Maybe<DateTime>;
+  
+  updatedAt_lte?: Maybe<DateTime>;
+  
+  updatedAt_gt?: Maybe<DateTime>;
+  
+  updatedAt_gte?: Maybe<DateTime>;
+  
+  type?: Maybe<JobType>;
+  
+  type_not?: Maybe<JobType>;
+  
+  type_in?: Maybe<JobType[]>;
+  
+  type_not_in?: Maybe<JobType[]>;
+  
+  department?: Maybe<string>;
+  
+  department_not?: Maybe<string>;
+  
+  department_in?: Maybe<string[]>;
+  
+  department_not_in?: Maybe<string[]>;
+  
+  department_lt?: Maybe<string>;
+  
+  department_lte?: Maybe<string>;
+  
+  department_gt?: Maybe<string>;
+  
+  department_gte?: Maybe<string>;
+  
+  department_contains?: Maybe<string>;
+  
+  department_not_contains?: Maybe<string>;
+  
+  department_starts_with?: Maybe<string>;
+  
+  department_not_starts_with?: Maybe<string>;
+  
+  department_ends_with?: Maybe<string>;
+  
+  department_not_ends_with?: Maybe<string>;
+  
+  name?: Maybe<string>;
+  
+  name_not?: Maybe<string>;
+  
+  name_in?: Maybe<string[]>;
+  
+  name_not_in?: Maybe<string[]>;
+  
+  name_lt?: Maybe<string>;
+  
+  name_lte?: Maybe<string>;
+  
+  name_gt?: Maybe<string>;
+  
+  name_gte?: Maybe<string>;
+  
+  name_contains?: Maybe<string>;
+  
+  name_not_contains?: Maybe<string>;
+  
+  name_starts_with?: Maybe<string>;
+  
+  name_not_starts_with?: Maybe<string>;
+  
+  name_ends_with?: Maybe<string>;
+  
+  name_not_ends_with?: Maybe<string>;
+  
+  excerpt?: Maybe<string>;
+  
+  excerpt_not?: Maybe<string>;
+  
+  excerpt_in?: Maybe<string[]>;
+  
+  excerpt_not_in?: Maybe<string[]>;
+  
+  excerpt_lt?: Maybe<string>;
+  
+  excerpt_lte?: Maybe<string>;
+  
+  excerpt_gt?: Maybe<string>;
+  
+  excerpt_gte?: Maybe<string>;
+  
+  excerpt_contains?: Maybe<string>;
+  
+  excerpt_not_contains?: Maybe<string>;
+  
+  excerpt_starts_with?: Maybe<string>;
+  
+  excerpt_not_starts_with?: Maybe<string>;
+  
+  excerpt_ends_with?: Maybe<string>;
+  
+  excerpt_not_ends_with?: Maybe<string>;
+  
+  companyDescription?: Maybe<string>;
+  
+  companyDescription_not?: Maybe<string>;
+  
+  companyDescription_in?: Maybe<string[]>;
+  
+  companyDescription_not_in?: Maybe<string[]>;
+  
+  companyDescription_lt?: Maybe<string>;
+  
+  companyDescription_lte?: Maybe<string>;
+  
+  companyDescription_gt?: Maybe<string>;
+  
+  companyDescription_gte?: Maybe<string>;
+  
+  companyDescription_contains?: Maybe<string>;
+  
+  companyDescription_not_contains?: Maybe<string>;
+  
+  companyDescription_starts_with?: Maybe<string>;
+  
+  companyDescription_not_starts_with?: Maybe<string>;
+  
+  companyDescription_ends_with?: Maybe<string>;
+  
+  companyDescription_not_ends_with?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  description_not?: Maybe<string>;
+  
+  description_in?: Maybe<string[]>;
+  
+  description_not_in?: Maybe<string[]>;
+  
+  description_lt?: Maybe<string>;
+  
+  description_lte?: Maybe<string>;
+  
+  description_gt?: Maybe<string>;
+  
+  description_gte?: Maybe<string>;
+  
+  description_contains?: Maybe<string>;
+  
+  description_not_contains?: Maybe<string>;
+  
+  description_starts_with?: Maybe<string>;
+  
+  description_not_starts_with?: Maybe<string>;
+  
+  description_ends_with?: Maybe<string>;
+  
+  description_not_ends_with?: Maybe<string>;
+  
+  requirements?: Maybe<string>;
+  
+  requirements_not?: Maybe<string>;
+  
+  requirements_in?: Maybe<string[]>;
+  
+  requirements_not_in?: Maybe<string[]>;
+  
+  requirements_lt?: Maybe<string>;
+  
+  requirements_lte?: Maybe<string>;
+  
+  requirements_gt?: Maybe<string>;
+  
+  requirements_gte?: Maybe<string>;
+  
+  requirements_contains?: Maybe<string>;
+  
+  requirements_not_contains?: Maybe<string>;
+  
+  requirements_starts_with?: Maybe<string>;
+  
+  requirements_not_starts_with?: Maybe<string>;
+  
+  requirements_ends_with?: Maybe<string>;
+  
+  requirements_not_ends_with?: Maybe<string>;
+  
+  AND?: Maybe<JobScalarWhereInput[]>;
+  
+  OR?: Maybe<JobScalarWhereInput[]>;
+  
+  NOT?: Maybe<JobScalarWhereInput[]>;
+}
+
+export interface JobUpdateManyWithWhereNestedInput {
+  
+  where: JobScalarWhereInput;
+  
+  data: JobUpdateManyDataInput;
+}
+
+export interface JobUpdateManyDataInput {
+  
+  type?: Maybe<JobType>;
+  
+  department?: Maybe<string>;
+  
+  name?: Maybe<string>;
+  
+  excerpt?: Maybe<string>;
+  
+  companyDescription?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  requirements?: Maybe<string>;
 }
 
 export interface StageUpdateManyInput {
@@ -5971,44 +7515,44 @@ export interface DisqualificationUpdateManyDataInput {
   description?: Maybe<string>;
 }
 
-export interface FieldUpdateManyInput {
+export interface ReviewUpdateManyInput {
   
-  create?: Maybe<FieldCreateInput[]>;
+  create?: Maybe<ReviewCreateInput[]>;
   
-  update?: Maybe<FieldUpdateWithWhereUniqueNestedInput[]>;
+  update?: Maybe<ReviewUpdateWithWhereUniqueNestedInput[]>;
   
-  upsert?: Maybe<FieldUpsertWithWhereUniqueNestedInput[]>;
+  upsert?: Maybe<ReviewUpsertWithWhereUniqueNestedInput[]>;
   
-  delete?: Maybe<FieldWhereUniqueInput[]>;
+  delete?: Maybe<ReviewWhereUniqueInput[]>;
   
-  connect?: Maybe<FieldWhereUniqueInput[]>;
+  connect?: Maybe<ReviewWhereUniqueInput[]>;
   
-  set?: Maybe<FieldWhereUniqueInput[]>;
+  set?: Maybe<ReviewWhereUniqueInput[]>;
   
-  disconnect?: Maybe<FieldWhereUniqueInput[]>;
+  disconnect?: Maybe<ReviewWhereUniqueInput[]>;
   
-  deleteMany?: Maybe<FieldScalarWhereInput[]>;
+  deleteMany?: Maybe<ReviewScalarWhereInput[]>;
   
-  updateMany?: Maybe<FieldUpdateManyWithWhereNestedInput[]>;
+  updateMany?: Maybe<ReviewUpdateManyWithWhereNestedInput[]>;
 }
 
-export interface FieldUpdateWithWhereUniqueNestedInput {
+export interface ReviewUpdateWithWhereUniqueNestedInput {
   
-  where: FieldWhereUniqueInput;
+  where: ReviewWhereUniqueInput;
   
-  data: FieldUpdateDataInput;
+  data: ReviewUpdateDataInput;
 }
 
-export interface FieldUpsertWithWhereUniqueNestedInput {
+export interface ReviewUpsertWithWhereUniqueNestedInput {
   
-  where: FieldWhereUniqueInput;
+  where: ReviewWhereUniqueInput;
   
-  update: FieldUpdateDataInput;
+  update: ReviewUpdateDataInput;
   
-  create: FieldCreateInput;
+  create: ReviewCreateInput;
 }
 
-export interface FieldScalarWhereInput {
+export interface ReviewScalarWhereInput {
   
   id?: Maybe<string>;
   
@@ -6070,91 +7614,51 @@ export interface FieldScalarWhereInput {
   
   updatedAt_gte?: Maybe<DateTime>;
   
-  type?: Maybe<FieldType>;
+  name?: Maybe<string>;
   
-  type_not?: Maybe<FieldType>;
+  name_not?: Maybe<string>;
   
-  type_in?: Maybe<FieldType[]>;
+  name_in?: Maybe<string[]>;
   
-  type_not_in?: Maybe<FieldType[]>;
+  name_not_in?: Maybe<string[]>;
   
-  label?: Maybe<string>;
+  name_lt?: Maybe<string>;
   
-  label_not?: Maybe<string>;
+  name_lte?: Maybe<string>;
   
-  label_in?: Maybe<string[]>;
+  name_gt?: Maybe<string>;
   
-  label_not_in?: Maybe<string[]>;
+  name_gte?: Maybe<string>;
   
-  label_lt?: Maybe<string>;
+  name_contains?: Maybe<string>;
   
-  label_lte?: Maybe<string>;
+  name_not_contains?: Maybe<string>;
   
-  label_gt?: Maybe<string>;
+  name_starts_with?: Maybe<string>;
   
-  label_gte?: Maybe<string>;
+  name_not_starts_with?: Maybe<string>;
   
-  label_contains?: Maybe<string>;
+  name_ends_with?: Maybe<string>;
   
-  label_not_contains?: Maybe<string>;
+  name_not_ends_with?: Maybe<string>;
   
-  label_starts_with?: Maybe<string>;
+  AND?: Maybe<ReviewScalarWhereInput[]>;
   
-  label_not_starts_with?: Maybe<string>;
+  OR?: Maybe<ReviewScalarWhereInput[]>;
   
-  label_ends_with?: Maybe<string>;
-  
-  label_not_ends_with?: Maybe<string>;
-  
-  description?: Maybe<string>;
-  
-  description_not?: Maybe<string>;
-  
-  description_in?: Maybe<string[]>;
-  
-  description_not_in?: Maybe<string[]>;
-  
-  description_lt?: Maybe<string>;
-  
-  description_lte?: Maybe<string>;
-  
-  description_gt?: Maybe<string>;
-  
-  description_gte?: Maybe<string>;
-  
-  description_contains?: Maybe<string>;
-  
-  description_not_contains?: Maybe<string>;
-  
-  description_starts_with?: Maybe<string>;
-  
-  description_not_starts_with?: Maybe<string>;
-  
-  description_ends_with?: Maybe<string>;
-  
-  description_not_ends_with?: Maybe<string>;
-  
-  AND?: Maybe<FieldScalarWhereInput[]>;
-  
-  OR?: Maybe<FieldScalarWhereInput[]>;
-  
-  NOT?: Maybe<FieldScalarWhereInput[]>;
+  NOT?: Maybe<ReviewScalarWhereInput[]>;
 }
 
-export interface FieldUpdateManyWithWhereNestedInput {
+export interface ReviewUpdateManyWithWhereNestedInput {
   
-  where: FieldScalarWhereInput;
+  where: ReviewScalarWhereInput;
   
-  data: FieldUpdateManyDataInput;
+  data: ReviewUpdateManyDataInput;
 }
 
-export interface FieldUpdateManyDataInput {
+export interface ReviewUpdateManyDataInput {
   
-  type?: Maybe<FieldType>;
-  
-  label?: Maybe<string>;
-  
-  description?: Maybe<string>;
+  name?: Maybe<string>;
 }
 
 export interface WorkflowUpsertWithWhereUniqueNestedInput {
@@ -6485,269 +7989,37 @@ export interface WorkspaceUpsertWithoutJobsInput {
   create: WorkspaceCreateWithoutJobsInput;
 }
 
-export interface WorkflowUpdateOneRequiredInput {
+export interface WorkflowUpdateOneRequiredWithoutJobsInput {
   
-  create?: Maybe<WorkflowCreateInput>;
+  create?: Maybe<WorkflowCreateWithoutJobsInput>;
   
-  update?: Maybe<WorkflowUpdateDataInput>;
+  update?: Maybe<WorkflowUpdateWithoutJobsDataInput>;
   
-  upsert?: Maybe<WorkflowUpsertNestedInput>;
+  upsert?: Maybe<WorkflowUpsertWithoutJobsInput>;
   
   connect?: Maybe<WorkflowWhereUniqueInput>;
 }
 
-export interface WorkflowUpsertNestedInput {
+export interface WorkflowUpdateWithoutJobsDataInput {
   
-  update: WorkflowUpdateDataInput;
+  name?: Maybe<string>;
   
-  create: WorkflowCreateInput;
+  description?: Maybe<string>;
+  
+  stages?: Maybe<StageUpdateManyInput>;
+  
+  disqualifications?: Maybe<DisqualificationUpdateManyInput>;
+  
+  fields?: Maybe<FieldUpdateManyInput>;
+  
+  reviews?: Maybe<ReviewUpdateManyInput>;
 }
 
-export interface LocationUpdateManyInput {
+export interface WorkflowUpsertWithoutJobsInput {
   
-  create?: Maybe<LocationCreateInput[]>;
+  update: WorkflowUpdateWithoutJobsDataInput;
   
-  update?: Maybe<LocationUpdateWithWhereUniqueNestedInput[]>;
-  
-  upsert?: Maybe<LocationUpsertWithWhereUniqueNestedInput[]>;
-  
-  delete?: Maybe<LocationWhereUniqueInput[]>;
-  
-  connect?: Maybe<LocationWhereUniqueInput[]>;
-  
-  set?: Maybe<LocationWhereUniqueInput[]>;
-  
-  disconnect?: Maybe<LocationWhereUniqueInput[]>;
-  
-  deleteMany?: Maybe<LocationScalarWhereInput[]>;
-  
-  updateMany?: Maybe<LocationUpdateManyWithWhereNestedInput[]>;
-}
-
-export interface LocationUpdateWithWhereUniqueNestedInput {
-  
-  where: LocationWhereUniqueInput;
-  
-  data: LocationUpdateDataInput;
-}
-
-export interface LocationUpdateDataInput {
-  
-  country?: Maybe<string>;
-  
-  region?: Maybe<string>;
-  
-  city?: Maybe<string>;
-  
-  zip?: Maybe<string>;
-}
-
-export interface LocationUpsertWithWhereUniqueNestedInput {
-  
-  where: LocationWhereUniqueInput;
-  
-  update: LocationUpdateDataInput;
-  
-  create: LocationCreateInput;
-}
-
-export interface LocationScalarWhereInput {
-  
-  id?: Maybe<string>;
-  
-  id_not?: Maybe<string>;
-  
-  id_in?: Maybe<string[]>;
-  
-  id_not_in?: Maybe<string[]>;
-  
-  id_lt?: Maybe<string>;
-  
-  id_lte?: Maybe<string>;
-  
-  id_gt?: Maybe<string>;
-  
-  id_gte?: Maybe<string>;
-  
-  id_contains?: Maybe<string>;
-  
-  id_not_contains?: Maybe<string>;
-  
-  id_starts_with?: Maybe<string>;
-  
-  id_not_starts_with?: Maybe<string>;
-  
-  id_ends_with?: Maybe<string>;
-  
-  id_not_ends_with?: Maybe<string>;
-  
-  createdAt?: Maybe<DateTime>;
-  
-  createdAt_not?: Maybe<DateTime>;
-  
-  createdAt_in?: Maybe<DateTime[]>;
-  
-  createdAt_not_in?: Maybe<DateTime[]>;
-  
-  createdAt_lt?: Maybe<DateTime>;
-  
-  createdAt_lte?: Maybe<DateTime>;
-  
-  createdAt_gt?: Maybe<DateTime>;
-  
-  createdAt_gte?: Maybe<DateTime>;
-  
-  updatedAt?: Maybe<DateTime>;
-  
-  updatedAt_not?: Maybe<DateTime>;
-  
-  updatedAt_in?: Maybe<DateTime[]>;
-  
-  updatedAt_not_in?: Maybe<DateTime[]>;
-  
-  updatedAt_lt?: Maybe<DateTime>;
-  
-  updatedAt_lte?: Maybe<DateTime>;
-  
-  updatedAt_gt?: Maybe<DateTime>;
-  
-  updatedAt_gte?: Maybe<DateTime>;
-  
-  country?: Maybe<string>;
-  
-  country_not?: Maybe<string>;
-  
-  country_in?: Maybe<string[]>;
-  
-  country_not_in?: Maybe<string[]>;
-  
-  country_lt?: Maybe<string>;
-  
-  country_lte?: Maybe<string>;
-  
-  country_gt?: Maybe<string>;
-  
-  country_gte?: Maybe<string>;
-  
-  country_contains?: Maybe<string>;
-  
-  country_not_contains?: Maybe<string>;
-  
-  country_starts_with?: Maybe<string>;
-  
-  country_not_starts_with?: Maybe<string>;
-  
-  country_ends_with?: Maybe<string>;
-  
-  country_not_ends_with?: Maybe<string>;
-  
-  region?: Maybe<string>;
-  
-  region_not?: Maybe<string>;
-  
-  region_in?: Maybe<string[]>;
-  
-  region_not_in?: Maybe<string[]>;
-  
-  region_lt?: Maybe<string>;
-  
-  region_lte?: Maybe<string>;
-  
-  region_gt?: Maybe<string>;
-  
-  region_gte?: Maybe<string>;
-  
-  region_contains?: Maybe<string>;
-  
-  region_not_contains?: Maybe<string>;
-  
-  region_starts_with?: Maybe<string>;
-  
-  region_not_starts_with?: Maybe<string>;
-  
-  region_ends_with?: Maybe<string>;
-  
-  region_not_ends_with?: Maybe<string>;
-  
-  city?: Maybe<string>;
-  
-  city_not?: Maybe<string>;
-  
-  city_in?: Maybe<string[]>;
-  
-  city_not_in?: Maybe<string[]>;
-  
-  city_lt?: Maybe<string>;
-  
-  city_lte?: Maybe<string>;
-  
-  city_gt?: Maybe<string>;
-  
-  city_gte?: Maybe<string>;
-  
-  city_contains?: Maybe<string>;
-  
-  city_not_contains?: Maybe<string>;
-  
-  city_starts_with?: Maybe<string>;
-  
-  city_not_starts_with?: Maybe<string>;
-  
-  city_ends_with?: Maybe<string>;
-  
-  city_not_ends_with?: Maybe<string>;
-  
-  zip?: Maybe<string>;
-  
-  zip_not?: Maybe<string>;
-  
-  zip_in?: Maybe<string[]>;
-  
-  zip_not_in?: Maybe<string[]>;
-  
-  zip_lt?: Maybe<string>;
-  
-  zip_lte?: Maybe<string>;
-  
-  zip_gt?: Maybe<string>;
-  
-  zip_gte?: Maybe<string>;
-  
-  zip_contains?: Maybe<string>;
-  
-  zip_not_contains?: Maybe<string>;
-  
-  zip_starts_with?: Maybe<string>;
-  
-  zip_not_starts_with?: Maybe<string>;
-  
-  zip_ends_with?: Maybe<string>;
-  
-  zip_not_ends_with?: Maybe<string>;
-  
-  AND?: Maybe<LocationScalarWhereInput[]>;
-  
-  OR?: Maybe<LocationScalarWhereInput[]>;
-  
-  NOT?: Maybe<LocationScalarWhereInput[]>;
-}
-
-export interface LocationUpdateManyWithWhereNestedInput {
-  
-  where: LocationScalarWhereInput;
-  
-  data: LocationUpdateManyDataInput;
-}
-
-export interface LocationUpdateManyDataInput {
-  
-  country?: Maybe<string>;
-  
-  region?: Maybe<string>;
-  
-  city?: Maybe<string>;
-  
-  zip?: Maybe<string>;
+  create: WorkflowCreateWithoutJobsInput;
 }
 
 export interface JobUpsertWithoutApplicationsInput {
@@ -6764,95 +8036,6 @@ export interface ApplicationUpsertWithWhereUniqueWithoutCandidateInput {
   update: ApplicationUpdateWithoutCandidateDataInput;
   
   create: ApplicationCreateWithoutCandidateInput;
-}
-
-export interface ApplicationScalarWhereInput {
-  
-  createdAt?: Maybe<DateTime>;
-  
-  createdAt_not?: Maybe<DateTime>;
-  
-  createdAt_in?: Maybe<DateTime[]>;
-  
-  createdAt_not_in?: Maybe<DateTime[]>;
-  
-  createdAt_lt?: Maybe<DateTime>;
-  
-  createdAt_lte?: Maybe<DateTime>;
-  
-  createdAt_gt?: Maybe<DateTime>;
-  
-  createdAt_gte?: Maybe<DateTime>;
-  
-  id?: Maybe<string>;
-  
-  id_not?: Maybe<string>;
-  
-  id_in?: Maybe<string[]>;
-  
-  id_not_in?: Maybe<string[]>;
-  
-  id_lt?: Maybe<string>;
-  
-  id_lte?: Maybe<string>;
-  
-  id_gt?: Maybe<string>;
-  
-  id_gte?: Maybe<string>;
-  
-  id_contains?: Maybe<string>;
-  
-  id_not_contains?: Maybe<string>;
-  
-  id_starts_with?: Maybe<string>;
-  
-  id_not_starts_with?: Maybe<string>;
-  
-  id_ends_with?: Maybe<string>;
-  
-  id_not_ends_with?: Maybe<string>;
-  
-  updatedAt?: Maybe<DateTime>;
-  
-  updatedAt_not?: Maybe<DateTime>;
-  
-  updatedAt_in?: Maybe<DateTime[]>;
-  
-  updatedAt_not_in?: Maybe<DateTime[]>;
-  
-  updatedAt_lt?: Maybe<DateTime>;
-  
-  updatedAt_lte?: Maybe<DateTime>;
-  
-  updatedAt_gt?: Maybe<DateTime>;
-  
-  updatedAt_gte?: Maybe<DateTime>;
-  
-  type?: Maybe<ApplicationType>;
-  
-  type_not?: Maybe<ApplicationType>;
-  
-  type_in?: Maybe<ApplicationType[]>;
-  
-  type_not_in?: Maybe<ApplicationType[]>;
-  
-  AND?: Maybe<ApplicationScalarWhereInput[]>;
-  
-  OR?: Maybe<ApplicationScalarWhereInput[]>;
-  
-  NOT?: Maybe<ApplicationScalarWhereInput[]>;
-}
-
-export interface ApplicationUpdateManyWithWhereNestedInput {
-  
-  where: ApplicationScalarWhereInput;
-  
-  data: ApplicationUpdateManyDataInput;
-}
-
-export interface ApplicationUpdateManyDataInput {
-  
-  type?: Maybe<ApplicationType>;
 }
 
 export interface CandidateUpsertWithoutTasksInput {
@@ -6883,63 +8066,6 @@ export interface DisqualificationInstanceUpsertNestedInput {
   update: DisqualificationInstanceUpdateDataInput;
   
   create: DisqualificationInstanceCreateInput;
-}
-
-export interface CandidateUpdateOneRequiredWithoutApplicationsInput {
-  
-  create?: Maybe<CandidateCreateWithoutApplicationsInput>;
-  
-  update?: Maybe<CandidateUpdateWithoutApplicationsDataInput>;
-  
-  upsert?: Maybe<CandidateUpsertWithoutApplicationsInput>;
-  
-  connect?: Maybe<CandidateWhereUniqueInput>;
-}
-
-export interface CandidateUpdateWithoutApplicationsDataInput {
-  
-  firstName?: Maybe<string>;
-  
-  lastName?: Maybe<string>;
-  
-  emails?: Maybe<CandidateUpdateemailsInput>;
-  
-  phones?: Maybe<CandidateUpdatephonesInput>;
-  
-  links?: Maybe<CandidateUpdatelinksInput>;
-  
-  avatar?: Maybe<FileUpdateOneInput>;
-  
-  company?: Maybe<string>;
-  
-  headline?: Maybe<string>;
-  
-  position?: Maybe<string>;
-  
-  resumesString?: Maybe<CandidateUpdateresumesStringInput>;
-  
-  resumesFile?: Maybe<FileUpdateManyInput>;
-  
-  coverLettersString?: Maybe<CandidateUpdatecoverLettersStringInput>;
-  
-  coverLettersFile?: Maybe<FileUpdateManyInput>;
-  
-  tags?: Maybe<TagUpdateManyInput>;
-  
-  sources?: Maybe<SourceUpdateManyInput>;
-  
-  fields?: Maybe<FieldInstanceUpdateManyInput>;
-  
-  tasks?: Maybe<TaskUpdateManyWithoutCandidateInput>;
-  
-  comments?: Maybe<CommentUpdateManyInput>;
-}
-
-export interface CandidateUpsertWithoutApplicationsInput {
-  
-  update: CandidateUpdateWithoutApplicationsDataInput;
-  
-  create: CandidateCreateWithoutApplicationsInput;
 }
 
 export interface ApplicationUpdateManyMutationInput {
@@ -7017,7 +8143,7 @@ export interface JobCreateInput {
   
   applications?: Maybe<ApplicationCreateManyWithoutJobInput>;
   
-  workflow: WorkflowCreateOneInput;
+  workflow: WorkflowCreateOneWithoutJobsInput;
   
   comments?: Maybe<CommentCreateManyInput>;
   
@@ -7038,31 +8164,13 @@ export interface JobCreateInput {
   requirements?: Maybe<string>;
 }
 
-export interface ApplicationCreateManyWithoutJobInput {
-  
-  create?: Maybe<ApplicationCreateWithoutJobInput[]>;
-  
-  connect?: Maybe<ApplicationWhereUniqueInput[]>;
-}
-
-export interface ApplicationCreateWithoutJobInput {
-  
-  type: ApplicationType;
-  
-  disqualification?: Maybe<DisqualificationInstanceCreateOneInput>;
-  
-  stage: StageCreateOneInput;
-  
-  candidate: CandidateCreateOneWithoutApplicationsInput;
-}
-
 export interface JobUpdateInput {
   
   workspace?: Maybe<WorkspaceUpdateOneRequiredWithoutJobsInput>;
   
   applications?: Maybe<ApplicationUpdateManyWithoutJobInput>;
   
-  workflow?: Maybe<WorkflowUpdateOneRequiredInput>;
+  workflow?: Maybe<WorkflowUpdateOneRequiredWithoutJobsInput>;
   
   comments?: Maybe<CommentUpdateManyInput>;
   
@@ -7081,54 +8189,6 @@ export interface JobUpdateInput {
   description?: Maybe<string>;
   
   requirements?: Maybe<string>;
-}
-
-export interface ApplicationUpdateManyWithoutJobInput {
-  
-  create?: Maybe<ApplicationCreateWithoutJobInput[]>;
-  
-  delete?: Maybe<ApplicationWhereUniqueInput[]>;
-  
-  connect?: Maybe<ApplicationWhereUniqueInput[]>;
-  
-  set?: Maybe<ApplicationWhereUniqueInput[]>;
-  
-  disconnect?: Maybe<ApplicationWhereUniqueInput[]>;
-  
-  update?: Maybe<ApplicationUpdateWithWhereUniqueWithoutJobInput[]>;
-  
-  upsert?: Maybe<ApplicationUpsertWithWhereUniqueWithoutJobInput[]>;
-  
-  deleteMany?: Maybe<ApplicationScalarWhereInput[]>;
-  
-  updateMany?: Maybe<ApplicationUpdateManyWithWhereNestedInput[]>;
-}
-
-export interface ApplicationUpdateWithWhereUniqueWithoutJobInput {
-  
-  where: ApplicationWhereUniqueInput;
-  
-  data: ApplicationUpdateWithoutJobDataInput;
-}
-
-export interface ApplicationUpdateWithoutJobDataInput {
-  
-  type?: Maybe<ApplicationType>;
-  
-  disqualification?: Maybe<DisqualificationInstanceUpdateOneInput>;
-  
-  stage?: Maybe<StageUpdateOneRequiredInput>;
-  
-  candidate?: Maybe<CandidateUpdateOneRequiredWithoutApplicationsInput>;
-}
-
-export interface ApplicationUpsertWithWhereUniqueWithoutJobInput {
-  
-  where: ApplicationWhereUniqueInput;
-  
-  update: ApplicationUpdateWithoutJobDataInput;
-  
-  create: ApplicationCreateWithoutJobInput;
 }
 
 export interface JobUpdateManyMutationInput {
@@ -7209,6 +8269,30 @@ export interface TaskUpdateManyMutationInput {
   description?: Maybe<string>;
   
   dueAt?: Maybe<DateTime>;
+}
+
+export interface WorkflowUpdateInput {
+  
+  jobs?: Maybe<JobUpdateManyWithoutWorkflowInput>;
+  
+  name?: Maybe<string>;
+  
+  description?: Maybe<string>;
+  
+  stages?: Maybe<StageUpdateManyInput>;
+  
+  disqualifications?: Maybe<DisqualificationUpdateManyInput>;
+  
+  fields?: Maybe<FieldUpdateManyInput>;
+  
+  reviews?: Maybe<ReviewUpdateManyInput>;
+}
+
+export interface WorkflowUpdateManyMutationInput {
+  
+  name?: Maybe<string>;
+  
+  description?: Maybe<string>;
 }
 
 export interface ToastInput {
@@ -7425,6 +8509,34 @@ export interface ConnectDisconnectMany {
     ContentDesc = "content_DESC",
   }
 
+  export enum ReviewInstanceOrderByInput {
+    IdAsc = "id_ASC",
+    IdDesc = "id_DESC",
+    CreatedAtAsc = "createdAt_ASC",
+    CreatedAtDesc = "createdAt_DESC",
+    UpdatedAtAsc = "updatedAt_ASC",
+    UpdatedAtDesc = "updatedAt_DESC",
+    RatingAsc = "rating_ASC",
+    RatingDesc = "rating_DESC",
+    ContentAsc = "content_ASC",
+    ContentDesc = "content_DESC",
+  }
+
+  export enum FieldOrderByInput {
+    IdAsc = "id_ASC",
+    IdDesc = "id_DESC",
+    CreatedAtAsc = "createdAt_ASC",
+    CreatedAtDesc = "createdAt_DESC",
+    UpdatedAtAsc = "updatedAt_ASC",
+    UpdatedAtDesc = "updatedAt_DESC",
+    TypeAsc = "type_ASC",
+    TypeDesc = "type_DESC",
+    LabelAsc = "label_ASC",
+    LabelDesc = "label_DESC",
+    DescriptionAsc = "description_ASC",
+    DescriptionDesc = "description_DESC",
+  }
+
   export enum JobOrderByInput {
     IdAsc = "id_ASC",
     IdDesc = "id_DESC",
@@ -7508,19 +8620,15 @@ export interface ConnectDisconnectMany {
     DescriptionDesc = "description_DESC",
   }
 
-  export enum FieldOrderByInput {
+  export enum ReviewOrderByInput {
     IdAsc = "id_ASC",
     IdDesc = "id_DESC",
     CreatedAtAsc = "createdAt_ASC",
     CreatedAtDesc = "createdAt_DESC",
     UpdatedAtAsc = "updatedAt_ASC",
     UpdatedAtDesc = "updatedAt_DESC",
-    TypeAsc = "type_ASC",
-    TypeDesc = "type_DESC",
-    LabelAsc = "label_ASC",
-    LabelDesc = "label_DESC",
-    DescriptionAsc = "description_ASC",
-    DescriptionDesc = "description_DESC",
+    NameAsc = "name_ASC",
+    NameDesc = "name_DESC",
   }
 
   export enum InviteOrderByInput {
@@ -7633,6 +8741,12 @@ export interface Query {
   
   usersConnection: UserConnection;
   
+  workflow?: Maybe<Workflow>;
+  
+  workflows: (Maybe<Workflow>)[];
+  
+  workflowsConnection: WorkflowConnection;
+  
   localField: string;
   
   localType: LocalType;
@@ -7655,6 +8769,8 @@ export interface Application {
   
   stage: Stage;
   
+  reviews?: Maybe<ReviewInstance[]>;
+  
   job: Job;
   
   candidate: Candidate;
@@ -7669,7 +8785,7 @@ export interface DisqualificationInstance {
   
   updatedAt: DateTime;
   
-  disqualification: Disqualification;
+  prototype: Disqualification;
   
   createdBy: User;
   
@@ -7749,9 +8865,9 @@ export interface Candidate {
   
   updatedAt: DateTime;
   
-  firstName: string;
+  firstName?: Maybe<string>;
   
-  lastName: string;
+  lastName?: Maybe<string>;
   
   emails: string[];
   
@@ -7843,7 +8959,7 @@ export interface FieldInstance {
   
   updatedAt: DateTime;
   
-  field: Field;
+  prototype: Field;
   
   value?: Maybe<string>;
 }
@@ -7894,6 +9010,40 @@ export interface Stage {
   description?: Maybe<string>;
   
   type: StageType;
+}
+
+
+export interface ReviewInstance {
+  
+  id: string;
+  
+  createdAt: DateTime;
+  
+  updatedAt: DateTime;
+  
+  prototype?: Maybe<Review>;
+  
+  fields?: Maybe<FieldInstance[]>;
+  
+  createdBy: User;
+  
+  rating?: Maybe<number>;
+  
+  content?: Maybe<string>;
+}
+
+
+export interface Review {
+  
+  id: string;
+  
+  createdAt: DateTime;
+  
+  updatedAt: DateTime;
+  
+  name: string;
+  
+  fields?: Maybe<Field[]>;
 }
 
 
@@ -7963,6 +9113,8 @@ export interface Workflow {
   
   updatedAt: DateTime;
   
+  jobs?: Maybe<Job[]>;
+  
   name: string;
   
   description?: Maybe<string>;
@@ -7972,6 +9124,8 @@ export interface Workflow {
   disqualifications?: Maybe<Disqualification[]>;
   
   fields?: Maybe<Field[]>;
+  
+  reviews?: Maybe<Review[]>;
 }
 
 
@@ -8189,6 +9343,30 @@ export interface AggregateUser {
 }
 
 
+export interface WorkflowConnection {
+  
+  pageInfo: PageInfo;
+  
+  edges: (Maybe<WorkflowEdge>)[];
+  
+  aggregate: AggregateWorkflow;
+}
+
+
+export interface WorkflowEdge {
+  
+  node: Workflow;
+  
+  cursor: string;
+}
+
+
+export interface AggregateWorkflow {
+  
+  count: number;
+}
+
+
 export interface LocalType {
   
   id: string;
@@ -8282,6 +9460,18 @@ export interface Mutation {
   deleteTask?: Maybe<Task>;
   
   deleteManyTasks: BatchPayload;
+  
+  createWorkflow: Workflow;
+  
+  updateWorkflow?: Maybe<Workflow>;
+  
+  updateManyWorkflows: BatchPayload;
+  
+  upsertWorkflow: Workflow;
+  
+  deleteWorkflow?: Maybe<Workflow>;
+  
+  deleteManyWorkflows: BatchPayload;
   
   createToast: Toast;
 }
@@ -8564,6 +9754,58 @@ export interface UsersConnectionQueryArgs {
   
   last?: Maybe<number>;
 }
+export interface WorkflowQueryArgs {
+  
+  where: WorkflowWhereUniqueInput;
+}
+export interface WorkflowsQueryArgs {
+  
+  where?: Maybe<WorkflowWhereInput>;
+  
+  orderBy?: Maybe<WorkflowOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface WorkflowsConnectionQueryArgs {
+  
+  where?: Maybe<WorkflowWhereInput>;
+  
+  orderBy?: Maybe<WorkflowOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface ReviewsApplicationArgs {
+  
+  where?: Maybe<ReviewInstanceWhereInput>;
+  
+  orderBy?: Maybe<ReviewInstanceOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
 export interface TasksUserArgs {
   
   where?: Maybe<TaskWhereInput>;
@@ -8724,6 +9966,38 @@ export interface CommentsCandidateArgs {
   
   last?: Maybe<number>;
 }
+export interface FieldsReviewInstanceArgs {
+  
+  where?: Maybe<FieldInstanceWhereInput>;
+  
+  orderBy?: Maybe<FieldInstanceOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface FieldsReviewArgs {
+  
+  where?: Maybe<FieldWhereInput>;
+  
+  orderBy?: Maybe<FieldOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
 export interface ApplicationsJobArgs {
   
   where?: Maybe<ApplicationWhereInput>;
@@ -8852,6 +10126,22 @@ export interface InvitesWorkspaceArgs {
   
   last?: Maybe<number>;
 }
+export interface JobsWorkflowArgs {
+  
+  where?: Maybe<JobWhereInput>;
+  
+  orderBy?: Maybe<JobOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
 export interface StagesWorkflowArgs {
   
   where?: Maybe<StageWhereInput>;
@@ -8889,6 +10179,22 @@ export interface FieldsWorkflowArgs {
   where?: Maybe<FieldWhereInput>;
   
   orderBy?: Maybe<FieldOrderByInput>;
+  
+  skip?: Maybe<number>;
+  
+  after?: Maybe<string>;
+  
+  before?: Maybe<string>;
+  
+  first?: Maybe<number>;
+  
+  last?: Maybe<number>;
+}
+export interface ReviewsWorkflowArgs {
+  
+  where?: Maybe<ReviewWhereInput>;
+  
+  orderBy?: Maybe<ReviewOrderByInput>;
   
   skip?: Maybe<number>;
   
@@ -9092,6 +10398,38 @@ export interface DeleteManyTasksMutationArgs {
   
   where?: Maybe<TaskWhereInput>;
 }
+export interface CreateWorkflowMutationArgs {
+  
+  data: WorkflowCreateInput;
+}
+export interface UpdateWorkflowMutationArgs {
+  
+  data: WorkflowUpdateInput;
+  
+  where: WorkflowWhereUniqueInput;
+}
+export interface UpdateManyWorkflowsMutationArgs {
+  
+  data: WorkflowUpdateManyMutationInput;
+  
+  where?: Maybe<WorkflowWhereInput>;
+}
+export interface UpsertWorkflowMutationArgs {
+  
+  where: WorkflowWhereUniqueInput;
+  
+  create: WorkflowCreateInput;
+  
+  update: WorkflowUpdateInput;
+}
+export interface DeleteWorkflowMutationArgs {
+  
+  where: WorkflowWhereUniqueInput;
+}
+export interface DeleteManyWorkflowsMutationArgs {
+  
+  where?: Maybe<WorkflowWhereInput>;
+}
 export interface CreateToastMutationArgs {
   
   data: ToastInput;
@@ -9190,6 +10528,12 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     users?: QueryUsersResolver<(Maybe<User>)[], TypeParent, TContext>;
     
     usersConnection?: QueryUsersConnectionResolver<UserConnection, TypeParent, TContext>;
+    
+    workflow?: QueryWorkflowResolver<Maybe<Workflow>, TypeParent, TContext>;
+    
+    workflows?: QueryWorkflowsResolver<(Maybe<Workflow>)[], TypeParent, TContext>;
+    
+    workflowsConnection?: QueryWorkflowsConnectionResolver<WorkflowConnection, TypeParent, TContext>;
     
     localField?: QueryLocalFieldResolver<string, TypeParent, TContext>;
     
@@ -9514,6 +10858,51 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   }
 
 
+  export type QueryWorkflowResolver<R = Maybe<Workflow>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, QueryWorkflowArgs>;
+  export interface QueryWorkflowArgs {
+    
+    where: WorkflowWhereUniqueInput;
+  }
+
+
+  export type QueryWorkflowsResolver<R = (Maybe<Workflow>)[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, QueryWorkflowsArgs>;
+  export interface QueryWorkflowsArgs {
+    
+    where?: Maybe<WorkflowWhereInput>;
+    
+    orderBy?: Maybe<WorkflowOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
+  export type QueryWorkflowsConnectionResolver<R = WorkflowConnection, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, QueryWorkflowsConnectionArgs>;
+  export interface QueryWorkflowsConnectionArgs {
+    
+    where?: Maybe<WorkflowWhereInput>;
+    
+    orderBy?: Maybe<WorkflowOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
   export type QueryLocalFieldResolver<R = string, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext>;
   export type QueryLocalTypeResolver<R = LocalType, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext>;
   export type QueryToastsResolver<R = Toast[], Parent = {}, TContext = {}> = Resolver<R, Parent, TContext>;
@@ -9532,6 +10921,8 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     
     stage?: ApplicationStageResolver<Stage, TypeParent, TContext>;
     
+    reviews?: ApplicationReviewsResolver<Maybe<ReviewInstance[]>, TypeParent, TContext>;
+    
     job?: ApplicationJobResolver<Job, TypeParent, TContext>;
     
     candidate?: ApplicationCandidateResolver<Candidate, TypeParent, TContext>;
@@ -9544,6 +10935,25 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   export type ApplicationTypeResolver<R = ApplicationType, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
   export type ApplicationDisqualificationResolver<R = Maybe<DisqualificationInstance>, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
   export type ApplicationStageResolver<R = Stage, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ApplicationReviewsResolver<R = Maybe<ReviewInstance[]>, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext, ApplicationReviewsArgs>;
+  export interface ApplicationReviewsArgs {
+    
+    where?: Maybe<ReviewInstanceWhereInput>;
+    
+    orderBy?: Maybe<ReviewInstanceOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
   export type ApplicationJobResolver<R = Job, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
   export type ApplicationCandidateResolver<R = Candidate, Parent = Application, TContext = {}> = Resolver<R, Parent, TContext>;
 
@@ -9555,7 +10965,7 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     
     updatedAt?: DisqualificationInstanceUpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    disqualification?: DisqualificationInstanceDisqualificationResolver<Disqualification, TypeParent, TContext>;
+    prototype?: DisqualificationInstancePrototypeResolver<Disqualification, TypeParent, TContext>;
     
     createdBy?: DisqualificationInstanceCreatedByResolver<User, TypeParent, TContext>;
     
@@ -9566,7 +10976,7 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   export type DisqualificationInstanceIdResolver<R = string, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
   export type DisqualificationInstanceCreatedAtResolver<R = DateTime, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
   export type DisqualificationInstanceUpdatedAtResolver<R = DateTime, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
-  export type DisqualificationInstanceDisqualificationResolver<R = Disqualification, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type DisqualificationInstancePrototypeResolver<R = Disqualification, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
   export type DisqualificationInstanceCreatedByResolver<R = User, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
   export type DisqualificationInstanceContentResolver<R = Maybe<string>, Parent = DisqualificationInstance, TContext = {}> = Resolver<R, Parent, TContext>;
 
@@ -9707,9 +11117,9 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     
     updatedAt?: CandidateUpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    firstName?: CandidateFirstNameResolver<string, TypeParent, TContext>;
+    firstName?: CandidateFirstNameResolver<Maybe<string>, TypeParent, TContext>;
     
-    lastName?: CandidateLastNameResolver<string, TypeParent, TContext>;
+    lastName?: CandidateLastNameResolver<Maybe<string>, TypeParent, TContext>;
     
     emails?: CandidateEmailsResolver<string[], TypeParent, TContext>;
     
@@ -9750,8 +11160,8 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   export type CandidateIdResolver<R = string, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
   export type CandidateCreatedAtResolver<R = DateTime, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
   export type CandidateUpdatedAtResolver<R = DateTime, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
-  export type CandidateFirstNameResolver<R = string, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
-  export type CandidateLastNameResolver<R = string, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CandidateFirstNameResolver<R = Maybe<string>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type CandidateLastNameResolver<R = Maybe<string>, Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
   export type CandidateEmailsResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
   export type CandidatePhonesResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
   export type CandidateLinksResolver<R = string[], Parent = Candidate, TContext = {}> = Resolver<R, Parent, TContext>;
@@ -9988,7 +11398,7 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     
     updatedAt?: FieldInstanceUpdatedAtResolver<DateTime, TypeParent, TContext>;
     
-    field?: FieldInstanceFieldResolver<Field, TypeParent, TContext>;
+    prototype?: FieldInstancePrototypeResolver<Field, TypeParent, TContext>;
     
     value?: FieldInstanceValueResolver<Maybe<string>, TypeParent, TContext>;
   }
@@ -9997,7 +11407,7 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   export type FieldInstanceIdResolver<R = string, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
   export type FieldInstanceCreatedAtResolver<R = DateTime, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
   export type FieldInstanceUpdatedAtResolver<R = DateTime, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
-  export type FieldInstanceFieldResolver<R = Field, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type FieldInstancePrototypeResolver<R = Field, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
   export type FieldInstanceValueResolver<R = Maybe<string>, Parent = FieldInstance, TContext = {}> = Resolver<R, Parent, TContext>;
 
   export interface FieldResolvers<TContext = {}, TypeParent = Field> {
@@ -10068,6 +11478,91 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   export type StageNameResolver<R = string, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
   export type StageDescriptionResolver<R = Maybe<string>, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
   export type StageTypeResolver<R = StageType, Parent = Stage, TContext = {}> = Resolver<R, Parent, TContext>;
+
+  export interface ReviewInstanceResolvers<TContext = {}, TypeParent = ReviewInstance> {
+    
+    id?: ReviewInstanceIdResolver<string, TypeParent, TContext>;
+    
+    createdAt?: ReviewInstanceCreatedAtResolver<DateTime, TypeParent, TContext>;
+    
+    updatedAt?: ReviewInstanceUpdatedAtResolver<DateTime, TypeParent, TContext>;
+    
+    prototype?: ReviewInstancePrototypeResolver<Maybe<Review>, TypeParent, TContext>;
+    
+    fields?: ReviewInstanceFieldsResolver<Maybe<FieldInstance[]>, TypeParent, TContext>;
+    
+    createdBy?: ReviewInstanceCreatedByResolver<User, TypeParent, TContext>;
+    
+    rating?: ReviewInstanceRatingResolver<Maybe<number>, TypeParent, TContext>;
+    
+    content?: ReviewInstanceContentResolver<Maybe<string>, TypeParent, TContext>;
+  }
+
+
+  export type ReviewInstanceIdResolver<R = string, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewInstanceCreatedAtResolver<R = DateTime, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewInstanceUpdatedAtResolver<R = DateTime, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewInstancePrototypeResolver<R = Maybe<Review>, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewInstanceFieldsResolver<R = Maybe<FieldInstance[]>, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext, ReviewInstanceFieldsArgs>;
+  export interface ReviewInstanceFieldsArgs {
+    
+    where?: Maybe<FieldInstanceWhereInput>;
+    
+    orderBy?: Maybe<FieldInstanceOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
+  export type ReviewInstanceCreatedByResolver<R = User, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewInstanceRatingResolver<R = Maybe<number>, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewInstanceContentResolver<R = Maybe<string>, Parent = ReviewInstance, TContext = {}> = Resolver<R, Parent, TContext>;
+
+  export interface ReviewResolvers<TContext = {}, TypeParent = Review> {
+    
+    id?: ReviewIdResolver<string, TypeParent, TContext>;
+    
+    createdAt?: ReviewCreatedAtResolver<DateTime, TypeParent, TContext>;
+    
+    updatedAt?: ReviewUpdatedAtResolver<DateTime, TypeParent, TContext>;
+    
+    name?: ReviewNameResolver<string, TypeParent, TContext>;
+    
+    fields?: ReviewFieldsResolver<Maybe<Field[]>, TypeParent, TContext>;
+  }
+
+
+  export type ReviewIdResolver<R = string, Parent = Review, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewCreatedAtResolver<R = DateTime, Parent = Review, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewUpdatedAtResolver<R = DateTime, Parent = Review, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewNameResolver<R = string, Parent = Review, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type ReviewFieldsResolver<R = Maybe<Field[]>, Parent = Review, TContext = {}> = Resolver<R, Parent, TContext, ReviewFieldsArgs>;
+  export interface ReviewFieldsArgs {
+    
+    where?: Maybe<FieldWhereInput>;
+    
+    orderBy?: Maybe<FieldOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
 
   export interface JobResolvers<TContext = {}, TypeParent = Job> {
     
@@ -10306,6 +11801,8 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     
     updatedAt?: WorkflowUpdatedAtResolver<DateTime, TypeParent, TContext>;
     
+    jobs?: WorkflowJobsResolver<Maybe<Job[]>, TypeParent, TContext>;
+    
     name?: WorkflowNameResolver<string, TypeParent, TContext>;
     
     description?: WorkflowDescriptionResolver<Maybe<string>, TypeParent, TContext>;
@@ -10315,12 +11812,33 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     disqualifications?: WorkflowDisqualificationsResolver<Maybe<Disqualification[]>, TypeParent, TContext>;
     
     fields?: WorkflowFieldsResolver<Maybe<Field[]>, TypeParent, TContext>;
+    
+    reviews?: WorkflowReviewsResolver<Maybe<Review[]>, TypeParent, TContext>;
   }
 
 
   export type WorkflowIdResolver<R = string, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
   export type WorkflowCreatedAtResolver<R = DateTime, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
   export type WorkflowUpdatedAtResolver<R = DateTime, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type WorkflowJobsResolver<R = Maybe<Job[]>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext, WorkflowJobsArgs>;
+  export interface WorkflowJobsArgs {
+    
+    where?: Maybe<JobWhereInput>;
+    
+    orderBy?: Maybe<JobOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
   export type WorkflowNameResolver<R = string, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
   export type WorkflowDescriptionResolver<R = Maybe<string>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext>;
   export type WorkflowStagesResolver<R = Maybe<Stage[]>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext, WorkflowStagesArgs>;
@@ -10367,6 +11885,25 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     where?: Maybe<FieldWhereInput>;
     
     orderBy?: Maybe<FieldOrderByInput>;
+    
+    skip?: Maybe<number>;
+    
+    after?: Maybe<string>;
+    
+    before?: Maybe<string>;
+    
+    first?: Maybe<number>;
+    
+    last?: Maybe<number>;
+  }
+
+
+  export type WorkflowReviewsResolver<R = Maybe<Review[]>, Parent = Workflow, TContext = {}> = Resolver<R, Parent, TContext, WorkflowReviewsArgs>;
+  export interface WorkflowReviewsArgs {
+    
+    where?: Maybe<ReviewWhereInput>;
+    
+    orderBy?: Maybe<ReviewOrderByInput>;
     
     skip?: Maybe<number>;
     
@@ -10678,6 +12215,39 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
   export type AggregateUserCountResolver<R = number, Parent = AggregateUser, TContext = {}> = Resolver<R, Parent, TContext>;
 
+  export interface WorkflowConnectionResolvers<TContext = {}, TypeParent = WorkflowConnection> {
+    
+    pageInfo?: WorkflowConnectionPageInfoResolver<PageInfo, TypeParent, TContext>;
+    
+    edges?: WorkflowConnectionEdgesResolver<(Maybe<WorkflowEdge>)[], TypeParent, TContext>;
+    
+    aggregate?: WorkflowConnectionAggregateResolver<AggregateWorkflow, TypeParent, TContext>;
+  }
+
+
+  export type WorkflowConnectionPageInfoResolver<R = PageInfo, Parent = WorkflowConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type WorkflowConnectionEdgesResolver<R = (Maybe<WorkflowEdge>)[], Parent = WorkflowConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type WorkflowConnectionAggregateResolver<R = AggregateWorkflow, Parent = WorkflowConnection, TContext = {}> = Resolver<R, Parent, TContext>;
+
+  export interface WorkflowEdgeResolvers<TContext = {}, TypeParent = WorkflowEdge> {
+    
+    node?: WorkflowEdgeNodeResolver<Workflow, TypeParent, TContext>;
+    
+    cursor?: WorkflowEdgeCursorResolver<string, TypeParent, TContext>;
+  }
+
+
+  export type WorkflowEdgeNodeResolver<R = Workflow, Parent = WorkflowEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+  export type WorkflowEdgeCursorResolver<R = string, Parent = WorkflowEdge, TContext = {}> = Resolver<R, Parent, TContext>;
+
+  export interface AggregateWorkflowResolvers<TContext = {}, TypeParent = AggregateWorkflow> {
+    
+    count?: AggregateWorkflowCountResolver<number, TypeParent, TContext>;
+  }
+
+
+  export type AggregateWorkflowCountResolver<R = number, Parent = AggregateWorkflow, TContext = {}> = Resolver<R, Parent, TContext>;
+
   export interface LocalTypeResolvers<TContext = {}, TypeParent = LocalType> {
     
     id?: LocalTypeIdResolver<string, TypeParent, TContext>;
@@ -10779,6 +12349,18 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
     deleteTask?: MutationDeleteTaskResolver<Maybe<Task>, TypeParent, TContext>;
     
     deleteManyTasks?: MutationDeleteManyTasksResolver<BatchPayload, TypeParent, TContext>;
+    
+    createWorkflow?: MutationCreateWorkflowResolver<Workflow, TypeParent, TContext>;
+    
+    updateWorkflow?: MutationUpdateWorkflowResolver<Maybe<Workflow>, TypeParent, TContext>;
+    
+    updateManyWorkflows?: MutationUpdateManyWorkflowsResolver<BatchPayload, TypeParent, TContext>;
+    
+    upsertWorkflow?: MutationUpsertWorkflowResolver<Workflow, TypeParent, TContext>;
+    
+    deleteWorkflow?: MutationDeleteWorkflowResolver<Maybe<Workflow>, TypeParent, TContext>;
+    
+    deleteManyWorkflows?: MutationDeleteManyWorkflowsResolver<BatchPayload, TypeParent, TContext>;
     
     createToast?: MutationCreateToastResolver<Toast, TypeParent, TContext>;
   }
@@ -11084,6 +12666,56 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
   }
 
 
+  export type MutationCreateWorkflowResolver<R = Workflow, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, MutationCreateWorkflowArgs>;
+  export interface MutationCreateWorkflowArgs {
+    
+    data: WorkflowCreateInput;
+  }
+
+
+  export type MutationUpdateWorkflowResolver<R = Maybe<Workflow>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, MutationUpdateWorkflowArgs>;
+  export interface MutationUpdateWorkflowArgs {
+    
+    data: WorkflowUpdateInput;
+    
+    where: WorkflowWhereUniqueInput;
+  }
+
+
+  export type MutationUpdateManyWorkflowsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, MutationUpdateManyWorkflowsArgs>;
+  export interface MutationUpdateManyWorkflowsArgs {
+    
+    data: WorkflowUpdateManyMutationInput;
+    
+    where?: Maybe<WorkflowWhereInput>;
+  }
+
+
+  export type MutationUpsertWorkflowResolver<R = Workflow, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, MutationUpsertWorkflowArgs>;
+  export interface MutationUpsertWorkflowArgs {
+    
+    where: WorkflowWhereUniqueInput;
+    
+    create: WorkflowCreateInput;
+    
+    update: WorkflowUpdateInput;
+  }
+
+
+  export type MutationDeleteWorkflowResolver<R = Maybe<Workflow>, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, MutationDeleteWorkflowArgs>;
+  export interface MutationDeleteWorkflowArgs {
+    
+    where: WorkflowWhereUniqueInput;
+  }
+
+
+  export type MutationDeleteManyWorkflowsResolver<R = BatchPayload, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, MutationDeleteManyWorkflowsArgs>;
+  export interface MutationDeleteManyWorkflowsArgs {
+    
+    where?: Maybe<WorkflowWhereInput>;
+  }
+
+
   export type MutationCreateToastResolver<R = Toast, Parent = {}, TContext = {}> = Resolver<R, Parent, TContext, MutationCreateToastArgs>;
   export interface MutationCreateToastArgs {
     
@@ -11168,6 +12800,8 @@ export type IResolvers<TContext = {}> = {
     Field?: FieldResolvers<TContext>;
     Comment?: CommentResolvers<TContext>;
     Stage?: StageResolvers<TContext>;
+    ReviewInstance?: ReviewInstanceResolvers<TContext>;
+    Review?: ReviewResolvers<TContext>;
     Job?: JobResolvers<TContext>;
     Workspace?: WorkspaceResolvers<TContext>;
     Workflow?: WorkflowResolvers<TContext>;
@@ -11195,6 +12829,9 @@ export type IResolvers<TContext = {}> = {
     UserConnection?: UserConnectionResolvers<TContext>;
     UserEdge?: UserEdgeResolvers<TContext>;
     AggregateUser?: AggregateUserResolvers<TContext>;
+    WorkflowConnection?: WorkflowConnectionResolvers<TContext>;
+    WorkflowEdge?: WorkflowEdgeResolvers<TContext>;
+    AggregateWorkflow?: AggregateWorkflowResolvers<TContext>;
     LocalType?: LocalTypeResolvers<TContext>;
     Toast?: ToastResolvers<TContext>;
     Mutation?: MutationResolvers<TContext>;

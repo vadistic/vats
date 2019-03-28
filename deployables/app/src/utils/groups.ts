@@ -49,7 +49,7 @@ export const getGrouped = <T>(
       ...acc,
       {
         key,
-        name: key,
+        ...(template[i] as IGroup),
         startIndex:
           acc.length === 0 ? 0 : acc[acc.length - 1].startIndex + acc[acc.length - 1].count,
         count: groupItems.length,

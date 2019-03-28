@@ -99,7 +99,7 @@ export const BoardLane = ({ items, group, groupIndex }: BoardLaneProps) => {
           {items.map((item, i) => {
             return (
               <BoardCard
-                key={group.startIndex + i}
+                key={item.id}
                 index={group.startIndex + i}
                 groupIndex={groupIndex}
                 localIndex={i}

@@ -1,8 +1,9 @@
 import { RouteComponentProps } from '@reach/router'
-import { StoreStatus, useComputed, useReaction } from '@vats/store'
+import { StoreStatus, useComputed } from '@vats/store'
+import { toJS } from 'mobx'
 import { useObserver } from 'mobx-react-lite'
 import React, { useContext } from 'react'
-import { Board, BoardProps, boardUpdateAction } from '../../../components'
+import { Board, BoardOnDropProps, BoardProps, boardUpdateAction } from '../../../components'
 import { getGrouped, PartialGroup } from '../../../utils'
 import { ApplicationsContext, ApplicationsElement } from '../store'
 import { ApplicationCard } from '../widgets'
@@ -12,34 +13,25 @@ export interface ApplicationsBoardProps extends RouteComponentProps {}
 export const ApplicationsBoardBase: React.FC<ApplicationsBoardProps> = ({ children }) => {
   const store = useContext(ApplicationsContext)
 
-  const grouped = useComputed('grouped', () =>
-    getGrouped(template, store.data.applications, application => application.stage.id),
-  )
+  const grouped = useComputed('grouped', () => {
+    let template: PartialGroup[] = []
+    // select first workflow if there's many for now
+    if (store.data.workflows.length !== 0 && store.data.workflows[0].stages !== null) {
+      template = store.data.workflows[0].stages.map(stage => ({ key: stage.id, name: stage.name }))
+    }
 
-  useReaction(
-    'selection items',
-    () => store.data.applications.length,
-    () => {
-      store.state.selection.instance.setItems(grouped.get().items as any, true)
-    },
-    [],
-  )
+    const res = getGrouped(template, store.data.applications, application => application.stage.id)
 
-  const template = store.data.applications.reduce(
-    (acc, app) => {
-      if (acc.findIndex(val => val.key === app.stage.id) === -1) {
-        acc.push({ key: app.stage.id })
-      }
+    store.state.selection.instance.setItems(res.items as any, true)
 
-      return acc
-    },
-    [] as PartialGroup[],
-  )
+    return getGrouped(template, store.data.applications, application => application.stage.id)
+  })
 
   const renderHeader: BoardProps['onRenderHeader'] = (group, items) => (
     <>
-      <h3>STAGE: {group.key}</h3>
-      <span>{items.length}</span>
+      <h3>
+        STAGE: {group.name} ({items.length})
+      </h3>
     </>
   )
 
@@ -47,18 +39,57 @@ export const ApplicationsBoardBase: React.FC<ApplicationsBoardProps> = ({ childr
     <ApplicationCard application={application} />
   )
 
-  const handleDrop = store.action(
-    'handle drop',
+  const handleDrop = store.action('handle drop', (props: BoardOnDropProps) => {
+    // TODO: INVESTIGATE MYSTERY
+    //  why this observable does not work as function argument
+    // but works with this small refactor?
+    const _grouped = grouped.get()
+
     boardUpdateAction({
       selection: store.state.selection.instance,
-      grouped: grouped.get(),
+      grouped: _grouped,
       items: store.data.applications,
-      update: selectedItems => {
-        console.log(selectedItems)
-        /* noop */
+      update: (selectedItems, target) => {
+        // optimistic is build-in board update action
+
+        const uniqueUpdates = selectedItems.filter(item => item.stage.id !== target.group.key)
+
+        if (uniqueUpdates.length > 1) {
+          store.loopUpdateMany(
+            {
+              ids: uniqueUpdates.map(app => app.id),
+            },
+            {
+              stage: { connect: { id: target.group.key } },
+            },
+          )
+        }
+
+        if (uniqueUpdates.length === 1) {
+          store.update(
+            {
+              id: uniqueUpdates[0].id,
+            },
+            {
+              stage: { connect: { id: target.group.key } },
+            },
+            undefined,
+          )
+        }
+
+        const nextStage = store.data.workflows[0].stages!.find(
+          stage => stage.id === target.group.key,
+        )
+
+        if (nextStage) {
+          return selectedItems.map(application => ({
+            ...application,
+            stage: nextStage,
+          }))
+        }
       },
-    }),
-  )
+    })(props)
+  })
 
   return useObserver(
     () => (
@@ -68,7 +99,7 @@ export const ApplicationsBoardBase: React.FC<ApplicationsBoardProps> = ({ childr
           onRenderHeader={renderHeader}
           onDrop={handleDrop}
           groups={grouped.get().groups}
-          items={grouped.get().items}
+          items={toJS(grouped.get().items)}
           selection={store.state.selection.instance}
         />
         {children}
@@ -81,12 +112,16 @@ export const ApplicationsBoardBase: React.FC<ApplicationsBoardProps> = ({ childr
 export const ApplicationsBoard: React.FC<ApplicationsBoardProps> = () => {
   const store = useContext(ApplicationsContext)
 
-  return useObserver(() => {
-    if (!store.variables.where || !store.variables.where.job) {
-      return <p>Needs jobs selector</p>
-    }
+  // TEMP: set default job
+  if (
+    !store.variables.where ||
+    (!store.variables.where.job && store.data.applications.length > 0)
+  ) {
+    store.variables.where = { job: { id: store.data.applications[0].job.id } }
+  }
 
-    if (store.meta.status !== StoreStatus.ready) {
+  return useObserver(() => {
+    if (store.meta.status === StoreStatus.loading || store.meta.status === StoreStatus.refetch) {
       return <p>Loading...</p>
     }
 
