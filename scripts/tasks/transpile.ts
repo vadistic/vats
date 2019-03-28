@@ -13,6 +13,7 @@ export const config = {
   BUILD_DIR: 'build',
   DIST_DIR: 'dist',
   SOURCE_GLOB: ['**/*.{ts,tsx}'],
+  SOURCE_COPYFILES_GLOB: ['**/generated/**/*.{json, graphql}'],
   IGNORE_GLOB: [
     '!**/tests/**',
     '!**/__tests__/**',
@@ -24,16 +25,21 @@ export const config = {
 
 export const transpile = async (args: string[]) => {
   process.env.BABEL_ENV = 'production'
+  process.env.NODE_ENV = 'production'
+
   const pkg = await readJson('package.json')
 
   const useEmotion = Object.keys(pkg.dependencies).includes('@emotion/core')
+  const useNode = !Object.keys(pkg.dependencies).includes('react')
 
-  const babelPresets = {
-    cjs: require.resolve('../config/babel-preset.node.js'),
-    browser: useEmotion
-      ? require.resolve('../config/babel-preset.emotion.js')
-      : require.resolve('../config/babel-preset.react.js'),
-  }
+  const browserPreset = useEmotion
+    ? require.resolve('../config/babel-preset.emotion.js')
+    : require.resolve('../config/babel-preset.react.js')
+
+  // browser packages with 'react' dep will also get cjs module build but with cra preset
+  const mainPreset = useNode
+    ? require.resolve('../config/babel-preset.node.js')
+    : [browserPreset, { useESModules: false }]
 
   const getBabelConfig = (preset: any) => ({
     presets: [preset],
@@ -46,6 +52,16 @@ export const transpile = async (args: string[]) => {
   const maindir = pkg.main && path.dirname(pkg.main)
   const sourcedir = pkg.source ? path.dirname(pkg.source) : 'src'
 
+  const copyfiles = (dir: string) =>
+    sequence(
+      find([
+        ...config.SOURCE_COPYFILES_GLOB.map(globPath => `${sourcedir}/${globPath}`),
+        ...config.IGNORE_GLOB,
+      ]),
+      read,
+      write(dir),
+    )
+
   return sequence(
     // find source files, ignoring tests etc.
     find([
@@ -56,18 +72,22 @@ export const transpile = async (args: string[]) => {
     read,
     cond(
       () => !!moduledir,
+      // esm
       sequence(
-        babel(getBabelConfig(babelPresets.browser)),
-        rename(file => file.replace(/\.tsx*$/, '.mjs')),
+        babel(getBabelConfig(browserPreset)),
+        rename(file => file.replace(/\.tsx*$/, '.js')),
         write(moduledir),
+        copyfiles(moduledir),
       ),
     ),
     cond(
+      // cjs
       () => !!maindir,
       sequence(
-        babel(getBabelConfig(babelPresets.cjs)),
+        babel(getBabelConfig(mainPreset)),
         rename(file => file.replace(/\.tsx*$/, '.js')),
         write(maindir),
+        copyfiles(maindir),
       ),
     ),
   )

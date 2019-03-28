@@ -6,8 +6,8 @@
   "license": "No license",
   "private": true,
   "source": "src/index.ts",
-  "module": "dist/esm/index.mjs",
   "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.mjs",
   "scripts": {
     "clean": "rm -rf dist",
     "transpile": "vscripts transpile",
