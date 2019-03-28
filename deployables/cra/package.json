@@ -22,14 +22,14 @@
   ],
   "dependencies": {
     "@emotion/core": "^10.0.9",
-    "@vats/utils": "^0.1.0",
+    "@vats/utils": "0.1.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5"
   },
   "devDependencies": {
     "@types/react": "16.8.8",
     "@types/react-dom": "^16.8.2",
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "typescript": "3.3.4000"
   }
 }

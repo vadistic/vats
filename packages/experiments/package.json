@@ -7,7 +7,7 @@
   "private": true,
   "source": "src/index.ts",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.mjs",
+  "module": "dist/esm/index.js",
   "scripts": {
     "clean": "rm -rf dist",
     "transpile": "vscripts transpile",
@@ -21,7 +21,7 @@
     "react-dom": "^16.8.5"
   },
   "devDependencies": {
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "typescript": "3.3.4000"
   }
 }

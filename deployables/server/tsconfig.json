@@ -1,9 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es6",
-    "sourceMap": true,
-    "lib": ["esnext"],
     "module": "commonjs"
   },
   "exclude": ["build", "node_modules"]

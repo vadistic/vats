@@ -7,7 +7,8 @@
   "private": true,
   "source": "src/index.ts",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.mjs",
+  "module": "dist/esm/index.js",
+  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf dist",
     "transpile": "vscripts transpile",
@@ -17,7 +18,7 @@
     "test": "vscripts test"
   },
   "dependencies": {
-    "@vats/utils": "^0.1.0",
+    "@vats/utils": "0.1.0",
     "apollo-cache-inmemory": "1.6.0-beta.1",
     "apollo-client": "2.6.0-beta.1",
     "apollo-link": "^1.2.10",
@@ -34,7 +35,7 @@
     "react-dom": "^16.8.5"
   },
   "devDependencies": {
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "typescript": "3.3.4000"
   }
 }

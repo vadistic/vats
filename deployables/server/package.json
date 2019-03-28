@@ -20,8 +20,8 @@
     "gen": "yarn copyprisma && yarn gen:sdl && yarn gen:ts"
   },
   "dependencies": {
-    "@vats/prisma": "^0.1.0",
-    "@vats/utils": "^0.1.0",
+    "@vats/prisma": "0.1.0",
+    "@vats/utils": "0.1.0",
     "apollo-server": "^2.4.8",
     "aws-sdk": "^2.421.0",
     "dayjs": "^1.8.11",
@@ -40,7 +40,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/graphql": "^14.0.6",
     "@types/jsonwebtoken": "^8.3.2",
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "apollo": "2.6.2",
     "graphql-code-generator": "0.18.0",
     "graphql-codegen-introspection": "0.18.0",

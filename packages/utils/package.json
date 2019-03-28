@@ -8,6 +8,7 @@
   "source": "src/index.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.mjs",
+  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf dist",
     "transpile": "vscripts transpile",
@@ -17,7 +18,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "clone-deep": "^4.0.1",
     "typescript": "3.3.4000"
   }

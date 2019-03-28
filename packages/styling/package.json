@@ -7,7 +7,8 @@
   "private": true,
   "source": "src/index.ts",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.mjs",
+  "module": "dist/esm/index.js",
+  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf dist",
     "transpile": "vscripts transpile",
@@ -20,12 +21,12 @@
     "@emotion/core": "^10.0.9",
     "@uifabric/icons": "^6.4.0",
     "@uifabric/styling": "^6.45.0",
-    "@vats/utils": "^0.1.0",
+    "@vats/utils": "0.1.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5"
   },
   "devDependencies": {
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "typescript": "3.3.4000"
   }
 }

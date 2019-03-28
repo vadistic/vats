@@ -7,7 +7,10 @@
   "private": true,
   "source": "src/index.ts",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.mjs",
+  "module": "dist/esm/index.js",
+  "sideEffects": [
+    "**/i18n.js"
+  ],
   "scripts": {
     "clean": "rm -rf dist",
     "transpile": "vscripts transpile",
@@ -19,14 +22,14 @@
     "test": "vscripts test"
   },
   "dependencies": {
-    "@vats/utils": "^0.1.0",
+    "@vats/utils": "0.1.0",
     "i18next": "15.0.7",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-i18next": "^10.5.0"
   },
   "devDependencies": {
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "typescript": "3.3.4000"
   }
 }

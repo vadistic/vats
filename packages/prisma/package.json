@@ -19,7 +19,7 @@
     "prepare": "yarn gen && yarn transpile"
   },
   "dependencies": {
-    "@vats/utils": "^0.1.0",
+    "@vats/utils": "0.1.0",
     "graphql": "^14.1.1",
     "graphql-binding": "^2.5.1",
     "prisma-binding": "^2.3.10",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/faker": "4.1.5",
     "@types/ramda": "^0.26.3",
-    "@vats/scripts": "^0.1.0",
+    "@vats/scripts": "0.1.0",
     "faker": "^4.1.0",
     "prisma": "^1.28.3",
     "ramda": "^0.26.1",

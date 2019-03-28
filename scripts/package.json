@@ -66,6 +66,7 @@
     "react-testing-library": "^6.0.3",
     "serve": "^10.1.2",
     "sloc": "^0.2.1",
+    "source-map-explorer": "^1.8.0",
     "stack-utils": "^1.0.2",
     "typescript": "3.3.4000",
     "webpack": "^5.0.0-alpha.11"

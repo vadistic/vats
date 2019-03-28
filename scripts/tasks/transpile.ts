@@ -44,6 +44,7 @@ export const transpile = async (args: string[]) => {
   const getBabelConfig = (preset: any) => ({
     presets: [preset],
     plugins: [],
+    sourceMaps: true,
     babelrc: false,
     configFile: false,
   })
