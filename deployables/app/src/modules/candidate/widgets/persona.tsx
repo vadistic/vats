@@ -2,6 +2,7 @@ import { css } from '@emotion/core'
 import { useTranslation } from '@vats/i18n'
 import { createPartialSelector } from '@vats/store'
 import { useTheme } from '@vats/styling'
+import { filterNull } from '@vats/utils'
 import { Icon, IPersonaSharedProps, Persona, PersonaSize } from 'office-ui-fabric-react'
 import React from 'react'
 import { Link, LinkArg, useDayjs } from '../../../components'
@@ -21,9 +22,11 @@ export const personaCandidateSelector = createPartialSelector(
     updatedAt: candidate.updatedAt,
     comments: candidate.comments ? candidate.comments.map(val => ({ id: val.id })) : null,
   }),
-  ({ comments, firstName, lastName }) => ({
+  ({ comments, firstName, lastName, company, position }) => ({
     commentsCount: comments ? comments.length : 0,
-    fullName: [firstName, lastName].join(' '),
+    fullName: filterNull([firstName, lastName]).join(' '),
+    initials: `${firstName ? firstName[0] : ''}${lastName ? lastName[0] : ''}`,
+    companyAndPosition: filterNull([position, company]).join(' @ '),
   }),
 )
 
@@ -48,17 +51,6 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
   const { tp } = useTranslation()
   const { dayjs, shortDateFormat } = useDayjs(candidate.updatedAt)
 
-  const {
-    avatar,
-    firstName,
-    lastName,
-    position,
-    company,
-    comments,
-    fullName,
-    commentsCount,
-  } = candidate
-
   const statusStyles = css`
     & > * {
       margin-right: ${theme.spacing.s1};
@@ -67,7 +59,7 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
 
   const renderName = () => (
     <Link plain={true} to={linkProps.name}>
-      {fullName}
+      {candidate.fullName}
     </Link>
   )
 
@@ -88,9 +80,11 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
         tabIndex={-1}
         plain={true}
         to={linkProps.comments}
-        title={`${commentsCount} ${tp.candidate.comment({ count: commentsCount })}`}
+        title={`${candidate.commentsCount} ${tp.candidate.comment({
+          count: candidate.commentsCount,
+        })}`}
       >
-        <Icon iconName="comment" /> {commentsCount}
+        <Icon iconName="comment" /> {candidate.commentsCount}
       </Link>
     )
 
@@ -107,14 +101,14 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
         title={`${reviewsCount} ${tp.candidate.review({ count: reviewsCount })}`}
       >
         <Icon iconName={reviewsValue >= 2.5 ? 'favoritestarfill' : 'favoritestar'} />{' '}
-        {commentsCount}
+        {candidate.commentsCount}
       </Link>
     )
 
     return (
       <div css={statusStyles}>
         {renderDate}
-        {comments && renderComments}
+        {candidate.comments && renderComments}
         {reviews && renderReviews}
       </div>
     )
@@ -125,11 +119,11 @@ export const CandidatePersona: React.FC<CandidatePersonaProps> = ({
       hidePersonaDetails={false}
       imageShouldFadeIn={true}
       size={PersonaSize.size72}
-      imageAlt={`${firstName} ${lastName} avatar`}
-      imageUrl={avatar ? avatar.url : undefined}
-      imageInitials={firstName[0] + lastName[0]}
+      imageAlt={candidate.fullName + ' ' + tp.candidate.avatar()}
+      imageUrl={candidate.avatar ? candidate.avatar.url : undefined}
+      imageInitials={candidate.initials}
       onRenderPrimaryText={renderName}
-      secondaryText={position || company || undefined}
+      secondaryText={candidate.companyAndPosition}
       onRenderTertiaryText={renderStatus}
       {...rest}
     />

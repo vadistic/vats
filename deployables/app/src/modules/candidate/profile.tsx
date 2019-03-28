@@ -51,8 +51,6 @@ export const CandidateProfileBase: React.FC = () => {
 
   const selectedKey = store.state.surfaceTab
 
-  console.log(selectedKey)
-
   return (
     <>
       <CandidateTopSection />

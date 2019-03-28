@@ -2,7 +2,7 @@ import { css } from '@emotion/core'
 import { useTranslation } from '@vats/i18n'
 import { useComputed } from '@vats/store'
 import { Theme } from '@vats/styling'
-import { pathProxy, SortDirection } from '@vats/utils'
+import { filterNull, pathProxy, SortDirection } from '@vats/utils'
 import {
   IColumn,
   IPersonaCoinProps,
@@ -169,7 +169,7 @@ const ColumnAvatar: React.FC<CandidatesElementProps> = ({ candidate }) => {
         imageAlt: [candidate.firstName, candidate.lastName].join(' '),
       }
     : {
-        imageInitials: candidate.firstName[0] + candidate.lastName[0],
+        imageInitials: filterNull([candidate.firstName, candidate.lastName]).map(v => v[0]).join(''),
         imageAlt: [candidate.firstName, candidate.lastName].join(' '),
       }
   return <PersonaCoin {...props} size={PersonaSize.size40} />

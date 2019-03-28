@@ -52,7 +52,7 @@ const CandidatesBarBase: React.FC<CandidatesBarProps> = ({ navigate }) => {
 
     store.state.selection.instance.setAllSelected(false)
 
-    store.deleteMany({ indicies })
+    store.loopDeleteMany({ indicies })
   })
 
   const getSubmenuItem = (sortBy: string) => ({

@@ -52,6 +52,20 @@ export const Navigation: React.FC<NavigationProps> = ({ groups }) => {
           },
         ],
       },
+      {
+        name: tp.job.applications({ count: 10 }),
+        url: `/applications`,
+        key: '/applications',
+        isExpanded: true,
+        links: [
+          {
+            name: tp.common.board(),
+            url: `/applications/board`,
+            key: `/applications/board`,
+            icon: 'backlogboard',
+          },
+        ],
+      },
     ],
   }
 

@@ -37,7 +37,6 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({
   }, [location && location.state && location.state.tab])
 
   useMemo(() => {
-    console.log('derived render')
     if (store.meta.status === StoreStatus.ready) {
       // dialog for dirty state here
       store.state.editable = false
@@ -128,3 +127,5 @@ export const CandidateSurface: React.FC<CandidateSurfaceProps> = ({
     'CandidateSurface',
   )
 }
+
+export default CandidateSurface

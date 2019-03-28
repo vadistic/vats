@@ -1,6 +1,6 @@
 import { RouteComponentProps } from '@reach/router'
 import { useStore } from '@vats/store'
-import { observer } from 'mobx-react-lite'
+import { useObserver } from 'mobx-react-lite'
 import React from 'react'
 import { Router } from '../../components'
 import { JobSurface } from '../job'
@@ -23,20 +23,23 @@ const JobsViewDefaultRoute: React.FC<RouteComponentProps> = ({ navigate }) => {
 
 export interface JobsViewProps extends RouteComponentProps {}
 
-export const JobsViewBase: React.FC<JobsViewProps> = () => {
+export const JobsView: React.FC<JobsViewProps> = () => {
   const store = useStore(createJobsStore, {}, [])
 
-  return (
-    <JobsContext.Provider value={store}>
-      <JobsBar />
-      <Router basepath={`/jobs`} primary={false}>
-        <JobsViewDefaultRoute default={true} />
-        <JobsList path={`list`}>
-          <JobSurface path={`/job/:id`} />
-        </JobsList>
-      </Router>
-    </JobsContext.Provider>
+  return useObserver(
+    () => (
+      <JobsContext.Provider value={store}>
+        <JobsBar />
+        <Router basepath={`/jobs`} primary={false}>
+          <JobsViewDefaultRoute default={true} />
+          <JobsList path={`list`}>
+            <JobSurface path={`/job/:id`} />
+          </JobsList>
+        </Router>
+      </JobsContext.Provider>
+    ),
+    'JobsView',
   )
 }
 
-export const JobsView = observer(JobsViewBase)
+export default JobsView

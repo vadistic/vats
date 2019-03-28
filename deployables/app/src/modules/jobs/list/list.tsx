@@ -27,7 +27,7 @@ export const JobsList: React.FC<JobsListProps> = ({ children }) => {
       getKey: ((job: SingleJobValue) => job.id) as any,
       canSelectItem: ((job: SingleJobValue) => job.__typename === 'Job') as any,
       onSelectionChanged: () => {
-        console.log('selection changed', selection.current.getSelection())
+        /* update selection indicies? */
       },
     }),
   )
