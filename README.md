@@ -83,8 +83,6 @@ Store factory with automated & strongly typed graphql transport layer.
 
 Prisma datamodel & seeding script. With custom/lightweigth prisma-bindings to cut outdated `graphql-cli` dependency & use resolver forwarding.
 
-[**DATAMODEL VISUALISATION**](https://app.graphqleditor.com/vats/vats-datamodel)
-
 ### `@vats/styling`
 
 Reusable theming.
