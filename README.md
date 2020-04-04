@@ -1,6 +1,6 @@
 # vats
 
-> Cool app architecture for Applications Tracking System [🚧wip]
+> [Archived] Cool app architecture for Applications Tracking System
 
 As recruiter this is was an obvious choice for pet project. It's mostly playground for utils and architecture patterns - I'm trying to keep features limited for quick refactors.
 
@@ -11,8 +11,6 @@ To achieve it - I'm reusing tons of auto-generated code and with generic adapter
 ## App / client
 
 [**SOURCE**](./deployables/app)
-
-[**LIVE**](https://vats.now.sh/app)
 
 ### Tech
 
@@ -27,8 +25,6 @@ To achieve it - I'm reusing tons of auto-generated code and with generic adapter
 ## Server/ API
 
 [**SOURCE** ](./deployables/server/)
-
-[**ENDPOINT**](https://vats.now.sh/graphql)
 
 ### Tech
 
